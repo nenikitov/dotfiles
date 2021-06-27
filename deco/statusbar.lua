@@ -9,6 +9,7 @@ local moddeco = {
 }
 
 local taglist_buttons = moddeco.taglist()
+local tasklist_buttons = moddeco.tasklist()
 
 mytextclock = wibox.widget.textclock()
 
