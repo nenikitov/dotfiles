@@ -8,7 +8,8 @@ function getclientkeys()
     -- Bind keyboard keys to interact with clients
     local clientkeys = gears.table.join(
         -- Toggle fullscreen on MOD + F
-        awful.key({ modkey }, "f",
+        awful.key(
+            { modkey }, "f",
             function (c)
                 c.fullscreen = not c.fullscreen
                 c:raise()
@@ -80,7 +81,8 @@ function getclientkeys()
             { description = "(un)maximize vertically", group = "client" }
         ),
         -- Maximize client horizontally on MOD + CTRL + M
-        awful.key({ modkey, "Shift" }, "m",
+        awful.key(
+            { modkey, "Shift" }, "m",
             function (c)
                 c.maximized_horizontal = not c.maximized_horizontal
                 c:raise()

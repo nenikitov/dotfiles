@@ -1,11 +1,11 @@
+-- Standard Awesome libraries
 local gears = require("gears")
 local beautiful = require("beautiful")
 
 function set_wallpaper(s)
-	-- Wallpaper
+	-- Set wallpaper
 	if beautiful.wallpaper then
 		local wallpaper = beautiful.wallpaper
-		-- If wallpaper is a function, call it with the screen
 		if type(wallpaper) == "function" then
 			wallpaper = wallpaper(s)
 		end

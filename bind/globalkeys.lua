@@ -187,7 +187,7 @@ function getglobalkeys()
                 menubar.show()
             end,
             { description = "show the menubar", group = "launcher" }
-        )
+        ),
         -- }}}
 
         -- {{{ Tiled grid manipulation manipulation
@@ -257,10 +257,8 @@ function getglobalkeys()
                 awful.layout.inc(-1)
             end,
             { description = "select previous", group = "layout" }
-        ),
+        )
         -- }}}
-    
-
     )
 
     return globalkeys

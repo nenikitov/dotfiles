@@ -1,8 +1,11 @@
+-- Standard Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
 
 function gettaglist()
+    -- Create the buttons for tag list
     local taglist_buttons = gears.table.join(
+        -- View only the current tag on LMB
         awful.button(
             { },
             1,
@@ -10,6 +13,7 @@ function gettaglist()
                 t:view_only()
             end
         ),
+        -- Move to tag on MOD + LMB
         awful.button(
             { modkey },
             1,
@@ -19,11 +23,13 @@ function gettaglist()
                 end
             end
         ),
+        -- Toggle visibility on RMB
         awful.button(
             { },
             3,
             awful.tag.viewtoggle
         ),
+        -- Toggle tag on MOD + RMB
         awful.button(
             { modkey },
             3,
@@ -33,6 +39,7 @@ function gettaglist()
                 end
             end
         ),
+        -- Go to next tag on FTMB
         awful.button(
             { },
             4,
@@ -40,6 +47,7 @@ function gettaglist()
                 awful.tag.viewnext(t.screen)
             end
         ),
+        -- Go to previous tag on BTMB
         awful.button(
             { },
             5,
@@ -48,6 +56,7 @@ function gettaglist()
             end
         )
     )
+
     return taglist_buttons
 end
 

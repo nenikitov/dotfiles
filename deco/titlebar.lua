@@ -6,8 +6,9 @@ local wibox = require("wibox")
 client.connect_signal(
     "request::titlebars",
     function(c)
-        -- buttons for the titlebar
+        -- Buttons for the titlebar
         local buttons = gears.table.join(
+            -- Move window on LMB
             awful.button(
                 { }, 1,
                 function()
@@ -15,6 +16,7 @@ client.connect_signal(
                     awful.mouse.client.move(c)
                 end
             ),
+            -- Resize window on RMB
             awful.button(
                 { }, 3,
                 function()
@@ -24,20 +26,24 @@ client.connect_signal(
             )
         )
         awful.titlebar(c) : setup {
-            { -- Left
+            -- Left
+            {
                 awful.titlebar.widget.iconwidget(c),
                 buttons = buttons,
                 layout  = wibox.layout.fixed.horizontal
             },
-            { -- Middle
-                { -- Title
+            -- Middle
+            {
+                -- Title
+                {
                     align  = "center",
                     widget = awful.titlebar.widget.titlewidget(c)
                 },
                 buttons = buttons,
                 layout  = wibox.layout.flex.horizontal
             },
-            { -- Right
+            -- Right
+            {
                 awful.titlebar.widget.floatingbutton (c),
                 awful.titlebar.widget.maximizedbutton(c),
                 awful.titlebar.widget.stickybutton   (c),

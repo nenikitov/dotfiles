@@ -2,7 +2,9 @@ local gears = require("gears")
 local awful = require("awful")
 
 function gettasklist()
+    -- Create buttons for task list
     local tasklist_buttons = gears.table.join(
+        -- Mimimaze / Restore on LMB
         awful.button(
             { },
             1,
@@ -18,6 +20,7 @@ function gettasklist()
                 end
             end
         ),
+        -- Display client list on RMB
         awful.button(
             { },
             3,
@@ -25,6 +28,7 @@ function gettasklist()
                 awful.menu.client_list({ theme = { width = 250 } })
             end
         ),
+        -- Go to next task on FTMB
         awful.button(
             { },
             4, 
@@ -32,6 +36,7 @@ function gettasklist()
                 awful.client.focus.byidx(1)
             end
         ),
+        -- Go to previous task on BTMB
         awful.button(
             { },
             5,
@@ -40,6 +45,7 @@ function gettasklist()
             end
         )
     )
+
     return tasklist_buttons
 end
 
