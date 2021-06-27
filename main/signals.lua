@@ -1,21 +1,22 @@
+-- Standard Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
+-- Load titlebars
 require("deco.titlebar")
 
 -- Signal function to execute when a new client appears.
 client.connect_signal(
     "manage",
     function (c)
+        -- Set the shape to be rounded rectangle
         c.shape = function(cr, w, h)
-			gears.shape.rounded_rect(cr, w, h, 10)
-		end
+            gears.shape.rounded_rect(cr, w, h, 10)
+        end
 
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        -- if not awesome.startup then awful.client.setslave(c) end
+        -- Set the windows at the slave (put it at the end of others instead of setting it master)
         if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
             -- Prevent clients from being unreachable after screen count changes.
             awful.placement.no_offscreen(c)
@@ -35,12 +36,14 @@ client.connect_signal(
     end
 )
 
+-- Change border color on focus
 client.connect_signal(
     "focus",
     function(c)
         c.border_color = beautiful.border_focus
     end
 )
+-- Change border color on lost focus
 client.connect_signal(
     "unfocus",
     function(c)

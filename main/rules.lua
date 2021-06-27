@@ -1,3 +1,4 @@
+-- Standard Awesome libraries
 local awful =  require("awful")
 local beautiful = require("beautiful")
 
@@ -18,7 +19,7 @@ function getrules(clientkeys, clientbuttons)
                 placement = awful.placement.no_overlap+awful.placement.no_offscreen
             }
         },
-        -- Floating clients.
+        -- Floating clients
         {
             rule_any = {
                 instance = {

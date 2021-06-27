@@ -1,5 +1,7 @@
+-- Standard Awesome libraries
 local awful = require("awful")
 
+-- Use only uncommented layout types
 local layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,

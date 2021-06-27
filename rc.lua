@@ -34,18 +34,18 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
 -- {{{ Load custom modules
 -- Main modules
 local modmain = {
-	layouts = require("main.layouts"),
-	tags = require("main.tags"),
-	menu = require("main.menu"),
-	rules = require("main.rules")
+    layouts = require("main.layouts"),
+    tags = require("main.tags"),
+    menu = require("main.menu"),
+    rules = require("main.rules")
 }
 -- Bind modules
 local modbind = {
-	globalbuttons = require("bind.globalbuttons"),
-	clientbuttons = require("bind.clientbuttons"),
-	globalkeys = require("bind.globalkeys"),
-	bindtotags = require("bind.bindtotags"),
-	clientkeys = require("bind.clientkeys")
+    globalbuttons = require("bind.globalbuttons"),
+    clientbuttons = require("bind.clientbuttons"),
+    globalkeys = require("bind.globalkeys"),
+    bindtotags = require("bind.bindtotags"),
+    clientkeys = require("bind.clientkeys")
 }
 -- }}}
 
@@ -56,8 +56,8 @@ rc.globalkeys = modbind.bindtotags(modbind.globalkeys())
 -- Load menu
 rc.menu = awful.menu({ items = modmain.menu })
 rc.launcher = awful.widget.launcher({
-	image = beautiful.awesome_icon,
-	menu = rc.menu
+    image = beautiful.awesome_icon,
+    menu = rc.menu
 })
 
 -- Init layouts
