@@ -3,6 +3,8 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
+require("deco.titlebar")
+
 -- Signal function to execute when a new client appears.
 client.connect_signal(
     "manage",
@@ -20,8 +22,6 @@ client.connect_signal(
         end
     end
 )
-
-require("deco.titlebar")
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal(
