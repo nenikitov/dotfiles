@@ -1,12 +1,14 @@
+-- Standard Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
-
+-- Global modkey
 local modkey = rc.uservars.modkey
 
 function getbindtotags(globalkeys)
+    -- Bind all key numbers to interact with corresponding tags
     for i = 1, 9 do
         globalkeys = gears.table.join(globalkeys,
-            -- View tag only.
+            -- View tag only
             awful.key(
                 { modkey }, "#" .. i + 9,
                 function ()
@@ -18,7 +20,7 @@ function getbindtotags(globalkeys)
                 end,
                 { description = "view tag #"..i, group = "tag" }
             ),
-            -- Toggle tag display.
+            -- Toggle tag display
             awful.key(
                 { modkey, "Control" }, "#" .. i + 9,
                 function ()
@@ -30,7 +32,7 @@ function getbindtotags(globalkeys)
                 end,
                 { description = "toggle tag #" .. i, group = "tag" }
             ),
-            -- Move client to tag.
+            -- Move client to tag
             awful.key(
                 { modkey, "Shift" }, "#" .. i + 9,
                 function ()
@@ -43,7 +45,7 @@ function getbindtotags(globalkeys)
                 end,
                 { description = "move focused client to tag #"..i, group = "tag" }
             ),
-            -- Toggle tag on focused client.
+            -- Toggle tag on focused client
             awful.key(
                 { modkey, "Control", "Shift" }, "#" .. i + 9,
                 function ()

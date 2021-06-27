@@ -2,7 +2,7 @@
 pcall(require, "luarocks.loader")
 
 -- {{{ Load libraries
--- Standart Awesome libraries
+-- Standard Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
@@ -14,8 +14,6 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
--- Enable hotkeys help widget for VIM and other apps 
-require("awful.hotkeys_popup.keys")
 -- Error handling module
 require("main.error-handling")
 -- }}}
@@ -33,7 +31,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- Load theme
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
 
--- {{{ Load modules
+-- {{{ Load custom modules
 -- Main modules
 local modmain = {
 	layouts = require("main.layouts"),
@@ -55,30 +53,30 @@ local modbind = {
 rc.tags = modmain.tags
 rc.globalkeys = modbind.bindtotags(modbind.globalkeys())
 
--- Menu
+-- Load menu
 rc.menu = awful.menu({ items = modmain.menu })
 rc.launcher = awful.widget.launcher({
 	image = beautiful.awesome_icon,
 	menu = rc.menu
 })
 
--- Layouts
+-- Init layouts
 awful.layout.layouts = modmain.layouts
 
 -- Set the terminal for applications that require it
 menubar.utils.terminal = rc.uservars.terminal
 
--- Wibar
+-- Init wibar
 require("deco.statusbar")
 
--- Key binds
+-- Load key binds
 root.keys(rc.globalkeys)
 root.buttons(modbind.globalbuttons())
 
--- Rules
+-- Set rules
 awful.rules.rules = modmain.rules(modbind.clientkeys(), modbind.clientbuttons())
 
--- Signals
+-- Set signals
 require("main.signals")
 
 -- Autostart
