@@ -1,42 +1,47 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
+-- Ensure that LuaRocks is installed
 pcall(require, "luarocks.loader")
 
--- Standard awesome library
+-- {{{ Load libraries
+-- Standart Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
--- Widget and layout library
+-- Load widget and layout library
 local wibox = require("wibox")
--- Theme handling library
+-- Load theme handling library
 local beautiful = require("beautiful")
--- Notification library
+-- Load notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps 
--- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
-
--- Error handling
+-- Error handling module
 require("main.error-handling")
+-- }}}
 
+-- RC is a global scope for the modules
 rc = {}
+-- Load user variables
 rc.uservars = require("main.user-vars")
+-- Set global variables
 modkey = rc.uservars.modkey
 terminal = rc.uservars.terminal
 editor = rc.uservars.editor
 editor_cmd = terminal .. " -e " .. editor
 
+-- Load theme
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
 
--- Load custom modules
+-- {{{ Load modules
+-- Main modules
 local modmain = {
 	layouts = require("main.layouts"),
 	tags = require("main.tags"),
 	menu = require("main.menu"),
 	rules = require("main.rules")
 }
+-- Bind modules
 local modbind = {
 	globalbuttons = require("bind.globalbuttons"),
 	clientbuttons = require("bind.clientbuttons"),
@@ -44,7 +49,9 @@ local modbind = {
 	bindtotags = require("bind.bindtotags"),
 	clientkeys = require("bind.clientkeys")
 }
+-- }}}
 
+-- Set more global variables
 rc.tags = modmain.tags
 rc.globalkeys = modbind.bindtotags(modbind.globalkeys())
 
@@ -55,15 +62,16 @@ rc.launcher = awful.widget.launcher({
 	menu = rc.menu
 })
 
--- Table of layouts
+-- Layouts
 awful.layout.layouts = modmain.layouts
+
 -- Set the terminal for applications that require it
 menubar.utils.terminal = rc.uservars.terminal
 
 -- Wibar
 require("deco.statusbar")
 
--- Set keys
+-- Key binds
 root.keys(rc.globalkeys)
 root.buttons(modbind.globalbuttons())
 
@@ -74,5 +82,4 @@ awful.rules.rules = modmain.rules(modbind.clientkeys(), modbind.clientbuttons())
 require("main.signals")
 
 -- Autostart
-awful.spawn.with_shell("picom --xrender-sync-fence")
-awful.spawn.with_shell("nitrogen --restore")
+require("main.autostart")
