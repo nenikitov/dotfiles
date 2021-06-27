@@ -12,6 +12,7 @@ local taglist_buttons = moddeco.taglist()
 local tasklist_buttons = moddeco.tasklist()
 
 mytextclock = wibox.widget.textclock()
+mykeyboardlayout = awful.widget.keyboardlayout()
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
