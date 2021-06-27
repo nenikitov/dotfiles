@@ -1,3 +1,4 @@
+-- Standard Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
 

@@ -1,8 +1,9 @@
+-- Standard Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local menubar = require("menubar")
-
+-- Global variables
 local modkey = rc.uservars.modkey
 local terminal = rc.uservars.terminal
 
