@@ -19,4 +19,4 @@ local layouts = {
     -- awful.layout.suit.corner.se,
 }
 
-return layouts;
+return layouts

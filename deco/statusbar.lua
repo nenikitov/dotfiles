@@ -8,6 +8,8 @@ local moddeco = {
     tasklist = require("deco.tasklist")
 }
 
+local taglist_buttons = moddeco.taglist()
+
 mytextclock = wibox.widget.textclock()
 
 awful.screen.connect_for_each_screen(function(s)
