@@ -1,7 +1,7 @@
 -- Standard Awesome libraries
 local gears = require("gears")
 local awful = require("awful")
-
+-- Global variables
 local modkey = rc.uservars.modkey
 
 function getclientkeys()
