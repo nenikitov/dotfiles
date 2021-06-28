@@ -29,7 +29,7 @@ editor = rc.uservars.editor
 editor_cmd = terminal .. " -e " .. editor
 
 -- Load theme
-beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme/netheme/theme.lua")
 
 -- {{{ Load custom modules
 -- Main modules
