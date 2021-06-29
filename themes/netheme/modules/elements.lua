@@ -18,7 +18,7 @@ theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
 -- Gap
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = dpi(3)
 
 -- Variables set for theming notifications:
 -- notification_font

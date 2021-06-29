@@ -16,7 +16,7 @@ function getrules(clientkeys, clientbuttons)
                 keys = clientkeys,
                 buttons = clientbuttons,
                 screen = awful.screen.preferred,
-                placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                placement = awful.placement.no_overlap + awful.placement.no_offscreen
             }
         },
         -- Floating clients
