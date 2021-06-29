@@ -1,13 +1,6 @@
--- {{{ Load libraries and modules
--- Standard Awesome libraries
-local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
 -- Custom module for the color palette
 local palette = require("theme.netheme.modules.palette")
--- }}}
 
--- {{{ Theme setup
 -- Font
 theme.font          = "sans 12"
 -- Foreground colors
@@ -29,7 +22,12 @@ theme.border_marked = "#91231c"
 
 -- Gap
 theme.useless_gap   = dpi(5)
--- }}}
+
+-- Variables set for theming notifications:
+-- notification_font
+-- notification_[bg|fg]
+-- notification_[width|height|margin]
+-- notification_[border_color|border_width|shape|opacity]
 
 
 -- There are other variable sets
