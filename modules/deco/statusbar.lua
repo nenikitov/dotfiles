@@ -5,9 +5,9 @@ local wibox = require("wibox")
 
 -- Load custom modules
 local moddeco = {
-    wallpaper = require("deco.wallpaper"),
-    taglist = require("deco.taglist"),
-    tasklist = require("deco.tasklist")
+    wallpaper = require("modules.deco.wallpaper"),
+    taglist = require("modules.deco.taglist"),
+    tasklist = require("modules.deco.tasklist")
 }
 
 -- Get taglist and tasklist buttons

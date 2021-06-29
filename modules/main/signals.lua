@@ -5,7 +5,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 -- Load titlebars
-require("deco.titlebar")
+require("modules.deco.titlebar")
 
 -- Signal function to execute when a new client appears.
 client.connect_signal(
