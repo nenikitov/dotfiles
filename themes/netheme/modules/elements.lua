@@ -1,6 +1,3 @@
--- Custom module for the color palette
-local palette = require("theme.netheme.modules.palette")
-
 -- Font
 theme.font          = "sans 12"
 -- Foreground colors

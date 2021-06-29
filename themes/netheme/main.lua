@@ -5,14 +5,19 @@ dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 themes_path = gfs.get_themes_dir()
 
+local awful = require("awful")
+awful.util = require("awful.util")
+netheme_path = awful.util.getdir("config") .. "/themes/netheme/"
+
 theme = {}
 
 -- {{{ Load cutom modules
-require("theme.netheme.modules.elements")
-require("theme.netheme.modules.taglist")
-require("theme.netheme.modules.menu")
-require("theme.netheme.modules.titlebar")
-require("theme.netheme.modules.layout")
+palette = require("themes.netheme.modules.palette")
+require("themes.netheme.modules.elements")
+require("themes.netheme.modules.taglist")
+require("themes.netheme.modules.menu")
+require("themes.netheme.modules.titlebar")
+require("themes.netheme.modules.layout")
 -- }}}
 
 -- Generate Awesome icon:
