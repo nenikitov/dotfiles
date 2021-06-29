@@ -1,4 +1,5 @@
 local color = {
+    -- Default colors that I use for alacritty
     ['primary-background'] = '#0a0a0a',
     ['primary-foreground'] = '#ffffff',
 
