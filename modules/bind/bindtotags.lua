@@ -8,7 +8,7 @@ function getbindtotags(globalkeys)
     -- Bind all key numbers to interact with corresponding tags
     for i = 1, 9 do
         globalkeys = gears.table.join(globalkeys,
-            -- View tag only
+            -- View tag only on MOD + NUMBER
             awful.key(
                 { modkey }, "#" .. i + 9,
                 function ()
@@ -20,7 +20,7 @@ function getbindtotags(globalkeys)
                 end,
                 { description = "view tag #"..i, group = "tag" }
             ),
-            -- Toggle tag display
+            -- Toggle tag display on MOD + CTRL + NUMBER
             awful.key(
                 { modkey, "Control" }, "#" .. i + 9,
                 function ()
@@ -32,7 +32,7 @@ function getbindtotags(globalkeys)
                 end,
                 { description = "toggle tag #" .. i, group = "tag" }
             ),
-            -- Move client to tag
+            -- Move client to tag on MOD + SHIFT + NUMBER
             awful.key(
                 { modkey, "Shift" }, "#" .. i + 9,
                 function ()
@@ -45,7 +45,7 @@ function getbindtotags(globalkeys)
                 end,
                 { description = "move focused client to tag #"..i, group = "tag" }
             ),
-            -- Toggle tag on focused client
+            -- Toggle tag on focused client on MOD + CTRL + SHIFT + NUMBER
             awful.key(
                 { modkey, "Control", "Shift" }, "#" .. i + 9,
                 function ()
