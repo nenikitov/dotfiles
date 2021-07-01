@@ -5,7 +5,7 @@ local awful = require("awful")
 local ls = awful.layout.suit
 
 local tags = {}
-local tagnames = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+local tagnames = { "chill", "term", "code", "draw", "study", "fun", "7", "8", "9" }
 local taglayouts = ls.floating
 
 -- Add layouts to each screen

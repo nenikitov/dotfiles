@@ -4,7 +4,7 @@ local awful = require("awful")
 function gettasklist()
     -- Create buttons for task list
     local tasklist_buttons = gears.table.join(
-        -- Mimimaze / Restore on LMB
+        -- Mimimize / Restore on LMB
         awful.button(
             { },
             1,

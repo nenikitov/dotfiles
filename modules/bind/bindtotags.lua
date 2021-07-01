@@ -15,7 +15,7 @@ function getbindtotags(globalkeys)
                         local screen = awful.screen.focused()
                         local tag = screen.tags[i]
                         if tag then
-                        tag:view_only()
+                            tag:view_only()
                         end
                 end,
                 { description = "view tag #"..i, group = "tag" }

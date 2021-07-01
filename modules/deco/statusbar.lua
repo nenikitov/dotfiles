@@ -45,7 +45,7 @@ awful.screen.connect_for_each_screen(
         s.mytasklist = awful.widget.tasklist {
             screen  = s,
             filter  = awful.widget.tasklist.filter.currenttags,
-            buttons = tasklist_buttons
+            buttons = tasklist_buttons,
         }
 
         -- Create the wibox
@@ -70,7 +70,7 @@ awful.screen.connect_for_each_screen(
                 wibox.widget.systray(),
                 mytextclock,
                 s.mylayoutbox,
-            },
+            }
         }
     end
 )
