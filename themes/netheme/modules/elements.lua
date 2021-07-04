@@ -1,5 +1,6 @@
 -- Font
 theme.font          = "sans 12"
+
 -- Foreground colors
 theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#ffffff"
@@ -18,7 +19,7 @@ theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
 -- Gap
-theme.useless_gap   = dpi(3)
+theme.useless_gap   = dpi(5)
 
 -- Variables set for theming notifications:
 -- notification_font
