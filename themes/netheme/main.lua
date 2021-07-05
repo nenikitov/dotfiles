@@ -21,9 +21,11 @@ require("themes.netheme.modules.layout")
 -- }}}
 
 -- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
-)
+theme.awesome_icon = netheme_path .. "graphics/icons/arch-logo.svg"
+
+-- theme_assets.awesome_icon(
+--     theme.menu_height, theme.bg_focus, theme.fg_focus
+-- )
 
 theme.icon_theme = nil
 -- theme.wallpaper = themes_path .. "default/background.png"
