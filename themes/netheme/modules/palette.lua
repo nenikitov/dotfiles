@@ -25,9 +25,9 @@ local palette = {
         active = "#3d5142"
     },
     bg_tertiary = {
-        dull   = "#0f191c",
+        dull   = "#111d21",
         normal = "#1f353b",
-        active = "#1f353b"
+        active = "#2b4a52"
     }
 }
 
