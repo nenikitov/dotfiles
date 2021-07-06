@@ -46,10 +46,45 @@ awful.screen.connect_for_each_screen(
             screen  = s,
             filter  = awful.widget.tasklist.filter.currenttags,
             buttons = tasklist_buttons,
+            layout   = {
+                layout  = wibox.layout.fixed.horizontal
+            },
+            widget_template = {
+                {
+                    wibox.widget.base.make_widget(),
+                    forced_height = 5,
+                    id            = 'background_role',
+                    widget        = wibox.container.background,
+                },
+                {
+                    {
+                        {
+                            id     = 'clienticon',
+                            widget = awful.widget.clienticon,
+                        },
+                        {
+                            id     = 'text_role',
+                            widget = wibox.widget.textbox,
+                        },
+                        layout = wibox.layout.fixed.horizontal
+                    },
+                    margins = 5,
+                    widget  = wibox.container.margin
+                },
+                forced_width = 250,
+                layout = wibox.layout.align.vertical,
+                create_callback = function(self, c, index, objects) --luacheck: no unused args
+                    self:get_children_by_id('clienticon')[1].client = c
+                end,
+            },
         }
 
         -- Create the wibox
-        s.mywibox = awful.wibar({ position = "top", screen = s })
+        s.mywibox = awful.wibar({
+            position = "top",
+            screen = s,
+            height = 40,
+        })
 
         -- Add widgets to the wibox
         s.mywibox:setup {
@@ -64,7 +99,7 @@ awful.screen.connect_for_each_screen(
             -- Middle widget
             s.mytasklist, 
             -- Right widgets
-            { 
+            {
                 layout = wibox.layout.fixed.horizontal,
                 mykeyboardlayout,
                 wibox.widget.systray(),
