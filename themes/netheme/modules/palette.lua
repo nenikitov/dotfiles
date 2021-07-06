@@ -1,34 +1,34 @@
-local color = {
-    -- Default colors that I use for alacritty
-    ['primary-background'] = '#0a0a0a',
-    ['primary-foreground'] = '#ffffff',
-
-    ['normal_black']       = '#2e2e2e',
-    ['normal_red']         = '#bf757f',
-    ['normal_green']       = '#8bbf80',
-    ['normal_yellow']      = '#bf956b',
-    ['normal_blue']        = '#7595bf',
-    ['normal_magenta']     = '#bf8abf',
-    ['normal_cyan']        = '#80bfb5',
-    ['normal_white']       = '#bfbfbf',
-
-    ['bright_black']       = '#696969',
-    ['bright_red']         = '#de4b55',
-    ['bright_green']       = '#79e43c',
-    ['bright_yellow']      = '#f7ab38',
-    ['bright_blue']        = '#478ff3',
-    ['bright_magenta']     = '#f43bf4',
-    ['bright_cyan']        = '#40f9bb',
-    ['bright_white']       = '#f6f6f6',
-
-    ['dim_black']          = '#1a1a1a',
-    ['dim_red']            = '#80282e',
-    ['dim_green']          = '#4b8030',
-    ['dim_yellow']         = '#80581d',
-    ['dim_blue']           = '#3b5880',
-    ['dim_magenta']        = '#803080',
-    ['dim_cyan']           = '#288062',
-    ['dim_white']          = '#808080'
+local palette = {
+    fg_text = {
+        dull   = "#909090",
+        normal = "#bfbfbf",
+        active = "#ffffff"
+    },
+    bg_neutral = {
+        dull   = "#0a0a0a",
+        normal = "#1a1a1a",
+        active = "#2a2a2a"
+    },
+    bg_variation  = {
+        dull   = "#131313",
+        normal = "#262626",
+        active = "#353535"
+    },
+    bg_primary = {
+        dull   = "#271f18",
+        normal = "#271f18",
+        active = "#45372b"
+    },
+    bg_secondary = {
+        dull   = "#19211b",
+        normal = "#304034",
+        active = "#3d5142"
+    },
+    bg_tertiary = {
+        dull   = "#0f191c",
+        normal = "#1f353b",
+        active = "#1f353b"
+    }
 }
 
-return color
+return palette
