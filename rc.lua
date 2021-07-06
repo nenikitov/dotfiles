@@ -55,10 +55,6 @@ rc.globalkeys = modbind.bindtotags(modbind.globalkeys())
 
 -- Load menu
 rc.menu = awful.menu({ items = modmain.menu })
-rc.launcher = awful.widget.launcher({
-    image = beautiful.awesome_icon,
-    menu = rc.menu
-})
 
 -- Init layouts
 awful.layout.layouts = modmain.layouts
