@@ -7,15 +7,15 @@ theme.fg_focus      = palette.fg_text.active
 theme.fg_urgent     = palette.fg_text.active
 theme.fg_minimize   = palette.fg_text.active
 -- Background colors
-theme.bg_normal     = palette.bg_neutral.dull
-theme.bg_focus      = palette.bg_primary.active
+theme.bg_normal     = palette.bg_blue.dull .. "f2"
+theme.bg_focus      = palette.bg_red.active
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = palette.bg_variation.active
 theme.bg_systray    = theme.bg_normal
 -- Borders
 theme.border_width  = dpi(1)
-theme.border_normal = palette.bg_neutral.dull
-theme.border_focus  = palette.bg_primary.active
+theme.border_normal = palette.bg_blue.dull
+theme.border_focus  = palette.bg_red.active
 theme.border_marked = "#91231c"
 
 -- Gap

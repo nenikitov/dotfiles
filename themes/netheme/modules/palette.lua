@@ -28,6 +28,21 @@ local palette = {
         dull   = "#111d21",
         normal = "#1f353b",
         active = "#2b4a52"
+    },
+    bg_red = {
+        dull   = "#900000",
+        normal = "#bf0000",
+        active = "#ff0000"
+    },
+    bg_green = {
+        dull   = "#009000",
+        normal = "#00bf00",
+        active = "#00ff00"
+    },
+    bg_blue = {
+        dull   = "#000090",
+        normal = "#0000bf",
+        active = "#0000ff"
     }
 }
 
