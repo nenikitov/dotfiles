@@ -2,20 +2,20 @@
 theme.font          = "sans 12"
 
 -- Foreground colors
-theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = palette.fg_text.normal
+theme.fg_focus      = palette.fg_text.active
+theme.fg_urgent     = palette.fg_text.active
+theme.fg_minimize   = palette.fg_text.active
 -- Background colors
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
+theme.bg_normal     = palette.bg_neutral.dull
+theme.bg_focus      = palette.bg_primary.active
 theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_minimize   = palette.bg_variation.active
 theme.bg_systray    = theme.bg_normal
 -- Borders
 theme.border_width  = dpi(1)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_normal = palette.bg_neutral.dull
+theme.border_focus  = palette.bg_primary.active
 theme.border_marked = "#91231c"
 
 -- Gap
