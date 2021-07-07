@@ -3,6 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local utils = require("modules.main.utils")
 
 -- Load custom modules
 local moddeco = {
@@ -77,13 +78,13 @@ awful.screen.connect_for_each_screen(
                 },
                 forced_width = 250,
                 layout = wibox.layout.align.vertical,
-                create_callback = function(self, c, index, objects) --luacheck: no unused args
+                create_callback = function(self, c, index, objects)
                     self:get_children_by_id('clienticon')[1].client = c
                 end,
             },
         }
         -- Current layout indicator
-        s.layoutbox = awful.widget.layoutbox()
+        s.layoutbox = awful.widget.layoutbox(s)
         s.layoutbox:buttons(layoutbox_buttons)
         -- Wibar on top that will display previous widgets
         s.wibox = awful.wibar {
@@ -99,9 +100,10 @@ awful.screen.connect_for_each_screen(
             {
                 -- Left widgets
                 {
-                    launchermenu,
-                    s.taglist,
+                    createpill(launchermenu, "#00000090"),
+                    createpill(s.taglist, theme.border_marked),
                     s.promptbox,
+
                     layout = wibox.layout.fixed.horizontal,
                 },
                 -- Middle widget
@@ -112,12 +114,18 @@ awful.screen.connect_for_each_screen(
                     wibox.widget.systray(),
                     textclock,
                     s.layoutbox,
+
                     layout = wibox.layout.fixed.horizontal,
                 },
+
                 layout = wibox.layout.align.horizontal,
             },
             widget = wibox.container.margin,
-            margins = 4
+
+            top = 2,
+            bottom = 2,
+            left = 4,
+            right = 4
         }
     end
 )
