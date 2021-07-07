@@ -7,8 +7,8 @@ themes_path = gfs.get_themes_dir()
 
 local awful = require("awful")
 awful.util = require("awful.util")
-netheme_path = awful.util.getdir("config") .. "/themes/netheme/"
-
+config_path = awful.util.getdir("config")
+netheme_path = config_path .. "/themes/netheme/"
 theme = {}
 
 -- {{{ Load cutom modules
@@ -21,7 +21,7 @@ require("themes.netheme.modules.layout")
 -- }}}
 
 -- Generate Awesome icon:
-theme.awesome_icon = netheme_path .. "graphics/icons/arch-logo.svg"
+theme.awesome_icon = config_path .. "graphics/icons/arch-logo.svg"
 
 -- theme_assets.awesome_icon(
 --     theme.menu_height, theme.bg_focus, theme.fg_focus
