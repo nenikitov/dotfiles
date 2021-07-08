@@ -4,7 +4,7 @@ local iconlist = require("modules.deco.iconlist")
 
 local iconfont = "Font Awesome 5 Free-Solid-900"
 
-function createicon(icon, size, color)
+function create_icon(icon, size, color)
     return wibox.widget {
         font = iconfont .. ' ' .. size,
         markup = ' <span color="' .. color ..'">' .. iconlist[icon] .. '</span> ',
@@ -14,26 +14,34 @@ function createicon(icon, size, color)
     }
 end
 
-function createpill(contents, color)
-    return wibox.widget {
-        {
+function create_pill(contents, color, margin)
+    local margin_r = margin and 8 or 0
+
+    if (contents ~= nil)
+    then
+        return {
             {
-                contents,
-
-                widget = wibox.container.margin,
-
-                left = 10,
-                right = 10,
-                top = 2,
-                bottom = 2
+                {
+                    contents,
+        
+                    widget = wibox.container.margin,
+        
+                    left = 10,
+                    right = 10,
+                    top = 2,
+                    bottom = 2
+                },
+                widget = wibox.container.background,
+        
+                bg = color,
+                shape = gears.shape.rounded_rect
             },
-            widget = wibox.container.background,
 
-            bg = color,
-            shape = gears.shape.rounded_rect
-        },
-        widget = wibox.container.margin,
+            widget = wibox.container.margin,
 
-        right = 8
-    }
+            right = margin_r
+        }
+    else
+        return wibox.widget {}
+    end
 end
