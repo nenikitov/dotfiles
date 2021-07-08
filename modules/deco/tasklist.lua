@@ -1,9 +1,12 @@
 local gears = require("gears")
 local awful = require("awful")
+local wibox = require("wibox")
 
 function gettasklist()
+    local tasklist_info = {}
+
     -- Create buttons for task list
-    local tasklist_buttons = gears.table.join(
+    tasklist_info.buttons = gears.table.join(
         -- Mimimize / Restore on LMB
         awful.button(
             { },
@@ -46,7 +49,37 @@ function gettasklist()
         )
     )
 
-    return tasklist_buttons
+    -- Create a widget template
+    tasklist_info.template = {
+        {
+            wibox.widget.base.make_widget(),
+            forced_height = 2,
+            id            = 'background_role',
+            widget        = wibox.container.background,
+        },
+        {
+            {
+                {
+                    id     = 'clienticon',
+                    widget = awful.widget.clienticon,
+                },
+                {
+                    id     = 'text_role',
+                    widget = wibox.widget.textbox,
+                },
+                layout = wibox.layout.fixed.horizontal
+            },
+            margins = 2,
+            widget  = wibox.container.margin
+        },
+        forced_width = 250,
+        layout = wibox.layout.align.vertical,
+        create_callback = function(self, c, index, objects)
+            self:get_children_by_id('clienticon')[1].client = c
+        end,
+    }
+
+    return tasklist_info
 end
 
 return setmetatable(

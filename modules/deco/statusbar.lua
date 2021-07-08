@@ -6,17 +6,11 @@ local beautiful = require("beautiful")
 local utils = require("modules.main.utils")
 
 -- Load custom modules
-local moddeco = {
-    wallpaper = require("modules.deco.wallpaper"),
-    taglist = require("modules.deco.taglist"),
-    tasklist = require("modules.deco.tasklist"),
-    layoutbox = require("modules.deco.layoutbox")
-}
-
--- Get taglist and tasklist buttons
-local taglist_buttons = moddeco.taglist()
-local tasklist_buttons = moddeco.tasklist()
-local layoutbox_buttons = moddeco.layoutbox()
+wallpaper = require("modules.deco.wallpaper")
+-- Get info about complex widgets
+local taglist_info = require("modules.deco.taglist")()
+local tasklist_info = require("modules.deco.tasklist")()
+local layoutbox_buttons = require("modules.deco.layoutbox")()
 
 -- {{{ Generate widgets that are the same on all the screens
 -- Launcher menu
@@ -28,6 +22,9 @@ local launchermenu = awful.widget.launcher({
 local keyboardlayout = awful.widget.keyboardlayout()
 -- Clock
 local textclock = wibox.widget.textclock()
+-- Systray for background applications
+local systray = wibox.widget.systray()
+systray.base_size = 26
 -- }}}
 
 
@@ -44,44 +41,18 @@ awful.screen.connect_for_each_screen(
         s.taglist = awful.widget.taglist {
             screen  = s,
             filter  = awful.widget.taglist.filter.all,
-            buttons = taglist_buttons
+            buttons = taglist_info.buttons,
+            widget_template = taglist_info.template
         }
         -- Tasklist
         s.tasklist = awful.widget.tasklist {
             screen  = s,
             filter  = awful.widget.tasklist.filter.currenttags,
-            buttons = tasklist_buttons,
+            buttons = tasklist_info.buttons,
             layout   = {
                 layout  = wibox.layout.fixed.horizontal
             },
-            widget_template = {
-                {
-                    wibox.widget.base.make_widget(),
-                    forced_height = 2,
-                    id            = 'background_role',
-                    widget        = wibox.container.background,
-                },
-                {
-                    {
-                        {
-                            id     = 'clienticon',
-                            widget = awful.widget.clienticon,
-                        },
-                        {
-                            id     = 'text_role',
-                            widget = wibox.widget.textbox,
-                        },
-                        layout = wibox.layout.fixed.horizontal
-                    },
-                    margins = 2,
-                    widget  = wibox.container.margin
-                },
-                forced_width = 250,
-                layout = wibox.layout.align.vertical,
-                create_callback = function(self, c, index, objects)
-                    self:get_children_by_id('clienticon')[1].client = c
-                end,
-            },
+            widget_template = tasklist_info.template
         }
         -- Current layout indicator
         s.layoutbox = awful.widget.layoutbox(s)
@@ -100,20 +71,20 @@ awful.screen.connect_for_each_screen(
             {
                 -- Left widgets
                 {
-                    createpill(launchermenu, "#00000090"),
-                    createpill(s.taglist, theme.border_marked),
+                    create_pill(launchermenu, "#00000090", true),
+                    create_pill(s.taglist, theme.border_marked, true),
                     s.promptbox,
 
                     layout = wibox.layout.fixed.horizontal,
                 },
                 -- Middle widget
-                s.tasklist, 
+                create_pill(s.tasklist, "#00000090", true), 
                 -- Right widgets
                 {
-                    keyboardlayout,
-                    wibox.widget.systray(),
-                    textclock,
-                    s.layoutbox,
+                    create_pill(keyboardlayout, "#00000090", true),
+                    create_pill(systray, "#00000090", true),
+                    create_pill(textclock, "#00000090", true),
+                    create_pill(s.layoutbox, "#00000090"),
 
                     layout = wibox.layout.fixed.horizontal,
                 },
