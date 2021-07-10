@@ -1,0 +1,12 @@
+configuration {
+	width: 50;
+	lines: 10;
+	font: "mono 14";
+	bw: 0;
+	m: "1";
+	cycle: false;
+	sidebar-mode: true;
+	modi: "window,drun,run";
+}
+
+@import "theme.rasi"

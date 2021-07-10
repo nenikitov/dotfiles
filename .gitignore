@@ -1,0 +1,13 @@
+# Blacklist everything
+/*
+
+# Track only certain files
+!/.gitignore
+
+# Track only certain configuration folders
+!/alacritty/*
+!/awesome
+!/neofetch
+!/picom
+!/rofi
+
