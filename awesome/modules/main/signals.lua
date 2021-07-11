@@ -40,13 +40,13 @@ client.connect_signal(
 client.connect_signal(
     "focus",
     function(c)
-        c.border_color = beautiful.border_focus
+        -- c.border_color = beautiful.border_focus
     end
 )
 -- Change border color on lost focus
 client.connect_signal(
     "unfocus",
     function(c)
-        c.border_color = beautiful.border_normal
+        -- c.border_color = beautiful.border_normal
     end
 )

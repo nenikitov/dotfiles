@@ -42,7 +42,7 @@ awful.screen.connect_for_each_screen(
             screen  = s,
             filter  = awful.widget.taglist.filter.all,
             buttons = taglist_info.buttons,
-            widget_template = taglist_info.template
+            -- widget_template = taglist_info.template
         }
         -- Tasklist
         s.tasklist = awful.widget.tasklist {
@@ -52,7 +52,7 @@ awful.screen.connect_for_each_screen(
             layout   = {
                 layout  = wibox.layout.fixed.horizontal
             },
-            widget_template = tasklist_info.template
+            -- widget_template = tasklist_info.template
         }
         -- Current layout indicator
         s.layoutbox = awful.widget.layoutbox(s)
@@ -72,7 +72,7 @@ awful.screen.connect_for_each_screen(
                 -- Left widgets
                 {
                     create_pill(launchermenu, "#00000090", true),
-                    create_pill(s.taglist, theme.border_marked, true),
+                    create_pill(s.taglist, "#00000090", true),
                     s.promptbox,
 
                     layout = wibox.layout.fixed.horizontal,
