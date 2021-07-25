@@ -18,6 +18,7 @@ client.connect_signal(
             awful.placement.no_offscreen(c)
         end
 
+        -- Let the theme manage client if needed
         if beautiful.client_setup ~= nil
         then
             beautiful.client_setup(c)

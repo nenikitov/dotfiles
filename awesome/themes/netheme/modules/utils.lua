@@ -14,7 +14,7 @@ function create_icon(icon, size, color)
     }
 end
 
-function create_pill(contents, color, margin)
+function create_pill(contents, color, radius, margin)
     local margin_r = margin and 8 or 0
 
     if (contents ~= nil)
@@ -34,7 +34,9 @@ function create_pill(contents, color, margin)
                 widget = wibox.container.background,
         
                 bg = color,
-                shape = gears.shape.rounded_rect
+                shape = function(cr, w, h)
+                    gears.shape.rounded_rect(cr, w, h, radius)
+                end
             },
 
             widget = wibox.container.margin,

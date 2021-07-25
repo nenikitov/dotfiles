@@ -58,6 +58,7 @@ client.connect_signal(
             layout = wibox.layout.align.horizontal
         }
 
+        -- Let the theme recreate titlebars
         if (beautiful.titlebar_setup ~= nil)
         then
             beautiful.titlebar_setup(c)

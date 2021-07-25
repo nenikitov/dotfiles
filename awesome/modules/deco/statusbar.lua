@@ -3,7 +3,6 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local utils = require("modules.main.utils")
 
 -- Load custom modules
 wallpaper = require("modules.deco.wallpaper")
@@ -90,7 +89,7 @@ awful.screen.connect_for_each_screen(
             layout = wibox.layout.align.horizontal,
         }
 
-        -- Let the theme recreate wibox if it can
+        -- Let the theme recreate wibox
         if beautiful.at_screen_connect ~= nil
         then
             beautiful.at_screen_connect(s)

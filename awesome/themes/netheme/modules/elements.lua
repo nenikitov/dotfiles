@@ -3,7 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local utils = require("modules.main.utils")
+local utils = require("themes.netheme.modules.utils")
 
 -- Load custom modules
 wallpaper = require("modules.deco.wallpaper")
@@ -30,6 +30,33 @@ function theme.at_screen_connect(s)
             screen = s,
             filter = awful.widget.taglist.filter.all,
             buttons = theme.taglist_buttons,
+            widget_template = {
+                {
+                    {
+                        {
+                            widget = wibox.widget.textbox,
+            
+                            id = "text_role"
+                        },
+                        {
+                            widget = wibox.widget.imagebox,
+            
+                            id = "icon_role"
+                        },
+            
+                        layout = wibox.layout.fixed.horizontal 
+                    },
+            
+                    widget = wibox.container.margin,
+            
+                    left = 5,
+                    right = 5
+                },
+            
+                widget = wibox.container.background,
+                
+                id = "background_role",
+            }
         }
     else
         taglist = s.taglist
@@ -49,6 +76,7 @@ function theme.at_screen_connect(s)
                     forced_height = 2,
                     id = 'background_role',
                     widget = wibox.container.background,
+
                 },
                 {
                     {
@@ -89,7 +117,7 @@ function theme.at_screen_connect(s)
         -- Left widgets
         {
             launcher,
-            taglist,
+            create_pill(taglist, '#000000ff', 10, true),
             s.promptbox,
 
             layout = wibox.layout.fixed.horizontal,
@@ -118,13 +146,12 @@ function theme.client_setup(c)
     end
 end
 
-
 function theme.titlebar_setup(c)
     awful.titlebar(c):setup {
         -- Left
         {
             awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
+            buttons = theme.titlebar_buttons,
             layout = wibox.layout.fixed.horizontal
         },
         -- Middle
@@ -134,7 +161,7 @@ function theme.titlebar_setup(c)
                 align = "center",
                 widget = awful.titlebar.widget.titlewidget(c)
             },
-            buttons = buttons,
+            buttons = theme.titlebar_buttons,
             layout = wibox.layout.flex.horizontal
         },
         -- Right
