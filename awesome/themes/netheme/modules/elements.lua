@@ -175,4 +175,40 @@ function theme.titlebar_setup(c)
         },
         layout = wibox.layout.align.horizontal
     }
+
+    --[[
+                awful.titlebar(c, { position = "top" }):setup {
+            widget = wibox.container.background,
+            shape = gears.shape.cross
+        }
+
+        awful.titlebar(c, { position = "bottom" }):setup {
+            -- Left
+            {
+                awful.titlebar.widget.iconwidget(c),
+                buttons = theme.titlebar_buttons,
+                layout = wibox.layout.fixed.horizontal
+            },
+            -- Middle
+            {
+                -- Title
+                {
+                    align = "center",
+                    widget = awful.titlebar.widget.titlewidget(c)
+                },
+                buttons = theme.titlebar_buttons,
+                layout = wibox.layout.flex.horizontal
+            },
+            -- Right
+            {
+                awful.titlebar.widget.floatingbutton(c),
+                awful.titlebar.widget.maximizedbutton(c),
+                awful.titlebar.widget.stickybutton(c),
+                awful.titlebar.widget.ontopbutton(c),
+                awful.titlebar.widget.closebutton(c),
+                layout = wibox.layout.fixed.horizontal()
+            },
+            layout = wibox.layout.align.horizontal
+        }
+    ]]
 end
