@@ -4,10 +4,8 @@ local awful = require("awful")
 local wibox = require("wibox")
 
 function gettaglist()
-    local taglist_info = {}
-
     -- Create the buttons for tag list
-    taglist_info.buttons = gears.table.join(
+    local buttons = gears.table.join(
         -- View only the current tag on LMB
         awful.button(
             { },
@@ -60,36 +58,7 @@ function gettaglist()
         )
     )
 
-    -- Create a widget template
-    taglist_info.template = {
-        {
-            {
-                {
-                    widget = wibox.widget.textbox,
-
-                    id = "text_role"
-                },
-                {
-                    widget = wibox.widget.textbox,
-
-                    id = "icon_role"
-                },
-
-                layout = wibox.layout.fixed.horizontal 
-            },
-
-            widget = wibox.container.margin,
-
-            left = 5,
-            right = 5
-        },
-
-        widget = wibox.container.background,
-        
-        id = "background_role"
-    }
-
-    return taglist_info
+    return buttons
 end
 
 return setmetatable(

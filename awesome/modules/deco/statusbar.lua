@@ -8,8 +8,8 @@ local utils = require("modules.main.utils")
 -- Load custom modules
 wallpaper = require("modules.deco.wallpaper")
 -- Get info about complex widgets
-local taglist_info = require("modules.deco.taglist")()
-local tasklist_info = require("modules.deco.tasklist")()
+local taglist_buttons = require("modules.deco.taglist")()
+local tasklist_buttons = require("modules.deco.tasklist")()
 local layoutbox_buttons = require("modules.deco.layoutbox")()
 
 -- {{{ Generate widgets that are the same on all the screens
@@ -24,7 +24,11 @@ local keyboardlayout = awful.widget.keyboardlayout()
 local textclock = wibox.widget.textclock()
 -- Systray for background applications
 local systray = wibox.widget.systray()
-systray.base_size = 26
+-- }}}
+
+-- {{{ Send button info to the theme
+theme.tasklist_buttons = tasklist_buttons
+theme.taglist_buttons = taglist_buttons
 -- }}}
 
 
@@ -39,15 +43,15 @@ awful.screen.connect_for_each_screen(
         s.promptbox = awful.widget.prompt()
         -- Taglist
         s.taglist = awful.widget.taglist {
-            screen  = s,
-            filter  = awful.widget.taglist.filter.all,
-            buttons = taglist_info.buttons,
+            screen = s,
+            filter = awful.widget.taglist.filter.all,
+            buttons = taglist_buttons,
         }
         -- Tasklist
         s.tasklist = awful.widget.tasklist {
-            screen  = s,
-            filter  = awful.widget.tasklist.filter.currenttags,
-            buttons = tasklist_info.buttons,
+            screen = s,
+            filter = awful.widget.tasklist.filter.currenttags,
+            buttons = tasklist_buttons,
         }
         -- Current layout indicator
         s.layoutbox = awful.widget.layoutbox(s)
@@ -61,29 +65,34 @@ awful.screen.connect_for_each_screen(
         }
         -- }}}
 
-        -- Add widgets to the wibox
-        s.wibox:setup {
-            -- Left widgets
-            {
-                launchermenu,
-                s.taglist,
-                s.promptbox,
+        if beautiful.at_screen_connect ~= nil
+        then
+            beautiful.at_screen_connect(s)
+        else
+            -- Add widgets to the wibox
+            s.wibox:setup {
+                -- Left widgets
+                {
+                    launchermenu,
+                    s.taglist,
+                    s.promptbox,
 
-                layout = wibox.layout.fixed.horizontal,
-            },
-            -- Middle widget
-            s.tasklist, 
-            -- Right widgets
-            {
-                keyboardlayout,
-                systray,
-                textclock,
-                s.layoutbox,
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                -- Middle widget
+                s.tasklist, 
+                -- Right widgets
+                {
+                    keyboardlayout,
+                    systray,
+                    textclock,
+                    s.layoutbox,
 
-                layout = wibox.layout.fixed.horizontal,
-            },
+                    layout = wibox.layout.fixed.horizontal,
+                },
 
-            layout = wibox.layout.align.horizontal,
-        }
+                layout = wibox.layout.align.horizontal,
+            }
+        end
     end
 )
