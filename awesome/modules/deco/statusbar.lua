@@ -14,7 +14,7 @@ local layoutbox_buttons = require("modules.deco.layoutbox")()
 
 -- {{{ Generate widgets that are the same on all the screens
 -- Launcher menu
-local launchermenu = awful.widget.launcher({
+local launcher = awful.widget.launcher({
     image = beautiful.awesome_icon,
     menu = rc.menu
 })
@@ -65,34 +65,35 @@ awful.screen.connect_for_each_screen(
         }
         -- }}}
 
+        -- Add widgets to the wibox
+        s.wibox:setup {
+            -- Left widgets
+            {
+                launcher,
+                s.taglist,
+                s.promptbox,
+
+                layout = wibox.layout.fixed.horizontal,
+            },
+            -- Middle widget
+            s.tasklist, 
+            -- Right widgets
+            {
+                keyboardlayout,
+                systray,
+                textclock,
+                s.layoutbox,
+
+                layout = wibox.layout.fixed.horizontal,
+            },
+
+            layout = wibox.layout.align.horizontal,
+        }
+
+        -- Let the theme recreate wibox if it can
         if beautiful.at_screen_connect ~= nil
         then
             beautiful.at_screen_connect(s)
-        else
-            -- Add widgets to the wibox
-            s.wibox:setup {
-                -- Left widgets
-                {
-                    launchermenu,
-                    s.taglist,
-                    s.promptbox,
-
-                    layout = wibox.layout.fixed.horizontal,
-                },
-                -- Middle widget
-                s.tasklist, 
-                -- Right widgets
-                {
-                    keyboardlayout,
-                    systray,
-                    textclock,
-                    s.layoutbox,
-
-                    layout = wibox.layout.fixed.horizontal,
-                },
-
-                layout = wibox.layout.align.horizontal,
-            }
         end
     end
 )

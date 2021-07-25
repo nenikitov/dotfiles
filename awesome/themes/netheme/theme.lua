@@ -19,7 +19,7 @@ theme = {}
 palette = require("themes.netheme.modules.palette")
 require("themes.netheme.modules.parameters")
 require("themes.netheme.modules.graphics")
-require("themes.netheme.modules.statusbar")
+require("themes.netheme.modules.elements")
 -- }}}
 
 return theme

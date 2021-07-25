@@ -11,15 +11,16 @@ require("modules.deco.titlebar")
 client.connect_signal(
     "manage",
     function (c)
-        -- Set the shape to be rounded rectangle
-        c.shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, 10)
-        end
-
         -- Set the windows at the slave (put it at the end of others instead of setting it master)
-        if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
+        if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position
+        then
             -- Prevent clients from being unreachable after screen count changes.
             awful.placement.no_offscreen(c)
+        end
+
+        if beautiful.client_setup ~= nil
+        then
+            beautiful.client_setup(c)
         end
     end
 )
@@ -40,13 +41,13 @@ client.connect_signal(
 client.connect_signal(
     "focus",
     function(c)
-        -- c.border_color = beautiful.border_focus
+        c.border_color = beautiful.border_focus
     end
 )
 -- Change border color on lost focus
 client.connect_signal(
     "unfocus",
     function(c)
-        -- c.border_color = beautiful.border_normal
+        c.border_color = beautiful.border_normal
     end
 )

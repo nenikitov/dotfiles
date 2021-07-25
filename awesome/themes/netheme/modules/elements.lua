@@ -9,11 +9,7 @@ local utils = require("modules.main.utils")
 wallpaper = require("modules.deco.wallpaper")
 
 -- {{{ Generate widgets that are the same on all the screens
--- Launcher menu
-local launcher = awful.widget.launcher({
-    image = config_path .. "graphics/icons/arch-logo.svg",
-    menu = rc.menu
-});
+
 -- Current keyboard layout
 local keyboardlayout = awful.widget.keyboardlayout()
 -- Clock
@@ -25,7 +21,8 @@ local systray = wibox.widget.systray()
 
 
 function theme.at_screen_connect(s)
-    -- Generate new taglist if rc.lua passed button info
+    -- {{{ Generate widgets that are unique for each screen
+    -- New taglist if rc.lua passed button info
     local taglist;
     if theme.taglist_buttons ~= nil
     then
@@ -37,7 +34,7 @@ function theme.at_screen_connect(s)
     else
         taglist = s.taglist
     end
-    -- Generate new tasklist if rc.lua passed button info
+    -- New tasklist if rc.lua passed button info
     local tasklist;
     if theme.tasklist_buttons ~= nil
     then
@@ -79,7 +76,15 @@ function theme.at_screen_connect(s)
         tasklist = s.tasklist
     end
 
-    -- Add widgets to the wibox
+    -- Launcher menu
+    local launcher = awful.widget.launcher({
+        image = theme.awesome_icon,
+        menu = rc.menu
+    });
+    -- }}}
+    
+
+    -- {{{ Add widgets to the wibox
     s.wibox:setup {
         -- Left widgets
         {
@@ -102,5 +107,45 @@ function theme.at_screen_connect(s)
         },
 
         layout = wibox.layout.align.horizontal,
+    }
+    -- }}}
+end
+
+function theme.client_setup(c)
+    -- Set the shape to be rounded rectangle
+    c.shape = function(cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, 15)
+    end
+end
+
+
+function theme.titlebar_setup(c)
+    awful.titlebar(c):setup {
+        -- Left
+        {
+            awful.titlebar.widget.iconwidget(c),
+            buttons = buttons,
+            layout = wibox.layout.fixed.horizontal
+        },
+        -- Middle
+        {
+            -- Title
+            {
+                align = "center",
+                widget = awful.titlebar.widget.titlewidget(c)
+            },
+            buttons = buttons,
+            layout = wibox.layout.flex.horizontal
+        },
+        -- Right
+        {
+            awful.titlebar.widget.floatingbutton(c),
+            awful.titlebar.widget.maximizedbutton(c),
+            awful.titlebar.widget.stickybutton(c),
+            awful.titlebar.widget.ontopbutton(c),
+            awful.titlebar.widget.closebutton(c),
+            layout = wibox.layout.fixed.horizontal()
+        },
+        layout = wibox.layout.align.horizontal
     }
 end
