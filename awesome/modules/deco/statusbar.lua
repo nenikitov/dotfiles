@@ -42,17 +42,12 @@ awful.screen.connect_for_each_screen(
             screen  = s,
             filter  = awful.widget.taglist.filter.all,
             buttons = taglist_info.buttons,
-            -- widget_template = taglist_info.template
         }
         -- Tasklist
         s.tasklist = awful.widget.tasklist {
             screen  = s,
             filter  = awful.widget.tasklist.filter.currenttags,
             buttons = tasklist_info.buttons,
-            layout   = {
-                layout  = wibox.layout.fixed.horizontal
-            },
-            -- widget_template = tasklist_info.template
         }
         -- Current layout indicator
         s.layoutbox = awful.widget.layoutbox(s)
@@ -68,35 +63,27 @@ awful.screen.connect_for_each_screen(
 
         -- Add widgets to the wibox
         s.wibox:setup {
+            -- Left widgets
             {
-                -- Left widgets
-                {
-                    create_pill(launchermenu, "#00000090", true),
-                    create_pill(s.taglist, "#00000090", true),
-                    s.promptbox,
+                launchermenu,
+                s.taglist,
+                s.promptbox,
 
-                    layout = wibox.layout.fixed.horizontal,
-                },
-                -- Middle widget
-                create_pill(s.tasklist, "#00000090", true), 
-                -- Right widgets
-                {
-                    create_pill(keyboardlayout, "#00000090", true),
-                    create_pill(systray, "#00000090", true),
-                    create_pill(textclock, "#00000090", true),
-                    create_pill(s.layoutbox, "#00000090"),
-
-                    layout = wibox.layout.fixed.horizontal,
-                },
-
-                layout = wibox.layout.align.horizontal,
+                layout = wibox.layout.fixed.horizontal,
             },
-            widget = wibox.container.margin,
+            -- Middle widget
+            s.tasklist, 
+            -- Right widgets
+            {
+                keyboardlayout,
+                systray,
+                textclock,
+                s.layoutbox,
 
-            top = 2,
-            bottom = 2,
-            left = 4,
-            right = 4
+                layout = wibox.layout.fixed.horizontal,
+            },
+
+            layout = wibox.layout.align.horizontal,
         }
     end
 )

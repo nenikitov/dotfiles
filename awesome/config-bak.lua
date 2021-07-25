@@ -160,3 +160,21 @@ awful.screen.connect_for_each_screen(
         }
     end
 )
+
+-- Rounded corners
+-- Signal function to execute when a new client appears.
+client.connect_signal(
+    "manage",
+    function (c)
+        -- Set the shape to be rounded rectangle
+        c.shape = function(cr, w, h)
+            gears.shape.rounded_rect(cr, w, h, 10)
+        end
+
+        -- Set the windows at the slave (put it at the end of others instead of setting it master)
+        if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
+            -- Prevent clients from being unreachable after screen count changes.
+            awful.placement.no_offscreen(c)
+        end
+    end
+)

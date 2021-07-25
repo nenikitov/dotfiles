@@ -14,20 +14,10 @@ theme = {}
 -- {{{ Load cutom modules
 palette = require("themes.netheme.modules.palette")
 require("themes.netheme.modules.elements")
-require("themes.netheme.modules.taglist")
-require("themes.netheme.modules.menu")
-require("themes.netheme.modules.titlebar")
-require("themes.netheme.modules.layout")
+require("themes.netheme.modules.icons")
 -- }}}
 
--- Generate Awesome icon:
-theme.awesome_icon = config_path .. "graphics/icons/arch-logo.svg"
-
--- theme_assets.awesome_icon(
---     theme.menu_height, theme.bg_focus, theme.fg_focus
--- )
-
 theme.icon_theme = nil
--- theme.wallpaper = themes_path .. "default/background.png"
+theme.wallpaper = netheme_path .. "wallpaper.png"
 
 return theme

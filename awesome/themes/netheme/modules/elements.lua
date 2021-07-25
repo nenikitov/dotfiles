@@ -21,6 +21,13 @@ theme.border_marked = "#91231c"
 -- Gap
 theme.useless_gap   = dpi(5)
 
+-- Variables set for theming the menu:
+-- menu_[bg|fg]_[normal|focus]
+-- menu_[border_color|border_width]
+theme.menu_submenu_icon = themes_path .. "default/submenu.png"
+theme.menu_height = dpi(30)
+theme.menu_width  = dpi(200)
+
 -- Variables set for theming notifications:
 -- notification_font
 -- notification_[bg|fg]
