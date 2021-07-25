@@ -1,9 +1,14 @@
--- Generate Awesome icon:
+-- Awesome icon
 theme.awesome_icon = config_path .. "graphics/icons/arch-logo.svg"
-
 theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
+
+-- Icon theme
+theme.icon_theme = nil
+
+-- Wallpaper
+theme.wallpaper = netheme_path .. "wallpaper.png"
 
 -- Layout
 theme.layout_fairh = themes_path .. "default/layouts/fairhw.png"
