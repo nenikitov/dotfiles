@@ -5,11 +5,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local utils = require("themes.netheme.modules.utils")
 
--- Load custom modules
-wallpaper = require("modules.deco.wallpaper")
-
 -- {{{ Generate widgets that are the same on all the screens
-
 -- Current keyboard layout
 local keyboardlayout = awful.widget.keyboardlayout()
 -- Clock
@@ -110,29 +106,37 @@ function theme.at_screen_connect(s)
         menu = rc.menu
     });
     -- }}}
-    
+
+    -- {{{ Change wibox settings
+    s.wibox.ontop = true
+    --s.wibox.shape = gears.shape.rounded_rect
+    -- }}}
+
+    -- {{{ Create widget groups
+    local left_widgets = {
+        launcher,
+        taglist,
+        s.promptbox,
+
+        layout = wibox.layout.fixed.horizontal,
+    }
+    local middle_widgets = tasklist
+    local right_widgets = {
+        keyboardlayout,
+        systray,
+        textclock,
+        s.layoutbox,
+
+        layout = wibox.layout.fixed.horizontal,
+    }
+    -- }}}
+
 
     -- {{{ Add widgets to the wibox
     s.wibox:setup {
-        -- Left widgets
-        {
-            launcher,
-            create_pill(taglist, '#000000ff', 10, true),
-            s.promptbox,
-
-            layout = wibox.layout.fixed.horizontal,
-        },
-        -- Middle widget
-        tasklist, 
-        -- Right widgets
-        {
-            keyboardlayout,
-            systray,
-            textclock,
-            s.layoutbox,
-
-            layout = wibox.layout.fixed.horizontal,
-        },
+        create_pill(left_widgets, "#00000070", 5, true),
+        create_pill(middle_widgets, "#00000070", 5, true),
+        create_pill(right_widgets, "#00000070", 5, true),
 
         layout = wibox.layout.align.horizontal,
     }

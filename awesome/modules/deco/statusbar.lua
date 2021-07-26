@@ -58,9 +58,8 @@ awful.screen.connect_for_each_screen(
         -- Wibar on top that will display previous widgets
         s.wibox = awful.wibar {
             position = "top",
-            ontop = true,
             screen = s,
-            height = 30
+            height = 24,
         }
         -- }}}
 

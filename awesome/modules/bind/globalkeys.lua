@@ -48,7 +48,7 @@ function getglobalkeys()
         ),
         -- Go to previous tag on MOD + LEFT ARROW
         awful.key(
-            { modkey },	"Left",
+            { modkey },    "Left",
             awful.tag.viewprev,
             { description = "view previous", group = "tag" }
         ),
