@@ -9,7 +9,7 @@ local utils = require("themes.netheme.modules.utils")
 -- Current keyboard layout
 local keyboardlayout = awful.widget.keyboardlayout()
 -- Clock
-local textclock = wibox.widget.textclock()
+local textclock = wibox.widget.textclock("%H:%M, %a, %Y-%m-%d")
 -- Systray for background applications
 local systray = wibox.widget.systray()
 -- systray.base_size = 26
@@ -130,7 +130,11 @@ function theme.at_screen_connect(s)
     local middle_widgets = create_pill(tasklist, "#000000", theme.rounding_buttons, true, false)
     local right_widgets = {
         create_pill(keyboardlayout, "#000000", theme.rounding_buttons, true, true),
-        create_pill(systray, "#000000", theme.rounding_buttons, true, true),
+        {
+            create_pill(systray, "#000000", theme.rounding_buttons, true, true),
+            visible = (s == screen.primary),
+            layout = wibox.layout.fixed.horizontal
+        },
         create_pill(textclock, "#000000", theme.rounding_buttons, true, true),
         create_pill(s.layoutbox, "#000000", theme.rounding_buttons, false, true),
 
@@ -166,7 +170,7 @@ end
 function theme.client_setup(c)
     -- Set the shape to be rounded rectangle
     c.shape = function(cr, w, h)
-        gears.shape.rounded_rect(cr, w, h, 15)
+        gears.shape.rounded_rect(cr, w, h, theme.rounding_clients)
     end
 end
 

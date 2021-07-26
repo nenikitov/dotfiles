@@ -34,9 +34,6 @@ theme.taglist_buttons = taglist_buttons
 awful.screen.connect_for_each_screen(
     -- Set up the status bar (top bar) for each screen
     function(s)
-        -- Set wallpaper for each screen
-        set_wallpaper(s)
-
         -- {{{ Generate widgets that are unique for each screen
         -- Promptbox 
         s.promptbox = awful.widget.prompt()
@@ -59,7 +56,7 @@ awful.screen.connect_for_each_screen(
         s.wibox = awful.wibar {
             position = "top",
             screen = s,
-            height = 28,
+            height = 30,
         }
         -- }}}
 
