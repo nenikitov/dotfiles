@@ -28,30 +28,37 @@ function theme.at_screen_connect(s)
             buttons = theme.taglist_buttons,
             widget_template = {
                 {
+
                     {
                         {
-                            widget = wibox.widget.textbox,
-            
-                            id = "text_role"
-                        },
-                        {
-                            widget = wibox.widget.imagebox,
-            
-                            id = "icon_role"
-                        },
-            
-                        layout = wibox.layout.fixed.horizontal 
-                    },
-            
-                    widget = wibox.container.margin,
-            
-                    left = 5,
-                    right = 5
-                },
-            
-                widget = wibox.container.background,
+                            {
+                                widget = wibox.widget.textbox,
                 
-                id = "background_role",
+                                id = "text_role"
+                            },
+                            {
+                                widget = wibox.widget.imagebox,
+                
+                                id = "icon_role"
+                            },
+                
+                            layout = wibox.layout.fixed.horizontal 
+                        },
+                
+                        widget = wibox.container.margin,
+                
+                        left = 5,
+                        right = 5
+                    },
+                
+                    widget = wibox.container.background,
+                    
+                    id = "background_role",
+                },
+
+                widget = wibox.container.background,
+                shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 6) end,
+                shape_clip = true
             }
         }
     else
@@ -114,18 +121,18 @@ function theme.at_screen_connect(s)
 
     -- {{{ Create widget groups
     local left_widgets = {
-        launcher,
-        taglist,
-        s.promptbox,
+        create_pill(launcher, "#000000", theme.rounding_buttons, true, true),
+        create_pill(taglist, "#000000", theme.rounding_buttons, true, false),
+        --create_pill(s.promptbox, "#000000", theme.rounding_buttons, true, false),
 
         layout = wibox.layout.fixed.horizontal,
     }
-    local middle_widgets = tasklist
+    local middle_widgets = create_pill(tasklist, "#000000", theme.rounding_buttons, true, false)
     local right_widgets = {
-        keyboardlayout,
-        systray,
-        textclock,
-        s.layoutbox,
+        create_pill(keyboardlayout, "#000000", theme.rounding_buttons, true, true),
+        create_pill(systray, "#000000", theme.rounding_buttons, true, true),
+        create_pill(textclock, "#000000", theme.rounding_buttons, true, true),
+        create_pill(s.layoutbox, "#000000", theme.rounding_buttons, false, true),
 
         layout = wibox.layout.fixed.horizontal,
     }
@@ -134,11 +141,24 @@ function theme.at_screen_connect(s)
 
     -- {{{ Add widgets to the wibox
     s.wibox:setup {
-        create_pill(left_widgets, "#00000070", 5, true),
-        create_pill(middle_widgets, "#00000070", 5, true),
-        create_pill(right_widgets, "#00000070", 5, true),
+        {
+            {
+                left_widgets,
+                middle_widgets,
+                right_widgets,
+    
+                layout = wibox.layout.align.horizontal,
+            },
 
-        layout = wibox.layout.align.horizontal,
+            widget = wibox.container.margin,
+
+            left = 4,
+            right = 4,
+            top = 2,
+            bottom = 2
+        },
+
+        layout = wibox.layout.flex.horizontal
     }
     -- }}}
 end

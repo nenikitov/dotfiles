@@ -1,3 +1,7 @@
+-- Custom theme properties
+theme.rounding_buttons = 6
+theme.rounding_clients = 10
+
 -- Font
 theme.font          = "sans 12"
 

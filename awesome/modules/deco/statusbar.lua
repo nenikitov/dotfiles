@@ -59,7 +59,7 @@ awful.screen.connect_for_each_screen(
         s.wibox = awful.wibar {
             position = "top",
             screen = s,
-            height = 24,
+            height = 28,
         }
         -- }}}
 
