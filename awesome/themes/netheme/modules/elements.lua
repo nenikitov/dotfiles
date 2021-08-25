@@ -15,7 +15,7 @@ local systray = wibox.widget.systray()
 -- systray.base_size = 26
 -- }}}
 
-
+-- Top wibar
 function theme.at_screen_connect(s)
     -- {{{ Generate widgets that are unique for each screen
     -- New taglist if rc.lua passed button info
@@ -167,6 +167,7 @@ function theme.at_screen_connect(s)
     -- }}}
 end
 
+-- Windows
 function theme.client_setup(c)
     -- Set the shape to be rounded rectangle
     c.shape = function(cr, w, h)
@@ -174,6 +175,7 @@ function theme.client_setup(c)
     end
 end
 
+-- Titlebars
 function theme.titlebar_setup(c)
     awful.titlebar(c):setup {
         -- Left

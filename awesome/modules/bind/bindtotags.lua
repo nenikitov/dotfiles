@@ -6,7 +6,7 @@ local modkey = rc.uservars.modkey
 
 function getbindtotags(globalkeys)
     -- Bind all key numbers to interact with corresponding tags
-    for i = 1, 9 do
+    for i = 1, rc.tagnum do
         globalkeys = gears.table.join(globalkeys,
             -- View tag only on MOD + NUMBER
             awful.key(
