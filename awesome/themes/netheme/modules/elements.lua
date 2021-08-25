@@ -15,7 +15,7 @@ local systray = wibox.widget.systray()
 -- systray.base_size = 26
 -- }}}
 
--- Top wibar
+-- Wibar
 function theme.at_screen_connect(s)
     -- {{{ Generate widgets that are unique for each screen
     -- New taglist if rc.lua passed button info

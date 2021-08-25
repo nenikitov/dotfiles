@@ -1,12 +1,13 @@
 # Wibar
 ## General
 - [ ] Set up the correct background and pill colors
-- [ ] **?** Set up 2 wiboxes **OR** reorganize to have it all in 1
+- [ ] **?** Set up 2 wibars **OR** reorganize to have all widgets in 1
 ## Tag list
+- [X] Organize tags
 - [x] Find icons for tags
-- [ ] Create a better background for active and used tag
 ## Task list
 - [ ] Add spacing
+- [ ] **?** Making task occupy less space **OR** adapt to the available space
 - [ ] Improve active and minimized border
 ## Language
 - [ ] Add an icon
@@ -22,3 +23,15 @@
 - [ ] Add Internet usage widget
 - [ ] Add volume widget
 - [ ] Add music player widget
+
+# Client
+- [ ] Create rounder border (the one that can use anti-aliasing)
+- [ ] Use correct colors
+
+# Titlebar
+- [ ] Use correct colors
+
+# Graphics
+- [ ] Redraw layout icons
+- [ ] Redraw titlebar icons
+- [ ] Redraw taglist icons
