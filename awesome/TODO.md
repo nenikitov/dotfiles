@@ -32,6 +32,23 @@
 - [ ] Use correct colors
 
 # Graphics
-- [ ] Redraw layout icons
-- [ ] Redraw titlebar icons
-- [ ] Redraw taglist icons
+## Layout
+- [ ] Redraw "fair" icons
+- [ ] Redraw "floating" icon
+- [ ] Redraw "magnifier" icon
+- [ ] Redraw "max" icon
+- [ ] Redraw "fullscreen" icon
+- [ ] Redraw "tile" icons
+- [ ] Redraw "spiral" icon
+- [ ] Redraw "dwindle" icon
+- [ ] Redraw "corner" icons
+## Titlebar
+- [ ] Redraw "close" icon
+- [ ] Redraw "minimize" icon
+- [ ] Redraw "maximized" icon
+- [ ] Redraw "ontop" icon
+- [ ] Redraw "sticky" icon
+- [ ] Redraw "floating" icon
+## Taglist
+- [ ] Redraw "sel" icon
+- [ ] Redraw "unsel" icon
