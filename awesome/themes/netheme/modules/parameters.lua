@@ -3,7 +3,7 @@ theme.rounding_buttons = 6
 theme.rounding_clients = 10
 
 -- Font
-theme.font          = "Jost* 12"
+theme.font = "Jost* 12"
 
 -- Decorations
 theme.useless_gap   = dpi(5)
@@ -11,20 +11,18 @@ theme.border_width  = dpi(1)
 
 -- {{{ Generic colors
 -- Foreground colors
-theme.fg_normal     = palette.fg_text.normal
-theme.fg_focus      = palette.fg_text.active
-theme.fg_urgent     = palette.fg_text.active
-theme.fg_minimize   = palette.fg_text.active
+theme.fg_normal = palette.fg_text.normal
+theme.fg_focus = palette.fg_text.active
+theme.fg_urgent = palette.fg_text.active
+theme.fg_minimize = palette.fg_text.active
 -- Background colors
-theme.bg_normal     = palette.bg_neutral.dull .. "f2"
-theme.bg_focus      = palette.bg_primary.active
-theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = palette.bg_neutral.active
-theme.bg_systray    = theme.bg_normal
+theme.bg_normal = "#800000e6" -- palette.bg_neutral.dull .. "e6"
+theme.bg_focus = palette.bg_primary.active .. "f0"
+theme.bg_urgent = "#800000ff"
+theme.bg_minimize = palette.bg_neutral.active
 -- Borders
-theme.border_normal = palette.bg_neutral.dull
-theme.border_focus  = palette.bg_primary.active
-theme.border_marked = "#91231c"
+theme.border_normal = theme.bg_normal
+theme.border_focus = theme.bg_focus
 -- }}}
 
 -- {{{ More specific colors
@@ -33,7 +31,7 @@ theme.border_marked = "#91231c"
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = themes_path .. "default/submenu.png"
 theme.menu_height = dpi(30)
-theme.menu_width  = dpi(200)
+theme.menu_width = dpi(200)
 
 -- Notifications
 -- notification_font
@@ -41,11 +39,14 @@ theme.menu_width  = dpi(200)
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
 
+-- Systray
+theme.bg_systray = theme.bg_normal
+
 -- Taglist
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
 
 -- Tasklist
--- tasklist_[bg|fg]_[focus|urgent]
+theme.tasklist_bg_focus = palette.fg_text.dull .. "a0"
 
 -- Titlebar
 -- titlebar_[bg|fg]_[normal|focus]
