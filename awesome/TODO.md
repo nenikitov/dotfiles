@@ -52,3 +52,12 @@
 ## Taglist
 - [ ] Redraw "sel" icon
 - [ ] Redraw "unsel" icon
+
+# Binds
+## Floating workflow
+- [ ] Middle click on the taskbar application closes it
+- [ ] Dragging fullscreen applications moves it
+## Tiling workflow
+- [ ] Better cycling
+## General
+- [ ] More consistent shortcuts
