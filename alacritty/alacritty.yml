@@ -1,0 +1,53 @@
+window:
+  decorations: none
+
+font:
+  size: 12.0
+
+colors:
+  primary:
+    background: '#0a0a0a'
+    foreground: '#ffffff'
+
+  normal:
+    black:   '#2e2e2e'
+    red:     '#bf757f'
+    green:   '#8bbf80'
+    yellow:  '#bf956b'
+    blue:    '#7595bf'
+    magenta: '#bf8abf'
+    cyan:    '#80bfb5'
+    white:   '#bfbfbf'
+
+  bright:
+    black:   '#696969'
+    red:     '#de4b55'
+    green:   '#79e43c'
+    yellow:  '#f7ab38'
+    blue:    '#478ff3'
+    magenta: '#f43bf4'
+    cyan:    '#40f9bb'
+    white:   '#f6f6f6'
+
+  dim:
+    black:   '#1a1a1a'
+    red:     '#80282e'
+    green:   '#4b8030'
+    yellow:  '#80581d'
+    blue:    '#3b5880'
+    magenta: '#803080'
+    cyan:    '#288062'
+    white:   '#808080'
+
+background_opacity: 0.9
+
+cursor:
+  style:
+    blinking: On
+
+  blink_interval: 750
+
+  unfocused_hollow: true
+
+selection:
+  save_to_clipboard: true

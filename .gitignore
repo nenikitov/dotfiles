@@ -5,7 +5,7 @@
 !/.gitignore
 
 # Track only certain configuration folders
-!/alacritty/*
+!/alacritty
 !/awesome
 !/neofetch
 !/picom
