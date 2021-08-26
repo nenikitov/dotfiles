@@ -6,7 +6,7 @@
 - [X] Organize tags
 - [x] Find icons for tags
 ## Task list
-- [ ] Add spacing
+- [X] Add spacing
 - [ ] **?** Making task occupy less space **OR** adapt to the available space
 - [ ] Improve active and minimized border
 ## Language

@@ -72,20 +72,33 @@ function theme.at_screen_connect(s)
             screen = s,
             filter = awful.widget.tasklist.filter.currenttags,
             buttons = theme.tasklist_buttons,
-            layout = { layout = wibox.layout.fixed.horizontal },
+            layout = {
+                spacing = 4,
+                color = "#00000000",
+                layout = wibox.layout.fixed.horizontal
+            },
             widget_template = {
                 {
                     wibox.widget.base.make_widget(),
-                    forced_height = 2,
+                    forced_height = 4,
                     id = 'background_role',
                     widget = wibox.container.background,
-
                 },
                 {
                     {
                         {
+                            forced_width = 4,
+                            color = "#00000000",
+                            widget = wibox.widget.separator
+                        },
+                        {
                             id = 'clienticon',
                             widget = awful.widget.clienticon,
+                        },
+                        {
+                            forced_width = 4,
+                            color = "#00000000",
+                            widget = wibox.widget.separator
                         },
                         {
                             id = 'text_role',
@@ -94,9 +107,9 @@ function theme.at_screen_connect(s)
                         layout = wibox.layout.fixed.horizontal
                     },
                     margins = 2,
-                    widget  = wibox.container.margin
+                    widget = wibox.container.margin
                 },
-                forced_width = 250,
+                forced_width = 200,
                 layout = wibox.layout.align.vertical,
                 create_callback = function(self, c, index, objects)
                     self:get_children_by_id('clienticon')[1].client = c
