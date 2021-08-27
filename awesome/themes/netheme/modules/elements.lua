@@ -134,13 +134,13 @@ function theme.at_screen_connect(s)
 
     -- {{{ Create widget groups
     local left_widgets = {
-        create_pill(launcher, "#000000", theme.rounding_buttons, true, true),
-        create_pill(taglist, "#000000", theme.rounding_buttons, true, false),
+        create_pill(launcher, theme.pillcolor .. "20", theme.rounding_buttons, true, true),
+        create_pill(taglist, theme.pillcolor .. "20", theme.rounding_buttons, true, false),
         --create_pill(s.promptbox, "#000000", theme.rounding_buttons, true, false),
 
         layout = wibox.layout.fixed.horizontal,
     }
-    local middle_widgets = create_pill(tasklist, "#000000", theme.rounding_buttons, true, false)
+    local middle_widgets = create_pill(tasklist, theme.pillcolor .. "00", theme.rounding_buttons, true, false)
     local right_widgets = {
         create_pill(keyboardlayout, "#000000", theme.rounding_buttons, true, true),
         {

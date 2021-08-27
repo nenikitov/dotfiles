@@ -1,13 +1,14 @@
 -- Custom theme properties
 theme.rounding_buttons = 6
 theme.rounding_clients = 10
+theme.pillcolor = palette.fg_text.normal
 
 -- Font
 theme.font = "Jost* 12"
 
 -- Decorations
-theme.useless_gap   = dpi(5)
-theme.border_width  = dpi(1)
+theme.useless_gap = dpi(5)
+theme.border_width = dpi(1)
 
 -- {{{ Generic colors
 -- Foreground colors
@@ -16,7 +17,7 @@ theme.fg_focus = palette.fg_text.active
 theme.fg_urgent = palette.fg_text.active
 theme.fg_minimize = palette.fg_text.active
 -- Background colors
-theme.bg_normal = "#800000e6" -- palette.bg_neutral.dull .. "e6"
+theme.bg_normal = palette.bg_neutral.normal .. "e6"
 theme.bg_focus = palette.bg_primary.active .. "f0"
 theme.bg_urgent = "#800000ff"
 theme.bg_minimize = palette.bg_neutral.active
