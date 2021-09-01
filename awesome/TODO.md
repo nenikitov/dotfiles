@@ -61,3 +61,40 @@
 - [ ] Better cycling
 ## General
 - [ ] More consistent shortcuts
+
+# File structure
+```cpp
+myconfig
+    config
+        user
+            uservars.lua
+        client
+            buttons.lua
+            init.lua
+            keys.lua
+            rules.lua
+            signals.lua
+        globalbind
+            buttons.lua
+            keys.lua
+            tagbind.lua
+        bars
+            bottombar
+                buttons.lua
+                keys.lua
+                layout.lua
+            titlebar
+                buttons.lua
+                keys.lua
+                layout.lua
+            topbar
+                buttons.lua
+                keys.lua
+                layout.lua
+        main
+            autostart.lua
+            errorhandling.lua
+            tag.lua
+----
+
+```
