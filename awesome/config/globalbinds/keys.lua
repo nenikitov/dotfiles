@@ -3,11 +3,12 @@ local gears = require("gears")
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local menubar = require("menubar")
+local user_vars = require('config.user.user_vars')
 
 
--- Global variables
-local super_key = custom_global.user_vars.binds.keys.super_key
-local terminal = custom_global.user_vars.apps.default_apps.terminal
+-- Get variables
+local super_key = user_vars.binds.keys.super_key
+local terminal = user_vars.apps.default_apps.terminal
 
 
 -- Customize this

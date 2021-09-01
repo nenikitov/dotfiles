@@ -1,11 +1,12 @@
 -- Load libraries
 local gears = require("gears")
 local awful = require("awful")
+local user_vars = require('config.user.user_vars')
 
 
--- Global variables
-local super_key = custom_global.user_vars.binds.keys.super_key
-local tag_num = #(custom_global.user_vars.desktop.tag_names)
+-- Get variables
+local super_key = user_vars.binds.keys.super_key
+local tag_num = #(user_vars.desktop.tag_names)
 
 
 -- Bind all key numbers to interact with corresponding tags

@@ -13,14 +13,12 @@ local hotkeys_popup = require('awful.hotkeys_popup')
 require('config.main.error_handling')
 
 
--- Custom global scope variable
-custom_global = {}
-custom_global.user_vars = require('config.user.user_vars')
+local user_vars = require('config.user.user_vars')
 
 
 -- Load the theme MODIFY THIS LAYER
 beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
--- beautiful.init(custom_global.user_vars.desktop.theme_path)
+-- beautiful.init(user_vars.desktop.theme_path)
 
 
 -- REMOVE THIS LATER
@@ -55,7 +53,7 @@ local modbind = {
 -- }}}
 
 -- Set more global variables
-custom_global.global_keys = modbind.global_tagbinds(modbind.global_keys())
+local global_keys = modbind.global_tagbinds(modbind.global_keys())
 
 -- Load menu
 rc.menu = awful.menu({ items = modmain.menu })
@@ -70,7 +68,7 @@ menubar.utils.terminal = rc.user_vars.apps.default_apps.terminal
 require("modules.deco.statusbar")
 
 -- Load key binds
-root.keys(custom_global.global_keys)
+root.keys(global_keys)
 root.buttons(modbind.global_buttons())
 
 -- Set rules

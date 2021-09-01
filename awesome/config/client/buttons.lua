@@ -1,10 +1,11 @@
 -- Load libraries
-local gears = require("gears")
-local awful = require("awful")
+local gears = require('gears')
+local awful = require('awful')
+local user_vars = require('config.user.user_vars')
 
 
--- Global variables
-local super_key = custom_global.user_vars.binds.keys.super_key
+-- Get variables
+local super_key = user_vars.binds.keys.super_key
 
 
 -- Customize this
