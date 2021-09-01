@@ -3,9 +3,6 @@ local icons = require('config.utils.icons')
 
 
 -- Customize this
--- █▀▀ █ █ █▀ ▀█▀ █▀█ █▀▄▀█ █ ▀█ █▀▀   ▀█▀ █ █ █ █▀
--- █▄▄ █▄█ ▄█  █  █▄█ █ ▀ █ █ █▄ ██▄    █  █▀█ █ ▄█
-
 -- ▄▀█ █▀█ █▀█ █▀
 -- █▀█ █▀▀ █▀▀ ▄█
 -- Applications that can be opened with shortcuts
@@ -23,7 +20,6 @@ local startup_apps = {
     'nitrogen --restore'
 }
 
-
 -- █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █ █ ▀█ █▄▀ ▄█
 -- Special keys that are used in binds
@@ -33,7 +29,6 @@ local keys = {
     ctrl_key = 'Ctrl',
     alt_key = 'Mod1'
 }
-
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀

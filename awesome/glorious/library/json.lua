@@ -1,6 +1,6 @@
--- ░▀▀█░█▀▀░█▀█░█▀█░░
--- ░░░█░▀▀█░█░█░█░█░░
--- ░▀▀░░▀▀▀░▀▀▀░▀░▀░░
+--  ▀▀█ █▀▀ █▀█ █▀█  
+--    █ ▀▀█ █ █ █ █  
+--  ▀▀  ▀▀▀ ▀▀▀ ▀ ▀  
 
 -- This script is from https://gist.github.com/tylerneylon/59f4bcf316be525b30ab
 -- License: None. Public Domain
