@@ -12,7 +12,7 @@ function get_global_buttons()
         awful.button(
             { }, 3,
             function()
-                rc.menu:toggle()
+                rcmenu:toggle()
             end
         ),
         -- Go to next tag on FTMB

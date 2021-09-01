@@ -123,7 +123,7 @@ function theme.at_screen_connect(s)
     -- Launcher menu
     local launcher = awful.widget.launcher({
         image = theme.awesome_icon,
-        menu = rc.menu
+        menu = rcmenu
     });
     -- }}}
 

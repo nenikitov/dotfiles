@@ -15,7 +15,7 @@ local layoutbox_buttons = require("modules.deco.layoutbox")()
 -- Launcher menu
 local launcher = awful.widget.launcher({
     image = beautiful.awesome_icon,
-    menu = rc.menu
+    menu = rcmenu
 })
 -- Current keyboard layout
 local keyboardlayout = awful.widget.keyboardlayout()

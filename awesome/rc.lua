@@ -21,24 +21,11 @@ beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 -- beautiful.init(user_vars.desktop.theme_path)
 
 
--- REMOVE THIS LATER
--- RC is a global scope for the modules
-rc = {}
--- Load user variables
-rc.user_vars = require('config.user.user_vars')
--- Set global variables
-modkey = rc.user_vars.binds.keys.super_key
-terminal = rc.user_vars.apps.default_apps.terminal
-editor = rc.user_vars.apps.default_apps.code_editor
-editor_cmd = terminal .. " -e " .. editor
--- TILL HERE
-
-
 -- {{{ Load custom modules
 -- Main modules
 local modmain = {
     layouts = require("modules.main.layouts"),
-    tags = require("modules.main.tags"),
+    tags = require('config.main.tag'),
     menu = require("modules.main.menu"),
     rules = require("modules.main.rules")
 }
@@ -56,13 +43,14 @@ local modbind = {
 local global_keys = modbind.global_tagbinds(modbind.global_keys())
 
 -- Load menu
-rc.menu = awful.menu({ items = modmain.menu })
+-- CHANGE THIS LATER
+rcmenu = awful.menu({ items = modmain.menu })
 
 -- Init layouts
 awful.layout.layouts = modmain.layouts
 
 -- Set the terminal for applications that require it
-menubar.utils.terminal = rc.user_vars.apps.default_apps.terminal
+menubar.utils.terminal = user_vars.apps.default_apps.terminal
 
 -- Init wibar
 require("modules.deco.statusbar")

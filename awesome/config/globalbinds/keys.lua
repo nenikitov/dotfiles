@@ -27,7 +27,7 @@ function get_global_keys()
         awful.key(
             { super_key }, "w",
             function ()
-                rc.menu:show()
+                rcmenu:show()
             end,
             { description = "show main menu", group = "awesome" }
         ),
