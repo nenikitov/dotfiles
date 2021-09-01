@@ -24,10 +24,10 @@ beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 -- {{{ Load custom modules
 -- Main modules
 local modmain = {
-    layouts = require("modules.main.layouts"),
+    layouts = user_vars.desktop.layouts,
     tags = require('config.main.tag'),
     menu = require("modules.main.menu"),
-    rules = require("modules.main.rules")
+    rules = require('config.client.rules')
 }
 -- Bind modules
 local modbind = {
@@ -63,7 +63,7 @@ root.buttons(modbind.global_buttons())
 awful.rules.rules = modmain.rules(modbind.client_keys(), modbind.client_buttons())
 
 -- Set signals
-require("modules.main.signals")
+require('config.client.signals')
 
 -- Autostart
 require('config.main.autostart')

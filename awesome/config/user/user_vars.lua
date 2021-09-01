@@ -29,6 +29,10 @@ local keys = {
     ctrl_key = 'Ctrl',
     alt_key = 'Mod1'
 }
+-- Other settings related to mouse and keyboard binds
+local interactions = {
+    enable_sloppy_focus = true
+}
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
@@ -75,7 +79,8 @@ local user_vars = {
         startup_apps = startup_apps
     },
     binds = {
-        keys = keys
+        keys = keys,
+        interactions = interactions
     },
     desktop = {
         layouts = layouts,

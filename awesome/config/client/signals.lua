@@ -1,15 +1,17 @@
--- Standard Awesome libraries
-local gears = require("gears")
-local awful = require("awful")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+-- Load libraries
+local gears = require('gears')
+local awful = require('awful')
+local wibox = require('wibox')
+local beautiful = require('beautiful')
+local user_vars = require('config.user.user_vars')
 
--- Load titlebars
-require("modules.deco.titlebar")
+-- Load titlebars MODIFY THIS LATER
+require('modules.deco.titlebar')
+
 
 -- Signal function to execute when a new client appears.
 client.connect_signal(
-    "manage",
+    'manage',
     function (c)
         -- Set the windows at the slave (put it at the end of others instead of setting it master)
         if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position
@@ -27,27 +29,30 @@ client.connect_signal(
 )
 
 -- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal(
-    "mouse::enter",
-    function(c)
-        c:emit_signal(
-            "request::activate",
-            "mouse_enter",
-            {raise = false}
-        )
-    end
-)
+if (user_vars.binds.interactions.enable_sloppy_focus)
+then
+    client.connect_signal(
+        'mouse::enter',
+        function(c)
+            c:emit_signal(
+                'request::activate',
+                'mouse_enter',
+                {raise = false}
+            )
+        end
+    )
+end
 
 -- Change border color on focus
 client.connect_signal(
-    "focus",
+    'focus',
     function(c)
         c.border_color = beautiful.border_focus
     end
 )
 -- Change border color on lost focus
 client.connect_signal(
-    "unfocus",
+    'unfocus',
     function(c)
         c.border_color = beautiful.border_normal
     end
