@@ -1,6 +1,6 @@
 -- Load libraries
-local gears = require("gears")
-local awful = require("awful")
+local gears = require('gears')
+local awful = require('awful')
 local user_vars = require('config.user.user_vars')
 
 
@@ -15,7 +15,7 @@ function get_tag_binds(global_keys)
         global_keys = gears.table.join(global_keys,
             -- View tag only on SUPER + NUMBER
             awful.key(
-                { super_key }, "#" .. i + 9,
+                { super_key }, '#' .. i + 9,
                 function ()
                         local screen = awful.screen.focused()
                         local tag = screen.tags[i]
@@ -23,11 +23,11 @@ function get_tag_binds(global_keys)
                             tag:view_only()
                         end
                 end,
-                { description = "view tag #" .. i, group = "tag" }
+                { description = 'view tag #' .. i, group = 'tag' }
             ),
             -- Toggle tag display on SUPER + CTRL + NUMBER
             awful.key(
-                { super_key, "Control" }, "#" .. i + 9,
+                { super_key, 'Control' }, '#' .. i + 9,
                 function ()
                     local screen = awful.screen.focused()
                     local tag = screen.tags[i]
@@ -35,11 +35,11 @@ function get_tag_binds(global_keys)
                         awful.tag.viewtoggle(tag)
                     end
                 end,
-                { description = "toggle tag #" .. i, group = "tag" }
+                { description = 'toggle tag #' .. i, group = 'tag' }
             ),
             -- Move client to tag on SUPER + SHIFT + NUMBER
             awful.key(
-                { super_key, "Shift" }, "#" .. i + 9,
+                { super_key, 'Shift' }, '#' .. i + 9,
                 function ()
                     if client.focus then
                         local tag = client.focus.screen.tags[i]
@@ -48,11 +48,11 @@ function get_tag_binds(global_keys)
                         end
                     end
                 end,
-                { description = "move focused client to tag #"..i, group = "tag" }
+                { description = 'move focused client to tag #'..i, group = 'tag' }
             ),
             -- Toggle tag on focused client on SUPER + CTRL + SHIFT + NUMBER
             awful.key(
-                { super_key, "Control", "Shift" }, "#" .. i + 9,
+                { super_key, 'Control', 'Shift' }, '#' .. i + 9,
                 function ()
                     if client.focus then
                         local tag = client.focus.screen.tags[i]
@@ -61,7 +61,7 @@ function get_tag_binds(global_keys)
                         end
                     end
                 end,
-                { description = "toggle focused client on tag #" .. i, group = "tag" }
+                { description = 'toggle focused client on tag #' .. i, group = 'tag' }
             )
         )
     end

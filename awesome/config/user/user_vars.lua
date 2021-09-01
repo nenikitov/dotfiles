@@ -1,4 +1,5 @@
 local awful = require('awful')
+local gears = require('gears')
 local icons = require('config.utils.icons')
 
 
@@ -70,7 +71,7 @@ local tag_names = {
     icons.media,
 }
 -- Theme
-local theme_path = os.getenv("HOME") .. '/.config/awesome/themes/netheme/theme.lua'
+local theme_path = gears.filesystem.get_themes_dir() .. 'default/theme.lua' -- os.getenv('HOME') .. '/.config/awesome/themes/netheme/theme.lua'
 
 
 local user_vars = {
@@ -88,4 +89,5 @@ local user_vars = {
         theme_path = theme_path
     }
 }
+
 return user_vars

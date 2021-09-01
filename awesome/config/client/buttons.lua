@@ -17,14 +17,14 @@ function get_client_buttons()
         awful.button(
             { }, 1,
             function (c)
-                c:emit_signal("request::activate", "mouse_click", {raise = true})
+                c:emit_signal('request::activate', 'mouse_click', {raise = true})
             end
         ),
         -- Move client on SUPER + LMB
         awful.button(
             { super_key }, 1,
             function (c)
-                c:emit_signal("request::activate", "mouse_click", {raise = true})
+                c:emit_signal('request::activate', 'mouse_click', {raise = true})
                 awful.mouse.client.move(c)
             end
         ),
@@ -32,7 +32,7 @@ function get_client_buttons()
         awful.button(
             { super_key }, 3,
             function (c)
-                c:emit_signal("request::activate", "mouse_click", {raise = true})
+                c:emit_signal('request::activate', 'mouse_click', {raise = true})
                 awful.mouse.client.resize(c)
             end
         )
