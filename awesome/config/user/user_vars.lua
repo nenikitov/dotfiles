@@ -1,11 +1,14 @@
--- Imports
 local awful = require('awful')
 local icons = require('config.utils.icons')
 
 
+-- Customize this
+-- █▀▀ █ █ █▀ ▀█▀ █▀█ █▀▄▀█ █ ▀█ █▀▀   ▀█▀ █ █ █ █▀
+-- █▄▄ █▄█ ▄█  █  █▄█ █ ▀ █ █ █▄ ██▄    █  █▀█ █ ▄█
+
 -- ▄▀█ █▀█ █▀█ █▀
 -- █▀█ █▀▀ █▀▀ ▄█
--- These applications can be opened with shortcuts
+-- Applications that can be opened with shortcuts
 local default_apps = {
     terminal = 'alacritty',
 
@@ -14,7 +17,7 @@ local default_apps = {
     
     browser = 'firefox'
 }
--- These commands will be executed on start up
+-- Commands that will be executed on start up
 local startup_apps = {
     'picom --xrender-sync-fence', --experimental-backends
     'nitrogen --restore'
@@ -34,6 +37,7 @@ local keys = {
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
+-- List of layouts that can be cycled through
 local layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
@@ -58,6 +62,7 @@ local layouts = {
         awful.layout.suit.corner.se
     -- ]]
 }
+-- Names (and consequently, number) of tags
 local tag_names = {
     icons.home,
     icons.terminal,
@@ -65,6 +70,8 @@ local tag_names = {
     icons.study,
     icons.media,
 }
+-- Theme
+local theme_path = os.getenv("HOME") .. '/.config/awesome/themes/netheme/theme.lua'
 
 
 local user_vars = {
@@ -77,8 +84,8 @@ local user_vars = {
     },
     desktop = {
         layouts = layouts,
-        tag_names = tag_names
+        tag_names = tag_names,
+        theme_path = theme_path
     }
 }
-
 return user_vars

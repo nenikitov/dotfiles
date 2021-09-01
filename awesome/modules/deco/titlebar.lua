@@ -27,7 +27,7 @@ client.connect_signal(
             )
         )
         -- Send button info to the theme
-        theme.titlebar_buttons = buttons
+        beautiful.titlebar_buttons = buttons
 
         awful.titlebar(c):setup {
             -- Left

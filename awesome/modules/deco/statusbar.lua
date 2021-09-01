@@ -26,8 +26,8 @@ local systray = wibox.widget.systray()
 -- }}}
 
 -- {{{ Send button info to the theme
-theme.tasklist_buttons = tasklist_buttons
-theme.taglist_buttons = taglist_buttons
+beautiful.tasklist_buttons = tasklist_buttons
+beautiful.taglist_buttons = taglist_buttons
 -- }}}
 
 
