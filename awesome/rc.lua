@@ -80,4 +80,4 @@ awful.rules.rules = modmain.rules(modbind.client_keys(), modbind.client_buttons(
 require("modules.main.signals")
 
 -- Autostart
-require("modules.main.autostart")
+require('config.main.autostart')
