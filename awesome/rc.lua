@@ -21,14 +21,7 @@ beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 -- beautiful.init(user_vars.desktop.theme_path)
 
 
--- {{{ Load custom modules
--- Main modules
-local modmain = {
-    layouts = user_vars.desktop.layouts,
-    tags = require('config.main.tag'),
-    menu = require("modules.main.menu"),
-    rules = require('config.client.rules')
-}
+require('config.main.tag')
 -- Bind modules
 local modbind = {
     global_buttons = require('config.globalbinds.buttons'),
@@ -37,13 +30,12 @@ local modbind = {
     client_buttons = require('config.client.buttons'),
     client_keys = require('config.client.keys')
 }
--- }}}
 
 -- Set more global variables
 local global_keys = modbind.global_tagbinds(modbind.global_keys())
 
 -- Init layouts
-awful.layout.layouts = modmain.layouts
+awful.layout.layouts = user_vars.desktop.layouts
 
 -- Set the terminal for applications that require it
 menubar.utils.terminal = user_vars.apps.default_apps.terminal
@@ -56,7 +48,8 @@ root.keys(global_keys)
 root.buttons(modbind.global_buttons())
 
 -- Set rules
-awful.rules.rules = modmain.rules(modbind.client_keys(), modbind.client_buttons())
+local rules = require('config.client.rules')
+awful.rules.rules = rules(modbind.client_keys(), modbind.client_buttons())
 
 -- Set signals
 require('config.client.signals')
