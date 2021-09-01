@@ -15,17 +15,17 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Error handling module
-require("modules.main.error-handling")
+require("config.main.error_handling")
 -- }}}
 
 -- RC is a global scope for the modules
 rc = {}
 -- Load user variables
-rc.uservars = require("modules.main.user-vars")
+rc.user_vars = require('config.main.user_vars')
 -- Set global variables
-modkey = rc.uservars.modkey
-terminal = rc.uservars.terminal
-editor = rc.uservars.editor
+modkey = rc.user_vars.binds.keys.super_key
+terminal = rc.user_vars.apps.default_apps.terminal
+editor = rc.user_vars.apps.default_apps.code_editor
 editor_cmd = terminal .. " -e " .. editor
 
 -- Load theme
@@ -60,7 +60,7 @@ rc.menu = awful.menu({ items = modmain.menu })
 awful.layout.layouts = modmain.layouts
 
 -- Set the terminal for applications that require it
-menubar.utils.terminal = rc.uservars.terminal
+menubar.utils.terminal = rc.user_vars.apps.default_apps.terminal
 
 -- Init wibar
 require("modules.deco.statusbar")

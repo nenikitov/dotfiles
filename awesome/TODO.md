@@ -96,5 +96,4 @@ myconfig
             errorhandling.lua
             tag.lua
 ----
-
 ```

@@ -4,8 +4,8 @@ local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local menubar = require("menubar")
 -- Global variables
-local modkey = rc.uservars.modkey
-local terminal = rc.uservars.terminal
+local modkey = rc.user_vars.binds.keys.super_key
+local terminal = rc.user_vars.apps.default_apps.terminal
 
 function getglobalkeys()
     -- Bind keyboard keys to interact with Awesome WM itself

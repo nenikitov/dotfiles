@@ -2,7 +2,7 @@
 local gears = require("gears")
 local awful = require("awful")
 -- Global variables
-local modkey = rc.uservars.modkey
+local modkey = rc.user_vars.binds.keys.super_key
 
 function getclientkeys()
     -- Bind keyboard keys to interact with clients
