@@ -1,23 +1,27 @@
 -- Standard Awesome libraries
-local gears = require("gears")
-local awful = require("awful")
-local wibox = require("wibox")
+local gears = require('gears')
+local awful = require('awful')
+local wibox = require('wibox')
+local user_vars = require('config.user.user_vars')
 
-function gettaglist()
-    -- Create the buttons for tag list
-    local buttons = gears.table.join(
+
+-- Get variables
+local super_key = user_vars.binds.keys.super_key
+
+
+-- Create the button binds for tag list
+function get_taglist_buttons()
+    local taglist_buttons = gears.table.join(
         -- View only the current tag on LMB
         awful.button(
-            { },
-            1,
+            { }, 1,
             function(t)
                 t:view_only()
             end
         ),
-        -- Move to tag on MOD + LMB
+        -- Move to tag on SUPER + LMB
         awful.button(
-            { modkey },
-            1,
+            { super_key }, 1,
             function(t)
                 if client.focus then
                     client.focus:move_to_tag(t)
@@ -26,14 +30,12 @@ function gettaglist()
         ),
         -- Toggle visibility on RMB
         awful.button(
-            { },
-            3,
+            { }, 3,
             awful.tag.viewtoggle
         ),
-        -- Toggle tag on MOD + RMB
+        -- Toggle tag on SUPER + RMB
         awful.button(
-            { modkey },
-            3,
+            { super_key }, 3,
             function(t)
                 if client.focus then
                     client.focus:toggle_tag(t)
@@ -42,26 +44,24 @@ function gettaglist()
         ),
         -- Go to next tag on FTMB
         awful.button(
-            { },
-            4,
+            { }, 4,
             function(t)
                 awful.tag.viewnext(t.screen)
             end
         ),
         -- Go to previous tag on BTMB
         awful.button(
-            { },
-            5,
+            { }, 5,
             function(t)
                 awful.tag.viewprev(t.screen)
             end
         )
     )
 
-    return buttons
+    return taglist_buttons
 end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return gettaglist(...) end }
+    {  __call = function(_, ...) return get_taglist_buttons(...) end }
 )

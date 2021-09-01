@@ -9,9 +9,9 @@ local user_menu = require('config.user.user_menu')
 -- Load custom modules
 wallpaper = require("modules.deco.wallpaper")
 -- Get info about complex widgets
-local taglist_buttons = require("modules.deco.taglist")()
-local tasklist_buttons = require("modules.deco.tasklist")()
-local layoutbox_buttons = require("modules.deco.layoutbox")()
+local taglist_buttons = require('config.bars.actionbar.widgets.taglist_buttons')()
+local tasklist_buttons = require('config.bars.actionbar.widgets.tasklist_buttons')()
+local layoutbox_buttons = require('config.bars.actionbar.widgets.layoutbox_buttons')()
 
 -- {{{ Generate widgets that are the same on all the screens
 -- Launcher menu
