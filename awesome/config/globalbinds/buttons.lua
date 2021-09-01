@@ -1,6 +1,7 @@
 --  Load libraries
-local gears = require("gears")
-local awful = require("awful")
+local gears = require('gears')
+local awful = require('awful')
+local user_menu = require('config.user.user_menu')
 
 
 -- Customize this
@@ -12,7 +13,7 @@ function get_global_buttons()
         awful.button(
             { }, 3,
             function()
-                rcmenu:toggle()
+                user_menu:toggle()
             end
         ),
         -- Go to next tag on FTMB

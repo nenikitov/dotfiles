@@ -5,6 +5,8 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local utils = require("themes.netheme.modules.utils")
 
+local user_menu = require('config.user.user_menu')
+
 -- {{{ Generate widgets that are the same on all the screens
 -- Current keyboard layout
 local keyboardlayout = awful.widget.keyboardlayout()
@@ -123,7 +125,7 @@ function theme.at_screen_connect(s)
     -- Launcher menu
     local launcher = awful.widget.launcher({
         image = theme.awesome_icon,
-        menu = rcmenu
+        menu = user_menu
     });
     -- }}}
 

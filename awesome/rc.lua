@@ -42,10 +42,6 @@ local modbind = {
 -- Set more global variables
 local global_keys = modbind.global_tagbinds(modbind.global_keys())
 
--- Load menu
--- CHANGE THIS LATER
-rcmenu = awful.menu({ items = modmain.menu })
-
 -- Init layouts
 awful.layout.layouts = modmain.layouts
 

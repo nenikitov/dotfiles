@@ -4,6 +4,8 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
+local user_menu = require('config.user.user_menu')
+
 -- Load custom modules
 wallpaper = require("modules.deco.wallpaper")
 -- Get info about complex widgets
@@ -15,7 +17,7 @@ local layoutbox_buttons = require("modules.deco.layoutbox")()
 -- Launcher menu
 local launcher = awful.widget.launcher({
     image = beautiful.awesome_icon,
-    menu = rcmenu
+    menu = user_menu
 })
 -- Current keyboard layout
 local keyboardlayout = awful.widget.keyboardlayout()
