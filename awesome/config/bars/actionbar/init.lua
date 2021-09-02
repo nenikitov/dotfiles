@@ -24,11 +24,6 @@ local textclock = wibox.widget.textclock()
 local systray = wibox.widget.systray()
 
 
--- Send button info to the theme
-beautiful.tasklist_buttons = tasklist_buttons
-beautiful.taglist_buttons = taglist_buttons
-
-
 -- Set up the action bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)

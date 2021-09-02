@@ -6,88 +6,129 @@ local icons = require('config.utils.icons')
 -- Customize this
 -- ▄▀█ █▀█ █▀█ █▀
 -- █▀█ █▀▀ █▀▀ ▄█
--- Applications that can be opened with shortcuts
-local default_apps = {
-    terminal = 'alacritty',
+local apps = {
+    -- Applications that can be opened with shortcuts
+    default_apps = {
+        terminal = 'alacritty',
 
-    text_editor = 'code',
-    code_editor = 'code',
-    
-    browser = 'firefox'
+        text_editor = 'code',
+        code_editor = 'code',
+        
+        browser = 'firefox'
+    },
+    -- Commands that will be executed on start up
+    startup_apps = {
+        'picom --xrender-sync-fence', --experimental-backends
+        'nitrogen --restore'
+    }
 }
--- Commands that will be executed on start up
-local startup_apps = {
-    'picom --xrender-sync-fence', --experimental-backends
-    'nitrogen --restore'
-}
+
 
 -- █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █ █ ▀█ █▄▀ ▄█
--- Special keys that are used in binds
-local keys = {
-    super_key = 'Mod4',
-    shift_key = 'Shift',
-    ctrl_key = 'Ctrl',
-    alt_key = 'Mod1'
+local binds = {
+    -- Special keys that are used in binds
+    keys = {
+        super_key = 'Mod4',
+        shift_key = 'Shift',
+        ctrl_key = 'Ctrl',
+        alt_key = 'Mod1'
+    },
+    -- Other settings related to mouse and keyboard binds
+    interactions = {
+        enable_sloppy_focus = true
+    }
 }
--- Other settings related to mouse and keyboard binds
-local interactions = {
-    enable_sloppy_focus = true
-}
+
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
--- List of layouts that can be cycled through
-local layouts = {
-    awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.spiral
-    
-    --[[ All available layouts
-        awful.layout.suit.tile
-        awful.layout.suit.tile.left
-        awful.layout.suit.tile.bottom
-        awful.layout.suit.tile.top
-        awful.layout.suit.fair
-        awful.layout.suit.fair.horizontal
-        awful.layout.suit.floating
-        awful.layout.suit.spiral
-        awful.layout.suit.spiral.dwindle
-        awful.layout.suit.max
-        awful.layout.suit.max.fullscreen
-        awful.layout.suit.magnifier
-        awful.layout.suit.corner.nw
-        awful.layout.suit.corner.ne
-        awful.layout.suit.corner.sw
-        awful.layout.suit.corner.se
-    -- ]]
+local desktop = {
+    -- Theme
+    theme_path = gears.filesystem.get_themes_dir() .. 'default/theme.lua', -- os.getenv('HOME') .. '/.config/awesome/themes/netheme/theme.lua'
+    -- Names (and consequently, number) of tags
+    tag_names = {
+        icons.home,
+        icons.terminal,
+        icons.code,
+        icons.study,
+        icons.media,
+    },
+    -- List of layouts that can be cycled through
+    layouts = {
+        awful.layout.suit.floating,
+        awful.layout.suit.tile,
+        awful.layout.suit.spiral,
+        
+        --[[ All available layouts
+            awful.layout.suit.tile
+            awful.layout.suit.tile.left
+            awful.layout.suit.tile.bottom
+            awful.layout.suit.tile.top
+            awful.layout.suit.fair
+            awful.layout.suit.fair.horizontal
+            awful.layout.suit.floating
+            awful.layout.suit.spiral
+            awful.layout.suit.spiral.dwindle
+            awful.layout.suit.max
+            awful.layout.suit.max.fullscreen
+            awful.layout.suit.magnifier
+            awful.layout.suit.corner.nw
+            awful.layout.suit.corner.ne
+            awful.layout.suit.corner.sw
+            awful.layout.suit.corner.se
+        -- ]]
+    }
 }
--- Names (and consequently, number) of tags
-local tag_names = {
-    icons.home,
-    icons.terminal,
-    icons.code,
-    icons.study,
-    icons.media,
+
+
+-- ▄▀█ █▀▀ ▀█▀ █ █▀█ █▄ █ █▄▄ ▄▀█ █▀█
+-- █▀█ █▄▄  █  █ █▄█ █ ▀█ █▄█ █▀█ █▀▄
+local actionbar = {
+    -- Show the action bar
+    visibility = true,
+    -- Which widgets will be shown
+    widgets = {
+        launcher = true,
+        prompt = true,
+        taglist = true,
+        tasklist = true
+    },
+    -- Position on the screen 
+    position = 'bottom',
+    -- Height
+    height = 25
 }
--- Theme
-local theme_path = gears.filesystem.get_themes_dir() .. 'default/theme.lua' -- os.getenv('HOME') .. '/.config/awesome/themes/netheme/theme.lua'
+
+
+-- █▀ ▀█▀ ▄▀█ ▀█▀ █ █ █▀ █▄▄ ▄▀█ █▀█
+-- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
+local statusbar = {
+    -- Show the action bar
+    visibility = true,
+    -- Which widgets will be shown
+    widgets = {
+        layout = true,
+        player = true,
+        volume = true,
+        internet = true,
+        language = true,
+        date = true,
+        time = true
+    },
+    -- Position on the screen 
+    position = 'top',
+    -- Height
+    height = 25
+}
 
 
 local user_vars = {
-    apps = {
-        default_apps = default_apps,
-        startup_apps = startup_apps
-    },
-    binds = {
-        keys = keys,
-        interactions = interactions
-    },
-    desktop = {
-        layouts = layouts,
-        tag_names = tag_names,
-        theme_path = theme_path
-    }
+    apps = apps,
+    binds = binds,
+    desktop = desktop,
+    actionbar = actionbar,
+    statusbar = statusbar
 }
 
 return user_vars
