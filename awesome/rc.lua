@@ -20,6 +20,9 @@ local user_vars = require('config.user.user_vars')
 beautiful.init(user_vars.desktop.theme_path)
 
 
+require('config.main.wallpaper')
+
+
 require('config.main.tag')
 
 
@@ -41,7 +44,7 @@ awful.layout.layouts = user_vars.desktop.layouts
 menubar.utils.terminal = user_vars.apps.default_apps.terminal
 
 -- Init wibar
-require("modules.deco.statusbar")
+require('config.bars.actionbar.init')
 
 
 -- TODO move to separate module?

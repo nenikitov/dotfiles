@@ -1,13 +1,13 @@
--- Standard Awesome libraries
-local gears = require("gears")
-local awful = require("awful")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+-- Load librareis
+local gears = require('gears')
+local awful = require('awful')
+local wibox = require('wibox')
+local beautiful = require('beautiful')
+
 
 local user_menu = require('config.user.user_menu')
 
--- Load custom modules
-wallpaper = require("modules.deco.wallpaper")
+
 -- Get info about complex widgets
 local taglist_buttons = require('config.bars.actionbar.widgets.taglist_buttons')()
 local tasklist_buttons = require('config.bars.actionbar.widgets.tasklist_buttons')()
@@ -56,7 +56,7 @@ awful.screen.connect_for_each_screen(
         s.layoutbox:buttons(layoutbox_buttons)
         -- Wibar on top that will display previous widgets
         s.wibox = awful.wibar {
-            position = "top",
+            position = 'top',
             screen = s,
             height = 30,
         }
