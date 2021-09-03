@@ -112,14 +112,15 @@ local statusbar = {
         player = true,
         volume = true,
         internet = true,
-        language = true,
-        date = true,
-        time = true
+        systray = true,
+        keyboard_layout = true,
+        clock = true
     },
+    datetime_format = '%H:%M, %a, %Y-%m-%d',
     -- Position on the screen 
     position = 'top',
     -- Height
-    height = 25
+    height = 20
 }
 
 
