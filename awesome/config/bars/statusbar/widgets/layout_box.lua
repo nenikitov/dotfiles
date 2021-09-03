@@ -4,7 +4,7 @@ local gears = require('gears')
 
 
 function get_layout_box(screen)
-    local layout_box = awful.widget.layoutbox(s)
+    local layout_box = awful.widget.layoutbox(screen)
     local layoutbox_buttons = gears.table.join(
         -- Go to next layout on LMB
         awful.button(
