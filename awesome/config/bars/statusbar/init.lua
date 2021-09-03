@@ -24,7 +24,7 @@ awful.screen.connect_for_each_screen(
 
 
         -- Strore widgets for screen
-        s.statusbar = {
+        s.statusbar_widgets = {
             keyboard_layout = widget_keyboard_layout,
             systray = widget_systray,
             clock = widget_clock,
@@ -33,18 +33,18 @@ awful.screen.connect_for_each_screen(
 
 
         -- Generate the container
-        s.wibox = awful.wibar {
+        s.statusbar = awful.wibar {
             position = 'bottom',
             screen = s,
-            height = parameters.height
+            height = parameters.height,
         }
 
 
         -- Popilate it
-        s.wibox:setup {
+        s.statusbar:setup {
             -- Left widgets
             {
-                s.statusbar.layout_box,
+                s.statusbar_widgets.layout_box,
 
                 layout = wibox.layout.fixed.horizontal,
             },
@@ -54,9 +54,9 @@ awful.screen.connect_for_each_screen(
             }, 
             -- Right widgets
             {
-                s.statusbar.systray,
-                s.statusbar.keyboard_layout,
-                s.statusbar.clock,
+                s.statusbar_widgets.systray,
+                s.statusbar_widgets.keyboard_layout,
+                s.statusbar_widgets.clock,
 
                 layout = wibox.layout.fixed.horizontal,
             },
