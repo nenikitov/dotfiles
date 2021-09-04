@@ -14,6 +14,7 @@ local parameters = user_vars.statusbar
 local widget_keyboard_layout = require('config.bars.statusbar.widgets.keyboard_layout')
 local widget_systray = require('config.bars.statusbar.widgets.systray')
 local widget_clock = require('config.bars.statusbar.widgets.clock')
+-- local widget_launcher = require('config.bars.statusbar.widgets.launcher')
 
 
 -- Set up the action bar for each screen
@@ -44,8 +45,6 @@ awful.screen.connect_for_each_screen(
         s.statusbar:setup {
             -- Left widgets
             {
-                s.statusbar_widgets.layout_box,
-
                 layout = wibox.layout.fixed.horizontal,
             },
             -- Middle widget
@@ -57,6 +56,7 @@ awful.screen.connect_for_each_screen(
                 s.statusbar_widgets.systray,
                 s.statusbar_widgets.keyboard_layout,
                 s.statusbar_widgets.clock,
+                s.statusbar_widgets.layout_box,
 
                 layout = wibox.layout.fixed.horizontal,
             },

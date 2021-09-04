@@ -11,10 +11,13 @@ local apps = {
     default_apps = {
         terminal = 'alacritty',
 
-        text_editor = 'code',
         code_editor = 'code',
+        text_editor = 'code',
         
-        browser = 'firefox'
+        browser = 'firefox',
+
+        file_manager = 'dolphin', -- pcmanfm?
+        multimedia = 'vlc'
     },
     -- Commands that will be executed on start up
     startup_apps = {
@@ -82,29 +85,10 @@ local desktop = {
 }
 
 
--- ▄▀█ █▀▀ ▀█▀ █ █▀█ █▄ █ █▄▄ ▄▀█ █▀█
--- █▀█ █▄▄  █  █ █▄█ █ ▀█ █▄█ █▀█ █▀▄
-local actionbar = {
-    -- Show the action bar
-    visibility = true,
-    -- Which widgets will be shown
-    widgets = {
-        launcher = true,
-        prompt = true,
-        taglist = true,
-        tasklist = true
-    },
-    -- Position on the screen 
-    position = 'bottom',
-    -- Height
-    height = 25
-}
-
-
 -- █▀ ▀█▀ ▄▀█ ▀█▀ █ █ █▀ █▄▄ ▄▀█ █▀█
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
-    -- Show the action bar
+    -- Show the status bar
     visibility = true,
     -- Which widgets will be shown
     widgets = {
@@ -119,6 +103,28 @@ local statusbar = {
     datetime_format = '%H:%M, %a, %Y-%m-%d',
     -- Position on the screen 
     position = 'top',
+    -- Height
+    height = 20
+}
+
+
+-- ▄▀█ █▀█ █▀█ █▄▄ ▄▀█ █▀█
+-- █▀█ █▀▀ █▀▀ █▄█ █▀█ █▀▄
+local appbar = {
+    -- Show the application bar
+    visibility = true,
+    -- Widgets that will be shown
+    widgets = {
+        launcher = true,
+        terminal = true,
+        code_editor = true,
+        text_editor = true,
+        broser = true,
+        file_manager = false,
+        multimedia = false
+    },
+    -- Position on the screen
+    position = 'bottom',
     -- Height
     height = 20
 }
