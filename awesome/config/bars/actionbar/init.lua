@@ -3,10 +3,8 @@ local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
-
-
 local user_menu = require('config.user.user_menu')
-
+local user_vars = require('config.user.user_vars')
 
 -- Get info about complex widgets
 local taglist_buttons = require('config.bars.actionbar.widgets.taglist_buttons')()
@@ -20,7 +18,7 @@ local launcher = awful.widget.launcher({
     menu = user_menu
 })
 local keyboardlayout = awful.widget.keyboardlayout()
-local textclock = wibox.widget.textclock()
+local textclock = wibox.widget.textclock(user_vars.statusbar.datetime_format)
 local systray = wibox.widget.systray()
 
 

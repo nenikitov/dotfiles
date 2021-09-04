@@ -93,10 +93,10 @@ local statusbar = {
     -- Which widgets will be shown
     widgets = {
         layout = true,
-        player = true,
-        volume = true,
-        internet = true,
-        systray = true,
+        taglist = true,
+        tasklist = true,
+        system_tools = true,
+        notifications = true,
         keyboard_layout = true,
         clock = true
     },
@@ -134,8 +134,8 @@ local user_vars = {
     apps = apps,
     binds = binds,
     desktop = desktop,
-    actionbar = actionbar,
-    statusbar = statusbar
+    statusbar = statusbar,
+    appbar = appbar
 }
 
 return user_vars
