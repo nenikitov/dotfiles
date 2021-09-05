@@ -3,17 +3,18 @@ local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
+-- Load custom modules
 local user_menu = require('config.user.user_menu')
 local user_vars = require('config.user.user_vars')
 
+
 -- Get info about complex widgets
-local taglist_buttons = require('config.bars.statusbar.widgets.taglist_buttons')()
 local tasklist_buttons = require('config.bars.statusbar.widgets.tasklist_buttons')()
 local layoutbox_buttons = require('config.bars.statusbar.widgets.layoutbox_buttons')()
 
 
 -- Widgets that are the same on all screen
-local launcher = require('config.bars.statusbar.widgets.menu.init')
+local launcher = require('config.bars.statusbar.widgets.menu.menu_init')
 local keyboardlayout = awful.widget.keyboardlayout()
 local textclock = wibox.widget.textclock(user_vars.statusbar.datetime_format)
 local systray = wibox.widget.systray()
@@ -24,11 +25,7 @@ awful.screen.connect_for_each_screen(
     function(s)
         -- Generate widgets that are unique for each screen
         s.promptbox = awful.widget.prompt()
-        s.taglist = awful.widget.taglist {
-            screen = s,
-            filter = awful.widget.taglist.filter.all,
-            buttons = taglist_buttons,
-        }
+        s.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
         s.tasklist = awful.widget.tasklist {
             screen = s,
             filter = awful.widget.tasklist.filter.currenttags,
