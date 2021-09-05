@@ -7,16 +7,13 @@ local user_menu = require('config.user.user_menu')
 local user_vars = require('config.user.user_vars')
 
 -- Get info about complex widgets
-local taglist_buttons = require('config.bars.actionbar.widgets.taglist_buttons')()
-local tasklist_buttons = require('config.bars.actionbar.widgets.tasklist_buttons')()
-local layoutbox_buttons = require('config.bars.actionbar.widgets.layoutbox_buttons')()
+local taglist_buttons = require('config.bars.statusbar.widgets.taglist_buttons')()
+local tasklist_buttons = require('config.bars.statusbar.widgets.tasklist_buttons')()
+local layoutbox_buttons = require('config.bars.statusbar.widgets.layoutbox_buttons')()
 
 
 -- Widgets that are the same on all screen
-local launcher = awful.widget.launcher({
-    image = beautiful.awesome_icon,
-    menu = user_menu
-})
+local launcher = require('config.bars.statusbar.widgets.menu.init')
 local keyboardlayout = awful.widget.keyboardlayout()
 local textclock = wibox.widget.textclock(user_vars.statusbar.datetime_format)
 local systray = wibox.widget.systray()

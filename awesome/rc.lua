@@ -44,7 +44,7 @@ awful.layout.layouts = user_vars.desktop.layouts
 menubar.utils.terminal = user_vars.apps.default_apps.terminal
 
 -- Init wibar
-require('config.bars.actionbar.init')
+require('config.bars.statusbar.init')
 
 
 -- TODO move to separate module?
