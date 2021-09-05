@@ -2,8 +2,8 @@
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup').widget
 local beautiful = require('beautiful')
+-- Load custom modules
 local user_vars = require('config.user.user_vars')
-
 
 -- Get variables
 local terminal = user_vars.apps.default_apps.terminal

@@ -2,7 +2,7 @@
 local awful = require('awful')
 local beautiful = require('beautiful')
 
--- Get variables
+-- Load custom modules
 local user_menu = require('config.user.user_menu')
 
 

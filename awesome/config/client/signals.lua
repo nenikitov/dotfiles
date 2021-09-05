@@ -3,9 +3,11 @@ local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
+-- Load custom modules
 local user_vars = require('config.user.user_vars')
 
--- Load titlebars MODIFY THIS LATER
+
+-- Load titlebars TODO MODIFY THIS LATER
 require('modules.deco.titlebar')
 
 

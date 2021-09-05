@@ -1,8 +1,8 @@
 -- Load libraries
 local gears = require('gears')
 local awful = require('awful')
+-- Load custom modules
 local user_vars = require('config.user.user_vars')
-
 
 -- Get variables
 local super_key = user_vars.binds.keys.super_key

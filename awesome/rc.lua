@@ -9,6 +9,8 @@ local beautiful = require('beautiful')
 local naughty = require('naughty')
 local menubar = require('menubar')
 local hotkeys_popup = require('awful.hotkeys_popup')
+
+
 -- Init error handling
 require('config.main.error_handling')
 

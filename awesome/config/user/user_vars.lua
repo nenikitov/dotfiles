@@ -112,7 +112,7 @@ local statusbar = {
 -- █▀█ █▀▀ █▀▀ █▄█ █▀█ █▀▄
 local appbar = {
     -- Show the application bar
-    visibility = true,
+    visibility = true,-- Load libraries
     -- Widgets that will be shown
     widgets = {
         launcher = true,
