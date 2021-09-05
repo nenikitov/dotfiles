@@ -15,7 +15,7 @@ local layoutbox_buttons = require('config.bars.statusbar.widgets.layoutbox_butto
 -- Widgets that are the same on all screen
 local launcher = require('config.bars.statusbar.widgets.menu.menu_init')
 local keyboardlayout = require('config.bars.statusbar.widgets.keyboard.keyboard_init')
-local textclock = wibox.widget.textclock(user_vars.statusbar.datetime_format)
+local textclock = require('config.bars.statusbar.widgets.textclock.textclock_init')
 local systray = wibox.widget.systray()
 
 
@@ -60,11 +60,5 @@ awful.screen.connect_for_each_screen(
 
             layout = wibox.layout.align.horizontal,
         }
-
-        -- Let the theme modify the wibar
-        if beautiful.at_screen_connect ~= nil
-        then
-            beautiful.at_screen_connect(s)
-        end
     end
 )
