@@ -9,7 +9,6 @@ local user_vars = require('config.user.user_vars')
 
 
 -- Get info about complex widgets
-local tasklist_buttons = require('config.bars.statusbar.widgets.tasklist_buttons')()
 local layoutbox_buttons = require('config.bars.statusbar.widgets.layoutbox_buttons')()
 
 
@@ -26,11 +25,7 @@ awful.screen.connect_for_each_screen(
         -- Generate widgets that are unique for each screen
         s.promptbox = awful.widget.prompt()
         s.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
-        s.tasklist = awful.widget.tasklist {
-            screen = s,
-            filter = awful.widget.tasklist.filter.currenttags,
-            buttons = tasklist_buttons,
-        }
+        s.tasklist = require('config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
         s.layoutbox = awful.widget.layoutbox(s)
         s.layoutbox:buttons(layoutbox_buttons)
         
