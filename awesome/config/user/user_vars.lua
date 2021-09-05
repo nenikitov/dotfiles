@@ -21,8 +21,8 @@ local apps = {
     },
     -- Commands that will be executed on start up
     startup_apps = {
-        'picom --xrender-sync-fence', --experimental-backends
-        'nitrogen --restore'
+        'nitrogen --restore',
+        'picom --xrender-sync-fence --experimental-backends',
     }
 }
 
@@ -104,7 +104,7 @@ local statusbar = {
     -- Position on the screen 
     position = 'top',
     -- Height
-    height = 20
+    height = 30
 }
 
 

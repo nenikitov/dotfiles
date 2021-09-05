@@ -31,8 +31,9 @@ awful.screen.connect_for_each_screen(
         
         -- Generate the container
         s.wibox = awful.wibar {
-            position = 'top',
+            position = user_vars.statusbar.position,
             screen = s,
+            height = user_vars.statusbar.height
         }
 
 
