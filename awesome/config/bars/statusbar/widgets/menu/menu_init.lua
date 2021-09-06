@@ -6,7 +6,7 @@ local beautiful = require('beautiful')
 local user_menu = require('config.user.user_menu')
 
 
--- Construct launcher widget
+-- Construct menu widget
 return awful.widget.launcher({
     image = beautiful.awesome_icon,
     menu = user_menu

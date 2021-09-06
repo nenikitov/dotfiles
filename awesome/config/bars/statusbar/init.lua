@@ -6,6 +6,7 @@ local beautiful = require('beautiful')
 -- Load custom modules
 local user_menu = require('config.user.user_menu')
 local user_vars = require('config.user.user_vars')
+require('config.utils.widget_utils')
 
 
 -- Get info about complex widgets
@@ -36,9 +37,7 @@ awful.screen.connect_for_each_screen(
             height = user_vars.statusbar.height
         }
 
-
-        -- Add widgets to the wibar
-        s.wibox:setup {
+        local final_widget = {
             -- Left widgets
             {
                 launcher,
@@ -60,6 +59,13 @@ awful.screen.connect_for_each_screen(
             },
 
             layout = wibox.layout.align.horizontal,
+        }
+
+        -- Add widgets to the wibar
+        s.wibox:setup {
+            final_widget,
+
+            layout = wibox.layout.flex.horizontal,
         }
     end
 )
