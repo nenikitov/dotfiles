@@ -4,7 +4,7 @@ local gears = require('gears')
 local beautiful = require('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 local clickable_container = require('widget.clickable-container')
-local config = require('configuration.config')
+local config = require('neconfig.configuration.config')
 local military_mode = config.widget.clock.military_mode or false
 
 local create_clock = function(s)

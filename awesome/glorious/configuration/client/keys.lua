@@ -2,8 +2,8 @@ local awful = require('awful')
 local gears = require('gears')
 local dpi = require('beautiful').xresources.apply_dpi
 require('awful.autofocus')
-local modkey = require('configuration.keys.mod').mod_key
-local altkey = require('configuration.keys.mod').alt_key
+local modkey = require('neconfig.configuration.keys.mod').mod_key
+local altkey = require('neconfig.configuration.keys.mod').alt_key
 
 local client_keys = awful.util.table.join(
 	awful.key(

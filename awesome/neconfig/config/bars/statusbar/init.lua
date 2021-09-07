@@ -4,19 +4,19 @@ local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
-local user_menu = require('config.user.user_menu')
-local user_vars = require('config.user.user_vars')
-require('config.utils.widget_utils')
+local user_menu = require('neconfig.config.user.user_menu')
+local user_vars = require('neconfig.config.user.user_vars')
+require('neconfig.config.utils.widget_utils')
 
 
 -- Get info about complex widgets
-local layoutbox_buttons = require('config.bars.statusbar.widgets.layoutbox_buttons')()
+local layoutbox_buttons = require('neconfig.config.bars.statusbar.widgets.layoutbox_buttons')()
 
 
 -- Widgets that are the same on all screen
-local menu = require('config.bars.statusbar.widgets.menu.menu_init')
-local keyboardlayout = require('config.bars.statusbar.widgets.keyboard.keyboard_init')
-local textclock = require('config.bars.statusbar.widgets.textclock.textclock_init')
+local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
+local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
+local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
 local systray = wibox.widget.systray()
 
 
@@ -30,10 +30,10 @@ awful.screen.connect_for_each_screen(
         -- Generate and initialize all widgets
         -- Left
         s.statusbar.widgets.menu = menu
-        s.statusbar.widgets.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
+        s.statusbar.widgets.taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s)
         s.statusbar.widgets.promptbox = awful.widget.prompt()
         -- Center
-        s.statusbar.widgets.tasklist = require('config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
+        s.statusbar.widgets.tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
         -- Right
         s.statusbar.widgets.systray = systray
         s.statusbar.widgets.keyboardlayout = keyboardlayout

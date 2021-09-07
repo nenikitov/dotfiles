@@ -4,7 +4,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
-local user_vars = require('config.user.user_vars')
+local user_vars = require('neconfig.config.user.user_vars')
 
 
 -- Load titlebars TODO MODIFY THIS LATER

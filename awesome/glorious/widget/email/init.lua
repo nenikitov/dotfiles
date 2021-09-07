@@ -7,7 +7,7 @@ local dpi = beautiful.xresources.apply_dpi
 local config_dir = gears.filesystem.get_configuration_dir()
 local widget_icon_dir = config_dir .. 'widget/email/icons/'
 
-local config = require('configuration.config')
+local config = require('neconfig.configuration.config')
 local secrets = {
 	email_address = config.widget.email.address,
 	app_password = config.widget.email.app_password,

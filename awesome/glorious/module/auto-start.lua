@@ -3,8 +3,8 @@
 
 local awful = require('awful')
 local naughty = require('naughty')
-local apps = require('configuration.apps')
-local config = require('configuration.config')
+local apps = require('neconfig.configuration.apps')
+local config = require('neconfig.configuration.config')
 local debug_mode = config.module.auto_start.debug_mode or false
 
 local run_once = function(cmd)

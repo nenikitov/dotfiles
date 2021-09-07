@@ -5,7 +5,7 @@ local gears = require('gears')
 
 local watch = awful.widget.watch
 
-local apps = require('configuration.apps')
+local apps = require('neconfig.configuration.apps')
 
 local clickable_container = require('widget.clickable-container')
 local dpi = require('beautiful').xresources.apply_dpi

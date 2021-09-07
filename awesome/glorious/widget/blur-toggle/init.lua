@@ -6,7 +6,7 @@ local dpi = require('beautiful').xresources.apply_dpi
 local filesystem = gears.filesystem
 local config_dir = filesystem.get_configuration_dir()
 local icons = require('theme.icons')
-local apps = require('configuration.apps')
+local apps = require('neconfig.configuration.apps')
 local frame_status = nil
 
 local action_name = wibox.widget {

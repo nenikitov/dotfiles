@@ -5,7 +5,7 @@ local naughty = require('naughty')
 local watch = awful.widget.watch
 local dpi = require('beautiful').xresources.apply_dpi
 
-local apps = require('configuration.apps')
+local apps = require('neconfig.configuration.apps')
 
 local clickable_container = require('widget.clickable-container')
 

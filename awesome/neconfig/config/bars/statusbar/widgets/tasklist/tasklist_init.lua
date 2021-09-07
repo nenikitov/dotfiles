@@ -1,7 +1,7 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local tasklist_buttons = require('config.bars.statusbar.widgets.tasklist.tasklist_buttons')()
+local tasklist_buttons = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_buttons')()
 
 -- Generate tasklist widget
 function get_tasklist_widget(screen)

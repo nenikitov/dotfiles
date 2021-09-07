@@ -1,7 +1,7 @@
 local gears = require('gears')
 local awful = require('awful')
 
-local apps = require('configuration.apps')
+local apps = require('neconfig.configuration.apps')
 
 root.buttons(
 	gears.table.join(

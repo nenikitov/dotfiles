@@ -30,10 +30,10 @@ require('layout')
 --  █   █ █ █ █ █▀▀  █  █ █ █ █ █▀▄ █▀█  █   █  █ █ █ █ ▀▀█
 --  ▀▀▀ ▀▀▀ ▀ ▀ ▀   ▀▀▀ ▀▀▀ ▀▀▀ ▀ ▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀ ▀ ▀▀▀
 
-require('configuration.client')
-require('configuration.root')
-require('configuration.tags')
-root.keys(require('configuration.keys.global'))
+require('neconfig.configuration.client')
+require('neconfig.configuration.root')
+require('neconfig.configuration.tags')
+root.keys(require('neconfig.configuration.keys.global'))
 
 --  █▄█ █▀█ █▀▄ █ █ █   █▀▀ █▀▀
 --  █ █ █ █ █ █ █ █ █   █▀▀ ▀▀█

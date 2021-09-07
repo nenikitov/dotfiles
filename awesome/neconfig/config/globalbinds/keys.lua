@@ -3,8 +3,8 @@ local gears = require('gears')
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
-local user_vars = require('config.user.user_vars')
-local user_menu = require('config.user.user_menu')
+local user_vars = require('neconfig.config.user.user_vars')
+local user_menu = require('neconfig.config.user.user_menu')
 
 
 -- Get variables

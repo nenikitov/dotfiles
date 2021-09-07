@@ -1,4 +1,4 @@
 return {
-	keys = require('configuration.keys'),
-  	apps = require('configuration.apps')
+	keys = require('neconfig.configuration.keys'),
+  	apps = require('neconfig.configuration.apps')
 }

@@ -5,9 +5,9 @@ require('awful.autofocus')
 
 local hotkeys_popup = require('awful.hotkeys_popup').widget
 
-local modkey = require('configuration.keys.mod').mod_key
-local altkey = require('configuration.keys.mod').alt_key
-local apps = require('configuration.apps')
+local modkey = require('neconfig.configuration.keys.mod').mod_key
+local altkey = require('neconfig.configuration.keys.mod').alt_key
+local apps = require('neconfig.configuration.apps')
 
 -- Key bindings
 local global_keys = awful.util.table.join(

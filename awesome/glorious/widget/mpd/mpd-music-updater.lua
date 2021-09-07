@@ -11,7 +11,7 @@ local song_info = ui_content.song_info
 local vol_slider = ui_content.volume_slider
 local media_buttons = ui_content.media_buttons
 
-local apps = require('configuration.apps')
+local apps = require('neconfig.configuration.apps')
 
 local update_cover = function()
 	

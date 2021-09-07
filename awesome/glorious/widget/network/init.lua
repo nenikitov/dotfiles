@@ -14,12 +14,12 @@ local wibox = require('wibox')
 local gears = require('gears')
 local naughty = require('naughty') 
 local dpi = require('beautiful').xresources.apply_dpi
-local apps = require('configuration.apps')
+local apps = require('neconfig.configuration.apps')
 local clickable_container = require('widget.clickable-container')
 
 local config_dir = gears.filesystem.get_configuration_dir()
 local widget_icon_dir = config_dir .. 'widget/network/icons/'
-local config = require('configuration.config')
+local config = require('neconfig.configuration.config')
 
 -- Configuration
 local interfaces = {

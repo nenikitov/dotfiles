@@ -3,7 +3,7 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 
 -- Load custom modules
-local user_menu = require('config.user.user_menu')
+local user_menu = require('neconfig.config.user.user_menu')
 
 
 -- Construct menu widget

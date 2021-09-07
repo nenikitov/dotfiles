@@ -5,7 +5,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local utils = require("themes.netheme.modules.utils")
 
-local user_menu = require('config.user.user_menu')
+local user_menu = require('neconfig.config.user.user_menu')
 
 -- {{{ Generate widgets that are the same on all the screens
 -- Current keyboard layout

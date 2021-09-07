@@ -1,7 +1,7 @@
 --  Load libraries
 local gears = require('gears')
 local awful = require('awful')
-local user_menu = require('config.user.user_menu')
+local user_menu = require('neconfig.config.user.user_menu')
 
 
 -- Customize this

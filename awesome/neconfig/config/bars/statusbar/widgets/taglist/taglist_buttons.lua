@@ -2,7 +2,7 @@
 local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
-local user_vars = require('config.user.user_vars')
+local user_vars = require('neconfig.config.user.user_vars')
 
 
 -- Get variables

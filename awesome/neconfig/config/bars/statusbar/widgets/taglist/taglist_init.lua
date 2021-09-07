@@ -1,7 +1,7 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local taglist_buttons = require('config.bars.statusbar.widgets.taglist.taglist_buttons')()
+local taglist_buttons = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_buttons')()
 
 -- Generate taglist widget
 function get_taglist_widget(screen)

@@ -1,6 +1,6 @@
 local awful = require('awful')
 local gears = require('gears')
-local icons = require('config.utils.icons')
+local icons = require('neconfig.config.utils.icons')
 
 
 -- Customize this

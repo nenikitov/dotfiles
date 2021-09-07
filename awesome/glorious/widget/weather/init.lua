@@ -9,7 +9,7 @@ local widget_icon_dir = config_dir .. 'widget/weather/icons/'
 local clickable_container = require('widget.clickable-container')
 local json = require('library.json')
 
-local config = require('configuration.config')
+local config = require('neconfig.configuration.config')
 local secrets = {
 	key = config.widget.weather.key,
 	city_id = config.widget.weather.city_id,
