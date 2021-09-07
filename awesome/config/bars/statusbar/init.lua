@@ -30,6 +30,8 @@ awful.screen.connect_for_each_screen(
         -- Generate and initialize all widgets
         s.statusbar.widgets.menu = menu
         s.statusbar.widgets.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
+        s.statusbar.widgets.tasklist = require('config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
+
 
         -- Generate empty background wibar
         s.statusbar.wibar = awful.wibar {
@@ -37,7 +39,6 @@ awful.screen.connect_for_each_screen(
             screen = s,
             height = user_vars.statusbar.height,
         }
-        -- Initialize
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal
         }
@@ -49,7 +50,6 @@ awful.screen.connect_for_each_screen(
             placement = awful.placement.top_left,
             widget = {},
         }
-        -- Initialize
         s.statusbar.left_container:setup {
             {
                 s.statusbar.widgets.menu,
@@ -60,6 +60,22 @@ awful.screen.connect_for_each_screen(
                 s.statusbar.widgets.taglist,
                 widget = wibox.container.background,
                 forced_height = 30,
+            },
+            layout = wibox.layout.fixed.horizontal
+        }
+        -- Middle container with tasklist
+        s.statusbar.middle_container = awful.popup {
+            screen = s,
+            placement = awful.placement.top,
+            widget = {}
+        }
+        s.statusbar.middle_container:setup {
+            {
+                s.statusbar.widgets.tasklist,
+                widget = wibox.container.background,
+                forced_height = 30,
+                -- TODO improve tasklist widget template to have fixed size so there is no forced_width here
+                forced_width = 800
             },
             layout = wibox.layout.fixed.horizontal
         }
