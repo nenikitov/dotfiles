@@ -28,10 +28,17 @@ awful.screen.connect_for_each_screen(
 
 
         -- Generate and initialize all widgets
+        -- Left
         s.statusbar.widgets.menu = menu
         s.statusbar.widgets.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
+        -- Center
         s.statusbar.widgets.tasklist = require('config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
-
+        -- Right
+        s.statusbar.widgets.systray = systray
+        s.statusbar.widgets.keyboardlayout = keyboardlayout
+        s.statusbar.widgets.textclock = textclock
+        s.statusbar.widgets.layoutbox = awful.widget.layoutbox(s)
+        s.statusbar.widgets.layoutbox:buttons(layoutbox_buttons)
 
         -- Generate empty background wibar
         s.statusbar.wibar = awful.wibar {
@@ -52,17 +59,19 @@ awful.screen.connect_for_each_screen(
         }
         s.statusbar.left_container:setup {
             {
-                s.statusbar.widgets.menu,
-                widget = wibox.container.background,
-                forced_height = 30,
-            },
-            {
-                s.statusbar.widgets.taglist,
+                {
+                    s.statusbar.widgets.menu,
+                    s.statusbar.widgets.taglist,
+
+                    layout = wibox.layout.fixed.horizontal
+                },
+
                 widget = wibox.container.background,
                 forced_height = 30,
             },
             layout = wibox.layout.fixed.horizontal
         }
+
         -- Middle container with tasklist
         s.statusbar.middle_container = awful.popup {
             screen = s,
@@ -72,6 +81,7 @@ awful.screen.connect_for_each_screen(
         s.statusbar.middle_container:setup {
             {
                 s.statusbar.widgets.tasklist,
+
                 widget = wibox.container.background,
                 forced_height = 30,
                 -- TODO improve tasklist widget template to have fixed size so there is no forced_width here
@@ -80,6 +90,32 @@ awful.screen.connect_for_each_screen(
             layout = wibox.layout.fixed.horizontal
         }
 
+        -- Right container
+        s.statusbar.right_container = awful.popup {
+            screen = s,
+            placement = awful.placement.top_right,
+            widget = {}
+        }
+        s.statusbar.right_container:setup {
+            {
+                {
+                    s.statusbar.widgets.systray,
+                    s.statusbar.widgets.keyboardlayout,
+                    s.statusbar.widgets.textclock,
+                    {
+                        s.statusbar.widgets.layoutbox,
+                        widget = wibox.container.background,
+                        forced_width = 30
+                    },
+
+                    layout = wibox.layout.fixed.horizontal
+                },
+
+                widget = wibox.container.background,
+                forced_height = 30,
+            },
+            layout = wibox.layout.fixed.horizontal
+        }
 
 
 
