@@ -6,17 +6,59 @@ local gears = require('gears')
 local iconfont = 'Font Awesome 5 Free-Solid-900'
 
 
+-- HELPER METHODS
+function rrect(radius)
+    return function(cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, radius)
+    end
+end
+
+
+function clip_widget(contents, shape)
+    return {
+        contents,
+
+        widget = wibox.container.background,
+        shape = shape,
+        shape_clip = true
+    }
+end
+
+
+
+
+
 -- Generate an text widget with an icon
 function create_icon(icon, size, color)
     return wibox.widget {
         font = iconfont .. ' ' .. size,
-        markup = ' <span color=' .. color ..'>' .. icon .. '</span> ',
+        markup = ' <span color="' .. color ..'">' .. icon .. '</span> ',
         align = 'center',
         valign = 'center',
         widget = wibox.widget.textbox
     }
 end
 
+
+-- Shrink widget horizontally to the given size
+function resize_hor_widget(contents, size)
+    return {
+        contents,
+
+        widget = wibox.container.background,
+        forced_height = size
+    }
+end
+
+-- Shrink widget vertically to the given size
+function resize_vert_widget(contents, size)
+    return {
+        contents,
+
+        widget = wibox.container.background,
+        forced_width = size
+    }
+end
 
 -- Create a padding for a widget
 function pad_widget(contents, top, right, bottom, left)
