@@ -34,7 +34,7 @@ awful.screen.connect_for_each_screen(
         s.wibox = awful.wibar {
             position = user_vars.statusbar.position,
             screen = s,
-            height = user_vars.statusbar.height
+            height = user_vars.statusbar.height,
         }
 
         local final_widget = {
@@ -60,6 +60,10 @@ awful.screen.connect_for_each_screen(
 
             layout = wibox.layout.align.horizontal,
         }
+
+        -- TEST
+        -- Use awful.popup for independent containers that can addapt to width of widgets
+
 
         -- Add widgets to the wibar
         s.wibox:setup {
