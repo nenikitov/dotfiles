@@ -31,6 +31,7 @@ awful.screen.connect_for_each_screen(
         -- Left
         s.statusbar.widgets.menu = menu
         s.statusbar.widgets.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
+        s.statusbar.widgets.promptbox = awful.widget.prompt()
         -- Center
         s.statusbar.widgets.tasklist = require('config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
         -- Right
@@ -62,6 +63,7 @@ awful.screen.connect_for_each_screen(
                 {
                     s.statusbar.widgets.menu,
                     s.statusbar.widgets.taglist,
+                    s.statusbar.widgets.promptbox,
 
                     layout = wibox.layout.fixed.horizontal
                 },
@@ -115,56 +117,6 @@ awful.screen.connect_for_each_screen(
                 forced_height = 30,
             },
             layout = wibox.layout.fixed.horizontal
-        }
-
-
-
-        -- TODO clear this
-        -- Generate widgets that are unique for each screen
-        s.promptbox = awful.widget.prompt()
-        s.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
-        s.tasklist = require('config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
-        s.layoutbox = awful.widget.layoutbox(s)
-        s.layoutbox:buttons(layoutbox_buttons)
-        
-
-
-        -- Use awful.popup for independent containers that can addapt to width of widgets
-        
-
-        -- TODO delete this later
-        s.testbar = awful.wibar {
-            position = user_vars.statusbar.position,
-            screen = s,
-            height = user_vars.statusbar.height,
-        }
-        local final_widget = {
-            -- Left widgets
-            {
-                menu,
-                s.taglist,
-                s.promptbox,
-
-                layout = wibox.layout.fixed.horizontal,
-            },
-            -- Middle widget
-            s.tasklist, 
-            -- Right widgets
-            {
-                keyboardlayout,
-                systray,
-                textclock,
-                s.layoutbox,
-
-                layout = wibox.layout.fixed.horizontal,
-            },
-
-            layout = wibox.layout.align.horizontal,
-        }
-        s.testbar:setup {
-            final_widget,
-
-            layout = wibox.layout.flex.horizontal,
         }
     end
 )
