@@ -70,7 +70,7 @@ awful.screen.connect_for_each_screen(
                     {
                         s.statusbar.widgets.menu,
                         widget = wibox.container.background,
-                        forced_height = real_widget_height
+                        forced_height = real_widget_height,
                     },
                     s.statusbar.widgets.taglist,
                     s.statusbar.widgets.promptbox,
@@ -81,7 +81,7 @@ awful.screen.connect_for_each_screen(
                 widget = wibox.container.background,
                 forced_height = real_widget_height
             },
-            layout = wibox.layout.fixed.horizontal
+            layout = wibox.layout.fixed.horizontal,
         }
 
         -- Middle container with tasklist
