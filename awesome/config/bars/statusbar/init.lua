@@ -51,6 +51,7 @@ awful.screen.connect_for_each_screen(
             layout = wibox.layout.flex.horizontal
         }
 
+
         -- Generate 3 main containers where all the widgets will be placed
         -- Left container with launcher and tag list
         s.statusbar.left_container = awful.popup {
@@ -61,7 +62,12 @@ awful.screen.connect_for_each_screen(
         s.statusbar.left_container:setup {
             {
                 {
-                    s.statusbar.widgets.menu,
+                    -- TODO make this more readable
+                    {
+                        s.statusbar.widgets.menu,
+                        widget = wibox.container.background,
+                        forced_width = 30
+                    },
                     s.statusbar.widgets.taglist,
                     s.statusbar.widgets.promptbox,
 
@@ -69,10 +75,11 @@ awful.screen.connect_for_each_screen(
                 },
 
                 widget = wibox.container.background,
-                forced_height = 30,
+                forced_height = 30
             },
             layout = wibox.layout.fixed.horizontal
         }
+
 
         -- Middle container with tasklist
         s.statusbar.middle_container = awful.popup {
@@ -104,6 +111,7 @@ awful.screen.connect_for_each_screen(
                     s.statusbar.widgets.systray,
                     s.statusbar.widgets.keyboardlayout,
                     s.statusbar.widgets.textclock,
+                    -- TODO make this more readable
                     {
                         s.statusbar.widgets.layoutbox,
                         widget = wibox.container.background,
@@ -114,9 +122,10 @@ awful.screen.connect_for_each_screen(
                 },
 
                 widget = wibox.container.background,
-                forced_height = 30,
+                forced_height = 30
             },
             layout = wibox.layout.fixed.horizontal
         }
+
     end
 )
