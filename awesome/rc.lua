@@ -21,10 +21,6 @@ local user_vars = require('neconfig.config.user.user_vars')
 -- Load the theme
 beautiful.init(user_vars.desktop.theme_path)
 
--- TODO remove this later
-beautiful.bg_normal = '#00000000'
-beautiful.bg_focus = '#00000010'
-
 require('neconfig.config.main.wallpaper')
 
 

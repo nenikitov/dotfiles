@@ -48,7 +48,7 @@ local binds = {
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
 local desktop = {
     -- Theme
-    theme_path = gears.filesystem.get_themes_dir() .. 'default/theme.lua', -- os.getenv('HOME') .. '/.config/awesome/themes/netheme/theme.lua'
+    theme_path = os.getenv('HOME') .. '/.config/awesome/neconfig/theme/theme.lua', -- gears.filesystem.get_themes_dir() .. 'default/theme.lua'
     -- Names (and consequently, number) of tags
     tag_names = {
         icons.home,
