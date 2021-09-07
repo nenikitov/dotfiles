@@ -25,8 +25,11 @@ awful.screen.connect_for_each_screen(
     function(s)
         s.statusbar = {}
         s.statusbar.widgets = {}
+
+
         -- Generate and initialize all widgets
-        s.statusbar.widgets.menu = menu;
+        s.statusbar.widgets.menu = menu
+        s.statusbar.widgets.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
 
         -- Generate empty background wibar
         s.statusbar.wibar = awful.wibar {
@@ -54,14 +57,17 @@ awful.screen.connect_for_each_screen(
                 forced_height = 30,
             },
             {
-                s.taglist,
+                s.statusbar.widgets.taglist,
                 widget = wibox.container.background,
-                forced_width = 30,
                 forced_height = 30,
             },
             layout = wibox.layout.fixed.horizontal
         }
 
+
+
+
+        -- TODO clear this
         -- Generate widgets that are unique for each screen
         s.promptbox = awful.widget.prompt()
         s.taglist = require('config.bars.statusbar.widgets.taglist.taglist_init')(s)
