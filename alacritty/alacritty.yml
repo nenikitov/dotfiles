@@ -39,7 +39,7 @@ colors:
     cyan:    '#288062'
     white:   '#808080'
 
-background_opacity: 0.9
+background_opacity: 0.5
 
 cursor:
   style:

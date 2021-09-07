@@ -9,5 +9,5 @@ local user_menu = require('config.user.user_menu')
 -- Construct menu widget
 return awful.widget.launcher({
     image = beautiful.awesome_icon,
-    menu = user_menu
+    menu = user_menu,
 })
