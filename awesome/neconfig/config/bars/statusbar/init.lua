@@ -106,10 +106,11 @@ awful.screen.connect_for_each_screen(
             }
         }
 
+        local prev_widget = s.next_popup
         s.last_popup = awful.popup {
             screen = s,
             placement = function(wi)
-                return awful.placement.top_right(wi, {margins = {right = (s.geometry.width - s.next_popup.x) + 5}})
+                return awful.placement.top_right(wi, {margins = {right = (s.geometry.width - prev_widget.x) + 5}})
             end,
             widget = {
                 keyboardlayout,
