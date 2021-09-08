@@ -96,7 +96,7 @@ awful.screen.connect_for_each_screen(
         s.next_popup = awful.popup {
             screen = s,
             placement = function(wi)
-                return awful.placement.top_right(wi, {margins = {right = (1920 - prev_widget.x) + 5}})
+                return awful.placement.top_right(wi, {margins = {right = (s.geometry.width - prev_widget.x) + 5}})
             end,
             widget = {
                 menu,
@@ -109,7 +109,7 @@ awful.screen.connect_for_each_screen(
         s.last_popup = awful.popup {
             screen = s,
             placement = function(wi)
-                return awful.placement.top_right(wi, {margins = {right = (1920 - s.next_popup.x) + 5}})
+                return awful.placement.top_right(wi, {margins = {right = (s.geometry.width - s.next_popup.x) + 5}})
             end,
             widget = {
                 keyboardlayout,
