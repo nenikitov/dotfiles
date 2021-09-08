@@ -7,118 +7,124 @@ local beautiful = require('beautiful')
 local user_menu = require('neconfig.config.user.user_menu')
 local user_vars = require('neconfig.config.user.user_vars')
 require('neconfig.config.utils.widget_utils')
+require('neconfig.config.utils.bar_utils')
 
-
--- Get info about complex widgets
-local layoutbox_buttons = require('neconfig.config.bars.statusbar.widgets.layoutbox_buttons')()
-local widget_gap = beautiful.useless_gap * 2
-local real_widget_height = user_vars.statusbar.height - widget_gap * 2
-
--- Widgets that are the same on all screen
-local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
-local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
-local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
-
+-- Get variables
+-- From user_vars
+local bar_position = user_vars.statusbar.position
+local bar_height = user_vars.statusbar.height
+-- From theme
+local bar_info = beautiful.statusbar
+local vertical_padding = bar_info.vertical_padding
+local horizontal_padding = bar_info.horizontal_padding
+local corner_radius = bar_info.corner_radius
+local nested_widget_height = bar_height - vertical_padding * 2
 
 -- Set up the action bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)
+        --[[ TODO
+        Create an empty wibar that will constraint the clients
+        Create a separate popup widget for each section of the fake wibar
+            Sections
+                Left
+                    Menu
+                    Taglist
+                Middle
+                    Tasklist
+                Right
+                    Tools
+                    Notifications
+                    Keyboard
+                    Clock
+        ]]
+
         s.statusbar = {}
-        s.statusbar.widgets = {}
+        s.statusbar.sections = {}
+        s.statusbar.widths = {}
 
-        -- Generate and initialize all widgets
-        -- Left
-        s.statusbar.widgets.menu = menu
-        s.statusbar.widgets.taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s)
-        s.statusbar.widgets.promptbox = awful.widget.prompt()
-        -- Center
-        s.statusbar.widgets.tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
-        -- Right
-        s.statusbar.widgets.keyboardlayout = keyboardlayout
-        s.statusbar.widgets.textclock = textclock
-
-        -- Generate empty background wibar
+        -- Create an empty wibar to constraint client position
         s.statusbar.wibar = awful.wibar {
-            position = user_vars.statusbar.position,
+            position = bar_position,
             screen = s,
-            height = user_vars.statusbar.height,
+            height = user_vars.statusbar.height
         }
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal
         }
 
+        -- TODO remove this later
+        local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
+        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s)
+        local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
+        local promptbox = awful.widget.prompt()
 
-        -- Generate 3 main containers where all the widgets will be placed
-        -- Left container with launcher and tag list
-        s.statusbar.left_container = awful.popup {
+
+        -- Add sections
+        add_section_to_bar {
+            info_table = s.statusbar,
+            name = 'test',
+            widgets = {
+                taglist
+            },
+            screen = s,
+            position = {
+                vertical = bar_position,
+                horizontal = 'left',
+                vertical_offset = vertical_padding,
+                horizontal_offset = horizontal_padding
+            },
+            style = {
+                size = nested_widget_height,
+                vertical_padding = vertical_padding,
+                horizontal_padding = horizontal_padding,
+                corner_radius = corner_radius
+            }
+        }
+
+        s.test = awful.popup {
             screen = s,
             placement = function(wi)
-                return awful.placement.top_left(wi, { margins = widget_gap })
+                return awful.placement.top_right(wi)
             end,
-            widget = {},
+            widget = {}
         }
-        s.statusbar.left_container:setup {
+        s.test:setup {
             {
-                {
-                    resize_vert_widget(s.statusbar.widgets.menu, real_widget_height),
-                    s.statusbar.widgets.taglist,
-                    s.statusbar.widgets.promptbox,
-
-                    layout = wibox.layout.fixed.horizontal
-                },
-
+                menu,
                 widget = wibox.container.background,
-                forced_height = real_widget_height
+                forced_width = 50,
+                forced_height = 50
             },
             layout = wibox.layout.fixed.horizontal,
         }
 
+        -- So the s.test.width changes depending on where it is measured
+        -- I honestly have no idea why
+        s.widths = {}
 
-        -- Middle container with tasklist
-        s.statusbar.middle_container = awful.popup {
+        s.test2 = awful.popup {
             screen = s,
             placement = function(wi)
-                return awful.placement['top'](wi, { margins = widget_gap })
+                s.widths.l = s.test.width
+                return awful.placement.top_right(wi, {margins = {right = s.widths.l}})
             end,
             widget = {}
         }
-        --awful.placement.top(s.statusbar.middle_container, { margins = widget_gap })
-        s.statusbar.middle_container:setup {
+
+        local naughty = require('naughty')
+        naughty.notify {
+            text = tostring(s.widths.l)
+        }
+
+        s.test2:setup {
             {
-                s.statusbar.widgets.tasklist,
-
+                menu,
                 widget = wibox.container.background,
-                forced_height = real_widget_height,
-                -- TODO improve tasklist widget template to have fixed size so there is no forced_width here
-                forced_width = 800
+                forced_width = 50,
+                forced_height = 50
             },
-            layout = wibox.layout.fixed.horizontal
+            layout = wibox.layout.fixed.horizontal,
         }
-        awful.placement.top(s.statusbar.middle_container, { margins = widget_gap })
-
-        -- Right container
-        s.statusbar.right_container = awful.popup {
-            screen = s,
-            placement = function(wi)
-                return awful.placement.top_right(wi, { margins = widget_gap })
-            end,
-            widget = {}
-        }
-        awful.placement.top_right(s.statusbar.right_container, { margins = widget_gap })
-        s.statusbar.right_container:setup {
-            {
-                {
-                    s.statusbar.widgets.keyboardlayout,
-                    s.statusbar.widgets.textclock,
-
-                    layout = wibox.layout.fixed.horizontal
-                },
-
-                widget = wibox.container.background,
-                forced_height = real_widget_height
-            },
-            layout = wibox.layout.fixed.horizontal
-        }
-
     end
 )

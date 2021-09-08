@@ -32,7 +32,7 @@ function resize_hor_widget(contents, size)
         contents,
 
         widget = wibox.container.background,
-        forced_height = size
+        forced_width = size
     }
 end
 
@@ -42,7 +42,7 @@ function resize_vert_widget(contents, size)
         contents,
 
         widget = wibox.container.background,
-        forced_width = size
+        forced_height = size
     }
 end
 

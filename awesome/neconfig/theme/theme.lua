@@ -25,7 +25,14 @@ theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
-theme.wibar_bg = '#0000000'
+
+
+theme.wibar_bg = '#ffffff30'
+
+theme.statusbar = {}
+theme.statusbar.vertical_padding = theme.useless_gap * 2
+theme.statusbar.horizontal_padding = theme.statusbar.vertical_padding * 1.5
+theme.statusbar.corner_radius = theme.statusbar.vertical_padding
 
 -- There are other variable sets
 -- overriding the default one when
