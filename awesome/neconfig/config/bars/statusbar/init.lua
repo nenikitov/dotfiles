@@ -82,49 +82,40 @@ awful.screen.connect_for_each_screen(
             }
         }
 
-        s.test = awful.popup {
+        s.first_popup = awful.popup {
+            screen = s,
+            placement = awful.placement.top_right,
+            widget = {
+                taglist,
+                widget = wibox.container.background,
+                forced_height = 30
+            }
+        }
+
+        local prev_widget = s.first_popup
+        s.next_popup = awful.popup {
             screen = s,
             placement = function(wi)
-                return awful.placement.top_right(wi)
+                return awful.placement.top_right(wi, {margins = {right = (1920 - prev_widget.x) + 5}})
             end,
-            widget = {}
-        }
-        s.test:setup {
-            {
+            widget = {
                 menu,
                 widget = wibox.container.background,
-                forced_width = 50,
-                forced_height = 50
-            },
-            layout = wibox.layout.fixed.horizontal,
+                forced_width = 30,
+                forced_height = 30
+            }
         }
 
-        -- So the s.test.width changes depending on where it is measured
-        -- I honestly have no idea why
-        s.widths = {}
-
-        s.test2 = awful.popup {
+        s.last_popup = awful.popup {
             screen = s,
             placement = function(wi)
-                s.widths.l = s.test.width
-                return awful.placement.top_right(wi, {margins = {right = s.widths.l}})
+                return awful.placement.top_right(wi, {margins = {right = (1920 - s.next_popup.x) + 5}})
             end,
-            widget = {}
-        }
-
-        local naughty = require('naughty')
-        naughty.notify {
-            text = tostring(s.widths.l)
-        }
-
-        s.test2:setup {
-            {
-                menu,
+            widget = {
+                keyboardlayout,
                 widget = wibox.container.background,
-                forced_width = 50,
-                forced_height = 50
-            },
-            layout = wibox.layout.fixed.horizontal,
+                forced_height = 30,
+            }
         }
     end
 )

@@ -8,7 +8,6 @@ require('neconfig.config.utils.widget_utils')
 -- Add, initialize and draw a section onto a custom bar
 function add_section_to_bar(args)
     local sections = args.info_table.sections
-    local widths = args.info_table.widths
 
     -- Init the section
     sections[args.name] = {
