@@ -18,8 +18,6 @@ local real_widget_height = user_vars.statusbar.height - widget_gap * 2
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
 local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
-local systray = wibox.widget.systray()
-systray:set_base_size(20)
 
 
 -- Set up the action bar for each screen
@@ -27,7 +25,6 @@ awful.screen.connect_for_each_screen(
     function(s)
         s.statusbar = {}
         s.statusbar.widgets = {}
-
 
         -- Generate and initialize all widgets
         -- Left
@@ -37,11 +34,8 @@ awful.screen.connect_for_each_screen(
         -- Center
         s.statusbar.widgets.tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s)
         -- Right
-        s.statusbar.widgets.systray = systray
         s.statusbar.widgets.keyboardlayout = keyboardlayout
         s.statusbar.widgets.textclock = textclock
-        s.statusbar.widgets.layoutbox = awful.widget.layoutbox(s)
-        s.statusbar.widgets.layoutbox:buttons(layoutbox_buttons)
 
         -- Generate empty background wibar
         s.statusbar.wibar = awful.wibar {
@@ -66,12 +60,7 @@ awful.screen.connect_for_each_screen(
         s.statusbar.left_container:setup {
             {
                 {
-                    -- TODO make this more readable
-                    {
-                        s.statusbar.widgets.menu,
-                        widget = wibox.container.background,
-                        forced_height = real_widget_height,
-                    },
+                    resize_vert_widget(s.statusbar.widgets.menu, real_widget_height),
                     s.statusbar.widgets.taglist,
                     s.statusbar.widgets.promptbox,
 
@@ -84,11 +73,12 @@ awful.screen.connect_for_each_screen(
             layout = wibox.layout.fixed.horizontal,
         }
 
+
         -- Middle container with tasklist
         s.statusbar.middle_container = awful.popup {
             screen = s,
             placement = function(wi)
-                return awful.placement.top(wi, { margins = widget_gap })
+                return awful.placement['top'](wi, { margins = widget_gap })
             end,
             widget = {}
         }
@@ -118,19 +108,8 @@ awful.screen.connect_for_each_screen(
         s.statusbar.right_container:setup {
             {
                 {
-                    {
-                        s.statusbar.widgets.systray,
-                        widget = wibox.container.background,
-                        forced_height = real_widget_height
-                    },
                     s.statusbar.widgets.keyboardlayout,
                     s.statusbar.widgets.textclock,
-                    -- TODO make this more readable
-                    {
-                        s.statusbar.widgets.layoutbox,
-                        widget = wibox.container.background,
-                        forced_width = real_widget_height
-                    },
 
                     layout = wibox.layout.fixed.horizontal
                 },

@@ -7,13 +7,15 @@ local iconfont = 'Font Awesome 5 Free-Solid-900'
 
 
 -- HELPER METHODS
-function rrect(radius)
+-- Generate a rounded rectangle shape with given radius and automatic width and height
+function round_rect(radius)
     return function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, radius)
     end
 end
 
 
+-- Clip the widget so it fits the given shape
 function clip_widget(contents, shape)
     return {
         contents,
@@ -23,22 +25,6 @@ function clip_widget(contents, shape)
         shape_clip = true
     }
 end
-
-
-
-
-
--- Generate an text widget with an icon
-function create_icon(icon, size, color)
-    return wibox.widget {
-        font = iconfont .. ' ' .. size,
-        markup = ' <span color="' .. color ..'">' .. icon .. '</span> ',
-        align = 'center',
-        valign = 'center',
-        widget = wibox.widget.textbox
-    }
-end
-
 
 -- Shrink widget horizontally to the given size
 function resize_hor_widget(contents, size)
@@ -75,21 +61,16 @@ function pad_widget(contents, top, right, bottom, left)
 end
 
 -- Generate a pill shape that can contain widgets
-function create_pill(contents, color, radius, vertical_padding, horizontal_padding, right_margin)
-    return {
-        {
-            {
-                pad_widget(contents, vertical_padding, horizontal_padding, vertical_padding, horizontal_padding)
-            },
-            widget = wibox.container.background,
-    
-            bg = color,
-            shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, radius) end,
-            shape_clip = true
-        },
-
-        widget = wibox.container.margin,
-
-        right = right_margin
+function place_in_pill(contents, color, radius, vertical_padding, horizontal_padding, right_margin)
+    local padded = pad_widget(contents, vertical_padding, horizontal_padding, vertical_padding, horizontal_padding)
+    local with_bg = {
+        padded,
+        widget = wibox.container.background,
+        bg = color,
+        shape = round_rect(radius),
+        shape_clip = true
     }
+    local final = pad_widget(with_bg, 0, right_margin, 0, 0)
+
+    return final
 end
