@@ -41,7 +41,6 @@ awful.screen.connect_for_each_screen(
 
         s.statusbar = {}
         s.statusbar.sections = {}
-        s.statusbar.widths = {}
 
         -- Create an empty wibar to constraint client position
         s.statusbar.wibar = awful.wibar {
@@ -61,6 +60,7 @@ awful.screen.connect_for_each_screen(
 
 
         -- Add sections
+        --[[
         add_section_to_bar {
             info_table = s.statusbar,
             name = 'test',
@@ -81,6 +81,53 @@ awful.screen.connect_for_each_screen(
                 corner_radius = corner_radius
             }
         }
+        ]]
+
+
+        add_section {
+            name = 'kb',
+            widgets = {
+                keyboardlayout,
+            },
+            position = {
+                side = 'top',
+                section = 1
+            },
+            style = {
+                initial_margin = 4,
+                contents_size = 30,
+                contents_parallel_padding = 6,
+                contetns_perpendicular_padding = 4,
+                contents_contents_spacing = 6,
+                corner_radius = 4,
+                background_color = '#ff0000ff'
+            },
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+
+        add_section {
+            name = 'test',
+            widgets = {
+                taglist,
+            },
+            position = {
+                side = 'top',
+                section = 1
+            },
+            style = {
+                initial_margin = 4,
+                contents_size = 30,
+                contents_parallel_padding = 6,
+                contetns_perpendicular_padding = 4,
+                contents_contents_spacing = 6,
+                corner_radius = 4,
+                background_color = '#ff0000ff'
+            },
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+
 
         s.first_popup = awful.popup {
             screen = s,
