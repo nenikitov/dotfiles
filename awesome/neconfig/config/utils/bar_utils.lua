@@ -70,6 +70,8 @@ function add_section(args)
             last_section = nil
         }
     end
+    local last_section = info_table[section_position].last_section
+
 
     info_table[section_position][name] = {
         popup = {},
@@ -80,11 +82,11 @@ function add_section(args)
     -- Create the popup
     info_table[section_position][name].popup = awful.popup {
         screen = screen,
-        placement = function(widget)
-            local margins = find_margins_for_position(position_info, style, screen, info_table)
+        placement = function(wi)
+            local margins = find_margins_for_position(position_info, position.side, last_section, style, screen, info_table)
 
             return awful.placement[section_position](
-                widget,
+                wi,
                 { margins = margins }
             )
         end,
@@ -149,71 +151,66 @@ function generate_positon(side, section)
 end
 
 -- Generate the margin table for the section position so it is after the previous one
--- This function is horrible...
-function find_margins_for_position(position_info, style, screen, info_table)
-    -- Lookup for the margin opposite of the direction (where previous widgets are placed)
-    local lookup_opposite_margin = {
+function find_margins_for_position(position_info, bar_position_dir, last_section, style, screen, info_table)
+    local dir = position_info.next_direction
+    local pos = position_info.combined
+
+    -- Calculate the margin to the side of the screen where the section (and the bar) are attached
+    local margins_to_bar = style.bar_margins + style.contents_margins_to_bar
+
+
+    -- Calculate the margin to the corner where the section is attached
+    -- Find its location
+    local lookup_margin_before = {
         ['top'] = 'bottom',
         ['bottom'] = 'top',
         ['left'] = 'right',
         ['right'] = 'left'
     }
-    -- Lookup for the margin parallel to the direction of the widgets
-    local lookup_parallel_margins = {
-        ['top'] = { 'left', 'right' },
-        ['bottom'] = { 'left', 'right' },
-        ['left'] = { 'top', 'bottom' },
-        ['right'] = { 'top', 'bottom' }
-    }
-    -- Lookup for the position and size measurement for the last section
-    local lookup_widget_info = {
-        ['top'] = { 'y', 'height' },
-        ['bottom'] = { 'y', 'height' },
-        ['left'] = { 'x', 'width' },
-        ['right'] = { 'x', 'width' },
-    }
-    -- Lookup if the size of the previous widget affects the position of the next
-    local lookup_margin_type = {
-        ['top'] = false,
-        ['bottom'] = true,
-        ['left'] = true,
-        ['right'] = false,
-    }
-
-    local section_position = position_info.combined
-    local section_direction = position_info.next_direction
-
-    -- Get the offset of the previous widget in this section
-    local prev_section_margin
-    if (not info_table[section_position].last_section)
+    local margin_before_dir = lookup_margin_before[dir]
+    -- Calculate the offset of this margin (depends on the section that was placed before)
+    local margin_content_offset = 0
+    -- Check last placed section
+    
+    if (not last_section)
     then
-        -- 0 if it is the first widget
-        prev_section_margin = 0
+        -- There was no sections placed in this corner, the margin depends on the bar
+        margin_content_offset = style.bar_margins
     else
-        -- Get all needed info from previous widget
-        local prev_section_name = info_table[section_position].last_section
-        local prev_section_widget = info_table[section_position][prev_section_name].popup
-        local widget_measurement = lookup_widget_info[section_direction]
-        local position = prev_section_widget[widget_measurement[1]]
-        local size = prev_section_widget[widget_measurement[2]]
-        local screen_dimension = screen.geometry[widget_measurement[2]]
+        -- Offset the current section so it does not overlap with previous
+        -- Find info parameters to calculate content offset
+        local section_size_param
+        local section_position_param
+        if (dir == 'top' or dir == 'bottom')
+        then
+            section_size_param = 'height'
+            section_position_param = 'y'
+        else
+            section_size_param = 'width'
+            section_position_param = 'x'
+        end
+        -- Get info
+        local section_size = info_table[pos][last_section].popup[section_size_param]
+        local section_position = info_table[pos][last_section].popup[section_position_param]
+        local screen_size = screen.geometry[section_size_param]
+
+
 
         -- Calculate the offset
-        if (lookup_margin_type[section_direction])
+        if (dir == 'bottom' or dir == 'right')
         then
             -- The current section is placed after (on the right or below)
-            prev_section_margin = position + size
+            margin_content_offset = section_position + section_size
         else
             -- The current section is placed before (on the left or above) 
-            prev_section_margin = screen_dimension - position
+            margin_content_offset = screen_size - section_position
         end
     end
+    -- Add spacing between last and current section
+    local margin_to_content = margin_content_offset + style.contents_margins_to_content
 
-    local margins
-    margins[lookup_opposite_margin[section_direction]] = style.contents_parallel_padding
-    margins[lookup_parallel_margins[section_direction][0]] = style.contetns_perpendicular_padding
-    margins[lookup_parallel_margins[section_direction][1]] = style.contetns_perpendicular_padding
-    margins[section_direction] = prev_section_margin
-
-    return margins
+    return {
+        [bar_position_dir] = margins_to_bar,
+        [margin_before_dir] = margin_to_content
+    }
 end

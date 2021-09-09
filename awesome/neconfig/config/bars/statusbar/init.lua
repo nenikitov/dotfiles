@@ -59,31 +59,6 @@ awful.screen.connect_for_each_screen(
         local promptbox = awful.widget.prompt()
 
 
-        -- Add sections
-        --[[
-        add_section_to_bar {
-            info_table = s.statusbar,
-            name = 'test',
-            widgets = {
-                taglist
-            },
-            screen = s,
-            position = {
-                vertical = bar_position,
-                horizontal = 'left',
-                vertical_offset = vertical_padding,
-                horizontal_offset = horizontal_padding
-            },
-            style = {
-                size = nested_widget_height,
-                vertical_padding = vertical_padding,
-                horizontal_padding = horizontal_padding,
-                corner_radius = corner_radius
-            }
-        }
-        ]]
-
-
         add_section {
             name = 'kb',
             widgets = {
@@ -95,10 +70,10 @@ awful.screen.connect_for_each_screen(
             },
             style = {
                 initial_margin = 4,
-                contents_size = 30,
-                contents_parallel_padding = 6,
-                contetns_perpendicular_padding = 4,
-                contents_contents_spacing = 6,
+                contents_size = 70,
+                bar_margins = 4,
+                contents_margins_to_content = 6,
+                contents_margins_to_bar = 4,
                 corner_radius = 4,
                 background_color = '#ff0000ff'
             },
@@ -106,6 +81,29 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
 
+        add_section {
+            name = 'taglist',
+            widgets = {
+                taglist,
+            },
+            position = {
+                side = 'top',
+                section = 1
+            },
+            style = {
+                initial_margin = 4,
+                contents_size = 70,
+                bar_margins = 4,
+                contents_margins_to_content = 6,
+                contents_margins_to_bar = 4,
+                corner_radius = 4,
+                background_color = '#ff0000ff'
+            },
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+
+        --[[
         add_section {
             name = 'test',
             widgets = {
@@ -127,8 +125,9 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        ]]
 
-
+        --[[
         s.first_popup = awful.popup {
             screen = s,
             placement = awful.placement.top_right,
@@ -165,5 +164,6 @@ awful.screen.connect_for_each_screen(
                 forced_height = 30,
             }
         }
+        ]]
     end
 )
