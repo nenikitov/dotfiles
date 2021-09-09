@@ -54,9 +54,11 @@ awful.screen.connect_for_each_screen(
 
         -- TODO remove this later
         local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
+        local clock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s)
         local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
         local promptbox = awful.widget.prompt()
+        local systray = wibox.widget.systray()
 
 
         add_section {
@@ -94,7 +96,7 @@ awful.screen.connect_for_each_screen(
                 initial_margin = 4,
                 contents_size = 70,
                 bar_margins = 4,
-                contents_margins_to_content = 6,
+                contents_margins_to_content = 24,
                 contents_margins_to_bar = 4,
                 corner_radius = 4,
                 background_color = '#ff0000ff'
@@ -105,20 +107,42 @@ awful.screen.connect_for_each_screen(
 
         --[[
         add_section {
-            name = 'test',
+            name = 'clock',
             widgets = {
-                taglist,
+                clock,
             },
             position = {
                 side = 'top',
+                section = 3
+            },
+            style = {
+                initial_margin = 4,
+                contents_size = 70,
+                bar_margins = 4,
+                contents_margins_to_content = 24,
+                contents_margins_to_bar = 4,
+                corner_radius = 4,
+                background_color = '#ff0000ff'
+            },
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+
+        add_section {
+            name = 'systray',
+            widgets = {
+                systray,
+            },
+            position = {
+                side = 'bottom',
                 section = 1
             },
             style = {
                 initial_margin = 4,
-                contents_size = 30,
-                contents_parallel_padding = 6,
-                contetns_perpendicular_padding = 4,
-                contents_contents_spacing = 6,
+                contents_size = 70,
+                bar_margins = 4,
+                contents_margins_to_content = 6,
+                contents_margins_to_bar = 4,
                 corner_radius = 4,
                 background_color = '#ff0000ff'
             },

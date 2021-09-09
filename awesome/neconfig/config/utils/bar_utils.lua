@@ -6,52 +6,6 @@ require('neconfig.config.utils.widget_utils')
 
 
 -- Add, initialize and draw a section onto a custom bar
-function add_section_to_bar(args)
-    local sections = args.info_table.sections
-
-    -- Init the section
-    sections[args.name] = {
-        popup = {},
-        contents = {}
-    }
-
-    -- Create the popup
-    sections[args.name].popup = awful.popup {
-        screen = args.screen,
-        placement = function(widget)
-            local position = args.position.vertical .. '_' .. args.position.horizontal
-            local margins = {}
-            margins[args.position.vertical] = args.position.vertical_offset
-            margins[args.position.horizontal] = args.position.horizontal_offset
-            return awful.placement[position](
-                widget,
-                { margins = margins }
-            )
-        end,
-        widget = {}
-    }
-
-    -- Populate it with widgets
-    local section_layout = wibox.layout.fixed.horizontal()
-    for _, widget in pairs(args.widgets)
-    do
-        section_layout:add(resize_vert_widget(widget, args.style.size))
-    end
-    local section_final_widget = {
-        section_layout,
-        forced_height = args.style.size,
-        widget = wibox.container.background
-    }
-
-    sections[args.name].widgets = args.widgets
-    
-    sections[args.name].popup:setup {
-        section_final_widget,
-
-        layout = wibox.layout.fixed.horizontal
-    }
-end
-
 function add_section(args)
     local name = args.name
     local widgets = args.widgets
@@ -171,7 +125,6 @@ function find_margins_for_position(position_info, bar_position_dir, last_section
     -- Calculate the offset of this margin (depends on the section that was placed before)
     local margin_content_offset = 0
     -- Check last placed section
-    
     if (not last_section)
     then
         -- There was no sections placed in this corner, the margin depends on the bar
@@ -179,31 +132,31 @@ function find_margins_for_position(position_info, bar_position_dir, last_section
     else
         -- Offset the current section so it does not overlap with previous
         -- Find info parameters to calculate content offset
-        local section_size_param
-        local section_position_param
+        local size_param
+        local pos_param
         if (dir == 'top' or dir == 'bottom')
         then
-            section_size_param = 'height'
-            section_position_param = 'y'
+            size_param = 'height'
+            pos_param = 'y'
         else
-            section_size_param = 'width'
-            section_position_param = 'x'
+            size_param = 'width'
+            pos_param = 'x'
         end
         -- Get info
-        local section_size = info_table[pos][last_section].popup[section_size_param]
-        local section_position = info_table[pos][last_section].popup[section_position_param]
-        local screen_size = screen.geometry[section_size_param]
-
+        local section_size = info_table[pos][last_section].popup[size_param]
+        local section_position = info_table[pos][last_section].popup[pos_param]
+        local screen_size = screen.geometry[size_param]
+        local screen_position = screen.geometry[pos_param]
 
 
         -- Calculate the offset
         if (dir == 'bottom' or dir == 'right')
         then
             -- The current section is placed after (on the right or below)
-            margin_content_offset = section_position + section_size
+            margin_content_offset = section_position + section_size - screen_position
         else
             -- The current section is placed before (on the left or above) 
-            margin_content_offset = screen_size - section_position
+            margin_content_offset = screen_size - section_position + screen_position
         end
     end
     -- Add spacing between last and current section
