@@ -37,7 +37,7 @@ function add_section(args)
     info_table[section_position][name].popup = awful.popup {
         screen = screen,
         placement = function(wi)
-            local margins = find_margins_for_position(position_info, position.side, last_section, style, screen, info_table)
+            local margins = find_margins_for_position(position_info, position.side, position.section, last_section, style, screen, info_table)
 
             return awful.placement[section_position](
                 wi,
@@ -115,7 +115,7 @@ function generate_positon(side, section)
 end
 
 -- Generate the margin table for the section position so it is after the previous one
-function find_margins_for_position(position_info, bar_position_dir, last_section, style, screen, info_table)
+function find_margins_for_position(position_info, bar_position_dir, section, last_section, style, screen, info_table)
     local dir = position_info.next_direction
     local pos = position_info.combined
 
@@ -123,57 +123,66 @@ function find_margins_for_position(position_info, bar_position_dir, last_section
     local margins_to_bar = style.bar_margins + style.contents_margins_to_bar
 
 
-    -- Calculate the margin to the corner where the section is attached
-    -- Find its location
-    local lookup_margin_before = {
-        ['top'] = 'bottom',
-        ['bottom'] = 'top',
-        ['left'] = 'right',
-        ['right'] = 'left'
-    }
-    local margin_before_dir = lookup_margin_before[dir]
-    -- Calculate the offset of this margin (depends on the section that was placed before)
-    local margin_content_offset = 0
-    -- Check last placed section
-    if (not last_section)
+    local margin_to_content
+    if (section == 2)
     then
-        -- There was no sections placed in this corner, the margin depends on the bar
-        margin_content_offset = style.bar_margins
+        -- If the section is in the middle, just put it in the center without any content offset
+        return {
+            [bar_position_dir] = margins_to_bar
+        }
     else
-        -- Offset the current section so it does not overlap with previous
-        -- Find info parameters to calculate content offset
-        local size_param
-        local pos_param
-        if (dir == 'top' or dir == 'bottom')
+        -- Calculate the margin to the corner where the section is attached
+        -- Find its location
+        local lookup_margin_before = {
+            ['top'] = 'bottom',
+            ['bottom'] = 'top',
+            ['left'] = 'right',
+            ['right'] = 'left'
+        }
+        local margin_before_dir = lookup_margin_before[dir]
+        -- Calculate the offset of this margin (depends on the section that was placed before)
+        local margin_content_offset = 0
+        -- Check last placed section
+        if (not last_section)
         then
-            size_param = 'height'
-            pos_param = 'y'
+            -- There was no sections placed in this corner, the margin depends on the bar
+            margin_content_offset = style.bar_margins
         else
-            size_param = 'width'
-            pos_param = 'x'
-        end
-        -- Get info
-        local section_size = info_table[pos][last_section].popup[size_param]
-        local section_position = info_table[pos][last_section].popup[pos_param]
-        local screen_size = screen.geometry[size_param]
-        local screen_position = screen.geometry[pos_param]
+            -- Offset the current section so it does not overlap with previous
+            -- Find info parameters to calculate content offset
+            local size_param
+            local pos_param
+            if (dir == 'top' or dir == 'bottom')
+            then
+                size_param = 'height'
+                pos_param = 'y'
+            else
+                size_param = 'width'
+                pos_param = 'x'
+            end
+            -- Get info
+            local section_size = info_table[pos][last_section].popup[size_param]
+            local section_position = info_table[pos][last_section].popup[pos_param]
+            local screen_size = screen.geometry[size_param]
+            local screen_position = screen.geometry[pos_param]
 
 
-        -- Calculate the offset
-        if (dir == 'bottom' or dir == 'right')
-        then
-            -- The current section is placed after (on the right or below)
-            margin_content_offset = section_position + section_size - screen_position
-        else
-            -- The current section is placed before (on the left or above) 
-            margin_content_offset = screen_size - section_position + screen_position
+            -- Calculate the offset
+            if (dir == 'bottom' or dir == 'right')
+            then
+                -- The current section is placed after (on the right or below)
+                margin_content_offset = section_position + section_size - screen_position
+            else
+                -- The current section is placed before (on the left or above) 
+                margin_content_offset = screen_size - section_position + screen_position
+            end
         end
+        -- Add spacing between last and current section
+        margin_to_content = margin_content_offset + style.contents_margins_to_content
+
+        return {
+            [bar_position_dir] = margins_to_bar,
+            [margin_before_dir] = margin_to_content
+        }
     end
-    -- Add spacing between last and current section
-    local margin_to_content = margin_content_offset + style.contents_margins_to_content
-
-    return {
-        [bar_position_dir] = margins_to_bar,
-        [margin_before_dir] = margin_to_content
-    }
 end

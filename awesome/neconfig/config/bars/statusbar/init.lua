@@ -60,7 +60,6 @@ awful.screen.connect_for_each_screen(
         local promptbox = awful.widget.prompt()
         local systray = wibox.widget.systray()
 
-
         add_section {
             name = 'kb',
             widgets = {
@@ -71,11 +70,10 @@ awful.screen.connect_for_each_screen(
                 section = 1
             },
             style = {
-                initial_margin = 4,
-                contents_size = 30,
-                bar_margins = 4,
+                contents_size = 22,
+                bar_margins = 2,
                 contents_margins_to_content = 6,
-                contents_margins_to_bar = 4,
+                contents_margins_to_bar = 2,
                 corner_radius = 4,
                 background_color = '#ff0000ff'
             },
@@ -93,11 +91,10 @@ awful.screen.connect_for_each_screen(
                 section = 1
             },
             style = {
-                initial_margin = 4,
-                contents_size = 30,
-                bar_margins = 4,
+                contents_size = 22,
+                bar_margins = 2,
                 contents_margins_to_content = 6,
-                contents_margins_to_bar = 4,
+                contents_margins_to_bar = 2,
                 corner_radius = 4,
                 background_color = '#ff0000ff'
             },
