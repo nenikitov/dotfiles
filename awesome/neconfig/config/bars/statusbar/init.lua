@@ -72,7 +72,7 @@ awful.screen.connect_for_each_screen(
             },
             style = {
                 initial_margin = 4,
-                contents_size = 70,
+                contents_size = 30,
                 bar_margins = 4,
                 contents_margins_to_content = 6,
                 contents_margins_to_bar = 4,
@@ -94,9 +94,9 @@ awful.screen.connect_for_each_screen(
             },
             style = {
                 initial_margin = 4,
-                contents_size = 70,
+                contents_size = 30,
                 bar_margins = 4,
-                contents_margins_to_content = 24,
+                contents_margins_to_content = 6,
                 contents_margins_to_bar = 4,
                 corner_radius = 4,
                 background_color = '#ff0000ff'

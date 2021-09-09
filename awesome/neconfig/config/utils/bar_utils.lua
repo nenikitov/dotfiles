@@ -48,18 +48,28 @@ function add_section(args)
     }
 
     -- Populate it with widgets
+    info_table[section_position][name].widgets = widgets
+    -- Precalculate needed values
+    local size_param
+    if (position_info.next_direction == 'top' or position_info.next_direction == 'bottom')
+    then
+        size_param = 'width'
+    else
+        size_param = 'height'
+    end
+    -- Create a layout
     local section_layout = wibox.layout.fixed.horizontal()
-    for _, widget in pairs(widgets)
+    -- Add widgets to it
+    for _, widget in pairs(info_table[section_position][name].widgets)
     do
         section_layout:add(resize_vert_widget(widget, style.contents_size))
     end
+    -- Construct final widget
     local section_final_widget = {
         section_layout,
-        forced_height = style.contents_size,
+        ['forced_' .. size_param] = style.contents_size,
         widget = wibox.container.background
     }
-
-    info_table[section_position][name].widgets = widgets
     
     info_table[section_position][name].popup:setup {
         section_final_widget,
