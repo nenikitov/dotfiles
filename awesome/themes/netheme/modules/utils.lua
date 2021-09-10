@@ -14,7 +14,7 @@ local icons = {
 function create_icon(icon, size, color)
     return wibox.widget {
         font = iconfont .. ' ' .. size,
-        markup = ' <span color="' .. color ..'">' .. iconlist[icon] .. '</span> ',
+        markup = ' <span color="' .. color ..'">' .. icons[icon] .. '</span> ',
         align = 'center',
         valign = 'center',
         widget = wibox.widget.textbox

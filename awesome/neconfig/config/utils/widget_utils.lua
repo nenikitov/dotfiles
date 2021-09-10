@@ -6,8 +6,9 @@ local gears = require('gears')
 local iconfont = 'Font Awesome 5 Free-Solid-900'
 
 
--- HELPER METHODS
--- Generate a rounded rectangle shape with given radius and automatic width and height
+---Generate a rounded rectangle shape
+---@param radius number
+---@return function
 function r_rect(radius)
     return function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, radius)
@@ -15,7 +16,10 @@ function r_rect(radius)
 end
 
 
--- Clip the widget so it fits the given shape
+---Clip the widget so it fits the given shape
+---@param contents widget
+---@param shape gears.shape
+---@return table
 function clip_widget(contents, shape)
     return {
         contents,
@@ -27,6 +31,10 @@ function clip_widget(contents, shape)
 end
 
 -- Shrink widget horizontally to the given size
+---Shrink widget horizontally to the given size
+---@param contents widget
+---@param size number
+---@return widget
 function resize_hor_widget(contents, size)
     return {
         contents,
@@ -36,7 +44,10 @@ function resize_hor_widget(contents, size)
     }
 end
 
--- Shrink widget vertically to the given size
+---Shrink widget vertically to the given size
+---@param contents widget
+---@param size number
+---@return widget
 function resize_vert_widget(contents, size)
     return {
         contents,
@@ -46,7 +57,13 @@ function resize_vert_widget(contents, size)
     }
 end
 
--- Create a padding for a widget
+---Create a padding for a widget
+---@param contents widget
+---@param top number
+---@param right number
+---@param bottom number
+---@param left number
+---@return widget
 function pad_widget(contents, top, right, bottom, left)
     return {
         contents,
@@ -60,6 +77,7 @@ function pad_widget(contents, top, right, bottom, left)
     }
 end
 
+-- TODO remove?
 -- Generate a pill shape that can contain widgets
 function place_in_pill(contents, color, radius, vertical_padding, horizontal_padding, right_margin)
     local padded = pad_widget(contents, vertical_padding, horizontal_padding, vertical_padding, horizontal_padding)
@@ -67,7 +85,7 @@ function place_in_pill(contents, color, radius, vertical_padding, horizontal_pad
         padded,
         widget = wibox.container.background,
         bg = color,
-        shape = round_rect(radius),
+        shape = r_rect(radius),
         shape_clip = true
     }
     local final = pad_widget(with_bg, 0, right_margin, 0, 0)
