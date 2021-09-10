@@ -37,7 +37,7 @@ function add_section(args)
     info_table[section_position][name].popup = awful.popup {
         screen = screen,
         placement = function(wi)
-            local margins = find_margins_for_position(position_info, position.side, position.section, last_section, style, screen, info_table)
+            local margins = find_margins_for_position(position, last_section, style, screen, info_table)
 
             return awful.placement[section_position](
                 wi,
@@ -115,14 +115,20 @@ function generate_positon(side, section)
 end
 
 -- Generate the margin table for the section position so it is after the previous one
-function find_margins_for_position(position_info, bar_position_dir, section, last_section, style, screen, info_table)
+function find_margins_for_position(position, last_section, style, screen, info_table)
+    local position_info = generate_positon(position.side, position.section)
+    
     local dir = position_info.next_direction
     local pos = position_info.combined
 
+    local bar_position_dir = position.side
+    local section = position.section
+
     -- Calculate the margin to the side of the screen where the section (and the bar) are attached
-    local margins_to_bar = style.bar_margins + style.contents_margins_to_bar
+    local margins_to_bar = style.margin.edge * 2
 
 
+    -- Margin to the corner where the section is attached
     local margin_to_content
     if (section == 2)
     then
@@ -146,7 +152,7 @@ function find_margins_for_position(position_info, bar_position_dir, section, las
         if (not last_section)
         then
             -- There was no sections placed in this corner, the margin depends on the bar
-            margin_content_offset = style.bar_margins
+            margin_content_offset = style.margin.corners
         else
             -- Offset the current section so it does not overlap with previous
             -- Find info parameters to calculate content offset
@@ -166,7 +172,6 @@ function find_margins_for_position(position_info, bar_position_dir, section, las
             local screen_size = screen.geometry[size_param]
             local screen_position = screen.geometry[pos_param]
 
-
             -- Calculate the offset
             if (dir == 'bottom' or dir == 'right')
             then
@@ -178,7 +183,7 @@ function find_margins_for_position(position_info, bar_position_dir, section, las
             end
         end
         -- Add spacing between last and current section
-        margin_to_content = margin_content_offset + style.contents_margins_to_content
+        margin_to_content = margin_content_offset + style.spacing.section
 
         return {
             [bar_position_dir] = margins_to_bar,

@@ -11,22 +11,15 @@ require('neconfig.config.utils.bar_utils')
 
 -- Get variables
 -- From theme
-require('neconfig.theme.user_vars_theme')
 local bar_info = beautiful.user_vars_theme.statusbar
-
-local bar_position = bar_info.position
-local bar_height = bar_info.height
-local bar_margin = bar_info.margin
-local bar_corner_radius = bar_info.corner_radius
-local bar_nested_widget_height = bar_height - bar_margin.edge * 2
-
-local widget_style = {
-    contents_size = 22,
-    bar_margins = 2,
-    contents_margins_to_content = 6,
-    contents_margins_to_bar = 2,
-    corner_radius = 4,
-    background_color = '#ff0000ff'
+local section_content_size = bar_info.height - bar_info.margin.edge * 4
+-- Precalculate
+local section_style = {
+    background_color = '#ff0000ff',
+    contents_size = section_content_size,
+    margin = bar_info.margin,
+    spacing = bar_info.spacing,
+    corner_radius = bar_info.corner_radius
 }
 
 -- Set up the action bar for each screen
@@ -53,14 +46,33 @@ awful.screen.connect_for_each_screen(
 
         -- Create an empty wibar to constraint client position
         s.statusbar.wibar = awful.wibar {
-            position = bar_position,
+            position = bar_info.position,
             screen = s,
-            height = user_vars_conf.statusbar.height,
-            shape = r_rect(8)
+            height = bar_info.height
         }
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal
         }
+        
+        -- Here is a better solution to sections
+        local previous = nil
+        for i=1, 2 do
+            local p2 = awful.popup {
+                widget = wibox.widget {
+                    text   = '| '..i..' |',
+                    widget = wibox.widget.textbox
+                },
+                preferred_positions = 'right',
+                placement           = (not previous) and awful.placement.top_left or nil,
+                offset = {
+                    x = 10
+                },
+                screen = s,
+            }
+
+            p2:move_next_to(previous)
+            previous = p2
+        end
 
         -- TODO remove this later
         local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
@@ -70,16 +82,17 @@ awful.screen.connect_for_each_screen(
         local promptbox = awful.widget.prompt()
         local systray = wibox.widget.systray()
 
+        --[[
         add_section {
             name = 'kb',
             widgets = {
                 keyboardlayout,
             },
             position = {
-                side = 'top',
+                side = bar_info.position,
                 section = 1
             },
-            style = widget_style,
+            style = section_style,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -90,10 +103,10 @@ awful.screen.connect_for_each_screen(
                 taglist,
             },
             position = {
-                side = 'top',
+                side = bar_info.position,
                 section = 1
             },
-            style = widget_style,
+            style = section_style,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -104,10 +117,10 @@ awful.screen.connect_for_each_screen(
                 clock,
             },
             position = {
-                side = 'top',
+                side = bar_info.position,
                 section = 3
             },
-            style = widget_style,
+            style = section_style,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -121,10 +134,11 @@ awful.screen.connect_for_each_screen(
                 side = 'bottom',
                 section = 1
             },
-            style = widget_style,
+            style = section_style,
             screen = s,
             info_table = s.statusbar.sections
         }
+        ]]
 
         --[[
         s.first_popup = awful.popup {

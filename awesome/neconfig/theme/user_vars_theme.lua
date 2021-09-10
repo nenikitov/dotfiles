@@ -20,14 +20,18 @@ end
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     position = 'top',
-    height = size(36),
+    height = size(40),
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corner = size(20),
+        corners = size(80),
         -- Margin between the bar side and the edge of the screen
-        edge = size(6)
+        edge = size(4)
     },
-    corner_radius = size(8)
+    spacing = {
+        widget = size(4),
+        section = size(8)
+    },
+    corner_radius = size(12)
 }
 
 
