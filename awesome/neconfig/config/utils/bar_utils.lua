@@ -114,6 +114,7 @@ function generate_positon(side, section)
     }
 end
 
+
 -- Generate the margin table for the section position so it is after the previous one
 function find_margins_for_position(position, last_section, style, screen, info_table)
     local position_info = generate_positon(position.side, position.section)
