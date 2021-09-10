@@ -2,10 +2,10 @@
 local gears = require('gears')
 local awful = require('awful')
 -- Load custom modules
-local user_vars = require('neconfig.config.user.user_vars')
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 -- Get variables
-local super_key = user_vars.binds.keys.super_key
+local super_key = user_vars_conf.binds.keys.super_key
 
 
 -- Customize this

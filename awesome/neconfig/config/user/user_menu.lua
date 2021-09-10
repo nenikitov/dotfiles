@@ -3,10 +3,10 @@ local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup').widget
 local beautiful = require('beautiful')
 -- Load custom modules
-local user_vars = require('neconfig.config.user.user_vars')
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 -- Get variables
-local terminal = user_vars.apps.default_apps.terminal
+local terminal = user_vars_conf.apps.default_apps.terminal
 
 
 -- Customize this

@@ -8,7 +8,7 @@ local iconfont = 'Font Awesome 5 Free-Solid-900'
 
 -- HELPER METHODS
 -- Generate a rounded rectangle shape with given radius and automatic width and height
-function round_rect(radius)
+function r_rect(radius)
     return function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, radius)
     end

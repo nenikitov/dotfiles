@@ -100,11 +100,7 @@ local statusbar = {
         keyboard_layout = true,
         clock = true
     },
-    datetime_format = '%H:%M, %a, %Y-%m-%d',
-    -- Position on the screen 
-    position = 'top',
-    -- Height
-    height = 30
+    datetime_format = '%H:%M, %a, %Y-%m-%d'
 }
 
 
@@ -122,15 +118,11 @@ local appbar = {
         broser = true,
         file_manager = false,
         multimedia = false
-    },
-    -- Position on the screen
-    position = 'bottom',
-    -- Height
-    height = 20
+    }
 }
 
 
-local user_vars = {
+local user_vars_conf = {
     apps = apps,
     binds = binds,
     desktop = desktop,
@@ -138,4 +130,4 @@ local user_vars = {
     appbar = appbar
 }
 
-return user_vars
+return user_vars_conf

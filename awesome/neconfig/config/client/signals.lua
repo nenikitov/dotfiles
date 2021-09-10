@@ -4,7 +4,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
-local user_vars = require('neconfig.config.user.user_vars')
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 
 -- Load titlebars TODO MODIFY THIS LATER
@@ -31,7 +31,7 @@ client.connect_signal(
 )
 
 -- Enable sloppy focus, so that focus follows mouse.
-if (user_vars.binds.interactions.enable_sloppy_focus)
+if (user_vars_conf.binds.interactions.enable_sloppy_focus)
 then
     client.connect_signal(
         'mouse::enter',

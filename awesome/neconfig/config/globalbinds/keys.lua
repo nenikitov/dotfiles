@@ -3,13 +3,13 @@ local gears = require('gears')
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
-local user_vars = require('neconfig.config.user.user_vars')
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 local user_menu = require('neconfig.config.user.user_menu')
 
 
 -- Get variables
-local super_key = user_vars.binds.keys.super_key
-local terminal = user_vars.apps.default_apps.terminal
+local super_key = user_vars_conf.binds.keys.super_key
+local terminal = user_vars_conf.apps.default_apps.terminal
 
 
 -- Customize this
