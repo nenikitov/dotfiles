@@ -11,14 +11,14 @@ require('neconfig.config.utils.bar_utils')
 
 -- Get variables
 -- From theme
-
+require('neconfig.theme.user_vars_theme')
 local bar_info = beautiful.user_vars_theme.statusbar
 
 local bar_position = bar_info.position
 local bar_height = bar_info.height
 local bar_margin = bar_info.margin
 local bar_corner_radius = bar_info.corner_radius
-local bar_nested_widget_height = bar_height - bar_margin * 2
+local bar_nested_widget_height = bar_height - bar_margin.edge * 2
 
 local widget_style = {
     contents_size = 22,
