@@ -56,20 +56,21 @@ awful.screen.connect_for_each_screen(
         
         -- Here is a better solution to sections
         local previous = nil
-        for i=1, 2 do
+        for i=1, 3 do
             local p2 = awful.popup {
                 widget = wibox.widget {
-                    text   = '| '..i..' |',
+                    text   = '|'..i..'|',
                     widget = wibox.widget.textbox
                 },
-                preferred_positions = 'right',
-                placement           = (not previous) and awful.placement.top_left or nil,
+                border_color        = beautiful.border_color,
+                preferred_positions = 'left',
+                border_width        = 2,
+                preferred_anchors   = 'middle',
+                placement           = (not previous) and function(wi) return awful.placement.top_right(wi, {margins = 10}) end or nil,
                 offset = {
-                    x = 10
+                    x = -20,
                 },
-                screen = s,
             }
-
             p2:move_next_to(previous)
             previous = p2
         end
