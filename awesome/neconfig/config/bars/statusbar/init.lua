@@ -12,11 +12,11 @@ require('neconfig.config.utils.bar_utils')
 -- Get variables
 -- From theme
 local bar_info = beautiful.user_vars_theme.statusbar
-local section_content_size = bar_info.height - bar_info.margin.edge * 4
+local bar_height = bar_info.contents_size + bar_info.margin.edge + bar_info.margin.content * 2
 -- Precalculate
 local section_style = {
     background_color = '#ff0000ff',
-    contents_size = section_content_size,
+    contents_size = bar_info.contents_size,
     margin = bar_info.margin,
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius
@@ -43,11 +43,12 @@ awful.screen.connect_for_each_screen(
         s.statusbar = {}
         s.statusbar.sections = {}
 
+
         -- Create an empty wibar to constraint client position
         s.statusbar.wibar = awful.wibar {
             position = bar_info.position,
             screen = s,
-            height = bar_info.height,
+            height = bar_height,
             stretch = false,
             width = s.geometry.width - bar_info.margin.corners * 2,
             shape = function(cr, w, h)
@@ -56,7 +57,6 @@ awful.screen.connect_for_each_screen(
                     : translate(0, bar_info.margin.edge)
                     (cr, w, h - bar_info.margin.edge)
             end,
-            bg = '#00000000'
         }
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal

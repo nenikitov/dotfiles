@@ -3,7 +3,7 @@ local wibox = require('wibox')
 local gears = require('gears')
 
 
----Generate a rounded rectangle shape
+--- Generate a rounded rectangle shape
 ---@param radius number
 ---@return function
 function r_rect(radius)
@@ -13,7 +13,7 @@ function r_rect(radius)
 end
 
 
----Clip the widget so it fits the given shape
+--- Clip the widget so it fits the given shape
 ---@param contents widget
 ---@param shape gears.shape
 ---@return table
@@ -27,7 +27,7 @@ function clip_widget(contents, shape)
     }
 end
 
----Shrink widget horizontally to the given size
+--- Shrink widget horizontally to the given size
 ---@param contents widget
 ---@param size number
 ---@return widget
@@ -40,7 +40,7 @@ function resize_hor_widget(contents, size)
     }
 end
 
----Shrink widget vertically to the given size
+--- Shrink widget vertically to the given size
 ---@param contents widget
 ---@param size number
 ---@return widget
@@ -53,7 +53,7 @@ function resize_vert_widget(contents, size)
     }
 end
 
----Create a padding for a widget
+--- Create a padding for a widget
 ---@param contents widget
 ---@param top number
 ---@param right number

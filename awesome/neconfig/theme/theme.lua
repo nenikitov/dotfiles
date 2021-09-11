@@ -9,7 +9,7 @@ local theme = {}
 
 theme.user_vars_theme = require('neconfig.theme.user_vars_theme')
 
-theme.font          = 'Jost* Regular 12'
+theme.font          = theme.user_vars_theme.general.font .. ' ' .. size(12)
 
 theme.bg_normal     = '#222222'
 theme.bg_focus      = '#535d6c'
@@ -22,14 +22,14 @@ theme.fg_focus      = '#ffffff'
 theme.fg_urgent     = '#ffffff'
 theme.fg_minimize   = '#ffffff'
 
-theme.useless_gap   = dpi(3)
+theme.useless_gap   = theme.user_vars_theme.client.gaps
 theme.border_width  = dpi(1)
 theme.border_normal = '#000000'
 theme.border_focus  = '#535d6c'
 theme.border_marked = '#91231c'
 
 
-theme.wibar_bg = '#ffffff30'
+theme.wibar_bg = '#0000ffff'
 
 
 -- There are other variable sets

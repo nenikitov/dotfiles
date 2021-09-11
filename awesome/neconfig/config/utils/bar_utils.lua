@@ -5,8 +5,8 @@ local wibox = require('wibox')
 require('neconfig.config.utils.widget_utils')
 
 
----Add, initialize and draw a section
----@param args table Arguments
+--- Add, initialize and draw a section
+---@param args table Name, widget list, position, style, screen and info_table
 function add_section(args)
     --#region Aliases for the arguments
     local name = args.name
@@ -93,9 +93,10 @@ function add_section(args)
 end
 
 
--- Generates the position string from a side where the bar is attached and section index
--- Side is 'top', 'bottom', 'left', 'right'
--- Section is 1, 2, 3 where, in case of 'top' side, 1 is left corner, 2 is middle and 3 is right corner
+--- Generates the position string from a side where the bar is attached and section index
+---@param side string 'top', 'bottom', 'left', 'right'
+---@param section number 1, 2, 3 where, in case of 'top' side, 1 is left corner, 2 is middle and 3 is right corner
+---@return table position_info Where the widget should be located and what is the direction to the next widget
 function generate_positon_info(side, section)
     -- 1st value is the combined position of the popup
     -- 2nd is where the next section would be if placed in the same screen corner
@@ -129,7 +130,13 @@ function generate_positon_info(side, section)
 end
 
 
--- Generate the margin table for the section position so it is after the previous one
+--- Generate the margin table for the section position so it is after the previous one
+---@param position table Position of the bar and section index
+---@param last_section string The name of the previous section popup
+---@param style table List of margins and spacing info
+---@param screen table Screen where to put the popup
+---@param info_table table Table from where to read and where to store all the data
+---@return table margins Final margins
 function find_margins_for_position(position, last_section, style, screen, info_table)
     -- Precalculate all values
     local position_info = generate_positon_info(position.side, position.section)
@@ -140,7 +147,7 @@ function find_margins_for_position(position, last_section, style, screen, info_t
     local edge_dir = position.side
 
     -- Calculate the margin to the edge of the screen where the section (and the bar) are attached
-    local margins_to_edge = style.margin.edge * 2
+    local margins_to_edge = style.margin.edge + style.margin.content
 
 
     -- Margin to the corners where the section is attached
