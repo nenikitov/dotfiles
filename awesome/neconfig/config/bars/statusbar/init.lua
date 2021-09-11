@@ -13,13 +13,12 @@ require('neconfig.config.utils.bar_utils')
 -- From theme
 local bar_info = beautiful.user_vars_theme.statusbar
 local bar_height = bar_info.contents_size + bar_info.margin.edge + bar_info.margin.content * 2
--- Precalculate
+-- Style that will be usef for sections
 local section_style = {
-    background_color = '#ff0000ff',
+    background_color = bar_info.colors.bg_sections,
     contents_size = bar_info.contents_size,
     margin = bar_info.margin,
     spacing = bar_info.spacing,
-    colors = bar_info.colors,
     corner_radius = bar_info.corner_radius.sections
 }
 
@@ -48,13 +47,7 @@ awful.screen.connect_for_each_screen(
         }
 
 
-        -- TODO remove this later
         local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
-        local clock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
-        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s)
-        local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
-        local promptbox = awful.widget.prompt()
-        local systray = wibox.widget.systray()
 
         add_section {
             name = 'kb',
@@ -70,6 +63,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
 
+        --[[
         add_section {
             name = 'taglist',
             widgets = {
@@ -111,5 +105,6 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        ]]
     end
 )

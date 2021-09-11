@@ -51,7 +51,7 @@ local statusbar = {
         -- Margin between 2 ends of the bar and the corners of the screen
         corners = client.gaps * 2,
         -- Margin between the bar side and the edge of the screen
-        edge = size(4),
+        edge = client.gaps * 2,
         -- Margin between the bar and its contents
         content = space(4)
     },

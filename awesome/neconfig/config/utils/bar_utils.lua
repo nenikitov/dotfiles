@@ -48,7 +48,7 @@ function add_section(args)
             return awful.placement[section_position](wi, { margins = margins })
         end,
         shape = r_rect(style.corner_radius),
-        bg = style.colors.bg_sections,
+        bg = style.background_color,
         widget = {},
         type = 'toolbar'
     }
