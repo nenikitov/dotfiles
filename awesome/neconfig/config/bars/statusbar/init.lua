@@ -40,7 +40,6 @@ awful.screen.connect_for_each_screen(
                     Keyboard
                     Clock
         ]]
-
         s.statusbar = {}
         s.statusbar.sections = {}
 
@@ -48,11 +47,21 @@ awful.screen.connect_for_each_screen(
         s.statusbar.wibar = awful.wibar {
             position = bar_info.position,
             screen = s,
-            height = bar_info.height
+            height = bar_info.height,
+            stretch = false,
+            width = s.geometry.width - bar_info.margin.corners * 2,
+            shape = function(cr, w, h)
+                --shape.transform(shape.rounded_rect) : translate(0,25) (cr,70,20, 5)
+                return gears.shape.transform(gears.shape.rounded_rect)
+                    : translate(0, bar_info.margin.edge)
+                    (cr, w, h - bar_info.margin.edge)
+            end,
+            bg = '#00000000'
         }
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal
         }
+
 
         -- TODO remove this later
         local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')

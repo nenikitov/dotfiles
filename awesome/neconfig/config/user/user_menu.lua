@@ -14,15 +14,34 @@ local terminal = user_vars_conf.apps.default_apps.terminal
 -- ▀▀█ █▄█ █ █▄▄ █ █   █ ▀ █ ██▄ █ ▀█ █▄█
 -- 'Awesome' submenu
 local menu_root_awesome = {
-    { 'Hotkeys', function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { 'Restart', awesome.restart },
-    { 'Quit', function() awesome.quit() end },
+    {
+        'Hotkeys',
+        function()
+            hotkeys_popup.show_help(nil, awful.screen.focused())
+        end
+    },
+    {
+        'Restart',
+        awesome.restart
+    },
+    {
+        'Quit',
+        function()
+            awesome.quit()
+        end
+    },
 }
 
 -- 'Root' menu
 local menu_root = {
-    { 'Awesome', menu_root_awesome, beautiful.awesome_icon },
-    { 'Terminal', terminal }
+    {
+        'Awesome',
+        menu_root_awesome,
+        beautiful.awesome_icon },
+    {
+        'Terminal',
+        terminal
+    }
 }
 
 return awful.menu({ items = menu_root })

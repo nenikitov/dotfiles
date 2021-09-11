@@ -2,9 +2,6 @@
 local wibox = require('wibox')
 local gears = require('gears')
 
--- Other variables
-local iconfont = 'Font Awesome 5 Free-Solid-900'
-
 
 ---Generate a rounded rectangle shape
 ---@param radius number
@@ -30,7 +27,6 @@ function clip_widget(contents, shape)
     }
 end
 
--- Shrink widget horizontally to the given size
 ---Shrink widget horizontally to the given size
 ---@param contents widget
 ---@param size number

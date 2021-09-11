@@ -23,13 +23,13 @@ local statusbar = {
     height = size(40),
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corners = size(80),
+        corners = dpi(500),
         -- Margin between the bar side and the edge of the screen
-        edge = size(4)
+        edge = dpi(4)
     },
     spacing = {
-        widget = size(4),
-        section = size(8)
+        widget = dpi(4),
+        section = dpi(8)
     },
     corner_radius = size(12)
 }

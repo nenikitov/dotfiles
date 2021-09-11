@@ -1,5 +1,4 @@
 local awful = require('awful')
-local gears = require('gears')
 local icons = require('neconfig.config.utils.icons')
 
 
@@ -16,7 +15,7 @@ local apps = {
         
         browser = 'firefox',
 
-        file_manager = 'dolphin', -- pcmanfm?
+        file_manager = 'pcmanfm',
         multimedia = 'vlc'
     },
     -- Commands that will be executed on start up
