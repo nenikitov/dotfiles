@@ -47,8 +47,10 @@ function add_section(args)
             local margins = find_margins_for_position(position, last_section, style, screen, info_table)
             return awful.placement[section_position](wi, { margins = margins })
         end,
+        shape = r_rect(style.corner_radius),
+        bg = style.colors.bg_sections,
         widget = {},
-        bg = '#a00'
+        type = 'toolbar'
     }
     --#endregion
 
@@ -65,7 +67,6 @@ function add_section(args)
 
     -- Create a layout
     local section_layout = wibox.layout.fixed.horizontal()
-
     -- Add widgets to it
     for _, widget in pairs(info_table[section_position][name].widgets)
     do
@@ -81,9 +82,13 @@ function add_section(args)
 
     -- Put it in the popup
     info_table[section_position][name].popup:setup {
-        section_final_widget,
+        pad_widget(
+            section_final_widget,
+            0, style.corner_radius,
+            0, style.corner_radius
+        ),
 
-        layout = wibox.layout.fixed.horizontal
+        layout = wibox.layout.fixed.horizontal,
     }
     --#endregion
 

@@ -11,7 +11,7 @@ theme.user_vars_theme = require('neconfig.theme.user_vars_theme')
 
 theme.font          = theme.user_vars_theme.general.font .. ' ' .. size(12)
 
-theme.bg_normal     = '#222222'
+theme.bg_normal     = '#22222200'
 theme.bg_focus      = '#535d6c'
 theme.bg_urgent     = '#ff0000'
 theme.bg_minimize   = '#444444'
@@ -29,7 +29,7 @@ theme.border_focus  = '#535d6c'
 theme.border_marked = '#91231c'
 
 
-theme.wibar_bg = '#0000ffff'
+theme.wibar_bg = theme.user_vars_theme.statusbar.colors.bg_bar
 
 
 -- There are other variable sets

@@ -8,7 +8,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 local general = {
     font = 'Jost* Regular',
     scaling = {
-        contents = 1,
+        contents = 1.25,
         spacing = 1
     }
 }
@@ -37,21 +37,34 @@ local client = {
 -- █▀ ▀█▀ ▄▀█ ▀█▀ █ █ █▀ █▄▄ ▄▀█ █▀█
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
+    -- Side of the screen ('top', 'bottom', 'left', or 'right')
     position = 'top',
+    -- The size of the sections inside
     contents_size = size(24),
+    -- Color scheme
+    colors = {
+        bg_bar = '#0001',
+        bg_sections = '#0003',
+    },
+    -- Spacing between the bar, the screen and the sections
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
         corners = client.gaps * 2,
         -- Margin between the bar side and the edge of the screen
-        edge = client.gaps * 2,
+        edge = size(4),
         -- Margin between the bar and its contents
         content = space(4)
     },
+    -- Spacing between the sections and the widgets
     spacing = {
         widget = space(4),
         section = space(16)
     },
-    corner_radius = size(12)
+    -- Corner rounding
+    corner_radius = {
+        bar = size(6),
+        sections = size(6)
+    }
 }
 
 

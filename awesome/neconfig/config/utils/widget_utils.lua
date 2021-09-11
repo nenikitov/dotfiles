@@ -72,19 +72,3 @@ function pad_widget(contents, top, right, bottom, left)
         left = left
     }
 end
-
--- TODO remove?
--- Generate a pill shape that can contain widgets
-function place_in_pill(contents, color, radius, vertical_padding, horizontal_padding, right_margin)
-    local padded = pad_widget(contents, vertical_padding, horizontal_padding, vertical_padding, horizontal_padding)
-    local with_bg = {
-        padded,
-        widget = wibox.container.background,
-        bg = color,
-        shape = r_rect(radius),
-        shape_clip = true
-    }
-    local final = pad_widget(with_bg, 0, right_margin, 0, 0)
-
-    return final
-end
