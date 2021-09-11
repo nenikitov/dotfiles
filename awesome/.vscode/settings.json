@@ -1,7 +1,9 @@
 {
     "Lua.diagnostics.globals": [
         "root",
-        "screen"
+        "screen",
+        "awesome",
+        "client"
     ],
     "Lua.diagnostics.disable": [
         "undefined-doc-name"
