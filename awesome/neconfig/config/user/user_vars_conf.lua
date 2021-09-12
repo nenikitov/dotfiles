@@ -100,8 +100,8 @@ local statusbar = {
         clock = true
     },
     clock = {
-        time_format = '%H:%M',
-        date_format = '%a %Y-%m-%d',
+        top_format = '%H:%M',
+        bottom_format = '%a %Y-%m-%d',
     }
 }
 

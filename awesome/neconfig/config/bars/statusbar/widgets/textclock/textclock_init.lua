@@ -5,23 +5,21 @@ local beautiful = require('beautiful')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 -- Generate 2 separate widgets for date and time
-local time = wibox.widget {
-    wibox.widget.textclock(user_vars_conf.statusbar.clock.time_format),
+local top_time = wibox.widget {
+    wibox.widget.textclock(user_vars_conf.statusbar.clock.top_format),
     widget = wibox.container.place
 }
-local date = wibox.widget {
-    wibox.widget.textclock(user_vars_conf.statusbar.clock.date_format),
+local bottom_time = wibox.widget {
+    wibox.widget.textclock(user_vars_conf.statusbar.clock.bottom_format),
     widget = wibox.container.place
 }
 -- Set textclock font sizes
-local time_children = time:get_all_children()
-for _, child in pairs(time_children)
+for _, child in pairs(top_time:get_all_children())
 do
     child.font = beautiful.user_vars_theme.general.font .. ' '
-        .. (beautiful.user_vars_theme.general.text_size * 0.8)
+        .. (beautiful.user_vars_theme.general.text_size * 1)
 end
-local date_children = date:get_all_children()
-for _, child in pairs(date_children)
+for _, child in pairs(bottom_time:get_all_children())
 do
     child.font = beautiful.user_vars_theme.general.font .. ' '
         .. (beautiful.user_vars_theme.general.text_size * 0.75)
@@ -29,8 +27,8 @@ end
 
 -- Construct layered widget
 return wibox.widget {
-    time,
-    date,
+    top_time,
+    bottom_time,
     layout = wibox.layout.flex.vertical,
     fill_space = true
 }
