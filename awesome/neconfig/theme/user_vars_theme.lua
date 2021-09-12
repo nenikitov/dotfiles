@@ -3,29 +3,33 @@ local dpi = require('beautiful.xresources').apply_dpi
 
 
 -- Customize this
--- █▀▀ █▀▀ █▄ █ █▀▀ █▀█ ▄▀█ █  
--- █▄█ ██▄ █ ▀█ ██▄ █▀▄ █▀█ █▄▄
-local general = {
-    font = 'Jost* Regular',
-    scaling = {
-        contents = 1.25,
-        spacing = 1
-    }
+-- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
+-- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
+local scaling = {
+    contents = 1.25,
+    spacing = 1
 }
 
 --- Initialize size values related to widget scale
 ---@param value number
 ---@return number
-function size(value)
-    return dpi(value) * general.scaling.contents
+local function size(value)
+    return dpi(value) * scaling.contents
 end
 
 --- Initialize size values related to spacing
 ---@param value number
 ---@return number
-function space(value)
-    return dpi(value) * general.scaling.spacing
+local function space(value)
+    return dpi(value) * scaling.spacing
 end
+
+-- █▀▀ █▀▀ █▄ █ █▀▀ █▀█ ▄▀█ █
+-- █▄█ ██▄ █ ▀█ ██▄ █▀▄ █▀█ █▄▄
+local general = {
+    font = 'Jost* Regular',
+    text_size = size(12)
+}
 
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █

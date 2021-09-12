@@ -99,7 +99,10 @@ local statusbar = {
         keyboard_layout = true,
         clock = true
     },
-    datetime_format = '%H:%M, %a, %Y-%m-%d'
+    clock = {
+        time_format = '%H:%M',
+        date_format = '%a %Y-%m-%d',
+    }
 }
 
 
