@@ -88,3 +88,19 @@ function pad_widget(contents, top, right, bottom, left)
         left = left
     }
 end
+
+
+function square_widget(contents, size, padding)
+    return {
+        contents,
+
+        widget = wibox.container.margin,
+
+        top = padding,
+        right = padding,
+        bottom = padding,
+        left = padding,
+        forced_width = size,
+        forced_height = size,
+    }
+end

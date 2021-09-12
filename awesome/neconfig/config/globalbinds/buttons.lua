@@ -7,7 +7,7 @@ local user_menu = require('neconfig.config.user.user_menu')
 -- Customize this
 -- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
-function get_global_buttons()
+local function get_global_buttons()
     local global_buttons = gears.table.join(
         -- Toggle menu on RMB
         awful.button(

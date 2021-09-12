@@ -23,15 +23,8 @@ local section_style = {
 }
 
 
-local menu = set_size_widget(
-    pad_widget(
-        require('neconfig.config.bars.statusbar.widgets.menu.menu_init'),
-        beautiful.user_vars_theme.statusbar.spacing.widget,
-        beautiful.user_vars_theme.statusbar.spacing.widget,
-        beautiful.user_vars_theme.statusbar.spacing.widget,
-        beautiful.user_vars_theme.statusbar.spacing.widget
-    ),
-    bar_info.contents_size, bar_info.contents_size
+local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(
+    bar_info.contents_size
 )
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
 
