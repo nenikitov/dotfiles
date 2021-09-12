@@ -31,7 +31,7 @@ end
 ---@param contents widget
 ---@param size number
 ---@return widget
-function resize_hor_widget(contents, size)
+function set_width_widget(contents, size)
     return {
         contents,
 
@@ -44,12 +44,28 @@ end
 ---@param contents widget
 ---@param size number
 ---@return widget
-function resize_vert_widget(contents, size)
+function set_height_widget(contents, size)
     return {
         contents,
 
         widget = wibox.container.background,
         forced_height = size
+    }
+end
+
+
+--- Shrink widget to the given size
+---@param contents widget
+---@param width number
+---@param height number
+---@return widget
+function set_size_widget(contents, width, height)
+    return {
+        contents,
+
+        widget = wibox.container.background,
+        forced_height = height,
+        forced_width = width
     }
 end
 

@@ -22,6 +22,19 @@ local section_style = {
     corner_radius = bar_info.corner_radius.sections
 }
 
+
+local menu = set_size_widget(
+    pad_widget(
+        require('neconfig.config.bars.statusbar.widgets.menu.menu_init'),
+        beautiful.user_vars_theme.statusbar.spacing.widget,
+        beautiful.user_vars_theme.statusbar.spacing.widget,
+        beautiful.user_vars_theme.statusbar.spacing.widget,
+        beautiful.user_vars_theme.statusbar.spacing.widget
+    ),
+    bar_info.contents_size, bar_info.contents_size
+)
+
+
 -- Set up the action bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)
@@ -47,12 +60,10 @@ awful.screen.connect_for_each_screen(
         }
 
 
-        local keyboardlayout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
-
         add_section {
-            name = 'kb',
+            name = 'menu',
             widgets = {
-                keyboardlayout,
+                menu,
             },
             position = {
                 side = bar_info.position,

@@ -57,8 +57,8 @@ local statusbar = {
     },
     -- Spacing between the sections and the widgets
     spacing = {
-        widget = space(4),
-        section = space(16)
+        widget = client.gaps / 2,
+        section = client.gaps * 2
     },
     -- Corner rounding
     corner_radius = {

@@ -70,7 +70,7 @@ function add_section(args)
     -- Add widgets to it
     for _, widget in pairs(info_table[section_position][name].widgets)
     do
-        section_layout:add(resize_vert_widget(widget, style.contents_size))
+        section_layout:add(set_height_widget(widget, style.contents_size))
     end
 
     -- Construct final widget

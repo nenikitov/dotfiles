@@ -1,9 +1,13 @@
+local awful = require('awful')
+
 local theme_assets = require('beautiful.theme_assets')
 local xresources = require('beautiful.xresources')
 local dpi = xresources.apply_dpi
 
 local gfs = require('gears.filesystem')
 local themes_path = gfs.get_themes_dir()
+
+local config_path = awful.util.getdir('config') .. '/neconfig/'
 
 local theme = {}
 
@@ -120,9 +124,7 @@ theme.layout_cornersw = themes_path..'default/layouts/cornersww.png'
 theme.layout_cornerse = themes_path..'default/layouts/cornersew.png'
 
 -- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
-)
+theme.awesome_icon = config_path .. 'graphics/icons/arch_logo.svg'
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
