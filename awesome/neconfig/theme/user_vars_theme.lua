@@ -43,8 +43,9 @@ local statusbar = {
     contents_size = size(24),
     -- Color scheme
     colors = {
-        bg_bar = '#0001',
-        bg_sections = '#0003',
+        -- Main
+        bg_bar = '#0002',
+        bg_sections = '#0004',
     },
     -- Spacing between the bar, the screen and the sections
     margin = {

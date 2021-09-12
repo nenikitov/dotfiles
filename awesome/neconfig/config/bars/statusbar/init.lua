@@ -33,6 +33,7 @@ local menu = set_size_widget(
     ),
     bar_info.contents_size, bar_info.contents_size
 )
+local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
 
 
 -- Set up the action bar for each screen
@@ -60,6 +61,7 @@ awful.screen.connect_for_each_screen(
         }
 
 
+        --#region 1st section
         add_section {
             name = 'menu',
             widgets = {
@@ -73,6 +75,23 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        --#endregion
+
+        --#region 3rd section
+        add_section {
+            name = 'clock',
+            widgets = {
+                textclock,
+            },
+            position = {
+                side = bar_info.position,
+                section = 3
+            },
+            style = section_style,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+        --#endregion
 
         --[[
         add_section {
