@@ -48,13 +48,13 @@ local statusbar = {
     -- Color scheme
     colors = {
         -- Main
-        bg_bar = '#0006',
+        bg_bar = '#ff04',
         bg_sections = '#0002',
     },
     -- Spacing between the bar, the screen and the sections
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corners = client.gaps * 2,
+        corners = client.gaps * 32,
         -- Margin between the bar side and the edge of the screen
         edge = client.gaps * 2,
         -- Margin between the bar and its contents

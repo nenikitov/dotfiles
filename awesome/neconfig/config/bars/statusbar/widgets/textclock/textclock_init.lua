@@ -13,12 +13,7 @@ local bottom_time = wibox.widget {
     wibox.widget.textclock(user_vars_conf.statusbar.clock.bottom_format),
     widget = wibox.container.place
 }
--- Set textclock font sizes
-for _, child in pairs(top_time:get_all_children())
-do
-    child.font = beautiful.user_vars_theme.general.font .. ' '
-        .. (beautiful.user_vars_theme.general.text_size * 1)
-end
+-- Set font size for the date on the bottom
 for _, child in pairs(bottom_time:get_all_children())
 do
     child.font = beautiful.user_vars_theme.general.font .. ' '
