@@ -54,28 +54,38 @@ awful.screen.connect_for_each_screen(
             [size_param.length] = s.geometry[size_param.length] - bar_info.margin.corners * 2,
 
             shape = function(cr, w, h)
-                --[[
-                    position
-                        translate
-                        size
-
-                    top
-                        0, bar_info.margin.edge
-                        w, h - bar_info.margin.edge
-                    bottom
-                        0, 0
-                        w, h - bar_info.margin.edge
-                    left
-                        bar_info.margin.edge, 0
-                        w - bar_info.margin.edge, h
-                    right
-                        0, 0
-                        w - bar_info.margin.edge, h
-                ]]
+                local offset = bar_info.margin.edge
+                local transform_lookup = {
+                    top = {
+                        x = 0,
+                        y = offset,
+                        w = w,
+                        h = h - offset
+                    },
+                    bottom = {
+                        x = 0,
+                        y = 0,
+                        w = w,
+                        h = h - offset
+                    },
+                    left = {
+                        x = offset,
+                        y = 0,
+                        w = w - offset,
+                        h = h
+                    },
+                    right = {
+                        x = 0,
+                        y = 0,
+                        w = w - offset,
+                        h = h
+                    },
+                }
+                local transform = transform_lookup[bar_info.position]
 
                 return gears.shape.transform(gears.shape.rounded_rect)
-                    : translate(0, bar_info.margin.edge)
-                    (cr, w, h - bar_info.margin.edge, bar_info.corner_radius.bar)
+                    : translate(transform.x, transform.y)
+                    (cr, transform.w, transform.h, bar_info.corner_radius.bar)
             end,
         }
         s.statusbar.wibar:setup {
