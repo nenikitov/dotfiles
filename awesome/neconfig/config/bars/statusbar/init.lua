@@ -102,9 +102,7 @@ awful.screen.connect_for_each_screen(
         --#region 1st section
         add_section {
             name = 'menu',
-            widgets = {
-                menu,
-            },
+            widget = menu,
             position = {
                 side = bar_info.position,
                 section = 1
@@ -118,9 +116,7 @@ awful.screen.connect_for_each_screen(
         --#region 3rd section
         add_section {
             name = 'clock',
-            widgets = {
-                textclock,
-            },
+            widget = textclock,
             position = {
                 side = bar_info.position,
                 section = 3
@@ -134,9 +130,7 @@ awful.screen.connect_for_each_screen(
         local systray = wibox.widget.systray(s)
         add_section {
             name = 'taglist',
-            widgets = {
-                systray,
-            },
+            widget = systray,
             position = {
                 side = 'bottom',
                 section = 1

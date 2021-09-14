@@ -10,7 +10,7 @@ require('neconfig.config.utils.widget_utils')
 function add_section(args)
     --#region Aliases for the arguments
     local name = args.name
-    local widgets = args.widgets
+    local widget = args.widget
     local position = args.position
     local style = args.style
     local screen = args.screen
@@ -55,27 +55,25 @@ function add_section(args)
     --#endregion
 
     --#region Populate the section with each widget in the list
-    info_table[section_position][name].widgets = widgets
+    info_table[section_position][name].widget = widget
     -- Get if the section should restrict the widgets width or height
     local size_param
+    local padding_ver
+    local padding_hor
     if (position_info.next_direction == 'top' or position_info.next_direction == 'bottom')
     then
         size_param = 'width'
+        padding_ver = style.corner_radius
+        padding_hor = 0
     else
         size_param = 'height'
-    end
-
-    -- Create a layout
-    local section_layout = wibox.layout.fixed.horizontal()
-    -- Add widgets to it
-    for _, widget in pairs(info_table[section_position][name].widgets)
-    do
-        section_layout:add(set_height_widget(widget, style.contents_size))
+        padding_ver = 0
+        padding_hor = style.corner_radius
     end
 
     -- Construct final widget
     local section_final_widget = {
-        section_layout,
+        set_height_widget(widget, style.contents_size),
         ['forced_' .. size_param] = style.contents_size,
         widget = wibox.container.background
     }
@@ -84,8 +82,8 @@ function add_section(args)
     info_table[section_position][name].popup:setup {
         pad_widget(
             section_final_widget,
-            0, style.corner_radius,
-            0, style.corner_radius
+            padding_ver, padding_hor,
+            padding_ver, padding_hor
         ),
 
         layout = wibox.layout.fixed.horizontal,

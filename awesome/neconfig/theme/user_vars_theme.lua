@@ -48,7 +48,7 @@ local statusbar = {
     -- Color scheme
     colors = {
         -- Main
-        bg_bar = '#ff04',
+        bg_bar = '#0ff4',
         bg_sections = '#0002',
     },
     -- Spacing between the bar, the screen and the sections
