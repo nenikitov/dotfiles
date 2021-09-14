@@ -45,6 +45,13 @@ awful.screen.connect_for_each_screen(
         s.statusbar = {}
         s.statusbar.sections = {}
 
+        -- TODO
+        -- You can set wibars position by using s.statusbar.wibar.y
+        -- However, the struts are not correct
+        -- You should find how to make them better
+        --
+        -- Make so section accepts 1 widget
+        -- Make so it resizes it automatically
 
         -- Create an empty wibar to constraint client position
         s.statusbar.wibar = awful.wibar {
@@ -91,11 +98,6 @@ awful.screen.connect_for_each_screen(
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal
         }
-
-        --[[ TODO
-            - Add spacing between widgets inside the same section
-            - Make so the bar can be placed on the left and right
-        ]]
 
         --#region 1st section
         add_section {
