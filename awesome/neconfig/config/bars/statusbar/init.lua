@@ -32,7 +32,10 @@ local section_style = {
     corner_radius = bar_info.corner_radius.sections
 }
 local taglist_style = {
-
+    direction = 'horizontal',
+    padding = bar_info.spacing.widget * 2,
+    spacing = bar_info.spacing.widget,
+    corner_radius = bar_info.corner_radius.sections
 }
 
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(

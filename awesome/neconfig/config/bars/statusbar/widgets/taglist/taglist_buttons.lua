@@ -9,7 +9,7 @@ local super_key = user_vars_conf.binds.keys.super_key
 
 
 -- Create the button binds for tag list
-function get_taglist_buttons()
+local function get_taglist_buttons()
     local taglist_buttons = gears.table.join(
         -- View only the current tag on LMB
         awful.button(

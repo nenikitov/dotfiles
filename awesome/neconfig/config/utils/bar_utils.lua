@@ -60,20 +60,23 @@ function add_section(args)
     local size_param
     local padding_ver
     local padding_hor
+    local resize_func
     if (position_info.next_direction == 'top' or position_info.next_direction == 'bottom')
     then
         size_param = 'width'
         padding_ver = style.corner_radius
         padding_hor = 0
+        resize_func = set_width_widget
     else
         size_param = 'height'
         padding_ver = 0
         padding_hor = style.corner_radius
+        resize_func = set_height_widget
     end
 
     -- Construct final widget
     local section_final_widget = {
-        set_height_widget(widget, style.contents_size),
+        resize_func(widget, style.contents_size),
         ['forced_' .. size_param] = style.contents_size,
         widget = wibox.container.background
     }

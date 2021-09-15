@@ -8,14 +8,14 @@ local widget_utils = require('neconfig.config.utils.widget_utils')
 
 local function get_taglist_widget(style)
     local widget_style = {
-        shape = r_rect(6)
+        shape = r_rect(style.corner_radius)
     }
     
     local widget_layout = {
-        spacing = 6,
-        layout  = wibox.layout.fixed.horizontal
+        spacing = style.spacing,
+        layout  = wibox.layout.fixed[style.direction]
     }
-    
+ 
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
@@ -37,10 +37,10 @@ local function get_taglist_widget(style)
             {
                 id = 'text_margin_role',
                 widget = wibox.container.margin,
-                top = 0,
-                bottom = 0,
-                left = 6,
-                right = 6,
+                top = style.padding,
+                bottom = style.padding,
+                left = style.padding,
+                right = style.padding,
 
                 {
                     id = 'text_role',

@@ -4,7 +4,7 @@ local awful = require('awful')
 local tasklist_buttons = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_buttons')()
 
 -- Generate tasklist widget
-function get_tasklist_widget(screen)
+local function get_tasklist(screen)
     local tasklist = awful.widget.tasklist {
         screen = screen,
         filter = awful.widget.tasklist.filter.currenttags,
@@ -16,5 +16,5 @@ end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_tasklist_widget(...) end }
+    {  __call = function(_, ...) return get_tasklist(...) end }
 )
