@@ -5,7 +5,7 @@ local taglist_buttons = require('neconfig.config.bars.statusbar.widgets.taglist.
 
 
 -- Generate taglist widget
-local function get_taglist_widget(screen, style)
+local function get_taglist(screen, style)
     local taglist_widget = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_widget')(style)
 
     local taglist = awful.widget.taglist {
@@ -22,5 +22,5 @@ end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_taglist_widget(...) end }
+    {  __call = function(_, ...) return get_taglist(...) end }
 )

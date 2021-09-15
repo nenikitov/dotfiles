@@ -31,7 +31,7 @@ local function get_taglist_widget(style)
                 {
                     id = 'icon_role',
                     widget = wibox.widget.imagebox,
-                    left = 6,
+                    left = style.padding,
                 },
             },
             {
@@ -47,7 +47,12 @@ local function get_taglist_widget(style)
                     widget = wibox.widget.textbox,
                 },
             }
-        }
+        },
+
+        update_callback = function(self, t, index, tags)
+            -- You can get the number of clients here
+            local num_clients = #t:clients()
+        end
     }
 
     return {
