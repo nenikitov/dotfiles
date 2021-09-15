@@ -1,7 +1,6 @@
 -- Standard Awesome libraries
 local gears = require('gears')
 local awful = require('awful')
-local wibox = require('wibox')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 

@@ -31,7 +31,9 @@ local section_style = {
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
+local taglist_style = {
 
+}
 
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(
     bar_info.contents_size
@@ -49,11 +51,9 @@ awful.screen.connect_for_each_screen(
         -- You can set wibars position by using s.statusbar.wibar.y
         -- However, the struts are not correct
         -- You should find how to make them better
-        --
-        -- Make so section accepts 1 widget
-        -- Make so it resizes it automatically
 
         -- Create an empty wibar to constraint client position
+        --#region Fake wibar
         s.statusbar.wibar = awful.wibar {
             position = bar_info.position,
             screen = s,
@@ -98,6 +98,13 @@ awful.screen.connect_for_each_screen(
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal
         }
+        --#endregion
+
+
+        --#region Generate screen scpecific widgets
+        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_style)
+        local systray = wibox.widget.systray(s)
+        --#endregion
 
         --#region 1st section
         add_section {
@@ -111,7 +118,19 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        add_section {
+            name = 'taglist',
+            widget = taglist,
+            position = {
+                side = bar_info.position,
+                section = 1
+            },
+            style = section_style,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
         --#endregion
+
 
         --#region 3rd section
         add_section {
@@ -127,7 +146,7 @@ awful.screen.connect_for_each_screen(
         }
         --#endregion
 
-        local systray = wibox.widget.systray(s)
+        -- Other
         add_section {
             name = 'taglist',
             widget = systray,
@@ -139,35 +158,5 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
-
-        --[[
-        add_section {
-            name = 'clock',
-            widgets = {
-                clock,
-            },
-            position = {
-                side = bar_info.position,
-                section = 3
-            },
-            style = section_style,
-            screen = s,
-            info_table = s.statusbar.sections
-        }
-
-        add_section {
-            name = 'clock',
-            widgets = {
-                systray,
-            },
-            position = {
-                side = 'bottom',
-                section = 1
-            },
-            style = section_style,
-            screen = s,
-            info_table = s.statusbar.sections
-        }
-        ]]
     end
 )
