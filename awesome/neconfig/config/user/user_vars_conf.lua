@@ -88,21 +88,25 @@ local desktop = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Show the status bar
-    visibility = true,
-    -- Which widgets will be shown
+    visibile = true,
+    -- Widget settings
     widgets = {
-        layout = true,
-        taglist = true,
-        tasklist = true,
-        system_tools = true,
-        notifications = true,
-        keyboard_layout = true,
-        clock = true
+        menu = {
+            visible = true
+        },
+        taglist = {
+            visible = true,
+            show_client_number = true
+        },
+        keyboard_layout = {
+            visible = true,
+        },
+        clock = {
+            visible = true,
+            top_format = '%H:%M',
+            bottom_format = '%a %Y-%m-%d',
+        }
     },
-    clock = {
-        top_format = '%H:%M',
-        bottom_format = '%a %Y-%m-%d',
-    }
 }
 
 
@@ -110,7 +114,7 @@ local statusbar = {
 -- █▀█ █▀▀ █▀▀ █▄█ █▀█ █▀▄
 local appbar = {
     -- Show the application bar
-    visibility = true,-- Load libraries
+    visibile = true,
     -- Widgets that will be shown
     widgets = {
         launcher = true,

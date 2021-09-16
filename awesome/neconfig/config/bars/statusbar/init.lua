@@ -44,7 +44,7 @@ local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(
     bar_info.contents_size
 )
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')
-
+local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
 
 -- Set up the action bar for each screen
 awful.screen.connect_for_each_screen(
@@ -109,12 +109,24 @@ awful.screen.connect_for_each_screen(
         --#region Generate screen scpecific widgets
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_style)
         local systray = wibox.widget.systray(s)
+        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info.contents_size)
         --#endregion
 
         --#region 1st section
         add_section {
             name = 'menu',
             widget = menu,
+            position = {
+                side = bar_info.position,
+                section = 1
+            },
+            style = section_style,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+        add_section {
+            name = 'layoutbox',
+            widget = layoutbox,
             position = {
                 side = bar_info.position,
                 section = 1
@@ -141,6 +153,17 @@ awful.screen.connect_for_each_screen(
         add_section {
             name = 'clock',
             widget = textclock,
+            position = {
+                side = bar_info.position,
+                section = 3
+            },
+            style = section_style,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+        add_section {
+            name = 'keyboard_layout',
+            widget = keyboard_layout,
             position = {
                 side = bar_info.position,
                 section = 3

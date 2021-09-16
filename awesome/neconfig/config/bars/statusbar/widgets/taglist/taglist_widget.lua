@@ -4,6 +4,7 @@ local wibox = require('wibox')
 local gears = require('gears')
 local beautiful = require('beautiful')
 -- Load custom modules
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
@@ -36,29 +37,32 @@ local function get_taglist_widget(style)
         --#endregion
 
         --#region Update the widget that shows the number of opened clients on a tag
-        local client_num_role = self:get_children_by_id('client_num_role')[1]
-        -- Generate circle widget
-        local circle_bg
-        if (t.selected)
+        if (user_vars_conf.statusbar.widgets.taglist.show_client_number)
         then
-            circle_bg = beautiful.fg_focus
-        else
-            circle_bg = beautiful.fg_normal
-        end
-        local circle = wibox.widget {
-            bg = circle_bg,
-            shape = gears.shape.circle,
-            widget = wibox.container.background,
-        }
-        -- Clear the widget with the circles
-        for i = 0, 5, 1
-        do
-            client_num_role:remove(1)
-        end
-        -- Add circles to it
-        for i = 1, clients_num, 1
-        do
-            client_num_role:add(circle)
+            local client_num_role = self:get_children_by_id('client_num_role')[1]
+            -- Generate circle widget
+            local circle_bg
+            if (t.selected)
+            then
+                circle_bg = beautiful.fg_focus
+            else
+                circle_bg = beautiful.fg_normal
+            end
+            local circle = wibox.widget {
+                bg = circle_bg,
+                shape = gears.shape.circle,
+                widget = wibox.container.background,
+            }
+            -- Clear the widget with the circles
+            for i = 0, 5, 1
+            do
+                client_num_role:remove(1)
+            end
+            -- Add circles to it
+            for i = 1, clients_num, 1
+            do
+                client_num_role:add(circle)
+            end
         end
         --#endregion
     end
