@@ -4,7 +4,7 @@ local wibox = require('wibox')
 
 
 -- Create button binds for task list
-function get_tasklist_buttons()
+local function get_tasklist_buttons()
     local tasklist_buttons = gears.table.join(
         -- Mimimize / Restore on LMB
         awful.button(

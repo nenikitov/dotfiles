@@ -4,7 +4,7 @@ local awful = require('awful')
 
 
 -- Create the button binds for layoutbox
-function get_layoutbox_buttons()
+local function get_layoutbox_buttons()
     local layoutbox_buttons = gears.table.join(
         -- Go to next layout on LMB
         awful.button(

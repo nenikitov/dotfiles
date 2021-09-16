@@ -10,7 +10,7 @@ local tag_num = #(user_vars_conf.desktop.tag_names)
 
 
 -- Bind all key numbers to interact with corresponding tags
-function get_tag_binds(global_keys)
+local function get_tag_binds(global_keys)
     for i = 1, tag_num do
         global_keys = gears.table.join(global_keys,
             -- View tag only on SUPER + NUMBER

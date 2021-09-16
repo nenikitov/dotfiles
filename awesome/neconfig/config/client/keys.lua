@@ -11,7 +11,7 @@ local super_key = user_vars_conf.binds.keys.super_key
 -- Customize this
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █    █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
-function get_client_keys()
+local function get_client_keys()
     local client_keys = gears.table.join(
         -- Toggle fullscreen on SUPER + F
         awful.key(

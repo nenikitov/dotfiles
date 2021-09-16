@@ -15,7 +15,7 @@ local terminal = user_vars_conf.apps.default_apps.terminal
 -- Customize this
 -- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
-function get_global_keys()
+local function get_global_keys()
     local global_keys = gears.table.join(
         -- Awesome WM controls
         -- Show all bind on SUPER + S

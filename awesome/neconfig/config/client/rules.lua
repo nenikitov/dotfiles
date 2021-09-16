@@ -4,7 +4,7 @@ local beautiful = require('beautiful')
 
 
 -- Rules to apply to new clients (through the 'manage' signal).
-function get_rules(client_keys, client_buttons)
+local function get_rules(client_keys, client_buttons)
     local rules = {
         -- All clients will match this rule.
         {

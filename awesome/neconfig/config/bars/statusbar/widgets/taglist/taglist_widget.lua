@@ -8,13 +8,8 @@ local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
 local function get_taglist_widget(style)  
-    local widget_style = nil
-    --[[
-    {
-        shape = r_rect(style.corner_radius)
-    }
-    ]]
-    
+    local widget_style = nil -- { shape = r_rect(style.corner_radius) }
+
     local widget_layout = {
         spacing = style.spacing,
         layout = wibox.layout.fixed[style.direction]
@@ -22,20 +17,27 @@ local function get_taglist_widget(style)
 
 
     local tag_updated = function (self, t, index, tags)
+        -- Count clients
+        local clients_num = math.min(#t:clients(), 5)
+
         --#region Update the color of the 'selected_bar_role'
         local selected_bar_role = self:get_children_by_id('selected_bar_role')[1]
         if (t.selected)
         then
             selected_bar_role.bg = beautiful.fg_focus
         else
-            selected_bar_role.bg = '#0000'
+            if (clients_num > 0)
+            then
+                selected_bar_role.bg = beautiful.bg_normal
+            else
+                selected_bar_role.bg = '#0000'
+            end
         end
         --#endregion
 
         --#region Update the widget that shows the number of opened clients on a tag
-        -- Count clients
-        local clients_num = math.min(#t:clients(), 5)
         local client_num_role = self:get_children_by_id('client_num_role')[1]
+        -- Generate circle widget
         local circle_bg
         if (t.selected)
         then
@@ -48,12 +50,12 @@ local function get_taglist_widget(style)
             shape = gears.shape.circle,
             widget = wibox.container.background,
         }
-        -- Clear the widget
+        -- Clear the widget with the circles
         for i = 0, 5, 1
         do
             client_num_role:remove(1)
         end
-        -- Add circles
+        -- Add circles to it
         for i = 1, clients_num, 1
         do
             client_num_role:add(circle)
@@ -105,6 +107,7 @@ local function get_taglist_widget(style)
                     {
                         id = 'text_role',
                         widget = wibox.widget.textbox,
+                        align = 'center'
                     },
                 }
             },
@@ -112,8 +115,8 @@ local function get_taglist_widget(style)
             {
                 widget = wibox.container.margin,
                 top = style.size - style.decoration_size,
-                left = style.size / 6,
-                right = style.size / 6,
+                left = style.size / 10,
+                right = style.size / 10,
 
                 {
                     id = 'client_num_role',
@@ -121,7 +124,6 @@ local function get_taglist_widget(style)
                 }
             }
         },
-
 
         update_callback = tag_updated,
         create_callback = tag_updated

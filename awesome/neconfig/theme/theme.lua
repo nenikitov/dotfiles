@@ -15,7 +15,7 @@ theme.user_vars_theme = require('neconfig.theme.user_vars_theme')
 
 theme.font          = theme.user_vars_theme.general.font .. ' ' .. theme.user_vars_theme.general.text_size
 
-theme.bg_normal     = '#22222200'
+theme.bg_normal     = '#222222'
 theme.bg_focus      = '#535d6c'
 theme.bg_urgent     = '#ff0000'
 theme.bg_minimize   = '#444444'

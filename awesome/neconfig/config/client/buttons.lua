@@ -11,7 +11,7 @@ local super_key = user_vars_conf.binds.keys.super_key
 -- Customize this
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █    █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
-function get_client_buttons()
+local function get_client_buttons()
     local client_buttons = gears.table.join(
         -- Activate client on LMB
         awful.button(

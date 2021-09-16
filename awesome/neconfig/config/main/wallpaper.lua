@@ -4,7 +4,7 @@ local beautiful = require('beautiful')
 
 
 -- Set wallpaper
-function set_wallpaper(s)
+local function set_wallpaper(s)
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
         if type(wallpaper) == 'function' then
