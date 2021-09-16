@@ -57,18 +57,15 @@ function add_section(args)
     --#region Populate the section with each widget in the list
     info_table[section_position][name].widget = widget
     -- Get if the section should restrict the widgets width or height
-    local size_param
     local padding_ver
     local padding_hor
     local resize_func
     if (position_info.next_direction == 'top' or position_info.next_direction == 'bottom')
     then
-        size_param = 'width'
         padding_ver = style.corner_radius
         padding_hor = 0
         resize_func = set_width_widget
     else
-        size_param = 'height'
         padding_ver = 0
         padding_hor = style.corner_radius
         resize_func = set_height_widget
@@ -77,7 +74,6 @@ function add_section(args)
     -- Construct final widget
     local section_final_widget = {
         resize_func(widget, style.contents_size),
-        ['forced_' .. size_param] = style.contents_size,
         widget = wibox.container.background
     }
 

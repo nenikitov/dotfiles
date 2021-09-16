@@ -33,6 +33,8 @@ local section_style = {
 }
 local taglist_style = {
     direction = 'horizontal',
+    size = bar_info.contents_size,
+    decoration_size = 4,
     padding = bar_info.spacing.widget * 2,
     spacing = bar_info.spacing.widget,
     corner_radius = bar_info.corner_radius.sections
