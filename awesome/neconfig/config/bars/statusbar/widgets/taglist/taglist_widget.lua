@@ -1,11 +1,9 @@
 -- Load libaries
-local awful = require('awful')
 local wibox = require('wibox')
 local gears = require('gears')
 local beautiful = require('beautiful')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
-local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
 local function get_taglist_widget(style)  

@@ -36,6 +36,9 @@ theme.border_marked = '#91231c'
 theme.wibar_bg = theme.user_vars_theme.statusbar.colors.bg_bar
 
 
+theme.taglist_bg_focus = '#0006'
+theme.taglist_bg_urgent = '#f004'
+
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
