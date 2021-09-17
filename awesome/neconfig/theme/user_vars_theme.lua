@@ -34,7 +34,7 @@ local general = {
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █
 local client = {
-    gaps = space(5)
+    gaps = space(4)
 }
 
 
@@ -54,11 +54,11 @@ local statusbar = {
     -- Spacing between the bar, the screen and the sections
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corners = client.gaps * 32,
+        corners = space(128),
         -- Margin between the bar side and the edge of the screen
-        edge = client.gaps * 2,
+        edge = client.gaps,
         -- Margin between the bar and its contents
-        content = space(4)
+        content = client.gaps
     },
     -- Spacing between the sections and the widgets
     spacing = {

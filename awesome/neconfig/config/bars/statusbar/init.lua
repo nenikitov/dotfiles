@@ -61,9 +61,17 @@ awful.screen.connect_for_each_screen(
         s.statusbar.sections = {}
 
         -- TODO
+        -- 1
         -- You can set wibars position by using s.statusbar.wibar.y
         -- However, the struts are not correct
         -- You should find how to make them better
+        -- 2
+        -- Select the style of the taglist (horizontal or vertical)
+        -- 3
+        -- Create better tasklist
+        -- 4
+        -- Create system tools and notifications buttons
+
 
         -- Create an empty wibar to constraint client position
         --#region Fake wibar

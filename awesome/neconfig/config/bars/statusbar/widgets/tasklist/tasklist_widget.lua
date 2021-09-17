@@ -2,7 +2,7 @@
 local wibox = require('wibox')
 local gears = require('gears')
 local beautiful = require('beautiful')
--- Load custom modules
+-- Load custom modulesclient.gaps,
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 
@@ -11,7 +11,7 @@ local function get_tasklist_widget(style)
 
 
     local widget_layout = {
-        layout = wibox.layout.fixed.horizontal,
+        layout = wibox.layout.flex.horizontal,
         forced_width = 800
     }
 
