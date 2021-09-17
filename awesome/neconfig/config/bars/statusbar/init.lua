@@ -39,6 +39,14 @@ local taglist_style = {
     spacing = bar_info.spacing.widget,
     corner_radius = bar_info.corner_radius.sections
 }
+local tasklist_style = {
+    direction = 'horizontal',
+    size = bar_info.contents_size,
+    decoration_size = 4,
+    padding = bar_info.spacing.widget * 2,
+    spacing = bar_info.spacing.widget,
+    corner_radius = bar_info.corner_radius.sections
+}
 
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(
     bar_info.contents_size
@@ -110,6 +118,7 @@ awful.screen.connect_for_each_screen(
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_style)
         local systray = wibox.widget.systray(s)
         local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info.contents_size)
+        local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, tasklist_style)
         --#endregion
 
         --#region 1st section
@@ -141,6 +150,21 @@ awful.screen.connect_for_each_screen(
             position = {
                 side = bar_info.position,
                 section = 1
+            },
+            style = section_style,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+        --#endregion
+
+
+        --#region 2nd section
+        add_section {
+            name = 'tasklist',
+            widget = tasklist,
+            position = {
+                side = bar_info.position,
+                section = 2
             },
             style = section_style,
             screen = s,
