@@ -2,6 +2,12 @@
 local wibox = require('wibox')
 local gears = require('gears')
 local beautiful = require('beautiful')
+local clienticon = require("awful.widget.clienticon")
+local wmargin = require("wibox.container.margin")
+local wtextbox = require("wibox.widget.textbox")
+local wfixed = require("wibox.layout.fixed")
+local wbackground = require("wibox.container.background")
+local dpi = require("beautiful").xresources.apply_dpi
 -- Load custom modulesclient.gaps,
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
@@ -16,7 +22,30 @@ local function get_tasklist_widget(style)
     }
 
 
-    local widget_template = nil
+    local widget_template = {
+        {
+            {
+                clienticon,
+                id = "icon_margin_role",
+                left = dpi(4),
+                widget = wmargin
+            },
+            {
+                {
+                    id = "text_role",
+                    widget = wtextbox,
+                },
+                id = "text_margin_role",
+                left = dpi(4),
+                right = dpi(4),
+                widget = wmargin
+            },
+            fill_space = true,
+            layout = wfixed.horizontal
+        },
+        id = "background_role",
+        widget = wbackground
+    }
 
     return {
         style = widget_style,
