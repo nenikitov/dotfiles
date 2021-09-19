@@ -72,6 +72,14 @@ awful.screen.connect_for_each_screen(
         -- 4
         -- Create system tools and notifications buttons
 
+        --[[
+        local wi_test_cal = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
+        local test_cal = awful.popup {
+            screen = s,
+            bg = '#0000',
+            widget = wi_test_cal
+        }
+        ]]
 
         -- Create an empty wibar to constraint client position
         --#region Fake wibar
