@@ -32,15 +32,15 @@ local section_style = {
     corner_radius = bar_info.corner_radius.sections
 }
 local taglist_style = {
-    direction = 'horizontal',
+    bar_pos = bar_info.position,
     size = bar_info.contents_size,
-    decoration_size = 4,
+    decoration_size = bar_info.contents_size / 8,
     padding = bar_info.spacing.widget * 2,
     spacing = bar_info.spacing.widget,
     corner_radius = bar_info.corner_radius.sections
 }
 local tasklist_style = {
-    direction = 'horizontal',
+    bar_pos = bar_info.position,
     size = bar_info.contents_size,
     decoration_size = 4,
     padding = bar_info.spacing.widget * 2,
@@ -175,6 +175,7 @@ awful.screen.connect_for_each_screen(
 
 
         --#region 2nd section
+        --[[
         add_section {
             name = 'tasklist',
             widget = tasklist,
@@ -186,6 +187,7 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        ]]
         --#endregion
 
 

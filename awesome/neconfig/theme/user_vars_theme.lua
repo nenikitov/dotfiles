@@ -7,7 +7,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
     contents = 1.25,
-    spacing = 1
+    spacing = 3
 }
 
 --- Initialize size values related to widget scale
@@ -42,7 +42,7 @@ local client = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Side of the screen ('top', 'bottom', 'left', or 'right')
-    position = 'top',
+    position = 'right',
     -- The size of the sections inside
     contents_size = size(24),
     -- Color scheme
@@ -54,7 +54,7 @@ local statusbar = {
     -- Spacing between the bar, the screen and the sections
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corners = space(128),
+        corners = space(32),
         -- Margin between the bar side and the edge of the screen
         edge = client.gaps,
         -- Margin between the bar and its contents
@@ -73,26 +73,10 @@ local statusbar = {
 }
 
 
--- ▄▀█ █▀█ █▀█ █▄▄ ▄▀█ █▀█
--- █▀█ █▀▀ █▀▀ █▄█ █▀█ █▀▄
-local appbar = {
-    position = 'bottom',
-    height = size(36),
-    margin = {
-        -- Margin between 2 ends of the bar and the corners of the screen
-        corner = size(20),
-        -- Margin between the bar side and the edge of the screen
-        edge = size(6)
-    },
-    corner_radius = size(8)
-}
-
-
 local user_vars_theme = {
     general = general,
     client = client,
-    statusbar = statusbar,
-    appbar = appbar
+    statusbar = statusbar
 }
 
 return user_vars_theme

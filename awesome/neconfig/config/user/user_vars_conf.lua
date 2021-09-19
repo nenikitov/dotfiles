@@ -1,5 +1,6 @@
 local awful = require('awful')
 local icons = require('neconfig.config.utils.icons')
+local config_path = os.getenv('HOME') .. '/.config/awesome/'
 
 
 -- Customize this
@@ -47,7 +48,7 @@ local binds = {
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
 local desktop = {
     -- Theme
-    theme_path = os.getenv('HOME') .. '/.config/awesome/neconfig/theme/theme.lua', -- gears.filesystem.get_themes_dir() .. 'default/theme.lua'
+    theme_path = config_path .. 'neconfig/theme/theme.lua', -- gears.filesystem.get_themes_dir() .. 'default/theme.lua'
     -- Names (and consequently, number) of tags
     tag_names = {
         icons.home,
@@ -59,9 +60,9 @@ local desktop = {
     -- List of layouts that can be cycled through
     layouts = {
         awful.layout.suit.floating,
-        awful.layout.suit.tile,
         awful.layout.suit.spiral,
-        
+        awful.layout.suit.tile,
+
         --[[ All available layouts
             awful.layout.suit.tile
             awful.layout.suit.tile.left
