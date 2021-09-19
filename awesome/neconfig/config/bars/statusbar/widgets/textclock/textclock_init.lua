@@ -7,11 +7,13 @@ local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 -- Generate 2 separate widgets for date and time
 local top_time = wibox.widget {
     wibox.widget.textclock(user_vars_conf.statusbar.widgets.clock.top_format),
-    widget = wibox.container.place
+    widget = wibox.container.place,
+    halign = 'center'
 }
 local bottom_time = wibox.widget {
     wibox.widget.textclock(user_vars_conf.statusbar.widgets.clock.bottom_format),
-    widget = wibox.container.place
+    widget = wibox.container.place,
+    halign = 'center'
 }
 -- Set font size for the date on the bottom
 for _, child in pairs(bottom_time:get_all_children())

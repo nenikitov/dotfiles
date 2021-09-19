@@ -8,22 +8,24 @@ local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 local function get_taglist_widget(style)
     local direction
-    local padding
-    local edge
-    if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+    if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
-        padding = { 'left', 'right' }
+    elseif (style.bar_pos == 'bottom')
+    then
+        direction = 'horizontal'
+    elseif (style.bar_pos == 'left')
+    then
+        direction = 'vertical'
     else
         direction = 'vertical'
-        padding = { 'top', 'bottom' }
     end
 
 
     local widget_style = nil -- { shape = r_rect(style.corner_radius) }
 
     local widget_layout = {
-        spacing = style.spacing,
+        spacing = style.padding,
         layout = wibox.layout.fixed[direction]
     }
 
@@ -48,7 +50,7 @@ local function get_taglist_widget(style)
         --#endregion
 
         --#region Update the widget that shows the number of opened clients on a tag
-        if (user_vars_conf.statusbar.widgets.taglist.show_client_number)
+        if (user_vars_conf.statusbar.widgets.taglist.show_client_count)
         then
             local client_num_role = self:get_children_by_id('client_num_role')[1]
             -- Generate circle widget
@@ -99,19 +101,19 @@ local function get_taglist_widget(style)
             },
             -- Main taglist widget
             {
-                widget = wibox.layout.fixed.horizontal,
-                fill_space = true,
-    
-                {
-                    id = 'icon_role',
-                    widget = wibox.widget.imagebox,
-                    left = style.padding,
-                },
-                {
-                    id = 'text_role',
-                    widget = wibox.widget.textbox,
-                    align = 'center'
-                }
+                    widget = wibox.layout.fixed.horizontal,
+                    fill_space = true,
+                    spacing = style.padding,
+
+                    {
+                        id = 'icon_role',
+                        widget = wibox.widget.imagebox,
+                    },
+                    {
+                        id = 'text_role',
+                        widget = wibox.widget.textbox,
+                        align = 'center'
+                    }
             },
             -- Number of opened clients
             {

@@ -7,7 +7,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
     contents = 1.25,
-    spacing = 3
+    spacing = 1
 }
 
 --- Initialize size values related to widget scale
@@ -42,7 +42,7 @@ local client = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Side of the screen ('top', 'bottom', 'left', or 'right')
-    position = 'right',
+    position = 'top',
     -- The size of the sections inside
     contents_size = size(24),
     -- Color scheme

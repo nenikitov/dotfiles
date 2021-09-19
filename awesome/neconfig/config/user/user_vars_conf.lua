@@ -97,7 +97,7 @@ local statusbar = {
         },
         taglist = {
             visible = true,
-            show_client_number = true
+            show_client_count = true
         },
         keyboard_layout = {
             visible = true,

@@ -36,7 +36,6 @@ local taglist_style = {
     size = bar_info.contents_size,
     decoration_size = bar_info.contents_size / 8,
     padding = bar_info.spacing.widget * 2,
-    spacing = bar_info.spacing.widget,
     corner_radius = bar_info.corner_radius.sections
 }
 local tasklist_style = {
