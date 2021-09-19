@@ -7,7 +7,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
     contents = 1.25,
-    spacing = 1
+    spacing = 2
 }
 
 --- Initialize size values related to widget scale

@@ -111,30 +111,11 @@ local statusbar = {
 }
 
 
--- ▄▀█ █▀█ █▀█ █▄▄ ▄▀█ █▀█
--- █▀█ █▀▀ █▀▀ █▄█ █▀█ █▀▄
-local appbar = {
-    -- Show the application bar
-    visibile = true,
-    -- Widgets that will be shown
-    widgets = {
-        launcher = true,
-        terminal = true,
-        code_editor = true,
-        text_editor = true,
-        broser = true,
-        file_manager = false,
-        multimedia = false
-    }
-}
-
-
 local user_vars_conf = {
     apps = apps,
     binds = binds,
     desktop = desktop,
-    statusbar = statusbar,
-    appbar = appbar
+    statusbar = statusbar
 }
 
 return user_vars_conf

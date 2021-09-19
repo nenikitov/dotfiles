@@ -25,7 +25,6 @@ local function get_taglist_widget(style)
     local widget_style = nil -- { shape = r_rect(style.corner_radius) }
 
     local widget_layout = {
-        spacing = style.padding,
         layout = wibox.layout.fixed[direction]
     }
 
