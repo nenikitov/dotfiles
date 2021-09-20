@@ -13,7 +13,7 @@ local apps = {
 
         code_editor = 'code',
         text_editor = 'code',
-        
+
         browser = 'firefox',
 
         file_manager = 'pcmanfm',
@@ -97,7 +97,8 @@ local statusbar = {
         },
         taglist = {
             visible = true,
-            show_client_count = true
+            show_client_count = true,
+            max_client_count = 5
         },
         keyboard_layout = {
             visible = true,

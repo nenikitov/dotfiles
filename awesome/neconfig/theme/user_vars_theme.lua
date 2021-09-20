@@ -7,7 +7,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
     contents = 1.25,
-    spacing = 2
+    spacing = 1
 }
 
 --- Initialize size values related to widget scale
@@ -54,7 +54,7 @@ local statusbar = {
     -- Spacing between the bar, the screen and the sections
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corners = space(32),
+        corners = space(128),
         -- Margin between the bar side and the edge of the screen
         edge = client.gaps,
         -- Margin between the bar and its contents
@@ -69,6 +69,13 @@ local statusbar = {
     corner_radius = {
         bar = size(6),
         sections = size(6)
+    },
+    -- Widgets
+    widgets = {
+        taglist = {
+            decoration_size = size(2),
+            spacing = space(12)
+        }
     }
 }
 

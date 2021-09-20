@@ -34,16 +34,15 @@ local section_style = {
 local taglist_style = {
     bar_pos = bar_info.position,
     size = bar_info.contents_size,
-    decoration_size = bar_info.contents_size / 8,
-    padding = bar_info.spacing.widget * 2,
+    decoration_size = bar_info.widgets.taglist.decoration_size,
+    spacing = bar_info.widgets.taglist.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
 local tasklist_style = {
     bar_pos = bar_info.position,
     size = bar_info.contents_size,
     decoration_size = 4,
-    padding = bar_info.spacing.widget * 2,
-    spacing = bar_info.spacing.widget,
+    padding = bar_info.spacing.widget * 4,
     corner_radius = bar_info.corner_radius.sections
 }
 
