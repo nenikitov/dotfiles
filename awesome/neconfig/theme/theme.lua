@@ -35,9 +35,13 @@ theme.border_marked = '#91231c'
 
 theme.wibar_bg = theme.user_vars_theme.statusbar.colors.bg_bar
 
-
+-- TODO handle all bg and fg possibilities
 theme.taglist_bg_focus = '#0006'
 theme.taglist_bg_urgent = '#f004'
+
+theme.tasklist_bg_focus = '#0006'
+theme.tasklist_bg_normal = '#0000'
+theme.tasklist_bg_minimize = '#0000'
 
 -- theme.tasklist_maximized = '+ '
 

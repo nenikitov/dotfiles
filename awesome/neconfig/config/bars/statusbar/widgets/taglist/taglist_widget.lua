@@ -7,29 +7,8 @@ local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 
 local function get_taglist_widget(style)
-    local direction
-    if (style.bar_pos == 'top')
-    then
-        direction = 'horizontal'
-    elseif (style.bar_pos == 'bottom')
-    then
-        direction = 'horizontal'
-    elseif (style.bar_pos == 'left')
-    then
-        direction = 'vertical'
-    else
-        direction = 'vertical'
-    end
-
-
-    local widget_style = nil -- { shape = r_rect(style.corner_radius) }
-
-    local widget_layout = {
-        layout = wibox.layout.fixed[direction]
-    }
-
-
-    local tag_updated = function (self, t, index, tags)
+    --#region Callback when the taglist is updated
+    local function tag_updated(self, t, index, tags)
         -- Count clients
         local clients_num = math.min(#t:clients(), style.max_client_count)
 
@@ -38,13 +17,11 @@ local function get_taglist_widget(style)
         if (t.selected)
         then
             selected_bar_role.bg = beautiful.fg_focus
+        elseif (clients_num > 0)
+        then
+            selected_bar_role.bg = beautiful.bg_normal
         else
-            if (clients_num > 0)
-            then
-                selected_bar_role.bg = beautiful.bg_normal
-            else
-                selected_bar_role.bg = '#0000'
-            end
+            selected_bar_role.bg = '#0000'
         end
         --#endregion
 
@@ -78,6 +55,28 @@ local function get_taglist_widget(style)
         end
         --#endregion
     end
+    --#endregion
+
+
+    local direction
+    if (style.bar_pos == 'top')
+    then
+        direction = 'horizontal'
+    elseif (style.bar_pos == 'bottom')
+    then
+        direction = 'horizontal'
+    elseif (style.bar_pos == 'left')
+    then
+        direction = 'vertical'
+    else
+        direction = 'vertical'
+    end
+
+    local widget_style = nil -- { shape = r_rect(style.corner_radius) }
+
+    local widget_layout = {
+        layout = wibox.layout.fixed[direction]
+    }
 
     local widget_template = {
         id = 'background_role',
@@ -87,7 +86,7 @@ local function get_taglist_widget(style)
         {
             widget = wibox.layout.stack,
 
-            -- Selected tag Bar
+            -- Selected tag decoration
             {
                 widget = wibox.container.margin,
                 bottom = style.size - style.decoration_size,
@@ -114,7 +113,7 @@ local function get_taglist_widget(style)
                         align = 'center'
                     }
             },
-            -- Number of opened clients
+            -- Number of opened clients decoration
             {
                 widget = wibox.container.margin,
                 top = style.size - style.decoration_size,

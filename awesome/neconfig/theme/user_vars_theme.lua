@@ -6,7 +6,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
-    contents = 1.0,
+    contents = 1.25,
     spacing = 1.0
 }
 
@@ -81,7 +81,7 @@ local statusbar = {
         tasklist = {
             decoration_size = size(2),
             spacing = space(12),
-            max_size = dpi(1000),
+            max_size = dpi(800),
             max_client_count = 5
         }
     }
