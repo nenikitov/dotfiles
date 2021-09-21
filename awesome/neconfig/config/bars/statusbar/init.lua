@@ -31,13 +31,6 @@ local section_style = {
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
-local taglist_style = {
-    bar_pos = bar_info.position,
-    size = bar_info.contents_size,
-    decoration_size = bar_info.widgets.taglist.decoration_size,
-    spacing = bar_info.widgets.taglist.spacing,
-    corner_radius = bar_info.corner_radius.sections
-}
 local tasklist_style = {
     bar_pos = bar_info.position,
     size = bar_info.contents_size,
@@ -129,7 +122,7 @@ awful.screen.connect_for_each_screen(
 
 
         --#region Generate screen scpecific widgets
-        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_style)
+        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s)
         local systray = wibox.widget.systray(s)
         local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info.contents_size)
         local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, tasklist_style)

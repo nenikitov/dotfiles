@@ -1,11 +1,23 @@
 -- Load libraries
 local awful = require('awful')
+local beautiful = require('beautiful')
 -- Load custom modules
 local taglist_buttons = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_buttons')()
+-- Get style from the theme
+local bar_info = beautiful.user_vars_theme.statusbar
+local widget_info = bar_info.widgets.taglist
+local style = {
+    bar_pos = bar_info.position,
+    corner_radius = bar_info.corner_radius.sections,
+    size = bar_info.contents_size,
+    decoration_size = widget_info.decoration_size,
+    spacing = widget_info.spacing,
+    max_client_count = widget_info.max_client_count
+}
 
 
 -- Generate taglist widget
-local function get_taglist(screen, style)
+local function get_taglist(screen)
     local taglist_widget = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_widget')(style)
 
     local taglist = awful.widget.taglist {
