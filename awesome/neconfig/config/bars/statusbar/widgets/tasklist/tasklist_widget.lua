@@ -7,9 +7,20 @@ local beautiful = require('beautiful')
 local function get_tasklist_widget(style, tasklist_getter_func)
     --#region Callback when the tasklist is updated
     local function task_updated(self, c, index, clients)
+        -- TODO
         --#region Update total widget size
+        --[[
+        -- Get the parent widget through that ugly hack
         local parent = tasklist_getter_func()
-        parent.forced_width = math.min(#clients * 200, style.max_size)
+        -- Update the size
+        if (#clients == 0)
+        then
+            parent.forced_width = 0
+        elseif (#clients <= style.size_adapt_client_count)
+        then
+            parent.forced_width = style.max_size / style.size_adapt_client_count * #clients
+        end
+        ]]
         --#endregion
 
         --#region Update the color of the 'selected_bar_role'

@@ -14,7 +14,7 @@ local function get_tasklist(screen, bar_info, widget)
         size = bar_info.contents_size,
         decoration_size = widget_info.decoration_size,
         spacing = widget_info.spacing,
-        max_client_count = widget_info.max_client_count,
+        size_adapt_client_count = widget_info.size_adapt_client_count,
         max_size = widget_info.max_size
     }
 

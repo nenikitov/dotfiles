@@ -82,7 +82,7 @@ local statusbar = {
             decoration_size = size(2),
             spacing = space(12),
             max_size = dpi(800),
-            max_client_count = 5
+            size_adapt_client_count = 3
         }
     }
 }
