@@ -6,8 +6,8 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
-    contents = 1.25,
-    spacing = 1
+    contents = 1.0,
+    spacing = 1.0
 }
 
 --- Initialize size values related to widget scale
@@ -23,6 +23,7 @@ end
 local function space(value)
     return dpi(value) * scaling.spacing
 end
+
 
 -- █▀▀ █▀▀ █▄ █ █▀▀ █▀█ ▄▀█ █
 -- █▄█ ██▄ █ ▀█ ██▄ █▀▄ █▀█ █▄▄
@@ -74,7 +75,14 @@ local statusbar = {
     widgets = {
         taglist = {
             decoration_size = size(2),
-            spacing = space(12)
+            spacing = space(12),
+            max_client_count = 3
+        },
+        tasklist = {
+            decoration_size = size(2),
+            spacing = space(12),
+            max_size = dpi(800),
+            max_client_count = 5
         }
     }
 }

@@ -31,7 +31,7 @@ local function get_taglist_widget(style)
 
     local tag_updated = function (self, t, index, tags)
         -- Count clients
-        local clients_num = math.min(#t:clients(), user_vars_conf.statusbar.widgets.taglist.max_client_count)
+        local clients_num = math.min(#t:clients(), beautiful.user_vars_theme.statusbar.widgets.taglist.max_client_count)
 
         --#region Update the color of the 'selected_bar_role'
         local selected_bar_role = self:get_children_by_id('selected_bar_role')[1]

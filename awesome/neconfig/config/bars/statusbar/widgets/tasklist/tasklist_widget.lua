@@ -2,7 +2,7 @@
 local wibox = require('wibox')
 local awful = require('awful')
 
-local dpi = require('beautiful').xresources.apply_dpi
+local beautiful = require('beautiful')
 -- Load custom modulesclient.gaps,
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
@@ -13,7 +13,7 @@ local function get_tasklist_widget(style)
 
     local widget_layout = {
         layout = wibox.layout.flex.horizontal,
-        forced_width = 800
+        forced_width = beautiful.user_vars_theme.statusbar.widgets.tasklist.max_size
     }
 
 
@@ -22,7 +22,7 @@ local function get_tasklist_widget(style)
             {
                 awful.widget.clienticon,
                 id = 'icon_margin_role',
-                left = dpi(4),
+                left = 4,
                 widget = wibox.container.margin
             },
             {
@@ -31,8 +31,8 @@ local function get_tasklist_widget(style)
                     widget = wibox.widget.textbox,
                 },
                 id = 'text_margin_role',
-                left = dpi(4),
-                right = dpi(4),
+                left = 4,
+                right = 4,
                 widget = wibox.container.margin
             },
             fill_space = true,
