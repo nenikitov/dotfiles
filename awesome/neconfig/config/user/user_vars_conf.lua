@@ -89,15 +89,20 @@ local desktop = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Show the status bar
-    visibile = true,
+    visible = true,
     -- Widget settings
     widgets = {
         menu = {
-            visible = true
+            visible = true -- TODO
         },
         taglist = {
             visible = true,
             show_client_count = true
+        },
+        tasklist = {
+            visible = true,
+            show_client_text = true,
+            show_client_mode = true
         },
         keyboard_layout = {
             visible = true,

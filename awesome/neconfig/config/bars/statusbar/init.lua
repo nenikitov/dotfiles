@@ -1,4 +1,4 @@
--- Load librareis
+-- Load libraries
 local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
@@ -23,7 +23,7 @@ local size_param = {
     length = lookup_size_param[bar_info.position][1],
     thickness = lookup_size_param[bar_info.position][2],
 }
--- Style that will be usef for sections
+-- Style that will be used for sections
 local section_style = {
     background_color = bar_info.colors.bg_sections,
     contents_size = bar_info.contents_size,
@@ -115,7 +115,7 @@ awful.screen.connect_for_each_screen(
         --#endregion
 
 
-        --#region Generate screen scpecific widgets
+        --#region Generate screen specific widgets
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, bar_info)
         local systray = wibox.widget.systray(s)
         local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info.contents_size)
@@ -160,7 +160,6 @@ awful.screen.connect_for_each_screen(
 
 
         --#region 2nd section
-        --[[
         add_section {
             name = 'tasklist',
             widget = tasklist,
@@ -172,7 +171,6 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
-        ]]
         --#endregion
 
 

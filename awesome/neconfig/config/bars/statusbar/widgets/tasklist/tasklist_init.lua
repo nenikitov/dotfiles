@@ -7,7 +7,7 @@ local tasklist_buttons = require('neconfig.config.bars.statusbar.widgets.tasklis
 -- Generate tasklist widget
 local function get_tasklist(screen, bar_info)
         -- Get style from the theme
-        local widget_info = bar_info.widgets.taglist
+        local widget_info = bar_info.widgets.tasklist
         local style = {
             bar_pos = bar_info.position,
             corner_radius = bar_info.corner_radius.sections,

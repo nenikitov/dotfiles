@@ -1,10 +1,7 @@
--- Load libaries
+-- Load libraries
 local wibox = require('wibox')
 local awful = require('awful')
-
 local beautiful = require('beautiful')
--- Load custom modulesclient.gaps,
-local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 
 local function get_tasklist_widget(style)
@@ -13,7 +10,7 @@ local function get_tasklist_widget(style)
 
     local widget_layout = {
         layout = wibox.layout.flex.horizontal,
-        forced_width = beautiful.user_vars_theme.statusbar.widgets.tasklist.max_size
+        forced_width = style.max_size
     }
 
 
