@@ -4,9 +4,29 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 
 
-local function get_tasklist_widget(style, tasklist_getter_func)
+local function get_tasklist_widget(style, screen, tasklist_getter_func)
     --#region Callback when the tasklist is updated
     local function task_updated(self, c, index, clients)
+        -- This is called when a sub widget is updated
+        -- I need to find a function that calls when the tasklist is updated
+        -- ? args.update_function and awful.widget.common.list_update
+        local naughty = require('naughty')
+
+        if (#clients == 0)
+        then
+            naughty.notify {
+                text = 'No clients'
+            }
+        end
+
+        for i, cl in ipairs(clients) do
+            naughty.notify {
+                text = tostring(i .. ' - ' .. cl.name),
+                screen = screen,
+            }
+        end
+
+
         -- TODO
         --#region Update total widget size
         --[[
