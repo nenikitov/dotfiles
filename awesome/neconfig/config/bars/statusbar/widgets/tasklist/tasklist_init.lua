@@ -27,7 +27,7 @@ local function get_tasklist(screen, bar_info, widget)
         return tasklist_ref
     end
 
-    local tasklist_widget = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_widget')(style, screen, get_tasklist_before_init)
+    local tasklist_widget = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_widget')(style)
 
     local tasklist = awful.widget.tasklist {
         screen = screen,
@@ -35,7 +35,8 @@ local function get_tasklist(screen, bar_info, widget)
         buttons = tasklist_buttons,
         style = tasklist_widget.style,
         layout = tasklist_widget.layout,
-        widget_template = tasklist_widget.widget_template
+        widget_template = tasklist_widget.widget_template,
+        update_function = tasklist_widget.update_function
     }
     tasklist_ref = tasklist
 

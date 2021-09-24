@@ -76,13 +76,13 @@ local statusbar = {
         taglist = {
             decoration_size = size(2),
             spacing = space(12),
-            max_client_count = 3
+            max_client_count = 5
         },
         tasklist = {
             decoration_size = size(2),
             spacing = space(12),
             max_size = dpi(800),
-            size_adapt_client_count = 3
+            size_adapt_client_count = 1
         }
     }
 }
