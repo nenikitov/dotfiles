@@ -7,6 +7,25 @@ local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 
 local function get_taglist_widget(style)
+    --#region Precompute values
+    -- Direction of of the tags
+    local direction
+    if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+    then
+        direction = 'horizontal'
+    else
+        direction = 'vertical'
+    end
+    --#endregion
+
+
+    --#region Layout (direction)
+    local widget_layout = {
+        layout = wibox.layout.fixed[direction]
+    }
+    --#endregion
+
+
     --#region Callback when the taglist is updated
     local function tag_updated(self, t, index, tags)
         -- Count clients
@@ -56,28 +75,7 @@ local function get_taglist_widget(style)
         --#endregion
     end
     --#endregion
-
-
-    local direction
-    if (style.bar_pos == 'top')
-    then
-        direction = 'horizontal'
-    elseif (style.bar_pos == 'bottom')
-    then
-        direction = 'horizontal'
-    elseif (style.bar_pos == 'left')
-    then
-        direction = 'vertical'
-    else
-        direction = 'vertical'
-    end
-
-    local widget_style = nil -- { shape = r_rect(style.corner_radius) }
-
-    local widget_layout = {
-        layout = wibox.layout.fixed[direction]
-    }
-
+    --#region Template for the sub widgets
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
@@ -130,9 +128,10 @@ local function get_taglist_widget(style)
         update_callback = tag_updated,
         create_callback = tag_updated
     }
+    --#endregion
+
 
     return {
-        style = widget_style,
         layout = widget_layout,
         widget_template = widget_template
     }

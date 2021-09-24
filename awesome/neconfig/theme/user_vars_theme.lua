@@ -61,11 +61,8 @@ local statusbar = {
         -- Margin between the bar and its contents
         content = client.gaps
     },
-    -- Spacing between the sections and the widgets
-    spacing = {
-        widget = client.gaps / 2,
-        section = client.gaps * 2
-    },
+    -- Spacing between the sections
+    spacing = client.gaps * 2,
     -- Corner rounding
     corner_radius = {
         bar = size(6),
@@ -81,8 +78,8 @@ local statusbar = {
         tasklist = {
             decoration_size = size(2),
             spacing = space(12),
-            max_size = dpi(800),
-            size_adapt_client_count = 1
+            max_size = dpi(1000),
+            size_adapt_client_count = 4
         }
     }
 }

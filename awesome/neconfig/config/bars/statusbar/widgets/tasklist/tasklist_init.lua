@@ -18,15 +18,6 @@ local function get_tasklist(screen, bar_info, widget)
         max_size = widget_info.max_size
     }
 
-    -- Ugly hack to pass the tasklist widget to the sub widgets
-    -- Hopefully the callback of the sub widget will not execute before the tasklist inits
-    -- I really hope there is a better solution for this, but its the best I can do
-    -- I am surprised it works...
-    local tasklist_ref
-    local function get_tasklist_before_init()
-        return tasklist_ref
-    end
-
     local tasklist_widget = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_widget')(style)
 
     local tasklist = awful.widget.tasklist {
@@ -38,7 +29,6 @@ local function get_tasklist(screen, bar_info, widget)
         widget_template = tasklist_widget.widget_template,
         update_function = tasklist_widget.update_function
     }
-    tasklist_ref = tasklist
 
     return tasklist
 end

@@ -5,7 +5,31 @@ local beautiful = require('beautiful')
 
 
 local function get_tasklist_widget(style)
+    --#region Precompute values
+    -- Size of the task
     local task_target_width = style.max_size / style.size_adapt_client_count
+    -- Direction of of the tasks
+    local direction
+    -- The parameters that is responsible for the size
+    local size_param
+    if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+    then
+        direction = 'horizontal'
+        size_param = 'width'
+    else
+        direction = 'vertical'
+        size_param = 'height'
+    end
+    --#endregion
+
+
+    --#region Layout (direction)
+    local widget_layout = {
+        layout = wibox.layout.flex[direction],
+        forced_width = style.max_size
+    }
+    --#endregion
+
 
     --#region Callback when the task inside the tasklist is updated
     local function task_updated(self, c, index, clients)
@@ -23,27 +47,7 @@ local function get_tasklist_widget(style)
         --#endregion
     end
     --#endregion
-
-
-    --#region Callback when the whole tasklist is updated
-    local function tasklist_updated(w, buttons, label, data, objects, args)      
-        -- Set widget size based on the number of opened clients
-        w.forced_width = math.min(#objects * task_target_width, style.max_size)
-
-        awful.widget.common.list_update(w, buttons, label, data, objects, args)
-    end
-    --#endregion
-
-
-    local widget_style = nil
-
-
-    local widget_layout = {
-        layout = wibox.layout.flex.horizontal,
-        forced_width = style.max_size
-    }
-
-
+    --#region Template for the sub widgets
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
@@ -65,7 +69,7 @@ local function get_tasklist_widget(style)
             },
             -- Main tasklist widget
             {
-                fill_space = true,
+                fille = true,
                 layout = wibox.layout.fixed.horizontal,
 
                 awful.widget.clienticon,
@@ -79,9 +83,21 @@ local function get_tasklist_widget(style)
         update_callback = task_updated,
         create_callback = task_updated
     }
+    --#endregion
+
+
+    --#region Callback when the whole tasklist is updated
+    local function tasklist_updated(w, buttons, label, data, objects, args)      
+        -- Set widget size based on the number of opened clients
+        local target_size = math.min(#objects * task_target_width, style.max_size)
+        w['forced_' .. size_param] = target_size
+
+        awful.widget.common.list_update(w, buttons, label, data, objects, args)
+    end
+    --#endregion
+
 
     return {
-        style = widget_style,
         layout = widget_layout,
         widget_template = widget_template,
         update_function = tasklist_updated

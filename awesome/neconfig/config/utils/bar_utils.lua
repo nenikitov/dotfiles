@@ -119,7 +119,7 @@ local function find_margins_for_position(position, last_section, style, screen, 
             end
         end
         -- Add spacing between last and current section
-        margin_to_corner = margin_content_offset + style.spacing.section
+        margin_to_corner = margin_content_offset + style.spacing
 
         return {
             [edge_dir] = margins_to_edge,
