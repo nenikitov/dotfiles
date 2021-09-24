@@ -42,7 +42,8 @@ theme.taglist_bg_urgent = '#f004'
 theme.tasklist_bg_focus = '#0006'
 theme.tasklist_bg_normal = '#0000'
 theme.tasklist_bg_minimize = '#0000'
-
+-- theme.tasklist_plain_task_name = true
+-- theme.tasklist_disable_task_name = true
 -- theme.tasklist_maximized = '+ '
 
 -- There are other variable sets

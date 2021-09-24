@@ -10,11 +10,31 @@ local function get_taglist_widget(style)
     --#region Precompute values
     -- Direction of of the tags
     local direction
-    if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+    -- Margin to size the selected tag bar
+    local bar_margin_pos
+    -- Margin to size the opened clients circles
+    local dots_margin_pos = style.bar_pos
+    -- Other margins to reduce opened clients distance
+    local dots_margin_others = {}
+    if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
+        bar_margin_pos = 'bottom'
+        dots_margin_others = { 'right', 'left' }
+    elseif (style.bar_pos == 'bottom')
+    then
+        direction = 'horizontal'
+        bar_margin_pos = 'top'
+        dots_margin_others = { 'right', 'left' }
+    elseif (style.bar_pos == 'right')
+    then
+        direction = 'vertical'
+        bar_margin_pos = 'left'
+        dots_margin_others = { 'top', 'bottom' }
     else
         direction = 'vertical'
+        bar_margin_pos = 'right'
+        dots_margin_others = { 'top', 'bottom' }
     end
     --#endregion
 
@@ -88,7 +108,7 @@ local function get_taglist_widget(style)
             -- Selected tag decoration
             {
                 widget = wibox.container.margin,
-                bottom = style.size - style.decoration_size,
+                [bar_margin_pos] = style.size - style.decoration_size,
 
                 {
                     widget = wibox.container.background,
@@ -115,13 +135,13 @@ local function get_taglist_widget(style)
             -- Number of opened clients decoration
             {
                 widget = wibox.container.margin,
-                top = style.size - style.decoration_size,
-                left = style.size / 10,
-                right = style.size / 10,
+                [dots_margin_pos] = style.size - style.decoration_size,
+                [dots_margin_others[1]] = style.size / 10,
+                [dots_margin_others[2]] = style.size / 10,
 
                 {
                     id = 'client_num_role',
-                    layout = wibox.layout.flex.horizontal,
+                    layout = wibox.layout.flex[direction],
                 }
             }
         },

@@ -6,7 +6,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
-    contents = 1.25,
+    contents = 1.5,
     spacing = 1.0
 }
 
@@ -43,7 +43,7 @@ local client = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Side of the screen ('top', 'bottom', 'left', or 'right')
-    position = 'top',
+    position = 'right',
     -- The size of the sections inside
     contents_size = size(24),
     -- Color scheme
@@ -78,7 +78,7 @@ local statusbar = {
         tasklist = {
             decoration_size = size(2),
             spacing = space(12),
-            task_size = dpi(300),
+            task_size = dpi(24),
             max_size = dpi(900),
         }
     }
