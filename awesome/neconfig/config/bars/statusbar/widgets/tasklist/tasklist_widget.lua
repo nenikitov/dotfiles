@@ -6,17 +6,27 @@ local beautiful = require('beautiful')
 
 local function get_tasklist_widget(style)
     --#region Precompute values
+    -- Height based on font size
+    local height = beautiful.get_font_height(beautiful.font) * 1.5
     -- Direction of of the tasks
     local direction
-    -- The parameters that is responsible for the size
-    local size_param
-    if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+    -- Margin to size the selected tag bar
+    local bar_margin_pos
+    if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
-        size_param = 'width'
+        bar_margin_pos = 'bottom'
+    elseif (style.bar_pos == 'bottom')
+    then
+        direction = 'horizontal'
+        bar_margin_pos = 'top'
+    elseif (style.bar_pos == 'right')
+    then
+        direction = 'vertical'
+        bar_margin_pos = 'left'
     else
         direction = 'vertical'
-        size_param = 'height'
+        bar_margin_pos = 'right'
     end
     --#endregion
 
@@ -49,33 +59,40 @@ local function get_tasklist_widget(style)
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
-        forced_height = style.size,
+        forced_width = style.size,
+        forced_height = height,
 
         {
-            widget = wibox.layout.stack,
+            widget = wibox.container.place,
+            valign = 'center',
+            content_fill_horizontal = true,
 
-            -- Selected task decoration
             {
-                widget = wibox.container.margin,
-                bottom = style.size - style.decoration_size,
-
+                widget = wibox.layout.stack,
+    
+                -- Selected task decoration
                 {
-                    widget = wibox.container.background,
-                    bg = '#0000',
-                    id = 'selected_bar_role',
+                    widget = wibox.container.margin,
+                    [bar_margin_pos] = style.size - style.decoration_size,
+    
+                    {
+                        widget = wibox.container.background,
+                        bg = '#0000',
+                        id = 'selected_bar_role',
+                    }
+                },
+                -- Main tasklist widget
+                {
+                    fill_space = true,
+                    layout = wibox.layout.fixed.horizontal,
+    
+                    awful.widget.clienticon,
+                    {
+                        id = 'text_role',
+                        widget = wibox.widget.textbox,
+                    }
                 }
             },
-            -- Main tasklist widget
-            {
-                fille = true,
-                layout = wibox.layout.fixed.horizontal,
-
-                awful.widget.clienticon,
-                {
-                    id = 'text_role',
-                    widget = wibox.widget.textbox,
-                }
-            }
         },
 
         update_callback = task_updated,
@@ -88,7 +105,7 @@ local function get_tasklist_widget(style)
     local function tasklist_updated(w, buttons, label, data, objects, args)      
         -- Set widget size based on the number of opened clients
         local target_size = math.min(#objects * style.task_size, style.max_size)
-        w['forced_' .. size_param] = target_size
+        w.forced_width = target_size
 
         awful.widget.common.list_update(w, buttons, label, data, objects, args)
     end
