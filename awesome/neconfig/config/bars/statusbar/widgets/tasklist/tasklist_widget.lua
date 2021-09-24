@@ -12,21 +12,29 @@ local function get_tasklist_widget(style)
     local direction
     -- Margin to size the selected tag bar
     local bar_margin_pos
+    -- Margin to the screen edge
+    local edge_margin_pos = style.bar_pos
+    -- Other margins
+    local other_margin_pos = {}
     if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
         bar_margin_pos = 'bottom'
+        other_margin_pos = { 'right', 'left' }
     elseif (style.bar_pos == 'bottom')
     then
         direction = 'horizontal'
         bar_margin_pos = 'top'
+        other_margin_pos = { 'right', 'left' }
     elseif (style.bar_pos == 'right')
     then
         direction = 'vertical'
         bar_margin_pos = 'left'
+        other_margin_pos = { 'top', 'bottom' }
     else
         direction = 'vertical'
         bar_margin_pos = 'right'
+        other_margin_pos = { 'top', 'bottom' }
     end
     --#endregion
 
@@ -34,7 +42,8 @@ local function get_tasklist_widget(style)
     --#region Layout (direction)
     local widget_layout = {
         layout = wibox.layout.flex[direction],
-        forced_width = style.max_size
+        forced_width = style.max_size,
+        spacing = style.spacing / 2
     }
     --#endregion
 
@@ -69,7 +78,7 @@ local function get_tasklist_widget(style)
 
             {
                 widget = wibox.layout.stack,
-    
+
                 -- Selected task decoration
                 {
                     widget = wibox.container.margin,
@@ -83,13 +92,22 @@ local function get_tasklist_widget(style)
                 },
                 -- Main tasklist widget
                 {
-                    fill_space = true,
-                    layout = wibox.layout.fixed.horizontal,
-    
-                    awful.widget.clienticon,
+                    widget = wibox.container.margin,
+                    [bar_margin_pos] = style.decoration_size,
+                    [edge_margin_pos] = style.decoration_size,
+                    [other_margin_pos[1]] = style.decoration_size + style.spacing / 4,
+                    [other_margin_pos[2]] = style.decoration_size + style.spacing / 4,
+
                     {
-                        id = 'text_role',
-                        widget = wibox.widget.textbox,
+                        fill_space = true,
+                        layout = wibox.layout.fixed.horizontal,
+                        spacing = style.spacing / 2,
+
+                        awful.widget.clienticon,
+                        {
+                            id = 'text_role',
+                            widget = wibox.widget.textbox,
+                        }
                     }
                 }
             },

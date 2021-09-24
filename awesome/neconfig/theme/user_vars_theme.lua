@@ -50,7 +50,7 @@ local statusbar = {
     colors = {
         -- Main
         bg_bar = '#0004',
-        bg_sections = '#0f02',
+        bg_sections = '#0002',
     },
     -- Spacing between the bar, the screen and the sections
     margin = {
@@ -79,7 +79,7 @@ local statusbar = {
             decoration_size = size(2),
             spacing = space(12),
             task_size = size(250),
-            max_size = 1920 - 2 * space(128) - size(600),
+            max_size = size(500)--1920 - 2 * space(128) - size(600),
         }
     }
 }
