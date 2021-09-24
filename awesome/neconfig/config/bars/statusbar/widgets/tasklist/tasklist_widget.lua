@@ -15,26 +15,26 @@ local function get_tasklist_widget(style)
     -- Margin to the screen edge
     local edge_margin_pos = style.bar_pos
     -- Other margins
-    local other_margin_pos = {}
+    local other_margin_pos
     if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
         bar_margin_pos = 'bottom'
-        other_margin_pos = { 'right', 'left' }
+        other_margin_pos = 'right'
     elseif (style.bar_pos == 'bottom')
     then
         direction = 'horizontal'
         bar_margin_pos = 'top'
-        other_margin_pos = { 'right', 'left' }
+        other_margin_pos = 'right'
     elseif (style.bar_pos == 'right')
     then
         direction = 'vertical'
         bar_margin_pos = 'left'
-        other_margin_pos = { 'top', 'bottom' }
+        other_margin_pos = 'none'
     else
         direction = 'vertical'
         bar_margin_pos = 'right'
-        other_margin_pos = { 'top', 'bottom' }
+        other_margin_pos = 'none'
     end
     --#endregion
 
@@ -95,15 +95,19 @@ local function get_tasklist_widget(style)
                     widget = wibox.container.margin,
                     [bar_margin_pos] = style.decoration_size,
                     [edge_margin_pos] = style.decoration_size,
-                    [other_margin_pos[1]] = style.decoration_size + style.spacing / 4,
-                    [other_margin_pos[2]] = style.decoration_size + style.spacing / 4,
+                    [other_margin_pos] = style.decoration_size + style.spacing / 4,
 
                     {
                         fill_space = true,
                         layout = wibox.layout.fixed.horizontal,
                         spacing = style.spacing / 2,
 
-                        awful.widget.clienticon,
+                        {
+                            widget = awful.widget.clienticon,
+                            -- Hack to make client icon not disappear when the size is 24
+                            -- Probably AwesomeWM bug
+                            forced_width = style.size
+                        },
                         {
                             id = 'text_role',
                             widget = wibox.widget.textbox,
@@ -122,9 +126,15 @@ local function get_tasklist_widget(style)
     --#region Callback when the whole tasklist is updated
     local function tasklist_updated(w, buttons, label, data, objects, args)      
         -- Set widget size based on the number of opened clients
-        local target_size = math.min(#objects * style.task_size, style.max_size)
-        w.forced_width = target_size
-
+        if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+        then
+            local target_size = math.min(#objects * style.task_size, style.max_size)
+            w.forced_width = target_size
+        else
+            local target_size = math.min(#objects * height, style.max_size)
+            w.forced_height = target_size
+        end
+        -- Default update
         awful.widget.common.list_update(w, buttons, label, data, objects, args)
     end
     --#endregion

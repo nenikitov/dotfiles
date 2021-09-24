@@ -43,9 +43,9 @@ local client = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Side of the screen ('top', 'bottom', 'left', or 'right')
-    position = 'top',
+    position = 'left',
     -- The size of the sections inside
-    contents_size = size(24),
+    contents_size = size(48),
     -- Color scheme
     colors = {
         -- Main
@@ -71,15 +71,22 @@ local statusbar = {
     -- Widgets
     widgets = {
         taglist = {
+            -- Size of the selection bar and the number of clients circles
             decoration_size = size(2),
+            -- Spacing between tags
             spacing = space(12),
+            -- Maximum number of client circles
             max_client_count = 5
         },
         tasklist = {
+            -- Size of the selection bar
             decoration_size = size(2),
+            -- Spacing between tasks
             spacing = space(12),
-            task_size = size(250),
-            max_size = size(500)--1920 - 2 * space(128) - size(600),
+            -- Maximum width of the task
+            task_size = size(225),
+            -- Maximum size of the taskbar
+            max_size = 1920 - 2 * space(128) - size(600),
         }
     }
 }
