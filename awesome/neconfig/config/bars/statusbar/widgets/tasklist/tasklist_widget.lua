@@ -6,8 +6,6 @@ local beautiful = require('beautiful')
 
 local function get_tasklist_widget(style)
     --#region Precompute values
-    -- Size of the task
-    local task_target_width = style.max_size / style.size_adapt_client_count
     -- Direction of of the tasks
     local direction
     -- The parameters that is responsible for the size
@@ -89,7 +87,7 @@ local function get_tasklist_widget(style)
     --#region Callback when the whole tasklist is updated
     local function tasklist_updated(w, buttons, label, data, objects, args)      
         -- Set widget size based on the number of opened clients
-        local target_size = math.min(#objects * task_target_width, style.max_size)
+        local target_size = math.min(#objects * style.task_size, style.max_size)
         w['forced_' .. size_param] = target_size
 
         awful.widget.common.list_update(w, buttons, label, data, objects, args)

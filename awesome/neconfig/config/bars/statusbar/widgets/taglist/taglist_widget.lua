@@ -21,7 +21,8 @@ local function get_taglist_widget(style)
 
     --#region Layout (direction)
     local widget_layout = {
-        layout = wibox.layout.fixed[direction]
+        layout = wibox.layout.fixed[direction],
+        spacing = style.spacing / 2
     }
     --#endregion
 
@@ -38,7 +39,7 @@ local function get_taglist_widget(style)
             selected_bar_role.bg = beautiful.fg_focus
         elseif (clients_num > 0)
         then
-            selected_bar_role.bg = beautiful.bg_normal
+            selected_bar_role.bg = beautiful.fg_normal
         else
             selected_bar_role.bg = '#0000'
         end
@@ -97,19 +98,19 @@ local function get_taglist_widget(style)
             },
             -- Main taglist widget
             {
-                    widget = wibox.layout.fixed.horizontal,
-                    fill_space = true,
-                    spacing = style.spacing,
+                widget = wibox.layout.fixed.horizontal,
+                fill_space = true,
+                spacing = style.spacing / 2,
 
-                    {
-                        id = 'icon_role',
-                        widget = wibox.widget.imagebox,
-                    },
-                    {
-                        id = 'text_role',
-                        widget = wibox.widget.textbox,
-                        align = 'center'
-                    }
+                {
+                    id = 'icon_role',
+                    widget = wibox.widget.imagebox,
+                },
+                {
+                    id = 'text_role',
+                    widget = wibox.widget.textbox,
+                    align = 'center'
+                }
             },
             -- Number of opened clients decoration
             {

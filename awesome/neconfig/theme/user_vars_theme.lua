@@ -78,8 +78,8 @@ local statusbar = {
         tasklist = {
             decoration_size = size(2),
             spacing = space(12),
-            max_size = dpi(1000),
-            size_adapt_client_count = 4
+            task_size = dpi(300),
+            max_size = dpi(900),
         }
     }
 }
