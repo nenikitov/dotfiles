@@ -101,8 +101,6 @@ local statusbar = {
         },
         tasklist = {
             visible = true,
-            show_client_text = true,
-            show_client_mode = true
         },
         keyboard_layout = {
             visible = true,

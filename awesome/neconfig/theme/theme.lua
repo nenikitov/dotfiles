@@ -42,9 +42,17 @@ theme.taglist_bg_urgent = '#f004'
 theme.tasklist_bg_focus = '#0006'
 theme.tasklist_bg_normal = '#0000'
 theme.tasklist_bg_minimize = '#0000'
--- theme.tasklist_plain_task_name = true
--- theme.tasklist_disable_task_name = true
--- theme.tasklist_maximized = '+ '
+theme.tasklist_plain_task_name = not theme.user_vars_theme.statusbar.widgets.tasklist.show_task_props
+theme.tasklist_disable_task_name = not theme.user_vars_theme.statusbar.widgets.tasklist.show_task_title
+
+theme.tasklist_sticky = '▪ '
+theme.tasklist_ontop = '^ '
+theme.tasklist_above = '▴ '
+theme.tasklist_below = '▾ '
+theme.tasklist_floating = '✈ '
+theme.tasklist_maximized = '+ '
+theme.tasklist_maximized_horizontal = '⬌ '
+theme.tasklist_maximized_vertical = '⬍ '
 
 -- There are other variable sets
 -- overriding the default one when

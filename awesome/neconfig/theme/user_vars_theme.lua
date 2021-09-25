@@ -32,6 +32,7 @@ local general = {
     text_size = size(12)
 }
 
+
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █
 local client = {
@@ -87,6 +88,16 @@ local statusbar = {
             task_size = size(225),
             -- Maximum size of the taskbar
             max_size = 1920 - 2 * space(128) - size(600),
+            -- Should the name of the task be shown
+            show_task_title = true,
+            -- Should the property (maximized, on top, etc) be shown
+            show_task_props = true
+        },
+        clock = {
+            top_size = 1.0,
+            top_weight = '500',
+            bottom_size = 0.75,
+            bottom_weight = 'normal'
         }
     }
 }
