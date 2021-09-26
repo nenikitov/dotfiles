@@ -11,7 +11,7 @@ require('neconfig.config.utils.bar_utils')
 
 -- Get variables
 local bar_info = beautiful.user_vars_theme.statusbar
-local bar_size = bar_info.contents_size + bar_info.margin.edge + bar_info.margin.content * 2
+local bar_size = bar_info.contents_size + bar_info.margin.content * 2
 -- Get bar size
 local lookup_size_param = {
     ['top']    = {'width',  'height'},
@@ -60,43 +60,14 @@ awful.screen.connect_for_each_screen(
             [size_param.thickness] = bar_size,
             [size_param.length] = s.geometry[size_param.length] - bar_info.margin.corners * 2,
 
-            shape = function(cr, w, h)
-                local offset = bar_info.margin.edge
-                local transform_lookup = {
-                    top = {
-                        x = 0,
-                        y = offset,
-                        w = w,
-                        h = h - offset
-                    },
-                    bottom = {
-                        x = 0,
-                        y = 0,
-                        w = w,
-                        h = h - offset
-                    },
-                    left = {
-                        x = offset,
-                        y = 0,
-                        w = w - offset,
-                        h = h
-                    },
-                    right = {
-                        x = 0,
-                        y = 0,
-                        w = w - offset,
-                        h = h
-                    },
-                }
-                local transform = transform_lookup[bar_info.position]
-
-                return gears.shape.transform(gears.shape.rounded_rect)
-                    : translate(transform.x, transform.y)
-                    (cr, transform.w, transform.h, bar_info.corner_radius.bar)
-            end,
+            shape = r_rect(bar_info.corner_radius.bar)
         }
         s.statusbar.wibar:setup {
             layout = wibox.layout.flex.horizontal
+        }
+        s.statusbar.wibar.y = bar_info.margin.edge
+        s.statusbar.wibar:struts {
+            top = bar_info.margin.edge + bar_size
         }
         --#endregion
 
