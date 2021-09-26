@@ -34,7 +34,9 @@ local section_style = {
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(
     bar_info.contents_size
 )
-local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info)
+local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(
+    bar_info
+)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
 
 -- Set up the action bar for each screen
@@ -66,8 +68,15 @@ awful.screen.connect_for_each_screen(
             layout = wibox.layout.flex.horizontal
         }
         s.statusbar.wibar.y = bar_info.margin.edge
+        -- ! For some reason, when the bar is on the left or on the right, it draws over the sections
+        -- TODO Find a fix
+        -- top    : y = bar_info.margin.edge
+        -- bottom : y = s.geometry.height - bar_size - bar_info.margin.edge
+        -- right  : x = s.geometry.width - bar_size - bar_info.margin.edge
+        -- left   : x = bar_info.margin.edge
+        
         s.statusbar.wibar:struts {
-            top = bar_info.margin.edge + bar_size
+            [bar_info.position] = bar_info.margin.edge + bar_size
         }
         --#endregion
 
