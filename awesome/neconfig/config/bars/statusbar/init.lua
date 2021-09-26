@@ -48,21 +48,9 @@ awful.screen.connect_for_each_screen(
         -- You can set wibars position by using s.statusbar.wibar.y
         -- However, the struts are not correct
         -- You should find how to make them better
-        -- 2
-        -- Select the style of the taglist (horizontal or vertical)
-        -- 3
-        -- Create better tasklist
         -- 4
         -- Create system tools and notifications buttons
 
-        --[[
-        local wi_test_cal = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
-        local test_cal = awful.popup {
-            screen = s,
-            bg = '#0000',
-            widget = wi_test_cal
-        }
-        ]]
 
         -- Create an empty wibar to constraint client position
         --#region Fake wibar

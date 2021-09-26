@@ -45,8 +45,10 @@ local function get_textclock(bar_info)
         placement = awful.placement.top,
         ontop = true,
         widget = calendar,
-        visible = false
+        visible = false,
+        preferred_positions = 'bottom'
     }
+
 
     final_widget:connect_signal('mouse::enter', function (s)
         cal_popup.visible = true
@@ -57,6 +59,7 @@ local function get_textclock(bar_info)
 
     return final_widget
 end
+
 
 return setmetatable(
     {},
