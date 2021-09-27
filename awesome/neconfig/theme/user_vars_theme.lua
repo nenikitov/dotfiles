@@ -44,9 +44,9 @@ local client = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Side of the screen ('top', 'bottom', 'left', or 'right')
-    position = 'top',
+    position = 'left',
     -- The size of the sections inside
-    contents_size = size(24),
+    contents_size = size(48),
     -- Color scheme
     colors = {
         -- Main
@@ -85,13 +85,9 @@ local statusbar = {
             -- Spacing between tasks
             spacing = space(12),
             -- Maximum width of the task
-            task_size = size(225),
+            task_size = size(150),--size(225),
             -- Maximum size of the taskbar
-            max_size = 1920 - 2 * space(128) - size(600),
-            -- Should the name of the task be shown
-            show_task_title = true,
-            -- Should the property (maximized, on top, etc) be shown
-            show_task_props = true
+            max_size = 1920 - 2 * space(128) - size(600)
         },
         clock = {
             top_size = 1.0,

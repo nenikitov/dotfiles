@@ -12,6 +12,8 @@ local config_path = awful.util.getdir('config') .. '/neconfig/'
 local theme = {}
 
 theme.user_vars_theme = require('neconfig.theme.user_vars_theme')
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
+
 
 theme.font          = theme.user_vars_theme.general.font .. ' ' .. theme.user_vars_theme.general.text_size
 
@@ -42,8 +44,8 @@ theme.taglist_bg_urgent = '#f004'
 theme.tasklist_bg_focus = '#0006'
 theme.tasklist_bg_normal = '#0000'
 theme.tasklist_bg_minimize = '#0000'
-theme.tasklist_plain_task_name = not theme.user_vars_theme.statusbar.widgets.tasklist.show_task_props
-theme.tasklist_disable_task_name = not theme.user_vars_theme.statusbar.widgets.tasklist.show_task_title
+theme.tasklist_plain_task_name = not user_vars_conf.statusbar.widgets.tasklist.show_task_props
+theme.tasklist_disable_task_name = not user_vars_conf.statusbar.widgets.tasklist.show_task_title
 
 theme.tasklist_sticky = '▪ '
 theme.tasklist_ontop = '^ '

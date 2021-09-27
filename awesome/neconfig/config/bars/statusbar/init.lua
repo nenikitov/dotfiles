@@ -64,9 +64,11 @@ awful.screen.connect_for_each_screen(
 
             shape = r_rect(bar_info.corner_radius.bar)
         }
+        -- Offset the bar
         local offset_prop = (bar_info.position == 'top' or bar_info.position == 'bottom') and 'y' or 'x'
         local offset_dir = (bar_info.position == 'top' or bar_info.position == 'left') and 1 or -1
         s.statusbar.wibar[offset_prop] = s.statusbar.wibar[offset_prop] + offset_dir * bar_info.margin.edge
+        -- Modify the area where clients can be placed
         s.statusbar.wibar:struts {
             [bar_info.position] = bar_info.margin.edge + bar_size
         }

@@ -5,7 +5,7 @@ local tasklist_buttons = require('neconfig.config.bars.statusbar.widgets.tasklis
 
 
 -- Generate tasklist widget
-local function get_tasklist(screen, bar_info, widget)
+local function get_tasklist(screen, bar_info)
     -- Get style from the theme
     local widget_info = bar_info.widgets.tasklist
     local style = {
@@ -15,7 +15,8 @@ local function get_tasklist(screen, bar_info, widget)
         decoration_size = widget_info.decoration_size,
         spacing = widget_info.spacing,
         task_size = widget_info.task_size,
-        max_size = widget_info.max_size
+        max_size = widget_info.max_size,
+        show_task_title = widget_info.show_task_title
     }
 
     local tasklist_widget = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_widget')(style)

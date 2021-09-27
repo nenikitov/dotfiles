@@ -12,30 +12,23 @@ local function get_tasklist_widget(style)
     local direction
     -- Margin to size the selected tag bar
     local bar_margin_pos
-    -- Margin to the screen edge
-    local edge_margin_pos = style.bar_pos
-    -- Other margins
-    local other_margin_pos
     if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
         bar_margin_pos = 'bottom'
-        other_margin_pos = 'right'
     elseif (style.bar_pos == 'bottom')
     then
         direction = 'horizontal'
         bar_margin_pos = 'top'
-        other_margin_pos = 'right'
     elseif (style.bar_pos == 'right')
     then
         direction = 'vertical'
         bar_margin_pos = 'left'
-        other_margin_pos = 'none'
     else
         direction = 'vertical'
         bar_margin_pos = 'right'
-        other_margin_pos = 'none'
     end
+    local center_contents = style.show_task_title
     --#endregion
 
 
@@ -72,49 +65,37 @@ local function get_tasklist_widget(style)
         forced_height = height,
 
         {
-            widget = wibox.container.place,
-            valign = 'center',
-            content_fill_horizontal = true,
+            widget = wibox.layout.stack,
 
+            -- Selected task decoration
             {
-                widget = wibox.layout.stack,
+                widget = wibox.container.margin,
+                [bar_margin_pos] = style.size - style.decoration_size,
 
-                -- Selected task decoration
                 {
-                    widget = wibox.container.margin,
-                    [bar_margin_pos] = style.size - style.decoration_size,
-    
-                    {
-                        widget = wibox.container.background,
-                        bg = '#0000',
-                        id = 'selected_bar_role',
-                    }
-                },
-                -- Main tasklist widget
-                {
-                    widget = wibox.container.margin,
-                    [bar_margin_pos] = style.decoration_size,
-                    [edge_margin_pos] = style.decoration_size,
-                    [other_margin_pos] = style.decoration_size + style.spacing / 4,
-
-                    {
-                        fill_space = true,
-                        layout = wibox.layout.fixed.horizontal,
-                        spacing = style.spacing / 2,
-
-                        {
-                            widget = awful.widget.clienticon,
-                            -- Hack to make client icon not disappear when the size is 24
-                            -- Probably AwesomeWM bug
-                            forced_width = style.size
-                        },
-                        {
-                            id = 'text_role',
-                            widget = wibox.widget.textbox,
-                        }
-                    }
+                    widget = wibox.container.background,
+                    bg = '#0000',
+                    id = 'selected_bar_role',
                 }
             },
+            -- Main tasklist widget
+            {
+                widget = wibox.container.place,
+                content_fill_horizontal = center_contents,
+                halign = 'center',
+
+                {
+                    fill_space = true,
+                    layout = wibox.layout.fixed.horizontal,
+                    {
+                        widget = awful.widget.clienticon,
+                    },
+                    {
+                        id = 'text_role',
+                        widget = wibox.widget.textbox,
+                    }
+                }
+            }
         },
 
         update_callback = task_updated,
