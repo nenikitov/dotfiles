@@ -10,7 +10,7 @@ require('neconfig.config.utils.widget_utils')
 
 local function get_menu(bar_info)
     -- Get style from the theme
-    local font_size = beautiful.get_font_height(beautiful.font)
+    local font_size = beautiful.get_font_height(beautiful.font) * 0.75
     local width
     local height
     if (bar_info.position == 'top' or bar_info.position == 'bottom')

@@ -1,5 +1,6 @@
 -- Load libraries
 local awful = require('awful')
+local wibox = require('wibox')
 local beautiful =require('beautiful')
 -- Load custom modules
 local layoutbox_buttons = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_buttons')()
@@ -7,7 +8,7 @@ local layoutbox_buttons = require('neconfig.config.bars.statusbar.widgets.layout
 
 local function get_layoutbox(screen, bar_info)
     -- Get style from the theme
-    local font_size = beautiful.get_font_height(beautiful.font)
+    local font_size = beautiful.get_font_height(beautiful.font) * 0.75
     local width
     local height
     if (bar_info.position == 'top' or bar_info.position == 'bottom')
@@ -21,13 +22,19 @@ local function get_layoutbox(screen, bar_info)
 
     local layoutbox = awful.widget.layoutbox(screen)
 
+    -- Hack because layoutbox does not want to center itself
+    return wibox.widget {
+        widget = wibox.container.background,
+        forced_height = height,
+        forced_width = width,
+        buttons = layoutbox_buttons,
 
-    layoutbox.buttons = layoutbox_buttons
-    layoutbox.forced_width = width
-    layoutbox.forced_height = height
-    layoutbox.fill_space = true
+        {
+            widget = wibox.container.place,
 
-    return layoutbox
+            layoutbox
+        }
+    }
 end
 
 return setmetatable(
