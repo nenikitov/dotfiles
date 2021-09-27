@@ -44,9 +44,9 @@ local client = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Side of the screen ('top', 'bottom', 'left', or 'right')
-    position = 'left',
+    position = 'top',
     -- The size of the sections inside
-    contents_size = size(48),
+    contents_size = size(100),
     -- Color scheme
     colors = {
         -- Main

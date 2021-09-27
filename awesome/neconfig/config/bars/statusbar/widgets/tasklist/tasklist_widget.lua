@@ -57,12 +57,12 @@ local function get_tasklist_widget(style)
         --#endregion
     end
     --#endregion
+
+
     --#region Template for the sub widgets
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
-        forced_width = style.size,
-        forced_height = height,
 
         {
             widget = wibox.layout.stack,
@@ -80,20 +80,17 @@ local function get_tasklist_widget(style)
             },
             -- Main tasklist widget
             {
-                widget = wibox.container.place,
-                content_fill_horizontal = center_contents,
-                halign = 'center',
-
+                --widget = wibox.container.place,
+                --content_fill_horizontal = center_contents,
+                --halign = 'center',
+                fill_space = true,
+                layout = wibox.layout.flex.horizontal,
                 {
-                    fill_space = true,
-                    layout = wibox.layout.fixed.horizontal,
-                    {
-                        widget = awful.widget.clienticon,
-                    },
-                    {
-                        id = 'text_role',
-                        widget = wibox.widget.textbox,
-                    }
+                    widget = awful.widget.clienticon,
+                },
+                {
+                    id = 'text_role',
+                    widget = wibox.widget.textbox,
                 }
             }
         },

@@ -102,9 +102,9 @@ local statusbar = {
         tasklist = {
             visible = true,
             -- Should the name of the task be shown
-            show_task_title = false,
+            show_task_title = true,
             -- Should the property (maximized, on top, etc) be shown
-            show_task_props = false
+            show_task_props = true
         },
         keyboard_layout = {
             visible = true,

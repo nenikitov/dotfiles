@@ -4,7 +4,6 @@ local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
-local user_menu = require('neconfig.config.user.user_menu')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 require('neconfig.config.utils.widget_utils')
 require('neconfig.config.utils.bar_utils')
@@ -31,12 +30,8 @@ local section_style = {
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
-local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(
-    bar_info.contents_size
-)
-local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(
-    bar_info
-)
+local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info)
+local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
 
 -- Set up the action bar for each screen
@@ -78,7 +73,7 @@ awful.screen.connect_for_each_screen(
         --#region Generate screen specific widgets
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, bar_info)
         local systray = wibox.widget.systray(s)
-        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info.contents_size)
+        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info)
         local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, bar_info)
         --#endregion
 

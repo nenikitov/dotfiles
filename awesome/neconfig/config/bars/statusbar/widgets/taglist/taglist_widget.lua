@@ -100,7 +100,6 @@ local function get_taglist_widget(style)
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
-        forced_height = style.size,
 
         {
             widget = wibox.layout.stack,
