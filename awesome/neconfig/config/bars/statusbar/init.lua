@@ -64,17 +64,9 @@ awful.screen.connect_for_each_screen(
 
             shape = r_rect(bar_info.corner_radius.bar)
         }
-        s.statusbar.wibar:setup {
-            layout = wibox.layout.flex.horizontal
-        }
-        s.statusbar.wibar.y = bar_info.margin.edge
-        -- ! For some reason, when the bar is on the left or on the right, it draws over the sections
-        -- TODO Find a fix
-        -- top    : y = bar_info.margin.edge
-        -- bottom : y = s.geometry.height - bar_size - bar_info.margin.edge
-        -- right  : x = s.geometry.width - bar_size - bar_info.margin.edge
-        -- left   : x = bar_info.margin.edge
-        
+        local offset_prop = (bar_info.position == 'top' or bar_info.position == 'bottom') and 'y' or 'x'
+        local offset_dir = (bar_info.position == 'top' or bar_info.position == 'left') and 1 or -1
+        s.statusbar.wibar[offset_prop] = s.statusbar.wibar[offset_prop] + offset_dir * bar_info.margin.edge
         s.statusbar.wibar:struts {
             [bar_info.position] = bar_info.margin.edge + bar_size
         }
