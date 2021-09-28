@@ -7,7 +7,9 @@ local beautiful = require('beautiful')
 local function get_tasklist_widget(style)
     --#region Precompute values
     -- Height based on font size
-    local height = beautiful.get_font_height(beautiful.font) * 1.5
+    local font_height = beautiful.get_font_height(beautiful.font)
+    local height = font_height * 1.5
+    local contents_align = style.show_task_title and 'left' or 'center'
     -- Direction of of the tasks
     local direction
     -- Margin to size the selected tag bar
@@ -28,7 +30,6 @@ local function get_tasklist_widget(style)
         direction = 'vertical'
         bar_margin_pos = 'right'
     end
-    local center_contents = style.show_task_title
     --#endregion
 
 
@@ -63,6 +64,7 @@ local function get_tasklist_widget(style)
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
+        forced_height = height,
 
         {
             widget = wibox.layout.stack,
@@ -80,17 +82,31 @@ local function get_tasklist_widget(style)
             },
             -- Main tasklist widget
             {
-                --widget = wibox.container.place,
-                --content_fill_horizontal = center_contents,
-                --halign = 'center',
-                fill_space = true,
-                layout = wibox.layout.flex.horizontal,
+                widget = wibox.container.margin,
+                margins = style.decoration_size,
+
                 {
-                    widget = awful.widget.clienticon,
-                },
-                {
-                    id = 'text_role',
-                    widget = wibox.widget.textbox,
+                    widget = wibox.container.place,
+                    halign = contents_align,
+
+                    {
+                        layout = wibox.layout.fixed.horizontal,
+                        spacing = font_height / 8,
+
+                        {
+                            widget = wibox.container.place,
+
+                            {
+                                widget = awful.widget.clienticon,
+                                forced_height = font_height,
+                                forced_width = font_height,
+                            }
+                        },
+                        {
+                            id = 'text_role',
+                            widget = wibox.widget.textbox,
+                        }
+                    }
                 }
             }
         },

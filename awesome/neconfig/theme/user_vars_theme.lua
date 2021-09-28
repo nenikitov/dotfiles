@@ -85,9 +85,9 @@ local statusbar = {
             -- Spacing between tasks
             spacing = space(12),
             -- Maximum width of the task
-            task_size = size(150),--size(225),
+            task_size = size(200),
             -- Maximum size of the taskbar
-            max_size = 1920 - 2 * space(128) - size(600)
+            max_size = 1920 - 2 * space(128) - size(600),
         },
         clock = {
             top_size = 1.0,
