@@ -16,6 +16,7 @@ local function get_taglist_widget(style)
     local dots_margin_pos = style.bar_pos
     -- Other margins to reduce opened clients distance
     local dots_margin_others = {}
+    local margin_full_size
     if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
@@ -96,10 +97,13 @@ local function get_taglist_widget(style)
         --#endregion
     end
     --#endregion
+
+
     --#region Template for the sub widgets
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
+        forced_height = beautiful.get_font_height(beautiful.font) * 1.5,
 
         {
             widget = wibox.layout.stack,
@@ -135,8 +139,8 @@ local function get_taglist_widget(style)
             {
                 widget = wibox.container.margin,
                 [dots_margin_pos] = style.size - style.decoration_size,
-                [dots_margin_others[1]] = style.size / 10,
-                [dots_margin_others[2]] = style.size / 10,
+                [dots_margin_others[1]] = 5,
+                [dots_margin_others[2]] = 5,
 
                 {
                     id = 'client_num_role',
