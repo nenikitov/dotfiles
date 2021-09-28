@@ -10,13 +10,13 @@ require('neconfig.config.utils.bar_utils')
 
 -- Get variables
 local bar_info = beautiful.user_vars_theme.statusbar
-local bar_size = bar_info.contents_size + bar_info.margin.content * 2
 -- Get bar size
+local bar_size = bar_info.contents_size + bar_info.margin.content * 2
 local lookup_size_param = {
     ['top']    = {'width',  'height'},
     ['bottom'] = {'width',  'height'},
-    ['left']   = {'height', 'width'},
-    ['right']  = {'height', 'width'}
+    ['left']   = {'height', 'width' },
+    ['right']  = {'height', 'width' }
 }
 local size_param = {
     length = lookup_size_param[bar_info.position][1],
@@ -30,26 +30,28 @@ local section_style = {
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
+
+
+--#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info)
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
+--#endregion
 
--- Set up the action bar for each screen
+
+-- Set up the status bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)
+        --#region Generate screen specific widgets
+        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, bar_info)
+        local systray = wibox.widget.systray(s)
+        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info)
+        local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, bar_info)
+        --#endregion
+
+
         s.statusbar = {}
         s.statusbar.sections = {}
-
-        -- TODO
-        -- 1
-        -- You can set wibars position by using s.statusbar.wibar.y
-        -- However, the struts are not correct
-        -- You should find how to make them better
-        -- 4
-        -- Create system tools and notifications buttons
-
-
-        -- Create an empty wibar to constraint client position
         --#region Fake wibar
         s.statusbar.wibar = awful.wibar {
             position = bar_info.position,
@@ -70,14 +72,8 @@ awful.screen.connect_for_each_screen(
         --#endregion
 
 
-        --#region Generate screen specific widgets
-        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, bar_info)
-        local systray = wibox.widget.systray(s)
-        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info)
-        local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, bar_info)
-        --#endregion
-
         --#region 1st section
+        -- Menu
         add_section {
             name = 'menu',
             widget = menu,
@@ -89,6 +85,7 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        -- Layout box
         add_section {
             name = 'layoutbox',
             widget = layoutbox,
@@ -100,6 +97,7 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        -- Tag list
         add_section {
             name = 'taglist',
             widget = taglist,
@@ -113,8 +111,8 @@ awful.screen.connect_for_each_screen(
         }
         --#endregion
 
-
         --#region 2nd section
+        -- Task list
         add_section {
             name = 'tasklist',
             widget = tasklist,
@@ -128,8 +126,8 @@ awful.screen.connect_for_each_screen(
         }
         --#endregion
 
-
         --#region 3rd section
+        -- Clock
         add_section {
             name = 'clock',
             widget = textclock,
@@ -141,6 +139,7 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        -- Keyboard layout
         add_section {
             name = 'keyboard_layout',
             widget = keyboard_layout,
@@ -154,7 +153,8 @@ awful.screen.connect_for_each_screen(
         }
         --#endregion
 
-        -- Other
+        --! Test, remove this later
+        --#region Other
         add_section {
             name = 'taglist',
             widget = systray,
@@ -166,5 +166,6 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        --#endregion
     end
 )

@@ -77,7 +77,7 @@ local function get_client_keys()
             end,
             { description = '(un)maximize', group = 'client' }
         ),
-        -- Maximize client verically on SUPER + CTRL + M
+        -- Maximize client vertically on SUPER + CTRL + M
         awful.key(
             { super_key, 'Control' }, 'm',
             function (c)
