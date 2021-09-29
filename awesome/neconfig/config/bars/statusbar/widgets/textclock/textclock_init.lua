@@ -40,23 +40,6 @@ local function get_textclock(bar_info)
         bottom_time
     }
 
-    local calendar = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
-    local cal_popup = awful.popup {
-        placement = awful.placement.top,
-        ontop = true,
-        widget = calendar,
-        visible = false,
-        preferred_positions = 'bottom'
-    }
-
-
-    final_widget:connect_signal('mouse::enter', function (s)
-        cal_popup.visible = true
-    end)
-    final_widget:connect_signal('mouse::leave', function (s)
-        cal_popup.visible = false
-    end)
-
     return final_widget
 end
 
