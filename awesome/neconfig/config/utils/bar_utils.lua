@@ -10,7 +10,7 @@ require('neconfig.config.utils.widget_utils')
 ---@param side string 'top', 'bottom', 'left', 'right'
 ---@param section number 1, 2, 3 where, in case of 'top' side, 1 is left corner, 2 is middle and 3 is right corner
 ---@return table position_info Where the widget should be located and what is the direction to the next widget
-local function generate_positon_info(side, section)
+local function generate_position_info(side, section)
     -- 1st value is the combined position of the popup
     -- 2nd is where the next section would be if placed in the same screen corner
     local lookup = {
@@ -51,7 +51,7 @@ end
 ---@return table margins Final margins
 local function find_margins_for_position(position, last_section, style, screen, info_table)
     -- Precalculate all values
-    local position_info = generate_positon_info(position.side, position.section)
+    local position_info = generate_position_info(position.side, position.section)
 
     local dir = position_info.next_direction
     local pos = position_info.combined
@@ -141,7 +141,7 @@ function add_section(args)
     local screen = args.screen
     local info_table = args.info_table
     -- Precalculate position info
-    local position_info = generate_positon_info(position.side, position.section)
+    local position_info = generate_position_info(position.side, position.section)
     local section_position = position_info.combined
     --#endregion
 
@@ -160,7 +160,7 @@ function add_section(args)
     -- Init current section
     info_table[section_position][name] = {
         popup = {},
-        contents = {}
+        widget = {}
     }
     --#endregion
 

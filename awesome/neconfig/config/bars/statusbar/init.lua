@@ -154,6 +154,20 @@ awful.screen.connect_for_each_screen(
         --#endregion
 
         --! Test, remove this later
+        --TODO Create popup utils
+        --[[
+        local calendar = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
+
+        local cal_popup = awful.popup {
+            widget = calendar,
+            placement = awful.placement.right + awful.placement.maximize_vertically,
+          --placement = awful.placement.right + awful.placement.stretch_down,
+            screen = s,
+        }
+        ]]
+
+
+
         --#region Other
         add_section {
             name = 'taglist',
@@ -169,3 +183,5 @@ awful.screen.connect_for_each_screen(
         --#endregion
     end
 )
+
+
