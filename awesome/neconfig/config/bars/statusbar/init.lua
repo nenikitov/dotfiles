@@ -74,7 +74,7 @@ awful.screen.connect_for_each_screen(
 
         --#region 1st section
         -- Menu
-        add_section {
+        add_bar_section {
             name = 'menu',
             widget = menu,
             position = {
@@ -86,7 +86,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         -- Layout box
-        add_section {
+        add_bar_section {
             name = 'layoutbox',
             widget = layoutbox,
             position = {
@@ -98,7 +98,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         -- Tag list
-        add_section {
+        add_bar_section {
             name = 'taglist',
             widget = taglist,
             position = {
@@ -113,7 +113,7 @@ awful.screen.connect_for_each_screen(
 
         --#region 2nd section
         -- Task list
-        add_section {
+        add_bar_section {
             name = 'tasklist',
             widget = tasklist,
             position = {
@@ -128,7 +128,7 @@ awful.screen.connect_for_each_screen(
 
         --#region 3rd section
         -- Clock
-        add_section {
+        add_bar_section {
             name = 'clock',
             widget = textclock,
             position = {
@@ -140,7 +140,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         -- Keyboard layout
-        add_section {
+        add_bar_section {
             name = 'keyboard_layout',
             widget = keyboard_layout,
             position = {
@@ -169,7 +169,7 @@ awful.screen.connect_for_each_screen(
 
 
         --#region Other
-        add_section {
+        add_bar_section {
             name = 'taglist',
             widget = systray,
             position = {

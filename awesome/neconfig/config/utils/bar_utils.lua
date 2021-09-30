@@ -132,7 +132,7 @@ end
 
 --- Add, initialize and draw a section
 ---@param args table Name, widget list, position, style, screen and info_table
-function add_section(args)
+function add_bar_section(args)
     --#region Aliases for the arguments
     local name = args.name
     local widget = args.widget
