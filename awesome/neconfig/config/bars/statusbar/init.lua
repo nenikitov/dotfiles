@@ -155,16 +155,26 @@ awful.screen.connect_for_each_screen(
 
         --! Test, remove this later
         --TODO Create popup utils
-        --[[
         local calendar = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
-
-        local cal_popup = awful.popup {
-            widget = calendar,
-            placement = awful.placement.right + awful.placement.maximize_vertically,
-          --placement = awful.placement.right + awful.placement.stretch_down,
+        local test = awful.popup {
+            widget = taglist,
+            placement = awful.placement.centered,
             screen = s,
         }
-        ]]
+        taglist._do_taglist_update_now() 
+        test:_apply_size_now(true)
+        local naughty = require('naughty')
+        naughty.notify {
+            text = tostring(taglist._do_taglist_update_now),
+            screen = s
+        }
+        local cal_popup = awful.popup {
+            widget = calendar,
+            screen = s,
+            preferred_positions = 'bottom',
+            preferred_anchors = 'front'
+        }
+        cal_popup:move_next_to(test)
 
 
 
