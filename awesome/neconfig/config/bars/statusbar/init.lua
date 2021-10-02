@@ -71,7 +71,6 @@ awful.screen.connect_for_each_screen(
         }
         --#endregion
 
-        --[[
         --#region 1st section
         -- Menu
         add_bar_section {
@@ -125,7 +124,6 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         --#endregion
-        ]]
 
         --#region 3rd section
         -- Clock
@@ -156,16 +154,6 @@ awful.screen.connect_for_each_screen(
 
         --! Test, remove this later
         --TODO Create popup utils
-        --[[
-        local test = awful.popup {
-            widget = keyboard_layout,
-            screen = s,
-            preferred_positions = 'bottom',
-            preferred_anchors = 'middle',
-            placement = nil
-        }
-        test:move_next_to(s.statusbar.sections[3].clock.popup)
-        ]]
 
         --[[
         --#region Other
