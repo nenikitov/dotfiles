@@ -71,7 +71,7 @@ awful.screen.connect_for_each_screen(
         }
         --#endregion
 
-
+        --[[
         --#region 1st section
         -- Menu
         add_bar_section {
@@ -125,6 +125,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         --#endregion
+        ]]
 
         --#region 3rd section
         -- Clock
@@ -155,29 +156,18 @@ awful.screen.connect_for_each_screen(
 
         --! Test, remove this later
         --TODO Create popup utils
-        local calendar = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
+        --[[
         local test = awful.popup {
-            widget = taglist,
-            placement = awful.placement.centered,
-            screen = s,
-        }
-        taglist._do_taglist_update_now() 
-        test:_apply_size_now(true)
-        local naughty = require('naughty')
-        naughty.notify {
-            text = tostring(taglist._do_taglist_update_now),
-            screen = s
-        }
-        local cal_popup = awful.popup {
-            widget = calendar,
+            widget = keyboard_layout,
             screen = s,
             preferred_positions = 'bottom',
-            preferred_anchors = 'front'
+            preferred_anchors = 'middle',
+            placement = nil
         }
-        cal_popup:move_next_to(test)
+        test:move_next_to(s.statusbar.sections[3].clock.popup)
+        ]]
 
-
-
+        --[[
         --#region Other
         add_bar_section {
             name = 'taglist',
@@ -191,6 +181,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         --#endregion
+        ]]
     end
 )
 

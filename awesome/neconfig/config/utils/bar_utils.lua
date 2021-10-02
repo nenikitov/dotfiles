@@ -129,9 +129,73 @@ local function find_margins_for_position(position, last_section, style, screen, 
 end
 --#endregion
 
+-- TODO
+-- Remake completely how the bar sections are attach
+-- There is no need to set the margins depending on the previous widget
+-- You can simply attach the current one to the previous by using `current:move_next_to(last)`
+-- The problem is some widgets have uninitialized size, so you need to init it manually with `last:_apply_size_now()`
+-- This feels like a hack, but it is less hacky then what i have now
+
+
+
+local function get_corner(side, section)
+        local lookup = {
+        ['top'] = {
+            [1] = 'top_left',
+            [2] = 'top',
+            [3] = 'top_right'
+        },
+        ['bottom'] = {
+            [1] = 'bottom_left',
+            [2] = 'bottom',
+            [3] = 'bottom_right'
+        },
+        ['left'] = {
+            [1] = 'top_left',
+            [2] = 'left',
+            [3] = 'bottom_left'
+        },
+        ['right'] = {
+            [1] = 'top_right',
+            [2] = 'right',
+            [3] = 'bottom_right'
+        }
+    }
+
+    return lookup[side][section]
+end
+
+
+local function get_next_widget_dir(side, section)
+    local lookup = {
+        ['top'] = {
+            [1] = 'right',
+            [2] = 'right',
+            [3] = 'left'
+        },
+        ['bottom'] = {
+            [1] = 'right',
+            [2] = 'right',
+            [3] = 'left'
+        },
+        ['left'] = {
+            [1] = 'bottom',
+            [2] = 'bottom',
+            [3] = 'top'
+        },
+        ['right'] = {
+            [1] = 'bottom',
+            [2] = 'bottom',
+            [3] = 'top'
+        }
+    }
+
+    return lookup[side][section]
+end
+
 
 --- Add, initialize and draw a section
----@param args table Name, widget list, position, style, screen and info_table
+---@param args table Name, widget(contents), position(side, section), style, screen and info_table
 function add_bar_section(args)
     --#region Aliases for the arguments
     local name = args.name
@@ -141,51 +205,35 @@ function add_bar_section(args)
     local screen = args.screen
     local info_table = args.info_table
     -- Precalculate position info
-    local position_info = generate_position_info(position.side, position.section)
-    local section_position = position_info.combined
+    local corner = get_corner(position.side, position.section)
+    local next_dir = get_next_widget_dir(position.side, position.section)
     --#endregion
 
-    --#region Init
-    -- Init the section if it is the first widget to be placed here
-    if (not info_table[section_position])
+
+    --#region Init the section table
+    -- The container for this corner if it is the first widget to be placed
+    if (not info_table[position.section])
     then
-        info_table[section_position] = {
-            last_section = nil
+        info_table[position.section] = {
+            last_section_name = nil
         }
     end
-    -- Get last section before creating the section's widgets
-    -- So every section stays in the correct order
-    local last_section = info_table[section_position].last_section
-
-    -- Init current section
-    info_table[section_position][name] = {
+    -- Get the last section if exists
+    local last_section_name = info_table[position.section].last_section_name
+    -- The container for this bar section
+    info_table[position.section][name] = {
         popup = {},
         widget = {}
     }
     --#endregion
 
 
-    --#region Create the popup
-    info_table[section_position][name].popup = awful.popup {
-        screen = screen,
-        placement = function(wi)
-            local margins = find_margins_for_position(position, last_section, style, screen, info_table)
-            return awful.placement[section_position](wi, { margins = margins })
-        end,
-        shape = r_rect(style.corner_radius),
-        bg = style.background_color,
-        widget = {},
-        type = 'toolbar'
-    }
-    --#endregion
-
-    --#region Populate the section with each widget in the list
-    info_table[section_position][name].widget = widget
-    -- Get if the section should restrict the widgets width or height
+    --#region Create popup
+    -- Resize the widget
     local padding_ver
     local padding_hor
     local resize_func
-    if (position_info.next_direction == 'top' or position_info.next_direction == 'bottom')
+    if (next_dir == 'top' or next_dir == 'bottom')
     then
         padding_ver = style.corner_radius
         padding_hor = 0
@@ -195,26 +243,49 @@ function add_bar_section(args)
         padding_hor = style.corner_radius
         resize_func = set_height_widget
     end
-
-    -- Construct final widget
-    local section_final_widget = {
-        resize_func(widget, style.contents_size),
-        widget = wibox.container.background
-    }
-
-    -- Put it in the popup
-    info_table[section_position][name].popup:setup {
+    local final_widget = {
         pad_widget(
-            section_final_widget,
+            {
+                resize_func(widget, style.contents_size),
+                widget = wibox.container.background
+            },
             padding_ver, padding_hor,
             padding_ver, padding_hor
         ),
 
         layout = wibox.layout.fixed.horizontal,
     }
+    -- Create the popup
+    local placement_func
+    if (last_section_name)
+    then
+        placement_func = nil
+    else
+        placement_func = awful.placement.top_right
+    end
+    local popup = awful.popup {
+        screen = screen,
+        shape = r_rect(style.corner_radius),
+        preferred_positions = 'left',
+        preferred_anchors = 'middle',
+        bg = style.background_color,
+        widget = final_widget,
+        -- x = screen.geometry.x + 40,
+        type = 'toolbar',
+        placement = placement_func
+    }
+    -- Apply the size
+    --popup:_apply_size_now()
+    -- Attach to the last section if exists
+    if (name ~= 'clock')
+    then
+        popup:move_next_to(info_table[3]['clock'].popup)
+    end
     --#endregion
 
-
-    -- Update last_popup so the next popup places after this one
-    info_table[section_position].last_section = name
+    --#region Update info table variables for next section
+    info_table[position.section][name].popup = popup
+    info_table[position.section][name].widget = widget
+    info_table[position.section].last_section_name = name
+    --#endregion
 end
