@@ -1,7 +1,3 @@
-local style = {
-    
-}
-
 function add_custom_popup(args)
     --#region Aliases for the arguments
     local widgets = args.widgets

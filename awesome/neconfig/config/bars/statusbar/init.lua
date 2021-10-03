@@ -1,12 +1,11 @@
 -- Load libraries
-local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
-local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 require('neconfig.config.utils.widget_utils')
 require('neconfig.config.utils.bar_utils')
+require('neconfig.config.utils.popup_utils')
 
 -- Get variables
 local bar_info = beautiful.user_vars_theme.statusbar
@@ -30,7 +29,13 @@ local section_style = {
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
-
+-- TODO create separate fields for popups
+local popup_style = {
+    background_color = bar_info.colors.bg_sections,
+    margin = bar_info.margin,
+    spacing = bar_info.spacing,
+    corner_radius = bar_info.corner_radius.sections
+}
 
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info)
@@ -50,8 +55,10 @@ awful.screen.connect_for_each_screen(
         --#endregion
 
 
-        s.statusbar = {}
-        s.statusbar.sections = {}
+        s.statusbar = {
+            sections = {},
+            widgets = {}
+        }
         --#region Fake wibar
         s.statusbar.wibar = awful.wibar {
             position = bar_info.position,
@@ -150,11 +157,29 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+
+        -- TODO remove this later, test
+        local cal = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
+        add_custom_popup {
+            name = 'calendar',
+            widgets = {
+                keyboard_layout,
+                cal
+            },
+            attach = {
+                target = s.statusbar.sections[3].clock.popup,
+                position = 'bottom',
+                anchor = 'middle',
+                offset = 10
+            },
+            size = 'fit',
+            style = popup_style,
+            screen = s,
+            info_table = s.statusbar.widgets
+        }
         --#endregion
 
-        --! Test, remove this later
-        --TODO Create popup utils
-
+        --! Test, remove this later (place systray in a better position)
         --[[
         --#region Other
         add_bar_section {
