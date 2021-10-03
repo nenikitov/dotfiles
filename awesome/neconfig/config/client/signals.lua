@@ -7,7 +7,8 @@ local beautiful = require('beautiful')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 
--- Load titlebars TODO MODIFY THIS LATER
+-- TODO Modify this later
+-- Load titlebars
 require('modules.deco.titlebar')
 
 
