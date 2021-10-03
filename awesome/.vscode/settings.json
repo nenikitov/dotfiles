@@ -8,4 +8,15 @@
     "Lua.diagnostics.disable": [
         "undefined-doc-name"
     ],
+    "cSpell.words": [
+        "closebutton",
+        "floatingbutton",
+        "iconwidget",
+        "maximizedbutton",
+        "ontopbutton",
+        "stickybutton",
+        "titlebars",
+        "titlewidget",
+        "unfocus"
+    ],
 }

@@ -1,11 +1,11 @@
-local gears = require("gears")
-local awful = require("awful")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local gears = require('gears')
+local awful = require('awful')
+local wibox = require('wibox')
+local beautiful = require('beautiful')
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal(
-    "request::titlebars",
+    'request::titlebars',
     function(c)
         -- Buttons for the titlebar
         local buttons = gears.table.join(
@@ -13,7 +13,7 @@ client.connect_signal(
             awful.button(
                 { }, 1,
                 function()
-                    c:emit_signal("request::activate", "titlebar", {raise = true})
+                    c:emit_signal('request::activate', 'titlebar', {raise = true})
                     awful.mouse.client.move(c)
                 end
             ),
@@ -21,7 +21,7 @@ client.connect_signal(
             awful.button(
                 { }, 3,
                 function()
-                    c:emit_signal("request::activate", "titlebar", {raise = true})
+                    c:emit_signal('request::activate', 'titlebar', {raise = true})
                     awful.mouse.client.resize(c)
                 end
             )
@@ -40,7 +40,7 @@ client.connect_signal(
             {
                 -- Title
                 {
-                    align = "center",
+                    align = 'center',
                     widget = awful.titlebar.widget.titlewidget(c)
                 },
                 buttons = buttons,

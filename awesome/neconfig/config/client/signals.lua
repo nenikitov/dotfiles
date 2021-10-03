@@ -7,10 +7,7 @@ local beautiful = require('beautiful')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 
--- TODO Modify this later
--- Load titlebars
-require('modules.deco.titlebar')
-
+require('neconfig.config.bars.titlebar.titlebar')
 
 -- Signal function to execute when a new client appears.
 client.connect_signal(
