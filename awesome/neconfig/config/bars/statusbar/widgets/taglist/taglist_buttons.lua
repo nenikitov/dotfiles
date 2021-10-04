@@ -1,14 +1,14 @@
--- Standard Awesome libraries
+-- Load libraries
 local gears = require('gears')
 local awful = require('awful')
+-- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
-
 
 -- Get variables
 local super_key = user_vars_conf.binds.keys.super_key
 
 
--- Create the button binds for tag list
+-- Create the mouse button binds for tag list
 local function get_taglist_buttons()
     local taglist_buttons = gears.table.join(
         -- View only the current tag on LMB
@@ -18,7 +18,7 @@ local function get_taglist_buttons()
                 t:view_only()
             end
         ),
-        -- Move to tag on SUPER + LMB
+        -- Move current client to tag on SUPER + LMB
         awful.button(
             { super_key }, 1,
             function(t)
@@ -32,7 +32,7 @@ local function get_taglist_buttons()
             { }, 3,
             awful.tag.viewtoggle
         ),
-        -- Toggle tag on SUPER + RMB
+        -- Toggle tag for the current client on SUPER + RMB
         awful.button(
             { super_key }, 3,
             function(t)
@@ -41,6 +41,7 @@ local function get_taglist_buttons()
                 end
             end
         ),
+        -- TODO fix this, it does not work. Mouse 4 and 5 do nothing
         -- Go to next tag on FTMB
         awful.button(
             { }, 4,
@@ -62,5 +63,5 @@ end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_taglist_buttons(...) end }
+    {  __call = function(_, ...) return get_taglist_buttons() end }
 )

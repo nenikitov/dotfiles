@@ -4,18 +4,16 @@ local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
-local textclock_buttons = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_buttons')()
--- Get variables
-local font = beautiful.user_vars_theme.general.font
-local font_size = beautiful.user_vars_theme.general.text_size
 
 
 local function get_textclock(bar_info)
     -- Get style from the theme
     local style = bar_info.widgets.clock
+    local font = beautiful.user_vars_theme.general.font
+    local font_size = beautiful.user_vars_theme.general.text_size
 
 
-    -- Generate 2 separate widgets for date and time
+    -- Construct 2 separate widgets for date and time
     local top_time = wibox.widget {
         widget = wibox.widget.textclock,
 
@@ -31,8 +29,8 @@ local function get_textclock(bar_info)
         align = 'center'
     }
 
-    -- Construct the layered widget
-    local final_widget =  wibox.widget {
+    -- Construct the final widget
+    local final_widget = wibox.widget {
         layout = wibox.layout.flex.vertical,
         fill_space = true,
 

@@ -6,6 +6,10 @@ require('neconfig.config.utils.widget_utils')
 
 
 --#region Helper methods
+--- Get the corner or the edge of the screen where the widget will be placed from the side and section
+---@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
+---@param section number "Part" of the bar where the widget should be placed (1 for the first, 2 for the middle, 3 for the last)
+---@return string
 local function get_corner(side, section)
         local lookup = {
         ['top'] = {
@@ -33,6 +37,10 @@ local function get_corner(side, section)
     return lookup[side][section]
 end
 
+--- Get the direction to the next widget ('top', 'bottom', 'left', 'right')
+---@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
+---@param section number "Part" of the bar where the widget should be placed (1 for the first, 2 for the middle, 3 for the last)
+---@return string
 local function get_next_widget_dir(side, section)
     local lookup = {
         ['top'] = {
@@ -60,6 +68,10 @@ local function get_next_widget_dir(side, section)
     return lookup[side][section]
 end
 
+--- Compute the margin to the edge and corners of the screen
+---@param style table List of style variables
+---@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
+---@return table
 local function get_margins(style, side)
     local margin_edge_val = style.margin.edge + style.margin.content
     local margin_corner_val = style.margin.corners + style.spacing
@@ -80,6 +92,11 @@ local function get_margins(style, side)
     }
 end
 
+--- Compute the spacing between the current and the next widget
+---@param style table List of style variables
+---@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
+---@param dir string Direction to the next widget ('top', 'bottom', 'left', 'right')
+---@return table
 local function get_spacing(style, side, dir)
     local spacing_val = style.spacing
     local spacing_dir

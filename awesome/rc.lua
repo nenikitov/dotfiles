@@ -28,10 +28,10 @@ require('neconfig.config.main.tag')
 
 
 -- TODO move to separate module?
-local global_keys = require('neconfig.config.globalbinds.keys')
-local global_tagbinds = require('neconfig.config.globalbinds.tagbinds')
-global_keys = global_tagbinds(global_keys())
-local global_buttons = require('neconfig.config.globalbinds.buttons')
+local global_keys = require('neconfig.config.global_binds.global_keys')()
+local global_tag_binds = require('neconfig.config.global_binds.global_tag_binds')
+global_keys = global_tag_binds(global_keys)
+local global_buttons = require('neconfig.config.global_binds.global_buttons')()
 -- Load key binds
 root.keys(global_keys)
 root.buttons(global_buttons)
@@ -49,11 +49,11 @@ require('neconfig.config.bars.statusbar.init')
 
 
 -- TODO move to separate module?
-local rules = require('neconfig.config.client.rules')
-local client_buttons = require('neconfig.config.client.buttons')
-local client_keys = require('neconfig.config.client.keys')
+local rules = require('neconfig.config.client.client_rules')
+local client_buttons = require('neconfig.config.client.client_buttons')
+local client_keys = require('neconfig.config.client.client_keys')
 awful.rules.rules = rules(client_keys(), client_buttons())
-require('neconfig.config.client.signals')
+require('neconfig.config.client.client_signals')
 
 -- Autostart
 require('neconfig.config.main.autostart')

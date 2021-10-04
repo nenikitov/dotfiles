@@ -60,6 +60,23 @@ local function get_tasklist_widget(style)
     --#endregion
 
 
+    --#region Callback when the whole tasklist is updated
+    local function tasklist_updated(w, buttons, label, data, objects, args)      
+        -- Set widget size based on the number of opened clients
+        if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+        then
+            local target_size = math.min(#objects * style.task_size, style.max_size)
+            w.forced_width = target_size
+        else
+            local target_size = math.min(#objects * height, style.max_size)
+            w.forced_height = target_size
+        end
+        -- Default update
+        awful.widget.common.list_update(w, buttons, label, data, objects, args)
+    end
+    --#endregion
+
+
     --#region Template for the sub widgets
     local widget_template = {
         id = 'background_role',
@@ -115,24 +132,6 @@ local function get_tasklist_widget(style)
         create_callback = task_updated
     }
     --#endregion
-
-
-    --#region Callback when the whole tasklist is updated
-    local function tasklist_updated(w, buttons, label, data, objects, args)      
-        -- Set widget size based on the number of opened clients
-        if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
-        then
-            local target_size = math.min(#objects * style.task_size, style.max_size)
-            w.forced_width = target_size
-        else
-            local target_size = math.min(#objects * height, style.max_size)
-            w.forced_height = target_size
-        end
-        -- Default update
-        awful.widget.common.list_update(w, buttons, label, data, objects, args)
-    end
-    --#endregion
-
 
     return {
         layout = widget_layout,

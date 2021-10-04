@@ -3,7 +3,7 @@ local gears = require('gears')
 local awful = require('awful')
 
 
--- Create the button binds for layoutbox
+-- Create the mouse button binds for layoutbox
 local function get_layoutbox_buttons()
     local layoutbox_buttons = gears.table.join(
         -- Go to next layout on LMB
@@ -27,5 +27,5 @@ end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_layoutbox_buttons(...) end }
+    {  __call = function(_, ...) return get_layoutbox_buttons() end }
 )

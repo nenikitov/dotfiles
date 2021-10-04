@@ -20,8 +20,10 @@ local function get_tasklist(screen, bar_info)
         show_task_title = user_vars_conf.statusbar.widgets.tasklist.show_task_title
     }
 
+    -- Get custom widget properties
     local tasklist_widget = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_widget')(style)
 
+    -- Construct widget
     local tasklist = awful.widget.tasklist {
         screen = screen,
         filter = awful.widget.tasklist.filter.currenttags,
@@ -32,8 +34,8 @@ local function get_tasklist(screen, bar_info)
         update_function = tasklist_widget.update_function
     }
 
-        -- Hack to prematurely update tasklist so the widgets placed after it get the correct width and height
-        tasklist._do_tasklist_update_now()
+    -- Hack to prematurely update tasklist on creation, so the widgets placed after it get the correct width and height
+    tasklist._do_tasklist_update_now()
 
     return tasklist
 end

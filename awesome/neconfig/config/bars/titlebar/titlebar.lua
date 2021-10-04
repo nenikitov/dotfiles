@@ -1,12 +1,15 @@
+-- Load libraries
 local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 
+
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal(
     'request::titlebars',
     function(c)
+        -- TODO move to separate file
         -- Buttons for the titlebar
         local buttons = gears.table.join(
             -- Move window on LMB
@@ -25,10 +28,13 @@ client.connect_signal(
                     awful.mouse.client.resize(c)
                 end
             )
+            -- TODO double click to maximize / minimize
         )
         -- Send button info to the theme
+        -- ? Is needed
         beautiful.titlebar_buttons = buttons
 
+        -- TODO move to separate file
         awful.titlebar(c):setup {
             -- Left
             {
@@ -57,11 +63,5 @@ client.connect_signal(
             },
             layout = wibox.layout.align.horizontal
         }
-
-        -- Let the theme recreate titlebars
-        if (beautiful.titlebar_setup ~= nil)
-        then
-            beautiful.titlebar_setup(c)
-        end
     end
 )

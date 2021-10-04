@@ -14,5 +14,5 @@ local function set_wallpaper(s)
     end
 end
 
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+-- Re-set wallpaper when a screen's geometry changes (e.g. changing the resolution)
 screen.connect_signal('property::geometry', set_wallpaper)

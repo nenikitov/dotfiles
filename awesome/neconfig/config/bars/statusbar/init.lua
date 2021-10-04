@@ -29,7 +29,7 @@ local section_style = {
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
--- TODO create separate fields for popups
+-- TODO create better separate fields for popups
 local popup_style = {
     background_color = bar_info.colors.bg_sections,
     margin = bar_info.margin,
@@ -59,6 +59,8 @@ awful.screen.connect_for_each_screen(
             sections = {},
             widgets = {}
         }
+
+
         --#region Fake wibar
         s.statusbar.wibar = awful.wibar {
             position = bar_info.position,

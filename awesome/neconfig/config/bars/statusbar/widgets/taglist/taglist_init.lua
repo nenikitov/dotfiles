@@ -17,8 +17,10 @@ local function get_taglist(screen, bar_info)
         max_client_count = widget_info.max_client_count
     }
 
+    -- Get custom widget properties
     local taglist_widget = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_widget')(style)
 
+    -- Construct widget
     local taglist = awful.widget.taglist {
         screen = screen,
         filter = awful.widget.taglist.filter.all,
@@ -28,7 +30,7 @@ local function get_taglist(screen, bar_info)
         widget_template = taglist_widget.widget_template
     }
 
-    -- Hack to prematurely update taglist so the widgets placed after it get the correct width and height
+    -- Hack to prematurely update taglist on creation, so the widgets placed after it get the correct width and height
     taglist._do_taglist_update_now()
 
     return taglist

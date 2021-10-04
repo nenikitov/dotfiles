@@ -1,6 +1,6 @@
+-- Load libraries
 local gears = require('gears')
 local awful = require('awful')
-local wibox = require('wibox')
 
 
 -- Create button binds for task list
@@ -28,6 +28,7 @@ local function get_tasklist_buttons()
                 awful.menu.client_list({ theme = { width = 250 } })
             end
         ),
+        -- TODO fix this, it does not work. Mouse 4 and 5 do nothing
         -- Go to next task on FTMB
         awful.button(
             { }, 4,
@@ -42,6 +43,7 @@ local function get_tasklist_buttons()
                 awful.client.focus.byidx(-1)
             end
         )
+        -- TODO middle click to close
     )
 
     return tasklist_buttons
@@ -49,5 +51,5 @@ end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_tasklist_buttons(...) end }
+    {  __call = function(_, ...) return get_tasklist_buttons() end }
 )

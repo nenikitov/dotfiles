@@ -149,7 +149,7 @@ theme.layout_cornerse = themes_path..'default/layouts/cornersew.png'
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
-theme.system_icon = config_path .. 'graphics/icons/arch_logo.svg'
+theme.system_icon = config_path .. 'graphics/icons/system_logo.svg'
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

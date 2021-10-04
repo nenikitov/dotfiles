@@ -8,6 +8,7 @@ local config_path = os.getenv('HOME') .. '/.config/awesome/'
 -- █▀█ █▀▀ █▀▀ ▄█
 local apps = {
     -- Applications that can be opened with shortcuts
+    -- TODO implement this
     default_apps = {
         terminal = 'alacritty',
 
@@ -50,7 +51,7 @@ local binds = {
 local desktop = {
     -- Theme
     theme_path = config_path .. 'neconfig/theme/theme.lua', -- gears.filesystem.get_themes_dir() .. 'default/theme.lua'
-    -- Names (and consequently, number) of tags
+    -- Names (and consequently number) of tags
     tag_names = {
         icons.home,
         icons.terminal,
@@ -92,27 +93,46 @@ local statusbar = {
     -- Show the status bar
     visible = true,
     -- Widget settings
+    -- TODO implement `visible` setting
     widgets = {
+        -- Open menu widget
         menu = {
-            visible = true -- TODO
+            -- Should it be shown
+            visible = true
         },
+        -- Current desktop layout
+        layoutbox = {
+            -- Should it be shown
+            visible = true
+        },
+        -- List of tags (virtual desktops)
         taglist = {
+            -- Should it be shown
             visible = true,
+            -- Should the small dots under the tag be shown to indicate the number of tagged clients
             show_client_count = true
         },
+        -- List of tasks (opened apps)
         tasklist = {
+            -- Should it be shown
             visible = true,
             -- Should the name of the task be shown
             show_task_title = true,
             -- Should the property (maximized, on top, etc) be shown
             show_task_props = true
         },
+        -- Current keyboard layout
         keyboard_layout = {
+            -- Should it be shown
             visible = true,
         },
+        -- Analog clock
         clock = {
+            -- Should it be shown
             visible = true,
+            -- Format of the time written on the top
             top_format = '%H:%M',
+            -- Format of the time written on the bottom
             bottom_format = '%a %Y-%m-%d',
         }
     },

@@ -16,7 +16,6 @@ local function get_taglist_widget(style)
     local dots_margin_pos = style.bar_pos
     -- Other margins to reduce opened clients distance
     local dots_margin_others = {}
-    local margin_full_size
     if (style.bar_pos == 'top')
     then
         direction = 'horizontal'
@@ -153,7 +152,6 @@ local function get_taglist_widget(style)
         create_callback = tag_updated
     }
     --#endregion
-
 
     return {
         layout = widget_layout,
