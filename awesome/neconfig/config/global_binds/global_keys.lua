@@ -1,11 +1,10 @@
--- Load libaries
+-- Load libraries
 local gears = require('gears')
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 local user_menu = require('neconfig.config.user.user_menu')
-
 
 -- Get variables
 local super_key = user_vars_conf.binds.keys.super_key
@@ -16,6 +15,7 @@ local terminal = user_vars_conf.apps.default_apps.terminal
 -- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
 local function get_global_keys()
+    -- TODO create better key binds
     local global_keys = gears.table.join(
         -- Awesome WM controls
         -- Show all bind on SUPER + S
@@ -168,6 +168,8 @@ local function get_global_keys()
             end,
             { description = 'open ROFI launcher', group = 'launcher' }
         ),
+        -- ? Do I need this?
+        --[[
         -- LUA code on SUPER + X
         awful.key(
             { super_key }, 'x',
@@ -181,6 +183,7 @@ local function get_global_keys()
             end,
             { description = 'lua execute prompt', group = 'awesome' }
         ),
+        ]]
         -- Menubar on SUPER + P
         awful.key(
             { super_key }, 'p',
@@ -264,5 +267,5 @@ end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_global_keys(...) end }
+    {  __call = function(_, ...) return get_global_keys() end }
 )

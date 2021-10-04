@@ -16,6 +16,7 @@ local function get_global_buttons()
                 user_menu:toggle()
             end
         ),
+        -- TODO fix this, it does not work. Mouse 4 and 5 do nothing
         -- Go to next tag on FTMB
         awful.button(
             { }, 4,
@@ -33,5 +34,5 @@ end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_global_buttons(...) end }
+    {  __call = function(_, ...) return get_global_buttons() end }
 )
