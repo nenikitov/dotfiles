@@ -16,13 +16,12 @@ local function get_global_buttons()
                 user_menu:toggle()
             end
         ),
-        -- TODO fix this, it does not work. Mouse 4 and 5 do nothing
-        -- Go to next tag on FTMB
+        -- Go to next tag on SCROLL UP
         awful.button(
             { }, 4,
             awful.tag.viewnext
         ),
-        -- Go to previous tag on BTMB
+        -- Go to previous tag on SCROLL DOWN
         awful.button(
             { }, 5,
             awful.tag.viewprev

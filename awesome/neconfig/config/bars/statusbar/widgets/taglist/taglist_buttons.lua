@@ -41,15 +41,14 @@ local function get_taglist_buttons()
                 end
             end
         ),
-        -- TODO fix this, it does not work. Mouse 4 and 5 do nothing
-        -- Go to next tag on FTMB
+        -- Go to next tag on SCROLL UP
         awful.button(
             { }, 4,
             function(t)
                 awful.tag.viewnext(t.screen)
             end
         ),
-        -- Go to previous tag on BTMB
+        -- Go to previous tag on SCROLL DOWN
         awful.button(
             { }, 5,
             function(t)
