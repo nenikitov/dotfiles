@@ -29,14 +29,16 @@ function add_custom_popup(args)
             else
         end
     )]]
+    --[[
     capi.button.connect_signal(
-        'release',
+        'press',
         function ()
             naughty.notify {
                 text = 'click'
             }
         end
     )
+    ]]
 
     popup:connect_signal(
         'mouse::enter',
@@ -57,3 +59,37 @@ function add_custom_popup(args)
 
     info_table[name] = popup
 end
+
+-- TODO
+-- ! TEST Remove this
+--[[
+-- This is how to create a keygrabber
+awful.keygrabber {
+    keybindings = {
+        awful.key {
+            modifiers = { 'Mod1' },
+            key =       'Tab',
+            on_press = function ()
+                naughty.notify {
+                    text = 'Alt tab pressed'
+                }
+            end
+        }
+    },
+    stop_key = 'k',
+    stop_event = 'release',
+    autostart = 'true'
+}
+]]
+
+--[[
+local mousegrabber = require('mousegrabber')
+mousegrabber.run(test, 'leftbutton')
+
+local function test()
+    naughty.notify {
+        text = 'left click'
+    }
+    mousegrabber.stop()
+end
+]]
