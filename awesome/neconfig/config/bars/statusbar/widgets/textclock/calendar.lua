@@ -9,6 +9,6 @@ return wibox.widget {
     spacing = 10,
     week_numbers = false,
     start_sunday = false,
-    long_weekdays = true,
+    long_weekdays = false,
     widget = wibox.widget.calendar.month
 }

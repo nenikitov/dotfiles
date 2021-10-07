@@ -163,7 +163,7 @@ awful.screen.connect_for_each_screen(
         -- TODO remove this later, test
         local cal = require('neconfig.config.bars.statusbar.widgets.textclock.calendar')
         add_custom_popup {
-            name = 'calendar',
+            name = 'test',
             widgets = {
                 keyboard_layout,
                 cal
@@ -177,7 +177,7 @@ awful.screen.connect_for_each_screen(
             size = 'fit',
             style = popup_style,
             screen = s,
-            info_table = s.statusbar.widgets
+            info_table = s.statusbar.widgets,
         }
         --#endregion
 
