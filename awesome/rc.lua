@@ -10,7 +10,6 @@ local naughty = require('naughty')
 local menubar = require('menubar')
 local hotkeys_popup = require('awful.hotkeys_popup')
 
-
 -- Init error handling
 require('neconfig.config.main.error_handling')
 

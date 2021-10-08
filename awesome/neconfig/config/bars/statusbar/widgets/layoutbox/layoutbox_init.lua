@@ -23,7 +23,7 @@ local function get_layoutbox(screen, bar_info)
 
     -- Construct widget
     local layoutbox = awful.widget.layoutbox {
-        screen
+        screen = screen,
     }
 
     -- Layoutbox does not center itself with `halign` or `valign`, so I center it manually
