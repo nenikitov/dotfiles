@@ -2,7 +2,6 @@ local awful = require('awful')
 local wibox = require('wibox')
 local naughty = require('naughty')
 require('neconfig.config.utils.widget_utils')
-local capi = { button = button, mouse = mouse }
 
 
 -- TODO implement this
@@ -21,39 +20,11 @@ function add_custom_popup(args)
         screen = screen
     }
 
-    --[[
-    popup:connect_signal(
-        'property::visible',
-        function (w)
-            if (not w.visible) then
-            else
-        end
-    )]]
-    --[[
-    capi.button.connect_signal(
-        'press',
-        function ()
-            naughty.notify {
-                text = 'click'
-            }
-        end
-    )
-    ]]
 
-    popup:connect_signal(
-        'mouse::enter',
-        function ()
-            naughty.notify {
-                text = 'entered'
-            }
-        end
-    )
     popup:connect_signal(
         'mouse::leave',
         function ()
-            naughty.notify {
-                text = 'left'
-            }
+            popup.visible = false
         end
     )
 
@@ -83,13 +54,14 @@ awful.keygrabber {
 ]]
 
 --[[
-local mousegrabber = require('mousegrabber')
-mousegrabber.run(test, 'leftbutton')
+mousegrabber.run(
+    function(mouse)
+        if mouse.x > 1000 then
 
-local function test()
-    naughty.notify {
-        text = 'left click'
-    }
-    mousegrabber.stop()
-end
+            return false
+        end
+        return true
+    end,
+    'left_ptr'
+)
 ]]
