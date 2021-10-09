@@ -272,17 +272,7 @@ local function get_global_keys()
             { super_key }, 'i',
             function ()
                 for s in screen do
-                    local new_visibility = not s.statusbar.wibar.visible
-                    s.statusbar.wibar.visible = new_visibility
-
-                    for _, section in pairs(s.statusbar.sections) do
-                        for _, popup in pairs(section) do
-                            if (popup.popup)
-                            then
-                                popup.popup.visible = new_visibility
-                            end
-                        end
-                    end
+                    s.statusbar.wibar.visible = not s.statusbar.wibar.visible
                 end
             end,
             { description = 'toggle statusbar', group = 'test' }

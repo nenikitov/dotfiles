@@ -81,6 +81,22 @@ awful.screen.connect_for_each_screen(
         s.statusbar.wibar:struts {
             [bar_info.position] = bar_info.margin.edge + bar_size
         }
+        -- Hide all the widgets inside the wibar if wibar is hidden
+        s.statusbar.wibar:connect_signal(
+            'property::visible',
+            function ()
+                local new_visibility = s.statusbar.wibar.visible
+
+                for _, section in pairs(s.statusbar.sections) do
+                    for _, popup in pairs(section) do
+                        if (popup.popup)
+                        then
+                            popup.popup.visible = new_visibility
+                        end
+                    end
+                end
+            end
+        )
         --#endregion
 
         --#region 1st section
