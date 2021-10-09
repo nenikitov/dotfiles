@@ -3,6 +3,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 require('neconfig.config.utils.widget_utils')
 require('neconfig.config.utils.bar_utils')
 require('neconfig.config.utils.popup_utils')
@@ -68,7 +69,9 @@ awful.screen.connect_for_each_screen(
             [size_param.thickness] = bar_size,
             [size_param.length] = s.geometry[size_param.length] - bar_info.margin.corners * 2,
 
-            shape = r_rect(bar_info.corner_radius.bar)
+            shape = r_rect(bar_info.corner_radius.bar),
+            
+            visible = user_vars_conf.statusbar.visible
         }
         -- Offset the bar
         local offset_prop = (bar_info.position == 'top' or bar_info.position == 'bottom') and 'y' or 'x'
@@ -90,6 +93,7 @@ awful.screen.connect_for_each_screen(
                 section = 1
             },
             style = section_style,
+            visible = user_vars_conf.statusbar.widgets.menu.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -102,6 +106,7 @@ awful.screen.connect_for_each_screen(
                 section = 1
             },
             style = section_style,
+            visible = user_vars_conf.statusbar.widgets.layoutbox.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -113,6 +118,7 @@ awful.screen.connect_for_each_screen(
                 side = bar_info.position,
                 section = 1
             },
+            visible = user_vars_conf.statusbar.widgets.taglist.visible,
             style = section_style,
             screen = s,
             info_table = s.statusbar.sections
@@ -129,6 +135,7 @@ awful.screen.connect_for_each_screen(
                 section = 2
             },
             style = section_style,
+            visible = user_vars_conf.statusbar.widgets.tasklist.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -144,6 +151,7 @@ awful.screen.connect_for_each_screen(
                 section = 3
             },
             style = section_style,
+            visible = user_vars_conf.statusbar.widgets.clock.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -156,11 +164,13 @@ awful.screen.connect_for_each_screen(
                 section = 3
             },
             style = section_style,
+            visible = user_vars_conf.statusbar.widgets.keyboard_layout.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
 
         -- TODO remove this later, test
+        --[[
         local cal = require('neconfig.config.popups.calendar.init')
         add_custom_popup {
             name = 'test',
@@ -179,6 +189,7 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.widgets,
         }
+        ]]
         --#endregion
 
         --! Test, remove this later (place systray in a better position)

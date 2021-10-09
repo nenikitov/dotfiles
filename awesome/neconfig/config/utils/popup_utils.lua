@@ -20,7 +20,6 @@ function add_custom_popup(args)
         screen = screen
     }
 
-
     popup:connect_signal(
         'mouse::leave',
         function ()
@@ -30,38 +29,3 @@ function add_custom_popup(args)
 
     info_table[name] = popup
 end
-
--- TODO
--- ! TEST Remove this
---[[
--- This is how to create a keygrabber
-awful.keygrabber {
-    keybindings = {
-        awful.key {
-            modifiers = { 'Mod1' },
-            key =       'Tab',
-            on_press = function ()
-                naughty.notify {
-                    text = 'Alt tab pressed'
-                }
-            end
-        }
-    },
-    stop_key = 'k',
-    stop_event = 'release',
-    autostart = 'true'
-}
-]]
-
---[[
-mousegrabber.run(
-    function(mouse)
-        if mouse.x > 1000 then
-
-            return false
-        end
-        return true
-    end,
-    'left_ptr'
-)
-]]
