@@ -17,7 +17,7 @@ local terminal = user_vars_conf.apps.default_apps.terminal
 local function get_global_keys()
     -- TODO create better key binds
     local global_keys = gears.table.join(
-        -- Awesome WM controls
+        --#region Awesome WM controls
         -- Show all bind on SUPER + S
         awful.key(
             { super_key }, 's',
@@ -44,8 +44,9 @@ local function get_global_keys()
             awesome.quit,
             { description = 'quit awesome', group = 'awesome' }
         ),
+        --#endregion
 
-        -- ag interaction
+        --#region Tag interaction
         -- Go to next tag on SUPER + RIGHT ARROW
         awful.key(
             { super_key }, 'Right',
@@ -64,8 +65,9 @@ local function get_global_keys()
             awful.tag.history.restore,
             { description = 'go back', group = 'tag' }
         ),
+        --#endregion
 
-        -- Client focus manipulation
+        --#region Client focus manipulation
         -- Focus next client on SUPER + J
         awful.key(
             { super_key }, 'j',
@@ -82,8 +84,9 @@ local function get_global_keys()
             end,
             { description = 'focus previous by index', group = 'client' }
         ),
-    
-        -- Client manipulation
+        --#endregion
+
+        --#region Client manipulation
         -- Swap the current client with the next one in the wibar on SUPER + SHIFT + J
         awful.key(
             { super_key, 'Shift' }, 'j',
@@ -132,8 +135,9 @@ local function get_global_keys()
             end,
             { description = 'restore minimized', group = 'client' }
         ),
-    
-        -- Screen
+        --#endregion
+
+        --#region Screen
         -- Focus next screen on SUPER + CTRL + J
         awful.key(
             { super_key, 'Control' }, 'j',
@@ -150,8 +154,9 @@ local function get_global_keys()
             end,
             { description = 'focus the previous screen', group = 'screen' }
         ),
+        --#endregion
 
-        -- Launcher
+        --#region Launcher
         -- Terminal on SUPER + ENTER
         awful.key(
             { super_key }, 'Return',
@@ -192,8 +197,9 @@ local function get_global_keys()
             end,
             { description = 'show the menubar', group = 'launcher' }
         ),
+        --#endregion
 
-        -- Tiled grid manipulation manipulation
+        --#region Tiled grid manipulation manipulation
         -- Increase master width on SUPER + L
         awful.key(
             { super_key }, 'l',
@@ -259,6 +265,27 @@ local function get_global_keys()
                 awful.layout.inc(-1)
             end,
             { description = 'select previous', group = 'layout' }
+        ),
+        --#endregion
+
+        awful.key(
+            { super_key }, 'i',
+            function ()
+                for s in screen do
+                    local new_visibility = not s.statusbar.wibar.visible
+                    s.statusbar.wibar.visible = new_visibility
+
+                    for _, section in pairs(s.statusbar.sections) do
+                        for _, popup in pairs(section) do
+                            if (popup.popup)
+                            then
+                                popup.popup.visible = new_visibility
+                            end
+                        end
+                    end
+                end
+            end,
+            { description = 'toggle statusbar', group = 'test' }
         )
     )
 
