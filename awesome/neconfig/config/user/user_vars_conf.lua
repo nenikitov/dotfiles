@@ -12,6 +12,8 @@ local apps = {
     default_apps = {
         terminal = 'alacritty',
 
+        run_menu = 'rofi -show drun',
+
         code_editor = 'code',
         text_editor = 'code',
 
@@ -96,6 +98,11 @@ local statusbar = {
     widgets = {
         -- Open menu widget
         menu = {
+            -- Should it be shown
+            visible = true
+        },
+        -- Open run menu widget
+        run_menu = {
             -- Should it be shown
             visible = true
         },

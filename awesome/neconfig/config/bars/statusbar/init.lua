@@ -40,6 +40,7 @@ local popup_style = {
 
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info)
+local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu')(bar_info)
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
 --#endregion
@@ -70,7 +71,7 @@ awful.screen.connect_for_each_screen(
             [size_param.length] = s.geometry[size_param.length] - bar_info.margin.corners * 2,
 
             shape = r_rect(bar_info.corner_radius.bar),
-            
+
             visible = user_vars_conf.statusbar.visible
         }
         -- Offset the bar
@@ -110,6 +111,19 @@ awful.screen.connect_for_each_screen(
             },
             style = section_style,
             visible = user_vars_conf.statusbar.widgets.menu.visible,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+        -- Run menu
+        add_bar_section {
+            name = 'run_menu',
+            widget = run_menu,
+            position = {
+                side = bar_info.position,
+                section = 1
+            },
+            style = section_style,
+            visible = user_vars_conf.statusbar.widgets.run_menu.visible,
             screen = s,
             info_table = s.statusbar.sections
         }

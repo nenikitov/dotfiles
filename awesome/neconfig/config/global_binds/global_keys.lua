@@ -165,13 +165,13 @@ local function get_global_keys()
             end,
             { description = 'open a terminal', group = 'launcher' }
         ),
-        -- ROFI launcher on SUPER + R
+        -- Run launcher on SUPER + R
         awful.key(
             { super_key }, 'r',
             function ()
-                awful.util.spawn('rofi -show drun')
+                awful.util.spawn(user_vars_conf.apps.default_apps.run_menu)
             end,
-            { description = 'open ROFI launcher', group = 'launcher' }
+            { description = 'open run launcher', group = 'launcher' }
         ),
         -- ? Do I need this?
         --[[

@@ -1,6 +1,5 @@
 -- Load libraries
 local awful = require('awful')
-local wibox = require('wibox')
 local beautiful = require('beautiful')
 
 -- Load custom modules
