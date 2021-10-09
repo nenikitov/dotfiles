@@ -268,14 +268,26 @@ local function get_global_keys()
         ),
         --#endregion
 
+        -- TODO make these key binds more "official"
         awful.key(
             { super_key }, 'i',
             function ()
-                for s in screen do
-                    s.statusbar.wibar.visible = not s.statusbar.wibar.visible
-                end
+                local focused_screen = awful.screen.focused()
+                local new_visibility = not focused_screen.statusbar.wibar.visible
+                focused_screen.statusbar.wibar.visible = new_visibility
             end,
-            { description = 'toggle statusbar', group = 'test' }
+            { description = 'toggle statusbar on current screen', group = 'test' }
+        ),
+        awful.key(
+            { super_key, 'Shift' }, 'i',
+            function ()
+                local focused_screen = awful.screen.focused()
+                local new_visibility = not focused_screen.statusbar.wibar.visible
+
+                for s in screen do
+                    s.statusbar.wibar.visible = new_visibility
+                end
+            end
         )
     )
 
