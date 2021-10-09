@@ -21,6 +21,13 @@ local function get_tasklist_buttons()
                 end
             end
         ),
+        -- Close on MMB
+        awful.button(
+            { }, 2,
+            function (c)
+                c:kill()
+            end
+        ),
         -- Display client list on RMB
         awful.button(
             { }, 3,
@@ -28,22 +35,20 @@ local function get_tasklist_buttons()
                 awful.menu.client_list({ theme = { width = 250 } })
             end
         ),
-        -- TODO fix this, it does not work. Mouse 4 and 5 do nothing
-        -- Go to next task on FTMB
+        -- Go to next task on SCROLL UP
         awful.button(
             { }, 4,
             function ()
                 awful.client.focus.byidx(1)
             end
         ),
-        -- Go to previous task on BTMB
+        -- Go to previous task on SCROLL DOWN
         awful.button(
             { }, 5,
             function ()
                 awful.client.focus.byidx(-1)
             end
         )
-        -- TODO middle click to close
     )
 
     return tasklist_buttons
