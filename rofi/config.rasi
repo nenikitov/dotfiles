@@ -1,12 +1,22 @@
 configuration {
-	width: 50;
-	lines: 10;
-	font: "mono 14";
-	bw: 0;
-	m: "1";
-	cycle: false;
-	sidebar-mode: true;
-	modi: "window,drun,run";
-}
+    /* Behavior */
+    modi: "window,drun,run";
+    terminal: "alacritty";
+    case-sensitive: false;
+	cycle: true;
+	scroll-method: 1;
+	click-to-exit: true;
 
-@import "theme.rasi"
+
+    /* Display */
+    location: 0;
+	sidebar-mode: true;
+    show-icons: true;
+	monitor: "-5";
+
+
+    /* Appearence */
+/*	theme: "new_theme.rasi"; */
+/*	icon-theme: ;*/
+    font: "mono 12";
+}
