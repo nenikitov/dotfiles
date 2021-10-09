@@ -91,7 +91,6 @@ local desktop = {
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
     -- Show the status bar by default (statusbar can still be toggled with a keyboard shortcut)
-    -- TODO implement keyboard shortcut
     visible = true,
     -- Widget settings
     widgets = {
