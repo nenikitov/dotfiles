@@ -1,0 +1,133 @@
+/*#region Parent window */
+* {
+    /*#region Variables */
+    /* Layout */
+    --fullscreen: false;
+    --width:      54em;
+    --height:     27.5em;
+    --icon-size:  1.5em;
+    --border:     2px;
+    --padding:    0.5em;
+    /* Colors */
+    --bg-normal:  #0009;
+    --bg-active:  #fff4;
+    --fg-normal:  #bfbfbf;
+    --fg-active:  #ffff;
+    --border-col: #888;
+    /* Corner rounding */
+    --radius-in:  0.5em;
+    --radius-out: 0em;
+    /*#endregion*/
+
+
+    /* Main colors */
+    background-color: transparent;
+    text-color: @--fg-normal;
+}
+#window {
+    /* Main colors */
+    background-color: @--bg-normal;
+
+    /* Layout */
+    fullscreen: @--fullscreen;
+    padding: @--padding;
+
+    /* Border */
+    border: @--border;
+    border-color: @--border-col;
+    border-radius: @--radius-out;
+}
+/*#endregion*/
+
+
+/*#region List */
+#listview {
+    /* Layout */
+    columns: @--columns;
+    fixed-columns: true;
+}
+#element {
+    /* Layout */
+    spacing: 0;
+    children: [ separator, element-icon, separator, element-text ];
+
+    /* Border */
+    border-radius: @--radius-in;
+}
+#element.selected {
+    /* Main colors */
+    background-color: @--bg-active;
+}
+#element-icon {
+    /* Layout */
+    size: @--icon-size;
+    horizontal-align: 0.5;
+}
+#element-text {
+    /* Layout */
+    vertical-align: 0.5;
+}
+#element-text.selected {
+    /* Main colors */
+    text-color: @--fg-active;
+}
+/* #endregion */
+
+
+/*#region Search */
+#inputbar {
+    /* Layout */
+    padding: @--padding;
+    children: [ prompt, separator, entry, case-indicator ];
+
+    /* Border */
+    border-radius: @--radius-in;
+}
+#prompt {
+    /* Main colors */
+    background-color: @--bg-active;
+    text-color: @--fg-active;
+
+    /* Layout */
+    padding: @--padding;
+
+    /* Border */
+    border-radius: @--radius-in;
+}
+#separator {
+    /* Layout */
+    expand: false;
+    padding: @--padding;
+}
+#entry {
+    /* Main colors */
+    text-color: @--fg-active;
+
+    /* Layout */
+    vertical-align: 0.5;
+
+    /* Additional style */
+    placeholder: "Search...";
+}
+/* #endregion */
+
+
+/*#region Modes */
+#mode-switcher {
+    /* Border */
+    border-radius: @--radius-in;
+}
+#button {
+    /* Layout */
+    horizontal-align: 0.5;
+    padding: @--padding;
+
+    /* Border */
+    border-radius: @--radius-in;
+}
+#button.selected {
+    /* Main colors */
+    background-color: @--bg-active;
+    text-color: @--fg-active;
+}
+/* #endregion */
