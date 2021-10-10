@@ -1,31 +1,33 @@
 * {
-    --bg-normal:  #0008;
-    --bg-active:  #fff3;
-    --fg-normal:  #bfbfbfff;
+    --bg-normal:  #000a;
+    --bg-active:  #fff4;
+    --fg-normal:  #bfbfbf;
     --fg-active:  #ffff;
     --border-col: #666;
-    --radius:       0.5em;
-    --padding:      0.25em;
-    --border:       2px;
-    --width:        65em;
-    --height:       27em;
-    --icon-size:    3em;
-    --columns:      6;
-
+    --radius-in:  0.5em;
+    --radius-out: 0em;
+    --radius:     0em;
+    --padding:    0.25em;
+    --border:     2px;
+    --width:      65em;
+    --height:     28em;
+    --icon-size:  3em;
+    --columns:    6;
 
     background-color: transparent;
-    border-color: @--border-col;
     text-color: @--fg-normal;
 
     margin: 0;
 }
 
 #window {
+    background-color: @--bg-normal;
+
     width: @--width;
     height: @--height;
     padding: @--padding;
     border: @--border;
-    border-radius: @--radius;
+    border-radius: @--radius-out;
 
     border-color: @--border-col;
 }
@@ -40,7 +42,7 @@
 #element {
     orientation: vertical;
     spacing: 0;
-    border-radius: @--radius;
+    border-radius: @--radius-in;
     padding: @--padding;
 }
 #element-icon {
@@ -64,14 +66,13 @@
 }
 
 #mode-switcher {
-    border: @--border;
-    border-radius: @--radius;
+    border-radius: @--radius-in;
 }
 
 #button {
     horizontal-align: 0.5;
     padding: @--padding;
-    border-radius: @--radius;
+    border-radius: @--radius-in;
 }
 
 #button.selected {
@@ -81,8 +82,7 @@
 
 #inputbar {
     padding: @--padding;
-    border: @--border;
-    border-radius: @--radius;
+    border-radius: @--radius-in;
     children: [ prompt, separator, entry, case-indicator ];
 }
 #separator {
@@ -93,7 +93,7 @@
 #prompt {
     background-color: @--bg-active;
     padding: @--padding;
-    border-radius: @--radius;
+    border-radius: @--radius-in;
 }
 #entry {
     vertical-align: 0.5;
