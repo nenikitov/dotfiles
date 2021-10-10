@@ -1,101 +1,138 @@
+/*#region Parent window */
 * {
-    --bg-normal:  #000a;
+    /*#region Variables */
+    /* Layout */
+    --fullscreen: false;
+    --width:      54em;
+    --height:     27.5em;
+    --icon-size:  3em;
+    --columns:    6;
+    --border:     2px;
+    --padding:    0.5em;
+    /* Colors */
+    --bg-normal:  #0009;
     --bg-active:  #fff4;
     --fg-normal:  #bfbfbf;
     --fg-active:  #ffff;
-    --border-col: #666;
+    --border-col: #888;
+    /* Corner rounding */
     --radius-in:  0.5em;
     --radius-out: 0em;
-    --radius:     0em;
-    --padding:    0.25em;
-    --border:     2px;
-    --width:      65em;
-    --height:     28em;
-    --icon-size:  3em;
-    --columns:    6;
+    /*#endregion*/
 
+
+    /* Main colors */
     background-color: transparent;
     text-color: @--fg-normal;
-
-    margin: 0;
 }
-
 #window {
+    /* Main colors */
     background-color: @--bg-normal;
 
+    /* Layout */
+    fullscreen: @--fullscreen;
     width: @--width;
     height: @--height;
     padding: @--padding;
+
+    /* Border */
     border: @--border;
-    border-radius: @--radius-out;
-
     border-color: @--border-col;
+    border-radius: @--radius-out;
 }
+/*#endregion*/
 
 
+/*#region List */
 #listview {
+    /* Layout */
     columns: @--columns;
     fixed-columns: true;
     spacing: @--padding;
 }
-
 #element {
+    /* Layout */
     orientation: vertical;
-    spacing: 0;
-    border-radius: @--radius-in;
     padding: @--padding;
+    spacing: 0;
+
+    /* Border */
+    border-radius: @--radius-in;
+}
+#element.selected {
+    /* Main colors */
+    background-color: @--bg-active;
 }
 #element-icon {
+    /* Layout */
     size: @--icon-size;
     horizontal-align: 0.5;
 }
-
 #element-text {
+    /* Layout */
     horizontal-align: 0.5;
-}
-
-#element.selected {
-    background-color: @--bg-active;
 }
 #element-text.selected {
+    /* Main colors */
     text-color: @--fg-active;
 }
+/* #endregion */
 
-#entry {
-    placeholder: "Search...";
-}
 
-#mode-switcher {
-    border-radius: @--radius-in;
-}
-
-#button {
-    horizontal-align: 0.5;
-    padding: @--padding;
-    border-radius: @--radius-in;
-}
-
-#button.selected {
-    background-color: @--bg-active;
-    text-color: @--fg-active;
-}
-
+/*#region Search */
 #inputbar {
+    /* Layout */
     padding: @--padding;
-    border-radius: @--radius-in;
     children: [ prompt, separator, entry, case-indicator ];
-}
-#separator {
-    expand: false;
-    background-color: transparent;
-    padding: @--padding;
+
+    /* Border */
+    border-radius: @--radius-in;
 }
 #prompt {
+    /* Main colors */
     background-color: @--bg-active;
+    text-color: @--fg-active;
+
+    /* Layout */
     padding: @--padding;
+
+    /* Border */
     border-radius: @--radius-in;
 }
+#separator {
+    /* Layout */
+    expand: false;
+    padding: @--padding;
+}
 #entry {
+    /* Main colors */
+    text-color: @--fg-active;
+
+    /* Layout */
     vertical-align: 0.5;
+
+    /* Additional style */
+    placeholder: "Search...";
+}
+/* #endregion */
+
+
+/*#region Modes */
+#mode-switcher {
+    /* Border */
+    border-radius: @--radius-in;
+}
+#button {
+    /* Layout */
+    horizontal-align: 0.5;
+    padding: @--padding;
+
+    /* Border */
+    border-radius: @--radius-in;
+}
+#button.selected {
+    /* Main colors */
+    background-color: @--bg-active;
     text-color: @--fg-active;
 }
+/* #endregion */
