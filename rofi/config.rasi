@@ -4,7 +4,7 @@ configuration {
     terminal: "alacritty";
     case-sensitive: false;
 	cycle: true;
-	scroll-method: 1;
+	scroll-method: 0;
 	click-to-exit: true;
 
 
@@ -12,11 +12,12 @@ configuration {
     location: 0;
 	sidebar-mode: true;
     show-icons: true;
+    drun-display-format: "{name}[<span weight='light' size='small'><i>({generic})</i></span>]";
 	monitor: "-5";
 
 
     /* Appearence */
-/*	theme: "new_theme.rasi"; */
-/*	icon-theme: ;*/
+    theme: "grid.rasi";
+    /*icon-theme: ;*/
     font: "mono 12";
 }

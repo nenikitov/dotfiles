@@ -1,0 +1,74 @@
+* {
+    bg-normal: #0008;
+    bg-active: #fff3;
+    fg-normal: #bfbfbfff;
+    fg-active: #ffff;
+    radius:    0.5em;
+
+
+    background-color: transparent;
+    text-color: @fg-normal;
+
+    margin: 0;
+}
+
+#window {
+    width: 65em;
+    height: 27em;
+    padding: @radius;
+    border: 2px;
+    border-color: @bg-active;
+    border-radius: @radius;
+
+    background-color: @bg-normal;
+}
+
+
+#listview {
+    columns: 8;
+    fixed-columns: true;
+    spacing: 1em;
+}
+
+#element {
+    orientation: vertical;
+    spacing: 0;
+    border-radius: @radius;
+    padding: @radius;
+}
+#element-icon {
+    size: 3em;
+    horizontal-align: 0.5;
+}
+
+#element-text {
+    horizontal-align: 0.5;
+}
+
+#element.selected {
+    background-color: @bg-active;
+}
+#element-text.selected {
+    text-color: @fg-active;
+}
+
+#entry {
+    placeholder: "Search...";
+}
+
+#mode-switcher {
+    border: 2px;
+    border-radius: @radius;
+    border-color: @bg-active;
+}
+
+#button {
+    horizontal-align: 0.5;
+    padding: @radius;
+    border-radius: @radius;
+}
+
+#button.selected {
+    background-color: @bg-active;
+    text-color: @fg-active;
+}
