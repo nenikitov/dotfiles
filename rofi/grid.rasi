@@ -1,43 +1,49 @@
 * {
-    bg-normal: #0008;
-    bg-active: #fff3;
-    fg-normal: #bfbfbfff;
-    fg-active: #ffff;
-    radius:    0.5em;
+    --bg-normal: #0008;
+    --bg-active: #fff3;
+    --fg-normal: #bfbfbfff;
+    --fg-active: #ffff;
+    --radius:      0.5em;
+    --padding:     0.25em;
+    --border:      2px;
+    --width:       65em;
+    --height:      27em;
+    --icon-size:   3em;
+    --columns:     6;
 
 
     background-color: transparent;
-    text-color: @fg-normal;
+    text-color: @--fg-normal;
 
     margin: 0;
 }
 
 #window {
-    width: 65em;
-    height: 27em;
-    padding: @radius;
-    border: 2px;
-    border-color: @bg-active;
-    border-radius: @radius;
+    width: @--width;
+    height: @--height;
+    padding: @--radius;
+    border: @--border;
+    border-color: @--bg-active;
+    border-radius: @--radius;
 
-    background-color: @bg-normal;
+    background-color: @--bg-normal;
 }
 
 
 #listview {
-    columns: 8;
+    columns: @--columns;
     fixed-columns: true;
-    spacing: 1em;
+    spacing: @--padding;
 }
 
 #element {
     orientation: vertical;
     spacing: 0;
-    border-radius: @radius;
-    padding: @radius;
+    border-radius: @--radius;
+    padding: @--padding;
 }
 #element-icon {
-    size: 3em;
+    size: @--icon-size;
     horizontal-align: 0.5;
 }
 
@@ -46,10 +52,10 @@
 }
 
 #element.selected {
-    background-color: @bg-active;
+    background-color: @--bg-active;
 }
 #element-text.selected {
-    text-color: @fg-active;
+    text-color: @--fg-active;
 }
 
 #entry {
@@ -57,18 +63,39 @@
 }
 
 #mode-switcher {
-    border: 2px;
-    border-radius: @radius;
-    border-color: @bg-active;
+    border: @--border;
+    border-radius: @--radius;
+    border-color: @--bg-active;
 }
 
 #button {
     horizontal-align: 0.5;
-    padding: @radius;
-    border-radius: @radius;
+    padding: @--padding;
+    border-radius: @--radius;
 }
 
 #button.selected {
-    background-color: @bg-active;
-    text-color: @fg-active;
+    background-color: @--bg-active;
+    text-color: @--fg-active;
+}
+
+#inputbar {
+    padding: @--padding;
+    border: @--border;
+    border-radius: @--radius;
+    border-color: @--bg-active;
+    children: [ prompt, separator, entry, case-indicator ];
+}
+#separator {
+    background-color: @--bg-active;
+    padding: @--padding;
+}
+#prompt {
+    background-color: @--bg-active;
+    padding: @--padding;
+    border-radius: @--radius;
+}
+#entry {
+    vertical-align: 0.5;
+    text-color: @--fg-active;
 }
