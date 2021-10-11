@@ -136,3 +136,5 @@
     text-color: @--fg-active;
 }
 /* #endregion */
+
+/* vim:ft=css

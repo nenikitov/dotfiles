@@ -23,3 +23,5 @@ configuration {
     /*icon-theme: ;*/
     font: "mono 12";
 }
+
+/* vim:ft=css

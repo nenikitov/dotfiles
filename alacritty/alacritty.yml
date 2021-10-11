@@ -29,7 +29,7 @@ schemes:
             background: '0x080808'
             foreground: '0xbfbfbf'
         normal:
-            black:   '0x000000'
+            black:   '0x323232'
             red:     '0xa6212c'
             green:   '0x21a642'
             yellow:  '0xa66321'
@@ -38,7 +38,7 @@ schemes:
             cyan:    '0x219ba6'
             white:   '0xa6a6a6'
         bright:
-            black:   '0x444444'
+            black:   '0x808080'
             red:     '0xff737e'
             green:   '0x73ff93'
             yellow:  '0xffb473'
