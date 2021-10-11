@@ -14,11 +14,20 @@ function add_custom_popup(args)
     local name = args.name
     --#endregion
 
+    --#region Init the popup table
+    info_table[name] = {}
+    --#endregion
+
+
     local popup = awful.popup {
-        widget = widgets[2],
-        placement = awful.placement.centered,
-        screen = screen
+        widget = widgets[1],
+        screen = screen,
+        preferred_positions = 'bottom',
+        offset = {
+            y = 10
+        }
     }
+    popup:move_next_to(position.target)
 
     popup:connect_signal(
         'mouse::leave',

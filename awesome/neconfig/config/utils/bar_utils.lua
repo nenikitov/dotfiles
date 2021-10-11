@@ -152,10 +152,12 @@ function add_bar_section(args)
     -- Get the last section if exists
     local last_section_name = info_table[position.section].last_section_name
     -- The container for this bar section
-    info_table[position.section][name] = {
-        popup = {},
-        widget = {}
-    }
+    info_table[position.section][name] = {}
+    -- The list of all sections
+    if (not info_table.all_popups)
+    then
+        info_table.all_popups = {}
+    end
     --#endregion
 
 
@@ -215,14 +217,14 @@ function add_bar_section(args)
     -- Attach to the last section if exists
     if (last_section_name)
     then
-        popup:move_next_to(info_table[position.section][last_section_name].popup)
+        popup:move_next_to(info_table[position.section][last_section_name])
     end
     --#endregion
     --#endregion
 
     --#region Update info table variables for next section
-    info_table[position.section][name].popup = popup
-    info_table[position.section][name].widget = widget
+    info_table[position.section][name] = popup
+    info_table.all_popups[name] = popup
     info_table[position.section].last_section_name = name
     --#endregion
 end

@@ -59,7 +59,7 @@ awful.screen.connect_for_each_screen(
 
         s.statusbar = {
             sections = {},
-            widgets = {}
+            popups = {}
         }
 
 
@@ -198,28 +198,20 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        --#endregion
 
-        -- TODO remove this later, test
-        --[[
-        local cal = require('neconfig.config.popups.calendar.init')
-        add_custom_popup {
-            name = 'test',
-            widgets = {
-                keyboard_layout,
-                cal
-            },
-            attach = {
-                target = s.statusbar.sections[3].clock.popup,
+        --#region Popups that are attached to statusbar
+        require('neconfig.config.popups.calendar.init') {
+            position = {
+                target = s.statusbar.sections.all_popups.clock,
                 position = 'bottom',
                 anchor = 'middle',
                 offset = 10
             },
-            size = 'fit',
             style = popup_style,
             screen = s,
-            info_table = s.statusbar.widgets,
+            info_table = s.statusbar.popups
         }
-        ]]
         --#endregion
 
         --! Test, remove this later (place systray in a better position)
