@@ -8,7 +8,9 @@ require('neconfig.config.utils.widget_utils')
 function add_custom_popup(args)
     --#region Aliases for the arguments
     local widgets = args.widgets
+    local style = args.style
     local position = args.position
+    local direction = args.direction
     local screen = args.screen
     local info_table = args.info_table
     local name = args.name
@@ -18,14 +20,23 @@ function add_custom_popup(args)
     info_table[name] = {}
     --#endregion
 
+    --#region Construct the widgets
+    local layout = wibox.layout.fixed[direction]()
+    for _, wi in pairs(widgets) do
+        layout:add(wi)
+    end
+    --#endregion
+
 
     local popup = awful.popup {
-        widget = widgets[1],
+        widget = layout,
         screen = screen,
         preferred_positions = 'bottom',
+        ontop = true,
         offset = {
             y = 10
-        }
+        },
+        bg = style.background_color
     }
     popup:move_next_to(position.target)
 
