@@ -6,8 +6,9 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
-    contents = 1.25,
-    spacing = 1.0
+    contents = 1.0,
+    spacing = 1.0,
+    rounding = 8.0
 }
 
 --- Initialize size values related to widget scale
@@ -22,6 +23,13 @@ end
 ---@return number
 local function space(value)
     return dpi(value) * scaling.spacing
+end
+
+--- Initialize size values related to corner radius
+---@param value number
+---@return number
+local function radius(value)
+    return dpi(value) * scaling.rounding
 end
 
 
@@ -66,8 +74,8 @@ local statusbar = {
     spacing = client.gaps * 2,
     -- Corner rounding
     corner_radius = {
-        bar = size(6),
-        sections = size(6)
+        bar = radius(1),
+        sections = radius(1)
     },
     -- Widgets
     widgets = {
@@ -104,7 +112,7 @@ local statusbar = {
 local popup = {
    background_color = '#0004',
    margin = client.gaps,
-   corner_radius = size(6)
+   corner_radius = radius(1)
 }
 
 
