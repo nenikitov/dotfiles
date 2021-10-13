@@ -99,10 +99,20 @@ local statusbar = {
 }
 
 
+-- █▀█ █▀█ █▀█ █ █ █▀█ █▀
+-- █▀▀ █▄█ █▀▀ █▄█ █▀▀ ▄█
+local popup = {
+   background_color = '#0004',
+   margin = client.gaps,
+   corner_radius = size(6)
+}
+
+
 local user_vars_theme = {
     general = general,
     client = client,
-    statusbar = statusbar
+    statusbar = statusbar,
+    popup = popup
 }
 
 return user_vars_theme

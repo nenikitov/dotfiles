@@ -1,5 +1,6 @@
 -- Load libraries
 local wibox = require('wibox')
+local beautiful = require('beautiful')
 -- Load custom modules
 require('neconfig.config.utils.popup_utils')
 

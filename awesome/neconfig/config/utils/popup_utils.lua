@@ -1,14 +1,15 @@
 local awful = require('awful')
 local wibox = require('wibox')
 local naughty = require('naughty')
+local beautiful = require('beautiful')
 require('neconfig.config.utils.widget_utils')
 
+local style = beautiful.user_vars_theme.popup
 
 -- TODO implement this
 function add_custom_popup(args)
     --#region Aliases for the arguments
     local widgets = args.widgets
-    local style = args.style
     local position = args.position
     local direction = args.direction
     local screen = args.screen

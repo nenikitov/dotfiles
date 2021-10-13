@@ -41,7 +41,7 @@ return wibox.widget {
     {
         date = os.date('*t'),
         font = font,
-        spacing = 10,
+        spacing = 20,
         week_numbers = false,
         start_sunday = false,
         long_weekdays = false,

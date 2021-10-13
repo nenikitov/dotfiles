@@ -30,13 +30,6 @@ local section_style = {
     spacing = bar_info.spacing,
     corner_radius = bar_info.corner_radius.sections
 }
--- TODO create better separate fields for popups
-local popup_style = {
-    background_color = bar_info.colors.bg_sections,
-    margin = bar_info.margin,
-    spacing = bar_info.spacing,
-    corner_radius = bar_info.corner_radius.sections
-}
 
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info)
@@ -208,7 +201,6 @@ awful.screen.connect_for_each_screen(
                 anchor = 'middle',
                 offset = 10
             },
-            style = popup_style,
             screen = s,
             info_table = s.statusbar.popups
         }
