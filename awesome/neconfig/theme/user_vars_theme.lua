@@ -8,7 +8,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 local scaling = {
     contents = 1.0,
     spacing = 1.0,
-    rounding = 8.0
+    rounding = 1.0
 }
 
 --- Initialize size values related to widget scale
@@ -29,7 +29,7 @@ end
 ---@param value number
 ---@return number
 local function radius(value)
-    return dpi(value) * scaling.rounding
+    return dpi(value) * scaling.rounding * scaling.contents
 end
 
 
@@ -74,8 +74,8 @@ local statusbar = {
     spacing = client.gaps * 2,
     -- Corner rounding
     corner_radius = {
-        bar = radius(1),
-        sections = radius(1)
+        bar = radius(6),
+        sections = radius(6)
     },
     -- Widgets
     widgets = {
@@ -113,38 +113,54 @@ local popup = {
     background_color = '#0004',
     margin = client.gaps,
     padding = client.gaps,
-    corner_radius = radius(1),
+    corner_radius = radius(6),
     popups = {
         calendar = {
+            container = {
+                spacing = 0,
+                element_padding = general.text_size * 0.2,
+            },
             header = {
                 foreground_color = '#fff',
-                background_color = '#f004',
-                font_size = 1.5,
+                background_color = '#0004',
+                font_size = 1.1,
                 font_weight = '500',
+                corner_radius = 0
             },
             weekday = {
                 foreground_color = '#fff',
-                background_color = '#0f04',
-                font_size = 1.25,
+                background_color = '#0004',
+                font_size = 1.0,
                 font_weight = '500',
+                corner_radius = 0
+            },
+            normal = {
+                foreground_color = '#bfbfbf',
+                background_color = '#0000',
+                font_size = 1.0,
+                font_weight = 'normal',
+                corner_radius = 0
             },
             focus = {
                 foreground_color = '#fff',
                 background_color = '#fff4',
                 font_size = 1.0,
                 font_weight = '700',
+                corner_radius = radius(6)
             },
-            normal = {
+            weekend = {
                 foreground_color = '#fff',
-                background_color = '#00f4',
+                background_color = '#0004',
                 font_size = 1.0,
                 font_weight = 'normal',
+                corner_radius = 0
             },
             other = {
                 foreground_color = '#fff',
                 background_color = '#0000',
                 font_size = 1.0,
                 font_weight = 'normal',
+                corner_radius = 0
             }
         }
     }

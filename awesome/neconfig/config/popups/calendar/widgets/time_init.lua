@@ -8,7 +8,7 @@ local font_size = beautiful.user_vars_theme.general.text_size
 
 return wibox.widget {
     format = '<span font_weight="500"> %H:%M:%S </span>',
-    font = font .. ' ' .. (font_size * 3),
+    font = font .. ' ' .. (font_size * 2),
     align = 'center',
     refresh = 1,
 
