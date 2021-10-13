@@ -1,6 +1,5 @@
 -- Load libraries
 local wibox = require('wibox')
-local beautiful = require('beautiful')
 -- Load custom modules
 require('neconfig.config.utils.popup_utils')
 
@@ -10,13 +9,12 @@ local calendar_sub_widget = require('neconfig.config.popups.calendar.widgets.cal
 local time_sub_widget = require('neconfig.config.popups.calendar.widgets.time_init')
 local date_sub_widget = require('neconfig.config.popups.calendar.widgets.date_init')
 local separator = wibox.widget.separator {
-    forced_width = 5,
-    forced_height = 5
+    forced_width = 2,
+    forced_height = 2
 }
 
 local function get_popup_calendar(args)
     local position = args.position
-    local style = args.style
     local screen = args.screen
     local info_table = args.info_table
 
@@ -31,7 +29,6 @@ local function get_popup_calendar(args)
         direction = 'vertical',
         position = position,
         size = 'fit',
-        style = style,
         screen = screen,
         info_table = info_table,
     }

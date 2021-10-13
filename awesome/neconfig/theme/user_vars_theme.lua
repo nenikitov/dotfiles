@@ -110,9 +110,44 @@ local statusbar = {
 -- █▀█ █▀█ █▀█ █ █ █▀█ █▀
 -- █▀▀ █▄█ █▀▀ █▄█ █▀▀ ▄█
 local popup = {
-   background_color = '#0004',
-   margin = client.gaps,
-   corner_radius = radius(1)
+    background_color = '#0004',
+    margin = client.gaps,
+    padding = client.gaps,
+    corner_radius = radius(1),
+    popups = {
+        calendar = {
+            header = {
+                foreground_color = '#fff',
+                background_color = '#f004',
+                font_size = 1.5,
+                font_weight = '500',
+            },
+            weekday = {
+                foreground_color = '#fff',
+                background_color = '#0f04',
+                font_size = 1.25,
+                font_weight = '500',
+            },
+            focus = {
+                foreground_color = '#fff',
+                background_color = '#fff4',
+                font_size = 1.0,
+                font_weight = '700',
+            },
+            normal = {
+                foreground_color = '#fff',
+                background_color = '#00f4',
+                font_size = 1.0,
+                font_weight = 'normal',
+            },
+            other = {
+                foreground_color = '#fff',
+                background_color = '#0000',
+                font_size = 1.0,
+                font_weight = 'normal',
+            }
+        }
+    }
 }
 
 
