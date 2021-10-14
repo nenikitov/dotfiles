@@ -41,7 +41,7 @@ local function calendar_style(contents, flag, date)
         {
             {
                 contents,
-    
+
                 widget = wibox.container.place
             },
 

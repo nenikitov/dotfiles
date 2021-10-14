@@ -30,7 +30,13 @@ function add_custom_popup(args)
 
 
     local popup = awful.popup {
-        widget = layout,
+        widget = {
+            layout,
+
+            margins = style.padding,
+            widget = wibox.container.margin,
+        },
+        shape = r_rect(style.corner_radius),
         screen = screen,
         preferred_positions = 'bottom',
         ontop = true,

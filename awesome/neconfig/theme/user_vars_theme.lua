@@ -6,7 +6,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
-    contents = 1.0,
+    contents = 1.25,
     spacing = 1.0,
     rounding = 1.0
 }
@@ -111,9 +111,9 @@ local statusbar = {
 -- █▀▀ █▄█ █▀▀ █▄█ █▀▀ ▄█
 local popup = {
     background_color = '#0004',
-    margin = client.gaps,
-    padding = client.gaps,
-    corner_radius = radius(6),
+    offset = client.gaps,
+    padding = 0,
+    corner_radius = radius(12),
     popups = {
         calendar = {
             container = {
