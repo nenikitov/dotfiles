@@ -74,8 +74,6 @@ awful.screen.connect_for_each_screen(
             [size_param.length] = s.geometry[size_param.length] - bar_info.margin.corners * 2,
 
             shape = r_rect(bar_info.corner_radius.bar),
-
-            visible = user_vars_conf.statusbar.visible
         }
         -- Offset the bar
         local offset_prop = (bar_info.position == 'top' or bar_info.position == 'bottom') and 'y' or 'x'
@@ -214,6 +212,9 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.popups
         }
         --#endregion
+
+        -- Set statusbar visibility once all widgets were created
+        s.statusbar.wibar.visible = user_vars_conf.statusbar.visible
 
         --! Test, remove this later (place systray in a better position)
         --[[
