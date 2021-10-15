@@ -153,7 +153,7 @@ theme.system_icon = config_path .. 'graphics/icons/system_logo.svg'
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+theme.icon_theme = theme.user_vars_theme.client.icon_theme
 
 return theme
 

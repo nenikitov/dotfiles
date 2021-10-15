@@ -1,8 +1,11 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
+local menubar_utils = require('menubar.utils')
+local gears = require('gears')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
+local user_vars_theme = beautiful.user_vars_theme
 require('neconfig.config.bars.titlebar.titlebar')
 
 
@@ -11,16 +14,20 @@ client.connect_signal(
     'manage',
     function (c)
         -- Set the windows at the slave (put it at the end of others instead of setting it master)
-        if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position
+        if (awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position)
         then
             -- Prevent clients from being unreachable after screen count changes.
             awful.placement.no_offscreen(c)
         end
 
-        -- Let the theme manage client if needed
-        if beautiful.client_setup ~= nil
+        -- Force set GTK icon
+        if (user_vars_theme.client.try_to_force_icon_theme)
         then
-            beautiful.client_setup(c)
+            local icon = menubar_utils.lookup_icon(c.instance)
+            if (icon ~= nil)
+            then
+                c.icon = gears.surface(icon)._native
+            end
         end
     end
 )

@@ -44,7 +44,9 @@ local general = {
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █
 local client = {
-    gaps = space(4)
+    gaps = space(4),
+    try_to_force_icon_theme = true,
+    icon_theme = 'Fluent-dark'
 }
 
 
