@@ -93,9 +93,9 @@ awful.screen.connect_for_each_screen(
 
                 for _, section in pairs(s.statusbar.sections) do
                     for _, popup in pairs(section) do
-                        if (popup.popup)
+                        if (popup.visible ~= nil)
                         then
-                            popup.popup.visible = new_visibility
+                            popup.visible = new_visibility
                         end
                     end
                 end

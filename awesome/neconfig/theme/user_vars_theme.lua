@@ -118,15 +118,15 @@ local popup = {
     corner_radius = radius(12),
     popups = {
         calendar = {
+            container = {
+                spacing = 0,
+                element_padding = general.text_size * 0.2,
+            },
             date_time_header = {
                 time_font_weight = '700',
                 time_font_size = 2.5,
                 date_font_weight = '450',
                 date_font_size = 1.25,
-            },
-            container = {
-                spacing = 0,
-                element_padding = general.text_size * 0.2,
             },
             header = {
                 font_size = 1.1,
