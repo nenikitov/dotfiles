@@ -16,10 +16,10 @@ local function generate_offset(position)
             y = style.offset
         },
         left = {
-            x = style.offset
+            x = -style.offset
         },
         right = {
-            x = -style.offset
+            x = style.offset
         }
     }
 

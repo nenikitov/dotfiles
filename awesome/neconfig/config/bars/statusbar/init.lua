@@ -13,15 +13,21 @@ local bar_info = beautiful.user_vars_theme.statusbar
 -- Get bar size
 local bar_size = bar_info.contents_size + bar_info.margin.content * 2
 local lookup_size_param = {
-    ['top']    = {'width',  'height'},
-    ['bottom'] = {'width',  'height'},
-    ['left']   = {'height', 'width' },
-    ['right']  = {'height', 'width' }
+    top    = {'width',  'height'},
+    bottom = {'width',  'height'},
+    left   = {'height', 'width' },
+    right  = {'height', 'width' }
 }
 local size_param = {
     length = lookup_size_param[bar_info.position][1],
     thickness = lookup_size_param[bar_info.position][2],
 }
+local opposite_side = ({
+        top = 'bottom',
+        bottom = 'top',
+        left = 'right',
+        right = 'left'
+    }) [bar_info.position]
 -- Style that will be used for sections
 local section_style = {
     background_color = bar_info.colors.bg_sections,
@@ -197,7 +203,7 @@ awful.screen.connect_for_each_screen(
         require('neconfig.config.popups.calendar.init') {
             position = {
                 target = s.statusbar.sections.all_popups.clock,
-                position = 'bottom',
+                position = opposite_side,
                 anchor = 'back',
             },
             screen = s,
