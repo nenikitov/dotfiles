@@ -12,15 +12,19 @@ require('neconfig.config.utils.popup_utils')
 local bar_info = beautiful.user_vars_theme.statusbar
 -- Get bar size
 local bar_size = bar_info.contents_size + bar_info.margin.content * 2
-local lookup_size_param = {
-    top    = {'width',  'height'},
-    bottom = {'width',  'height'},
-    left   = {'height', 'width' },
-    right  = {'height', 'width' }
-}
 local size_param = {
-    length = lookup_size_param[bar_info.position][1],
-    thickness = lookup_size_param[bar_info.position][2],
+    length = ({
+        top = 'width',
+        bottom = 'width',
+        left = 'height',
+        right = 'height'
+    })[bar_info.position],
+    thickness = ({
+        top = 'height',
+        bottom = 'height',
+        left = 'width',
+        right = 'width'
+    })[bar_info.position],
 }
 local opposite_side = ({
         top = 'bottom',

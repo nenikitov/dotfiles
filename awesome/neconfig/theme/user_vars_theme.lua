@@ -112,56 +112,47 @@ local statusbar = {
 -- █▀█ █▀█ █▀█ █ █ █▀█
 -- █▀▀ █▄█ █▀▀ █▄█ █▀▀
 local popup = {
-    background_color = '#0004',
+    background_color = '#0008',
     offset = 3 * client.gaps,
     padding = 0,
     corner_radius = radius(12),
     popups = {
         calendar = {
+            date_time_header = {
+                time_font_weight = '700',
+                time_font_size = 2.5,
+                date_font_weight = '450',
+                date_font_size = 1.25,
+            },
             container = {
                 spacing = 0,
                 element_padding = general.text_size * 0.2,
             },
             header = {
-                foreground_color = '#fff',
-                background_color = '#0004',
                 font_size = 1.1,
-                font_weight = '500',
-                corner_radius = 0
+                font_weight = '500'
             },
             weekday = {
-                foreground_color = '#fff',
-                background_color = '#0004',
-                font_size = 1.0,
-                font_weight = '500',
-                corner_radius = 0
+                font_weight = '500'
             },
             normal = {
                 foreground_color = '#bfbfbf',
-                background_color = '#0000',
-                font_size = 1.0,
-                font_weight = 'normal',
-                corner_radius = 0
+                background_color = '#0000'
             },
             focus = {
-                foreground_color = '#fff',
                 background_color = '#fff4',
-                font_size = 1.0,
                 font_weight = '700',
                 corner_radius = radius(6)
             },
             weekend = {
+                font_style = 'oblique'
+            },
+            other = {
                 foreground_color = '#fff',
                 background_color = '#0004',
                 font_size = 1.0,
                 font_weight = 'normal',
-                corner_radius = 0
-            },
-            other = {
-                foreground_color = '#fff',
-                background_color = '#0000',
-                font_size = 1.0,
-                font_weight = 'normal',
+                font_style = 'normal',
                 corner_radius = 0
             }
         }
