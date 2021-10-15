@@ -212,13 +212,14 @@ awful.screen.connect_for_each_screen(
         --[[
         --#region Other
         add_bar_section {
-            name = 'taglist',
+            name = 'systray',
             widget = systray,
             position = {
                 side = 'bottom',
                 section = 1
             },
             style = section_style,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
