@@ -26,7 +26,7 @@ local apps = {
     startup_apps = {
         'nitrogen --restore',
         'picom --xrender-sync-fence --experimental-backends',
-        'redshift',
+        --'redshift-gtk',
         'numlockx on',
     }
 }
