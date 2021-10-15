@@ -109,11 +109,11 @@ local statusbar = {
 }
 
 
--- █▀█ █▀█ █▀█ █ █ █▀█ █▀
--- █▀▀ █▄█ █▀▀ █▄█ █▀▀ ▄█
+-- █▀█ █▀█ █▀█ █ █ █▀█
+-- █▀▀ █▄█ █▀▀ █▄█ █▀▀
 local popup = {
     background_color = '#0004',
-    offset = client.gaps,
+    offset = 3 * client.gaps,
     padding = 0,
     corner_radius = radius(12),
     popups = {

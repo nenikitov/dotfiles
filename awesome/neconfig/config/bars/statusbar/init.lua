@@ -194,18 +194,15 @@ awful.screen.connect_for_each_screen(
         --#endregion
 
         --#region Popups that are attached to statusbar
-        --[[
         require('neconfig.config.popups.calendar.init') {
             position = {
                 target = s.statusbar.sections.all_popups.clock,
                 position = 'bottom',
-                anchor = 'middle',
-                offset = 10
+                anchor = 'back',
             },
             screen = s,
             info_table = s.statusbar.popups
         }
-        ]]
         --#endregion
 
         --! Test, remove this later (place systray in a better position)

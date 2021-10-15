@@ -6,11 +6,33 @@ require('neconfig.config.utils.widget_utils')
 
 local style = beautiful.user_vars_theme.popup
 
+
+local function generate_offset(position)
+    local offset_lookup = {
+        top = {
+            y = -style.offset
+        },
+        bottom = {
+            y = style.offset
+        },
+        left = {
+            x = style.offset
+        },
+        right = {
+            x = -style.offset
+        }
+    }
+
+    return offset_lookup[position]
+end
+
+
 -- TODO implement this
 function add_custom_popup(args)
     --#region Aliases for the arguments
     local widgets = args.widgets
-    local position = args.position
+    local position_type = args.position_type
+    local position_args = args.position_args
     local direction = args.direction
     local screen = args.screen
     local info_table = args.info_table
@@ -29,6 +51,7 @@ function add_custom_popup(args)
     --#endregion
 
 
+    --#region Generate popup
     local popup = awful.popup {
         widget = {
             layout,
@@ -38,14 +61,20 @@ function add_custom_popup(args)
         },
         shape = r_rect(style.corner_radius),
         screen = screen,
-        preferred_positions = 'bottom',
         ontop = true,
-        offset = {
-            y = 10
-        },
-        bg = style.background_color
+        bg = style.background_color,
     }
-    popup:move_next_to(position.target)
+    --#endregion
+
+    --#region Place popup
+    if (position_type == 'attach')
+    then
+        popup.preferred_positions = position_args.position
+        popup.preferred_anchors = position_args.anchor
+        popup.offset = generate_offset(position_args.position)
+        popup:move_next_to(position_args.target)
+    end
+    --#endregion 
 
     popup:connect_signal(
         'mouse::leave',
@@ -53,6 +82,7 @@ function add_custom_popup(args)
             popup.visible = false
         end
     )
+    --popup.visible = false
 
     info_table[name] = popup
 end
