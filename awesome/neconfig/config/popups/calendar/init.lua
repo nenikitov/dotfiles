@@ -17,6 +17,7 @@ local function get_popup_calendar(args)
     local position = args.position
     local screen = args.screen
     local info_table = args.info_table
+    local toggle_visibility_widget = args.toggle_visibility_widget
 
     add_custom_popup {
         name = 'calendar',
@@ -30,6 +31,7 @@ local function get_popup_calendar(args)
         position_type = 'attach',
         position_args = position,
         size = 'fit',
+        toggle_visibility_widget = toggle_visibility_widget,
         screen = screen,
         info_table = info_table,
     }

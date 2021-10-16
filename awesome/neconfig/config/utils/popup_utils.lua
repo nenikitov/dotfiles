@@ -37,6 +37,7 @@ function add_custom_popup(args)
     local screen = args.screen
     local info_table = args.info_table
     local name = args.name
+    local toggle_visibility_widget = args.toggle_visibility_widget
     --#endregion
 
     --#region Init the popup table
@@ -74,15 +75,57 @@ function add_custom_popup(args)
         popup.offset = generate_offset(position_args.position)
         popup:move_next_to(position_args.target)
     end
-    --#endregion 
+    --#endregion
 
+    --#region Update visibility
+    -- Hide by default
+    popup.visible = false
+    -- Hide on mouse leave
     popup:connect_signal(
         'mouse::leave',
         function ()
             popup.visible = false
         end
     )
-    --popup.visible = false
+    -- Hide on ESC
+    popup:connect_signal(
+        'property::visible',
+        function ()
+            if (popup.visible)
+            then
+                -- TODO fix the keygrabber
+                --[[
+                awful.keygrabber {
+                    keybindings = {
+                        {
+                            { }, 'Escape',
+                            function ()
+                            end
+                        }
+                    },
+                    stop_key           = 'Escape',
+                    stop_event         = 'press',
+                    stop_callback      = function()
+                        popup.visible = false
+                    end,
+                    export_keybindings = true
+                }
+                --]]
+            end
+        end
+    )
+
+    -- Toggle on click
+    if (toggle_visibility_widget)
+    then
+        toggle_visibility_widget:connect_signal(
+            "button::press",
+            function ()
+                popup.visible = not popup.visible
+            end
+        )
+    end
+    --#endregion
 
     info_table[name] = popup
 end

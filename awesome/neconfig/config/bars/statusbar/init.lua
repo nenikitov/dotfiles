@@ -208,6 +208,7 @@ awful.screen.connect_for_each_screen(
                 position = opposite_side,
                 anchor = 'back',
             },
+            toggle_visibility_widget = s.statusbar.sections.all_popups.clock,
             screen = s,
             info_table = s.statusbar.popups
         }
