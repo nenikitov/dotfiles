@@ -88,29 +88,20 @@ function add_custom_popup(args)
         end
     )
     -- Hide on ESC
+    local function grabber(mod, key, event)
+        if (key == 'Escape' and event == 'press')
+        then
+            popup.visible = false;
+        end
+    end
     popup:connect_signal(
         'property::visible',
         function ()
             if (popup.visible)
             then
-                -- TODO fix the keygrabber
-                --[[
-                awful.keygrabber {
-                    keybindings = {
-                        {
-                            { }, 'Escape',
-                            function ()
-                            end
-                        }
-                    },
-                    stop_key           = 'Escape',
-                    stop_event         = 'press',
-                    stop_callback      = function()
-                        popup.visible = false
-                    end,
-                    export_keybindings = true
-                }
-                --]]
+                awful.keygrabber.run(grabber)
+            else
+                awful.keygrabber.stop(grabber)
             end
         end
     )
