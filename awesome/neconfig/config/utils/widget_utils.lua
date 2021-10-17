@@ -1,5 +1,6 @@
 -- Load libraries
 local wibox = require('wibox')
+local awful = require('awful')
 local gears = require('gears')
 
 

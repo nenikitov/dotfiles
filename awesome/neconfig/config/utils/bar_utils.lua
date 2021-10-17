@@ -133,6 +133,7 @@ function add_bar_section(args)
     local widget = args.widget
     local position = args.position
     local style = args.style
+    local interactive = args.interactive
     local screen = args.screen
     local info_table = args.info_table
     -- Precalculate position info
@@ -161,8 +162,8 @@ function add_bar_section(args)
     --#endregion
 
 
-    --#region Popup creation
-    --#region Resize the contents
+    -- Create popup
+    --#region Set up contents
     local padding_ver
     local padding_hor
     local resize_func
@@ -213,13 +214,18 @@ function add_bar_section(args)
         type = 'toolbar',
     }
     -- Apply the size
+    -- ? May be needed
     --popup:_apply_size_now()
     -- Attach to the last section if exists
     if (last_section_name)
     then
         popup:move_next_to(info_table[position.section][last_section_name])
     end
-    --#endregion
+    -- Finalize interactive popup
+    if (interactive)
+    then
+        popup.cursor = 'pointer'
+    end
     --#endregion
 
     --#region Update info table variables for next section

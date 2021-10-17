@@ -182,6 +182,7 @@ awful.screen.connect_for_each_screen(
                 section = 3
             },
             style = section_style,
+            interactive = true,
             visible = user_vars_conf.statusbar.widgets.clock.visible,
             screen = s,
             info_table = s.statusbar.sections

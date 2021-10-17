@@ -63,7 +63,7 @@ function add_custom_popup(args)
         shape = r_rect(style.corner_radius),
         screen = screen,
         ontop = true,
-        bg = style.background_color,
+        bg = style.background_color
     }
     --#endregion
 
