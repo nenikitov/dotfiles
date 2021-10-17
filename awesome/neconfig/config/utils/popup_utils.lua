@@ -30,14 +30,14 @@ end
 -- TODO implement this
 function add_custom_popup(args)
     --#region Aliases for the arguments
+    local name = args.name
     local widgets = args.widgets
+    local direction = args.direction
     local position_type = args.position_type
     local position_args = args.position_args
-    local direction = args.direction
+    local toggle_visibility_widget = args.toggle_visibility_widget
     local screen = args.screen
     local info_table = args.info_table
-    local name = args.name
-    local toggle_visibility_widget = args.toggle_visibility_widget
     --#endregion
 
     --#region Init the popup table
@@ -88,7 +88,7 @@ function add_custom_popup(args)
         end
     )
     -- Hide on ESC
-    local function grabber(mod, key, event)
+    local function hide_grabber(mod, key, event)
         if (key == 'Escape' and event == 'press')
         then
             popup.visible = false;
@@ -99,9 +99,9 @@ function add_custom_popup(args)
         function ()
             if (popup.visible)
             then
-                awful.keygrabber.run(grabber)
+                awful.keygrabber.run(hide_grabber)
             else
-                awful.keygrabber.stop(grabber)
+                awful.keygrabber.stop(hide_grabber)
             end
         end
     )
