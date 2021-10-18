@@ -78,23 +78,28 @@ local function calendar_style(contents, flag, date)
     end
 end
 -- Generate calendar button binds
-local buttons = {
+local calendar_buttons = {
     -- Go to next month on SCROLL UP
-    awful.button {
+    awful.button(
         { }, 4,
         function ()
-            -- TODO
+            local naughty = require('naughty')
+            naughty.notify {
+                text = 'UP'
+            }
         end
-    },
+    ),
     -- Go to previous month on SCROLL DOWN
-    awful.button {
+    awful.button(
         { }, 5,
         function ()
-            -- TODO
+            local naughty = require('naughty')
+            naughty.notify {
+                text = 'DOWN'
+            }
         end
-    },
+    ),
 }
--- TODO go to next / previous month with scroll
 
 return wibox.widget {
     {
@@ -108,5 +113,6 @@ return wibox.widget {
         widget = wibox.widget.calendar.month
     },
 
+    buttons = calendar_buttons,
     widget = wibox.container.place
 }
