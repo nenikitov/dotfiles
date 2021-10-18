@@ -110,7 +110,7 @@ function add_custom_popup(args)
     if (toggle_visibility_widget)
     then
         toggle_visibility_widget:connect_signal(
-            "button::press",
+            'button::press',
             function ()
                 popup.visible = not popup.visible
             end

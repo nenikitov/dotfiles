@@ -133,7 +133,7 @@ function add_bar_section(args)
     local widget = args.widget
     local position = args.position
     local style = args.style
-    local interactive = args.interactive
+    local force_interactive = args.force_interactive
     local screen = args.screen
     local info_table = args.info_table
     -- Precalculate position info
@@ -221,10 +221,13 @@ function add_bar_section(args)
     then
         popup:move_next_to(info_table[position.section][last_section_name])
     end
-    -- Finalize interactive popup
-    if (interactive)
+    -- Improve user experience with popups that contain interactive widgets
+    -- By changing the cursor and making click area bigger
+    if (#widget.buttons ~= 0 or force_interactive == true)
     then
-        popup.cursor = 'pointer'
+        popup.cursor = 'hand1'
+        popup.buttons = widget.buttons
+        widget.buttons = {}
     end
     --#endregion
 
