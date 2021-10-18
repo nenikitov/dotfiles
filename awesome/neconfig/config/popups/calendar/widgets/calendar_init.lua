@@ -1,4 +1,5 @@
 -- Load modules
+local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 
@@ -76,6 +77,24 @@ local function calendar_style(contents, flag, date)
         return final_widget
     end
 end
+-- Generate calendar button binds
+local buttons = {
+    -- Go to next month on SCROLL UP
+    awful.button {
+        { }, 4,
+        function ()
+            -- TODO
+        end
+    },
+    -- Go to previous month on SCROLL DOWN
+    awful.button {
+        { }, 5,
+        function ()
+            -- TODO
+        end
+    },
+}
+-- TODO go to next / previous month with scroll
 
 return wibox.widget {
     {
