@@ -54,7 +54,6 @@ awful.screen.connect_for_each_screen(
     function(s)
         --#region Generate screen specific widgets
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, bar_info)
-        local systray = wibox.widget.systray(s)
         local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info)
         local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, bar_info)
         --#endregion
@@ -219,7 +218,9 @@ awful.screen.connect_for_each_screen(
         s.statusbar.wibar.visible = user_vars_conf.statusbar.visible
 
         --! Test, remove this later (place systray in a better position)
-        --[[
+        local systray = wibox.widget.systray()
+        systray.forced_width = 100
+        systray.visible = true
         --#region Other
         add_bar_section {
             name = 'systray',
@@ -234,7 +235,6 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         --#endregion
-        ]]
     end
 )
 

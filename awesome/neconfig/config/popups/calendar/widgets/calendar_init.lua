@@ -78,6 +78,7 @@ local function calendar_style(contents, flag, date)
     end
 end
 -- Generate calendar button binds
+local shown_date = os.date('*t')
 local calendar_buttons = {
     -- Go to next month on SCROLL UP
     awful.button(

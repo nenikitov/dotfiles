@@ -18,7 +18,7 @@
     "temp_step": 277,
     "temp_sunrise": "06:00:00",
     "temp_sunset": "21:00:00",
-    "wnd_show_on_startup": true,
+    "wnd_show_on_startup": false,
     "wnd_x": 0,
-    "wnd_y": 41
+    "wnd_y": 890
 }
