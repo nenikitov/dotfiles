@@ -97,11 +97,18 @@ function add_custom_popup(args)
     popup:connect_signal(
         'property::visible',
         function ()
-            if (popup.visible)
+            local visible = popup.visible
+
+            if (visible == true)
             then
                 awful.keygrabber.run(hide_grabber)
             else
                 awful.keygrabber.stop(hide_grabber)
+            end
+
+            for _,widget in pairs(widgets)
+            do
+                widget:emit_signal('custom::changed_popup_visibility', visible)
             end
         end
     )

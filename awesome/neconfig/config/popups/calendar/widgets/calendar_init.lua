@@ -1,6 +1,7 @@
 -- Load modules
 local awful = require('awful')
 local wibox = require('wibox')
+local gears = require('gears')
 local beautiful = require('beautiful')
 
 
@@ -105,8 +106,24 @@ local function generate_date()
     end
 end
 local function update_calendar()
+    local naughty = require('naughty')
     calendar.date = generate_date()
 end
+local update_timer = gears.timer {
+    timeout = 3600,
+    callback = update_calendar
+}
+final_widget:connect_signal(
+    'custom::changed_popup_visibility',
+    function (caller, visible)
+        if (visible)
+        then
+            update_timer:start()
+        else
+            update_timer:stop()
+        end
+    end
+)
 -- Generate calendar button binds
 local calendar_buttons = {
     -- Go to current month on MMB
@@ -135,6 +152,7 @@ local calendar_buttons = {
     ),
 }
 final_widget.buttons = calendar_buttons
+
 
 
 return final_widget
