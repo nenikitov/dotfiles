@@ -26,7 +26,7 @@ local function calendar_style(contents, flag, date)
     }
     local weekday = tonumber(os.date('%w', os.time(date_transformed)))
     local is_weekend = (weekday == 0 or weekday == 6) and (flag ~= 'weekday')
-    if (is_weekend and flag ~= 'focus')
+    if (is_weekend and flag == 'normal')
     then
         flag = 'weekend'
     end
