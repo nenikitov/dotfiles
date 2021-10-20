@@ -13,12 +13,12 @@
     "temp_auto": true,
     "temp_fps": 45,
     "temp_high": 6500,
-    "temp_low": 4000,
+    "temp_low": 5000,
     "temp_speed": 0.1,
-    "temp_step": 277,
+    "temp_step": 166,
     "temp_sunrise": "06:00:00",
     "temp_sunset": "21:00:00",
     "wnd_show_on_startup": false,
     "wnd_x": 0,
-    "wnd_y": 890
+    "wnd_y": 35
 }

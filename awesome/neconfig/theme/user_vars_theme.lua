@@ -6,7 +6,7 @@ local dpi = require('beautiful.xresources').apply_dpi
 -- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
-    contents = 1.25,
+    contents = 1.0,
     spacing = 1.0,
     rounding = 1.0
 }
@@ -97,7 +97,7 @@ local statusbar = {
             -- Maximum width of the task
             task_size = size(200),
             -- Maximum size of the taskbar
-            max_size = 1920 - 2 * space(128) - size(600),
+            max_size = 1920 - 2 * space(160) - size(800),
         },
         clock = {
             top_size = 1.0,

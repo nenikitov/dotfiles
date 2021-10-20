@@ -77,43 +77,64 @@ local function calendar_style(contents, flag, date)
         return final_widget
     end
 end
+-- Generate calendar widget
+local calendar = wibox.widget {
+    date = os.date('*t'),
+    font = font .. ' ' .. font_size,
+    spacing = popup_style.popups.calendar.container.spacing,
+    week_numbers = false,
+    start_sunday = false,
+    long_weekdays = true,
+    fn_embed = calendar_style,
+    widget = wibox.widget.calendar.month
+}
+local final_widget = wibox.widget {
+    calendar,
+
+    widget = wibox.container.place
+}
+-- Update calendar date
+local month_offset = 0
+local function generate_date()
+    if (month_offset == 0)
+    then
+        return os.date('*t')
+    else
+        local date = os.date('*t')
+        return { year = date.year, month = date.month + month_offset }
+    end
+end
+local function update_calendar()
+    calendar.date = generate_date()
+end
 -- Generate calendar button binds
-local shown_date = os.date('*t')
 local calendar_buttons = {
+    -- Go to current month on MMB
+    awful.button(
+        { }, 2,
+        function ()
+            month_offset = 0;
+            update_calendar()
+        end
+    ),
     -- Go to next month on SCROLL UP
     awful.button(
         { }, 4,
         function ()
-            local naughty = require('naughty')
-            naughty.notify {
-                text = 'UP'
-            }
+            month_offset = month_offset + 1;
+            update_calendar()
         end
     ),
     -- Go to previous month on SCROLL DOWN
     awful.button(
         { }, 5,
         function ()
-            local naughty = require('naughty')
-            naughty.notify {
-                text = 'DOWN'
-            }
+            month_offset = month_offset - 1;
+            update_calendar()
         end
     ),
 }
+final_widget.buttons = calendar_buttons
 
-return wibox.widget {
-    {
-        date = os.date('*t'),
-        font = font .. ' ' .. font_size,
-        spacing = popup_style.popups.calendar.container.spacing,
-        week_numbers = false,
-        start_sunday = false,
-        long_weekdays = true,
-        fn_embed = calendar_style,
-        widget = wibox.widget.calendar.month
-    },
 
-    buttons = calendar_buttons,
-    widget = wibox.container.place
-}
+return final_widget
