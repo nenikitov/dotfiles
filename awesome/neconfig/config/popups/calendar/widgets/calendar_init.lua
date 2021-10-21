@@ -96,6 +96,7 @@ local final_widget = wibox.widget {
 }
 -- Update calendar date
 local month_offset = 0
+local refresh_time = 60
 local function generate_date()
     if (month_offset == 0)
     then
@@ -106,21 +107,20 @@ local function generate_date()
     end
 end
 local function update_calendar()
-    local naughty = require('naughty')
     calendar.date = generate_date()
+
+    final_widget.update_timer.timeout = refresh_time - os.time() % refresh_time
+    final_widget.update_timer:again()
+    return true
 end
-local update_timer = gears.timer {
-    timeout = 3600,
-    callback = update_calendar
-}
+final_widget.update_timer = gears.timer.weak_start_new(refresh_time, update_calendar)
+update_calendar()
 final_widget:connect_signal(
     'custom::changed_popup_visibility',
     function (caller, visible)
         if (visible)
         then
-            update_timer:start()
-        else
-            update_timer:stop()
+            month_offset = 0
         end
     end
 )
@@ -130,7 +130,7 @@ local calendar_buttons = {
     awful.button(
         { }, 2,
         function ()
-            month_offset = 0;
+            month_offset = 0
             update_calendar()
         end
     ),
@@ -138,7 +138,7 @@ local calendar_buttons = {
     awful.button(
         { }, 4,
         function ()
-            month_offset = month_offset + 1;
+            month_offset = month_offset + 1
             update_calendar()
         end
     ),
@@ -146,13 +146,11 @@ local calendar_buttons = {
     awful.button(
         { }, 5,
         function ()
-            month_offset = month_offset - 1;
+            month_offset = month_offset - 1
             update_calendar()
         end
     ),
 }
 final_widget.buttons = calendar_buttons
-
-
 
 return final_widget
