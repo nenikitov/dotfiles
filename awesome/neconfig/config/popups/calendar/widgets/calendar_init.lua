@@ -96,7 +96,7 @@ local final_widget = wibox.widget {
 }
 -- Update calendar date
 local month_offset = 0
-local refresh_time = 3600
+local refresh_time = 86400
 local function generate_date()
     if (month_offset == 0)
     then
