@@ -4,6 +4,7 @@ local awful = require('awful')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 -- Get variables
+local should_number = user_vars_conf.statusbar.widgets.taglist.number
 local tag_names = user_vars_conf.desktop.tag_names
 local tag_layout = user_vars_conf.desktop.layouts[1]
 
@@ -11,6 +12,22 @@ local tag_layout = user_vars_conf.desktop.layouts[1]
 -- Add layouts to each screen
 awful.screen.connect_for_each_screen(
     function(s)
-        awful.tag(tag_names, s, tag_layout)
+        for i, tag in pairs(tag_names)
+        do
+            local tag_name = tag
+            if (should_number)
+            then
+                tag_name = i .. ' ' .. tag_name
+            end
+
+            awful.tag.add(
+                tag_name,
+                {
+                    layout = tag_layout,
+                    screen = s,
+                    selected = (i == 1)
+                }
+            )
+        end
     end
 )

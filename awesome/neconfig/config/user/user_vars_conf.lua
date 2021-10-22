@@ -59,8 +59,9 @@ local desktop = {
         icons.home,
         icons.terminal,
         icons.code,
-        icons.study,
+        icons.globe,
         icons.media,
+        icons.communication,
     },
     -- List of layouts that can be cycled through
     layouts = {
@@ -116,6 +117,8 @@ local statusbar = {
         taglist = {
             -- Should it be shown
             visible = true,
+            -- Should tags be numbered
+            number = false,
             -- Should the small dots under the tag be shown to indicate the number of tagged clients
             show_client_count = true
         },

@@ -85,7 +85,7 @@ local statusbar = {
             -- Size of the selection bar and the number of clients circles
             decoration_size = size(2),
             -- Spacing between tags
-            spacing = space(12),
+            spacing = space(14),
             -- Maximum number of client circles
             max_client_count = 5
         },
@@ -93,7 +93,7 @@ local statusbar = {
             -- Size of the selection bar
             decoration_size = size(2),
             -- Spacing between tasks
-            spacing = space(12),
+            spacing = space(14),
             -- Maximum width of the task
             task_size = size(200),
             -- Maximum size of the taskbar
