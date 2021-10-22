@@ -90,6 +90,13 @@ function add_custom_popup(args)
             hide()
         end
     )
+    -- Make popup stay if the mouse is inside
+    popup:connect_signal(
+        'mouse::enter',
+        function ()
+            capi.button.disconnect_signal('press', hide)
+        end
+    )
     -- Hide on ESC
     local function hide_grabber(mod, key, event)
         if (key == 'Escape' and event == 'press')
