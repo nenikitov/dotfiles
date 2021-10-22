@@ -1,7 +1,7 @@
 local awful = require('awful')
 local wibox = require('wibox')
-local naughty = require('naughty')
 local beautiful = require('beautiful')
+local capi = { button = button }
 require('neconfig.config.utils.widget_utils')
 
 local style = beautiful.user_vars_theme.popup
@@ -78,20 +78,23 @@ function add_custom_popup(args)
     --#endregion
 
     --#region Update visibility
+    local function hide()
+        popup.visible = false
+    end
     -- Hide by default
-    popup.visible = false
+    hide()
     -- Hide on mouse leave
     popup:connect_signal(
         'mouse::leave',
         function ()
-            popup.visible = false
+            hide()
         end
     )
     -- Hide on ESC
     local function hide_grabber(mod, key, event)
         if (key == 'Escape' and event == 'press')
         then
-            popup.visible = false;
+            hide()
         end
     end
     popup:connect_signal(
@@ -102,8 +105,10 @@ function add_custom_popup(args)
             if (visible == true)
             then
                 awful.keygrabber.run(hide_grabber)
+                capi.button.connect_signal('press', hide)
             else
                 awful.keygrabber.stop(hide_grabber)
+                capi.button.disconnect_signal('press', hide)
             end
 
             for _,widget in pairs(widgets)
@@ -112,8 +117,7 @@ function add_custom_popup(args)
             end
         end
     )
-
-    -- Toggle on click
+    -- Toggle on click on the widget
     if (toggle_visibility_widget)
     then
         toggle_visibility_widget:connect_signal(
