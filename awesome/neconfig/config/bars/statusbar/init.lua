@@ -46,6 +46,8 @@ local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(ba
 local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu')(bar_info)
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
+local notification_center_button = require('neconfig.config.bars.statusbar.widgets.notification_center_button.notification_center_button_init')(bar_info)
+local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_tools_button.sys_tools_button_init')(bar_info)
 --#endregion
 
 
@@ -190,6 +192,30 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'keyboard_layout',
             widget = keyboard_layout,
+            position = {
+                side = bar_info.position,
+                section = 3
+            },
+            style = section_style,
+            visible = user_vars_conf.statusbar.widgets.keyboard_layout.visible,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+        add_bar_section {
+            name = 'notification_center_button',
+            widget = notification_center_button,
+            position = {
+                side = bar_info.position,
+                section = 3
+            },
+            style = section_style,
+            visible = user_vars_conf.statusbar.widgets.keyboard_layout.visible,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
+        add_bar_section {
+            name = 'sys_tools_button',
+            widget = sys_tools_button,
             position = {
                 side = bar_info.position,
                 section = 3

@@ -15,10 +15,10 @@
     "temp_high": 6500,
     "temp_low": 5000,
     "temp_speed": 0.1,
-    "temp_step": 0,
+    "temp_step": 166,
     "temp_sunrise": "06:00:00",
     "temp_sunset": "21:00:00",
     "wnd_show_on_startup": false,
-    "wnd_x": 0,
-    "wnd_y": 35
+    "wnd_x": 8,
+    "wnd_y": 43
 }

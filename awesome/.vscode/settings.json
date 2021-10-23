@@ -3,7 +3,8 @@
         "root",
         "screen",
         "awesome",
-        "client"
+        "client",
+        "button"
     ],
     "Lua.diagnostics.disable": [
         "undefined-doc-name"

@@ -63,11 +63,11 @@ local desktop = {
         icons.media,
         icons.communication,
     },
-    -- List of layouts that can be cycled through
+    -- List of layouts that can be cycled through (the first is selected by default)
     layouts = {
-        awful.layout.suit.floating,
         awful.layout.suit.spiral,
         awful.layout.suit.tile,
+        awful.layout.suit.floating,
 
         --[[ All available layouts
             awful.layout.suit.tile

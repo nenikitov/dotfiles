@@ -8,7 +8,7 @@ local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 require('neconfig.config.utils.widget_utils')
 
 
-local function get_run_menu(bar_info)
+local function get_sys_tools_button(bar_info)
     -- Get style from the theme
     local font_size = beautiful.get_font_height(beautiful.font) * 0.75
     local width
@@ -22,8 +22,8 @@ local function get_run_menu(bar_info)
         width = bar_info.contents_size
     end
 
-    local run_menu_launcher = wibox.widget {
-        text = '\u{f078}',
+    local sys_tools_button = wibox.widget {
+        text = '\u{f552}',
         align = 'center',
         valign = 'center',
         forced_width = width,
@@ -40,10 +40,10 @@ local function get_run_menu(bar_info)
         widget = wibox.widget.textbox
     }
 
-    return run_menu_launcher
+    return sys_tools_button
 end
 
 return setmetatable(
     {},
-    {  __call = function(_, ...) return get_run_menu(...) end }
+    {  __call = function(_, ...) return get_sys_tools_button(...) end }
 )
