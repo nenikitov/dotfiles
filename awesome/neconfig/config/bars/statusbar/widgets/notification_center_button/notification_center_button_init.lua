@@ -28,14 +28,6 @@ local function get_notification_center_button(bar_info)
         valign = 'center',
         forced_width = width,
         forced_height = height,
-        buttons = {
-            awful.button (
-                { }, 1,
-                function ()
-                    awful.util.spawn(user_vars_conf.apps.default_apps.run_menu)
-                end
-            )
-        },
 
         widget = wibox.widget.textbox
     }
