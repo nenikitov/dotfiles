@@ -29,8 +29,8 @@ local function get_layoutbox(screen, bar_info)
     -- Layoutbox does not center itself with `halign` or `valign`, so I center it manually
     return wibox.widget {
         widget = wibox.container.background,
-        forced_height = height,
-        forced_width = width,
+        forced_height = bar_info.contents_size * 0.75,
+        forced_width = bar_info.contents_size * 0.75,
         buttons = layoutbox_buttons,
 
         {

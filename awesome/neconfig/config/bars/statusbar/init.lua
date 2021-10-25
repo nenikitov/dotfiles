@@ -43,11 +43,11 @@ local section_style = {
 
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info)
-local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu')(bar_info)
+local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu')
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
-local notification_center_button = require('neconfig.config.bars.statusbar.widgets.notification_center_button.notification_center_button_init')(bar_info)
-local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_tools_button.sys_tools_button_init')(bar_info)
+local notification_center_button = require('neconfig.config.bars.statusbar.widgets.notification_center_button.notification_center_button_init')
+local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_tools_button.sys_tools_button_init')
 --#endregion
 
 
