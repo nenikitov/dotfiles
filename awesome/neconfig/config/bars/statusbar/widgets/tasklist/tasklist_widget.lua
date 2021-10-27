@@ -56,6 +56,18 @@ local function get_tasklist_widget(style)
             selected_bar_role.bg = '#0000'
         end
         --#endregion
+
+        --#region Update tooltip
+        self.tooltip_popup:set_text(c.name)
+        --#endregion
+    end
+    local function task_created(self, c, index, clients)
+    self.tooltip_popup = awful.tooltip {
+        objects = { self },
+        delay_show = 1,
+    }
+
+    task_updated(self, c, index, clients)
     end
     --#endregion
 
@@ -129,7 +141,7 @@ local function get_tasklist_widget(style)
         },
 
         update_callback = task_updated,
-        create_callback = task_updated
+        create_callback = task_created
     }
     --#endregion
 
