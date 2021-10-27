@@ -228,6 +228,7 @@ awful.screen.connect_for_each_screen(
         --#endregion
 
         --#region Popups that are attached to statusbar
+        -- Calendar
         require('neconfig.config.popups.calendar.init') {
             position = {
                 target = s.statusbar.sections.all_popups.clock,
@@ -235,6 +236,19 @@ awful.screen.connect_for_each_screen(
                 anchor = 'back',
             },
             toggle_visibility_widget = s.statusbar.sections.all_popups.clock,
+            screen = s,
+            info_table = s.statusbar.popups
+        }
+        -- Notifications pane
+        -- TODO
+        -- System tools
+        require('neconfig.config.popups.sys_tools.init') {
+            position = {
+                target = s.statusbar.sections.all_popups.sys_tools_button,
+                position = opposite_side,
+                anchor = 'back',
+            },
+            toggle_visibility_widget = s.statusbar.sections.all_popups.sys_tools_button,
             screen = s,
             info_table = s.statusbar.popups
         }
