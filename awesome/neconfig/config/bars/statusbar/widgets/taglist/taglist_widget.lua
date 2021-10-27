@@ -1,4 +1,5 @@
 -- Load libraries
+local awful = require('awful')
 local wibox = require('wibox')
 local gears = require('gears')
 local beautiful = require('beautiful')
@@ -94,6 +95,18 @@ local function get_taglist_widget(style)
             end
         end
         --#endregion
+
+        --#region Update tooltip
+        self.tooltip_popup:set_text('[ #' .. index .. '. ' .. t.name .. ' ] -- ' .. clients_num .. ' open')
+        --#endregion
+    end
+    local function tag_created(self, t, index, tags)
+        self.tooltip_popup = awful.tooltip {
+            objects = { self },
+            delay_show = 1
+        }
+
+        tag_updated(self, t, index, tags)
     end
     --#endregion
 
@@ -149,7 +162,7 @@ local function get_taglist_widget(style)
         },
 
         update_callback = tag_updated,
-        create_callback = tag_updated
+        create_callback = tag_created
     }
     --#endregion
 
