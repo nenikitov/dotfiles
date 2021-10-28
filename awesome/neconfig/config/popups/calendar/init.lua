@@ -27,6 +27,7 @@ local function get_popup_calendar(args)
             separator,
             calendar_sub_widget,
         },
+        tooltip = 'Open calendar',
         direction = 'vertical',
         position_type = 'attach',
         position_args = position,

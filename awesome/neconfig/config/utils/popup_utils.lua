@@ -32,6 +32,7 @@ function add_custom_popup(args)
     --#region Aliases for the arguments
     local name = args.name
     local widgets = args.widgets
+    local tooltip = args.tooltip
     local direction = args.direction
     local position_type = args.position_type
     local position_args = args.position_args
@@ -133,6 +134,17 @@ function add_custom_popup(args)
                 popup.visible = not popup.visible
             end
         )
+    end
+    --#endregion
+
+    --#region Add tooltip
+    if (tooltip and toggle_visibility_widget)
+    then
+        awful.tooltip {
+            objects = { toggle_visibility_widget },
+            text = tooltip,
+            delay_show = 1
+        }
     end
     --#endregion
 

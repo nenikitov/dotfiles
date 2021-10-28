@@ -22,6 +22,7 @@ local function get_popup_sys_tools(args)
         widgets = {
             test_sub_widget
         },
+        tooltip = 'Open system tools',
         direction = 'vertical',
         position_type = 'attach',
         position_args = position,
