@@ -209,6 +209,7 @@ awful.screen.connect_for_each_screen(
                 section = 3
             },
             style = section_style,
+            force_interactive = true,
             visible = user_vars_conf.statusbar.widgets.keyboard_layout.visible,
             screen = s,
             info_table = s.statusbar.sections
@@ -216,6 +217,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'sys_tools_button',
             widget = sys_tools_button,
+            force_interactive = true,
             position = {
                 side = bar_info.position,
                 section = 3
