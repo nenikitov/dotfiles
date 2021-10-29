@@ -6,6 +6,7 @@ require('neconfig.config.utils.widget_utils')
 
 
 --#region Helper methods
+
 --- Get the corner or the edge of the screen where the widget will be placed from the side and section
 ---@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
 ---@param section number "Part" of the bar where the widget should be placed (1 for the first, 2 for the middle, 3 for the last)
@@ -118,6 +119,7 @@ local function get_spacing(style, side, dir)
         [spacing_dir] = spacing_val * dir_multiplier
     }
 end
+--#endregion
 
 
 --- Add, initialize and draw a section

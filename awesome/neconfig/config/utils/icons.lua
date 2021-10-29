@@ -1,4 +1,4 @@
--- This table corresponds to unicode indexes of icons in Font Awesome. It may be different for other icon fonts
+-- Unicode indexes of icons in Font Awesome. It may be different for other icon fonts
 local icons = {
     code          = '\u{f121}',
     communication = '\u{f086}',
