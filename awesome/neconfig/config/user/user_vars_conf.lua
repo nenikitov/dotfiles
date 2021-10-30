@@ -1,4 +1,7 @@
+-- Load libraries
 local awful = require('awful')
+
+-- Get variables
 local icons = require('neconfig.config.utils.icons')
 local config_path = os.getenv('HOME') .. '/.config/awesome/'
 
@@ -31,7 +34,6 @@ local apps = {
     }
 }
 
-
 -- █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █ █ ▀█ █▄▀ ▄█
 local binds = {
@@ -48,12 +50,11 @@ local binds = {
     }
 }
 
-
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
 local desktop = {
-    -- Theme
-    theme_path = config_path .. 'neconfig/theme/theme.lua', -- gears.filesystem.get_themes_dir() .. 'default/theme.lua'
+    -- Path to the theme
+    theme_path = config_path .. 'neconfig/theme/theme.lua',
     -- Names (and consequently number) of tags
     tag_names = {
         icons.home,
@@ -63,7 +64,8 @@ local desktop = {
         icons.media,
         icons.communication,
     },
-    -- List of layouts that can be cycled through (the first is selected by default)
+    -- List of layouts that can be cycled through
+    -- (the first is selected by default)
     layouts = {
         awful.layout.suit.spiral,
         awful.layout.suit.tile,
@@ -90,7 +92,6 @@ local desktop = {
     }
 }
 
-
 -- █▀ ▀█▀ ▄▀█ ▀█▀ █ █ █▀ █▄▄ ▄▀█ █▀█
 -- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 local statusbar = {
@@ -106,7 +107,7 @@ local statusbar = {
         -- Open run menu widget
         run_menu = {
             -- Should it be shown
-            visible = true
+            visible = false
         },
         -- Current desktop layout
         layoutbox = {
@@ -134,7 +135,7 @@ local statusbar = {
         -- Current keyboard layout
         keyboard_layout = {
             -- Should it be shown
-            visible = true,
+            visible = false,
         },
         -- Analog clock
         clock = {
@@ -144,6 +145,14 @@ local statusbar = {
             top_format = '%H:%M',
             -- Format of the time written on the bottom
             bottom_format = '%a %Y-%m-%d',
+        },
+        -- Notifications pane
+        notifications_pane = {
+            visible = true
+        },
+        -- System tools
+        sys_tools = {
+            visible = true
         }
     },
 }

@@ -210,7 +210,7 @@ awful.screen.connect_for_each_screen(
             },
             style = section_style,
             force_interactive = true,
-            visible = user_vars_conf.statusbar.widgets.keyboard_layout.visible,
+            visible = user_vars_conf.statusbar.widgets.notifications_pane.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -223,7 +223,7 @@ awful.screen.connect_for_each_screen(
                 section = 3
             },
             style = section_style,
-            visible = user_vars_conf.statusbar.widgets.keyboard_layout.visible,
+            visible = user_vars_conf.statusbar.widgets.sys_tools.visible,
             screen = s,
             info_table = s.statusbar.sections
         }

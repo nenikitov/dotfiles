@@ -1,7 +1,7 @@
 -- Load libraries
 local awful = require('awful')
-local hotkeys_popup = require('awful.hotkeys_popup').widget
 local beautiful = require('beautiful')
+local hotkeys_popup = require('awful.hotkeys_popup').widget
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
