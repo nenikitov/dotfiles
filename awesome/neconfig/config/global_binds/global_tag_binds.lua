@@ -1,11 +1,14 @@
 -- Load libraries
-local gears = require('gears')
 local awful = require('awful')
+local gears = require('gears')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 -- Get variables
 local super_key = user_vars_conf.binds.keys.super_key
+local ctrl_key = user_vars_conf.binds.keys.ctrl_key
+local shift_key = user_vars_conf.binds.keys.shift_key
+local alt_key = user_vars_conf.binds.keys.alt_key
 local tag_num = #(user_vars_conf.desktop.tag_names)
 
 
@@ -27,7 +30,7 @@ local function get_tag_binds(global_keys)
             ),
             -- Toggle tag display on SUPER + CTRL + NUMBER
             awful.key(
-                { super_key, 'Control' }, '#' .. i + 9,
+                { super_key, ctrl_key }, '#' .. i + 9,
                 function ()
                     local screen = awful.screen.focused()
                     local tag = screen.tags[i]
@@ -39,7 +42,7 @@ local function get_tag_binds(global_keys)
             ),
             -- Move client to tag on SUPER + SHIFT + NUMBER
             awful.key(
-                { super_key, 'Shift' }, '#' .. i + 9,
+                { super_key, shift_key }, '#' .. i + 9,
                 function ()
                     if client.focus then
                         local tag = client.focus.screen.tags[i]
@@ -52,7 +55,7 @@ local function get_tag_binds(global_keys)
             ),
             -- Toggle tag on focused client on SUPER + CTRL + SHIFT + NUMBER
             awful.key(
-                { super_key, 'Control', 'Shift' }, '#' .. i + 9,
+                { super_key, ctrl_key, shift_key }, '#' .. i + 9,
                 function ()
                     if client.focus then
                         local tag = client.focus.screen.tags[i]

@@ -1,13 +1,17 @@
 -- Load libraries
-local gears = require('gears')
 local awful = require('awful')
+local gears = require('gears')
 local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
-local user_vars_conf = require('neconfig.config.user.user_vars_conf')
+-- Load custom modules
 local user_menu = require('neconfig.config.user.user_menu')
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 -- Get variables
 local super_key = user_vars_conf.binds.keys.super_key
+local ctrl_key = user_vars_conf.binds.keys.ctrl_key
+local shift_key = user_vars_conf.binds.keys.shift_key
+local alt_key = user_vars_conf.binds.keys.alt_key
 local terminal = user_vars_conf.apps.default_apps.terminal
 
 
@@ -34,13 +38,13 @@ local function get_global_keys()
         ),
         -- Reload Awesome on SUPER + CTRL + R
         awful.key(
-            { super_key, 'Control' }, 'r',
+            { super_key, ctrl_key }, 'r',
             awesome.restart,
             { description = 'reload awesome', group = 'awesome' }
         ),
         -- Quit Awesome on SUPER + SHIFT + Q
         awful.key(
-            { super_key, 'Shift' }, 'q',
+            { super_key, shift_key }, 'q',
             awesome.quit,
             { description = 'quit awesome', group = 'awesome' }
         ),
@@ -55,7 +59,7 @@ local function get_global_keys()
         ),
         -- Go to previous tag on SUPER + LEFT ARROW
         awful.key(
-            { super_key },    'Left',
+            { super_key }, 'Left',
             awful.tag.viewprev,
             { description = 'view previous', group = 'tag' }
         ),
@@ -72,7 +76,7 @@ local function get_global_keys()
         awful.key(
             { super_key }, 'j',
             function ()
-                awful.client.focus.byidx( 1)
+                awful.client.focus.byidx(1)
             end,
             { description = 'focus next by index', group = 'client' }
         ),
@@ -89,7 +93,7 @@ local function get_global_keys()
         --#region Client manipulation
         -- Swap the current client with the next one in the wibar on SUPER + SHIFT + J
         awful.key(
-            { super_key, 'Shift' }, 'j',
+            { super_key, shift_key }, 'j',
             function ()
                 awful.client.swap.byidx(1)
             end,
@@ -97,7 +101,7 @@ local function get_global_keys()
         ),
         -- Swap the current client with the previous one in the wibar on SUPER + SHIFT + K
         awful.key(
-            { super_key, 'Shift' }, 'k',
+            { super_key, shift_key }, 'k',
             function ()
                 awful.client.swap.byidx(-1)
             end,
@@ -122,7 +126,7 @@ local function get_global_keys()
         ),
         -- Restore minimized on SUPER + CTRL + N
         awful.key(
-            { super_key, 'Control' }, 'n',
+            { super_key, ctrl_key }, 'n',
             function ()
                 local c = awful.client.restore()
                 if c then
@@ -140,7 +144,7 @@ local function get_global_keys()
         --#region Screen
         -- Focus next screen on SUPER + CTRL + J
         awful.key(
-            { super_key, 'Control' }, 'j',
+            { super_key, ctrl_key }, 'j',
             function ()
                 awful.screen.focus_relative(1)
             end,
@@ -148,7 +152,7 @@ local function get_global_keys()
         ),
         -- Focus previous screen on SUPER + CTRL + K
         awful.key(
-            { super_key, 'Control' }, 'k',
+            { super_key, ctrl_key }, 'k',
             function ()
                 awful.screen.focus_relative(-1)
             end,
@@ -180,8 +184,8 @@ local function get_global_keys()
             { super_key }, 'x',
             function ()
                 awful.prompt.run {
-                    prompt       = 'Run Lua code: ',
-                    textbox      = awful.screen.focused().statusbar.widgets.promptbox.widget,
+                    prompt = 'Run Lua code: ',
+                    textbox = awful.screen.focused().statusbar.widgets.promptbox.widget,
                     exe_callback = awful.util.eval,
                     history_path = awful.util.get_cache_dir() .. '/history_eval'
                 }
@@ -218,7 +222,7 @@ local function get_global_keys()
         ),
         -- Increase the number of master clients on SUPER + SHIFT + H
         awful.key(
-            { super_key, 'Shift' }, 'h',
+            { super_key, shift_key }, 'h',
             function ()
                 awful.tag.incnmaster( 1, nil, true)
             end,
@@ -226,7 +230,7 @@ local function get_global_keys()
         ),
         -- Decrease the number of master clients on SUPER + SHIFT + L
         awful.key(
-            { super_key, 'Shift' }, 'l',
+            { super_key, shift_key }, 'l',
             function ()
                 awful.tag.incnmaster(-1, nil, true)
             end,
@@ -234,7 +238,7 @@ local function get_global_keys()
         ),
         -- Increase number of columns on SUPER + CTRL + H
         awful.key(
-            { super_key, 'Control' }, 'h',
+            { super_key, ctrl_key }, 'h',
             function ()
                 awful.tag.incncol( 1, nil, true)
             end,
@@ -242,7 +246,7 @@ local function get_global_keys()
         ),
         -- Decrease number of columns on SUPER + CTRL + L
         awful.key(
-            { super_key, 'Control' }, 'l',
+            { super_key, ctrl_key }, 'l',
             function ()
                 awful.tag.incncol(-1, nil, true)
             end,
@@ -260,7 +264,7 @@ local function get_global_keys()
         ),
         -- Select previous layout type on SUPER + SHIFT + SPACE
         awful.key(
-            { super_key, 'Shift' }, 'space',
+            { super_key, shift_key }, 'space',
             function ()
                 awful.layout.inc(-1)
             end,
@@ -279,7 +283,7 @@ local function get_global_keys()
             { description = 'toggle statusbar on current screen', group = 'test' }
         ),
         awful.key(
-            { super_key, 'Shift' }, 'i',
+            { super_key, shift_key }, 'i',
             function ()
                 local focused_screen = awful.screen.focused()
                 local new_visibility = not focused_screen.statusbar.wibar.visible

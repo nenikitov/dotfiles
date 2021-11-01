@@ -1,6 +1,6 @@
 -- Load libraries
-local gears = require('gears')
 local beautiful = require('beautiful')
+local gears = require('gears')
 
 
 -- Set wallpaper
