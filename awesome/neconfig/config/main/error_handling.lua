@@ -23,14 +23,15 @@ do
             if in_error then
                 return
             end
-
+            -- Handle the error
             in_error = true
-
+            -- Print the error message
             naughty.notify {
                 preset = naughty.config.presets.critical,
                 title = 'Oops, an error happened!',
                 text = tostring(err)
             }
+            -- Done
             in_error = false
         end
     )

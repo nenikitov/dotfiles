@@ -14,12 +14,13 @@ awful.screen.connect_for_each_screen(
     function(s)
         for i, tag in pairs(tag_names)
         do
+            -- Append numbers before tag name
             local tag_name = tag
             if (should_number)
             then
                 tag_name = i .. ' ' .. tag_name
             end
-
+            -- Add a tag
             awful.tag.add(
                 tag_name,
                 {
