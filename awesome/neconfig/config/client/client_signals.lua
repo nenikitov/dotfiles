@@ -1,8 +1,8 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
-local menubar_utils = require('menubar.utils')
 local gears = require('gears')
+local menubar_utils = require('menubar.utils')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 local user_vars_theme = beautiful.user_vars_theme

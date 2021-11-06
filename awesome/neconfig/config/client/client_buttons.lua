@@ -1,6 +1,6 @@
 -- Load libraries
-local gears = require('gears')
 local awful = require('awful')
+local gears = require('gears')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
