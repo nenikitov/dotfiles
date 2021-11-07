@@ -1,8 +1,12 @@
 -- Load libraries
 local awful = require('awful')
+local beautiful = require('beautiful')
 local wibox = require('wibox')
 -- Load custom modules
 require('neconfig.config.utils.widget_utils')
+
+-- Get style
+local style = beautiful.user_vars_theme.statusbar
 
 
 --#region Helper methods
@@ -70,10 +74,9 @@ local function get_next_widget_dir(side, section)
 end
 
 --- Compute the margin to the edge and corners of the screen
----@param style table List of style variables
 ---@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
 ---@return table
-local function get_margins(style, side)
+local function get_margins(side)
     local margin_edge_val = style.margin.edge + style.margin.content
     local margin_corner_val = style.margin.corners + style.spacing
 
@@ -94,11 +97,10 @@ local function get_margins(style, side)
 end
 
 --- Compute the spacing between the current and the next widget
----@param style table List of style variables
 ---@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
 ---@param dir string Direction to the next widget ('top', 'bottom', 'left', 'right')
 ---@return table
-local function get_spacing(style, side, dir)
+local function get_spacing(side, dir)
     local spacing_val = style.spacing
     local spacing_dir
     if (side == 'top' or side == 'bottom')
@@ -134,7 +136,6 @@ function add_bar_section(args)
     local name = args.name
     local widget = args.widget
     local position = args.position
-    local style = args.style
     local force_interactive = args.force_interactive
     local screen = args.screen
     local info_table = args.info_table
@@ -171,12 +172,12 @@ function add_bar_section(args)
     local resize_func
     if (next_dir == 'top' or next_dir == 'bottom')
     then
-        padding_ver = style.corner_radius
+        padding_ver = style.corner_radius.sections
         padding_hor = 0
         resize_func = set_width_widget
     else
         padding_ver = 0
-        padding_hor = style.corner_radius
+        padding_hor = style.corner_radius.sections
         resize_func = set_height_widget
     end
     local final_widget = {
@@ -200,19 +201,19 @@ function add_bar_section(args)
         placement_func = nil
     else
         placement_func = function(wi)
-            local margins = get_margins(style, position.side)
+            local margins = get_margins(position.side)
             return awful.placement[corner](wi, { margins = margins })
         end
     end
     local popup = awful.popup {
         screen = screen,
-        shape = r_rect(style.corner_radius),
+        shape = r_rect(style.corner_radius.sections),
         preferred_positions = next_dir,
         preferred_anchors = 'middle',
-        bg = style.background_color,
+        bg = style.colors.bg_sections,
         widget = final_widget,
         placement = placement_func,
-        offset = get_spacing(style, position.side, next_dir),
+        offset = get_spacing(position.side, next_dir),
         type = 'toolbar',
     }
     -- Apply the size
