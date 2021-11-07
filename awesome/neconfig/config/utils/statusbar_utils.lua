@@ -12,10 +12,9 @@ local style = beautiful.user_vars_theme.statusbar
 --#region Helper methods
 
 --- Get the corner or the edge of the screen where the widget will be placed from the side and section
----@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
 ---@param section number "Part" of the bar where the widget should be placed (1 for the first, 2 for the middle, 3 for the last)
 ---@return string
-local function get_corner(side, section)
+local function get_corner(section)
         local lookup = {
         ['top'] = {
             [1] = 'top_left',
@@ -39,14 +38,13 @@ local function get_corner(side, section)
         }
     }
 
-    return lookup[side][section]
+    return lookup[style.position][section]
 end
 
 --- Get the direction to the next widget ('top', 'bottom', 'left', 'right')
----@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
 ---@param section number "Part" of the bar where the widget should be placed (1 for the first, 2 for the middle, 3 for the last)
 ---@return string
-local function get_next_widget_dir(side, section)
+local function get_next_widget_dir(section)
     local lookup = {
         ['top'] = {
             [1] = 'right',
@@ -70,19 +68,18 @@ local function get_next_widget_dir(side, section)
         }
     }
 
-    return lookup[side][section]
+    return lookup[style.position][section]
 end
 
 --- Compute the margin to the edge and corners of the screen
----@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
 ---@return table
-local function get_margins(side)
+local function get_margins()
     local margin_edge_val = style.margin.edge + style.margin.content
     local margin_corner_val = style.margin.corners + style.spacing
 
-    local margin_edge_dir = side
+    local margin_edge_dir = style.position
     local margin_corner_dir
-    if (side == 'top' or side == 'bottom')
+    if (style.position == 'top' or style.position == 'bottom')
     then
         margin_corner_dir = { 'left', 'right' }
     else
@@ -97,13 +94,12 @@ local function get_margins(side)
 end
 
 --- Compute the spacing between the current and the next widget
----@param side string Side of the screen where the bar is placed ('top', 'bottom', 'left', 'right')
 ---@param dir string Direction to the next widget ('top', 'bottom', 'left', 'right')
 ---@return table
-local function get_spacing(side, dir)
+local function get_spacing(dir)
     local spacing_val = style.spacing
     local spacing_dir
-    if (side == 'top' or side == 'bottom')
+    if (style.position == 'top' or style.position == 'bottom')
     then
         spacing_dir = 'x'
     else
@@ -135,28 +131,28 @@ function add_bar_section(args)
     --#region Aliases for the arguments
     local name = args.name
     local widget = args.widget
-    local position = args.position
+    local section = args.section
     local force_interactive = args.force_interactive
     local screen = args.screen
     local info_table = args.info_table
     -- Precalculate position info
-    local corner = get_corner(position.side, position.section)
-    local next_dir = get_next_widget_dir(position.side, position.section)
+    local corner = get_corner(section)
+    local next_dir = get_next_widget_dir(section)
     --#endregion
 
 
     --#region Init the section table
     -- The container for this corner if it is the first widget to be placed
-    if (not info_table[position.section])
+    if (not info_table[section])
     then
-        info_table[position.section] = {
+        info_table[section] = {
             last_section_name = nil
         }
     end
     -- Get the last section if exists
-    local last_section_name = info_table[position.section].last_section_name
+    local last_section_name = info_table[section].last_section_name
     -- The container for this bar section
-    info_table[position.section][name] = {}
+    info_table[section][name] = nil
     -- The list of all sections
     if (not info_table.all_popups)
     then
@@ -165,21 +161,13 @@ function add_bar_section(args)
     --#endregion
 
 
-    -- Create popup
+    --#region Create popup
     --#region Set up contents
-    local padding_ver
-    local padding_hor
-    local resize_func
-    if (next_dir == 'top' or next_dir == 'bottom')
-    then
-        padding_ver = style.corner_radius.sections
-        padding_hor = 0
-        resize_func = set_width_widget
-    else
-        padding_ver = 0
-        padding_hor = style.corner_radius.sections
-        resize_func = set_height_widget
-    end
+    -- Calculate padding and size
+    local padding_ver = (next_dir == 'top' or next_dir == 'bottom') and style.corner_radius.sections or 0
+    local padding_hor = (next_dir == 'left' or next_dir == 'right') and style.corner_radius.sections or 0
+    local resize_func = (next_dir == 'top' or next_dir == 'bottom') and set_width_widget or set_height_widget
+    -- Construct the widget
     local final_widget = {
         pad_widget(
             {
@@ -193,6 +181,7 @@ function add_bar_section(args)
         layout = wibox.layout.fixed.horizontal,
     }
     --#endregion
+
     --#region Create the popup
     -- Function that will be used to place the widget
     local placement_func
@@ -201,10 +190,11 @@ function add_bar_section(args)
         placement_func = nil
     else
         placement_func = function(wi)
-            local margins = get_margins(position.side)
+            local margins = get_margins()
             return awful.placement[corner](wi, { margins = margins })
         end
     end
+    -- Construct popup
     local popup = awful.popup {
         screen = screen,
         shape = r_rect(style.corner_radius.sections),
@@ -213,16 +203,15 @@ function add_bar_section(args)
         bg = style.colors.bg_sections,
         widget = final_widget,
         placement = placement_func,
-        offset = get_spacing(position.side, next_dir),
+        offset = get_spacing(next_dir),
         type = 'toolbar',
     }
     -- Apply the size
-    -- ? May be needed
-    --popup:_apply_size_now()
+    -- ? May be needed : popup:_apply_size_now()
     -- Attach to the last section if exists
     if (last_section_name)
     then
-        popup:move_next_to(info_table[position.section][last_section_name])
+        popup:move_next_to(info_table[section][last_section_name])
     end
     -- Improve user experience with popups that contain interactive widgets
     -- By changing the cursor and making click area bigger
@@ -233,10 +222,11 @@ function add_bar_section(args)
         widget.buttons = {}
     end
     --#endregion
+    --#endregion
 
     --#region Update info table variables for next section
-    info_table[position.section][name] = popup
+    info_table[section][name] = popup
     info_table.all_popups[name] = popup
-    info_table[position.section].last_section_name = name
+    info_table[section].last_section_name = name
     --#endregion
 end

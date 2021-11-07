@@ -62,12 +62,11 @@ local function get_tasklist_widget(style)
         --#endregion
     end
     local function task_created(self, c, index, clients)
-    self.tooltip_popup = awful.tooltip {
-        objects = { self },
-        delay_show = 1,
-    }
-
-    task_updated(self, c, index, clients)
+        self.tooltip_popup = awful.tooltip {
+            objects = { self },
+            delay_show = 1,
+        }
+        task_updated(self, c, index, clients)
     end
     --#endregion
 

@@ -4,19 +4,23 @@ local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
-require('neconfig.config.utils.bar_utils')
+require('neconfig.config.utils.statusbar_utils')
 
 -- Get variables
+-- From configs
 local bar_info_theme = beautiful.user_vars_theme.statusbar
 local bar_info_conf = user_vars_conf.statusbar
--- Get bar size
+-- Popup direction
+local bar_param_opposite_side = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[bar_info_theme.position]
+-- Bar size
 local bar_size = bar_info_theme.contents_size + bar_info_theme.margin.content * 2
-local size_param = {
-    length =    ({ top = 'width',  bottom = 'width',  left = 'height', right = 'height' })[bar_info_theme.position],
-    thickness = ({ top = 'height', bottom = 'height', left = 'width',  right = 'width'  })[bar_info_theme.position],
+local bar_param_size = {
+    length =    (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom') and 'width'  or 'height',
+    thickness = (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom') and 'height' or 'width',
 }
-local opposite_side = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[bar_info_theme.position]
-
+-- Bar offset
+local bar_offset_dir = (bar_info_theme.position == 'top' or bar_info_theme.position == 'left') and 1 or -1
+local bar_param_offset = (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom') and 'y' or 'x'
 
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info_theme)
@@ -28,7 +32,7 @@ local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_too
 --#endregion
 
 
--- Set up the status bar for each screen
+--#region Set up the status bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)
         --#region Generate screen specific widgets
@@ -37,26 +41,25 @@ awful.screen.connect_for_each_screen(
         local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, bar_info_theme)
         --#endregion
 
-
+        --#region Init object to store widgets into
         s.statusbar = {
             sections = {},
             popups = {}
         }
+        --#endregion
 
 
-        --#region Fake wibar
+        --#region Background wibar
         s.statusbar.wibar = awful.wibar {
             position = bar_info_theme.position,
             screen = s,
-            [size_param.thickness] = bar_size,
-            [size_param.length] = s.geometry[size_param.length] - bar_info_theme.margin.corners * 2,
+            [bar_param_size.thickness] = bar_size,
+            [bar_param_size.length] = s.geometry[bar_param_size.length] - bar_info_theme.margin.corners * 2,
 
             shape = r_rect(bar_info_theme.corner_radius.bar),
         }
         -- Offset the bar
-        local offset_prop = (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom') and 'y' or 'x'
-        local offset_dir = (bar_info_theme.position == 'top' or bar_info_theme.position == 'left') and 1 or -1
-        s.statusbar.wibar[offset_prop] = s.statusbar.wibar[offset_prop] + offset_dir * bar_info_theme.margin.edge
+        s.statusbar.wibar[bar_param_offset] = s.statusbar.wibar[bar_param_offset] + bar_offset_dir * bar_info_theme.margin.edge
         -- Modify the area where clients can be placed
         s.statusbar.wibar:struts {
             [bar_info_theme.position] = bar_info_theme.margin.edge + bar_size
@@ -66,7 +69,7 @@ awful.screen.connect_for_each_screen(
             'property::visible',
             function ()
                 local new_visibility = s.statusbar.wibar.visible
-
+                -- Cycle through each widget
                 for _, section in pairs(s.statusbar.sections) do
                     for _, popup in pairs(section) do
                         if (popup.visible ~= nil)
@@ -84,10 +87,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'menu',
             widget = menu,
-            position = {
-                side = bar_info_theme.position,
-                section = 1
-            },
+            section = 1,
             visible = bar_info_conf.widgets.menu.visible,
             screen = s,
             info_table = s.statusbar.sections
@@ -96,10 +96,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'run_menu',
             widget = run_menu,
-            position = {
-                side = bar_info_theme.position,
-                section = 1
-            },
+            section = 1,
             visible = bar_info_conf.widgets.run_menu.visible,
             screen = s,
             info_table = s.statusbar.sections
@@ -108,10 +105,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'layoutbox',
             widget = layoutbox,
-            position = {
-                side = bar_info_theme.position,
-                section = 1
-            },
+            section = 1,
             visible = bar_info_conf.widgets.layoutbox.visible,
             screen = s,
             info_table = s.statusbar.sections
@@ -120,10 +114,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'taglist',
             widget = taglist,
-            position = {
-                side = bar_info_theme.position,
-                section = 1
-            },
+            section = 1,
             visible = bar_info_conf.widgets.taglist.visible,
             screen = s,
             info_table = s.statusbar.sections
@@ -135,10 +126,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'tasklist',
             widget = tasklist,
-            position = {
-                side = bar_info_theme.position,
-                section = 2
-            },
+            section = 2,
             visible = bar_info_conf.widgets.tasklist.visible,
             screen = s,
             info_table = s.statusbar.sections
@@ -150,10 +138,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'clock',
             widget = textclock,
-            position = {
-                side = bar_info_theme.position,
-                section = 3
-            },
+            section = 3,
             force_interactive = true,
             visible = bar_info_conf.widgets.clock.visible,
             screen = s,
@@ -163,10 +148,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'keyboard_layout',
             widget = keyboard_layout,
-            position = {
-                side = bar_info_theme.position,
-                section = 3
-            },
+            section = 3,
             visible = bar_info_conf.widgets.keyboard_layout.visible,
             screen = s,
             info_table = s.statusbar.sections
@@ -174,10 +156,7 @@ awful.screen.connect_for_each_screen(
         add_bar_section {
             name = 'notification_center_button',
             widget = notification_center_button,
-            position = {
-                side = bar_info_theme.position,
-                section = 3
-            },
+            section = 3,
             force_interactive = true,
             visible = bar_info_conf.widgets.notifications_pane.visible,
             screen = s,
@@ -187,22 +166,32 @@ awful.screen.connect_for_each_screen(
             name = 'sys_tools_button',
             widget = sys_tools_button,
             force_interactive = true,
-            position = {
-                side = bar_info_theme.position,
-                section = 3
-            },
+            section = 3,
             visible = bar_info_conf.widgets.sys_tools.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
+        --! Test, remove this later (place systray in a better position)
+        local systray = wibox.widget.systray()
+        systray.forced_width = 100
+        systray.visible = true
+        add_bar_section {
+            name = 'systray',
+            widget = systray,
+            section = 3,
+            visible = true,
+            screen = s,
+            info_table = s.statusbar.sections
+        }
         --#endregion
+
 
         --#region Popups that are attached to statusbar
         -- Calendar
         require('neconfig.config.popups.calendar.init') {
             position = {
                 target = s.statusbar.sections.all_popups.clock,
-                position = opposite_side,
+                position = bar_param_opposite_side,
                 anchor = 'back',
             },
             toggle_visibility_widget = s.statusbar.sections.all_popups.clock,
@@ -215,7 +204,7 @@ awful.screen.connect_for_each_screen(
         require('neconfig.config.popups.sys_tools.init') {
             position = {
                 target = s.statusbar.sections.all_popups.sys_tools_button,
-                position = opposite_side,
+                position = bar_param_opposite_side,
                 anchor = 'back',
             },
             toggle_visibility_widget = s.statusbar.sections.all_popups.sys_tools_button,
@@ -226,25 +215,6 @@ awful.screen.connect_for_each_screen(
 
         -- Set statusbar visibility once all widgets were created
         s.statusbar.wibar.visible = bar_info_conf.visible
-
-        --! Test, remove this later (place systray in a better position)
-        local systray = wibox.widget.systray()
-        systray.forced_width = 100
-        systray.visible = true
-        --#region Other
-        add_bar_section {
-            name = 'systray',
-            widget = systray,
-            position = {
-                side = 'bottom',
-                section = 1
-            },
-            visible = true,
-            screen = s,
-            info_table = s.statusbar.sections
-        }
-        --#endregion
     end
 )
-
-
+--#endregion
