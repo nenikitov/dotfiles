@@ -25,7 +25,6 @@ local function get_taglist(screen, bar_info)
         screen = screen,
         filter = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
-        style = taglist_widget.style,
         layout = taglist_widget.layout,
         widget_template = taglist_widget.widget_template
     }

@@ -1,7 +1,7 @@
 -- Load libraries
-local wibox = require('wibox')
 local awful = require('awful')
 local beautiful = require('beautiful')
+local wibox = require('wibox')
 
 
 local function get_tasklist_widget(style)
@@ -11,25 +11,9 @@ local function get_tasklist_widget(style)
     local height = font_height * 1.25
     local contents_align = style.show_task_title and 'left' or 'center'
     -- Direction of of the tasks
-    local direction
+    local direction = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and 'horizontal' or 'vertical'
     -- Margin to size the selected tag bar
-    local bar_margin_pos
-    if (style.bar_pos == 'top')
-    then
-        direction = 'horizontal'
-        bar_margin_pos = 'bottom'
-    elseif (style.bar_pos == 'bottom')
-    then
-        direction = 'horizontal'
-        bar_margin_pos = 'top'
-    elseif (style.bar_pos == 'right')
-    then
-        direction = 'vertical'
-        bar_margin_pos = 'left'
-    else
-        direction = 'vertical'
-        bar_margin_pos = 'right'
-    end
+    local bar_margin_pos = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[style.bar_pos]
     --#endregion
 
 

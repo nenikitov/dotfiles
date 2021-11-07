@@ -28,7 +28,6 @@ local function get_tasklist(screen, bar_info)
         screen = screen,
         filter = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons,
-        style = tasklist_widget.style,
         layout = tasklist_widget.layout,
         widget_template = tasklist_widget.widget_template,
         update_function = tasklist_widget.update_function

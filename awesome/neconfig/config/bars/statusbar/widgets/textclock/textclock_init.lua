@@ -1,7 +1,6 @@
 -- Load libraries
-local awful = require('awful')
-local wibox = require('wibox')
 local beautiful = require('beautiful')
+local wibox = require('wibox')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
@@ -30,15 +29,13 @@ local function get_textclock(bar_info)
     }
 
     -- Construct the final widget
-    local final_widget = wibox.widget {
+    return wibox.widget {
         layout = wibox.layout.flex.vertical,
         fill_space = true,
 
         top_time,
         bottom_time
     }
-
-    return final_widget
 end
 
 

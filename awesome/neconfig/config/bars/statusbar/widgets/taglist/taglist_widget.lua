@@ -1,8 +1,8 @@
 -- Load libraries
 local awful = require('awful')
-local wibox = require('wibox')
-local gears = require('gears')
 local beautiful = require('beautiful')
+local gears = require('gears')
+local wibox = require('wibox')
 -- Load custom modules
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
@@ -10,33 +10,13 @@ local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 local function get_taglist_widget(style)
     --#region Precompute values
     -- Direction of of the tags
-    local direction
+    local direction = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and 'horizontal' or 'vertical'
     -- Margin to size the selected tag bar
-    local bar_margin_pos
+    local bar_margin_pos = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[style.bar_pos]
     -- Margin to size the opened clients circles
     local dots_margin_pos = style.bar_pos
     -- Other margins to reduce opened clients distance
-    local dots_margin_others = {}
-    if (style.bar_pos == 'top')
-    then
-        direction = 'horizontal'
-        bar_margin_pos = 'bottom'
-        dots_margin_others = { 'right', 'left' }
-    elseif (style.bar_pos == 'bottom')
-    then
-        direction = 'horizontal'
-        bar_margin_pos = 'top'
-        dots_margin_others = { 'right', 'left' }
-    elseif (style.bar_pos == 'right')
-    then
-        direction = 'vertical'
-        bar_margin_pos = 'left'
-        dots_margin_others = { 'top', 'bottom' }
-    else
-        direction = 'vertical'
-        bar_margin_pos = 'right'
-        dots_margin_others = { 'top', 'bottom' }
-    end
+    local dots_margin_others = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'right', 'left' }
     --#endregion
 
 
@@ -51,7 +31,8 @@ local function get_taglist_widget(style)
     --#region Callback when the taglist is updated
     local function tag_updated(self, t, index, tags)
         -- Count clients
-        local clients_num = math.min(#t:clients(), style.max_client_count)
+        local clients_num = #t:clients()
+        local dots_num = math.min(clients_num, style.max_client_count)
 
         --#region Update the color of the 'selected_bar_role'
         local selected_bar_role = self:get_children_by_id('selected_bar_role')[1]
@@ -84,12 +65,12 @@ local function get_taglist_widget(style)
                 widget = wibox.container.background,
             }
             -- Clear the widget with the circles
-            for i = 0, 5, 1
+            for i = 0, style.max_client_count, 1
             do
                 client_num_role:remove(1)
             end
-            -- Add circles to it
-            for i = 1, clients_num, 1
+            -- Readd circles to it
+            for i = 1, dots_num, 1
             do
                 client_num_role:add(circle)
             end
@@ -105,7 +86,6 @@ local function get_taglist_widget(style)
             objects = { self },
             delay_show = 1
         }
-
         tag_updated(self, t, index, tags)
     end
     --#endregion

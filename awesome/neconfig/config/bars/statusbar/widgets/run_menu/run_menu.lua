@@ -6,7 +6,7 @@ local wibox = require('wibox')
 local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 
 -- Construct widget
-local run_menu_launcher = wibox.widget {
+return wibox.widget {
     text = '\u{f078}',
     align = 'center',
     valign = 'center',
@@ -21,5 +21,3 @@ local run_menu_launcher = wibox.widget {
 
     widget = wibox.widget.textbox
 }
-
-return run_menu_launcher
