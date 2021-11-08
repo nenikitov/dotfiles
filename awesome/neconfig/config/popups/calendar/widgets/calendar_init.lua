@@ -1,11 +1,10 @@
 -- Load modules
 local awful = require('awful')
-local wibox = require('wibox')
-local gears = require('gears')
 local beautiful = require('beautiful')
+local gears = require('gears')
+local wibox = require('wibox')
 
-
--- Get style variables
+-- Get style
 local font = beautiful.user_vars_theme.general.font
 local font_size = beautiful.user_vars_theme.general.text_size
 local popup_style = beautiful.user_vars_theme.popup
@@ -78,6 +77,8 @@ local function calendar_style(contents, flag, date)
         return final_widget
     end
 end
+
+
 -- Generate calendar widget
 local calendar = wibox.widget {
     date = os.date('*t'),
@@ -89,11 +90,12 @@ local calendar = wibox.widget {
     fn_embed = calendar_style,
     widget = wibox.widget.calendar.month
 }
+-- Put calendar in center
 local final_widget = wibox.widget {
     calendar,
-
     widget = wibox.container.place
 }
+
 -- Update calendar date
 local month_offset = 0
 local refresh_time = 86400
@@ -114,7 +116,6 @@ local function update_calendar()
     return true
 end
 final_widget.update_timer = gears.timer.weak_start_new(refresh_time, update_calendar)
-update_calendar()
 final_widget:connect_signal(
     'custom::changed_popup_visibility',
     function (caller, visible)
@@ -124,6 +125,8 @@ final_widget:connect_signal(
         end
     end
 )
+update_calendar()
+
 -- Generate calendar button binds
 local calendar_buttons = {
     -- Go to current month on MMB
@@ -152,5 +155,6 @@ local calendar_buttons = {
     ),
 }
 final_widget.buttons = calendar_buttons
+
 
 return final_widget

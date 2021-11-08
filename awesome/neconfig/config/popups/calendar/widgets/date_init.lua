@@ -1,8 +1,8 @@
 -- Load modules
-local wibox = require('wibox')
 local beautiful = require('beautiful')
+local wibox = require('wibox')
 
--- Get style variables
+-- Get style
 local font = beautiful.user_vars_theme.general.font
 local font_size = beautiful.user_vars_theme.general.text_size
 local theme_font_weight = beautiful.user_vars_theme.popup.popups.calendar.date_time_header.date_font_weight
