@@ -6,6 +6,7 @@ require('neconfig.config.utils.popup_utils')
 
 -- Create widgets
 local test_sub_widget = require('neconfig.config.popups.sys_tools.widgets.test_init')
+local tray_sub_widget = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')
 local separator = wibox.widget.separator {
     forced_width = 2,
     forced_height = 2
@@ -20,7 +21,8 @@ local function get_popup_sys_tools(args)
     add_custom_popup {
         name = 'sys_tools',
         widgets = {
-            test_sub_widget
+            test_sub_widget,
+            tray_sub_widget
         },
         tooltip = 'Open system tools',
         direction = 'vertical',

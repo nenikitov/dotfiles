@@ -171,18 +171,6 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
-        --! Test, remove this later (place systray in a better position)
-        local systray = wibox.widget.systray()
-        systray.forced_width = 100
-        systray.visible = true
-        add_bar_section {
-            name = 'systray',
-            widget = systray,
-            section = 3,
-            visible = true,
-            screen = s,
-            info_table = s.statusbar.sections
-        }
         --#endregion
 
 
