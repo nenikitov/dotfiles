@@ -115,9 +115,12 @@ function add_custom_popup(args)
         function ()
             local visible = popup.visible
 
-            if (visible == true)
+            if (visible)
             then
                 awful.keygrabber.run(hide_grabber)
+                require('naughty').notify {
+                    text = 'connected'
+                }
                 capi.button.connect_signal('press', hide)
             else
                 awful.keygrabber.stop(hide_grabber)

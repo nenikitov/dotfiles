@@ -22,7 +22,6 @@ local function get_popup_sys_tools(args)
     add_custom_popup {
         name = 'sys_tools',
         widgets = {
-            test_sub_widget,
             tray_sub_widget
         },
         tooltip = 'Open system tools',
