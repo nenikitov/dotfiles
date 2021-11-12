@@ -6,7 +6,8 @@ require('neconfig.config.utils.popup_utils')
 
 -- Create widgets
 local test_sub_widget = require('neconfig.config.popups.sys_tools.widgets.test_init')
-local tray_sub_widget = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')
+local tray_sub_widget = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')()
+tray_sub_widget.base_size = 24
 local separator = wibox.widget.separator {
     forced_width = 2,
     forced_height = 2
