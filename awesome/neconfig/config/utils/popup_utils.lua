@@ -136,7 +136,13 @@ function add_custom_popup(args)
         toggle_visibility_widget:connect_signal(
             'button::press',
             function ()
-                capi.button.emit_signal('press')
+                -- Hide other popups if this popup will be revealed
+                if (not popup.visible)
+                then
+                    capi.button.emit_signal('press', toggle_visibility_widget)
+                end
+
+                -- Toggle visibility
                 popup.visible = not popup.visible
             end
         )
