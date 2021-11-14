@@ -80,6 +80,9 @@ function add_custom_popup(args)
         popup.preferred_anchors = position_args.anchor
         popup.offset = generate_offset(position_args.position)
         popup:move_next_to(position_args.target)
+    elseif (position_type == 'place')
+    then
+
     end
     --#endregion
 
@@ -109,6 +112,7 @@ function add_custom_popup(args)
         then
             hide()
         end
+        -- TODO make keygrabber pass through unknown inputs
     end
     popup:connect_signal(
         'property::visible',
@@ -117,10 +121,10 @@ function add_custom_popup(args)
 
             if (visible)
             then
-                awful.keygrabber.run(hide_grabber)
+                --awful.keygrabber.run(hide_grabber)
                 capi.button.connect_signal('press', hide)
             else
-                awful.keygrabber.stop(hide_grabber)
+                --awful.keygrabber.stop(hide_grabber)
                 capi.button.disconnect_signal('press', hide)
             end
 
