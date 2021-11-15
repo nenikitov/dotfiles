@@ -53,9 +53,10 @@ awful.screen.connect_for_each_screen(
         --#region Background wibar
         add_background_bar {
             screen = s,
-            info_table_bar = s.statusbar.wibar,
-            info_table_sections = s.statusbar.sections
+            sections = s.statusbar.sections,
+            info_table = s.statusbar
         }
+
         --#endregion
 
         --#region 1st section

@@ -276,7 +276,6 @@ local function get_global_keys()
         awful.key(
             { super_key }, 'i',
             function ()
-                -- TODO fix this, broken after moving bar to statusbar utils
                 local focused_screen = awful.screen.focused()
                 local new_visibility = not focused_screen.statusbar.wibar.visible
                 focused_screen.statusbar.wibar.visible = new_visibility

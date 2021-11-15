@@ -123,8 +123,8 @@ end
 function add_background_bar(args)
     --#region Aliases for the arguments
     local screen = args.screen
-    local info_bar = args.info_table_bar
-    local info_sections = args.info_table_sections
+    local sections = args.sections
+    local info_table = args.info_table
     -- Precalculate bar info
     local bar_size = style.contents_size + style.margin.content * 2
     local bar_param_size = {
@@ -135,7 +135,7 @@ function add_background_bar(args)
     local bar_param_offset = (style.position == 'top' or style.position == 'bottom') and 'y' or 'x'
     --#endregion
 
-    info_bar = awful.wibar {
+    local wibar = awful.wibar {
         position = style.position,
         screen = screen,
         [bar_param_size.thickness] = bar_size,
@@ -144,18 +144,18 @@ function add_background_bar(args)
         shape = r_rect(style.corner_radius.bar),
     }
     -- Offset the bar
-    info_bar[bar_param_offset] = info_bar[bar_param_offset] + bar_offset_dir * style.margin.edge
+    wibar[bar_param_offset] = wibar[bar_param_offset] + bar_offset_dir * style.margin.edge
     -- Modify the area where clients can be placed
-    info_bar:struts {
+    wibar:struts {
         [style.position] = style.margin.edge + bar_size
     }
     -- Hide all the widgets inside the wibar if wibar is hidden
-    info_bar:connect_signal(
+    wibar:connect_signal(
         'property::visible',
         function ()
-            local new_visibility = info_bar.visible
+            local new_visibility = wibar.visible
             -- Cycle through each widget
-            for _, section in pairs(info_sections) do
+            for _, section in pairs(sections) do
                 for _, popup in pairs(section) do
                     if (popup.visible ~= nil)
                     then
@@ -165,6 +165,8 @@ function add_background_bar(args)
             end
         end
     )
+
+    info_table.wibar = wibar
 end
 
 
