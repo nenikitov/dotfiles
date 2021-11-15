@@ -169,16 +169,23 @@ function add_bar_section(args)
     local resize_func = (next_dir == 'top' or next_dir == 'bottom') and set_width_widget or set_height_widget
     -- Construct the widget
     local final_widget = {
-        pad_widget(
-            {
-                resize_func(widget, style.contents_size),
-                widget = wibox.container.background
-            },
-            padding_ver, padding_hor,
-            padding_ver, padding_hor
-        ),
+        {
+            pad_widget(
+                {
+                    resize_func(widget, style.contents_size),
+                    widget = wibox.container.background
+                },
+                padding_ver, padding_hor,
+                padding_ver, padding_hor
+            ),
 
-        layout = wibox.layout.fixed.horizontal,
+            layout = wibox.layout.fixed.horizontal,
+        },
+
+        widget = wibox.container.background,
+        shape = r_rect(style.corner_radius.sections),
+        shape_clip = true,
+        bg = style.colors.bg_sections
     }
     --#endregion
 
@@ -194,13 +201,21 @@ function add_bar_section(args)
             return awful.placement[corner](wi, { margins = margins })
         end
     end
+    -- Get the shape
+    local shape
+    if (style.real_clip)
+    then
+        shape = r_rect(style.corner_radius.sections)
+    else
+        shape = nil
+    end
     -- Construct popup
     local popup = awful.popup {
         screen = screen,
-        shape = r_rect(style.corner_radius.sections),
         preferred_positions = next_dir,
         preferred_anchors = 'middle',
-        bg = style.colors.bg_sections,
+        bg = '#00000000',
+        shape = shape,
         widget = final_widget,
         placement = placement_func,
         offset = get_spacing(next_dir),

@@ -79,6 +79,8 @@ local statusbar = {
         bar = radius(6),
         sections = radius(6)
     },
+    -- Force clip the shape. 'False' enables anti-aliasing, but introduces artifacts with shadows and blur of 'toolbox' widgets. 'True' will fix it, but disable anti-aliasing
+    real_clip = true,
     -- Widgets
     widgets = {
         taglist = {
