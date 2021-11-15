@@ -43,6 +43,7 @@ awful.screen.connect_for_each_screen(
 
         --#region Init object to store widgets into
         s.statusbar = {
+            wibar = {},
             sections = {},
             popups = {}
         }
@@ -50,36 +51,11 @@ awful.screen.connect_for_each_screen(
 
 
         --#region Background wibar
-        s.statusbar.wibar = awful.wibar {
-            position = bar_info_theme.position,
+        add_background_bar {
             screen = s,
-            [bar_param_size.thickness] = bar_size,
-            [bar_param_size.length] = s.geometry[bar_param_size.length] - bar_info_theme.margin.corners * 2,
-
-            shape = r_rect(bar_info_theme.corner_radius.bar),
+            info_table_bar = s.statusbar.wibar,
+            info_table_sections = s.statusbar.sections
         }
-        -- Offset the bar
-        s.statusbar.wibar[bar_param_offset] = s.statusbar.wibar[bar_param_offset] + bar_offset_dir * bar_info_theme.margin.edge
-        -- Modify the area where clients can be placed
-        s.statusbar.wibar:struts {
-            [bar_info_theme.position] = bar_info_theme.margin.edge + bar_size
-        }
-        -- Hide all the widgets inside the wibar if wibar is hidden
-        s.statusbar.wibar:connect_signal(
-            'property::visible',
-            function ()
-                local new_visibility = s.statusbar.wibar.visible
-                -- Cycle through each widget
-                for _, section in pairs(s.statusbar.sections) do
-                    for _, popup in pairs(section) do
-                        if (popup.visible ~= nil)
-                        then
-                            popup.visible = new_visibility
-                        end
-                    end
-                end
-            end
-        )
         --#endregion
 
         --#region 1st section

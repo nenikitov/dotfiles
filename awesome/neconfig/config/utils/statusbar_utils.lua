@@ -120,6 +120,54 @@ end
 --#endregion
 
 
+function add_background_bar(args)
+    --#region Aliases for the arguments
+    local screen = args.screen
+    local info_bar = args.info_table_bar
+    local info_sections = args.info_table_sections
+    -- Precalculate bar info
+    local bar_size = style.contents_size + style.margin.content * 2
+    local bar_param_size = {
+        length =    (style.position == 'top' or style.position == 'bottom') and 'width'  or 'height',
+        thickness = (style.position == 'top' or style.position == 'bottom') and 'height' or 'width',
+    }
+    local bar_offset_dir = (style.position == 'top' or style.position == 'left') and 1 or -1
+    local bar_param_offset = (style.position == 'top' or style.position == 'bottom') and 'y' or 'x'
+    --#endregion
+
+    info_bar = awful.wibar {
+        position = style.position,
+        screen = screen,
+        [bar_param_size.thickness] = bar_size,
+        [bar_param_size.length] = screen.geometry[bar_param_size.length] - style.margin.corners * 2,
+
+        shape = r_rect(style.corner_radius.bar),
+    }
+    -- Offset the bar
+    info_bar[bar_param_offset] = info_bar[bar_param_offset] + bar_offset_dir * style.margin.edge
+    -- Modify the area where clients can be placed
+    info_bar:struts {
+        [style.position] = style.margin.edge + bar_size
+    }
+    -- Hide all the widgets inside the wibar if wibar is hidden
+    info_bar:connect_signal(
+        'property::visible',
+        function ()
+            local new_visibility = info_bar.visible
+            -- Cycle through each widget
+            for _, section in pairs(info_sections) do
+                for _, popup in pairs(section) do
+                    if (popup.visible ~= nil)
+                    then
+                        popup.visible = new_visibility
+                    end
+                end
+            end
+        end
+    )
+end
+
+
 --- Add, initialize and draw a section
 ---@param args table Name, widget(contents), position(side, section), style, screen and info_table
 function add_bar_section(args)
@@ -203,7 +251,7 @@ function add_bar_section(args)
     end
     -- Get the shape
     local shape
-    if (style.real_clip)
+    if (style.real_clip.sections)
     then
         shape = r_rect(style.corner_radius.sections)
     else
