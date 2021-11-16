@@ -1,9 +1,12 @@
 -- Load libraries
 local wibox = require('wibox')
 
+-- Get variables
+local icons = require('neconfig.config.utils.icons')
+
 -- Construct widget
 return wibox.widget {
-    text = '\u{f27a}',
+    text = icons.message,
     align = 'center',
     valign = 'center',
 
