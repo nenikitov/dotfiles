@@ -1,8 +1,10 @@
+-- Load libraries
 local vicious = require('vicious')
-local wibox = require('wibox')
+-- Load custom modules
+require('neconfig.config.utils.widget_utils')
+local icons = require('neconfig.config.utils.icons')
 
-local ram_display = wibox.widget.textbox()
-vicious.cache(vicious.widgets.mem)
-vicious.register(ram_display, vicious.widgets.mem, '$2MiB/$3MiB', 1)
-
-return ram_display
+return create_monitor_widget(
+    vicious.widgets.mem, 1,
+    '$2MiB / $3MiB', icons.ram_module
+)
