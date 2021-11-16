@@ -1,5 +1,6 @@
 -- Load libraries
 local gears = require('gears')
+local vicious = require('vicious')
 local wibox = require('wibox')
 
 
@@ -57,4 +58,23 @@ function pad_widget(contents, top, right, bottom, left)
         bottom = bottom,
         left = left
     }
+end
+
+
+
+function create_monitor_widget(type, timeout, format, icon, args)
+    local widget = wibox.widget.textbox
+    vicious.cache(type)
+
+    local text
+    if (not icon or icon == '')
+    then
+        text = format
+    else
+        text = icon .. ' ' .. format
+    end
+
+    vicious.register(widget, type, text, timeout, args)
+
+    return widget
 end
