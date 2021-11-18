@@ -133,15 +133,29 @@ function add_background_bar(args)
     }
     local bar_offset_dir = (style.position == 'top' or style.position == 'left') and 1 or -1
     local bar_param_offset = (style.position == 'top' or style.position == 'bottom') and 'y' or 'x'
+    -- Get the shape
+    local shape
+    if (style.real_clip.bar)
+    then
+        shape = r_rect(style.corner_radius.bar)
+    else
+        shape = nil
+    end
     --#endregion
 
     local wibar = awful.wibar {
+        widget = {
+            bg = style.colors.bg_bar,
+            shape = r_rect(style.corner_radius.bar),
+
+            widget = wibox.widget.background
+        },
         position = style.position,
         screen = screen,
+        shape = shape,
         [bar_param_size.thickness] = bar_size,
         [bar_param_size.length] = screen.geometry[bar_param_size.length] - style.margin.corners * 2,
-
-        shape = r_rect(style.corner_radius.bar),
+        bg = '#00000000'
     }
     -- Offset the bar
     wibar[bar_param_offset] = wibar[bar_param_offset] + bar_offset_dir * style.margin.edge
