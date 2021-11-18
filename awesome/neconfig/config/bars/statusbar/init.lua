@@ -157,7 +157,7 @@ awful.screen.connect_for_each_screen(
             position = {
                 target = s.statusbar.sections.all_popups.clock,
                 position = bar_param_opposite_side,
-                anchor = 'back',
+                anchor = 'middle',
             },
             toggle_visibility_widget = s.statusbar.sections.all_popups.clock,
             screen = s,
@@ -170,7 +170,7 @@ awful.screen.connect_for_each_screen(
             position = {
                 target = s.statusbar.sections.all_popups.sys_tools_button,
                 position = bar_param_opposite_side,
-                anchor = 'back',
+                anchor = 'middle',
             },
             toggle_visibility_widget = s.statusbar.sections.all_popups.sys_tools_button,
             screen = s,

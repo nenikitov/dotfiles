@@ -6,6 +6,7 @@ require('neconfig.config.utils.popup_utils')
 
 -- Create widgets
 local test_sub = require('neconfig.config.popups.sys_tools.widgets.test_init')
+local battery_display_sub = require('neconfig.config.popups.sys_tools.widgets.battery_display_init')
 local ram_display_sub = require('neconfig.config.popups.sys_tools.widgets.ram_display_init')
 local tray_sub = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')()
 tray_sub.base_size = 24
@@ -25,6 +26,7 @@ local function get_popup_sys_tools(args)
         widgets = {
             test_sub,
             tray_sub,
+            battery_display_sub,
             ram_display_sub
         },
         tooltip = 'Open system tools',
