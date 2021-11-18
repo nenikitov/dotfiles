@@ -1,4 +1,5 @@
 -- Load libraries
+local beautiful = require('beautiful')
 local gears = require('gears')
 local vicious = require('vicious')
 local wibox = require('wibox')
@@ -63,18 +64,28 @@ end
 
 
 function create_monitor_widget(type, timeout, format, icon, args)
-    local widget = wibox.widget.textbox()
+    local info_widget = wibox.widget.textbox()
+
     vicious.cache(type)
+    vicious.register(info_widget, type, format, timeout, args)
 
-    local text
-    if (not icon or icon == '')
+    if (icon ~= nil)
     then
-        text = format
+        local font_height = beautiful.get_font_height(beautiful.font)
+        local icon_widget = wibox.widget {
+            markup = icon,
+            forced_width = font_height * 1.1,
+
+            widget = wibox.widget.textbox
+        }
+
+        return wibox.widget {
+            icon_widget,
+            info_widget,
+
+            layout = wibox.layout.fixed.horizontal
+        }
     else
-        text = icon .. ' ' .. format
+        return info_widget
     end
-
-    vicious.register(widget, type, text, timeout, args)
-
-    return widget
 end
