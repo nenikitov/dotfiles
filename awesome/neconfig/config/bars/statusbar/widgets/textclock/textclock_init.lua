@@ -12,7 +12,7 @@ local function get_textclock(bar_info)
     local font_size = beautiful.user_vars_theme.general.text_size
 
 
-    -- Construct 2 separate widgets for date and time
+    -- Construct 2 separate clock widgets
     local primary_time = wibox.widget {
         widget = wibox.widget.textclock,
 
@@ -31,13 +31,15 @@ local function get_textclock(bar_info)
     -- Construct the final widget
     if (style.direction == 'vertical')
     then
-        return wibox.widget {
-            layout = wibox.layout.flex.vertical,
+        local widget = wibox.widget {
+            layout = wibox.layout.ratio.vertical,
             fill_space = true,
 
             primary_time,
-            secondary_time
+            secondary_time,
         }
+        widget:set_ratio(2, 0.5 * style.secondary_size)
+        return widget
     else
         return wibox.widget {
             layout = wibox.layout.align.horizontal,
