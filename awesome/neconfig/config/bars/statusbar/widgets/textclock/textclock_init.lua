@@ -13,29 +13,40 @@ local function get_textclock(bar_info)
 
 
     -- Construct 2 separate widgets for date and time
-    local top_time = wibox.widget {
+    local primary_time = wibox.widget {
         widget = wibox.widget.textclock,
 
-        format = '<span font_weight="' .. style.top_weight .. '">' .. user_vars_conf.statusbar.widgets.clock.top_format .. '</span>',
-        font = font .. ' ' .. (font_size * style.top_size),
+        format = '<span font_weight="' .. style.primary_weight .. '">' .. user_vars_conf.statusbar.widgets.clock.primary_format .. '</span>',
+        font = font .. ' ' .. (font_size * style.primary_size),
         align = 'center'
     }
-    local bottom_time = wibox.widget {
+    local secondary_time = wibox.widget {
         widget = wibox.widget.textclock,
 
-        format = '<span font_weight="' .. style.bottom_weight .. '">' .. user_vars_conf.statusbar.widgets.clock.bottom_format .. '</span>',
-        font = font .. ' ' .. (font_size * style.bottom_size),
+        format = '<span font_weight="' .. style.secondary_weight .. '">' .. user_vars_conf.statusbar.widgets.clock.secondary_format .. '</span>',
+        font = font .. ' ' .. (font_size * style.secondary_size),
         align = 'center'
     }
 
     -- Construct the final widget
-    return wibox.widget {
-        layout = wibox.layout.flex.vertical,
-        fill_space = true,
+    if (style.direction == 'vertical')
+    then
+        return wibox.widget {
+            layout = wibox.layout.flex.vertical,
+            fill_space = true,
 
-        top_time,
-        bottom_time
-    }
+            primary_time,
+            secondary_time
+        }
+    else
+        return wibox.widget {
+            layout = wibox.layout.align.horizontal,
+            fill_space = true,
+
+            primary_time,
+            secondary_time
+        }
+    end
 end
 
 

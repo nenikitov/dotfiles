@@ -10,6 +10,7 @@ local system_display_sub = require('neconfig.config.popups.sys_tools.widgets.sys
 local net_display_sub = require('neconfig.config.popups.sys_tools.widgets.net_display_init')
 local tray_sub = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')()
 tray_sub.base_size = 24
+tray_sub.forced_width = 240
 local separator = wibox.widget.separator {
     forced_width = 2,
     forced_height = 2

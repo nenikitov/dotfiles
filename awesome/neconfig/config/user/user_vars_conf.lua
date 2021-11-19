@@ -141,10 +141,10 @@ local statusbar = {
         clock = {
             -- Should it be shown
             visible = true,
-            -- Format of the time written on the top
-            top_format = '%H:%M',
-            -- Format of the time written on the bottom
-            bottom_format = '%a %Y-%m-%d',
+            -- Format of the time written on the top or left
+            primary_format = '%H:%M',
+            -- Format of the time written on the bottom or right
+            secondary_format = '%a %Y-%m-%d',
         },
         -- Notifications pane
         notifications_pane = {

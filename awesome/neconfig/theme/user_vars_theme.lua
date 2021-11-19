@@ -105,10 +105,11 @@ local statusbar = {
             max_size = 1920 - 2 * space(160) - size(800),
         },
         clock = {
-            top_size = 1.0,
-            top_weight = '500',
-            bottom_size = 0.75,
-            bottom_weight = 'normal'
+            direction = 'vertical',
+            primary_size = 1.0,
+            primary_weight = '500',
+            secondary_size = 0.75,
+            secondary_weight = 'normal'
         }
     }
 }
