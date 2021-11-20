@@ -5,6 +5,12 @@ require('neconfig.config.utils.popup_utils')
 
 
 -- Create widgets
+-- TODO
+    -- Network - download, upload
+    -- Power - status, remaining
+    -- Usage - CPU, ?
+    -- Memory - RAM, Swap
+    -- Uptime
 local battery_display_sub = require('neconfig.config.popups.sys_tools.widgets.battery_display_init')
 local system_display_sub = require('neconfig.config.popups.sys_tools.widgets.system_display_init')
 local net_display_sub = require('neconfig.config.popups.sys_tools.widgets.net_display_init')
