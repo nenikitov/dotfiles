@@ -14,7 +14,8 @@ require('neconfig.config.utils.popup_utils')
 -- local battery_display_sub = require('neconfig.config.popups.sys_tools.widgets.battery_display_init')
 -- local system_display_sub = require('neconfig.config.popups.sys_tools.widgets.system_display_init')
 -- local net_display_sub = require('neconfig.config.popups.sys_tools.widgets.net_display_init')
-local net = require('neconfig.config.popups.sys_tools.widgets.net_init')
+local net_sub = require('neconfig.config.popups.sys_tools.widgets.net_display_init')
+local bat_sub = require('neconfig.config.popups.sys_tools.widgets.battery_display_init')
 local tray_sub = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')()
 tray_sub.base_size = 24
 tray_sub.forced_width = 240
@@ -32,7 +33,8 @@ local function get_popup_sys_tools(args)
     add_custom_popup {
         name = 'sys_tools',
         widgets = {
-            net,
+            net_sub,
+            bat_sub,
             tray_sub,
         },
         tooltip = 'Open system tools',

@@ -7,9 +7,9 @@ require('neconfig.config.utils.widget_utils')
 
 
 local download_icon = create_text_icon(icons.download)
-local download_widget = wibox.widget.textbox()
+local download_info = wibox.widget.textbox()
 local upload_icon = create_text_icon(icons.upload)
-local upload_widget = wibox.widget.textbox()
+local upload_info = wibox.widget.textbox()
 
 
 lain.widget.net {
@@ -24,21 +24,21 @@ lain.widget.net {
         local download = net_now.received
         local upload = net_now.sent
 
-        download_widget.text = download .. ' MB/s'
-        upload_widget.text = upload .. ' MB/s'
+        download_info.text = download .. ' MB/s'
+        upload_info.text = upload .. ' MB/s'
     end
 }
 
 return wibox.widget {
     {
         download_icon,
-        download_widget,
+        download_info,
 
         layout = wibox.layout.fixed.horizontal
     },
     {
         upload_icon,
-        upload_widget,
+        upload_info,
 
         layout = wibox.layout.fixed.horizontal
     },
