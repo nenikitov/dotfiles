@@ -10,6 +10,9 @@ local icons = {
     -- Widget icons
     toolbox       = '\u{f552}',
     message       = '\u{f27a}',
+    -- Connectivity
+    ethernet      = '\u{f6ff}',
+    wifi          = '\u{f1eb}',
     -- Volume
     volume_3      = '\u{f028}',
     volume_2      = '\u{f027}',

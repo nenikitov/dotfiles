@@ -5,12 +5,12 @@ local wibox = require('wibox')
 require('neconfig.config.utils.widget_utils')
 local icons = require('neconfig.config.utils.icons')
 
-local uptime = create_monitor_widget(
+local uptime = create_vicious_widget(
     vicious.widgets.uptime, 60,
     '$2:$3', icons.clock
 )
 
-local updates = create_monitor_widget(
+local updates = create_vicious_widget(
     vicious.widgets.pkg, 120,
     '$1', icons.update, 'Arch'
 )

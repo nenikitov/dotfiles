@@ -63,7 +63,7 @@ end
 
 
 
-function create_monitor_widget(type, timeout, format, icon, args)
+function create_vicious_widget(type, timeout, format, icon, args)
     local info_widget = wibox.widget.textbox()
 
     vicious.cache(type)

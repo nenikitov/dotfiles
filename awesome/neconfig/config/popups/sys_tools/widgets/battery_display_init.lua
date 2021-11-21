@@ -5,12 +5,12 @@ local wibox = require('wibox')
 require('neconfig.config.utils.widget_utils')
 local icons = require('neconfig.config.utils.icons')
 
-local battery = create_monitor_widget(
+local battery = create_vicious_widget(
     vicious.widgets.bat, 10,
     '$1$2', icons.battery0, 'BAT0'
 )
 
-local remaining = create_monitor_widget(
+local remaining = create_vicious_widget(
     vicious.widgets.bat, 10,
     '$3', icons.hourglass
 )

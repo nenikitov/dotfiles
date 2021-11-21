@@ -5,12 +5,12 @@ local wibox = require('wibox')
 require('neconfig.config.utils.widget_utils')
 local icons = require('neconfig.config.utils.icons')
 
-local download = create_monitor_widget(
+local download = create_vicious_widget(
     vicious.widgets.net, 1,
     '${enp0s31f6 down_mb}', icons.download
 )
 
-local upload = create_monitor_widget(
+local upload = create_vicious_widget(
     vicious.widgets.net, 1,
     '${enp0s31f6 up_mb}', icons.upload
 )
