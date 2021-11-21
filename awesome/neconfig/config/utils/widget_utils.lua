@@ -62,6 +62,17 @@ function pad_widget(contents, top, right, bottom, left)
 end
 
 
+function create_text_icon(icon)
+    local font_height = beautiful.get_font_height(beautiful.font)
+
+    return wibox.widget {
+        markup = icon,
+        forced_width = font_height,
+
+        widget = wibox.widget.textbox
+    }
+end
+
 
 function create_vicious_widget(type, timeout, format, icon, args)
     local info_widget = wibox.widget.textbox()
