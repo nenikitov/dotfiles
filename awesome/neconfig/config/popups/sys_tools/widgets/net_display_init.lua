@@ -24,8 +24,8 @@ lain.widget.net {
         local download = net_now.received
         local upload = net_now.sent
 
-        download_info.text = download .. ' MB/s'
-        upload_info.text = upload .. ' MB/s'
+        download_info.text = download .. ' Mb/s'
+        upload_info.text = upload .. ' Mb/s'
     end
 }
 

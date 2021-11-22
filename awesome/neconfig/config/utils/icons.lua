@@ -36,6 +36,7 @@ local icons = {
     upload        = '\u{f093}',
     -- Memory
     ram_module    = '\u{f538}',
+    swap          = '\u{f233}',
     hard_drive    = '\u{f0a0}',
     -- CPU
     cpu           = '\u{f2db}',

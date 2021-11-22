@@ -67,7 +67,8 @@ function create_text_icon(icon)
 
     return wibox.widget {
         markup = icon,
-        forced_width = font_height,
+        forced_width = font_height * 1.5,
+        align = 'center',
 
         widget = wibox.widget.textbox
     }
