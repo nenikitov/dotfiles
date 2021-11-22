@@ -11,6 +11,7 @@ local uptime_info = wibox.widget.textbox()
 local drive_icon = create_text_icon(icons.hard_drive)
 local drive_info = wibox.widget.textbox()
 
+
 lain.widget.contrib.uptime {
     timeout = 20,
 

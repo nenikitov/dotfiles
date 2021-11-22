@@ -17,7 +17,8 @@ require('neconfig.config.utils.popup_utils')
 local net_sub = require('neconfig.config.popups.sys_tools.widgets.net_display_init')
 local bat_sub = require('neconfig.config.popups.sys_tools.widgets.bat_display_init')
 local mem_sub = require('neconfig.config.popups.sys_tools.widgets.mem_display_init')
-local uptime_sub = require('neconfig.config.popups.sys_tools.widgets.uptime_display_init')
+local sys_sub = require('neconfig.config.popups.sys_tools.widgets.sys_display_init')
+local cpu_sub = require('neconfig.config.popups.sys_tools.widgets.cpu_display_init')
 local tray_sub = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')()
 tray_sub.base_size = 24
 tray_sub.forced_width = 240
@@ -38,7 +39,8 @@ local function get_popup_sys_tools(args)
             net_sub,
             bat_sub,
             mem_sub,
-            uptime_sub,
+            sys_sub,
+            cpu_sub,
             tray_sub,
         },
         tooltip = 'Open system tools',
