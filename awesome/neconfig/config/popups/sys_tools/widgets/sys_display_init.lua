@@ -3,6 +3,7 @@ local lain = require('lain')
 local wibox = require('wibox')
 -- Custom modules
 local icons = require('neconfig.config.utils.icons')
+local uptime_widget = require('neconfig.lib.lain_uptime')
 require('neconfig.config.utils.widget_utils')
 
 
@@ -12,7 +13,7 @@ local drive_icon = create_text_icon(icons.hard_drive)
 local drive_info = wibox.widget.textbox()
 
 
-lain.widget.contrib.uptime {
+uptime_widget {
     timeout = 20,
 
     settings = function ()
