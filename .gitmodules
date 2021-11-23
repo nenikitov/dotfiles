@@ -1,6 +1,0 @@
-[submodule "awesome/vicious"]
-	path = awesome/vicious
-	url = https://github.com/vicious-widgets/vicious
-[submodule "awesome/lain"]
-	path = awesome/lain
-	url = https://github.com/lcpz/lain.git
