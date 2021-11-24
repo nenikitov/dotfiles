@@ -24,7 +24,7 @@ lain.widget.cpu {
 lain.widget.temp {
     timeout = 1,
     -- TODO Find the correct file
-    tempfile = "/sys/devices/virtual/thermal/thermal_zone2/temp",
+    tempfile = '/sys/devices/virtual/thermal/thermal_zone2/temp',
 
     settings = function ()
         local temp = coretemp_now
