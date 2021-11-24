@@ -93,12 +93,12 @@ function add_custom_popup(args)
     -- Hide by default
     hide()
     -- Hide on mouse leave
-    popup:connect_signal(
-        'mouse::leave',
-        function ()
-            hide()
-        end
-    )
+    -- popup:connect_signal(
+    --     'mouse::leave',
+    --     function ()
+    --         hide()
+    --     end
+    -- )
     -- Make popup stay if the mouse is inside
     popup:connect_signal(
         'mouse::enter',
