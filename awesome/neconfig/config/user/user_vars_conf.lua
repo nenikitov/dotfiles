@@ -31,6 +31,7 @@ local apps = {
         'picom --xrender-sync-fence --experimental-backends',
         'sleep 1 && gammy',
         'numlockx on',
+        'nvidia-settings --load-config-only'
     }
 }
 

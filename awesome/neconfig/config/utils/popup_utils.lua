@@ -93,12 +93,13 @@ function add_custom_popup(args)
     -- Hide by default
     hide()
     -- Hide on mouse leave
-    -- popup:connect_signal(
-    --     'mouse::leave',
-    --     function ()
-    --         hide()
-    --     end
-    -- )
+    -- TODO make it not hide if mouse is outside after clicking a tray icon
+    popup:connect_signal(
+        'mouse::leave',
+        function ()
+            hide()
+        end
+    )
     -- Make popup stay if the mouse is inside
     popup:connect_signal(
         'mouse::enter',
