@@ -29,6 +29,8 @@
 ## Other
 * [ ] Refactor
 * [ ] Comments
+* [ ] Readme
+* [ ] Screenshots
 
 ## Graphics
 * [ ] Layout icons
