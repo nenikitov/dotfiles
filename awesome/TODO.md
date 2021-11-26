@@ -20,16 +20,20 @@
 * [ ] Rounded corners
 * [?] Custom rules
 
-## Shortcut
+## Hotkeys
 * [ ] Fix inconsistencies shortcuts
-* [ ] Shortcut to hide titlebars
-* [ ] Shortcut to resize floating clients
+* [ ] Hotkeys to hide titlebars
+* [ ] Hotkeys to resize floating clients
 * [ ] Fix some clients not resizing in tiling mode
+
+## User settings
+* [ ] Separate user settings into files
 
 ## Other
 * [ ] Refactor
 * [ ] Comments
 * [ ] Readme
+* [ ] Examples
 * [ ] Screenshots
 
 ## Graphics
