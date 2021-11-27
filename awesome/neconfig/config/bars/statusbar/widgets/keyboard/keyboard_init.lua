@@ -7,5 +7,5 @@ local wibox = require('wibox')
 return wibox.widget {
     widget = wibox.container.place,
 
-    awful.widget.keyboardlayout
+    awful.widget.keyboardlayout()
 }
