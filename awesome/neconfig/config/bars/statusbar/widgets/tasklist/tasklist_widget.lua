@@ -94,30 +94,25 @@ local function get_tasklist_widget(style)
             },
             -- Main tasklist widget
             {
-                widget = wibox.container.margin,
-                margins = style.decoration_size,
+                widget = wibox.container.place,
+                halign = contents_align,
 
                 {
-                    widget = wibox.container.place,
-                    halign = contents_align,
+                    layout = wibox.layout.fixed.horizontal,
+                    spacing = font_height / 8,
 
                     {
-                        layout = wibox.layout.fixed.horizontal,
-                        spacing = font_height / 8,
+                        widget = wibox.container.place,
 
                         {
-                            widget = wibox.container.place,
-
-                            {
-                                widget = awful.widget.clienticon,
-                                forced_height = font_height,
-                                forced_width = font_height,
-                            }
-                        },
-                        {
-                            id = 'text_role',
-                            widget = wibox.widget.textbox,
+                            widget = awful.widget.clienticon,
+                            forced_height = font_height,
+                            forced_width = font_height,
                         }
+                    },
+                    {
+                        id = 'text_role',
+                        widget = wibox.widget.textbox,
                     }
                 }
             }

@@ -16,7 +16,7 @@ local function get_taglist_widget(style)
     -- Margin to size the opened clients circles
     local dots_margin_pos = style.bar_pos
     -- Other margins to reduce opened clients distance
-    local dots_margin_others = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'right', 'left' }
+    local dots_margin_others = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'top', 'bottom' }
     --#endregion
 
 
