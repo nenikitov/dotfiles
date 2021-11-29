@@ -27,7 +27,7 @@ local apps = {
     },
     -- Commands that will be executed on start up
     startup_apps = {
-        'nitrogen --restore',
+        'nitrogen --set-zoom-fill --random /home/nenikitov/SharedFiles/Documents/Pictures/Wallpapers/ --save',
         'picom --xrender-sync-fence --experimental-backends',
         'sleep 1 && gammy',
         'numlockx on',
@@ -153,7 +153,8 @@ local statusbar = {
         },
         -- System tools
         sys_tools = {
-            visible = true
+            visible = true,
+            cpu_thermal_zone='thermal_zone1'
         }
     },
 }

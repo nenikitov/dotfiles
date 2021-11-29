@@ -3,7 +3,11 @@ local lain = require('lain')
 local wibox = require('wibox')
 -- Custom modules
 local icons = require('neconfig.config.utils.icons')
+local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 require('neconfig.config.utils.widget_utils')
+
+-- Get variables
+local cpu_thermal_zone = user_vars_conf.statusbar.widgets.sys_tools.cpu_thermal_zone
 
 
 local cpu_icon = create_text_icon(icons.cpu)
@@ -24,7 +28,7 @@ lain.widget.cpu {
 lain.widget.temp {
     timeout = 1,
     -- TODO Find the correct file
-    tempfile = '/sys/devices/virtual/thermal/thermal_zone2/temp',
+    tempfile = '/sys/devices/virtual/thermal/' .. cpu_thermal_zone .. '/temp',
 
     settings = function ()
         local temp = coretemp_now
