@@ -27,7 +27,7 @@ local apps = {
     },
     -- Commands that will be executed on start up
     startup_apps = {
-        'nitrogen --set-zoom-fill --random /home/nenikitov/SharedFiles/Documents/Pictures/Wallpapers/ --save',
+        'nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers/ --save',
         'picom --xrender-sync-fence --experimental-backends',
         'sleep 1 && gammy',
         'numlockx on',
@@ -133,11 +133,6 @@ local statusbar = {
             -- Should the property (maximized, on top, etc) be shown
             show_task_props = true
         },
-        -- Current keyboard layout
-        keyboard_layout = {
-            -- Should it be shown
-            visible = false,
-        },
         -- Analog clock
         clock = {
             -- Should it be shown
@@ -146,6 +141,11 @@ local statusbar = {
             primary_format = '%H:%M',
             -- Format of the time written on the bottom or right
             secondary_format = '%a %Y-%m-%d',
+        },
+        -- Current keyboard layout
+        keyboard_layout = {
+            -- Should it be shown
+            visible = false,
         },
         -- Notifications pane
         notifications_pane = {
