@@ -25,13 +25,13 @@ lain.widget.bat {
 
             battery_info.text = percent .. ' %'
 
-            if (value < 100) then
+            if (value > 80) then
                 battery_icon.text = icons.battery4
-            elseif (value < 80) then
+            elseif (value > 60) then
                 battery_icon.text = icons.battery3
-            elseif (value < 60) then
+            elseif (value > 40) then
                 battery_icon.text = icons.battery2
-            elseif (value < 40) then
+            elseif (value > 20) then
                 battery_icon.text = icons.battery1
             else
                 battery_icon.text = icons.battery0
