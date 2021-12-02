@@ -9,7 +9,6 @@ local user_vars_conf = require('neconfig.config.user.user_vars_conf')
 local terminal = user_vars_conf.apps.default_apps.terminal
 
 
--- Customize this
 -- █▀█ █ █ █ █▀▀ █▄▀   █▀▄▀█ █▀▀ █▄ █ █ █
 -- ▀▀█ █▄█ █ █▄▄ █ █   █ ▀ █ ██▄ █ ▀█ █▄█
 -- 'Awesome' submenu

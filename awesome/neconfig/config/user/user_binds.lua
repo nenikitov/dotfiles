@@ -14,5 +14,4 @@ local binds = {
     }
 }
 
-
 return binds

@@ -26,5 +26,4 @@ local apps = {
     }
 }
 
-
 return apps
