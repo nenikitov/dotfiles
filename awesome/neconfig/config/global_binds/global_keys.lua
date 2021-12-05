@@ -5,14 +5,14 @@ local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
 -- Load custom modules
 local user_menu = require('neconfig.config.user.user_menu')
-local user_binds = require('neconfig.config.user.user_binds')
+local user_conf_binds = require('neconfig.config.user.user_conf_binds')
 local user_conf_apps = require('neconfig.config.user.user_conf_apps')
 
 -- Get variables
-local super_key = user_binds.keys.super_key
-local ctrl_key = user_binds.keys.ctrl_key
-local shift_key = user_binds.keys.shift_key
-local alt_key = user_binds.keys.alt_key
+local super_key = user_conf_binds.keys.super_key
+local ctrl_key = user_conf_binds.keys.ctrl_key
+local shift_key = user_conf_binds.keys.shift_key
+local alt_key = user_conf_binds.keys.alt_key
 local terminal = user_conf_apps.default_apps.terminal
 
 

@@ -4,7 +4,7 @@ local beautiful = require('beautiful')
 local gears = require('gears')
 local menubar_utils = require('menubar.utils')
 -- Load custom modules
-local user_vars_conf = require('neconfig.config.user.user_vars_conf')
+local user_conf_binds = require('neconfig.config.user.user_conf_binds')
 local user_vars_theme = beautiful.user_vars_theme
 require('neconfig.config.bars.titlebar.titlebar')
 
@@ -33,7 +33,7 @@ client.connect_signal(
 )
 
 -- Enable sloppy focus, so that focus follows mouse.
-if (user_vars_conf.binds.interactions.enable_sloppy_focus)
+if (user_conf_binds.interactions.enable_sloppy_focus)
 then
     client.connect_signal(
         'mouse::enter',
