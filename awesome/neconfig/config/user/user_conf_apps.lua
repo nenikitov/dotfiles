@@ -22,7 +22,16 @@ local apps = {
         'picom --xrender-sync-fence --experimental-backends',
         'sleep 1 && gammy',
         'numlockx on',
-        'nvidia-settings --load-config-only'
+        'nvidia-settings --load-config-only',
+        'flameshot'
+    },
+    -- Utilities that are used in shortcuts
+    utils = {
+        -- Backlight brightness commands
+        get_brightness = 'light -G',
+        set_brightness = 'light -S %f',
+        -- Screenshot tool
+        screenshot = 'flameshot gui'
     }
 }
 
