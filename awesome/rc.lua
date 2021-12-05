@@ -13,12 +13,12 @@ local hotkeys_popup = require('awful.hotkeys_popup')
 -- Init error handling
 require('neconfig.config.main.error_handling')
 
-
-local user_vars_conf = require('neconfig.config.user.user_vars_conf')
+local user_desktop = require('neconfig.config.user.user_desktop')
+local user_apps = require('neconfig.config.user.user_apps')
 
 
 -- Load the theme
-beautiful.init(user_vars_conf.desktop.theme_path)
+beautiful.init(user_desktop.theme_path)
 
 require('neconfig.config.main.wallpaper')
 
@@ -37,11 +37,11 @@ root.buttons(global_buttons)
 
 
 -- Init layouts
-awful.layout.layouts = user_vars_conf.desktop.layouts
+awful.layout.layouts = user_desktop.layouts
 
 
 -- Set the terminal for applications that require it
-menubar.utils.terminal = user_vars_conf.apps.default_apps.terminal
+menubar.utils.terminal = user_apps.default_apps.terminal
 
 -- Init wibar
 require('neconfig.config.bars.statusbar.init')

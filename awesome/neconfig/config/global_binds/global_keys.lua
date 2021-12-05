@@ -5,14 +5,15 @@ local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
 -- Load custom modules
 local user_menu = require('neconfig.config.user.user_menu')
-local user_vars_conf = require('neconfig.config.user.user_vars_conf')
+local user_binds = require('neconfig.config.user.user_binds')
+local user_apps = require('neconfig.config.user.user_apps')
 
 -- Get variables
-local super_key = user_vars_conf.binds.keys.super_key
-local ctrl_key = user_vars_conf.binds.keys.ctrl_key
-local shift_key = user_vars_conf.binds.keys.shift_key
-local alt_key = user_vars_conf.binds.keys.alt_key
-local terminal = user_vars_conf.apps.default_apps.terminal
+local super_key = user_binds.keys.super_key
+local ctrl_key = user_binds.keys.ctrl_key
+local shift_key = user_binds.keys.shift_key
+local alt_key = user_binds.keys.alt_key
+local terminal = user_apps.default_apps.terminal
 
 
 -- Customize this
@@ -173,7 +174,7 @@ local function get_global_keys()
         awful.key(
             { super_key }, 'r',
             function ()
-                awful.util.spawn(user_vars_conf.apps.default_apps.run_menu)
+                awful.util.spawn(user_apps.default_apps.run_menu)
             end,
             { description = 'open run launcher', group = 'launcher' }
         ),

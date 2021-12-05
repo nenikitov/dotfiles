@@ -63,7 +63,7 @@ local statusbar = {
             -- Name of the thermal 
             cpu_thermal_zone='thermal_zone1'
         }
-    },
+    }
 }
 
 return statusbar
