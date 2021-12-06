@@ -23,7 +23,8 @@ local apps = {
         'sleep 1 && gammy',
         'numlockx on',
         'nvidia-settings --load-config-only',
-        'flameshot'
+        'flameshot',
+        'touchegg'
     },
     -- Utilities that are used in shortcuts
     utils = {

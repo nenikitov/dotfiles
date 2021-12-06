@@ -3,6 +3,7 @@
 
 # Track only certain files
 !/.gitignore
+!/gammyconf
 
 # Track only certain configuration folders
 !/alacritty
@@ -10,4 +11,4 @@
 !/neofetch
 !/picom
 !/rofi
-!/gammyconf
+!/touchegg
