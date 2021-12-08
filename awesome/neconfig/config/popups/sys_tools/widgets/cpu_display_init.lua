@@ -3,11 +3,11 @@ local lain = require('lain')
 local wibox = require('wibox')
 -- Custom modules
 local icons = require('neconfig.config.utils.icons')
-local user_vars_conf = require('neconfig.config.user.user_vars_conf')
+local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
 require('neconfig.config.utils.widget_utils')
 
 -- Get variables
-local cpu_thermal_zone = user_vars_conf.statusbar.widgets.sys_tools.cpu_thermal_zone
+local cpu_thermal_zone = user_conf_statusbar.widgets.sys_tools.cpu_thermal_zone
 
 
 local cpu_icon = create_text_icon(icons.cpu)
