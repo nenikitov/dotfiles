@@ -61,7 +61,7 @@ local statusbar = {
             -- Should be shown
             visible = true,
             -- Name of the thermal 
-            cpu_thermal_zone='thermal_zone1'
+            cpu_thermal_zone='thermal_zone2' -- Thermal zone 2 PC
         }
     }
 }
