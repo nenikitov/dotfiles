@@ -2,7 +2,7 @@
 local awful = require('awful')
 local gears = require('gears')
 -- Load custom modules
-local user_menu = require('neconfig.config.user.user_menu')
+local user_conf_menu = require('neconfig.config.user.user_conf_menu')
 
 
 -- Customize this
@@ -14,7 +14,7 @@ local function get_global_buttons()
         awful.button(
             { }, 3,
             function()
-                user_menu:toggle()
+                user_conf_menu:toggle()
             end
         ),
         -- Go to next tag on SCROLL UP

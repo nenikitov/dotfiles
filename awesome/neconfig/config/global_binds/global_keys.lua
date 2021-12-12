@@ -4,7 +4,7 @@ local gears = require('gears')
 local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
 -- Load custom modules
-local user_menu = require('neconfig.config.user.user_menu')
+local user_conf_menu = require('neconfig.config.user.user_conf_menu')
 local user_conf_binds = require('neconfig.config.user.user_conf_binds')
 local user_conf_apps = require('neconfig.config.user.user_conf_apps')
 require('neconfig.config.utils.app_utils')
@@ -34,7 +34,7 @@ local function get_global_keys()
         awful.key(
             { super_key }, 'w',
             function ()
-                user_menu:show()
+                user_conf_menu:show()
             end,
             { description = 'show main menu', group = 'awesome' }
         ),

@@ -60,8 +60,10 @@ local statusbar = {
         sys_tools = {
             -- Should be shown
             visible = true,
-            -- Name of the thermal 
-            cpu_thermal_zone='thermal_zone2' -- Thermal zone 2 PC
+            -- Name of the thermal zone corresponding to CPU
+            cpu_thermal_zone = 'thermal_zone2', -- Thermal zone 2 PC
+            -- Name of the sound card
+            sound_card = 'sofhdadsp'
         }
     }
 }
