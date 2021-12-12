@@ -4,16 +4,31 @@
         "screen",
         "awesome",
         "client",
-        "button"
+        "button",
+        "bat_now",
+        "cpu_now",
+        "coretemp_now",
+        "mem_now",
+        "net_now",
+        "fs_now",
+        "uptime_now",
+        "widget"
     ],
-    "Lua.diagnostics.disable": [
-        "undefined-doc-name"
+    "Lua.workspace.ignoreDir": [
+        ".vscode",
+        "lain",
+        "vicious"
     ],
+    "search.exclude": {
+        "lain/": true,
+        "vicious/": true
+    },
     "cSpell.words": [
         "Arandr",
         "Blueman",
         "capi",
         "closebutton",
+        "coretemp",
         "drun",
         "eval",
         "floatingbutton",

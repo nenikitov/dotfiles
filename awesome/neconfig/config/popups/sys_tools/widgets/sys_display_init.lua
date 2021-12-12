@@ -1,15 +1,15 @@
 -- Load libraries
 local lain = require('lain')
 local wibox = require('wibox')
--- Custom modules
+-- Load custom modules
 local icons = require('neconfig.config.utils.icons')
 local uptime_widget = require('neconfig.lib.lain_uptime')
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local uptime_icon = create_text_icon(icons.clock)
+local uptime_icon = widget_utils.create_text_icon(icons.clock)
 local uptime_info = wibox.widget.textbox()
-local drive_icon = create_text_icon(icons.hard_drive)
+local drive_icon = widget_utils.create_text_icon(icons.hard_drive)
 local drive_info = wibox.widget.textbox()
 
 

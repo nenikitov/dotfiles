@@ -1,18 +1,18 @@
 -- Load libraries
 local lain = require('lain')
 local wibox = require('wibox')
--- Custom modules
+-- Load custom modules
 local icons = require('neconfig.config.utils.icons')
 local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 -- Get variables
 local cpu_thermal_zone = user_conf_statusbar.widgets.sys_tools.cpu_thermal_zone
 
 
-local cpu_icon = create_text_icon(icons.cpu)
+local cpu_icon = widget_utils.create_text_icon(icons.cpu)
 local cpu_info = wibox.widget.textbox()
-local temp_icon = create_text_icon(icons.temperature)
+local temp_icon = widget_utils.create_text_icon(icons.temperature)
 local temp_info = wibox.widget.textbox()
 
 

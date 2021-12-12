@@ -1,14 +1,14 @@
 -- Load libraries
 local lain = require('lain')
 local wibox = require('wibox')
--- Custom modules
+-- Load custom modules
 local icons = require('neconfig.config.utils.icons')
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local battery_icon = create_text_icon(icons.battery0)
+local battery_icon = widget_utils.create_text_icon(icons.battery0)
 local battery_info = wibox.widget.textbox()
-local time_icon = create_text_icon(icons.hourglass)
+local time_icon = widget_utils.create_text_icon(icons.hourglass)
 local time_info = wibox.widget.textbox()
 
 

@@ -1,14 +1,14 @@
 -- Load libraries
 local lain = require('lain')
 local wibox = require('wibox')
--- Custom modules
+-- Load custom modules
 local icons = require('neconfig.config.utils.icons')
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local download_icon = create_text_icon(icons.download)
+local download_icon = widget_utils.create_text_icon(icons.download)
 local download_info = wibox.widget.textbox()
-local upload_icon = create_text_icon(icons.upload)
+local upload_icon = widget_utils.create_text_icon(icons.upload)
 local upload_info = wibox.widget.textbox()
 
 

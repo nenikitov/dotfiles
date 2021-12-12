@@ -1,7 +1,15 @@
+-- Load libraries
 local awful = require('awful')
+-- Load custom modules
 local user_conf_apps = require('neconfig.config.user.user_conf_apps')
 
-function increase_brightness(step)
+
+-- Container for functions
+local app_utils = {}
+
+--- Increase or descrease brightness by using a tool set up in the user conf files
+---@param step number Increment or decrement value
+app_utils.increase_brightness = function(step)
     awful.spawn.with_line_callback(
             user_conf_apps.utils.get_brightness,
             {
@@ -21,5 +29,8 @@ function increase_brightness(step)
         )
 end
 
-function take_screenshot()
+app_utils.take_screenshot = function ()
+    
 end
+
+return app_utils

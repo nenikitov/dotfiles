@@ -4,7 +4,7 @@ local beautiful = require('beautiful')
 local wibox = require('wibox')
 -- Load custom modules
 local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
-require('neconfig.config.utils.statusbar_utils')
+local statusbar_utils = require('neconfig.config.utils.statusbar_utils')
 
 -- Get variables
 -- From configs
@@ -50,7 +50,7 @@ awful.screen.connect_for_each_screen(
 
 
         --#region Background wibar
-        add_background_bar {
+        statusbar_utils.add_background_bar {
             screen = s,
             sections = s.statusbar.sections,
             info_table = s.statusbar
@@ -60,7 +60,7 @@ awful.screen.connect_for_each_screen(
 
         --#region 1st section
         -- Menu
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'menu',
             widget = menu,
             section = 1,
@@ -69,7 +69,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         -- Run menu
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'run_menu',
             widget = run_menu,
             section = 1,
@@ -78,7 +78,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         -- Layout box
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'layoutbox',
             widget = layoutbox,
             section = 1,
@@ -87,7 +87,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         -- Tag list
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'taglist',
             widget = taglist,
             section = 1,
@@ -99,7 +99,7 @@ awful.screen.connect_for_each_screen(
 
         --#region 2nd section
         -- Task list
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'tasklist',
             widget = tasklist,
             section = 2,
@@ -111,7 +111,7 @@ awful.screen.connect_for_each_screen(
 
         --#region 3rd section
         -- Clock
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'clock',
             widget = textclock,
             section = 3,
@@ -121,7 +121,7 @@ awful.screen.connect_for_each_screen(
             info_table = s.statusbar.sections
         }
         -- Keyboard layout
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'keyboard_layout',
             widget = keyboard_layout,
             section = 3,
@@ -129,7 +129,7 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'notification_center_button',
             widget = notification_center_button,
             section = 3,
@@ -138,7 +138,7 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
-        add_bar_section {
+        statusbar_utils.add_bar_section {
             name = 'sys_tools_button',
             widget = sys_tools_button,
             force_interactive = true,

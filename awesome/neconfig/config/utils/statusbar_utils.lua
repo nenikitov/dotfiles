@@ -3,10 +3,14 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 local wibox = require('wibox')
 -- Load custom modules
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 -- Get style
 local style = beautiful.user_vars_theme.statusbar
+
+
+-- Container for functions
+local statusbar_utils = {}
 
 
 --#region Helper methods
@@ -120,7 +124,7 @@ end
 --#endregion
 
 
-function add_background_bar(args)
+statusbar_utils.add_background_bar = function(args)
     --#region Aliases for the arguments
     local screen = args.screen
     local sections = args.sections
@@ -137,7 +141,7 @@ function add_background_bar(args)
     local shape
     if (style.real_clip.bar)
     then
-        shape = r_rect(style.corner_radius.bar)
+        shape = widget_utils.r_rect(style.corner_radius.bar)
     else
         shape = nil
     end
@@ -146,7 +150,7 @@ function add_background_bar(args)
     local wibar = awful.wibar {
         widget = {
             bg = style.colors.bg_bar,
-            shape = r_rect(style.corner_radius.bar),
+            shape = widget_utils.r_rect(style.corner_radius.bar),
 
             widget = wibox.widget.background
         },
@@ -186,7 +190,7 @@ end
 
 --- Add, initialize and draw a section
 ---@param args table Name, widget(contents), position(side, section), style, screen and info_table
-function add_bar_section(args)
+statusbar_utils.add_bar_section = function(args)
     if (not args.visible)
     then
         return
@@ -230,11 +234,11 @@ function add_bar_section(args)
     -- Calculate padding and size
     local padding_ver = (next_dir == 'top' or next_dir == 'bottom') and style.corner_radius.sections or 0
     local padding_hor = (next_dir == 'left' or next_dir == 'right') and style.corner_radius.sections or 0
-    local resize_func = (next_dir == 'top' or next_dir == 'bottom') and set_width_widget or set_height_widget
+    local resize_func = (next_dir == 'top' or next_dir == 'bottom') and widget_utils.set_width_widget or widget_utils.set_height_widget
     -- Construct the widget
     local final_widget = {
         {
-            pad_widget(
+            widget_utils.pad_widget(
                 {
                     resize_func(widget, style.contents_size),
                     widget = wibox.container.background
@@ -247,7 +251,7 @@ function add_bar_section(args)
         },
 
         widget = wibox.container.background,
-        shape = r_rect(style.corner_radius.sections),
+        shape = widget_utils.r_rect(style.corner_radius.sections),
         shape_clip = true,
         bg = style.colors.bg_sections
     }
@@ -269,7 +273,7 @@ function add_bar_section(args)
     local shape
     if (style.real_clip.sections)
     then
-        shape = r_rect(style.corner_radius.sections)
+        shape = widget_utils.r_rect(style.corner_radius.sections)
     else
         shape = nil
     end
@@ -309,3 +313,5 @@ function add_bar_section(args)
     info_table[section].last_section_name = name
     --#endregion
 end
+
+return statusbar_utils

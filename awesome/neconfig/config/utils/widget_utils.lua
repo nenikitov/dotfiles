@@ -5,10 +5,13 @@ local vicious = require('vicious')
 local wibox = require('wibox')
 
 
+-- Container for functions
+local widget_utils = {}
+
 --- Generate a rounded rectangle shape with a radius
 ---@param radius number Radius
 ---@return function
-function r_rect(radius)
+widget_utils.r_rect = function(radius)
     return function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, radius)
     end
@@ -19,7 +22,7 @@ end
 ---@param contents table Contents to put inside
 ---@param size number Width
 ---@return table
-function set_width_widget(contents, size)
+widget_utils.set_width_widget = function(contents, size)
     return {
         contents,
 
@@ -31,7 +34,7 @@ end
 ---@param contents table Contents to put inside
 ---@param size number Height
 ---@return table
-function set_height_widget(contents, size)
+widget_utils.set_height_widget = function(contents, size)
     return {
         contents,
 
@@ -48,7 +51,7 @@ end
 ---@param bottom number Pad on bottom
 ---@param left number Pad on left
 ---@return table
-function pad_widget(contents, top, right, bottom, left)
+widget_utils.pad_widget = function(contents, top, right, bottom, left)
     return {
         contents,
 
@@ -62,7 +65,7 @@ function pad_widget(contents, top, right, bottom, left)
 end
 
 
-function create_text_icon(icon)
+widget_utils.create_text_icon = function(icon)
     local font_height = beautiful.get_font_height(beautiful.font)
 
     return wibox.widget {
@@ -75,7 +78,7 @@ function create_text_icon(icon)
 end
 
 
-function create_vicious_widget(type, timeout, format, icon, args)
+widget_utils.create_vicious_widget = function(type, timeout, format, icon, args)
     local info_widget = wibox.widget.textbox()
 
     vicious.cache(type)
@@ -101,3 +104,5 @@ function create_vicious_widget(type, timeout, format, icon, args)
         return info_widget
     end
 end
+
+return widget_utils

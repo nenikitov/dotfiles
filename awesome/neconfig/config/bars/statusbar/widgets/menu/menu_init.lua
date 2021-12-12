@@ -4,7 +4,7 @@ local beautiful = require('beautiful')
 
 -- Load custom modules
 local user_conf_menu = require('neconfig.config.user.user_conf_menu')
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
 local function get_menu(bar_info)

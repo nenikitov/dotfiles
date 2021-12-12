@@ -1,7 +1,7 @@
 -- Load libraries
 local wibox = require('wibox')
 -- Load custom modules
-require('neconfig.config.utils.popup_utils')
+local popup_utils = require('neconfig.config.utils.popup_utils')
 
 
 -- Create widgets
@@ -19,7 +19,7 @@ local function get_popup_calendar(args)
     local info_table = args.info_table
     local toggle_visibility_widget = args.toggle_visibility_widget
 
-    add_custom_popup {
+    popup_utils.add_custom_popup {
         name = 'calendar',
         widgets = {
             time_sub_widget,

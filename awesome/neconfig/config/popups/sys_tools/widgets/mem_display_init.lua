@@ -1,14 +1,14 @@
 -- Load libraries
 local lain = require('lain')
 local wibox = require('wibox')
--- Custom modules
+-- Load custom modules
 local icons = require('neconfig.config.utils.icons')
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local ram_icon = create_text_icon(icons.ram_module)
+local ram_icon = widget_utils.create_text_icon(icons.ram_module)
 local ram_info = wibox.widget.textbox()
-local swap_icon = create_text_icon(icons.swap)
+local swap_icon = widget_utils.create_text_icon(icons.swap)
 local swap_info = wibox.widget.textbox()
 
 

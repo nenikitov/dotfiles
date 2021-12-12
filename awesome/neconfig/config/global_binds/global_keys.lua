@@ -7,7 +7,7 @@ local menubar = require('menubar')
 local user_conf_menu = require('neconfig.config.user.user_conf_menu')
 local user_conf_binds = require('neconfig.config.user.user_conf_binds')
 local user_conf_apps = require('neconfig.config.user.user_conf_apps')
-require('neconfig.config.utils.app_utils')
+local app_utils = require('neconfig.config.utils.app_utils')
 
 -- Get variables
 local super_key = user_conf_binds.keys.super_key
@@ -298,14 +298,14 @@ local function get_global_keys()
         awful.key(
             { }, 'XF86MonBrightnessDown',
             function ()
-                increase_brightness(-10)
+                app_utils.increase_brightness(-10)
             end,
             { description = 'Decrease brightness by 10%', group = 'screen'}
         ),
         awful.key(
             { }, 'XF86MonBrightnessUp',
             function ()
-                increase_brightness(10)
+                app_utils.increase_brightness(10)
             end,
             { description = 'Increase brightness by 10%', group = 'screen'}
         )

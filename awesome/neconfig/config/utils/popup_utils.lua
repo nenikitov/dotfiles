@@ -4,10 +4,14 @@ local beautiful = require('beautiful')
 local capi = { button = button }
 local wibox = require('wibox')
 -- Load custom modules
-require('neconfig.config.utils.widget_utils')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 -- Get style
 local style = beautiful.user_vars_theme.popup
+
+
+-- Container for functions
+local popup_utils = {}
 
 --- Calculate the offset from the edge of the screen to the popup widget
 ---@param position string Position of the bar ('top', 'bottom', 'left', 'right')
@@ -33,7 +37,7 @@ end
 
 
 -- TODO implement different position and size arguments
-function add_custom_popup(args)
+popup_utils.add_custom_popup = function(args)
     --#region Aliases for the arguments
     local name = args.name
     local widgets = args.widgets
@@ -66,7 +70,7 @@ function add_custom_popup(args)
             margins = style.padding,
             widget = wibox.container.margin,
         },
-        shape = r_rect(style.corner_radius),
+        shape = widget_utils.r_rect(style.corner_radius),
         screen = screen,
         ontop = true,
         bg = style.background_color
@@ -167,3 +171,5 @@ function add_custom_popup(args)
 
     info_table[name] = popup
 end
+
+return popup_utils

@@ -3,6 +3,8 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 local gears = require('gears')
 local wibox = require('wibox')
+-- Load custom modules
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 -- Get style
 local font = beautiful.user_vars_theme.general.font
@@ -58,7 +60,7 @@ local function calendar_style(contents, flag, date)
         },
 
         bg = get_element_style_var(flag, 'background_color'),
-        shape = r_rect(get_element_style_var(flag, 'corner_radius')),
+        shape = widget_utils.r_rect(get_element_style_var(flag, 'corner_radius')),
         shape_clip = true,
 
         widget = wibox.container.background
@@ -69,7 +71,7 @@ local function calendar_style(contents, flag, date)
             final_widget,
 
             bg = get_element_style_var('weekend', 'background_color'),
-            shape = r_rect(get_element_style_var('weekend', 'corner_radius')),
+            shape = widget_utils.r_rect(get_element_style_var('weekend', 'corner_radius')),
 
             widget = wibox.container.background
         }
