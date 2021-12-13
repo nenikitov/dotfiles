@@ -43,6 +43,7 @@
         "keygrabber",
         "Kruler",
         "maximizedbutton",
+        "neconfig",
         "numlockx",
         "ontopbutton",
         "pinentry",
@@ -50,6 +51,7 @@
         "rofi",
         "stickybutton",
         "Sxiv",
+        "textbox",
         "titlebars",
         "titlewidget",
         "unfocus",
@@ -58,6 +60,7 @@
         "viewnext",
         "viewprev",
         "viewtoggle",
+        "wibox",
         "xprop",
         "xtightvncviewer"
     ],

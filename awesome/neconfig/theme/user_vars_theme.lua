@@ -37,7 +37,7 @@ end
 -- █▄█ ██▄ █ ▀█ ██▄ █▀▄ █▀█ █▄▄
 local general = {
     font = 'Jost* Regular',
-    text_size = size(12)
+    text_size = size(11)
 }
 
 
@@ -56,7 +56,7 @@ local statusbar = {
     -- Side of the screen ('top', 'bottom', 'left', or 'right')
     position = 'top',
     -- The size of the sections inside
-    contents_size = size(24),
+    contents_size = general.text_size * 2,
     -- Color scheme
     colors = {
         -- Main

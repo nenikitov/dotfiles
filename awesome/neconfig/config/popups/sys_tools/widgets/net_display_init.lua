@@ -6,9 +6,9 @@ local icons = require('neconfig.config.utils.icons')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local download_icon = widget_utils.create_text_icon(icons.download)
+local download_icon = widget_utils.create_text_widget(icons.download)
 local download_info = wibox.widget.textbox()
-local upload_icon = widget_utils.create_text_icon(icons.upload)
+local upload_icon = widget_utils.create_text_widget(icons.upload)
 local upload_info = wibox.widget.textbox()
 
 

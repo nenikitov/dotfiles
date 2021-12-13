@@ -65,44 +65,42 @@ widget_utils.pad_widget = function(contents, top, right, bottom, left)
 end
 
 
-widget_utils.create_text_icon = function(icon)
+widget_utils.create_text_widget = function(text)
     local font_height = beautiful.get_font_height(beautiful.font)
 
     return wibox.widget {
-        markup = icon,
+        markup = text,
         forced_width = font_height * 1.5,
         align = 'center',
 
         widget = wibox.widget.textbox
     }
 end
-
-
-widget_utils.create_vicious_widget = function(type, timeout, format, icon, args)
-    local info_widget = wibox.widget.textbox()
-
-    vicious.cache(type)
-    vicious.register(info_widget, type, format, timeout, args)
-
-    if (icon ~= nil)
-    then
-        local font_height = beautiful.get_font_height(beautiful.font)
-        local icon_widget = wibox.widget {
-            markup = icon,
-            forced_width = font_height * 1.1,
-
-            widget = wibox.widget.textbox
+widget_utils.create_progress_bar = function (text, display_percent)
+    local font_height = beautiful.get_font_height(beautiful.font)
+    local text_widget = widget_utils.create_text_widget(text)
+    local progress_widget = wibox.widget {
+        max_value     = 1,
+        value         = 0.33,
+        forced_height = 1,
+        forced_width  = 1,
+        widget        = wibox.widget.progressbar,
+        clip = false,
+        bar_shape = gears.shape.circle,
+        margins  = {
+            top = 5,
+            bottom = 5
         }
+    }
 
-        return wibox.widget {
-            icon_widget,
-            info_widget,
+    return wibox.widget {
+        text_widget,
+        progress_widget,
+        text_widget,
 
-            layout = wibox.layout.fixed.horizontal
-        }
-    else
-        return info_widget
-    end
+        layout = wibox.layout.align.horizontal
+    }
 end
+
 
 return widget_utils

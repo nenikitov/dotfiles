@@ -2,6 +2,7 @@
 local wibox = require('wibox')
 -- Load custom modules
 local popup_utils = require('neconfig.config.utils.popup_utils')
+local widget_utils= require('neconfig.config.utils.widget_utils')
 
 
 -- Create widgets
@@ -20,6 +21,7 @@ local mem_sub = require('neconfig.config.popups.sys_tools.widgets.mem_display_in
 local sys_sub = require('neconfig.config.popups.sys_tools.widgets.sys_display_init')
 local cpu_sub = require('neconfig.config.popups.sys_tools.widgets.cpu_display_init')
 local tray_sub = require('neconfig.config.popups.sys_tools.widgets.sys_tray_init')()
+local test_sub = widget_utils.create_progress_bar('aaa', true)
 tray_sub.base_size = 24
 tray_sub.forced_width = 240
 local separator = wibox.widget.separator {
@@ -36,6 +38,7 @@ local function get_popup_sys_tools(args)
     popup_utils.add_custom_popup {
         name = 'sys_tools',
         widgets = {
+            test_sub,
             net_sub,
             bat_sub,
             mem_sub,

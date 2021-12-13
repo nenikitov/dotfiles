@@ -6,9 +6,9 @@ local icons = require('neconfig.config.utils.icons')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local battery_icon = widget_utils.create_text_icon(icons.battery0)
+local battery_icon = widget_utils.create_text_widget(icons.battery0)
 local battery_info = wibox.widget.textbox()
-local time_icon = widget_utils.create_text_icon(icons.hourglass)
+local time_icon = widget_utils.create_text_widget(icons.hourglass)
 local time_info = wibox.widget.textbox()
 
 

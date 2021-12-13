@@ -6,9 +6,9 @@ local icons = require('neconfig.config.utils.icons')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local ram_icon = widget_utils.create_text_icon(icons.ram_module)
+local ram_icon = widget_utils.create_text_widget(icons.ram_module)
 local ram_info = wibox.widget.textbox()
-local swap_icon = widget_utils.create_text_icon(icons.swap)
+local swap_icon = widget_utils.create_text_widget(icons.swap)
 local swap_info = wibox.widget.textbox()
 
 

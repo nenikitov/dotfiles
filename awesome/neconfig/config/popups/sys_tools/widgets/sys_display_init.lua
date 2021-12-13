@@ -7,9 +7,9 @@ local uptime_widget = require('neconfig.lib.lain_uptime')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local uptime_icon = widget_utils.create_text_icon(icons.clock)
+local uptime_icon = widget_utils.create_text_widget(icons.clock)
 local uptime_info = wibox.widget.textbox()
-local drive_icon = widget_utils.create_text_icon(icons.hard_drive)
+local drive_icon = widget_utils.create_text_widget(icons.hard_drive)
 local drive_info = wibox.widget.textbox()
 
 
