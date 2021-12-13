@@ -76,52 +76,45 @@ widget_utils.create_text_widget = function(text)
         widget = wibox.widget.textbox
     }
 end
-widget_utils.create_progress_bar = function(text)
-    local font_height = beautiful.get_font_height(beautiful.font)
-    local margin = font_height / 2 - 1
-    local radius = font_height / 4
+widget_utils.create_progress_bar = function(bar_thickness, circle_radius, total_height)
+    local half_height = total_height / 2
+    local margin = half_height - bar_thickness
 
-    local text_widget = widget_utils.create_text_widget(text)
-    local percent_widget = wibox.widget {
-        text = '100 %',
-        widget = wibox.widget.textbox
-    }
     local progress_widget = wibox.widget {
         max_value     = 1,
         value         = 0,
-        forced_height = 1,
+        forced_height = total_height,
         forced_width  = 100,
         widget        = wibox.widget.progressbar,
         clip = false,
         bar_shape = function(cr, w, h)
-            return gears.shape.circle(cr, w * 2, h, radius)
+            return gears.shape.circle(cr, w * 2, h, circle_radius)
         end,
         margins = {
             top = margin,
             bottom = margin
         },
         paddings = {
-            left = radius,
-            right = radius
+            left = circle_radius,
+            right = circle_radius
         }
     }
+
+    progress_widget.update_value = function(value)
+    end
+
     progress_widget:connect_signal(
         'button::press',
-        function(self, lx, ly, button, mods, widget_results)
-            self.value = 0.5
-            require('naughty').notify {
-                text = tostring(widget_results.widget_width)
-            }
+        function(self, lx, ly, button, mod, widget_results)
+            local bar_width = widget_results.widget_width - circle_radius * 2
+            local mouse_on_bar_x = lx - circle_radius
+            local value = math.max(0, math.min(1, mouse_on_bar_x / bar_width))
+
+            self.value = value
         end
     )
 
-    return wibox.widget {
-        text_widget,
-        progress_widget,
-        percent_widget,
-
-        layout = wibox.layout.align.horizontal
-    }
+    return progress_widget
 end
 
 
