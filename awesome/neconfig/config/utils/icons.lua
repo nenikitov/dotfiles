@@ -22,6 +22,7 @@ local icons = {
     mic_1         = '\u{f3c9}',
     mic_0         = '\u{f539}',
     -- Battery
+    charging      = '\u{f0e7}',
     battery4      = '\u{f240}',
     battery3      = '\u{f241}',
     battery2      = '\u{f242}',

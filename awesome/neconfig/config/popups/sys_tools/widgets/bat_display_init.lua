@@ -17,6 +17,7 @@ lain.widget.bat {
     timeout = 10,
 
     settings = function()
+        local status = bat_now.ac_status
         local percent = bat_now.perc
         local remaining = bat_now.time
 
@@ -25,7 +26,10 @@ lain.widget.bat {
 
             battery_info.text = percent .. ' %'
 
-            if (value >= 80) then
+            if (status == 1) then
+                -- Charging
+                battery_icon.text = icons.charging
+            elseif (value >= 80) then
                 -- 80 to 100 %
                 battery_icon.text = icons.battery4
             elseif (value >= 60) then
