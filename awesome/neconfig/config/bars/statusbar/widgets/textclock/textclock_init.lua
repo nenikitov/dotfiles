@@ -2,7 +2,7 @@
 local beautiful = require('beautiful')
 local wibox = require('wibox')
 -- Load custom modules
-local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
+local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
 
 local function get_textclock(bar_info)
@@ -16,14 +16,14 @@ local function get_textclock(bar_info)
     local primary_time = wibox.widget {
         widget = wibox.widget.textclock,
 
-        format = '<span font_weight="' .. style.primary_weight .. '">' .. user_conf_statusbar.widgets.clock.primary_format .. '</span>',
+        format = '<span font_weight="' .. style.primary_weight .. '">' .. statusbar_user_conf.widgets.clock.primary_format .. '</span>',
         font = font .. ' ' .. (font_size * style.primary_size),
         align = 'center'
     }
     local secondary_time = wibox.widget {
         widget = wibox.widget.textclock,
 
-        format = '<span font_weight="' .. style.secondary_weight .. '">' .. user_conf_statusbar.widgets.clock.secondary_format .. '</span>',
+        format = '<span font_weight="' .. style.secondary_weight .. '">' .. statusbar_user_conf.widgets.clock.secondary_format .. '</span>',
         font = font .. ' ' .. (font_size * style.secondary_size),
         align = 'center'
     }

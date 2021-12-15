@@ -1,7 +1,7 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local user_conf_apps = require('neconfig.config.user.user_conf_apps')
+local apps_user_conf = require('neconfig.config.user.apps_user_conf')
 
 
 -- Container for functions
@@ -11,7 +11,7 @@ local app_utils = {}
 ---@param step number Increment or decrement value
 app_utils.increase_brightness = function(step)
     awful.spawn.with_line_callback(
-        user_conf_apps.utils.get_brightness,
+        apps_user_conf.utils.get_brightness,
         {
             stdout = function(current_brightness)
                 current_brightness = math.floor(current_brightness / step) * step
@@ -28,7 +28,7 @@ app_utils.set_brightness = function(value)
 
     awful.spawn.with_shell(
         string.format(
-            user_conf_apps.utils.set_brightness,
+            apps_user_conf.utils.set_brightness,
             value
         )
     );

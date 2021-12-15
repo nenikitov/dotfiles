@@ -2,7 +2,7 @@
 local awful = require('awful')
 -- Load custom modules
 local tasklist_buttons = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_buttons')()
-local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
+local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
 
 -- Generate tasklist widget
@@ -17,7 +17,7 @@ local function get_tasklist(screen, bar_info)
         spacing = widget_info.spacing,
         task_size = widget_info.task_size,
         max_size = widget_info.max_size,
-        show_task_title = user_conf_statusbar.widgets.tasklist.show_task_title
+        show_task_title = statusbar_user_conf.widgets.tasklist.show_task_title
     }
 
     -- Get custom widget properties

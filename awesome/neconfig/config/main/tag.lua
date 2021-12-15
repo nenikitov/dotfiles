@@ -1,13 +1,13 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local user_conf_desktop = require('neconfig.config.user.user_conf_desktop')
-local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
+local desktop_user_conf = require('neconfig.config.user.desktop_user_conf')
+local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
 -- Get variables
-local should_number = user_conf_statusbar.widgets.taglist.number
-local tag_names = user_conf_desktop.tag_names
-local tag_layout = user_conf_desktop.layouts[1]
+local should_number = statusbar_user_conf.widgets.taglist.number
+local tag_names = desktop_user_conf.tag_names
+local tag_layout = desktop_user_conf.layouts[1]
 
 
 -- Add layouts to each screen

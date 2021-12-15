@@ -3,7 +3,7 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 local wibox = require('wibox')
 -- Load custom modules
-local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
+local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local statusbar_utils = require('neconfig.config.utils.statusbar_utils')
 
 -- Get variables
@@ -64,7 +64,7 @@ awful.screen.connect_for_each_screen(
             name = 'menu',
             widget = menu,
             section = 1,
-            visible = user_conf_statusbar.widgets.menu.visible,
+            visible = statusbar_user_conf.widgets.menu.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -73,7 +73,7 @@ awful.screen.connect_for_each_screen(
             name = 'run_menu',
             widget = run_menu,
             section = 1,
-            visible = user_conf_statusbar.widgets.run_menu.visible,
+            visible = statusbar_user_conf.widgets.run_menu.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -82,7 +82,7 @@ awful.screen.connect_for_each_screen(
             name = 'layoutbox',
             widget = layoutbox,
             section = 1,
-            visible = user_conf_statusbar.widgets.layoutbox.visible,
+            visible = statusbar_user_conf.widgets.layoutbox.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -91,7 +91,7 @@ awful.screen.connect_for_each_screen(
             name = 'taglist',
             widget = taglist,
             section = 1,
-            visible = user_conf_statusbar.widgets.taglist.visible,
+            visible = statusbar_user_conf.widgets.taglist.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -103,7 +103,7 @@ awful.screen.connect_for_each_screen(
             name = 'tasklist',
             widget = tasklist,
             section = 2,
-            visible = user_conf_statusbar.widgets.tasklist.visible,
+            visible = statusbar_user_conf.widgets.tasklist.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -116,7 +116,7 @@ awful.screen.connect_for_each_screen(
             widget = textclock,
             section = 3,
             force_interactive = true,
-            visible = user_conf_statusbar.widgets.clock.visible,
+            visible = statusbar_user_conf.widgets.clock.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -125,7 +125,7 @@ awful.screen.connect_for_each_screen(
             name = 'keyboard_layout',
             widget = keyboard_layout,
             section = 3,
-            visible = user_conf_statusbar.widgets.keyboard_layout.visible,
+            visible = statusbar_user_conf.widgets.keyboard_layout.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -134,7 +134,7 @@ awful.screen.connect_for_each_screen(
             widget = notification_center_button,
             section = 3,
             force_interactive = true,
-            visible = user_conf_statusbar.widgets.notifications_pane.visible,
+            visible = statusbar_user_conf.widgets.notifications_pane.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -143,7 +143,7 @@ awful.screen.connect_for_each_screen(
             widget = sys_tools_button,
             force_interactive = true,
             section = 3,
-            visible = user_conf_statusbar.widgets.sys_tools.visible,
+            visible = statusbar_user_conf.widgets.sys_tools.visible,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -178,7 +178,7 @@ awful.screen.connect_for_each_screen(
         --#endregion
 
         -- Set statusbar visibility once all widgets were created
-        s.statusbar.wibar.visible = user_conf_statusbar.visible
+        s.statusbar.wibar.visible = statusbar_user_conf.visible
     end
 )
 --#endregion

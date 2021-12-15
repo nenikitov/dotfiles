@@ -1,10 +1,10 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local user_conf_apps = require('neconfig.config.user.user_conf_apps')
+local apps_user_conf = require('neconfig.config.user.apps_user_conf')
 
 -- Get variables
-local startup_apps = user_conf_apps.startup_apps
+local startup_apps = apps_user_conf.startup_apps
 
 
 -- Launch applications

@@ -4,7 +4,7 @@ local beautiful = require('beautiful')
 local gears = require('gears')
 local wibox = require('wibox')
 -- Load custom modules
-local user_conf_statusbar = require('neconfig.config.user.user_conf_statusbar')
+local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
 
 local function get_taglist_widget(style)
@@ -48,7 +48,7 @@ local function get_taglist_widget(style)
         --#endregion
 
         --#region Update the widget that shows the number of opened clients on a tag
-        if (user_conf_statusbar.widgets.taglist.show_client_count)
+        if (statusbar_user_conf.widgets.taglist.show_client_count)
         then
             local client_num_role = self:get_children_by_id('client_num_role')[1]
             -- Generate circle widget

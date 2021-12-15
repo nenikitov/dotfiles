@@ -2,10 +2,10 @@
 local gears = require('gears')
 local awful = require('awful')
 -- Load custom modules
-local user_conf_binds = require('neconfig.config.user.user_conf_binds')
+local binds_user_conf = require('neconfig.config.user.binds_user_conf')
 
 -- Get variables
-local super_key = user_conf_binds.keys.super_key
+local super_key = binds_user_conf.keys.super_key
 
 
 -- Create the mouse button binds for tag list

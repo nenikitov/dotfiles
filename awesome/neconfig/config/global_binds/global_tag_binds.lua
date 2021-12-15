@@ -2,15 +2,15 @@
 local awful = require('awful')
 local gears = require('gears')
 -- Load custom modules
-local user_conf_binds = require('neconfig.config.user.user_conf_binds')
-local user_conf_desktop = require('neconfig.config.user.user_conf_desktop')
+local binds_user_conf = require('neconfig.config.user.binds_user_conf')
+local desktop_user_conf = require('neconfig.config.user.desktop_user_conf')
 
 -- Get variables
-local super_key = user_conf_binds.keys.super_key
-local ctrl_key = user_conf_binds.keys.ctrl_key
-local shift_key = user_conf_binds.keys.shift_key
-local alt_key = user_conf_binds.keys.alt_key
-local tag_num = #(user_conf_desktop.tag_names)
+local super_key = binds_user_conf.keys.super_key
+local ctrl_key = binds_user_conf.keys.ctrl_key
+local shift_key = binds_user_conf.keys.shift_key
+local alt_key = binds_user_conf.keys.alt_key
+local tag_num = #(desktop_user_conf.tag_names)
 
 
 -- Bind all key numbers to interact with corresponding tags

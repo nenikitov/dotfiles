@@ -3,7 +3,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 
 -- Load custom modules
-local user_conf_apps = require('neconfig.config.user.user_conf_apps')
+local apps_user_conf = require('neconfig.config.user.apps_user_conf')
 
 -- Construct widget
 return wibox.widget {
@@ -14,7 +14,7 @@ return wibox.widget {
         awful.button (
             { }, 1,
             function ()
-                awful.util.spawn(user_conf_apps.default_apps.run_menu)
+                awful.util.spawn(apps_user_conf.default_apps.run_menu)
             end
         )
     },
