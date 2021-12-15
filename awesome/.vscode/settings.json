@@ -17,11 +17,13 @@
     "Lua.workspace.ignoreDir": [
         ".vscode",
         "lain",
-        "vicious"
+        "vicious",
+        "rubato"
     ],
     "search.exclude": {
         "lain/": true,
-        "vicious/": true
+        "vicious/": true,
+        "rubato/": true
     },
     "cSpell.words": [
         "Arandr",
