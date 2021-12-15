@@ -5,7 +5,7 @@ local popup_utils = require('neconfig.config.utils.popup_utils')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
-local vol_sub = require('neconfig.config.popups.sys_tools.widgets.vol_display_init')
+local brightness_sub = require('neconfig.config.popups.sys_tools.widgets.brightness_display_init')
 
 local net_sub = require('neconfig.config.popups.sys_tools.widgets.net_display_init')
 local bat_sub = require('neconfig.config.popups.sys_tools.widgets.bat_display_init')
@@ -31,7 +31,7 @@ local function get_popup_sys_tools(args)
     popup_utils.add_custom_popup {
         name = 'sys_tools',
         widgets = {
-            vol_sub,
+            brightness_sub,
             separator,
             net_sub,
             bat_sub,

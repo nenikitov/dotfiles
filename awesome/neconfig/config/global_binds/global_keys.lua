@@ -298,16 +298,16 @@ local function get_global_keys()
         awful.key(
             { }, 'XF86MonBrightnessDown',
             function ()
-                app_utils.increase_brightness(-10)
+                app_utils.increase_brightness(-5)
             end,
-            { description = 'Decrease brightness by 10%', group = 'screen'}
+            { description = 'Decrease brightness by 5%', group = 'screen'}
         ),
         awful.key(
             { }, 'XF86MonBrightnessUp',
             function ()
-                app_utils.increase_brightness(10)
+                app_utils.increase_brightness(5)
             end,
-            { description = 'Increase brightness by 10%', group = 'screen'}
+            { description = 'Increase brightness by 5%', group = 'screen'}
         )
     )
 

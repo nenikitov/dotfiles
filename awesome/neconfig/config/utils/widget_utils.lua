@@ -1,7 +1,6 @@
 -- Load libraries
 local beautiful = require('beautiful')
 local gears = require('gears')
-local vicious = require('vicious')
 local wibox = require('wibox')
 
 
@@ -76,20 +75,33 @@ widget_utils.create_text_widget = function(text)
         widget = wibox.widget.textbox
     }
 end
-widget_utils.create_progress_bar = function(bar_thickness, circle_radius, total_height)
-    local half_height = total_height / 2
+widget_utils.create_progress_bar = function(args)
+    local max_value = args.max_value or 1
+    local bar_thickness = args.bar_thickness
+    local circle_radius = args.circle_radius
+    local target_thickness = args.target_thickness
+    local target_length = args.target_length
+    local orientation = args.orientation or 'horizontal'
+    local on_change = args.on_change or function(value) end
+
+    local half_height = target_thickness / 2
     local margin = half_height - bar_thickness
+    local direction = (orientation == 'horizontal') and 'north' or 'west'
 
     local progress_widget = wibox.widget {
-        max_value     = 1,
-        value         = 0,
-        forced_height = total_height,
-        forced_width  = 100,
-        widget        = wibox.widget.progressbar,
-        clip = false,
+        widget = wibox.widget.progressbar,
+
+        max_value = max_value,
+
+        forced_height = target_thickness,
+        forced_width = target_length,
+
         bar_shape = function(cr, w, h)
             return gears.shape.circle(cr, w * 2, h, circle_radius)
         end,
+
+        clip = false,
+
         margins = {
             top = margin,
             bottom = margin
@@ -100,21 +112,33 @@ widget_utils.create_progress_bar = function(bar_thickness, circle_radius, total_
         }
     }
 
-    progress_widget.update_value = function(value)
-    end
+    -- Move outside
+    awesome.connect_signal(
+        'custom::brightness_change',
+        function(value)
+            progress_widget.value = value
+        end
+    )
 
     progress_widget:connect_signal(
         'button::press',
         function(self, lx, ly, button, mod, widget_results)
-            local bar_width = widget_results.widget_width - circle_radius * 2
-            local mouse_on_bar_x = lx - circle_radius
-            local value = math.max(0, math.min(1, mouse_on_bar_x / bar_width))
-
-            self.value = value
+            if (button == 1) then
+                local bar_width = widget_results.widget_width - circle_radius * 2
+                local mouse_on_bar_x = lx - circle_radius
+                local value = math.max(0, math.min(1, mouse_on_bar_x / bar_width))
+                self.value = value * max_value
+                on_change(self.value)
+            end
         end
     )
 
-    return progress_widget
+    return wibox.widget {
+        progress_widget,
+
+        direction = direction,
+        layout = wibox.container.rotate
+    }
 end
 
 
