@@ -1,6 +1,8 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
+local easing = require('rubato.easing')
+local rubato = require('rubato')
 local wibox = require('wibox')
 
 
@@ -14,6 +16,15 @@ local function get_tasklist_widget(style)
     local direction = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and 'horizontal' or 'vertical'
     -- Margin to size the selected tag bar
     local bar_margin_pos = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[style.bar_pos]
+    -- TODO Smooth transitions
+    --[[
+    local widget_width_transition = rubato.timed {
+        intro = 0,
+        duration = 0.1,
+        easing = easing.linear,
+        rate = 120
+    }
+    ]]
     --#endregion
 
 
@@ -56,7 +67,7 @@ local function get_tasklist_widget(style)
 
 
     --#region Callback when the whole tasklist is updated
-    local function tasklist_updated(w, buttons, label, data, objects, args)      
+    local function tasklist_updated(w, buttons, label, data, objects, args)
         -- Set widget size based on the number of opened clients
         if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
         then

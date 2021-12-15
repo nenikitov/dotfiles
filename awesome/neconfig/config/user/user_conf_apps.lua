@@ -18,7 +18,8 @@ local apps = {
     },
     -- Commands that will be executed on start up
     startup_apps = {
-        'nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers/ --save',
+        'nitrogen --restore',
+        --'nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers/ --save',
         'picom --xrender-sync-fence --experimental-backends',
         'sleep 1 && gammy',
         'numlockx on',
