@@ -16,14 +16,14 @@ local function get_taglist_widget(style)
     -- Margin to size the opened clients circles
     local dots_margin_pos = style.bar_pos
     -- Other margins to reduce opened clients distance
-    local dots_margin_others = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'top', 'bottom' }
+    local side_margins = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'top', 'bottom' }
     --#endregion
 
 
     --#region Layout (direction)
     local widget_layout = {
         layout = wibox.layout.fixed[direction],
-        spacing = style.spacing / 2
+        spacing = style.spacing
     }
     --#endregion
 
@@ -113,26 +113,31 @@ local function get_taglist_widget(style)
             },
             -- Main taglist widget
             {
-                widget = wibox.layout.fixed.horizontal,
-                fill_space = true,
-                spacing = style.spacing / 2,
+                widget = wibox.container.margin,
+                [side_margins[1]] = style.padding,
+                [side_margins[2]] = style.padding,
 
                 {
-                    id = 'icon_role',
-                    widget = wibox.widget.imagebox,
+                    widget = wibox.layout.fixed.horizontal,
+                    fill_space = true,
+
+                    {
+                        id = 'icon_role',
+                        widget = wibox.widget.imagebox,
+                    },
+                    {
+                        id = 'text_role',
+                        widget = wibox.widget.textbox,
+                        align = 'center'
+                    }
                 },
-                {
-                    id = 'text_role',
-                    widget = wibox.widget.textbox,
-                    align = 'center'
-                }
             },
             -- Number of opened clients decoration
             {
                 widget = wibox.container.margin,
                 [dots_margin_pos] = style.size - style.decoration_size,
-                [dots_margin_others[1]] = 5,
-                [dots_margin_others[2]] = 5,
+                [side_margins[1]] = 5,
+                [side_margins[2]] = 5,
 
                 {
                     id = 'client_num_role',

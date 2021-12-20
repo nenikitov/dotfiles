@@ -14,6 +14,8 @@ local function get_tasklist_widget(style)
     local direction = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and 'horizontal' or 'vertical'
     -- Margin to size the selected tag bar
     local bar_margin_pos = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[style.bar_pos]
+    -- Margins to the sides of the widget
+    local side_margins = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'top', 'bottom' }
     -- TODO Smooth transitions
     --[[
     local widget_width_transition = rubato.timed {
@@ -30,7 +32,7 @@ local function get_tasklist_widget(style)
     local widget_layout = {
         layout = wibox.layout.flex[direction],
         forced_width = style.max_size,
-        spacing = style.spacing / 2
+        spacing = style.spacing
     }
     --#endregion
 
@@ -103,28 +105,34 @@ local function get_tasklist_widget(style)
             },
             -- Main tasklist widget
             {
-                widget = wibox.container.place,
-                halign = contents_align,
+                widget = wibox.container.margin,
+                [side_margins[1]] = style.padding,
+                [side_margins[2]] = style.padding,
 
                 {
-                    layout = wibox.layout.fixed.horizontal,
-                    spacing = font_height / 8,
+                    widget = wibox.container.place,
+                    halign = contents_align,
 
                     {
-                        widget = wibox.container.place,
+                        layout = wibox.layout.fixed.horizontal,
+                        spacing = font_height / 8,
 
                         {
-                            widget = awful.widget.clienticon,
-                            forced_height = font_height,
-                            forced_width = font_height,
+                            widget = wibox.container.place,
+
+                            {
+                                widget = awful.widget.clienticon,
+                                forced_height = font_height,
+                                forced_width = font_height,
+                            }
+                        },
+                        {
+                            id = 'text_role',
+                            widget = wibox.widget.textbox,
                         }
-                    },
-                    {
-                        id = 'text_role',
-                        widget = wibox.widget.textbox,
                     }
                 }
-            }
+            },
         },
 
         update_callback = task_updated,

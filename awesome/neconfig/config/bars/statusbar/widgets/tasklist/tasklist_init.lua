@@ -14,6 +14,7 @@ local function get_tasklist(screen, bar_info)
         corner_radius = bar_info.corner_radius.sections,
         size = bar_info.contents_size,
         decoration_size = widget_info.decoration_size,
+        padding = widget_info.padding,
         spacing = widget_info.spacing,
         task_size = widget_info.task_size,
         max_size = widget_info.max_size,

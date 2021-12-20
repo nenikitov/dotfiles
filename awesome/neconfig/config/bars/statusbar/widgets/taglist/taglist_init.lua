@@ -14,6 +14,7 @@ local function get_taglist(screen, bar_info)
         size = bar_info.contents_size,
         decoration_size = widget_info.decoration_size,
         spacing = widget_info.spacing,
+        padding = widget_info.padding,
         max_client_count = widget_info.max_client_count
     }
 

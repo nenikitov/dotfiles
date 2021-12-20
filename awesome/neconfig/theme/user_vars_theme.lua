@@ -43,7 +43,7 @@ local general = {
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █
 local client = {
-    gaps = space(4),
+    gaps = space(3),
     try_to_force_icon_theme = true,
     icon_theme = 'Fluent-dark'
 }
@@ -88,16 +88,20 @@ local statusbar = {
         taglist = {
             -- Size of the selection bar and the number of clients circles
             decoration_size = size(2),
+            -- Padding inside a tag
+            padding = space(4),
             -- Spacing between tags
-            spacing = space(14),
+            spacing = space(0),
             -- Maximum number of client circles
             max_client_count = 5
         },
         tasklist = {
             -- Size of the selection bar
             decoration_size = size(2),
+            -- Padding inside a tag
+            padding = space(4),
             -- Spacing between tasks
-            spacing = space(14),
+            spacing = space(0),
             -- Maximum width of the task
             task_size = size(200),
             -- Maximum size of the taskbar
