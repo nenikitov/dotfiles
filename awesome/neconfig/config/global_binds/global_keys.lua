@@ -17,7 +17,7 @@ local alt_key = binds_user_conf.keys.alt_key
 local terminal = apps_user_conf.default_apps.terminal
 
 
--- Customize this
+
 -- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
 local function get_global_keys()

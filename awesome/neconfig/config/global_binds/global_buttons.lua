@@ -5,7 +5,7 @@ local gears = require('gears')
 local menu_user_conf = require('neconfig.config.user.menu_user_conf')
 
 
--- Customize this
+
 -- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
 local function get_global_buttons()

@@ -8,7 +8,7 @@ local binds_user_conf = require('neconfig.config.user.binds_user_conf')
 local super_key = binds_user_conf.keys.super_key
 
 
--- Customize this
+
 -- █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
 -- █▄▄ █▄▄ █ ██▄ █ ▀█  █    █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
 local function get_client_buttons()

@@ -1,8 +1,6 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
-local easing = require('rubato.easing')
-local rubato = require('rubato')
 local wibox = require('wibox')
 
 

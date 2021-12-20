@@ -2,7 +2,6 @@
 local dpi = require('beautiful.xresources').apply_dpi
 
 
--- Customize this
 -- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
 -- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
