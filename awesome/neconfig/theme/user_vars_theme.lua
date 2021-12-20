@@ -65,7 +65,7 @@ local statusbar = {
     -- Spacing between the bar, the screen and the sections
     margin = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corners = space(128),
+        corners = space(64),
         -- Margin between the bar side and the edge of the screen
         edge = client.gaps,
         -- Margin between the bar and its contents
@@ -105,7 +105,7 @@ local statusbar = {
             -- Maximum width of the task
             task_size = size(200),
             -- Maximum size of the taskbar
-            max_size = 1920 - 2 * space(160) - size(800),
+            max_size = 1920 - 2 * space(64) - size(800),
         },
         clock = {
             direction = 'vertical',
