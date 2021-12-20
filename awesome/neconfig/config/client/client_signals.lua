@@ -6,6 +6,7 @@ local menubar_utils = require('menubar.utils')
 -- Load custom modules
 local binds_user_conf = require('neconfig.config.user.binds_user_conf')
 local user_vars_theme = beautiful.user_vars_theme
+local widget_utils = require('neconfig.config.utils.widget_utils')
 require('neconfig.config.bars.titlebar.titlebar')
 
 
@@ -60,5 +61,16 @@ client.connect_signal(
     'unfocus',
     function(c)
         c.border_color = beautiful.border_normal
+    end
+)
+
+client.connect_signal(
+    'property::geometry',
+    function (c)
+        if c.maximized or c.fullscreen then
+            c.shape = gears.shape.rectangle
+        else
+            c.shape = widget_utils.r_rect(10)
+        end
     end
 )

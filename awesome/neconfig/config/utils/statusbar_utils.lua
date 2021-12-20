@@ -288,7 +288,28 @@ statusbar_utils.add_bar_section = function(args)
         placement = placement_func,
         offset = get_spacing(next_dir),
         type = 'toolbar',
+        -- border_color = "#00ff00",
+        -- border_width = 1,
     }
+
+    --[[
+    local border = wibox.widget.base.make_widget()
+    local cairo = require("lgi").cairo
+    function border:draw(_, cr, width, height)
+        cr:set_operator(cairo.Operator.SOURCE)
+        cr:set_source(gears.color.create_linear_pattern{
+            from = { 0, 0 },
+            to = { width, 0 },
+            stops = {
+                { 0, "#0000" },
+                { 1, "#000f" },
+            },
+        })
+        cr:paint()
+    end
+    awful.titlebar(c, { position = "bottom" }):set_widget(border)
+    ]]
+
     -- Apply the size
     -- ? May be needed : popup:_apply_size_now()
     -- Attach to the last section if exists
