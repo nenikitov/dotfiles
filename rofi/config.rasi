@@ -3,18 +3,19 @@ configuration {
     modi: "window,drun,run";
     terminal: "alacritty";
     case-sensitive: false;
-	cycle: true;
-	scroll-method: 0;
-	click-to-exit: true;
+    cycle: true;
+    scroll-method: 0;
+    click-to-exit: true;
+    matching: "prefix";
 
 
     /* Display */
     location: 0;
-	sidebar-mode: true;
+    sidebar-mode: true;
     show-icons: true;
     drun-display-format: "{name}[<span weight='light' size='small'><i> ({generic})</i></span>]";
     window-format: "{w}{c}";
-	monitor: "-5";
+    monitor: "-5";
 
 
     /* Appearence */
