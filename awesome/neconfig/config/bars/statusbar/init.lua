@@ -5,6 +5,7 @@ local wibox = require('wibox')
 -- Load custom modules
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local statusbar_utils = require('neconfig.config.utils.statusbar_utils')
+local statusbar_section = require('neconfig.config.utils.statusbar_section')
 
 -- Get variables
 -- From configs
