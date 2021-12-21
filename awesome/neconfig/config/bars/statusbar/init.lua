@@ -148,6 +148,17 @@ awful.screen.connect_for_each_screen(
             screen = s,
             info_table = s.statusbar.sections
         }
+        local t = statusbar_section {
+            widget = taglist,
+            screen = s,
+            direction = 'horizontal',
+            style = {
+                shape = require('gears').shape.rounded_rect,
+                bg = '#ff0000',
+                padding = 5
+            },
+            use_real_clip = true
+        }
         --#endregion
 
 
