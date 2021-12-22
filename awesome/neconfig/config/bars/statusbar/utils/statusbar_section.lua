@@ -56,6 +56,16 @@ local function get_placement(edge, position)
 
     return placements[edge][position]
 end
+local function get_widget_direction(edge)
+    local widget_directions = {
+        top = 'horizontal',
+        bottom = 'horizontal',
+        left = 'vertical',
+        right = 'vertical'
+    }
+
+    return widget_directions[edge]
+end
 --#endregion
 
 
@@ -69,41 +79,46 @@ function statusbar_section:new(args)
     local position = args.position or 'front'
     -- Additional variables
     local next_widget_dir = get_next_widget_direction(edge, position)
+    local popup_widgets
     -- Instance variables
     self.popups = {}
 
-    -- Generate popups for each widget inside widgets
+
+    -- Determine how to place all widgets
     if position == 'middle' then
+        -- Widgets should be placed in 1 popup at the center
         local all_widgets_together = wibox.layout.fixed.horizontal()
         for _, widget in ipairs(widgets) do
             all_widgets_together:add(widget)
         end
+
+        popup_widgets = { all_widgets_together }
+    else
+        -- Widgets should be placed in separate popups
+        popup_widgets = widgets
+    end
+
+
+    -- Generate popups for widgets
+    for index, widget in ipairs(popup_widgets) do
+        -- Generate a popup for the current widget
         local current_popup = statusbar_widget {
-            widget = all_widgets_together,
+            widget = widget,
             size = size
         }
-        local placement_func = awful.placement[get_placement(edge, position)]
-        current_popup:set_placement(placement_func)
-        self.popups[1] = current_popup
-    else
-        for index, widget in ipairs(widgets) do
-            local current_popup = statusbar_widget {
-                widget = widget,
-                size = size
-            }
-            self.popups[index] = current_popup
+        self.popups[index] = current_popup
 
-            if index == 1 then
-                -- First widget, place in the correct place and add padding
-                local placement_func = awful.placement[get_placement(edge, position)]
-                current_popup:set_placement(placement_func)
-            else
-                -- Any other widget, offset by using previous widget
-                local previous_popup = self.popups[index - 1]
-                previous_popup:_apply_size_now(true)
-                current_popup.preferred_positions = next_widget_dir
-                current_popup:move_next_to(previous_popup)
-            end
+        -- Place it
+        if index == 1 then
+            -- First widget, place in the correct place and add padding
+            local placement_func = awful.placement[get_placement(edge, position)]
+            current_popup:set_placement(placement_func)
+        else
+            -- Any other widget, offset by using previous widget
+            local previous_popup = self.popups[index - 1]
+            previous_popup:_apply_size_now(true)
+            current_popup.preferred_positions = next_widget_dir
+            current_popup:move_next_to(previous_popup)
         end
     end
 

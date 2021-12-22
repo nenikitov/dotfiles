@@ -18,6 +18,7 @@ local function get_size_constraint(direction)
         horizontal = 'height',
         vertical = 'width'
     }
+
     return size_constraints[direction]
 end
 
@@ -33,7 +34,6 @@ local function get_widget_dirs(direction)
         front = 'bottom',
         back = 'top'
     }
-
     local widget_directions = {
         horizontal = horizontal_widget_directions,
         vertical = vertical_widget_directions
