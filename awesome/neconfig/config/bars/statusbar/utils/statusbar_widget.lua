@@ -5,8 +5,10 @@ local wibox = require('wibox')
 
 
 -- Container for class members
-local statusbar_section = {}
+local statusbar_widget = {}
 
+
+--#region Helper methods
 
 ---Find the size parameter which should be forced for a direction
 ---@param direction string Direction of the widget ('vertical' or 'horizontal')
@@ -48,9 +50,10 @@ local function get_popup_shape(use_real_clip, target_shape)
         return nil
     end
 end
+--#endregion
 
 
-function statusbar_section:new(args)
+function statusbar_widget:new(args)
     -- Reference to arguments and default values
     local widget = args.widget
     local style = args.style or {}
@@ -90,6 +93,7 @@ function statusbar_section:new(args)
     -- Generate a popup
     self = awful.popup {
         screen = screen,
+        preferred_anchors = 'middle',
         bg = '#00000000',
         shape = popup_shape,
         widget = final_widget,
@@ -108,5 +112,5 @@ end
 
 return setmetatable(
     {},
-    { __call = function(_,...) return statusbar_section:new(...) end }
+    { __call = function(_,...) return statusbar_widget:new(...) end }
 )

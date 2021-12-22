@@ -1,11 +1,9 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
-local wibox = require('wibox')
 -- Load custom modules
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local statusbar_utils = require('neconfig.config.utils.statusbar_utils')
-local statusbar_section = require('neconfig.config.utils.statusbar_section')
 
 -- Get variables
 -- From configs
@@ -165,6 +163,10 @@ awful.screen.connect_for_each_screen(
         }
         -- Notifications pane
         -- TODO Add notifications pane
+        local statusbar_section = require('neconfig.config.bars.statusbar.utils.statusbar_section')
+        local t = statusbar_section {
+            widgets = { taglist, keyboard_layout, textclock }
+        }
         -- System tools
         require('neconfig.config.popups.sys_tools.init') {
             position = {
