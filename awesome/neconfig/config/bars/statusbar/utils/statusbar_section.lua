@@ -58,6 +58,7 @@ function statusbar_section:new(args)
             self.popups[index]:set_placement(awful.placement.centered)
         else
             -- Any other widget, offset by using previous widget
+            self.popups[index - 1]:_apply_size_now(true)
             self.popups[index]:move_next_to(self.popups[index - 1])
         end
     end
