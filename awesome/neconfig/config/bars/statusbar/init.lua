@@ -170,7 +170,7 @@ awful.screen.connect_for_each_screen(
                 keyboard_layout,
                 textclock
             },
-            edge = 'bottom',
+            edge = 'top',
             position = 'middle'
         }
         -- System tools
