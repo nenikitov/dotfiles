@@ -165,7 +165,13 @@ awful.screen.connect_for_each_screen(
         -- TODO Add notifications pane
         local statusbar_section = require('neconfig.config.bars.statusbar.utils.statusbar_section')
         local t = statusbar_section {
-            widgets = { taglist, keyboard_layout, textclock }
+            widgets = {
+                taglist,
+                keyboard_layout,
+                textclock
+            },
+            edge = 'bottom',
+            position = 'middle'
         }
         -- System tools
         require('neconfig.config.popups.sys_tools.init') {

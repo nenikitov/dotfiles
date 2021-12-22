@@ -29,6 +29,33 @@ local function get_next_widget_direction(edge, position)
 
     return widget_directions[edge][position]
 end
+
+local function get_placement(edge, position)
+    local placements = {
+        top = {
+            front = 'top_left',
+            middle = 'top',
+            back = 'top_right'
+        },
+        bottom = {
+            front = 'bottom_left',
+            middle = 'bottom',
+            back = 'bottom_right'
+        },
+        left = {
+            front = 'top_left',
+            middle = 'left',
+            back = 'bottom_left'
+        },
+        right = {
+            front = 'top_right',
+            middle = 'right',
+            back = 'bottom_right'
+        }
+    }
+
+    return placements[edge][position]
+end
 --#endregion
 
 
@@ -39,27 +66,29 @@ function statusbar_section:new(args)
     local widget_style = args.style or {}
     local size = args.size
     local edge = args.edge or 'top'
-    local position = args.position or 'right'
+    local position = args.position or 'back'
     -- Additional variables
     local next_widget_dir = get_next_widget_direction(edge, position)
-    local first_widget_placed = false
     -- Instance variables
     self.popups = {}
 
     -- Generate popups for each widget inside widgets
     for index, widget in ipairs(widgets) do
-        self.popups[index] = statusbar_widget {
+        local current_popup = statusbar_widget {
             widget = widget,
             size = size
         }
+        self.popups[index] = current_popup
 
         if index == 1 then
-            -- First widget, add padding
-            self.popups[index]:set_placement(awful.placement.centered)
+            -- First widget, place in the correct place and add padding
+            local placement_func = awful.placement[get_placement(edge, position)]
+            self.popups[index]:set_placement(placement_func)
         else
             -- Any other widget, offset by using previous widget
-            self.popups[index - 1]:_apply_size_now(true)
-            self.popups[index]:move_next_to(self.popups[index - 1])
+            local previous_popup = self.popups[index - 1]
+            previous_popup:_apply_size_now(true)
+            current_popup:move_next_to(previous_popup)
         end
     end
 
