@@ -171,7 +171,7 @@ awful.screen.connect_for_each_screen(
                 textclock
             },
             edge = 'top',
-            position = 'middle'
+            position = 'left'
         }
         -- System tools
         require('neconfig.config.popups.sys_tools.init') {

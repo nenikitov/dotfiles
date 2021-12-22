@@ -79,6 +79,7 @@ function statusbar_section:new(args)
     local position = args.position or 'front'
     -- Additional variables
     local next_widget_dir = get_next_widget_direction(edge, position)
+    local widget_dir = get_widget_direction(edge)
     local popup_widgets
     -- Instance variables
     self.popups = {}
@@ -87,12 +88,11 @@ function statusbar_section:new(args)
     -- Determine how to place all widgets
     if position == 'middle' then
         -- Widgets should be placed in 1 popup at the center
-        local all_widgets_together = wibox.layout.fixed.horizontal()
-        for _, widget in ipairs(widgets) do
-            all_widgets_together:add(widget)
-        end
-
-        popup_widgets = { all_widgets_together }
+        popup_widgets = {
+            wibox.layout.fixed[widget_dir](
+                table.unpack(widgets)
+            )
+        }
     else
         -- Widgets should be placed in separate popups
         popup_widgets = widgets
@@ -104,7 +104,8 @@ function statusbar_section:new(args)
         -- Generate a popup for the current widget
         local current_popup = statusbar_widget {
             widget = widget,
-            size = size
+            size = size,
+            direction = widget_dir
         }
         self.popups[index] = current_popup
 
