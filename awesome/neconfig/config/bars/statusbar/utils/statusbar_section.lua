@@ -66,6 +66,18 @@ local function get_widget_direction(edge)
 
     return widget_directions[edge]
 end
+local function get_offset(edge, postion, offset)
+    offset = offset or 10
+
+    local offset_param =
+        (get_widget_direction(edge) == 'horizontal') and 'x' or 'y'
+    local offset_sign =
+        (postion == 'back') and -1 or 1
+
+    return {
+        [offset_param] = offset * offset_sign
+    }
+end
 --#endregion
 
 
@@ -119,6 +131,7 @@ function statusbar_section:new(args)
             local previous_popup = self.popups[index - 1]
             previous_popup:_apply_size_now(true)
             current_popup.preferred_positions = next_widget_dir
+            current_popup.offset = get_offset(edge, position, style.offset)
             current_popup:move_next_to(previous_popup)
         end
     end
