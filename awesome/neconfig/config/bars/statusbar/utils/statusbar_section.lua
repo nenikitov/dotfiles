@@ -30,7 +30,7 @@ local function get_next_widget_direction(edge, position)
 
     return widget_directions[edge][position]
 end
-local function get_placement(edge, position)
+local function get_first_widget_placement_name(edge, position)
     local placements = {
         top = {
             front = 'top_left',
@@ -66,17 +66,19 @@ local function get_widget_direction(edge)
 
     return widget_directions[edge]
 end
-local function get_offset(edge, postion, offset)
-    offset = offset or 10
+local function get_offset_spacing(edge, position, spacing)
+    spacing = spacing or 10
 
     local offset_param =
         (get_widget_direction(edge) == 'horizontal') and 'x' or 'y'
     local offset_sign =
-        (postion == 'back') and -1 or 1
+        (position == 'back') and -1 or 1
 
     return {
-        [offset_param] = offset * offset_sign
+        [offset_param] = spacing * offset_sign
     }
+end
+local function get_first_widget_margins(edge, position, style)
 end
 --#endregion
 
@@ -117,21 +119,29 @@ function statusbar_section:new(args)
         local current_popup = statusbar_widget {
             widget = widget,
             size = size,
-            direction = widget_dir
+            direction = widget_dir,
+            style = widget_style
         }
         self.popups[index] = current_popup
 
         -- Place it
         if index == 1 then
             -- First widget, place in the correct place and add padding
-            local placement_func = awful.placement[get_placement(edge, position)]
+            local placement_func = function(widget)
+                local corner = get_first_widget_placement_name(edge, position)
+                local margins = get_first_widget_margins(edge, position, style)
+                return awful.placement[corner](
+                    widget,
+                    { margins = margins }
+                )
+            end
             current_popup:set_placement(placement_func)
         else
             -- Any other widget, offset by using previous widget
             local previous_popup = self.popups[index - 1]
             previous_popup:_apply_size_now(true)
             current_popup.preferred_positions = next_widget_dir
-            current_popup.offset = get_offset(edge, position, style.offset)
+            current_popup.offset = get_offset_spacing(edge, position, style.spacing)
             current_popup:move_next_to(previous_popup)
         end
     end
