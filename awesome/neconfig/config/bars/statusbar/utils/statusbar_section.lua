@@ -67,7 +67,7 @@ local function get_widget_direction(edge)
     return widget_directions[edge]
 end
 local function get_offset_spacing(edge, position, spacing)
-    spacing = spacing or 10
+    spacing = spacing or 0
 
     local offset_param =
         (get_widget_direction(edge) == 'horizontal') and 'x' or 'y'
@@ -78,7 +78,23 @@ local function get_offset_spacing(edge, position, spacing)
         [offset_param] = spacing * offset_sign
     }
 end
-local function get_first_widget_margins(edge, position, style)
+local function get_first_widget_margins(edge, position, margins)
+    local corner_margins = {
+        horizontal = {
+            front = 'left',
+            back = 'right'
+        },
+        vertical = {
+            front = 'top',
+            back = 'bottom'
+        }
+    }
+    local corner_margin = corner_margins[get_widget_direction(edge)][position]
+
+    return {
+        [corner_margin] = margins.corner,
+        [edge] = margins.edge
+    }
 end
 --#endregion
 
@@ -129,7 +145,7 @@ function statusbar_section:new(args)
             -- First widget, place in the correct place and add padding
             local placement_func = function(widget)
                 local corner = get_first_widget_placement_name(edge, position)
-                local margins = get_first_widget_margins(edge, position, style)
+                local margins = get_first_widget_margins(edge, position, style.margins)
                 return awful.placement[corner](
                     widget,
                     { margins = margins }
