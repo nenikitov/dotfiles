@@ -79,6 +79,8 @@ local function get_offset_spacing(edge, position, spacing)
     }
 end
 local function get_first_widget_margins(edge, position, margins)
+    margins = margins or { corner = 0, edge = 0 }
+
     local corner_margins = {
         horizontal = {
             front = 'left',
