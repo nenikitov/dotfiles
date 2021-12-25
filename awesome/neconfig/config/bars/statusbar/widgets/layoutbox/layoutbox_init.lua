@@ -7,24 +7,29 @@ local layoutbox_buttons = require('neconfig.config.bars.statusbar.widgets.layout
 
 
 -- Generate layout box widget
-local function get_layoutbox(screen, bar_info)
+local function get_layoutbox(screen)
+    local font_height = beautiful.get_font_height(beautiful.font)
     -- Construct widget
     local layoutbox = awful.widget.layoutbox {
-        screen = screen,
+        screen = screen
     }
 
     -- Layoutbox does not center itself with `halign` or `valign`, so I center it manually
     return wibox.widget {
-        widget = wibox.container.background,
-        forced_height = bar_info.contents_size * 0.75,
-        forced_width = bar_info.contents_size * 0.75,
-        buttons = layoutbox_buttons,
-
         {
+            layoutbox,
+
             widget = wibox.container.place,
 
-            layoutbox
-        }
+            forced_height = font_height * 0.75,
+            forced_width = font_height * 0.75
+
+        },
+
+
+        widget = wibox.container.background,
+
+        buttons = layoutbox_buttons
     }
 end
 
