@@ -157,13 +157,24 @@ function statusbar_section:new(args)
 
 
     -- Generate popups for widgets
-    for index, widget in ipairs(popup_widgets) do
+    for index, widget_obj in ipairs(popup_widgets) do
+        -- Get if the current widget contains special tags
+        local widget_to_place
+        if widget_obj.visible then
+            widget_to_place = widget_obj
+        else
+            widget_to_place = widget_obj.widget
+        end
+
         -- Generate a popup for the current widget
         local current_popup = statusbar_widget {
-            widget = widget,
-            size = size,
+            widget = widget_to_place,
+            size = widget_obj.size or size,
             direction = widget_dir,
-            style = widget_style,
+            style = widget_obj.style or widget_style,
+            use_real_clip = widget_obj.user_real_clip,
+            force_interactive = widget_obj.force_interactive,
+            type = widget_obj.type,
             screen = screen
             --TODO add force interactive and other stuff
         }
