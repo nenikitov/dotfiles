@@ -7,7 +7,7 @@ local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_
 local statusbar = {
     -- Show the status bar by default (statusbar can be toggled with a keyboard shortcut)
     visible = true,
-
+    --[[
     widget_layout = {
         front = {
             statusbar_widget_list.menu,
@@ -56,7 +56,7 @@ local statusbar = {
             sound_card = 'sofhdadsp'
         }
     },
-
+    ]]
     -- Widget settings
     widgets = {
         -- Menu widget
