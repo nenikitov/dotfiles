@@ -22,7 +22,7 @@ local bar_param_offset = (bar_info_theme.position == 'top' or bar_info_theme.pos
 
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')(bar_info_theme)
-local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu')
+local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu_init')
 local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info_theme)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
 local notification_center_button = require('neconfig.config.bars.statusbar.widgets.notification_center_button.notification_center_button_init')
