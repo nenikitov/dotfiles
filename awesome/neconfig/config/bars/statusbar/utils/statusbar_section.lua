@@ -167,6 +167,12 @@ function statusbar_section:new(args)
     return self
 end
 
+function statusbar_section:set_visible(visibility)
+    for _, popup in ipairs(self.popups) do
+        popup.visible = visibility
+    end
+end
+
 return setmetatable(
     {},
     { __call = function(_,...) return statusbar_section:new(...) end }
