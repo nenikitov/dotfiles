@@ -103,9 +103,9 @@ end
 
 function statusbar_section:new(args)
     -- Reference to arguments and default values
-    local widgets = args.widgets
+    local widgets = args.widgets or {}
     local style = args.style or {}
-    local widget_style = args.style or {}
+    local widget_style = args.widget_style or {}
     local size = args.size
     local edge = args.edge or 'top'
     local position = args.position or 'front'
