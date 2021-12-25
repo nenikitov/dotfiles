@@ -41,8 +41,10 @@ local function get_widget_dirs(direction)
 
     return widget_directions[direction]
 end
-
-
+---Find the shape of the popup from use real clip setting
+---@param use_real_clip boolean If the shape should be really cut of with no anti-aliasing
+---@param target_shape function The function of the shape that the popup supposed to be
+---@return function shape The correct shape of the popup
 local function get_popup_shape(use_real_clip, target_shape)
     if use_real_clip == nil or use_real_clip then
         return target_shape
@@ -53,6 +55,9 @@ end
 --#endregion
 
 
+---Create a new statusbar widget in a popup
+---@param args table Widget, style, size, direction, use_real_clip, force_interactive, type, screen
+---@return table self A new instance of the popup
 function statusbar_widget:new(args)
     -- Reference to arguments and default values
     local widget = args.widget

@@ -10,6 +10,10 @@ local statusbar_section = {}
 
 
 --#region Helper methods
+---Get the direction to the next widget in the section
+---@param edge string Edge of the screen where the statusbar is attached (top, bottom, left, or right)
+---@param position string Position of the current section (front, middle, or back)
+---@return string direction (top, bottom, left, or right)
 local function get_next_widget_direction(edge, position)
     local horizontal_widget_directions = {
         front = 'right',
@@ -30,6 +34,10 @@ local function get_next_widget_direction(edge, position)
 
     return widget_directions[edge][position]
 end
+---Get the awful placement function name
+---@param edge string Edge of the screen where the statusbar is attached (top, bottom, left, or right)
+---@param position string Position of the current section (front, middle, or back)
+---@return string placement_name (top_left, top, top_right, ...)
 local function get_first_widget_placement_name(edge, position)
     local placements = {
         top = {
@@ -56,6 +64,9 @@ local function get_first_widget_placement_name(edge, position)
 
     return placements[edge][position]
 end
+---Get the direction of the widgets in the statusbar
+---@param edge string Edge of the screen where the statusbar is attached (top, bottom, left, or right)
+---@return string direction (horizontal or vertical)
 local function get_widget_direction(edge)
     local widget_directions = {
         top = 'horizontal',
@@ -66,6 +77,11 @@ local function get_widget_direction(edge)
 
     return widget_directions[edge]
 end
+---Calculate spacing in between popups of the sections based on screen position
+---@param edge string Edge of the screen where the statusbar is attached (top, bottom, left, or right)
+---@param position string Position of the current section (front, middle, or back)
+---@param spacing number Target spacing between widgets
+---@return table spacing Spacing table
 local function get_offset_spacing(edge, position, spacing)
     spacing = spacing or 0
 
@@ -78,6 +94,11 @@ local function get_offset_spacing(edge, position, spacing)
         [offset_param] = spacing * offset_sign
     }
 end
+---Calculate margins to offset the first popup based on screen position
+---@param edge string Edge of the screen where the statusbar is attached (top, bottom, left, or right)
+---@param position string Position of the current section (front, middle, or back)
+---@param margins table Margins to the corner and edge
+---@return table margins Margin table
 local function get_first_widget_margins(edge, position, margins)
     margins = margins or { corner = 0, edge = 0 }
 
@@ -101,6 +122,9 @@ end
 --#endregion
 
 
+---Create a new statusbar sections in popups
+---@param args table Widgets, style, widget_style, size, edge, position, screen
+---@return table self A new instance of the popup
 function statusbar_section:new(args)
     -- Reference to arguments and default values
     local widgets = args.widgets or {}
@@ -109,6 +133,7 @@ function statusbar_section:new(args)
     local size = args.size
     local edge = args.edge or 'top'
     local position = args.position or 'front'
+    local screen = args.screen
     -- Additional variables
     local next_widget_dir = get_next_widget_direction(edge, position)
     local widget_dir = get_widget_direction(edge)
@@ -138,7 +163,9 @@ function statusbar_section:new(args)
             widget = widget,
             size = size,
             direction = widget_dir,
-            style = widget_style
+            style = widget_style,
+            screen = screen
+            --TODO add force interactive and other stuff
         }
         self.popups[index] = current_popup
 
@@ -166,7 +193,8 @@ function statusbar_section:new(args)
 
     return self
 end
-
+---Update the visibility of the whole section
+---@param visibility boolean New visibility
 function statusbar_section:set_visible(visibility)
     for _, popup in ipairs(self.popups) do
         popup.visible = visibility
