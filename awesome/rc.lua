@@ -2,12 +2,16 @@
 pcall(require, 'luarocks.loader')
 -- Load libraries
 local awful = require('awful')
-require('awful.autofocus')
 local beautiful = require('beautiful')
 local menubar = require('menubar')
+local naughty = require('naughty')
 
 -- Init error handling
 require('neconfig.config.main.error_handling')
+
+
+-- TODO implement if statement to enable / disable from config
+require('awful.autofocus')
 
 local desktop_user_conf = require('neconfig.config.user.desktop_user_conf')
 local apps_user_conf = require('neconfig.config.user.apps_user_conf')
