@@ -3,27 +3,53 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 local gears = require('gears')
 local wibox = require('wibox')
--- Load custom modules
-local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
+-- Get variables
+local font_height = beautiful.get_font_height(beautiful.font)
 
-local function get_taglist_widget(style)
-    --#region Precompute values
-    -- Direction of of the tags
-    local direction = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and 'horizontal' or 'vertical'
-    -- Margin to size the selected tag bar
-    local bar_margin_pos = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[style.bar_pos]
-    -- Margin to size the opened clients circles
-    local dots_margin_pos = style.bar_pos
-    -- Other margins to reduce opened clients distance
-    local side_margins = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'top', 'bottom' }
-    --#endregion
+local function get_opposite_side(side)
+    local opposite_sides = {
+        top = 'bottom',
+        bottom = 'top',
+        left = 'right',
+        right = 'left'
+    }
+    return opposite_sides[side]
+end
+
+local function get_opposite_direction(direction)
+    local opposite_directions = {
+        horizontal = 'vertical',
+        vertical = 'horizontal'
+    }
+    return opposite_directions[direction]
+end
+
+local function get_taglist_widget(args, style)
+    -- Reference to arguments and default values
+    args = args or {}
+    local direction = args.direction or 'horizontal'
+    local flip_decorations = args.flip_decorations or false
+    local decoration_size = args.decoration_size or font_height * 0.075
+    local show_client_count
+    if args.show_client_count == nil then
+        show_client_count = true
+    else
+        show_client_count = args.show_client_count
+    end
+    local tag_spacing = args.spacing or 0
+    local tag_padding = args.padding or font_height * 0.1
+    local max_client_count = args.max_client_count or 5
+    -- Additional variables
+    local opposite_direction = get_opposite_direction(direction)
+
+    local side_margins = (direction == 'horizontal') and { 'left', 'right' } or { 'top', 'bottom' }
 
 
     --#region Layout (direction)
     local widget_layout = {
         layout = wibox.layout.fixed[direction],
-        spacing = style.spacing
+        spacing = tag_spacing
     }
     --#endregion
 
@@ -32,15 +58,13 @@ local function get_taglist_widget(style)
     local function tag_updated(self, t, index, tags)
         -- Count clients
         local clients_num = #t:clients()
-        local dots_num = math.min(clients_num, style.max_client_count)
+        local dots_num = math.min(clients_num, max_client_count)
 
         --#region Update the color of the 'selected_bar_role'
         local selected_bar_role = self:get_children_by_id('selected_bar_role')[1]
-        if (t.selected)
-        then
+        if (t.selected) then
             selected_bar_role.bg = beautiful.fg_focus
-        elseif (clients_num > 0)
-        then
+        elseif (clients_num > 0) then
             selected_bar_role.bg = beautiful.fg_normal
         else
             selected_bar_role.bg = '#0000'
@@ -48,13 +72,11 @@ local function get_taglist_widget(style)
         --#endregion
 
         --#region Update the widget that shows the number of opened clients on a tag
-        if (statusbar_user_conf.widgets.taglist.show_client_count)
-        then
+        if (show_client_count) then
             local client_num_role = self:get_children_by_id('client_num_role')[1]
             -- Generate circle widget
             local circle_bg
-            if (t.selected)
-            then
+            if (t.selected) then
                 circle_bg = beautiful.fg_focus
             else
                 circle_bg = beautiful.fg_normal
@@ -65,7 +87,7 @@ local function get_taglist_widget(style)
                 widget = wibox.container.background,
             }
             -- Clear the widget with the circles
-            for i = 0, style.max_client_count, 1
+            for i = 0, max_client_count, 1
             do
                 client_num_role:remove(1)
             end
@@ -78,7 +100,7 @@ local function get_taglist_widget(style)
         --#endregion
 
         --#region Update tooltip
-        self.tooltip_popup:set_text('[ #' .. index .. '. ' .. t.name .. ' ] -- ' .. clients_num .. ' open')
+        self.tooltip_popup:set_text('[ #' .. index .. '. ' .. t.name .. ' ] — ' .. clients_num .. ' open')
         --#endregion
     end
     local function tag_created(self, t, index, tags)
@@ -92,58 +114,56 @@ local function get_taglist_widget(style)
 
 
     --#region Template for the sub widgets
+    local bar_widget = {
+        widget = wibox.container.background,
+
+        id = 'selected_bar_role',
+        bg = '#0000',
+        forced_height = decoration_size,
+        forced_width = decoration_size
+    }
+    local circles_widget = {
+        layout = wibox.layout.flex[direction],
+
+        id = 'client_num_role',
+        forced_width = decoration_size,
+        forced_height = decoration_size
+    }
+    local main_widget = {
+        {
+            {
+                id = 'icon_role',
+                widget = wibox.widget.imagebox,
+            },
+            {
+                id = 'text_role',
+                widget = wibox.widget.textbox,
+                align = 'center'
+            },
+
+            widget = wibox.layout.fixed.horizontal,
+
+            fill_space = true,
+        },
+
+        widget = wibox.container.margin,
+
+        [side_margins[1]] = tag_padding,
+        [side_margins[2]] = tag_padding
+    }
+    local first_widget = flip_decorations and circles_widget or bar_widget
+    local last_widget = flip_decorations and bar_widget or circles_widget
     local widget_template = {
         id = 'background_role',
         widget = wibox.container.background,
         forced_height = beautiful.get_font_height(beautiful.font) * 1.25,
 
         {
-            widget = wibox.layout.stack,
+            first_widget,
+            main_widget,
+            last_widget,
 
-            -- Selected tag decoration
-            {
-                widget = wibox.container.margin,
-                [bar_margin_pos] = style.size - style.decoration_size,
-
-                {
-                    widget = wibox.container.background,
-                    bg = '#0000',
-                    id = 'selected_bar_role',
-                }
-            },
-            -- Main taglist widget
-            {
-                widget = wibox.container.margin,
-                [side_margins[1]] = style.padding,
-                [side_margins[2]] = style.padding,
-
-                {
-                    widget = wibox.layout.fixed.horizontal,
-                    fill_space = true,
-
-                    {
-                        id = 'icon_role',
-                        widget = wibox.widget.imagebox,
-                    },
-                    {
-                        id = 'text_role',
-                        widget = wibox.widget.textbox,
-                        align = 'center'
-                    }
-                },
-            },
-            -- Number of opened clients decoration
-            {
-                widget = wibox.container.margin,
-                [dots_margin_pos] = style.size - style.decoration_size,
-                [side_margins[1]] = 5,
-                [side_margins[2]] = 5,
-
-                {
-                    id = 'client_num_role',
-                    layout = wibox.layout.flex[direction],
-                }
-            }
+            layout = wibox.layout.align[opposite_direction],
         },
 
         update_callback = tag_updated,

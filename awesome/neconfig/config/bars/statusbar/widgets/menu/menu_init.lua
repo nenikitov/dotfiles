@@ -1,7 +1,6 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
-
 -- Load custom modules
 local menu_user_conf = require('neconfig.config.user.menu_user_conf')
 
@@ -9,7 +8,7 @@ local menu_user_conf = require('neconfig.config.user.menu_user_conf')
 local font_height = beautiful.get_font_height(beautiful.font)
 
 
--- Construct the widget
+-- Construct menu widget
 local launcher = awful.widget.launcher {
     image = beautiful.system_icon,
     menu = menu_user_conf

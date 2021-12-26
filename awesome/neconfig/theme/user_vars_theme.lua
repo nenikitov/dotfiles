@@ -36,7 +36,7 @@ end
 -- █▄█ ██▄ █ ▀█ ██▄ █▀▄ █▀█ █▄▄
 local general = {
     font = 'Jost* Regular',
-    text_size = size(11)
+    text_size = size(20)
 }
 
 

@@ -67,7 +67,7 @@ local statusbar = {
         -- Run menu widget
         run_menu = {
             -- Should be shown
-            visible = false
+            visible = true
         },
         -- Current desktop layout
         layoutbox = {

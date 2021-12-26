@@ -2,7 +2,6 @@
 local awful = require('awful')
 local beautiful = require('beautiful')
 local wibox = require('wibox')
-
 -- Load custom modules
 local apps_user_conf = require('neconfig.config.user.apps_user_conf')
 
@@ -10,7 +9,7 @@ local apps_user_conf = require('neconfig.config.user.apps_user_conf')
 local font_height = beautiful.get_font_height(beautiful.font)
 
 
--- Construct the widget
+-- Construct run menu widget
 return wibox.widget {
     widget = wibox.widget.textbox,
 
