@@ -5,9 +5,7 @@ local taglist_buttons = require('neconfig.config.bars.statusbar.widgets.taglist.
 
 
 -- Construct taglist widget
-local function get_taglist(screen, bar_info, args)
-    -- Get style from the theme
-    local widget_info = bar_info.widgets.taglist
+local function get_taglist(screen, args)
     -- Get custom widget properties
     local taglist_widget = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_widget')(args)
 

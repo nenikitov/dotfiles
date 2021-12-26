@@ -7,16 +7,12 @@ local wibox = require('wibox')
 -- Get variables
 local font_height = beautiful.get_font_height(beautiful.font)
 
-local function get_opposite_side(side)
-    local opposite_sides = {
-        top = 'bottom',
-        bottom = 'top',
-        left = 'right',
-        right = 'left'
-    }
-    return opposite_sides[side]
-end
 
+--#region Helper methods
+
+---Get the opposite direction to a direction
+---@param direction string 'vertical' or 'horizontal'
+---@return string direction Direction opposite to a given direction
 local function get_opposite_direction(direction)
     local opposite_directions = {
         horizontal = 'vertical',
@@ -24,10 +20,14 @@ local function get_opposite_direction(direction)
     }
     return opposite_directions[direction]
 end
+--#endregion
 
-local function get_taglist_widget(args, style)
+
+---Construct taglist widget
+---@param args table Arguments with different settings
+---@return table taglist_widget Widget
+local function get_taglist_widget(args)
     -- Reference to arguments and default values
-    args = args or {}
     local direction = args.direction or 'horizontal'
     local flip_decorations = args.flip_decorations or false
     local decoration_size = args.decoration_size or font_height * 0.075
@@ -37,8 +37,8 @@ local function get_taglist_widget(args, style)
     else
         show_client_count = args.show_client_count
     end
-    local tag_spacing = args.spacing or 0
-    local tag_padding = args.padding or font_height * 0.1
+    local tag_spacing = args.tag_spacing or 0
+    local tag_padding = args.tag_padding or font_height * 0.1
     local max_client_count = args.max_client_count or 5
     -- Additional variables
     local opposite_direction = get_opposite_direction(direction)

@@ -34,7 +34,20 @@ local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_too
 awful.screen.connect_for_each_screen(
     function(s)
         --#region Generate screen specific widgets
-        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, bar_info_theme)
+        local taglist_args = {
+            direction =
+                (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom')
+                and 'horizontal' or 'vertical',
+            flip_decorations =
+                (bar_info_theme.position == 'bottom' or bar_info_theme.position == 'right'),
+            decoration_size = bar_info_theme.widgets.taglist.decoration_size,
+            -- TODO move to separate file
+            show_client_count = statusbar_user_conf.widgets.taglist.show_client_count,
+            tag_spacing = bar_info_theme.widgets.taglist.spacing,
+            tag_padding = bar_info_theme.widgets.taglist.padding,
+            max_client_count = bar_info_theme.widgets.taglist.max_client_count
+        }
+        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_args)
         local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info_theme)
         local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, bar_info_theme)
         --#endregion
