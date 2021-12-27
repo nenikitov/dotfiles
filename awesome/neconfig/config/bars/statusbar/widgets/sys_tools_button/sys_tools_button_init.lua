@@ -1,14 +1,14 @@
 -- Load libraries
 local wibox = require('wibox')
-
--- Get variables
+-- Load custom modules
 local icons = require('neconfig.config.utils.icons')
 
--- Construct widget
+
+-- Construct system tools button widget
 return wibox.widget {
+    widget = wibox.widget.textbox,
+
     text = icons.toolbox,
     align = 'center',
-    valign = 'center',
-
-    widget = wibox.widget.textbox
+    valign = 'center'
 }
