@@ -1,7 +1,7 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local tasklist_buttons = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_buttons')()
+local tasklist_buttons = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_buttons')
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
 
