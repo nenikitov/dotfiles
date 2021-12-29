@@ -1,5 +1,4 @@
 -- Load libraries
-local gears = require('gears')
 local awful = require('awful')
 
 

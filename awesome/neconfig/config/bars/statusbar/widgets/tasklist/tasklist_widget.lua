@@ -1,9 +1,20 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
+local gears = require('gears')
 local wibox = require('wibox')
 
+-- Get variables
+local font_height = beautiful.get_font_height(beautiful.font)
 
+
+--#region Helper methods
+--#endregion
+
+
+---Construct tasklist widget
+---@param style table Arguments with different settings
+---@return table tasklist_widget Widget
 local function get_tasklist_widget(style)
     --#region Precompute values
     -- Height based on font size
