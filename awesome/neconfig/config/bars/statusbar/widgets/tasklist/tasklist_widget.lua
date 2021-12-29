@@ -9,16 +9,41 @@ local font_height = beautiful.get_font_height(beautiful.font)
 
 
 --#region Helper methods
+
+---Get the opposite direction to a direction
+---@param direction string 'vertical' or 'horizontal'
+---@return string direction Direction opposite to a given direction
+local function get_opposite_direction(direction)
+    local opposite_directions = {
+        horizontal = 'vertical',
+        vertical = 'horizontal'
+    }
+    return opposite_directions[direction]
+end
 --#endregion
 
 
 ---Construct tasklist widget
 ---@param style table Arguments with different settings
 ---@return table tasklist_widget Widget
-local function get_tasklist_widget(style)
+local function get_tasklist_widget(style, args)
+    --TODO remove this later
+    args = args or {}
+    -- Reference to arguments and default values
+    local direction = args.direction or 'horizontal'
+    local flip_decorations = args.flip_decorations or false
+    local decoration_size = args.decoration_size or font_height * 0.075
+    local task_spacing = args.task_spacing or 0
+    local task_padding = args.task_padding or font_height * 0.1
+    local center_name = args.center_name
+    -- Additional variables
+    local opposite_direction = get_opposite_direction(direction)
+    local side_margins = (direction == 'horizontal') and { 'left', 'right' } or { 'top', 'bottom' }
+    local contents_align = center_name and 'center' or 'left'
+
+
     --#region Precompute values
     -- Height based on font size
-    local font_height = beautiful.get_font_height(beautiful.font)
     local height = font_height * 1.25
     local contents_align = style.show_task_title and 'left' or 'center'
     -- Direction of of the tasks

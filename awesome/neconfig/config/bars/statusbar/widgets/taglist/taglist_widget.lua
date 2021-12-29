@@ -42,7 +42,6 @@ local function get_taglist_widget(args)
     local max_client_count = args.max_client_count or 5
     -- Additional variables
     local opposite_direction = get_opposite_direction(direction)
-
     local side_margins = (direction == 'horizontal') and { 'left', 'right' } or { 'top', 'bottom' }
 
 
