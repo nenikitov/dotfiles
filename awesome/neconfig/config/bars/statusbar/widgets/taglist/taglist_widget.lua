@@ -153,10 +153,6 @@ local function get_taglist_widget(args)
     local first_widget = flip_decorations and circles_widget or bar_widget
     local last_widget = flip_decorations and bar_widget or circles_widget
     local widget_template = {
-        id = 'background_role',
-        widget = wibox.container.background,
-        forced_height = beautiful.get_font_height(beautiful.font) * 1.25,
-
         {
             first_widget,
             main_widget,
@@ -164,6 +160,11 @@ local function get_taglist_widget(args)
 
             layout = wibox.layout.align[opposite_direction],
         },
+
+        widget = wibox.container.background,
+
+        id = 'background_role',
+        forced_height = font_height * 1.25,
 
         update_callback = tag_updated,
         create_callback = tag_created

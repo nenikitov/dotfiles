@@ -35,39 +35,18 @@ local function get_tasklist_widget(style, args)
     local decoration_size = args.decoration_size or font_height * 0.075
     local task_spacing = args.task_spacing or 0
     local task_padding = args.task_padding or font_height * 0.1
-    local center_name = args.center_name
+    local contents_align = args.center_name and 'center' or 'left'
+    local max_size = args.max_size or 640
     -- Additional variables
     local opposite_direction = get_opposite_direction(direction)
     local side_margins = (direction == 'horizontal') and { 'left', 'right' } or { 'top', 'bottom' }
-    local contents_align = center_name and 'center' or 'left'
-
-
-    --#region Precompute values
-    -- Height based on font size
-    local height = font_height * 1.25
-    local contents_align = style.show_task_title and 'left' or 'center'
-    -- Direction of of the tasks
-    local direction = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and 'horizontal' or 'vertical'
-    -- Margin to size the selected tag bar
-    local bar_margin_pos = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[style.bar_pos]
-    -- Margins to the sides of the widget
-    local side_margins = (style.bar_pos == 'top' or style.bar_pos == 'bottom') and { 'right', 'left' } or { 'top', 'bottom' }
-    -- TODO Smooth transitions
-    --[[
-    local widget_width_transition = rubato.timed {
-        intro = 0,
-        duration = 0.1,
-        easing = easing.linear,
-        rate = 120
-    }
-    ]]
-    --#endregion
+    local target_height = font_height * 1.25
 
 
     --#region Layout (direction)
     local widget_layout = {
         layout = wibox.layout.flex[direction],
-        forced_width = style.max_size,
+        forced_width = max_size,
         spacing = style.spacing
     }
     --#endregion
@@ -110,7 +89,7 @@ local function get_tasklist_widget(style, args)
             local target_size = math.min(#objects * style.task_size, style.max_size)
             w.forced_width = target_size
         else
-            local target_size = math.min(#objects * height, style.max_size)
+            local target_size = math.min(#objects * target_height, style.max_size)
             w.forced_height = target_size
         end
         -- Default update
@@ -120,56 +99,69 @@ local function get_tasklist_widget(style, args)
 
 
     --#region Template for the sub widgets
-    local widget_template = {
-        id = 'background_role',
+    local bar_widget = {
         widget = wibox.container.background,
-        forced_height = height,
 
+        id = 'selected_bar_role',
+        bg = '#0000',
+        forced_width = decoration_size,
+        forced_height = decoration_size
+    }
+    local empty_bar_widget = {
+        widget = wibox.container.background,
+
+        bg = '#0000',
+        forced_width = decoration_size,
+        forced_height = decoration_size
+    }
+    local main_widget = {
         {
-            widget = wibox.layout.stack,
-
-            -- Selected task decoration
             {
-                widget = wibox.container.margin,
-                [bar_margin_pos] = style.size - style.decoration_size,
-
                 {
-                    widget = wibox.container.background,
-                    bg = '#0000',
-                    id = 'selected_bar_role',
-                }
-            },
-            -- Main tasklist widget
-            {
-                widget = wibox.container.margin,
-                [side_margins[1]] = style.padding,
-                [side_margins[2]] = style.padding,
-
-                {
-                    widget = wibox.container.place,
-                    halign = contents_align,
-
                     {
-                        layout = wibox.layout.fixed.horizontal,
-                        spacing = font_height / 8,
+                        widget = awful.widget.clienticon,
+                        forced_height = font_height,
+                        forced_width = font_height,
+                    },
 
-                        {
-                            widget = wibox.container.place,
+                    widget = wibox.container.place
+                },
+                {
+                    widget = wibox.widget.textbox,
 
-                            {
-                                widget = awful.widget.clienticon,
-                                forced_height = font_height,
-                                forced_width = font_height,
-                            }
-                        },
-                        {
-                            id = 'text_role',
-                            widget = wibox.widget.textbox,
-                        }
-                    }
-                }
+                    id = 'text_role',
+                },
+
+                layout = wibox.layout.fixed.horizontal,
+
+                spacing = font_height / 8
             },
+
+            widget = wibox.container.place,
+
+            halign = contents_align
         },
+
+        widget = wibox.container.margin,
+
+        [side_margins[1]] = task_padding,
+        [side_margins[2]] = task_padding
+    }
+    local first_widget = flip_decorations and empty_bar_widget or bar_widget
+    local last_widget = flip_decorations and bar_widget or empty_bar_widget
+    local widget_template = {
+        {
+            first_widget,
+            main_widget,
+            last_widget,
+
+            layout = wibox.layout.align[opposite_direction]
+        },
+
+        widget = wibox.container.background,
+
+        id = 'background_role',
+        forced_height = target_height,
 
         update_callback = task_updated,
         create_callback = task_created
