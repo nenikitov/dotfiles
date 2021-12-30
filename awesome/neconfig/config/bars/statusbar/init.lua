@@ -23,7 +23,6 @@ local bar_param_offset = (bar_info_theme.position == 'top' or bar_info_theme.pos
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
 local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu_init')
-local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(bar_info_theme)
 local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
 local notification_center_button = require('neconfig.config.bars.statusbar.widgets.notification_center_button.notification_center_button_init')
 local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_tools_button.sys_tools_button_init')
@@ -66,8 +65,21 @@ awful.screen.connect_for_each_screen(
             task_size = tasklist_theme_conf.task_size,
             max_size = tasklist_theme_conf.max_size
         }
+        -- Text clock
+        local textclock_theme_conf = bar_info_theme.widgets.clock
+        local textclock_user_conf = statusbar_user_conf.widgets.clock
+        local textclock_args = {
+            direction = textclock_theme_conf.direction,
+            primary_format = textclock_user_conf.primary_format,
+            primary_size = textclock_theme_conf.primary_size,
+            primary_weight = textclock_theme_conf.primary_weight,
+            secondary_format = textclock_user_conf.secondary_format,
+            secondary_size = textclock_theme_conf.secondary_size,
+            secondary_weight = textclock_theme_conf.secondary_weight
+        }
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_args)
         local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, tasklist_args)
+        local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(textclock_args)
 
         local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s)
         --#endregion
