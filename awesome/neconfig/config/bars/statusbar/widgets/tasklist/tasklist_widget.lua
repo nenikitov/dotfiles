@@ -24,9 +24,9 @@ end
 
 
 ---Construct tasklist widget
----@param style table Arguments with different settings
+---@param args table Arguments with different settings
 ---@return table tasklist_widget Widget
-local function get_tasklist_widget(style, args)
+local function get_tasklist_widget(args)
     --TODO remove this later
     args = args or {}
     -- Reference to arguments and default values
@@ -36,6 +36,7 @@ local function get_tasklist_widget(style, args)
     local task_spacing = args.task_spacing or 0
     local task_padding = args.task_padding or font_height * 0.1
     local contents_align = args.center_name and 'center' or 'left'
+    local task_size = args.task_size or 160
     local max_size = args.max_size or 640
     -- Additional variables
     local opposite_direction = get_opposite_direction(direction)
@@ -47,7 +48,7 @@ local function get_tasklist_widget(style, args)
     local widget_layout = {
         layout = wibox.layout.flex[direction],
         forced_width = max_size,
-        spacing = style.spacing
+        spacing = task_spacing
     }
     --#endregion
 
@@ -84,12 +85,12 @@ local function get_tasklist_widget(style, args)
     --#region Callback when the whole tasklist is updated
     local function tasklist_updated(w, buttons, label, data, objects, args)
         -- Set widget size based on the number of opened clients
-        if (style.bar_pos == 'top' or style.bar_pos == 'bottom')
+        if (direction == 'horizontal')
         then
-            local target_size = math.min(#objects * style.task_size, style.max_size)
+            local target_size = math.min(#objects * task_size, max_size)
             w.forced_width = target_size
         else
-            local target_size = math.min(#objects * target_height, style.max_size)
+            local target_size = math.min(#objects * target_height, max_size)
             w.forced_height = target_size
         end
         -- Default update
