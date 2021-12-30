@@ -103,7 +103,7 @@ local statusbar = {
         -- Current keyboard layout
         keyboard_layout = {
             -- Should be shown
-            visible = false,
+            visible = true,
         },
         -- Notifications pane
         notifications_pane = {

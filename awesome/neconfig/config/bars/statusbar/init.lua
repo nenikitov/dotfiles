@@ -69,7 +69,7 @@ awful.screen.connect_for_each_screen(
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_args)
         local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, tasklist_args)
 
-        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info_theme)
+        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s)
         --#endregion
 
         --#region Init object to store widgets into
