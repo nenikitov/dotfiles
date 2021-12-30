@@ -1,7 +1,6 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
-local gears = require('gears')
 local wibox = require('wibox')
 
 -- Get variables
@@ -115,23 +114,16 @@ local function get_tasklist_widget(args)
         forced_width = decoration_size,
         forced_height = decoration_size
     }
+    local task_name_widget = {
+        widget = wibox.widget.textbox,
+
+        id = 'text_role',
+    }
     local main_widget = {
         {
             {
-                {
-                    {
-                        widget = awful.widget.clienticon,
-                        forced_height = font_height,
-                        forced_width = font_height,
-                    },
-
-                    widget = wibox.container.place
-                },
-                {
-                    widget = wibox.widget.textbox,
-
-                    id = 'text_role',
-                },
+                awful.widget.clienticon,
+                task_name_widget,
 
                 layout = wibox.layout.fixed.horizontal,
 

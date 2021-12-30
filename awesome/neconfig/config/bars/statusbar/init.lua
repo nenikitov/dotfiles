@@ -34,22 +34,42 @@ local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_too
 awful.screen.connect_for_each_screen(
     function(s)
         --#region Generate screen specific widgets
+        local bar_direction =
+            (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom')
+            and 'horizontal' or 'vertical'
+        local flip_widget_decorations =
+            (bar_info_theme.position == 'bottom' or bar_info_theme.position == 'right')
+        -- Taglist
+        local taglist_theme_conf = bar_info_theme.widgets.taglist
+        local taglist_user_conf = statusbar_user_conf.widgets.taglist
         local taglist_args = {
-            direction =
-                (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom')
-                and 'horizontal' or 'vertical',
-            flip_decorations =
-                (bar_info_theme.position == 'bottom' or bar_info_theme.position == 'right'),
-            decoration_size = bar_info_theme.widgets.taglist.decoration_size,
+            direction = bar_direction,
+            flip_decorations = flip_widget_decorations,
+            decoration_size = taglist_theme_conf.decoration_size,
             -- TODO move to separate file
-            show_client_count = statusbar_user_conf.widgets.taglist.show_client_count,
-            tag_spacing = bar_info_theme.widgets.taglist.spacing,
-            tag_padding = bar_info_theme.widgets.taglist.padding,
-            max_client_count = bar_info_theme.widgets.taglist.max_client_count
+            show_client_count = taglist_user_conf.show_client_count,
+            tag_spacing = taglist_theme_conf.spacing,
+            tag_padding = taglist_theme_conf.padding,
+            max_client_count = taglist_theme_conf.max_client_count
+        }
+        -- Tasklist
+        local tasklist_theme_conf = bar_info_theme.widgets.tasklist
+        local tasklist_user_conf = statusbar_user_conf.widgets.tasklist
+        local tasklist_args = {
+            direction = bar_direction,
+            flip_decorations = flip_widget_decorations,
+            decoration_size = tasklist_theme_conf.decoration_size,
+            -- TODO move to separate file
+            center_name = not (tasklist_user_conf.show_task_props or tasklist_user_conf.show_task_title),
+            task_spacing = tasklist_theme_conf.spacing,
+            task_padding = tasklist_theme_conf.padding,
+            task_size = tasklist_theme_conf.task_size,
+            max_size = tasklist_theme_conf.max_size
         }
         local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_args)
+        local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, tasklist_args)
+
         local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s, bar_info_theme)
-        local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, bar_info_theme)
         --#endregion
 
         --#region Init object to store widgets into
