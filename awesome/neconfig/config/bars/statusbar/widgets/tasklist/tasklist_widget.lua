@@ -26,8 +26,6 @@ end
 ---@param args table Arguments with different settings
 ---@return table tasklist_widget Widget
 local function get_tasklist_widget(args)
-    --TODO remove this later
-    args = args or {}
     -- Reference to arguments and default values
     local direction = args.direction or 'horizontal'
     local flip_decorations = args.flip_decorations or false
