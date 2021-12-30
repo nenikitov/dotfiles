@@ -64,13 +64,15 @@ client.connect_signal(
     end
 )
 
-client.connect_signal(
-    'property::geometry',
-    function (c)
-        if c.maximized or c.fullscreen then
-            c.shape = gears.shape.rectangle
-        else
-            c.shape = widget_utils.r_rect(10)
-        end
-    end
-)
+-- ! This slows down the window manager
+-- TODO find a better way of changing window shape
+-- client.connect_signal(
+--     'property::geometry',
+--     function (c)
+--         if c.maximized or c.fullscreen then
+--             c.shape = gears.shape.rectangle
+--         else
+--             c.shape = widget_utils.r_rect(10)
+--         end
+--     end
+-- )
