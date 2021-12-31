@@ -31,15 +31,16 @@ local function get_taglist_widget(args)
     local direction = args.direction or 'horizontal'
     local flip_decorations = args.flip_decorations or false
     local decoration_size = args.decoration_size or font_height * 0.075
-    local show_client_count
-    if args.show_client_count == nil then
-        show_client_count = true
+    local client_count
+    if args.client_count == nil then
+        client_count = true
     else
-        show_client_count = args.show_client_count
+        client_count = args.client_count
     end
     local tag_spacing = args.tag_spacing or 0
     local tag_padding = args.tag_padding or font_height * 0.1
     local max_client_count = args.max_client_count or 5
+    local number = args.number or false
     -- Additional variables
     local opposite_direction = get_opposite_direction(direction)
     local side_margins = (direction == 'horizontal') and { 'left', 'right' } or { 'top', 'bottom' }
@@ -59,9 +60,16 @@ local function get_taglist_widget(args)
         local clients_num = #t:clients()
         local dots_num = math.min(clients_num, max_client_count)
 
+        --#region Add the number to the tag name of the widget
+        if number then
+            local text_role = self:get_children_by_id('number_role')[1]
+            text_role.text = index .. ' '
+        end
+        --#endregion
+
         --#region Update the color of the 'selected_bar_role'
         local selected_bar_role = self:get_children_by_id('selected_bar_role')[1]
-        if (t.selected) then
+        if t.selected then
             selected_bar_role.bg = beautiful.fg_focus
         elseif (clients_num > 0) then
             selected_bar_role.bg = beautiful.fg_normal
@@ -71,7 +79,7 @@ local function get_taglist_widget(args)
         --#endregion
 
         --#region Update the widget that shows the number of opened clients on a tag
-        if (show_client_count) then
+        if client_count then
             local client_num_role = self:get_children_by_id('client_num_role')[1]
             -- Generate circle widget
             local circle_bg
@@ -135,9 +143,12 @@ local function get_taglist_widget(args)
                 widget = wibox.widget.imagebox,
             },
             {
+                id = 'number_role',
+                widget = wibox.widget.textbox
+            },
+            {
                 id = 'text_role',
-                widget = wibox.widget.textbox,
-                align = 'center'
+                widget = wibox.widget.textbox
             },
 
             widget = wibox.layout.fixed.horizontal,

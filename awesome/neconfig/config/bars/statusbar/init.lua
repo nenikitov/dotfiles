@@ -36,8 +36,9 @@ awful.screen.connect_for_each_screen(
             direction = bar_direction,
             flip_decorations = flip_widget_decorations,
             decoration_size = taglist_theme_conf.decoration_size,
+            number = taglist_user_conf.number,
+            client_count = taglist_user_conf.client_count,
             -- TODO move to separate file
-            show_client_count = taglist_user_conf.show_client_count,
             tag_spacing = taglist_theme_conf.spacing,
             tag_padding = taglist_theme_conf.padding,
             max_client_count = taglist_theme_conf.max_client_count
