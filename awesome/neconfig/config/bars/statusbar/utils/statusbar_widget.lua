@@ -64,8 +64,8 @@ function statusbar_widget:new(args)
     local style = args.style or {}
     local size = args.size or beautiful.get_font_height(beautiful.font)
     local direction = args.direction or 'horizontal'
-    local use_real_clip = args.use_real_clip
-    local force_interactive = args.force_interactive
+    local use_real_clip = args.use_real_clip or false
+    local force_interactive = args.force_interactive or false
     local type = args.type or 'toolbar'
     local screen = args.screen
     -- Additional variables

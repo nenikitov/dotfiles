@@ -1,28 +1,34 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
+local gears = require('gears')
 -- Load custom modules
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
-local widget_user_conf = require('neconfig.config.user.widget_user_conf')
-local statusbar_utils = require('neconfig.config.utils.statusbar_utils')
-
--- Get variables
--- From configs
-local bar_info_theme = beautiful.user_vars_theme.statusbar
--- Popup direction
-local bar_param_opposite_side = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[bar_info_theme.position]
---#region Generate screen independent widgets
-local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
-local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu_init')
-local keyboard_layout = require('neconfig.config.bars.statusbar.widgets.keyboard.keyboard_init')
-local notification_center_button = require('neconfig.config.bars.statusbar.widgets.notification_center_button.notification_center_button_init')
-local sys_tools_button = require('neconfig.config.bars.statusbar.widgets.sys_tools_button.sys_tools_button_init')
---#endregion
+local statusbar_bar = require('neconfig.config.bars.statusbar.utils.statusbar_bar')
+local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_widget_list')
 
 
 --#region Set up the status bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)
+        statusbar_bar {
+            front_widgets = {
+                statusbar_widget_list.menu
+            },
+            shape = gears.shape.rounded_rect,
+            style = {
+                bg = '#f00'
+            },
+            position = 'top'
+        }
+    end
+)
+
+
+
+
+
+        --[[
         --#region Generate screen specific widgets
         local bar_direction =
             (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom')
@@ -217,4 +223,5 @@ awful.screen.connect_for_each_screen(
         s.statusbar.wibar.visible = statusbar_user_conf.visible
     end
 )
+]]
 --#endregion

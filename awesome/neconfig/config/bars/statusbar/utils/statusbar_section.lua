@@ -10,6 +10,7 @@ local statusbar_section = {}
 
 
 --#region Helper methods
+
 ---Get the direction to the next widget in the section
 ---@param edge string Edge of the screen where the statusbar is attached (top, bottom, left, or right)
 ---@param position string Position of the current section (front, middle, or back)
