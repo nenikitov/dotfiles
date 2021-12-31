@@ -3,6 +3,7 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 -- Load custom modules
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
+local widget_user_conf = require('neconfig.config.user.widget_user_conf')
 local statusbar_utils = require('neconfig.config.utils.statusbar_utils')
 
 -- Get variables
@@ -30,7 +31,7 @@ awful.screen.connect_for_each_screen(
             (bar_info_theme.position == 'bottom' or bar_info_theme.position == 'right')
         -- Taglist
         local taglist_theme_conf = bar_info_theme.widgets.taglist
-        local taglist_user_conf = statusbar_user_conf.widgets.taglist
+        local taglist_user_conf = widget_user_conf.statusbar.taglist
         local taglist_args = {
             direction = bar_direction,
             flip_decorations = flip_widget_decorations,
@@ -43,7 +44,7 @@ awful.screen.connect_for_each_screen(
         }
         -- Tasklist
         local tasklist_theme_conf = bar_info_theme.widgets.tasklist
-        local tasklist_user_conf = statusbar_user_conf.widgets.tasklist
+        local tasklist_user_conf = widget_user_conf.statusbar.tasklist
         local tasklist_args = {
             direction = bar_direction,
             flip_decorations = flip_widget_decorations,
@@ -57,7 +58,7 @@ awful.screen.connect_for_each_screen(
         }
         -- Text clock
         local textclock_theme_conf = bar_info_theme.widgets.clock
-        local textclock_user_conf = statusbar_user_conf.widgets.clock
+        local textclock_user_conf = widget_user_conf.statusbar.clock
         local textclock_args = {
             direction = textclock_theme_conf.direction,
             primary_format = textclock_user_conf.primary_format,
@@ -98,7 +99,7 @@ awful.screen.connect_for_each_screen(
             name = 'menu',
             widget = menu,
             section = 1,
-            visible = statusbar_user_conf.widgets.menu.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -107,7 +108,7 @@ awful.screen.connect_for_each_screen(
             name = 'run_menu',
             widget = run_menu,
             section = 1,
-            visible = statusbar_user_conf.widgets.run_menu.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -116,7 +117,7 @@ awful.screen.connect_for_each_screen(
             name = 'layoutbox',
             widget = layoutbox,
             section = 1,
-            visible = statusbar_user_conf.widgets.layoutbox.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -125,7 +126,7 @@ awful.screen.connect_for_each_screen(
             name = 'taglist',
             widget = taglist,
             section = 1,
-            visible = statusbar_user_conf.widgets.taglist.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -137,7 +138,7 @@ awful.screen.connect_for_each_screen(
             name = 'tasklist',
             widget = tasklist,
             section = 2,
-            visible = statusbar_user_conf.widgets.tasklist.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -150,7 +151,7 @@ awful.screen.connect_for_each_screen(
             widget = textclock,
             section = 3,
             force_interactive = true,
-            visible = statusbar_user_conf.widgets.clock.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -159,7 +160,7 @@ awful.screen.connect_for_each_screen(
             name = 'keyboard_layout',
             widget = keyboard_layout,
             section = 3,
-            visible = statusbar_user_conf.widgets.keyboard_layout.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -168,7 +169,7 @@ awful.screen.connect_for_each_screen(
             widget = notification_center_button,
             section = 3,
             force_interactive = true,
-            visible = statusbar_user_conf.widgets.notifications_pane.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }
@@ -177,7 +178,7 @@ awful.screen.connect_for_each_screen(
             widget = sys_tools_button,
             force_interactive = true,
             section = 3,
-            visible = statusbar_user_conf.widgets.sys_tools.visible,
+            visible = true,
             screen = s,
             info_table = s.statusbar.sections
         }

@@ -7,8 +7,8 @@ local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 -- Get variables
-local cpu_thermal_zone = statusbar_user_conf.widgets.sys_tools.cpu_thermal_zone
-
+-- local cpu_thermal_zone = statusbar_user_conf.widgets.sys_tools.cpu_thermal_zone
+local cpu_thermal_zone = 'thermal_zone1'
 
 local cpu_icon = widget_utils.create_text_widget(icons.cpu)
 local cpu_info = wibox.widget.textbox()

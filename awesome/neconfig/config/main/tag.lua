@@ -5,7 +5,8 @@ local desktop_user_conf = require('neconfig.config.user.desktop_user_conf')
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
 -- Get variables
-local should_number = statusbar_user_conf.widgets.taglist.number
+-- TODO move to taglist widget itself
+local should_number = false
 local tag_names = desktop_user_conf.tag_names
 local tag_layout = desktop_user_conf.layouts[1]
 
