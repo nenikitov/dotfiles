@@ -10,16 +10,6 @@ local statusbar_utils = require('neconfig.config.utils.statusbar_utils')
 local bar_info_theme = beautiful.user_vars_theme.statusbar
 -- Popup direction
 local bar_param_opposite_side = ({ top = 'bottom', bottom = 'top', left = 'right', right = 'left'})[bar_info_theme.position]
--- Bar size
-local bar_size = bar_info_theme.contents_size + bar_info_theme.margin.content * 2
-local bar_param_size = {
-    length =    (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom') and 'width'  or 'height',
-    thickness = (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom') and 'height' or 'width',
-}
--- Bar offset
-local bar_offset_dir = (bar_info_theme.position == 'top' or bar_info_theme.position == 'left') and 1 or -1
-local bar_param_offset = (bar_info_theme.position == 'top' or bar_info_theme.position == 'bottom') and 'y' or 'x'
-
 --#region Generate screen independent widgets
 local menu = require('neconfig.config.bars.statusbar.widgets.menu.menu_init')
 local run_menu = require('neconfig.config.bars.statusbar.widgets.run_menu.run_menu_init')
