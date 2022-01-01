@@ -80,27 +80,27 @@ local function set_up_widget(screen, widget)
     end
 end
 
+local function set_up_widget_list(screen, widget_list)
+    local widgets = {}
+
+    for index, widget in ipairs(widget_list) do
+        widgets[index] = set_up_widget(screen, widget)
+    end
+
+    return widgets
+end
 
 
 --#region Set up the status bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)
         statusbar_bar {
-            front_widgets = {
-                set_up_widget(s, statusbar_widget_list.menu),
-                set_up_widget(s, statusbar_widget_list.run_menu),
-                set_up_widget(s, statusbar_widget_list.layout_box),
-                set_up_widget(s, statusbar_widget_list.tag_list)
-            },
-            middle_widgets = {
-                set_up_widget(s, statusbar_widget_list.task_list)
-            },
-            back_widgets = {
-                set_up_widget(s, statusbar_widget_list.text_clock),
-                set_up_widget(s, statusbar_widget_list.keyboard),
-                set_up_widget(s, statusbar_widget_list.notification_center),
-                set_up_widget(s, statusbar_widget_list.system_tools)
-            },
+            front_widgets =
+                set_up_widget_list(s, statusbar_user_conf.layout.front),
+            middle_widgets =
+                set_up_widget_list(s, statusbar_user_conf.layout.middle),
+            back_widgets =
+                set_up_widget_list(s, statusbar_user_conf.layout.back),
             position = statusbar_theme_conf.position,
             contents_size = statusbar_theme_conf.contents_size,
             style = {
