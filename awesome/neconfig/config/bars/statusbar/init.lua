@@ -12,16 +12,20 @@ local widget_utils = require('neconfig.config.utils.widget_utils')
 local widget_user_conf = require('neconfig.config.user.widget_user_conf')
 
 
-local function set_up_taglist(screen)
+local function set_up_taglist(screen, position)
+    local direction =
+        (position == 'top' or position == 'bottom')
+        and 'horizontal' or 'vertical'
+    local flip_decorations =
+        (position == 'bottom' or position == 'right')
     local taglist_theme_conf = statusbar_theme_conf.widgets.taglist
     local taglist_user_conf = widget_user_conf.statusbar.taglist
     local taglist_args = {
-        direction = 'horizontal',
-        flip_decorations = false,
+        direction = direction,
+        flip_decorations = flip_decorations,
         decoration_size = taglist_theme_conf.decoration_size,
         number = taglist_user_conf.number,
         client_count = taglist_user_conf.client_count,
-        -- TODO move to separate file
         tag_spacing = taglist_theme_conf.spacing,
         tag_padding = taglist_theme_conf.padding,
         max_client_count = taglist_theme_conf.max_client_count
@@ -30,14 +34,18 @@ local function set_up_taglist(screen)
     return statusbar_widget_list.tag_list(screen, taglist_args)
 end
 
-local function set_up_tasklist(screen)
+local function set_up_tasklist(screen, position)
+    local direction =
+        (position == 'top' or position == 'bottom')
+        and 'horizontal' or 'vertical'
+    local flip_decorations =
+        (position == 'bottom' or position == 'right')
     local tasklist_theme_conf = statusbar_theme_conf.widgets.tasklist
     local tasklist_user_conf = widget_user_conf.statusbar.tasklist
     local tasklist_args = {
-        direction = 'horizontal',
-        flip_decorations = false,
+        direction = direction,
+        flip_decorations = flip_decorations,
         decoration_size = tasklist_theme_conf.decoration_size,
-        -- TODO move to separate file
         center_name = not (tasklist_user_conf.show_task_props or tasklist_user_conf.show_task_title),
         task_spacing = tasklist_theme_conf.spacing,
         task_padding = tasklist_theme_conf.padding,
@@ -48,7 +56,7 @@ local function set_up_tasklist(screen)
     return statusbar_widget_list.task_list(screen, tasklist_args)
 end
 
-local function set_up_clock(screen)
+local function set_up_clock()
     local textclock_theme_conf = statusbar_theme_conf.widgets.clock
     local textclock_user_conf = widget_user_conf.statusbar.clock
     local textclock_args = {
@@ -64,14 +72,14 @@ local function set_up_clock(screen)
     return statusbar_widget_list.text_clock(textclock_args)
 end
 
-local function set_up_widget(screen, widget)
+local function set_up_widget(screen, position, widget)
     if type(widget) == 'function' then
         if widget == statusbar_widget_list.tag_list then
-            return set_up_taglist(screen)
+            return set_up_taglist(screen, position)
         elseif widget == statusbar_widget_list.task_list then
-            return set_up_tasklist(screen)
+            return set_up_tasklist(screen, position)
         elseif widget == statusbar_widget_list.text_clock then
-            return set_up_clock(screen)
+            return set_up_clock()
         else
             return widget(screen)
         end
@@ -80,11 +88,11 @@ local function set_up_widget(screen, widget)
     end
 end
 
-local function set_up_widget_list(screen, widget_list)
+local function set_up_widget_list(screen, position, widget_list)
     local widgets = {}
 
     for index, widget in ipairs(widget_list) do
-        widgets[index] = set_up_widget(screen, widget)
+        widgets[index] = set_up_widget(screen, position, widget)
     end
 
     return widgets
@@ -94,14 +102,22 @@ end
 --#region Set up the status bar for each screen
 awful.screen.connect_for_each_screen(
     function(s)
+        local position = statusbar_theme_conf.position
+
         statusbar_bar {
-            front_widgets =
-                set_up_widget_list(s, statusbar_user_conf.layout.front),
-            middle_widgets =
-                set_up_widget_list(s, statusbar_user_conf.layout.middle),
-            back_widgets =
-                set_up_widget_list(s, statusbar_user_conf.layout.back),
-            position = statusbar_theme_conf.position,
+            front_widgets = set_up_widget_list(
+                s, position,
+                statusbar_user_conf.layout.front
+            ),
+            middle_widgets = set_up_widget_list(
+                s, position,
+                statusbar_user_conf.layout.middle
+            ),
+            back_widgets = set_up_widget_list(
+                s, position,
+                statusbar_user_conf.layout.back
+            ),
+            position = position,
             contents_size = statusbar_theme_conf.contents_size,
             style = {
                 bg = statusbar_theme_conf.colors.bg_bar,
