@@ -5,6 +5,7 @@ local gears = require('gears')
 -- Load custom modules
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local statusbar_bar = require('neconfig.config.bars.statusbar.utils.statusbar_bar')
+local statusbar_section = require('neconfig.config.bars.statusbar.utils.statusbar_section')
 local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_widget_list')
 
 
@@ -17,17 +18,30 @@ awful.screen.connect_for_each_screen(
                 statusbar_widget_list.run_menu,
                 statusbar_widget_list.keyboard,
             },
+            middle_widgets = {
+                statusbar_widget_list.menu,
+                statusbar_widget_list.run_menu,
+                statusbar_widget_list.keyboard,
+            },
+            back_widgets = {
+                statusbar_widget_list.menu,
+                statusbar_widget_list.run_menu,
+                statusbar_widget_list.keyboard,
+            },
             shape = gears.shape.rounded_rect,
             style = {
-                bg = '#f00',
+                bg = '#0008',
                 padding = {
                     edge = 5,
                     corner = 10
                 },
                 margins = {
-                    edge = 10,
+                    edge = 5,
                     corner = 80
                 }
+            },
+            section_style = {
+                spacing = 4
             },
             position = 'top',
             screen = s

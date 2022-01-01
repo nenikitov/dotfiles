@@ -129,7 +129,22 @@ function statusbar_bar:new(args)
         position = 'front',
         screen = args.screen
     }
-
+    self.middle_sections = statusbar_section {
+        widgets = middle_widgets,
+        style = section_style,
+        size = contents_size,
+        edge = position,
+        position = 'middle',
+        screen = args.screen
+    }
+    self.middle_sections = statusbar_section {
+        widgets = back_widgets,
+        style = section_style,
+        size = contents_size,
+        edge = position,
+        position = 'back',
+        screen = args.screen
+    }
 
     return self
 end

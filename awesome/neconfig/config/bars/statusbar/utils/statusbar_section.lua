@@ -106,10 +106,12 @@ local function get_first_widget_margins(edge, position, margins)
     local corner_margins = {
         horizontal = {
             front = 'left',
+            middle = 'right',
             back = 'right'
         },
         vertical = {
             front = 'top',
+            middle = 'bottom',
             back = 'bottom'
         }
     }
@@ -146,10 +148,12 @@ function statusbar_section:new(args)
     -- Determine how to place all widgets
     if position == 'middle' then
         -- Widgets should be placed in 1 popup at the center
+        local layout = wibox.layout.fixed[widget_dir](
+            table.unpack(widgets)
+        )
+        layout.spacing = style.spacing
         popup_widgets = {
-            wibox.layout.fixed[widget_dir](
-                table.unpack(widgets)
-            )
+            layout
         }
     else
         -- Widgets should be placed in separate popups
@@ -184,11 +188,11 @@ function statusbar_section:new(args)
         -- Place it
         if index == 1 then
             -- First widget, place in the correct place and add padding
-            local placement_func = function(widget)
+            local placement_func = function(d)
                 local corner = get_first_widget_placement_name(edge, position)
                 local margins = get_first_widget_margins(edge, position, style.margins)
                 return awful.placement[corner](
-                    widget,
+                    d,
                     { margins = margins }
                 )
             end
