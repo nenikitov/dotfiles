@@ -45,6 +45,27 @@ local function get_length_param(position)
 
     return length_params[position]
 end
+local function get_offset_param(position)
+    local offset_params = {
+        top = 'y',
+        bottom = 'y',
+        left = 'x',
+        right = 'x'
+    }
+
+    return offset_params[position]
+end
+
+local function get_offset_dir(position)
+    local offset_dirs = {
+        top = 1,
+        bottom = -1,
+        left = 1,
+        right = -1
+    }
+
+    return offset_dirs[position]
+end
 --#endregion
 
 function statusbar_bar:new(args)
@@ -70,13 +91,12 @@ function statusbar_bar:new(args)
     local wibar_shape = get_wibar_shape(use_real_clip, shape)
     local thickness_param = get_thickness_param(position)
     local length_param = get_length_param(position)
+    local bar_offset_param = get_offset_param(position)
+    local bar_offset_dir = get_offset_dir(position)
+    local bar_thickness = contents_size + style.padding.edge * 2
     section_style.margins = {
         edge = style.margins.edge + style.padding.edge,
         corner = style.margins.corner + style.padding.corner
-    }
-
-    require('naughty').notify {
-        text = tostring(style.margins.corner)
     }
 
     -- Generate wibar
@@ -90,10 +110,15 @@ function statusbar_bar:new(args)
         screen = screen,
         bg = '#0000',
         shape = wibar_shape,
-        [thickness_param] = contents_size + style.padding.edge * 2,
+        [thickness_param] = bar_thickness,
         [length_param] = screen.geometry[length_param] - style.margins.corner * 2,
         position = position
     }
+    self.wibar[bar_offset_param] = self.wibar[bar_offset_param] + bar_offset_dir * style.margins.edge
+    self.wibar:struts {
+        [position] = style.margins.edge + bar_thickness
+    }
+
 
     -- Generate sections
     self.front_section = statusbar_section {

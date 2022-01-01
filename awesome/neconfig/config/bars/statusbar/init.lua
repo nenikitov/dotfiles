@@ -25,7 +25,7 @@ awful.screen.connect_for_each_screen(
                     corner = 10
                 },
                 margins = {
-                    edge = 0,
+                    edge = 10,
                     corner = 80
                 }
             },
