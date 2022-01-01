@@ -84,6 +84,7 @@ function statusbar_bar:new(args)
     style.padding.corner = style.padding.corner or 0
     local use_real_clip = args.use_real_clip or false
     local section_style = args.section_style or {}
+    local widget_style = args.widget_style or {}
     local contents_size = args.contents_size or beautiful.get_font_height(beautiful.font)
     local section_use_real_clip = args.section_use_real_clip
     local screen = args.screen
@@ -124,6 +125,7 @@ function statusbar_bar:new(args)
     self.front_section = statusbar_section {
         widgets = front_widgets,
         style = section_style,
+        widget_style = widget_style,
         size = contents_size,
         edge = position,
         position = 'front',
@@ -132,6 +134,7 @@ function statusbar_bar:new(args)
     self.middle_sections = statusbar_section {
         widgets = middle_widgets,
         style = section_style,
+        widget_style = widget_style,
         size = contents_size,
         edge = position,
         position = 'middle',
@@ -140,6 +143,7 @@ function statusbar_bar:new(args)
     self.middle_sections = statusbar_section {
         widgets = back_widgets,
         style = section_style,
+        widget_style = widget_style,
         size = contents_size,
         edge = position,
         position = 'back',

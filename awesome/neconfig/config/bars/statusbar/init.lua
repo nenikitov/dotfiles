@@ -43,6 +43,9 @@ awful.screen.connect_for_each_screen(
             section_style = {
                 spacing = 4
             },
+            widget_style = {
+                bg = '#f000',
+            },
             position = 'top',
             screen = s
         }
