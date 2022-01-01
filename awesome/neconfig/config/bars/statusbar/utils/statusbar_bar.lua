@@ -23,6 +23,28 @@ local function get_wibar_shape(use_real_clip, target_shape)
         return nil
     end
 end
+
+local function get_thickness_param(position)
+    local thickness_params = {
+        top = 'height',
+        bottom = 'height',
+        left = 'width',
+        right = 'width'
+    }
+
+    return thickness_params[position]
+end
+
+local function get_length_param(position)
+    local length_params = {
+        top = 'width',
+        bottom = 'width',
+        left = 'height',
+        right = 'height'
+    }
+
+    return length_params[position]
+end
 --#endregion
 
 function statusbar_bar:new(args)
@@ -33,14 +55,29 @@ function statusbar_bar:new(args)
     local shape = args.shape
     local position = args.position or 'top'
     local style = args.style or {}
+    style.margins = style.margins or {}
+    style.margins.edge = style.margins.edge or 0
+    style.margins.corner = style.margins.corner or 0
+    style.padding = style.padding or {}
+    style.padding.edge = style.padding.edge or 0
+    style.padding.corner = style.padding.corner or 0
     local use_real_clip = args.use_real_clip or false
-    local section_style = args.style
-    local contents_size = args.contents_size
+    local section_style = args.section_style or {}
+    local contents_size = args.contents_size or beautiful.get_font_height(beautiful.font)
     local section_use_real_clip = args.section_use_real_clip
     local screen = args.screen
     -- Additional variables
     local wibar_shape = get_wibar_shape(use_real_clip, shape)
+    local thickness_param = get_thickness_param(position)
+    local length_param = get_length_param(position)
+    section_style.margins = {
+        edge = style.margins.edge + style.padding.edge,
+        corner = style.margins.corner + style.padding.corner
+    }
 
+    require('naughty').notify {
+        text = tostring(style.margins.corner)
+    }
 
     -- Generate wibar
     self.wibar = awful.wibar {
@@ -53,6 +90,8 @@ function statusbar_bar:new(args)
         screen = screen,
         bg = '#0000',
         shape = wibar_shape,
+        [thickness_param] = contents_size + style.padding.edge * 2,
+        [length_param] = screen.geometry[length_param] - style.margins.corner * 2,
         position = position
     }
 

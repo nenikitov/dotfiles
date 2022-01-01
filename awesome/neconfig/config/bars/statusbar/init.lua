@@ -13,13 +13,24 @@ awful.screen.connect_for_each_screen(
     function(s)
         statusbar_bar {
             front_widgets = {
-                statusbar_widget_list.menu
+                statusbar_widget_list.menu,
+                statusbar_widget_list.run_menu,
+                statusbar_widget_list.keyboard,
             },
             shape = gears.shape.rounded_rect,
             style = {
-                bg = '#f00'
+                bg = '#f00',
+                padding = {
+                    edge = 5,
+                    corner = 10
+                },
+                margins = {
+                    edge = 0,
+                    corner = 80
+                }
             },
-            position = 'top'
+            position = 'top',
+            screen = s
         }
     end
 )
