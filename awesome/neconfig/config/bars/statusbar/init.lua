@@ -29,10 +29,51 @@ local function set_up_taglist(screen)
 
     return statusbar_widget_list.tag_list(screen, taglist_args)
 end
+
+local function set_up_tasklist(screen)
+    local tasklist_theme_conf = statusbar_theme_conf.widgets.tasklist
+    local tasklist_user_conf = widget_user_conf.statusbar.tasklist
+    local tasklist_args = {
+        direction = 'horizontal',
+        flip_decorations = false,
+        decoration_size = tasklist_theme_conf.decoration_size,
+        -- TODO move to separate file
+        center_name = not (tasklist_user_conf.show_task_props or tasklist_user_conf.show_task_title),
+        task_spacing = tasklist_theme_conf.spacing,
+        task_padding = tasklist_theme_conf.padding,
+        task_size = tasklist_theme_conf.task_size,
+        max_size = tasklist_theme_conf.max_size
+    }
+
+    return statusbar_widget_list.task_list(screen, tasklist_args)
+end
+
+local function set_up_clock(screen)
+    local textclock_theme_conf = statusbar_theme_conf.widgets.clock
+    local textclock_user_conf = widget_user_conf.statusbar.clock
+    local textclock_args = {
+        direction = textclock_theme_conf.direction,
+        primary_format = textclock_user_conf.primary_format,
+        primary_size = textclock_theme_conf.primary_size,
+        primary_weight = textclock_theme_conf.primary_weight,
+        secondary_format = textclock_user_conf.secondary_format,
+        secondary_size = textclock_theme_conf.secondary_size,
+        secondary_weight = textclock_theme_conf.secondary_weight
+    }
+
+    return statusbar_widget_list.text_clock(textclock_args)
+end
+
 local function set_up_widget(screen, widget)
     if type(widget) == 'function' then
         if widget == statusbar_widget_list.tag_list then
             return set_up_taglist(screen)
+        elseif widget == statusbar_widget_list.task_list then
+            return set_up_tasklist(screen)
+        elseif widget == statusbar_widget_list.text_clock then
+            return set_up_clock(screen)
+        else
+            return widget(screen)
         end
     else
         return widget
@@ -48,12 +89,17 @@ awful.screen.connect_for_each_screen(
             front_widgets = {
                 set_up_widget(s, statusbar_widget_list.menu),
                 set_up_widget(s, statusbar_widget_list.run_menu),
-                -- set_up_widget(s, statusbar_widget_list.layout_box),
+                set_up_widget(s, statusbar_widget_list.layout_box),
                 set_up_widget(s, statusbar_widget_list.tag_list)
             },
             middle_widgets = {
+                set_up_widget(s, statusbar_widget_list.task_list)
             },
             back_widgets = {
+                set_up_widget(s, statusbar_widget_list.text_clock),
+                set_up_widget(s, statusbar_widget_list.keyboard),
+                set_up_widget(s, statusbar_widget_list.notification_center),
+                set_up_widget(s, statusbar_widget_list.system_tools)
             },
             position = statusbar_theme_conf.position,
             contents_size = statusbar_theme_conf.contents_size,
