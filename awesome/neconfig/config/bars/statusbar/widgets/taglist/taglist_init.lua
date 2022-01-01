@@ -24,7 +24,4 @@ local function get_taglist(screen, args)
     return taglist
 end
 
-return setmetatable(
-    {},
-    {  __call = function(_, ...) return get_taglist(...) end }
-)
+return get_taglist

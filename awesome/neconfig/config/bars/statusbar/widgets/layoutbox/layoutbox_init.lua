@@ -29,7 +29,4 @@ local function get_layoutbox(screen)
     }
 end
 
-return setmetatable(
-    {},
-    {  __call = function(_, ...) return get_layoutbox(...) end }
-)
+return get_layoutbox

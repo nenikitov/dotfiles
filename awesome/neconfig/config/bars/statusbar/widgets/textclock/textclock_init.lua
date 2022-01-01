@@ -62,7 +62,4 @@ local function get_textclock(args)
 end
 
 
-return setmetatable(
-    {},
-    {  __call = function(_, ...) return get_textclock(...) end }
-)
+return get_textclock

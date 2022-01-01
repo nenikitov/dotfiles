@@ -25,7 +25,4 @@ local function get_tasklist(screen, args)
     return tasklist
 end
 
-return setmetatable(
-    {},
-    {  __call = function(_, ...) return get_tasklist(...) end }
-)
+return get_tasklist

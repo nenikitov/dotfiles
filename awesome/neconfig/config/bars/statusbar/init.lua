@@ -9,6 +9,36 @@ local statusbar_section = require('neconfig.config.bars.statusbar.utils.statusba
 local statusbar_theme_conf = beautiful.user_vars_theme.statusbar
 local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_widget_list')
 local widget_utils = require('neconfig.config.utils.widget_utils')
+local widget_user_conf = require('neconfig.config.user.widget_user_conf')
+
+
+local function set_up_taglist(screen)
+    local taglist_theme_conf = statusbar_theme_conf.widgets.taglist
+    local taglist_user_conf = widget_user_conf.statusbar.taglist
+    local taglist_args = {
+        direction = 'horizontal',
+        flip_decorations = false,
+        decoration_size = taglist_theme_conf.decoration_size,
+        number = taglist_user_conf.number,
+        client_count = taglist_user_conf.client_count,
+        -- TODO move to separate file
+        tag_spacing = taglist_theme_conf.spacing,
+        tag_padding = taglist_theme_conf.padding,
+        max_client_count = taglist_theme_conf.max_client_count
+    }
+
+    return statusbar_widget_list.tag_list(screen, taglist_args)
+end
+local function set_up_widget(screen, widget)
+    if type(widget) == 'function' then
+        if widget == statusbar_widget_list.tag_list then
+            return set_up_taglist(screen)
+        end
+    else
+        return widget
+    end
+end
+
 
 
 --#region Set up the status bar for each screen
@@ -16,19 +46,14 @@ awful.screen.connect_for_each_screen(
     function(s)
         statusbar_bar {
             front_widgets = {
-                statusbar_widget_list.menu,
-                statusbar_widget_list.run_menu,
-                statusbar_widget_list.keyboard,
+                set_up_widget(s, statusbar_widget_list.menu),
+                set_up_widget(s, statusbar_widget_list.run_menu),
+                -- set_up_widget(s, statusbar_widget_list.layout_box),
+                set_up_widget(s, statusbar_widget_list.tag_list)
             },
             middle_widgets = {
-                statusbar_widget_list.menu,
-                statusbar_widget_list.run_menu,
-                statusbar_widget_list.keyboard,
             },
             back_widgets = {
-                statusbar_widget_list.menu,
-                statusbar_widget_list.run_menu,
-                statusbar_widget_list.keyboard,
             },
             position = statusbar_theme_conf.position,
             contents_size = statusbar_theme_conf.contents_size,
@@ -52,6 +77,9 @@ awful.screen.connect_for_each_screen(
         }
     end
 )
+
+
+
 
 
 
