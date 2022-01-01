@@ -6,7 +6,9 @@ local gears = require('gears')
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local statusbar_bar = require('neconfig.config.bars.statusbar.utils.statusbar_bar')
 local statusbar_section = require('neconfig.config.bars.statusbar.utils.statusbar_section')
+local statusbar_theme_conf = beautiful.user_vars_theme.statusbar
 local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_widget_list')
+local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
 --#region Set up the status bar for each screen
@@ -28,25 +30,24 @@ awful.screen.connect_for_each_screen(
                 statusbar_widget_list.run_menu,
                 statusbar_widget_list.keyboard,
             },
-            shape = gears.shape.rounded_rect,
+            position = statusbar_theme_conf.position,
+            contents_size = statusbar_theme_conf.contents_size,
             style = {
-                bg = '#0008',
-                padding = {
-                    edge = 5,
-                    corner = 10
-                },
-                margins = {
-                    edge = 5,
-                    corner = 80
-                }
+                bg = statusbar_theme_conf.colors.bg_bar,
+                margins = statusbar_theme_conf.margins,
+                padding = statusbar_theme_conf.padding
             },
             section_style = {
-                spacing = 4
+                spacing = statusbar_theme_conf.spacing
             },
             widget_style = {
-                bg = '#f000',
+                bg = statusbar_theme_conf.colors.bg_sections,
+                padding = statusbar_theme_conf.corner_radius.sections,
+                shape = widget_utils.r_rect(statusbar_theme_conf.corner_radius.sections)
             },
-            position = 'top',
+            use_real_clip = statusbar_theme_conf.real_clip.bar,
+            section_use_real_clip = statusbar_theme_conf.real_clip.sections,
+            shape = gears.shape.rounded_rect,
             screen = s
         }
     end

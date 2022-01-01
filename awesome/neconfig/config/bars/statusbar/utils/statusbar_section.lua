@@ -136,6 +136,7 @@ function statusbar_section:new(args)
     local size = args.size
     local edge = args.edge or 'top'
     local position = args.position or 'front'
+    local use_real_clip = args.use_real_clip or false
     local screen = args.screen
     -- Additional variables
     local next_widget_dir = get_next_widget_direction(edge, position)
@@ -177,7 +178,7 @@ function statusbar_section:new(args)
             size = widget_obj.size or size,
             direction = widget_dir,
             style = widget_obj.style or widget_style,
-            use_real_clip = widget_obj.user_real_clip,
+            use_real_clip = widget_obj.use_real_clip or use_real_clip,
             force_interactive = widget_obj.force_interactive,
             type = widget_obj.type,
             screen = screen

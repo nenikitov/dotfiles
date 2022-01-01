@@ -129,6 +129,7 @@ function statusbar_bar:new(args)
         size = contents_size,
         edge = position,
         position = 'front',
+        use_real_clip = section_use_real_clip,
         screen = args.screen
     }
     self.middle_sections = statusbar_section {
@@ -138,6 +139,7 @@ function statusbar_bar:new(args)
         size = contents_size,
         edge = position,
         position = 'middle',
+        use_real_clip = section_use_real_clip,
         screen = args.screen
     }
     self.middle_sections = statusbar_section {
@@ -147,6 +149,7 @@ function statusbar_bar:new(args)
         size = contents_size,
         edge = position,
         position = 'back',
+        use_real_clip = section_use_real_clip,
         screen = args.screen
     }
 

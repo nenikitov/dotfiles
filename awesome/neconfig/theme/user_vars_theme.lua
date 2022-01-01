@@ -62,14 +62,17 @@ local statusbar = {
         bg_bar = '#0004',
         bg_sections = '#0008',
     },
-    -- Spacing between the bar, the screen and the sections
-    margin = {
+    -- Spacing between the bar and the edges of the screen
+    margins = {
         -- Margin between 2 ends of the bar and the corners of the screen
-        corners = space(64),
+        corner = space(64),
         -- Margin between the bar side and the edge of the screen
-        edge = client.gaps,
-        -- Margin between the bar and its contents
-        content = client.gaps
+        edge = client.gaps
+    },
+    -- Margin between the bar and its contents
+    padding = {
+        corner = client.gaps * 2,
+        edge = client.gaps
     },
     -- Spacing between the sections
     spacing = client.gaps * 2,
