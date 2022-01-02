@@ -46,7 +46,7 @@ local function set_up_tasklist(screen, position)
         direction = direction,
         flip_decorations = flip_decorations,
         decoration_size = tasklist_theme_conf.decoration_size,
-        center_name = not (tasklist_user_conf.show_task_props or tasklist_user_conf.show_task_title),
+        center_name = not (tasklist_user_conf.task_props or tasklist_user_conf.task_title),
         task_spacing = tasklist_theme_conf.spacing,
         task_padding = tasklist_theme_conf.padding,
         task_size = tasklist_theme_conf.task_size,
