@@ -3,7 +3,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 local beautiful =require('beautiful')
 -- Load custom modules
-local layoutbox_buttons = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_buttons')
+local layoutbox_buttons = require('neconfig.config.widgets.statusbar.subwidgets.layoutbox.layoutbox_buttons')
 
 -- Get variables
 local font_height = beautiful.get_font_height(beautiful.font)

@@ -3,7 +3,7 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 local wibox = require('wibox')
 -- Load custom modules
-local statusbar_section = require('neconfig.config.bars.statusbar.utils.statusbar_section')
+local statusbar_section = require('neconfig.config.widgets.statusbar.utils.statusbar_section')
 
 
 -- Container for class members

@@ -1,5 +1,5 @@
 -- Load custom modules
-local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_widget_list')
+local statusbar_subwidget_list = require('neconfig.config.widgets.statusbar.statusbar_subwidget_list')
 
 
 -- █▀ ▀█▀ ▄▀█ ▀█▀ █ █ █▀ █▄▄ ▄▀█ █▀█
@@ -11,21 +11,21 @@ local statusbar = {
     layout = {
         -- First widgets (top or left)
         front = {
-            statusbar_widget_list.menu,
-            statusbar_widget_list.run_menu,
-            statusbar_widget_list.layout_box,
-            statusbar_widget_list.tag_list
+            statusbar_subwidget_list.menu,
+            statusbar_subwidget_list.run_menu,
+            statusbar_subwidget_list.layout_box,
+            statusbar_subwidget_list.tag_list
         },
         -- Middle widgets (center)
         middle = {
-            statusbar_widget_list.task_list
+            statusbar_subwidget_list.task_list
         },
         -- Last widgets (bottom or right)
         back = {
-            statusbar_widget_list.text_clock,
-            statusbar_widget_list.keyboard,
-            statusbar_widget_list.notification_center,
-            statusbar_widget_list.system_tools
+            statusbar_subwidget_list.text_clock,
+            statusbar_subwidget_list.keyboard,
+            statusbar_subwidget_list.notification_center,
+            statusbar_subwidget_list.system_tools
         }
     }
 }

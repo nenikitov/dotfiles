@@ -7,7 +7,7 @@ local menubar_utils = require('menubar.utils')
 local binds_user_conf = require('neconfig.config.user.binds_user_conf')
 local user_vars_theme = beautiful.user_vars_theme
 local widget_utils = require('neconfig.config.utils.widget_utils')
-require('neconfig.config.bars.titlebar.titlebar')
+require('neconfig.config.widgets.titlebar.titlebar')
 
 
 -- Signal function to execute when a new client appears.

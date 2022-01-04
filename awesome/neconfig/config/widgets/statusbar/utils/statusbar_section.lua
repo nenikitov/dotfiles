@@ -2,7 +2,7 @@
 local awful = require('awful')
 local wibox = require('wibox')
 -- Load custom modules
-local statusbar_widget = require('neconfig.config.bars.statusbar.utils.statusbar_widget')
+local statusbar_widget = require('neconfig.config.widgets.statusbar.utils.statusbar_widget')
 
 
 -- Container for class members

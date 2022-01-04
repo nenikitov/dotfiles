@@ -6,8 +6,8 @@ local gears = require('gears')
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local widget_user_conf = require('neconfig.config.user.widget_user_conf')
 local statusbar_theme_conf = beautiful.user_vars_theme.statusbar
-local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_widget_list')
-local statusbar_bar = require('neconfig.config.bars.statusbar.utils.statusbar_bar')
+local statusbar_subwidget_list = require('neconfig.config.widgets.statusbar.statusbar_subwidget_list')
+local statusbar_bar = require('neconfig.config.widgets.statusbar.utils.statusbar_bar')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
@@ -30,7 +30,7 @@ local function set_up_taglist(screen, position)
         max_client_count = taglist_theme_conf.max_client_count
     }
 
-    return statusbar_widget_list.tag_list(screen, taglist_args)
+    return statusbar_subwidget_list.tag_list(screen, taglist_args)
 end
 
 local function set_up_tasklist(screen, position)
@@ -52,7 +52,7 @@ local function set_up_tasklist(screen, position)
         max_size = tasklist_theme_conf.max_size
     }
 
-    return statusbar_widget_list.task_list(screen, tasklist_args)
+    return statusbar_subwidget_list.task_list(screen, tasklist_args)
 end
 
 local function set_up_clock(screen)
@@ -68,16 +68,16 @@ local function set_up_clock(screen)
         secondary_weight = textclock_theme_conf.secondary_weight
     }
 
-    return statusbar_widget_list.text_clock(textclock_args)
+    return statusbar_subwidget_list.text_clock(textclock_args)
 end
 
 local function set_up_widget(screen, position, widget)
     if type(widget) == 'function' then
-        if widget == statusbar_widget_list.tag_list then
+        if widget == statusbar_subwidget_list.tag_list then
             return set_up_taglist(screen, position)
-        elseif widget == statusbar_widget_list.task_list then
+        elseif widget == statusbar_subwidget_list.task_list then
             return set_up_tasklist(screen, position)
-        elseif widget == statusbar_widget_list.text_clock then
+        elseif widget == statusbar_subwidget_list.text_clock then
             return set_up_clock(screen)
         else
             return widget(screen)
@@ -193,11 +193,11 @@ awful.screen.connect_for_each_screen(
             secondary_size = textclock_theme_conf.secondary_size,
             secondary_weight = textclock_theme_conf.secondary_weight
         }
-        local taglist = require('neconfig.config.bars.statusbar.widgets.taglist.taglist_init')(s, taglist_args)
-        local tasklist = require('neconfig.config.bars.statusbar.widgets.tasklist.tasklist_init')(s, tasklist_args)
-        local textclock = require('neconfig.config.bars.statusbar.widgets.textclock.textclock_init')(textclock_args)
+        local taglist = require('neconfig.config.widgets.statusbar.subwidgets.taglist.taglist_init')(s, taglist_args)
+        local tasklist = require('neconfig.config.widgets.statusbar.subwidgets.tasklist.tasklist_init')(s, tasklist_args)
+        local textclock = require('neconfig.config.widgets.statusbar.subwidgets.textclock.textclock_init')(textclock_args)
 
-        local layoutbox = require('neconfig.config.bars.statusbar.widgets.layoutbox.layoutbox_init')(s)
+        local layoutbox = require('neconfig.config.widgets.statusbar.subwidgets.layoutbox.layoutbox_init')(s)
         --#endregion
 
         --#region Init object to store widgets into
