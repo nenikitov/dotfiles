@@ -68,6 +68,25 @@ local function get_offset_dir(position)
 end
 --#endregion
 
+function statusbar_bar:get_visible()
+    return self.visible or false
+end
+
+function statusbar_bar:set_visible(visible)
+    self.visible = (visible ~= false)
+
+    self.wibar.visible = self.visible
+    self.front_section:set_visible(self.visible)
+    self.middle_section:set_visible(self.visible)
+    self.back_section:set_visible(self.visible)
+end
+
+function statusbar_bar:toggle()
+    self:set_visible(not self:get_visible())
+end
+
+
+
 function statusbar_bar:new(args)
     -- Reference to arguments and default values
     local front_widgets = args.front_widgets
@@ -88,6 +107,7 @@ function statusbar_bar:new(args)
     local contents_size = args.contents_size or beautiful.get_font_height(beautiful.font)
     local section_use_real_clip = args.section_use_real_clip
     local screen = args.screen
+    local visible = (args.visible ~= false)
     -- Additional variables
     local wibar_shape = get_wibar_shape(use_real_clip, shape)
     local thickness_param = get_thickness_param(position)
@@ -98,6 +118,16 @@ function statusbar_bar:new(args)
     section_style.margins = {
         edge = style.margins.edge + style.padding.edge,
         corner = style.margins.corner + style.padding.corner
+    }
+    -- Init self
+    self = {
+        wibar = nil,
+        front_section = nil,
+        middle_section = nil,
+        back_section = nil,
+        toggle = statusbar_bar.toggle,
+        set_visible = statusbar_bar.set_visible,
+        get_visible = statusbar_bar.get_visible
     }
 
     -- Generate wibar
@@ -132,7 +162,7 @@ function statusbar_bar:new(args)
         use_real_clip = section_use_real_clip,
         screen = args.screen
     }
-    self.middle_sections = statusbar_section {
+    self.middle_section = statusbar_section {
         widgets = middle_widgets,
         style = section_style,
         widget_style = widget_style,
@@ -142,7 +172,7 @@ function statusbar_bar:new(args)
         use_real_clip = section_use_real_clip,
         screen = args.screen
     }
-    self.middle_sections = statusbar_section {
+    self.back_section = statusbar_section {
         widgets = back_widgets,
         style = section_style,
         widget_style = widget_style,
@@ -152,6 +182,9 @@ function statusbar_bar:new(args)
         use_real_clip = section_use_real_clip,
         screen = args.screen
     }
+
+
+    self:set_visible(visible)
 
     return self
 end

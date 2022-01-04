@@ -279,8 +279,7 @@ local function get_global_keys()
             { super_key }, 'i',
             function ()
                 local focused_screen = awful.screen.focused()
-                local new_visibility = not focused_screen.statusbar.wibar.visible
-                focused_screen.statusbar.wibar.visible = new_visibility
+                focused_screen.statusbar:toggle()
             end,
             { description = 'toggle statusbar on current screen', group = 'test' }
         ),
@@ -288,10 +287,10 @@ local function get_global_keys()
             { super_key, shift_key }, 'i',
             function ()
                 local focused_screen = awful.screen.focused()
-                local new_visibility = not focused_screen.statusbar.wibar.visible
+                local new_visibility = not focused_screen.statusbar:get_visible()
 
                 for s in screen do
-                    s.statusbar.wibar.visible = new_visibility
+                    s.statusbar:set_visible(new_visibility)
                 end
             end
         ),

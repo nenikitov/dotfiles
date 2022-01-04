@@ -125,6 +125,14 @@ end
 --#endregion
 
 
+---Update the visibility of the whole section
+---@param visible boolean New visibility
+function statusbar_section:set_visible(visible)
+    for _, popup in ipairs(self.popups) do
+        popup.visible = visible
+    end
+end
+
 ---Create a new statusbar sections in popups
 ---@param args table Widgets, style, widget_style, size, edge, position, screen
 ---@return table self A new instance of the popup
@@ -142,9 +150,11 @@ function statusbar_section:new(args)
     local next_widget_dir = get_next_widget_direction(edge, position)
     local widget_dir = get_widget_direction(edge)
     local popup_widgets
-    -- Instance variables
-    self.popups = {}
-
+    -- Inititalize self
+    self = {
+        popups = {},
+        set_visible = statusbar_section.set_visible
+    }
 
     -- Determine how to place all widgets
     if position == 'middle' then
@@ -209,13 +219,6 @@ function statusbar_section:new(args)
     end
 
     return self
-end
----Update the visibility of the whole section
----@param visibility boolean New visibility
-function statusbar_section:set_visible(visibility)
-    for _, popup in ipairs(self.popups) do
-        popup.visible = visibility
-    end
 end
 
 return setmetatable(

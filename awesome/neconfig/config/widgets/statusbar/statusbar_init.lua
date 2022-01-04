@@ -8,6 +8,7 @@ local widget_user_conf = require('neconfig.config.user.widget_user_conf')
 local statusbar_theme_conf = beautiful.user_vars_theme.statusbar
 local statusbar_subwidget_list = require('neconfig.config.widgets.statusbar.statusbar_subwidget_list')
 local statusbar_bar = require('neconfig.config.widgets.statusbar.utils.statusbar_bar')
+local statusbar_widget = require('neconfig.config.widgets.statusbar.utils.statusbar_widget')
 local widget_utils = require('neconfig.config.utils.widget_utils')
 
 
@@ -103,7 +104,7 @@ awful.screen.connect_for_each_screen(
     function(s)
         local position = statusbar_theme_conf.position
 
-        statusbar_bar {
+        s.statusbar = statusbar_bar {
             front_widgets = set_up_widget_list(
                 s, position,
                 statusbar_user_conf.layout.front
