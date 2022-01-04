@@ -4,12 +4,11 @@ local beautiful = require('beautiful')
 local gears = require('gears')
 -- Load custom modules
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
-local statusbar_bar = require('neconfig.config.bars.statusbar.utils.statusbar_bar')
-local statusbar_section = require('neconfig.config.bars.statusbar.utils.statusbar_section')
+local widget_user_conf = require('neconfig.config.user.widget_user_conf')
 local statusbar_theme_conf = beautiful.user_vars_theme.statusbar
 local statusbar_widget_list = require('neconfig.config.bars.statusbar.statusbar_widget_list')
+local statusbar_bar = require('neconfig.config.bars.statusbar.utils.statusbar_bar')
 local widget_utils = require('neconfig.config.utils.widget_utils')
-local widget_user_conf = require('neconfig.config.user.widget_user_conf')
 
 
 local function set_up_taglist(screen, position)
@@ -56,7 +55,7 @@ local function set_up_tasklist(screen, position)
     return statusbar_widget_list.task_list(screen, tasklist_args)
 end
 
-local function set_up_clock()
+local function set_up_clock(screen)
     local textclock_theme_conf = statusbar_theme_conf.widgets.clock
     local textclock_user_conf = widget_user_conf.statusbar.clock
     local textclock_args = {
@@ -79,7 +78,7 @@ local function set_up_widget(screen, position, widget)
         elseif widget == statusbar_widget_list.task_list then
             return set_up_tasklist(screen, position)
         elseif widget == statusbar_widget_list.text_clock then
-            return set_up_clock()
+            return set_up_clock(screen)
         else
             return widget(screen)
         end
