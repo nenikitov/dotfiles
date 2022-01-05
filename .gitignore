@@ -1,13 +1,15 @@
 # Blacklist everything
 /*
 
-# Track only certain files
-!/.gitignore
-!/gammyconf
 
-# Track only certain configuration folders
+# Track only certain files
+# Git ignore
+!/.gitignore
+# Configuration files
 !/alacritty
 !/awesome
+!/flameshot
+!/gammyconf
 !/neofetch
 !/picom
 !/rofi
