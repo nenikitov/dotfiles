@@ -119,5 +119,29 @@ schemes:
             magenta: '#FF1493'
             cyan:    '#00CCCC'
             white:   '#FFFAFA'
+    # Other color schemes not done by me
+    # Monokai theme from https://github.com/yosukes-dev/monokai-windows-terminal
+    monokai: &monokai
+        primary:
+            background: '#1A1A1A'
+            foreground: '#F8F8F2'
+        normal:
+            black:   '#1B1D1E'
+            red:     '#F92672'
+            green:   '#82B414'
+            yellow:  '#FD971F'
+            blue:    '#465457'
+            magenta: '#8C54FE'
+            cyan:    '#56C2D6'
+            white:   '#CCCCC6'
+        bright:
+            black:   '#505354'
+            red:     '#FF5995'
+            green:   '#B6E354'
+            yellow:  '#FEED6C'
+            blue:    '#899CA1'
+            magenta: '#9E6FFE'
+            cyan:    '#8CEDFF'
+            white:   '#F8F8F2'
 
 colors: *netheme
