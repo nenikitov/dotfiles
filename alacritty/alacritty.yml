@@ -27,6 +27,29 @@ schemes:
     netheme: &netheme
         primary:
             background: '0x080808'
+            foreground: '0xcccccc'
+        normal:
+            black:   '0x3A3A3A'
+            red:     '0xb33443'
+            green:   '0x7f912a'
+            yellow:  '0xb97845'
+            blue:    '0x42739f'
+            magenta: '0x8c5aa2'
+            cyan:    '0x5aa79d'
+            white:   '0xb0b0b0'
+        bright:
+            black:   '0x5A5A5A'
+            red:     '0xff7587'
+            green:   '0xd0e171'
+            yellow:  '0xf2b286'
+            blue:    '0x87bde5'
+            magenta: '0xd09ce3'
+            cyan:    '0x9fece3'
+            white:   '0xffffff'
+    # NeTheme
+    netheme_old: &netheme_old
+        primary:
+            background: '0x080808'
             foreground: '0xbfbfbf'
         normal:
             black:   '0x323232'
