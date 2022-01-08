@@ -223,5 +223,5 @@ end
 
 return setmetatable(
     {},
-    { __call = function(_,...) return statusbar_section:new(...) end }
+    { __call = function(_, ...) return statusbar_section:new(...) end }
 )

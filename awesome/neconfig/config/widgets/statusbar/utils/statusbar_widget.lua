@@ -117,5 +117,5 @@ end
 
 return setmetatable(
     {},
-    { __call = function(_,...) return statusbar_widget:new(...) end }
+    { __call = function(_, ...) return statusbar_widget:new(...) end }
 )
