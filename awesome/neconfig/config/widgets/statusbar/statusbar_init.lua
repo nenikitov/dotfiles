@@ -8,8 +8,8 @@ local widget_user_conf = require('neconfig.config.user.widget_user_conf')
 local statusbar_theme_conf = beautiful.user_vars_theme.statusbar
 local statusbar_subwidget_list = require('neconfig.config.widgets.statusbar.statusbar_subwidget_list')
 local statusbar_bar = require('neconfig.config.widgets.statusbar.utils.statusbar_bar')
-local statusbar_widget = require('neconfig.config.widgets.statusbar.utils.statusbar_widget')
 local widget_utils = require('neconfig.config.utils.widget_utils')
+local popup_widget = require('neconfig.config.widgets.popups.utils.popup_widget')
 
 
 local function set_up_taglist(screen, position)
@@ -134,8 +134,17 @@ awful.screen.connect_for_each_screen(
             },
             use_real_clip = statusbar_theme_conf.real_clip.bar,
             section_use_real_clip = statusbar_theme_conf.real_clip.sections,
-            shape = gears.shape.rounded_rect,
+            shape = widget_utils.r_rect(statusbar_theme_conf.corner_radius.bar),
             screen = s
+        }
+
+        popup_widget {
+            screen = s,
+            widgets = {
+                statusbar_subwidget_list.keyboard,
+                set_up_clock(s)
+            },
+            visible = true
         }
     end
 )

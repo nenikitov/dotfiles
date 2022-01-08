@@ -150,7 +150,7 @@ function statusbar_section:new(args)
     local next_widget_dir = get_next_widget_direction(edge, position)
     local widget_dir = get_widget_direction(edge)
     local popup_widgets
-    -- Inititalize self
+    -- Initialize self
     self = {
         popups = {},
         set_visible = statusbar_section.set_visible
