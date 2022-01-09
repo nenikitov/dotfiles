@@ -138,6 +138,7 @@ awful.screen.connect_for_each_screen(
             screen = s
         }
 
+        --[[
         popup_widget {
             screen = s,
             widgets = {
@@ -146,6 +147,7 @@ awful.screen.connect_for_each_screen(
             },
             visible = true
         }
+        ]]
     end
 )
 
