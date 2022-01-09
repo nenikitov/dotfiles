@@ -10,11 +10,11 @@
     --border:     2px;
     --padding:    0.5em;
     /* Colors */
-    --bg-normal:  #0009;
-    --bg-active:  #fff4;
-    --fg-normal:  #bfbfbf;
-    --fg-active:  #ffff;
-    --border-col: #888;
+    --bg-normal:  #080808CC;
+    --bg-active:  #5A5A5A;
+    --fg-normal:  #CCCCCC;
+    --fg-active:  #FFFFFF;
+    --border-col: @--fg-normal;
     /* Corner rounding */
     --radius-in:  0.5em;
     --radius-out: 0em;

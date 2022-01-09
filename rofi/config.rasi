@@ -13,7 +13,7 @@ configuration {
     location: 0;
     sidebar-mode: true;
     show-icons: true;
-    drun-display-format: "{name}[<span weight='light' size='small'><i> ({generic})</i></span>]";
+    drun-display-format: "{name}";
     window-format: "{w}{c}";
     monitor: "-5";
 
