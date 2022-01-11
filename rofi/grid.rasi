@@ -4,41 +4,54 @@
     /* Layout */
     --fullscreen: false;
     --width:      54em;
-    --height:     27.5em;
+    --height:     27.25em;
     --icon-size:  3em;
     --columns:    6;
     --border:     2px;
-    --padding:    0.5em;
-    /* Colors */
-    --bg-normal:  #080808CC;
-    --bg-active:  #3A3A3A;
-    --fg-normal:  #CCCCCC;
-    --fg-active:  #FFFFFF;
-    --border-col: @--fg-normal;
-    /* Corner rounding */
-    --radius-in:  0.5em;
-    --radius-out: 0em;
+    /* Theme */
+    /* Main window */
+    --main-bg-col:         #080808CC;
+    --main-fg-col:         #CCCCCC;
+    --main-border-col:     #CCCCCC;
+    --main-border-width:   2px;
+    --main-border-radius:  0.5em;
+    --main-padding-val:    0.5em;
+    /* Card */
+    --card-bg-col:         #3A3A3A;
+    --card-fg-col:         #FFFFFF;
+    --card-border-col:     #000;
+    --card-border-width:   0px;
+    --card-border-radius:  0.5em;
+    --card-padding-val:    0.5em;
+    /* Active */
+    --active-bg-col:       #B33443;
+    --active-fg-col:       #FFFFFF;
+    --active-border-col:   #000;
+    --active-border-width: 0px;
     /*#endregion*/
 
 
     /* Main colors */
     background-color: transparent;
-    text-color: @--fg-normal;
+    text-color: @--main-fg-col;
 }
 #window {
     /* Main colors */
-    background-color: @--bg-normal;
+    background-color: @--main-bg-col;
 
     /* Layout */
     fullscreen: @--fullscreen;
     width: @--width;
     height: @--height;
-    padding: @--padding;
+    padding: @--main-padding-val;
+    spacing: @--main-padding-val;
+    children: [ inputbar, listview, mode-switcher ];
+
 
     /* Border */
-    border: @--border;
-    border-color: @--border-col;
-    border-radius: @--radius-out;
+    border: @--main-border-width;
+    border-color: @--main-border-col;
+    border-radius: @--main-border-radius;
 }
 /*#endregion*/
 
@@ -48,20 +61,36 @@
     /* Layout */
     columns: @--columns;
     fixed-columns: true;
-    spacing: @--padding;
+    spacing: @--main-padding-val;
+    scrollbar: true;
+    scrollbar-width: 1em;
+}
+#scrollbar {
+    /* Main colors */
+    background-color: @--card-bg-col;
+    handle-color: @--active-bg-col;
+
+    /* Border */
+    border: @--card-border-width;
+    border-color: @--card-border-col;
+    border-radius: @--card-border-radius;
 }
 #element {
     /* Layout */
     orientation: vertical;
-    padding: @--padding;
+    padding: @--card-padding-val;
     spacing: 0;
 
     /* Border */
-    border-radius: @--radius-in;
+    border-radius: @--card-border-radius;
 }
 #element.selected {
     /* Main colors */
-    background-color: @--bg-active;
+    background-color: @--active-bg-col;
+
+    /* Border */
+    border: @--active-border-width;
+    border-color: @--active-border-col;
 }
 #element-icon {
     /* Layout */
@@ -74,42 +103,43 @@
 }
 #element-text.selected {
     /* Main colors */
-    text-color: @--fg-active;
+    text-color: @--active-fg-col;
 }
 /* #endregion */
 
 
 /*#region Search */
 #inputbar {
+    /* Main Colors */
+    background-color: @--card-bg-col;
+    text-color: @--card-fg-col;
+
     /* Layout */
-    padding: @--padding;
-    children: [ prompt, separator, entry, case-indicator ];
+    children: [ prompt, entry, case-indicator, num-filtered-rows ];
 
     /* Border */
-    border-radius: @--radius-in;
+    border: @--card-border-width;
+    border-color: @--card-border-col;
+    border-radius: @--card-border-radius;
+}
+case-indicator, prompt, entry, num-rows, num-filtered-rows {
+    /* Layout */
+    vertical-align: 0.5;
+    padding: @--card-padding-val;
 }
 #prompt {
     /* Main colors */
-    background-color: @--bg-active;
-    text-color: @--fg-active;
-
-    /* Layout */
-    padding: @--padding;
+    background-color: @--active-bg-col;
+    text-color: @--card-fg-col;
 
     /* Border */
-    border-radius: @--radius-in;
-}
-#separator {
-    /* Layout */
-    expand: false;
-    padding: @--padding;
+    border-radius: inherit;
+    border: @--active-border-width;
+    border-color: @--active-border-col;
 }
 #entry {
     /* Main colors */
-    text-color: @--fg-active;
-
-    /* Layout */
-    vertical-align: 0.5;
+    text-color: @--card-fg-col;
 
     /* Additional style */
     placeholder: "Search...";
@@ -119,21 +149,30 @@
 
 /*#region Modes */
 #mode-switcher {
+    /* Main Colors */
+    background-color: @--card-bg-col;
+
     /* Border */
-    border-radius: @--radius-in;
+    border: @--card-border-width;
+    border-color: @--card-border-col;
+    border-radius: @--card-border-radius;
 }
 #button {
     /* Layout */
     horizontal-align: 0.5;
-    padding: @--padding;
+    padding: @--card-padding-val;
 
     /* Border */
-    border-radius: @--radius-in;
+    border-radius: inherit;
 }
 #button.selected {
     /* Main colors */
-    background-color: @--bg-active;
-    text-color: @--fg-active;
+    background-color: @--active-bg-col;
+    text-color: @--card-fg-col;
+
+    /* Border */
+    border: @--active-border-width;
+    border-color: @--active-border-col;
 }
 /* #endregion */
 
