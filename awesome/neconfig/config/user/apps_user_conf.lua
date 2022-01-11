@@ -6,7 +6,7 @@ local apps = {
     default_apps = {
         terminal = 'alacritty',
 
-        run_menu = 'rofi -show drun -theme grid.rasi',
+        run_menu = 'rofi -show drun',
 
         code_editor = 'code',
         text_editor = 'code',

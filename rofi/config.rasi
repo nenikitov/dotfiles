@@ -19,10 +19,10 @@ configuration {
 
 
     /* Appearence */
-    /* theme: "list.rasi";*/
-    /* theme: "grid.rasi";*/
-    /*icon-theme: ;*/
     font: "mono 12";
+    /*icon-theme: ;*/
 }
+
+@theme "netheme.rasi"
 
 /* vim:ft=css
