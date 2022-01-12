@@ -138,6 +138,7 @@ awful.screen.connect_for_each_screen(
             screen = s
         }
 
+        --[[
         popup_widget {
             screen = s,
             widgets = {
@@ -146,6 +147,19 @@ awful.screen.connect_for_each_screen(
                 set_up_clock(s)
             },
             visible = true
+        }
+        ]]
+
+        local t = {
+            a = {
+                b = {
+                    {0, 0 , 10, 0}
+                }
+            }
+        }
+        local val = require('neconfig.config.utils.table_utils').table_walk(t, 'a', 'b', 1, 3)
+        require('naughty').notify {
+            text = tostring(val)
         }
     end
 )
