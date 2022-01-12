@@ -10,7 +10,7 @@ local widget_utils = {}
 --- Generate a rounded rectangle shape with a radius
 ---@param radius number Radius
 ---@return function
-widget_utils.r_rect = function(radius)
+function widget_utils.r_rect(radius)
     return function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, radius)
     end
@@ -21,7 +21,7 @@ end
 ---@param contents table Contents to put inside
 ---@param size number Width
 ---@return table
-widget_utils.set_width_widget = function(contents, size)
+function widget_utils.set_width_widget(contents, size)
     return {
         contents,
 
@@ -33,7 +33,7 @@ end
 ---@param contents table Contents to put inside
 ---@param size number Height
 ---@return table
-widget_utils.set_height_widget = function(contents, size)
+function widget_utils.set_height_widget(contents, size)
     return {
         contents,
 
@@ -50,7 +50,7 @@ end
 ---@param bottom number Pad on bottom
 ---@param left number Pad on left
 ---@return table
-widget_utils.pad_widget = function(contents, top, right, bottom, left)
+function widget_utils.pad_widget(contents, top, right, bottom, left)
     return {
         contents,
 
@@ -64,7 +64,7 @@ widget_utils.pad_widget = function(contents, top, right, bottom, left)
 end
 
 
-widget_utils.create_text_widget = function(text)
+function widget_utils.create_text_widget(text)
     local font_height = beautiful.get_font_height(beautiful.font)
 
     return wibox.widget {
@@ -75,7 +75,7 @@ widget_utils.create_text_widget = function(text)
         widget = wibox.widget.textbox
     }
 end
-widget_utils.create_progress_bar = function(args)
+function widget_utils.create_progress_bar(args)
     local max_value = args.max_value or 1
     local bar_thickness = args.bar_thickness
     local circle_radius = args.circle_radius

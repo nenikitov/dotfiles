@@ -9,7 +9,7 @@ local app_utils = {}
 
 --- Increase or descrease brightness by using a tool set up in the user conf files
 ---@param step number Increment or decrement value
-app_utils.increase_brightness = function(step)
+function app_utils.increase_brightness(step)
     awful.spawn.with_line_callback(
         apps_user_conf.utils.get_brightness,
         {
@@ -23,7 +23,7 @@ app_utils.increase_brightness = function(step)
     )
 end
 
-app_utils.set_brightness = function(value)
+function app_utils.set_brightness(value)
     value = math.min(100, math.max(1, value))
 
     awful.spawn.with_shell(
@@ -39,7 +39,7 @@ app_utils.set_brightness = function(value)
     )
 end
 
-app_utils.take_screenshot = function()
+function app_utils.take_screenshot()
     
 end
 

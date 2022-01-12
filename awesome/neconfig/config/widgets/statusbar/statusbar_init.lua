@@ -138,16 +138,15 @@ awful.screen.connect_for_each_screen(
             screen = s
         }
 
-        --[[
         popup_widget {
             screen = s,
             widgets = {
                 statusbar_subwidget_list.keyboard,
+                statusbar_subwidget_list.run_menu,
                 set_up_clock(s)
             },
             visible = true
         }
-        ]]
     end
 )
 

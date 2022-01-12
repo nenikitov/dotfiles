@@ -32,6 +32,7 @@ function popup_widget:new(args)
     -- Generate a popup
     self = awful.popup {
         widget = layout,
+        ontop = true,
         type = type,
         screen = screen,
         visible = visible
