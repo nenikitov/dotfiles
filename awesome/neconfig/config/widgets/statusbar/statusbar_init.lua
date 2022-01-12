@@ -149,18 +149,6 @@ awful.screen.connect_for_each_screen(
             visible = true
         }
         ]]
-
-        local t = {
-            a = {
-                b = {
-                    {0, 0 , 10, 0}
-                }
-            }
-        }
-        local val = require('neconfig.config.utils.table_utils').table_walk(t, 'a', 'b', 1, 3)
-        require('naughty').notify {
-            text = tostring(val)
-        }
     end
 )
 
