@@ -27,10 +27,10 @@ require('neconfig.config.main.tag')
 
 
 -- TODO move to separate module?
-local global_keys = require('neconfig.config.global_binds.global_keys')()
-local global_tag_binds = require('neconfig.config.global_binds.global_tag_binds')
-global_keys = global_tag_binds(global_keys)
-local global_buttons = require('neconfig.config.global_binds.global_buttons')()
+local global_keys = require('neconfig.config.binds.global.global_keys')
+-- local global_tag_binds = require('neconfig.config.global_binds.global_tag_binds')
+-- global_keys = global_tag_binds(global_keys)
+local global_buttons = require('neconfig.config.binds.global.global_buttons')
 -- Load key binds
 root.keys(global_keys)
 root.buttons(global_buttons)
