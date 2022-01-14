@@ -5,15 +5,8 @@
     --fullscreen: false;
     --icon-size:  3em;
     --width:      54em;
-    --height:     calc(
-        /* Borders */
-        4 * 2px +
-        /* Top and bottom bars */
-        5.275em +
-        /* Icon rows */
-        4 * 5.475em
-    );
     --columns:    6;
+    --rows:       4;
     /* Theme */
     /* Main window */
     --main-bg-col:         #080808CC;
@@ -49,7 +42,6 @@
     /* Layout */
     fullscreen: @--fullscreen;
     width: @--width;
-    height: @--height;
 
     /* Border */
     border: @--main-border-width;
@@ -73,6 +65,7 @@
 #listview {
     /* Layout */
     columns: @--columns;
+    lines: @--rows;
     fixed-columns: true;
     spacing: @--main-padding-val;
     scrollbar: true;
