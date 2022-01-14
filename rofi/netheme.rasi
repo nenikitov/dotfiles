@@ -3,16 +3,23 @@
     /*#region Variables */
     /* Layout */
     --fullscreen: false;
-    --width:      54em;
-    --height:     27.25em;
     --icon-size:  3em;
+    --width:      54em;
+    --height:     calc(
+        /* Borders */
+        4 * 2px +
+        /* Top and bottom bars */
+        5.275em +
+        /* Icon rows */
+        4 * 5.475em
+    );
     --columns:    6;
-    --border:     2px;
     /* Theme */
     /* Main window */
     --main-bg-col:         #080808CC;
     --main-fg-col:         #CCCCCC;
-    --main-border-col:     #CCCCCC;
+    --main-border-out-col: #000;
+    --main-border-in-col:  #5A5A5A;
     --main-border-width:   2px;
     --main-border-radius:  0.5em;
     --main-padding-val:    0.5em;
@@ -43,15 +50,21 @@
     fullscreen: @--fullscreen;
     width: @--width;
     height: @--height;
-    padding: @--main-padding-val;
-    spacing: @--main-padding-val;
-    children: [ inputbar, listview, mode-switcher ];
-
 
     /* Border */
     border: @--main-border-width;
-    border-color: @--main-border-col;
+    border-color: @--main-border-out-col;
     border-radius: @--main-border-radius;
+}
+#mainbox {
+    /* Border */
+    border: @--main-border-width;
+    border-color: @--main-border-in-col;
+    border-radius: @--main-border-radius;
+
+    /* Layout */
+    padding: @--main-padding-val;
+    spacing: @--main-padding-val;
 }
 /*#endregion*/
 
