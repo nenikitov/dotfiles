@@ -18,7 +18,7 @@
     --main-padding-val:    0.5em;
     /* Card */
     --card-bg-col:         #3A3A3A;
-    --card-fg-col:         #FFFFFF;
+    --card-fg-col:         #CCCCCC;
     --card-border-col:     #000;
     --card-border-width:   0px;
     --card-border-radius:  0.5em;
@@ -123,6 +123,9 @@
     border-radius: @--card-border-radius;
 }
 case-indicator, prompt, entry, num-rows, num-filtered-rows {
+    /* Main Colors */
+    text-color: @--card-fg-col;
+
     /* Layout */
     vertical-align: 0.5;
     padding: @--card-padding-val;
@@ -130,7 +133,7 @@ case-indicator, prompt, entry, num-rows, num-filtered-rows {
 #prompt {
     /* Main colors */
     background-color: @--active-bg-col;
-    text-color: @--card-fg-col;
+    text-color: @--active-fg-col;
 
     /* Border */
     border-radius: inherit;
@@ -158,6 +161,9 @@ case-indicator, prompt, entry, num-rows, num-filtered-rows {
     border-radius: @--card-border-radius;
 }
 #button {
+    /* Main Colors */
+    text-color: @--card-fg-col;
+
     /* Layout */
     horizontal-align: 0.5;
     padding: @--card-padding-val;
@@ -168,7 +174,7 @@ case-indicator, prompt, entry, num-rows, num-filtered-rows {
 #button.selected {
     /* Main colors */
     background-color: @--active-bg-col;
-    text-color: @--card-fg-col;
+    text-color: @--active-fg-col;
 
     /* Border */
     border: @--active-border-width;
