@@ -1,8 +1,12 @@
-# Created by nenikitov for 5.8
+modules_path="${HOME}/.config/zsh/modules"
+
+
+# Modules
+# Completition
+autoload -U compinit; compinit
 
 autoload -U colors && colors
 
 NEWLINE=$'\n'
 
-export PS1="%n in %d"
-export RPS1="<"
+source $modules_path/prompt.zsh
