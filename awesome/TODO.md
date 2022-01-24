@@ -1,41 +1,36 @@
-# TODO
-
-## Statusbar
-### System tools
-* [ ] Volume bar
-* [ ] Better system tray
-* [ ] Verify if the battery icon works
-* [?] Quit, sleep, reload buttons
-### Notification manager
-* [ ] Create notification manager
-### Calendar
-* [ ] Add weather
-
-## Titlebar
-* [ ] Design a better one
-* [ ] Implement it
-
-## Clients
-* [ ] Thicker borders
-* [ ] Rounded corners
-* [?] Custom rules
-
-## Hotkeys
-* [ ] Fix inconsistencies shortcuts
-* [ ] Hotkeys to hide titlebars
-* [ ] Hotkeys to resize floating clients
-* [ ] Fix some clients not resizing in tiling mode
-
-## User settings
-* [ ] Separate user settings into files
-
-## Other
-* [ ] Refactor
-* [ ] Comments
-* [ ] Readme
-* [ ] Examples
-* [ ] Screenshots
-
-## Graphics
-* [ ] Layout icons
-* [ ] Titlebar icons
+config
+    binds
+        client
+            client_buttons.lua
+            client_keys.lua
+        global
+            global_buttons.lua
+            global_keys.lua
+    client
+        client_rules.lua
+        client_signals.lua
+    main
+        autostart.lua
+        error_handling.lua
+        tag.lua
+        wallpaper.lua
+    widgets
+        popup
+            sub_widgets
+            utils
+            status_bar_init.lua
+        status_bar
+            sub_widgets
+            utils
+            status_bar_init.lua
+        title_bar
+            sub_widgets
+            title_bar_init.lua
+graphics
+    wallpapers
+    icons
+theme
+    ...
+    utils
+user
+    ...
