@@ -1,3 +1,5 @@
+# File structure
+```
 config
     binds
         client
@@ -34,3 +36,4 @@ theme
     utils
 user
     ...
+```
