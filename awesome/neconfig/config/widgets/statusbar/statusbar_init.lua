@@ -106,13 +106,14 @@ awful.screen.connect_for_each_screen(
         local position = statusbar_theme_conf.position
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = 'top', screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            set_up_widget(s, 'top', statusbar_subwidget_list.menu),
             set_up_widget(s, 'top', statusbar_subwidget_list.layout_box),
             set_up_widget(s, 'top', statusbar_subwidget_list.tag_list),
         },
