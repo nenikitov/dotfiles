@@ -2,6 +2,7 @@
 local awful = require('awful')
 local beautiful = require('beautiful')
 local gears = require('gears')
+local wibox = require('wibox')
 -- Load custom modules
 local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 local widget_user_conf = require('neconfig.config.user.widget_user_conf')
@@ -104,6 +105,27 @@ awful.screen.connect_for_each_screen(
     function(s)
         local position = statusbar_theme_conf.position
 
+    -- Create the wibox
+    s.mywibox = awful.wibar({ position = "top", screen = s })
+
+    -- Add widgets to the wibox
+    s.mywibox:setup {
+        layout = wibox.layout.align.horizontal,
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+            set_up_widget(s, 'top', statusbar_subwidget_list.layout_box),
+            set_up_widget(s, 'top', statusbar_subwidget_list.tag_list),
+        },
+        set_up_widget(s, 'top', statusbar_subwidget_list.task_list),
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            set_up_widget(s, 'top', statusbar_subwidget_list.keyboard),
+            wibox.widget.systray(),
+            set_up_widget(s, 'top', statusbar_subwidget_list.text_clock),
+        },
+    }
+
+        --[[
         s.statusbar = statusbar_bar {
             front_widgets = set_up_widget_list(
                 s, position,
