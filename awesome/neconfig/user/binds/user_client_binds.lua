@@ -145,7 +145,9 @@ local client_keys = {
     awful.key(
         { super_key, less_key }, 'Up',
         function(c)
-            c:relative_move(0, 0, 0, -resize_val)
+            if c.height > resize_val then
+                c:relative_move(0, 0, 0, -resize_val)
+            end
         end,
         { description = 'shrink client to the top', group = 'client - position' }
     ),
@@ -153,7 +155,9 @@ local client_keys = {
     awful.key(
         { super_key, less_key }, 'Down',
         function(c)
-            c:relative_move(0, resize_val, 0, -resize_val)
+            if c.height > resize_val then
+                c:relative_move(0, resize_val, 0, -resize_val)
+            end
         end,
         { description = 'shrink client to the bottom', group = 'client - position' }
     ),
@@ -161,7 +165,9 @@ local client_keys = {
     awful.key(
         { super_key, less_key }, 'Right',
         function(c)
-            c:relative_move(resize_val, 0, -resize_val, 0)
+            if c.width > resize_val then
+                c:relative_move(resize_val, 0, -resize_val, 0)
+            end
         end,
         { description = 'shrink client to the right', group = 'client - position' }
     ),
@@ -169,7 +175,9 @@ local client_keys = {
     awful.key(
         { super_key, less_key }, 'Left',
         function(c)
-            c:relative_move(0, 0, -resize_val, 0)
+            if c.width > resize_val then
+                c:relative_move(0, 0, -resize_val, 0)
+            end
         end,
         { description = 'shrink client to the left', group = 'client - position' }
     ),
