@@ -27,8 +27,8 @@ require('neconfig.config.main.tag')
 
 
 -- Load key binds
-local global_keys = require('neconfig.config.binds.global.global_keys')
-local global_buttons = require('neconfig.config.binds.global.global_buttons')
+local global_keys = require('neconfig.user.binds.user_global_binds').keys
+local global_buttons = require('neconfig.user.binds.user_global_binds').buttons
 root.keys(global_keys)
 root.buttons(global_buttons)
 
