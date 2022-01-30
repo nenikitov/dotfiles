@@ -8,7 +8,7 @@ local interactions = {
         -- Resizing floating clients
         resize = dpi(20),
         -- Moving floating clients
-        move = dpi(10),
+        move = dpi(20),
         -- Resizing master factor
         master = 0.05
     },

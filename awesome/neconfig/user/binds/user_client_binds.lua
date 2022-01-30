@@ -99,49 +99,93 @@ local client_keys = {
     ),
     --#endregion
 
-    --#region Position
+    --#region Screen
 
-    -- Move client to another screen on "SUPER" + O
+    -- Move client to next screen on "SUPER" + O
     awful.key(
         { super_key }, 'o',
         function(c)
             c:move_to_screen()
         end,
-        { description = 'move to screen', group = 'client - position' }
+        { description = 'move to next screen', group = 'client - screen' }
     ),
-    -- Expand client to the top on "SUPER" + "MORE" + UP
+    -- Move client to previous screen on "SUPER" + "LESS" + O
+    awful.key(
+        { super_key, less_key }, 'o',
+        function(c)
+            c:move_to_screen()
+        end,
+        { description = 'move to previous screen', group = 'client - screen' }
+    ),
+    --#endregion
+
+    --#region Position
+
+    -- Move client up on "SUPER" + UP
+    awful.key(
+        { super_key }, 'Up',
+        function(c)
+            c:relative_move(0, -move_val, 0, 0)
+        end,
+        { description = 'move client up', group = 'client - position' }
+    ),
+    -- Move client down on "SUPER" + DOWN
+    awful.key(
+        { super_key }, 'Down',
+        function(c)
+            c:relative_move(0, move_val, 0, 0)
+        end,
+        { description = 'move client down', group = 'client - position' }
+    ),
+    -- Move client right on "SUPER" + RIGHT
+    awful.key(
+        { super_key }, 'Right',
+        function(c)
+            c:relative_move(move_val, 0, 0, 0)
+        end,
+        { description = 'move client right', group = 'client - position' }
+    ),
+    -- Move client left on "SUPER" + LEFT
+    awful.key(
+        { super_key }, 'Left',
+        function(c)
+            c:relative_move(-move_val, 0, 0, 0)
+        end,
+        { description = 'move client left', group = 'client - position' }
+    ),
+    -- Expand client up on "SUPER" + "MORE" + UP
     awful.key(
         { super_key, more_key }, 'Up',
         function(c)
             c:relative_move(0, -resize_val, 0, resize_val)
         end,
-        { description = 'expand client to the top', group = 'client - position' }
+        { description = 'expand client up', group = 'client - position' }
     ),
-    -- Expand client to the bottom on "SUPER" + "MORE" + DOWN
+    -- Expand client down on "SUPER" + "MORE" + DOWN
     awful.key(
         { super_key, more_key }, 'Down',
         function(c)
             c:relative_move(0, 0, 0, resize_val)
         end,
-        { description = 'expand client to the bottom', group = 'client - position' }
+        { description = 'expand client down', group = 'client - position' }
     ),
-    -- Expand client to the right on "SUPER" + "MORE" + RIGHT
+    -- Expand client right on "SUPER" + "MORE" + RIGHT
     awful.key(
         { super_key, more_key }, 'Right',
         function(c)
             c:relative_move(0, 0, resize_val, 0)
         end,
-        { description = 'expand client to the right', group = 'client - position' }
+        { description = 'expand client right', group = 'client - position' }
     ),
-    -- Expand client to the left on "SUPER" + "MORE" + LEFT
+    -- Expand client left on "SUPER" + "MORE" + LEFT
     awful.key(
         { super_key, more_key }, 'Left',
         function(c)
             c:relative_move(-resize_val, 0, resize_val, 0)
         end,
-        { description = 'expand client to the left', group = 'client - position' }
+        { description = 'expand client left', group = 'client - position' }
     ),
-    -- Shrink client to the top on "SUPER" + "LESS" + UP
+    -- Shrink client up on "SUPER" + "LESS" + UP
     awful.key(
         { super_key, less_key }, 'Up',
         function(c)
@@ -149,9 +193,9 @@ local client_keys = {
                 c:relative_move(0, 0, 0, -resize_val)
             end
         end,
-        { description = 'shrink client to the top', group = 'client - position' }
+        { description = 'shrink client up', group = 'client - position' }
     ),
-    -- Shrink client to the bottom on "SUPER" + "LESS" + DOWN
+    -- Shrink client down on "SUPER" + "LESS" + DOWN
     awful.key(
         { super_key, less_key }, 'Down',
         function(c)
@@ -159,9 +203,9 @@ local client_keys = {
                 c:relative_move(0, resize_val, 0, -resize_val)
             end
         end,
-        { description = 'shrink client to the bottom', group = 'client - position' }
+        { description = 'shrink client down', group = 'client - position' }
     ),
-    -- Shrink client to the right on "SUPER" + "LESS" + RIGHT
+    -- Shrink client right on "SUPER" + "LESS" + RIGHT
     awful.key(
         { super_key, less_key }, 'Right',
         function(c)
@@ -169,9 +213,9 @@ local client_keys = {
                 c:relative_move(resize_val, 0, -resize_val, 0)
             end
         end,
-        { description = 'shrink client to the right', group = 'client - position' }
+        { description = 'shrink client right', group = 'client - position' }
     ),
-    -- Shrink client to the left on "SUPER" + "LESS" + LEFT
+    -- Shrink client left on "SUPER" + "LESS" + LEFT
     awful.key(
         { super_key, less_key }, 'Left',
         function(c)
@@ -179,7 +223,7 @@ local client_keys = {
                 c:relative_move(0, 0, -resize_val, 0)
             end
         end,
-        { description = 'shrink client to the left', group = 'client - position' }
+        { description = 'shrink client left', group = 'client - position' }
     ),
     --#endregion
 

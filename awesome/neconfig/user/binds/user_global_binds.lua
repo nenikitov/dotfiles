@@ -323,7 +323,7 @@ local global_keys = {
     ),
     --#endregion
 
-    --#region Tags (! This should be the last section)
+    --#region Tags
 
     -- Swap between previous and current tag "SUPER" + ESC
     awful.key(
@@ -331,10 +331,14 @@ local global_keys = {
         awful.tag.history.restore,
         { description = 'restore previous tag', group = 'tag - display' }
     ),
-    -- All other tag binds (! This should be the last bind)
-    table.unpack(all_tag_keys),
+    -- All other tag related keys will be added later
     --#endregion
 }
+-- Add all other tag related keys
+for _, tag_key in ipairs(all_tag_keys) do
+    table.insert(global_keys, tag_key)
+end
+
 
 return {
     keys = global_keys,
