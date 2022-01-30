@@ -131,18 +131,6 @@ local global_keys = {
     ),
     --#endregion
 
-    --#region Tags
-
-    -- Swap between previous and current tag "SUPER" + ESC
-    awful.key(
-        { super_key }, 'Escape',
-        awful.tag.history.restore,
-        { description = 'restore previous tag', group = 'tag - display' }
-    ),
-    -- All other tag binds
-    table.unpack(all_tag_keys),
-    --#endregion
-
     --#region Client focus
     -- Focus next client on "SUPER" + J
     awful.key(
@@ -333,6 +321,18 @@ local global_keys = {
         end,
         { description = 'decrease master width factor', group = 'layout - size' }
     ),
+    --#endregion
+
+    --#region Tags (! This should be the last section)
+
+    -- Swap between previous and current tag "SUPER" + ESC
+    awful.key(
+        { super_key }, 'Escape',
+        awful.tag.history.restore,
+        { description = 'restore previous tag', group = 'tag - display' }
+    ),
+    -- All other tag binds (! This should be the last bind)
+    table.unpack(all_tag_keys),
     --#endregion
 }
 
