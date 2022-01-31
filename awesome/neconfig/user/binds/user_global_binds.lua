@@ -135,7 +135,7 @@ local global_keys = {
     -- Focus next client on "SUPER" + J
     awful.key(
         { super_key }, 'j',
-        function ()
+        function()
             awful.client.focus.byidx(1)
         end,
         { description = 'focus next by index', group = 'client - focus' }
@@ -143,7 +143,7 @@ local global_keys = {
     -- Focus previous client on SUPER + K
     awful.key(
         { super_key }, 'k',
-        function ()
+        function()
             awful.client.focus.byidx(-1)
         end,
         { description = 'focus previous by index', group = 'client - focus' }
@@ -155,7 +155,7 @@ local global_keys = {
     -- Swap the current client with the next one on "SUPER" + "MORE" + J
     awful.key(
         { super_key, more_key }, 'j',
-        function ()
+        function()
             awful.client.swap.byidx(1)
         end,
         { description = 'swap with next client by index', group = 'client - focus' }
@@ -163,7 +163,7 @@ local global_keys = {
     -- Swap the current client with the previous one on "SUPER" + "MORE" + K
     awful.key(
         { super_key, more_key }, 'k',
-        function ()
+        function()
             awful.client.swap.byidx(-1)
         end,
         { description = 'swap with previous client by index', group = 'client - focus' }
@@ -177,7 +177,7 @@ local global_keys = {
     -- Restore minimized on "SUPER" + "MORE" + N
     awful.key(
         { super_key, more_key }, 'n',
-        function ()
+        function()
             local c = awful.client.restore()
             if c then
                 c:emit_signal(
@@ -196,7 +196,7 @@ local global_keys = {
     -- Focus next screen on "SUPER" + "LESS" + J
     awful.key(
         { super_key, less_key }, 'j',
-        function ()
+        function()
             awful.screen.focus_relative(1)
         end,
         { description = 'focus next screen', group = 'screen - focus' }
@@ -204,7 +204,7 @@ local global_keys = {
     -- Focus previous screen on "SUPER" + "LESS" + K
     awful.key(
         { super_key, less_key }, 'k',
-        function ()
+        function()
             awful.screen.focus_relative(-1)
         end,
         { description = 'focus previous screen', group = 'screen - focus' }
@@ -212,7 +212,7 @@ local global_keys = {
     -- Increase brightness on BRIGHTNESS UP
     awful.key(
         { }, 'XF86MonBrightnessDown',
-        function ()
+        function()
             app_utils.increase_brightness(-5)
         end,
         { description = 'Decrease brightness by 5%', group = 'screen - brightness' }
@@ -220,7 +220,7 @@ local global_keys = {
     -- Decrease brightness on BRIGHTNESS DOWN
     awful.key(
         { }, 'XF86MonBrightnessUp',
-        function ()
+        function()
             app_utils.increase_brightness(5)
         end,
         { description = 'Increase brightness by 5%', group = 'screen - brightness' }
@@ -232,7 +232,7 @@ local global_keys = {
     -- Terminal on "SUPER" + ENTER
     awful.key(
         { super_key }, 'Return',
-        function ()
+        function()
             awful.spawn(terminal)
         end,
         { description = 'open a terminal', group = 'launcher' }
@@ -240,7 +240,7 @@ local global_keys = {
     -- Run launcher on "SUPER" + R
     awful.key(
         { super_key }, 'r',
-        function ()
+        function()
             awful.util.spawn(apps_user_conf.default_apps.run_menu)
         end,
         { description = 'open run launcher', group = 'launcher' }
@@ -260,7 +260,7 @@ local global_keys = {
     -- Select next layout type on "SUPER" + SPACE
     awful.key(
         { super_key }, 'space',
-        function ()
+        function()
             awful.layout.inc(1)
         end,
         { description = 'select next', group = 'layout - type' }
@@ -268,7 +268,7 @@ local global_keys = {
     -- Select previous layout type on "SUPER" + "LESS" + SPACE
     awful.key(
         { super_key, less_key }, 'space',
-        function ()
+        function()
             awful.layout.inc(-1)
         end,
         { description = 'select previous', group = 'layout - type' }
@@ -276,7 +276,7 @@ local global_keys = {
     -- Increase the number of master clients on "SUPER" + "MORE" + H
     awful.key(
         { super_key, more_key }, 'h',
-        function ()
+        function()
             awful.tag.incnmaster( 1, nil, true)
         end,
         { description = 'increase number of master clients', group = 'layout - type' }
@@ -284,7 +284,7 @@ local global_keys = {
     -- Decrease the number of master clients on "SUPER" + "MORE" + L
     awful.key(
         { super_key, more_key }, 'l',
-        function ()
+        function()
             awful.tag.incnmaster(-1, nil, true)
         end,
         { description = 'decrease number of master clients', group = 'layout - type' }
@@ -292,7 +292,7 @@ local global_keys = {
     -- Increase number of columns on "SUPER" + "LESS" + H
     awful.key(
         { super_key, less_key }, 'h',
-        function ()
+        function()
             awful.tag.incncol( 1, nil, true)
         end,
         { description = 'increase the number of columns', group = 'layout - type' }
@@ -300,7 +300,7 @@ local global_keys = {
     -- Decrease number of columns on "SUPER" + "LESS" + L
     awful.key(
         { super_key, less_key }, 'l',
-        function ()
+        function()
             awful.tag.incncol(-1, nil, true)
         end,
         { description = 'decrease the number of columns', group = 'layout - type' }
@@ -308,7 +308,7 @@ local global_keys = {
     -- Increase master width on "SUPER" + L
     awful.key(
         { super_key }, 'l',
-        function ()
+        function()
             awful.tag.incmwfact(resize_master_val)
         end,
         { description = 'increase master width factor', group = 'layout - size' }
@@ -316,7 +316,7 @@ local global_keys = {
     -- Decrease master width on "SUPER" + H
     awful.key(
         { super_key }, 'h',
-        function ()
+        function()
             awful.tag.incmwfact(-resize_master_val)
         end,
         { description = 'decrease master width factor', group = 'layout - size' }
