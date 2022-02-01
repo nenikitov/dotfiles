@@ -3,7 +3,6 @@ local awful = require('awful')
 
 -- Get variables
 local icons = require('neconfig.user.user_icons')
-local config_path = os.getenv('HOME') .. '/.config/awesome'
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
@@ -17,6 +16,8 @@ local desktop = {
         icons.media,
         icons.communication,
     },
+    -- List of layouts that can be cycled through
+    -- (the first one is selected by default)
     layouts = {
         awful.layout.suit.tile,
         awful.layout.suit.spiral,
