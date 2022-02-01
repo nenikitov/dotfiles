@@ -15,3 +15,7 @@
 !/rofi
 !/touchegg
 !/zsh
+
+
+# Blacklist files
+/zsh/.zcompdump
