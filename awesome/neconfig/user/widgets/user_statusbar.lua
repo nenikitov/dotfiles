@@ -8,17 +8,18 @@ local statusbar_subwidget_list = require('neconfig.config.widgets.statusbar.stat
 local primary = {
     top = {
         visible = true,
+        on_top = false,
         layout = {
-            first = {
+            beginning = {
                 statusbar_subwidget_list.menu,
                 statusbar_subwidget_list.run_menu,
                 statusbar_subwidget_list.layout_box,
                 statusbar_subwidget_list.tag_list
             },
-            middle = {
+            center = {
                 statusbar_subwidget_list.task_list
             },
-            last = {
+            ending = {
                 statusbar_subwidget_list.text_clock,
                 statusbar_subwidget_list.keyboard,
                 statusbar_subwidget_list.notification_center,
