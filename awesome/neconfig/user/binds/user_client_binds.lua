@@ -83,9 +83,9 @@ local client_keys = {
         end,
         { description = 'minimize', group = 'client - display' }
     ),
-    -- Toggle floating on "SUPER" + "LESS" + SPACE
+    -- Toggle floating on "SUPER" + "MORE" + SPACE
     awful.key(
-        { super_key, less_key }, 'space',
+        { super_key, more_key }, 'space',
         awful.client.floating.toggle,
         { description = 'toggle floating', group = 'client - display' }
     ),
