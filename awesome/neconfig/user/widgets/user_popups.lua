@@ -2,14 +2,14 @@
 -- █▀▀ █▄█ █▀▀ █▄█ █▀▀ ▄█`
 local popups = {
     -- Notifications
-    notification_popup = {
+    notification= {
         -- Time in seconds before popup disappears
         timeout = 5,
         -- Position on the screen
         position = 'top_right'
     },
     -- Popup when changing volume
-    volume_popup = {
+    volume = {
         -- Show the popup when changing volume
         show = true,
         -- Time in seconds before popup disappears
@@ -18,7 +18,7 @@ local popups = {
         position = 'right'
     },
     -- Popup when changing brightness
-    brightness_popup = {
+    brightness = {
         -- Show the popup when changing brightness
         show = true,
         -- Time in seconds before popup disappears
