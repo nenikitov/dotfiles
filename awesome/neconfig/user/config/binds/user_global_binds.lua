@@ -3,7 +3,7 @@ local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
 local menubar = require('menubar')
 -- Load custom modules
-local user_interactions = require('neconfig.user.user_interactions')
+local user_interactions = require('neconfig.user.config.binds.user_interactions')
 local apps_user_conf = require('neconfig.config.user.apps_user_conf')
 local app_utils = require('neconfig.config.utils.app_utils')
 local menu_user_conf = require('neconfig.config.user.menu_user_conf')

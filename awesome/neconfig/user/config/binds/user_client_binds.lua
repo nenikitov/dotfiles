@@ -1,7 +1,7 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local user_interactions = require('neconfig.user.user_interactions')
+local user_interactions = require('neconfig.user.config.binds.user_interactions')
 
 -- Get variables
 local super_key = user_interactions.keys.super_key

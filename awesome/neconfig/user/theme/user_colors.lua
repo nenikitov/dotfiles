@@ -100,22 +100,18 @@ local classes = {
     surface = scheme.surface,
 
     -- Primary
-    primary         = make_class_color('primary'),
-    primary_surface = make_class_surface('primary'),
-    primary_full    = make_class_full('primary'),
+    primary           = make_class_color('primary'),
+    primary_surface   = make_class_surface('primary'),
     -- Secondary
     secondary         = make_class_color('secondary'),
     secondary_surface = make_class_surface('secondary'),
-    secondary_full    = make_class_full('secondary'),
     -- Tertiary
-    tertiary         = make_class_color('tertiary'),
-    tertiary_surface = make_class_surface('tertiary'),
-    tertiary_full    = make_class_full('tertiary'),
+    tertiary          = make_class_color('tertiary'),
+    tertiary_surface  = make_class_surface('tertiary'),
 
     -- Error
-    error         = make_class_color('error'),
-    error_surface = make_class_surface('error'),
-    error_full    = make_class_full('error'),
+    error             = make_class_color('error'),
+    error_surface     = make_class_surface('error'),
 }
 
 return {

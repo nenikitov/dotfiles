@@ -43,7 +43,7 @@ local icons = {
     hard_drive    = '\u{f0a0}',
     -- CPU
     cpu           = '\u{f2db}',
-    temperature   = '\u{f2c9}'
+    temperature   = '\u{f2c9}',
 }
 
 return icons
