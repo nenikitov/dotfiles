@@ -44,75 +44,79 @@ local scheme = {
         fg = palette.fg.white,
         transparency = 1.0
     },
+
     -- Name of the color from the palette used as primary color
     primary   = 'blue',
     -- Name of the color from the palette used as secondary color
     secondary = 'magenta',
     -- Name of the color from the palette used as tertiary color
-    tertiary  = 'yellow'
+    tertiary  = 'yellow',
+
+    -- Name of the color from the palette used as error color
+    error     = 'error'
 }
+
+
+--#region Color class creation utilities (do not modify these)
+
+---Create a color class where the specified color is used as foreground
+---@param color_name string Color name in the palette
+---@return table class Color class
+local function make_class_color(color_name)
+    return {
+        bg = scheme.neutral.bg,
+        fg = palette.fg[color_name],
+        transparency = scheme.neutral.transparency
+    }
+end
+---Create a color class where the specified color is used as background
+---@param color_name string Color name in the palette
+---@return table class Color class
+local function make_class_surface(color_name)
+    return {
+        bg = scheme.bg[scheme[color_name]],
+        fg = palette.surface.fg,
+        transparency = 1.0
+    }
+end
+---Create a color class where the specified color is used as background and foreground
+---@param color_name string Color name in the palette
+---@return table class Color class
+local function make_class_full(color_name)
+    return {
+        bg = scheme.bg[color_name],
+        fg = scheme.fg[color_name],
+        transparency = 1.0
+    }
+end
+--#endregion
 
 
 -- █▀▀ █▀█ █   █▀█ █▀█   █▀▀ █   ▄▀█ █▀ █▀ █▀▀ █▀
 -- █▄▄ █▄█ █▄▄ █▄█ █▀▄   █▄▄ █▄▄ █▀█ ▄█ ▄█ ██▄ ▄█
 local classes = {
-    --#region Neutral
-
-    -- Normal neutral colors
+    -- Neutral
     neutral = scheme.neutral,
-    -- Highlighted elements on top of neutral background
     surface = scheme.surface,
-    --#endregion
 
-    --#region Primary
+    -- Primary
+    primary         = make_class_color('primary'),
+    primary_surface = make_class_surface('primary'),
+    primary_full    = make_class_full('primary'),
+    -- Secondary
+    secondary         = make_class_color('secondary'),
+    secondary_surface = make_class_surface('secondary'),
+    secondary_full    = make_class_full('secondary'),
+    -- Tertiary
+    tertiary         = make_class_color('tertiary'),
+    tertiary_surface = make_class_surface('tertiary'),
+    tertiary_full    = make_class_full('tertiary'),
 
-    -- Colors when primary is used for foreground
-    primary = {
-        bg = scheme.neutral.bg,
-        fg = palette.fg[scheme.primary],
-        transparency = scheme.neutral.transparency
-    },
-    -- Colors when primary is used for background
-    primary_surface = {
-        bg = palette.bg[scheme.primary],
-        fg = scheme.surface.fg,
-        transparency = 1.0
-    },
-    --#endregion
-
-    --#region Secondary
-
-    -- Colors when secondary is used for foreground
-    secondary = {
-        bg = scheme.neutral.bg,
-        fg = palette.fg[scheme.secondary],
-        transparency = scheme.neutral.transparency
-    },
-    -- Colors when secondary is used for background
-    secondary_surface = {
-        bg = palette.bg[scheme.secondary],
-        fg = scheme.surface.fg,
-        transparency = 1.0
-    },
-    --#endregion
-
-    --#region Tertiary
-
-    -- Colors when tertiary is used for foreground
-    tertiary = {
-        bg = scheme.neutral.bg,
-        fg = palette.fg[scheme.tertiary],
-        transparency = scheme.neutral.transparency
-    },
-    -- Colors when tertiary is used for background
-    tertiary_surface = {
-        bg = palette.bg[scheme.tertiary],
-        fg = scheme.surface.fg,
-        transparency = 1.0
-    },
-    --#endregion
+    -- Error
+    error         = make_class_color('error'),
+    error_surface = make_class_surface('error'),
+    error_full    = make_class_full('error'),
 }
-
 return {
     palette = palette,
     classes = classes
