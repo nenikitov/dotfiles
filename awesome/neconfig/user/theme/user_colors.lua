@@ -24,7 +24,8 @@ local palette = {
         magenta = '#D09CE3',
         cyan    = '#9FECE3',
         white   = '#FFFFFF'
-    }
+    },
+    transparency = 0.8
 }
 
 
@@ -34,12 +35,14 @@ local scheme = {
     -- Normal neutral colors
     neutral = {
         bg = palette.bg.normal,
-        fg = palette.fg.normal
+        fg = palette.fg.normal,
+        transparency = palette.transparency
     },
     -- Highlighted elements on top of neutral background
     surface = {
         bg = palette.bg.black,
-        fg = palette.fg.white
+        fg = palette.fg.white,
+        transparency = 1.0
     },
     -- Name of the color from the palette used as primary color
     primary   = 'blue',
@@ -66,12 +69,14 @@ local classes = {
     -- Colors when primary is used for foreground
     primary = {
         bg = scheme.neutral.bg,
-        fg = palette.fg[scheme.primary]
+        fg = palette.fg[scheme.primary],
+        transparency = scheme.neutral.transparency
     },
     -- Colors when primary is used for background
     primary_surface = {
         bg = palette.bg[scheme.primary],
-        fg = scheme.surface.fg
+        fg = scheme.surface.fg,
+        transparency = 1.0
     },
     --#endregion
 
@@ -80,12 +85,14 @@ local classes = {
     -- Colors when secondary is used for foreground
     secondary = {
         bg = scheme.neutral.bg,
-        fg = palette.fg[scheme.secondary]
+        fg = palette.fg[scheme.secondary],
+        transparency = scheme.neutral.transparency
     },
     -- Colors when secondary is used for background
     secondary_surface = {
         bg = palette.bg[scheme.secondary],
-        fg = scheme.surface.fg
+        fg = scheme.surface.fg,
+        transparency = 1.0
     },
     --#endregion
 
@@ -94,12 +101,14 @@ local classes = {
     -- Colors when tertiary is used for foreground
     tertiary = {
         bg = scheme.neutral.bg,
-        fg = palette.fg[scheme.tertiary]
+        fg = palette.fg[scheme.tertiary],
+        transparency = scheme.neutral.transparency
     },
     -- Colors when tertiary is used for background
     tertiary_surface = {
         bg = palette.bg[scheme.tertiary],
-        fg = scheme.surface.fg
+        fg = scheme.surface.fg,
+        transparency = 1.0
     },
     --#endregion
 }
