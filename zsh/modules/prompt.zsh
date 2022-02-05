@@ -1,11 +1,17 @@
-prompt_top_left_elems=(
+prompt_tl_elems=(
     '%n'
     ' in '
     '%~'
 )
-prompt_bottom_left_elems=(
+prompt_bl_elems=(
     '%#'
     ' '
 )
+prompt_tr_elems=(
+    ' '
+)
+prompt_br_elems=(
+    ' '
+)
 
-PS1=${(j::)prompt_top_left_elems}$'\n'${(j::)prompt_bottom_left_elems}
+PS1=${(j::)prompt_tl_elems}$'\n'${(j::)prompt_bl_elems}

@@ -27,8 +27,8 @@ require('neconfig.config.main.tag')
 
 
 -- Load key binds
-local global_keys = require('neconfig.config.binds.global.global_keys')
-local global_buttons = require('neconfig.config.binds.global.global_buttons')
+local global_keys = require('neconfig.user.config.binds.user_global_binds').keys
+local global_buttons = require('neconfig.user.config.binds.user_global_binds').buttons
 root.keys(global_keys)
 root.buttons(global_buttons)
 
@@ -46,8 +46,8 @@ require('neconfig.config.widgets.statusbar.statusbar_init')
 
 -- TODO move to separate module?
 local rules = require('neconfig.config.client.client_rules')
-local client_buttons = require('neconfig.config.binds.client.client_buttons')
-local client_keys = require('neconfig.config.binds.client.client_keys')
+local client_buttons = require('neconfig.user.config.binds.user_client_binds').buttons
+local client_keys = require('neconfig.user.config.binds.user_client_binds').keys
 awful.rules.rules = rules(client_keys, client_buttons)
 require('neconfig.config.client.client_signals')
 
