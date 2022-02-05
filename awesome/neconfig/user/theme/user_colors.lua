@@ -117,6 +117,7 @@ local classes = {
     error_surface = make_class_surface('error'),
     error_full    = make_class_full('error'),
 }
+
 return {
     palette = palette,
     classes = classes
