@@ -44,7 +44,7 @@ client.connect_signal(
 )
 
 -- Enable sloppy focus, so that focus follows mouse.
-if (user_interactions.enable_sloppy_focus) then
+if (user_interactions.focus.sloppy_focus) then
     client.connect_signal(
         'mouse::enter',
         function(c)
