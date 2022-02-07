@@ -1,21 +1,23 @@
+-- Load modules
 local awful = require('awful')
-
-local theme_assets = require('beautiful.theme_assets')
 local xresources = require('beautiful.xresources')
 local dpi = xresources.apply_dpi
-
+local theme_assets = require('beautiful.theme_assets')
 local gfs = require('gears.filesystem')
-local themes_path = gfs.get_themes_dir()
+-- Load custom modules
+local user_desktop_appearance = require('neconfig.user.appearance.user_desktop_appearance')
 
+
+-- Get variables
+local themes_path = gfs.get_themes_dir()
 local config_path = awful.util.getdir('config') .. '/neconfig/'
 
+
+-- Container for values
 local theme = {}
 
--- local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
--- theme.font          = theme.user_vars_theme.general.font .. ' ' .. theme.user_vars_theme.general.text_size
-
-theme.font          = "sans 8"
+theme.font          = user_desktop_appearance.font .. ' ' .. user_desktop_appearance.font_size
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -28,8 +30,8 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(5)
-theme.border_width  = dpi(1)
+theme.useless_gap   = user_desktop_appearance.gaps
+theme.border_width  = user_desktop_appearance.borders
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
@@ -143,6 +145,6 @@ theme.system_icon = config_path .. 'graphics/icons/system_logo.svg'
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
--- theme.icon_theme = theme.user_vars_theme.client.icon_theme
+theme.icon_theme = user_desktop_appearance.gtk_icon_theme
 
 return theme

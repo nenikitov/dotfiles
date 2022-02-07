@@ -1,10 +1,11 @@
 -- Load libraries
 local awful = require('awful')
 local beautiful = require('beautiful')
-local gears = require('gears')
 local menubar_utils = require('menubar.utils')
+local gears = require('gears')
 -- Load custom modules
 local user_interactions = require('neconfig.user.config.binds.user_interactions')
+local user_desktop_appearance = require('neconfig.user.appearance.user_desktop_appearance')
 require('neconfig.config.widgets.titlebar.titlebar_init')
 
 
@@ -19,7 +20,7 @@ client.connect_signal(
         end
 
         -- Force set GTK icon
-        if false then
+        if user_desktop_appearance.try_to_force_gtk_icon_theme then
             if c.instance ~= nil then
                 local icon = menubar_utils.lookup_icon(c.instance)
                 local lower_icon = menubar_utils.lookup_icon(c.instance:lower())
