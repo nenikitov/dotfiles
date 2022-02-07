@@ -45,9 +45,7 @@ require('neconfig.config.widgets.statusbar.statusbar_init')
 
 -- TODO move to separate module?
 local rules = require('neconfig.config.client.client_rules')
-local client_buttons = require('neconfig.user.config.binds.user_client_binds').buttons
-local client_keys = require('neconfig.user.config.binds.user_client_binds').keys
-awful.rules.rules = rules(client_keys, client_buttons)
+awful.rules.rules = rules
 require('neconfig.config.client.client_signals')
 
 -- Autostart
