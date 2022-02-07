@@ -17,7 +17,7 @@ local user_apps = require('neconfig.user.config.user_apps')
 
 
 -- Load the theme
-beautiful.init(user_desktop.theme_path)
+beautiful.init(os.getenv('HOME') .. '/.config/awesome/neconfig/theme/theme.lua')
 
 require('neconfig.config.main.wallpaper')
 
