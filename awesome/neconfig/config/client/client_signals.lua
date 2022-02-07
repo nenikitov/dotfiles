@@ -4,10 +4,8 @@ local beautiful = require('beautiful')
 local gears = require('gears')
 local menubar_utils = require('menubar.utils')
 -- Load custom modules
-local binds_user_conf = require('neconfig.config.user.binds_user_conf')
-local user_vars_theme = beautiful.user_vars_theme
-local widget_utils = require('neconfig.config.utils.widget_utils')
-require('neconfig.config.widgets.titlebar.titlebar')
+local user_interactions = require('neconfig.user.config.binds.user_interactions')
+-- require('neconfig.config.widgets.titlebar.titlebar')
 
 
 -- Signal function to execute when a new client appears.
@@ -21,8 +19,7 @@ client.connect_signal(
         end
 
         -- Force set GTK icon
-        if user_vars_theme.client.try_to_force_icon_theme
-        then
+        if false then
             if c.instance ~= nil then
                 local icon = menubar_utils.lookup_icon(c.instance)
                 local lower_icon = menubar_utils.lookup_icon(c.instance:lower())
@@ -47,8 +44,7 @@ client.connect_signal(
 )
 
 -- Enable sloppy focus, so that focus follows mouse.
-if (binds_user_conf.interactions.enable_sloppy_focus)
-then
+if (user_interactions.enable_sloppy_focus) then
     client.connect_signal(
         'mouse::enter',
         function(c)

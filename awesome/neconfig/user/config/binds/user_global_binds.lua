@@ -1,17 +1,16 @@
 -- Load libraries
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
-local menubar = require('menubar')
 -- Load custom modules
 local user_interactions = require('neconfig.user.config.binds.user_interactions')
-local apps_user_conf = require('neconfig.config.user.apps_user_conf')
+local user_apps = require('neconfig.user.config.user_apps')
 local app_utils = require('neconfig.config.utils.app_utils')
-local menu_user_conf = require('neconfig.config.user.menu_user_conf')
-local desktop_user_conf = require('neconfig.config.user.desktop_user_conf')
+local user_menu = require('neconfig.user.config.widgets.user_menu')
+local user_desktop = require('neconfig.user.config.user_desktop')
 
 -- Get variables
-local tag_num = #(desktop_user_conf.tag_names)
-local terminal = apps_user_conf.default_apps.terminal
+local tag_num = #(user_desktop.tag_names)
+local terminal = user_apps.default_apps.terminal
 local super_key = user_interactions.keys.super_key
 local more_key = user_interactions.keys.more_key
 local less_key = user_interactions.keys.less_key
@@ -25,7 +24,7 @@ local global_buttons = {
     awful.button(
         { }, 3,
         function()
-            menu_user_conf:toggle()
+            user_menu:toggle()
         end
     )
 }
@@ -241,7 +240,7 @@ local global_keys = {
     awful.key(
         { super_key }, 'r',
         function()
-            awful.util.spawn(apps_user_conf.default_apps.run_menu)
+            awful.util.spawn(user_apps.default_apps.run_menu)
         end,
         { description = 'open run launcher', group = 'launcher' }
     ),
@@ -249,7 +248,7 @@ local global_keys = {
     awful.key(
         { super_key }, 'w',
         function()
-            menu_user_conf:show()
+            user_menu:show()
         end,
         { description = 'open main menu', group = 'launcher' }
     ),

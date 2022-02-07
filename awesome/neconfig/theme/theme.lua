@@ -11,10 +11,9 @@ local config_path = awful.util.getdir('config') .. '/neconfig/'
 
 local theme = {}
 
-theme.user_vars_theme = require('neconfig.theme.user_vars_theme')
 -- local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
-theme.font          = theme.user_vars_theme.general.font .. ' ' .. theme.user_vars_theme.general.text_size
+-- theme.font          = theme.user_vars_theme.general.font .. ' ' .. theme.user_vars_theme.general.text_size
 
 theme.bg_normal     = '#222222'
 theme.bg_focus      = '#535d6c'
@@ -27,14 +26,14 @@ theme.fg_focus      = '#ffffff'
 theme.fg_urgent     = '#ffffff'
 theme.fg_minimize   = '#ffffff'
 
-theme.useless_gap   = theme.user_vars_theme.client.gaps
+theme.useless_gap   = dpi(3)
 theme.border_width  = dpi(2)
 theme.border_normal = '#000000'
 theme.border_focus  = '#535d6c'
 theme.border_marked = '#91231c'
 
 
-theme.wibar_bg = theme.user_vars_theme.statusbar.colors.bg_bar
+theme.wibar_bg = '#000000'
 
 -- TODO handle all bg and fg possibilities
 theme.taglist_bg_focus = '#0006'
@@ -152,8 +151,6 @@ theme.system_icon = config_path .. 'graphics/icons/system_logo.svg'
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = theme.user_vars_theme.client.icon_theme
+-- theme.icon_theme = theme.user_vars_theme.client.icon_theme
 
 return theme
-
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80

@@ -1,11 +1,11 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local desktop_user_conf = require('neconfig.config.user.desktop_user_conf')
+local user_desktop = require('neconfig.user.config.user_desktop')
 
 -- Get variables
-local tag_names = desktop_user_conf.tag_names
-local tag_layout = desktop_user_conf.layouts[1]
+local tag_names = user_desktop.tag_names
+local tag_layout = user_desktop.layouts[1]
 
 
 -- Add layouts to each screen
