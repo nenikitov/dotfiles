@@ -34,16 +34,6 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
-
-theme.wibar_bg = '#000000'
-
--- TODO handle all bg and fg possibilities
-theme.taglist_bg_focus = '#0006'
-theme.taglist_bg_urgent = '#f004'
-
-theme.tasklist_bg_focus = '#0006'
-theme.tasklist_bg_normal = '#0000'
-theme.tasklist_bg_minimize = '#0000'
 -- theme.tasklist_plain_task_name = not statusbar_user_conf.widgets.tasklist.show_task_props
 -- theme.tasklist_disable_task_name = not statusbar_user_conf.widgets.tasklist.show_task_title
 

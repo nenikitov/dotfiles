@@ -5,7 +5,7 @@ local gears = require('gears')
 local menubar_utils = require('menubar.utils')
 -- Load custom modules
 local user_interactions = require('neconfig.user.config.binds.user_interactions')
-require('neconfig.config.widgets.titlebar.titlebar')
+require('neconfig.config.widgets.titlebar.titlebar_init')
 
 
 -- Signal function to execute when a new client appears.

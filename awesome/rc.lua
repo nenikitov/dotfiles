@@ -40,7 +40,7 @@ awful.layout.layouts = user_desktop.layouts
 menubar.utils.terminal = user_apps.default_apps.terminal
 
 -- Init wibar
--- require('neconfig.config.widgets.statusbar.statusbar_init')
+require('neconfig.config.widgets.statusbar.statusbar_init')
 
 
 -- TODO move to separate module?
