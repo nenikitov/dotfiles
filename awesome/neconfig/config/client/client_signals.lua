@@ -13,7 +13,7 @@ require('neconfig.config.widgets.titlebar.titlebar')
 -- Signal function to execute when a new client appears.
 client.connect_signal(
     'manage',
-    function (c)
+    function(c)
         -- Set the windows at the slave (put it at the end of others instead of setting it master)
         if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
             -- Prevent clients from being unreachable after screen count changes.
@@ -34,6 +34,13 @@ client.connect_signal(
                 end
             elseif c.icon == nil then
                 c.icon = gears.surface(menubar_utils.lookup_icon('application-default-icon'))._native
+            end
+        end
+
+        -- Set client shape
+        if not (c.maximized or c.fullscreen) then
+            c.shape = function(cr, w, h)
+                return gears.shape.rounded_rect(cr, w, h, 10)
             end
         end
     end
