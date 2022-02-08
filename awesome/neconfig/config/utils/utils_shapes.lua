@@ -1,10 +1,17 @@
 -- Load modules
 local rad = math.rad
+local min = math.min
 -- Load custom modules
 
 -- Container for functions
 local utils_shapes = {}
 
+--- Generate a rectangle that supports different radius for corners and different cutout types
+---@param args table Radius (number) and/or round (boolean). Can also be a table with keys as:
+--- - `'tr'`, `'tl'`, `'br'`, `'bl'`
+--- - **OR** `'top'`, `'bottom'`,
+--- - **OR** `'right'`, `'left'`
+---@return function shape Shape that is compatible with `gears.shape`
 function utils_shapes.better_rect(args)
     args = args or {}
 
@@ -13,10 +20,10 @@ function utils_shapes.better_rect(args)
     radius =
         type(radius) == 'table'
         and {
-            tr = radius.tr or def_radius,
-            tl = radius.tl or def_radius,
-            br = radius.br or def_radius,
-            bl = radius.bl or def_radius
+            tr = radius.tr or radius.top or radius.right or def_radius,
+            tl = radius.tl or radius.top or radius.left or def_radius,
+            br = radius.br or radius.bottom or radius.right or def_radius,
+            bl = radius.bl or radius.bottom or radius.left or def_radius
         }
         or {
             tr = radius or def_radius,
@@ -25,70 +32,78 @@ function utils_shapes.better_rect(args)
             bl = radius or def_radius
         }
 
-    local def_cutout = 'round'
-    local cutout = args.cutout or def_cutout
-    cutout =
-        type(cutout) == 'table'
+    local def_round = false
+    local round = args.round or def_round
+    round =
+        type(round) == 'table'
         and {
-            tr = cutout.tr or def_cutout,
-            tl = cutout.tl or def_cutout,
-            br = cutout.br or def_cutout,
-            bl = cutout.bl or def_cutout
+            tr = round.tr or round.top or round.right or def_round,
+            tl = round.tl or round.top or round.left or def_round,
+            br = round.br or round.bottom or round.right or def_round,
+            bl = round.bl or round.bottom or round.left or def_round
         }
         or {
-            tr = cutout or def_cutout,
-            tl = cutout or def_cutout,
-            br = cutout or def_cutout,
-            bl = cutout or def_cutout
+            tr = round or def_round,
+            tl = round or def_round,
+            br = round or def_round,
+            bl = round or def_round
         }
 
     return function(cr, w, h)
-        cr:move_to(0, radius.tl)
+        local half_w = w / 2
+        local half_h = h / 2
+
+        local r = {
+            tr = min(radius.tr, half_w, half_h),
+            tl = min(radius.tl, half_w, half_h),
+            br = min(radius.br, half_w, half_h),
+            bl = min(radius.bl, half_w, half_h)
+        }
+
+        cr:move_to(0, r.tl)
 
         -- Top left corner
-        if cutout.tl == 'round' then
+        if round.tl then
             cr:arc(
-                radius.tl, radius.tl,
-                radius.tl, rad(180), rad(270)
+                r.tl, r.tl,
+                r.tl, rad(180), rad(270)
             )
         else
-            cr:line_to(radius.tl, 0)
+            cr:line_to(r.tl, 0)
         end
 
         -- Top right corner
-        if cutout.tr == 'round' then
+        if round.tr then
             cr:arc(
-                w - radius.tr, radius.tr,
-                radius.tr, rad(270), rad(0)
+                w - r.tr, r.tr,
+                r.tr, rad(270), rad(0)
             )
         else
-            cr:line_to(w - radius.tr, 0)
-            cr:line_to(w, radius.tr)
+            cr:line_to(w - r.tr, 0)
+            cr:line_to(w, r.tr)
         end
 
         -- Bottom right corner
-        if cutout.br == 'round' then
+        if round.br then
             cr:arc(
-                w - radius.br, h - radius.br,
-                radius.br, rad(0), rad(90)
+                w - r.br, h - r.br,
+                r.br, rad(0), rad(90)
             )
         else
-            cr:line_to(w, h - radius.br)
-            cr:line_to(w - radius.br, h)
+            cr:line_to(w, h - r.br + 1)
+            cr:line_to(w - r.br, h)
         end
 
         -- Bottom left corner
-        if cutout.bl == 'round' then
+        if round.bl then
             cr:arc(
-                radius.bl, h - radius.bl,
-                radius.bl, rad(90), rad(180)
+                r.bl, h - r.bl,
+                r.bl, rad(90), rad(180)
             )
         else
-            cr:line_to(radius.br, h)
-            cr:line_to(0, h - radius.br)
+            cr:line_to(r.bl, h)
+            cr:line_to(0, h - r.bl + 1)
         end
-
-
 
         cr:close_path()
     end
