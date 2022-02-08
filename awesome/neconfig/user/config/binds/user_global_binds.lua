@@ -4,7 +4,7 @@ local hotkeys_popup = require('awful.hotkeys_popup')
 -- Load custom modules
 local user_interactions = require('neconfig.user.config.binds.user_interactions')
 local user_apps = require('neconfig.user.config.user_apps')
-local app_utils = require('neconfig.config.utils.app_utils')
+local utils_apps = require('neconfig.config.utils.utils_apps')
 local user_menu = require('neconfig.user.config.widgets.user_menu')
 local user_desktop = require('neconfig.user.config.user_desktop')
 
@@ -283,7 +283,7 @@ local global_keys = {
     awful.key(
         { }, 'XF86MonBrightnessDown',
         function()
-            app_utils.increase_brightness(-5)
+            utils_apps.increase_brightness(-5)
         end,
         { description = 'Decrease brightness by 5%', group = 'screen - brightness' }
     ),
@@ -291,7 +291,7 @@ local global_keys = {
     awful.key(
         { }, 'XF86MonBrightnessUp',
         function()
-            app_utils.increase_brightness(5)
+            utils_apps.increase_brightness(5)
         end,
         { description = 'Increase brightness by 5%', group = 'screen - brightness' }
     ),

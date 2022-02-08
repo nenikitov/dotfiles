@@ -1,5 +1,5 @@
 -- Load custom modules
-local scaling = require('neconfig.config.utils.scaling_utils')
+local scaling = require('neconfig.config.utils.utils_scaling')
 
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█   ▄▀█ █▀█ █▀█ █▀▀ ▄▀█ █▀█ ▄▀█ █▄ █ █▀▀ █▀▀
