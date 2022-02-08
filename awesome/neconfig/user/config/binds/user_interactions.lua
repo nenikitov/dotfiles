@@ -10,7 +10,7 @@ local interactions = {
         -- Moving floating clients
         move = dpi(20),
         -- Resizing master factor
-        master = 0.05
+        master = 0.02
     },
     -- Special keys that are used in binds
     keys = {

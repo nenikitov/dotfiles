@@ -130,49 +130,8 @@ local global_keys = {
     ),
     --#endregion
 
-    --#region Client focus
-    -- Focus next client on "SUPER" + J
-    awful.key(
-        { super_key }, 'j',
-        function()
-            awful.client.focus.byidx(1)
-        end,
-        { description = 'focus next by index', group = 'client - focus' }
-    ),
-    -- Focus previous client on SUPER + K
-    awful.key(
-        { super_key }, 'k',
-        function()
-            awful.client.focus.byidx(-1)
-        end,
-        { description = 'focus previous by index', group = 'client - focus' }
-    ),
-    --#endregion
+    --#region Client display
 
-    --#region Client manipulation
-
-    -- Swap the current client with the next one on "SUPER" + "MORE" + J
-    awful.key(
-        { super_key, more_key }, 'j',
-        function()
-            awful.client.swap.byidx(1)
-        end,
-        { description = 'swap with next client by index', group = 'client - focus' }
-    ),
-    -- Swap the current client with the previous one on "SUPER" + "MORE" + K
-    awful.key(
-        { super_key, more_key }, 'k',
-        function()
-            awful.client.swap.byidx(-1)
-        end,
-        { description = 'swap with previous client by index', group = 'client - focus' }
-    ),
-    -- Focus urgent client on "SUPER" + U
-    awful.key(
-        { super_key }, 'u',
-        awful.client.urgent.jumpto,
-        { description = 'jump to urgent client', group = 'client - focus' }
-    ),
     -- Restore minimized on "SUPER" + "MORE" + N
     awful.key(
         { super_key, more_key }, 'n',
@@ -186,23 +145,135 @@ local global_keys = {
                 )
             end
         end,
-        { description = 'restore minimized', group = 'client - focus' }
+        { description = 'restore minimized', group = 'client - display' }
+    ),
+    --#endregion
+
+
+    --#region Client focus
+
+    -- Focus urgent client on "SUPER" + U
+    awful.key(
+        { super_key }, 'u',
+        awful.client.urgent.jumpto,
+        { description = 'jump to urgent client', group = 'client - focus' }
+    ),
+
+    -- Focus the next client up on "SUPER" + K
+    awful.key(
+        { super_key }, 'k',
+        function()
+            awful.client.focus.global_bydirection('up')
+        end,
+        { description = 'focus next client up', group = 'client - focus' }
+    ),
+    -- Focus the next client down on "SUPER" + J
+    awful.key(
+        { super_key }, 'j',
+        function()
+            awful.client.focus.global_bydirection('down')
+        end,
+        { description = 'focus next client down', group = 'client - focus' }
+    ),
+    -- Focus the next client right on "SUPER" + L
+    awful.key(
+        { super_key }, 'l',
+        function()
+            awful.client.focus.global_bydirection('right')
+        end,
+        { description = 'focus next client right', group = 'client - focus' }
+    ),
+    -- Focus the next client left on "SUPER" + H
+    awful.key(
+        { super_key }, 'h',
+        function()
+            awful.client.focus.global_bydirection('left')
+        end,
+        { description = 'focus next client left', group = 'client - focus' }
+    ),
+    -- Focus next client by id on "SUPER" + TAB
+    awful.key(
+        { super_key }, 'Tab',
+        function()
+            awful.client.focus.byidx(1)
+        end,
+        { description = 'focus next client by id', group = 'client - focus' }
+    ),
+    -- Focus previous client by id on "SUPER" + "MORE" + TAB
+    awful.key(
+        { super_key, more_key }, 'Tab',
+        function()
+            awful.client.focus.byidx(-1)
+        end,
+        { description = 'focus previous client by id', group = 'client - focus' }
+    ),
+    --#endregion
+
+    --#region Client swap
+
+    -- Swap with the next client up on "SUPER" + "LESS" + K
+    awful.key(
+        { super_key, less_key }, 'k',
+        function()
+            awful.client.swap.global_bydirection('up')
+        end,
+        { description = 'swap with next client up', group = 'client - swap' }
+    ),
+    -- Swap with the next client down on "SUPER" + "LESS" + J
+    awful.key(
+        { super_key, less_key }, 'j',
+        function()
+            awful.client.swap.global_bydirection('down')
+        end,
+        { description = 'swap with next client down', group = 'client - swap' }
+    ),
+    -- Swap with the next client right on "SUPER" + "LESS" + L
+    awful.key(
+        { super_key, less_key }, 'l',
+        function()
+            awful.client.swap.global_bydirection('right')
+        end,
+        { description = 'swap with next client right', group = 'client - swap' }
+    ),
+    -- Swap with the next client left on "SUPER" + "LESS" + H
+    awful.key(
+        { super_key, less_key }, 'h',
+        function()
+            awful.client.swap.global_bydirection('left')
+        end,
+        { description = 'swap with next client left', group = 'client - swap' }
+    ),
+    -- Swap with the next client by id on "SUPER" + "LESS" + TAB
+    awful.key(
+        { super_key, less_key }, 'Tab',
+        function()
+            awful.client.swap.byidx(1)
+        end,
+        { description = 'swap with next client by id', group = 'client - swap' }
+    ),
+    -- Swap with the previous client by id on "SUPER" + "MORE" + "LESS" + TAB
+    awful.key(
+        { super_key, more_key, less_key }, 'Tab',
+        function()
+            awful.client.swap.byidx(-1)
+        end,
+        { description = 'swap with previous client by id', group = 'client - swap' }
     ),
     --#endregion
 
     --#region Screen
 
-    -- Focus next screen on "SUPER" + "LESS" + J
+    -- Focus next screen on "SUPER" + P
     awful.key(
-        { super_key, less_key }, 'j',
+        { super_key }, 'p',
         function()
             awful.screen.focus_relative(1)
         end,
         { description = 'focus next screen', group = 'screen - focus' }
     ),
-    -- Focus previous screen on "SUPER" + "LESS" + K
+    -- Focus previous screen on "SUPER" + O
     awful.key(
-        { super_key, less_key }, 'k',
+        { super_key }, 'o',
         function()
             awful.screen.focus_relative(-1)
         end,
@@ -272,49 +343,33 @@ local global_keys = {
         end,
         { description = 'select previous', group = 'layout - type' }
     ),
-    -- Increase the number of master clients on "SUPER" + "MORE" + H
+    -- Increase the number of master clients on "SUPER" + "MORE" + K
     awful.key(
-        { super_key, more_key }, 'h',
+        { super_key, more_key }, 'k',
         function()
             awful.tag.incnmaster( 1, nil, true)
         end,
         { description = 'increase number of master clients', group = 'layout - type' }
     ),
-    -- Decrease the number of master clients on "SUPER" + "MORE" + L
+    -- Decrease the number of master clients on "SUPER" + "MORE" + J
     awful.key(
-        { super_key, more_key }, 'l',
+        { super_key, more_key }, 'j',
         function()
             awful.tag.incnmaster(-1, nil, true)
         end,
         { description = 'decrease number of master clients', group = 'layout - type' }
     ),
-    -- Increase number of columns on "SUPER" + "LESS" + H
+    -- Increase master width on "SUPER" + "MORE" + L
     awful.key(
-        { super_key, less_key }, 'h',
-        function()
-            awful.tag.incncol( 1, nil, true)
-        end,
-        { description = 'increase the number of columns', group = 'layout - type' }
-    ),
-    -- Decrease number of columns on "SUPER" + "LESS" + L
-    awful.key(
-        { super_key, less_key }, 'l',
-        function()
-            awful.tag.incncol(-1, nil, true)
-        end,
-        { description = 'decrease the number of columns', group = 'layout - type' }
-    ),
-    -- Increase master width on "SUPER" + L
-    awful.key(
-        { super_key }, 'l',
+        { super_key, more_key }, 'l',
         function()
             awful.tag.incmwfact(resize_master_val)
         end,
         { description = 'increase master width factor', group = 'layout - size' }
     ),
-    -- Decrease master width on "SUPER" + H
+    -- Decrease master width on "SUPER" + "MORE" + H
     awful.key(
-        { super_key }, 'h',
+        { super_key, more_key }, 'h',
         function()
             awful.tag.incmwfact(-resize_master_val)
         end,
