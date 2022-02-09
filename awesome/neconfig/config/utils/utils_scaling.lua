@@ -32,7 +32,7 @@ end
 ---@param value number
 ---@return number
 function utils_scaling.radius(value)
-    return dpi(value) * user_scaling.rounding * user_scaling.contents
+    return dpi(value) * user_scaling.radius * user_scaling.contents
 end
 
 return utils_scaling

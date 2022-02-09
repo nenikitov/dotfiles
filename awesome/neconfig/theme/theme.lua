@@ -6,6 +6,7 @@ local theme_assets = require('beautiful.theme_assets')
 local gfs = require('gears.filesystem')
 -- Load custom modules
 local user_desktop_appearance = require('neconfig.user.appearance.user_desktop_appearance')
+local user_apps_appearance = require('neconfig.user.appearance.user_apps_appearance')
 
 
 -- Get variables
@@ -31,7 +32,7 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = user_desktop_appearance.gaps
-theme.border_width  = user_desktop_appearance.borders
+theme.border_width  = user_apps_appearance.borders
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
