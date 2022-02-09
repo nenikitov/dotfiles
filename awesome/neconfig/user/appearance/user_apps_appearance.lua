@@ -21,8 +21,8 @@ local apps_appearance = {
         -- Radius of the corners
             -- Can be a value (number) to set all corners, or a table (with keys specified above) to set individual corners
         radius = {
-            titlebar = scaling.radius(6),
-            other    = scaling.radius(3)
+            titlebar = scaling.radius(8),
+            other    = scaling.radius(4)
         }
     }
 }

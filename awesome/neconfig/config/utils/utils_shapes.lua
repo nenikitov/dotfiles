@@ -109,4 +109,15 @@ function utils_shapes.better_rect(args)
     end
 end
 
+function utils_shapes.opposite_side(side)
+    local opposite_sides = {
+        top = 'bottom',
+        bottom = 'top',
+        right = 'left',
+        left = 'right',
+    }
+
+    return opposite_sides[side]
+end
+
 return utils_shapes

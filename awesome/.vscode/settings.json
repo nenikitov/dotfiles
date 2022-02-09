@@ -16,6 +16,7 @@
     ],
     "Lua.workspace.ignoreDir": [
         ".vscode",
+        "backup",
         "lain",
         "vicious",
         "rubato"
