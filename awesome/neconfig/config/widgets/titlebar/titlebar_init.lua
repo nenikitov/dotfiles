@@ -3,39 +3,24 @@ local gears = require('gears')
 local awful = require('awful')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
-
+-- Load custom modules
+local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
+local titlebar_buttons = require('neconfig.config.widgets.titlebar.tilebar_buttons')
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal(
     'request::titlebars',
     function(c)
-        -- TODO move to separate file
         -- Buttons for the titlebar
-        local buttons = gears.table.join(
-            -- Move window on LMB
-            awful.button(
-                { }, 1,
-                function()
-                    c:emit_signal('request::activate', 'titlebar', {raise = true})
-                    awful.mouse.client.move(c)
-                end
-            ),
-            -- Resize window on RMB
-            awful.button(
-                { }, 3,
-                function()
-                    c:emit_signal('request::activate', 'titlebar', {raise = true})
-                    awful.mouse.client.resize(c)
-                end
-            )
-            -- TODO double click to maximize / minimize
-        )
-        -- Send button info to the theme
-        -- ? Is needed
-        beautiful.titlebar_buttons = buttons
+        local buttons = titlebar_buttons(c)
 
-        -- TODO move to separate file
-        awful.titlebar(c):setup {
+        local client_titlebar = awful.titlebar(
+            c,
+            {
+                position = user_titlebar.position
+            }
+        )
+        client_titlebar:setup {
             -- Left
             {
                 awful.titlebar.widget.iconwidget(c),

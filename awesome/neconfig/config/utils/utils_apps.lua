@@ -17,7 +17,6 @@ function utils_apps.increase_brightness(step)
                 current_brightness = math.floor(current_brightness / step) * step
                 current_brightness = current_brightness + step
 
-
                 utils_apps.brightness_set(current_brightness)
             end
         }

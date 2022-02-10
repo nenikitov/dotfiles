@@ -2,6 +2,7 @@
 local awful = require('awful')
 local beautiful = require('beautiful')
 local hotkeys_popup = require('awful.hotkeys_popup').widget
+local menubar = require('menubar')
 -- Load custom modules
 local user_apps = require('neconfig.user.config.user_apps')
 

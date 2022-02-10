@@ -1,4 +1,4 @@
--- Load modules
+-- Load libraries
 local beautiful = require('beautiful')
 local wibox = require('wibox')
 

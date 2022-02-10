@@ -1,7 +1,7 @@
--- Load modules
+-- Load libraries
 local rad = math.rad
 local min = math.min
--- Load custom modules
+
 
 -- Container for functions
 local utils_shapes = {}

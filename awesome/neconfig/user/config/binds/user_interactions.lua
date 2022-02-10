@@ -3,6 +3,8 @@ local dpi = require('beautiful').xresources.apply_dpi
 
 
 local interactions = {
+    -- Maximum time between 2 clicks when they are considered as a double click
+    double_click_time = 0.2,
     -- Values for client resizing and move with keyboard
     keyboard_client_movement = {
         -- Resizing floating clients

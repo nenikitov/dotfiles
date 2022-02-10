@@ -1,4 +1,4 @@
--- Load modules
+-- Load libraries
 local awful = require('awful')
 local xresources = require('beautiful.xresources')
 local dpi = xresources.apply_dpi

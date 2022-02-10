@@ -1,4 +1,4 @@
--- Load modules
+-- Load libraries
 local dpi = require('beautiful.xresources').apply_dpi
 -- Load custom modules
 local user_scaling = require('neconfig.user.appearance.user_scaling')

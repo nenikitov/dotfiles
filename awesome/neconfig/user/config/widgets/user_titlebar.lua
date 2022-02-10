@@ -1,6 +1,5 @@
 -- Load custom modules
--- TODO create module
-local titlebar_subwidget_list = {}
+local titlebar_subwidget_list = require('neconfig.config.widgets.titlebar.titlebar_subwidget_list')
 
 
 -- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█ █▀
@@ -14,11 +13,11 @@ local titlebars = {
     layout = {
         -- Start of the bar (left for the top titlebar)
         beginning = {
-            titlebar_subwidget_list.icon
+            titlebar_subwidget_list.icon,
         },
         -- Center of the bar (middle for the top titlebar)
         center = {
-            titlebar_subwidget_list.title
+            titlebar_subwidget_list.title,
         },
         -- End of the bar (right for the top titlebar)
         ending = {
