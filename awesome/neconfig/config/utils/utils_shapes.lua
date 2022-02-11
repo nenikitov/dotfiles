@@ -109,6 +109,9 @@ function utils_shapes.better_rect(args)
     end
 end
 
+--- Get the side opposite to a side
+---@param side string 'top', 'bottom', 'right', 'left'
+---@return string side Opposite side
 function utils_shapes.opposite_side(side)
     local opposite_sides = {
         top = 'bottom',
@@ -118,6 +121,20 @@ function utils_shapes.opposite_side(side)
     }
 
     return opposite_sides[side]
+end
+
+--- Get the direction along a side
+---@param side string 'top', 'bottom', 'right', 'left'
+---@return string direction Direction
+function utils_shapes.direction_of_side(side)
+    local directions = {
+        top = 'horizontal',
+        bottom = 'horizontal',
+        right = 'vertical',
+        left = 'vertical',
+    }
+
+    return directions[side]
 end
 
 return utils_shapes

@@ -5,7 +5,9 @@ local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- Load custom modules
 local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
-local titlebar_buttons = require('neconfig.config.widgets.titlebar.tilebar_buttons')
+local titlebar_buttons = require('neconfig.config.widgets.titlebar.titlebar_buttons')
+local titlebar_widget_template = require('neconfig.config.widgets.titlebar.titlebar_widget_template')
+
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal(
@@ -35,7 +37,8 @@ client.connect_signal(
                     widget = awful.titlebar.widget.titlewidget(c)
                 },
                 buttons = buttons,
-                layout = wibox.layout.flex.horizontal
+
+                layout = wibox.layout.flex.horizontal()
             },
             -- Right
             {
