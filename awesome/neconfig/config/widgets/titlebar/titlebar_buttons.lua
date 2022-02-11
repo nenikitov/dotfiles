@@ -6,7 +6,7 @@ local utils_widgets = require('neconfig.config.utils.utils_widgets')
 
 local function titlebar_buttons(c)
     local buttons = {
-        -- Move window on LMB
+        -- Move client on LMB / Toggle maximize on DOUBLE CLICK LMB
         awful.button(
             { }, 1,
             function()
@@ -20,7 +20,7 @@ local function titlebar_buttons(c)
                 end
             end
         ),
-        -- Resize window on RMB
+        -- Resize client on RMB
         awful.button(
             { }, 3,
             function()
