@@ -2,8 +2,9 @@
 local scaling = require('neconfig.config.utils.utils_scaling')
 
 
--- ▄▀█ █▀█ █▀█   ▄▀█ █▀█ █▀█ █▀▀ ▄▀█ █▀█ ▄▀█ █▄ █ █▀▀ █▀▀
--- █▀█ █▀▀ █▀▀   █▀█ █▀▀ █▀▀ ██▄ █▀█ █▀▄ █▀█ █ ▀█ █▄▄ ██▄
+
+-- ▄▀█ █▀█ █▀█ █▀   █   █▀█ █▀█ █▄▀
+-- █▀█ █▀▀ █▀▀ ▄█   █▄▄ █▄█ █▄█ █ █
 local apps_look = {
     -- Width of borders around the application windows
     borders = scaling.borders(2),

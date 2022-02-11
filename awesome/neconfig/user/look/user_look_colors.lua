@@ -47,13 +47,26 @@ local scheme = {
 
     -- Name of the color from the palette used as primary color
     primary   = 'blue',
-    -- Name of the color from the palette used as secondary color
+    -- As secondary color
     secondary = 'magenta',
-    -- Name of the color from the palette used as tertiary color
+    -- As tertiary color
     tertiary  = 'yellow',
 
-    -- Name of the color from the palette used as error color
-    error     = 'error'
+    -- As error color
+    error = 'red',
+
+    -- As close titlebar button color
+    close    = 'red',
+    -- As maximize titlebar button color
+    maximize = 'green',
+    -- As minimize titlebar button color
+    minimize = 'yellow',
+    -- As on top titlebar button color
+    on_top   = 'blue',
+    -- As floating titlebar button color
+    floating = 'magenta',
+    -- As sticky titlebar button color
+    sticky   = 'cyan',
 }
 
 

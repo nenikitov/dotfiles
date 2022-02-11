@@ -2,9 +2,9 @@
 local titlebar_subwidget_list = require('neconfig.config.widgets.titlebar.titlebar_subwidget_list')
 
 
--- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█ █▀
---  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄ ▄█
-local titlebars = {
+-- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█
+--  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄
+local titlebar = {
     -- Position of the titlebar of the client
     position = 'top',
     -- Visible by default (if hidden can still be toggled with the shortcut)
@@ -30,4 +30,4 @@ local titlebars = {
     }
 }
 
-return titlebars
+return titlebar

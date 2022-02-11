@@ -7,16 +7,16 @@ local titlebar_subwidget_list = {
     -- Name of the client
     title = t_widget.titlewidget,
 
-    -- Button for toggling floating mode
-    floating = t_widget.floatingbutton,
+    -- Button for closing the client
+    close = t_widget.closebutton,
     -- Button for maximizing the client
     maximize = t_widget.maximizedbutton,
     -- Button for minimizing the client
     minimize = t_widget.minimizebutton,
-    -- Button for closing the client
-    close = t_widget.closebutton,
     -- Button for making the client display on top of other clients
     on_top = t_widget.ontopbutton,
+    -- Button for toggling floating mode
+    floating = t_widget.floatingbutton,
     -- Button for making the client display on all tags
     sticky = t_widget.stickybutton
 }
