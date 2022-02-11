@@ -4,7 +4,7 @@ local scaling = require('neconfig.config.utils.utils_scaling')
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█   ▄▀█ █▀█ █▀█ █▀▀ ▄▀█ █▀█ ▄▀█ █▄ █ █▀▀ █▀▀
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀   █▀█ █▀▀ █▀▀ ██▄ █▀█ █▀▄ █▀█ █ ▀█ █▄▄ ██▄
-local desktop_appearance = {
+local desktop_look = {
     font = 'sans-serif',
     font_size = scaling.size(8),
 
@@ -14,4 +14,4 @@ local desktop_appearance = {
     try_to_force_gtk_icon_theme = true
 }
 
-return desktop_appearance
+return desktop_look

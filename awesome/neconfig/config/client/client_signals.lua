@@ -5,8 +5,8 @@ local menubar_utils = require('menubar.utils')
 local gears = require('gears')
 -- Load custom modules
 local user_interactions = require('neconfig.user.config.binds.user_interactions')
-local user_apps_appearance = require('neconfig.user.appearance.user_apps_appearance')
-local user_desktop_appearance = require('neconfig.user.appearance.user_desktop_appearance')
+local user_look_apps = require('neconfig.user.look.user_look_apps')
+local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local utils_shapes = require('neconfig.config.utils.utils_shapes')
 require('neconfig.config.widgets.titlebar.titlebar_init')
 
@@ -20,8 +20,8 @@ local function update_client_shape(c)
     end
 end
 local function construct_custom_shape()
-    local u_round = user_apps_appearance.shape.round
-    local u_radius = user_apps_appearance.shape.radius
+    local u_round = user_look_apps.shape.round
+    local u_radius = user_look_apps.shape.radius
 
     local titlebar_side = 'top'
     local titlebar_opp_side = utils_shapes.opposite_side(titlebar_side)
@@ -70,7 +70,7 @@ client.connect_signal(
         end
 
         -- Force set GTK icon
-        if user_desktop_appearance.try_to_force_gtk_icon_theme then
+        if user_look_desktop.try_to_force_gtk_icon_theme then
             if c.instance ~= nil then
                 local icon = menubar_utils.lookup_icon(c.instance)
                 local lower_icon = menubar_utils.lookup_icon(c.instance:lower())

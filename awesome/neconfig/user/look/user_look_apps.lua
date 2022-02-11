@@ -4,7 +4,7 @@ local scaling = require('neconfig.config.utils.utils_scaling')
 
 -- ▄▀█ █▀█ █▀█   ▄▀█ █▀█ █▀█ █▀▀ ▄▀█ █▀█ ▄▀█ █▄ █ █▀▀ █▀▀
 -- █▀█ █▀▀ █▀▀   █▀█ █▀▀ █▀▀ ██▄ █▀█ █▀▄ █▀█ █ ▀█ █▄▄ ██▄
-local apps_appearance = {
+local apps_look = {
     -- Width of borders around the application windows
     borders = scaling.borders(2),
     -- Show slight lighting effect on the borders near the titlebar
@@ -27,4 +27,4 @@ local apps_appearance = {
     }
 }
 
-return apps_appearance
+return apps_look
