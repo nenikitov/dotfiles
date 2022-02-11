@@ -5,7 +5,7 @@ local wibox = require('wibox')
 -- Load custom modules
 local icons = require('neconfig.config.utils.icons')
 local widget_utils = require('neconfig.config.utils.widget_utils')
-local app_utils = require('neconfig.config.utils.app_utils')
+local utils_apps = require('neconfig.config.utils.utils_apps')
 
 local font_height = beautiful.get_font_height(beautiful.font)
 
@@ -16,7 +16,7 @@ local bar = widget_utils.create_progress_bar {
     target_length = 1,
     max_value = 100,
     on_change = function(value)
-        app_utils.set_brightness(value)
+        utils_apps.set_brightness(value)
     end
 }
 

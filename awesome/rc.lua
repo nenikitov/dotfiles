@@ -4,7 +4,6 @@ pcall(require, 'luarocks.loader')
 local awful = require('awful')
 local beautiful = require('beautiful')
 local menubar = require('menubar')
-local naughty = require('naughty')
 
 -- Init error handling
 require('neconfig.config.main.error_handling')
@@ -13,12 +12,12 @@ require('neconfig.config.main.error_handling')
 -- TODO implement if statement to enable / disable from config
 require('awful.autofocus')
 
-local desktop_user_conf = require('neconfig.config.user.desktop_user_conf')
-local apps_user_conf = require('neconfig.config.user.apps_user_conf')
+local user_desktop = require('neconfig.user.config.user_desktop')
+local user_apps = require('neconfig.user.config.user_apps')
 
 
 -- Load the theme
-beautiful.init(desktop_user_conf.theme_path)
+beautiful.init(os.getenv('HOME') .. '/.config/awesome/neconfig/theme/theme.lua')
 
 require('neconfig.config.main.wallpaper')
 
@@ -34,11 +33,11 @@ root.buttons(global_buttons)
 
 
 -- Init layouts
-awful.layout.layouts = desktop_user_conf.layouts
+awful.layout.layouts = user_desktop.layouts
 
 
 -- Set the terminal for applications that require it
-menubar.utils.terminal = apps_user_conf.default_apps.terminal
+menubar.utils.terminal = user_apps.default_apps.terminal
 
 -- Init wibar
 require('neconfig.config.widgets.statusbar.statusbar_init')
@@ -46,9 +45,7 @@ require('neconfig.config.widgets.statusbar.statusbar_init')
 
 -- TODO move to separate module?
 local rules = require('neconfig.config.client.client_rules')
-local client_buttons = require('neconfig.user.config.binds.user_client_binds').buttons
-local client_keys = require('neconfig.user.config.binds.user_client_binds').keys
-awful.rules.rules = rules(client_keys, client_buttons)
+awful.rules.rules = rules
 require('neconfig.config.client.client_signals')
 
 -- Autostart

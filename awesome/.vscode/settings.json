@@ -16,6 +16,7 @@
     ],
     "Lua.workspace.ignoreDir": [
         ".vscode",
+        "backup",
         "lain",
         "vicious",
         "rubato"
@@ -55,6 +56,7 @@
         "subwidget",
         "Sxiv",
         "textbox",
+        "titlebar",
         "titlebars",
         "titlewidget",
         "unfocus",

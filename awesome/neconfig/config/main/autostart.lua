@@ -1,13 +1,13 @@
 -- Load libraries
 local awful = require('awful')
 -- Load custom modules
-local apps_user_conf = require('neconfig.config.user.apps_user_conf')
+local user_apps = require('neconfig.user.config.user_apps')
 
 -- Get variables
-local startup_apps = apps_user_conf.startup_apps
+local startup = user_apps.startup
 
 
 -- Launch applications
-for i = 1, #(startup_apps) do
-    awful.spawn.with_shell(startup_apps[i])
+for i = 1, #(startup) do
+    awful.spawn.with_shell(startup[i])
 end

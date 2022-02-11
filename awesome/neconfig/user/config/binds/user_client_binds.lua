@@ -101,9 +101,9 @@ local client_keys = {
 
     --#region Screen
 
-    -- Move client to next screen on "SUPER" + O
+    -- Move client to next screen on "SUPER" + "LESS" + P
     awful.key(
-        { super_key }, 'o',
+        { super_key, less_key }, 'p',
         function(c)
             c:move_to_screen()
         end,
@@ -111,9 +111,9 @@ local client_keys = {
     ),
     -- Move client to previous screen on "SUPER" + "LESS" + O
     awful.key(
-        { super_key, less_key }, 'o',
+        { super_key, more_key }, 'o',
         function(c)
-            c:move_to_screen()
+            c:move_to_screen(c.screen.index - 1)
         end,
         { description = 'move to previous screen', group = 'client - screen' }
     ),

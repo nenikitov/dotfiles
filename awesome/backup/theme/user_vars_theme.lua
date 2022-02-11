@@ -1,4 +1,4 @@
--- Load modules
+-- Load libraries
 local dpi = require('beautiful.xresources').apply_dpi
 
 

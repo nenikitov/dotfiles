@@ -2,7 +2,7 @@
 local awful = require('awful')
 
 -- Get variables
-local icons = require('neconfig.user.user_icons')
+local icons = require('neconfig.user.config.user_icons')
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀

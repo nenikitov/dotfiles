@@ -1,48 +1,42 @@
+-- Load libraries
 local awful = require('awful')
-
-local theme_assets = require('beautiful.theme_assets')
 local xresources = require('beautiful.xresources')
 local dpi = xresources.apply_dpi
-
+local theme_assets = require('beautiful.theme_assets')
 local gfs = require('gears.filesystem')
-local themes_path = gfs.get_themes_dir()
+-- Load custom modules
+local user_desktop_appearance = require('neconfig.user.appearance.user_desktop_appearance')
+local user_apps_appearance = require('neconfig.user.appearance.user_apps_appearance')
 
+
+-- Get variables
+local themes_path = gfs.get_themes_dir()
 local config_path = awful.util.getdir('config') .. '/neconfig/'
 
+
+-- Container for values
 local theme = {}
 
-theme.user_vars_theme = require('neconfig.theme.user_vars_theme')
--- local statusbar_user_conf = require('neconfig.config.user.statusbar_user_conf')
 
-theme.font          = theme.user_vars_theme.general.font .. ' ' .. theme.user_vars_theme.general.text_size
+theme.font          = user_desktop_appearance.font .. ' ' .. user_desktop_appearance.font_size
 
-theme.bg_normal     = '#222222'
-theme.bg_focus      = '#535d6c'
-theme.bg_urgent     = '#ff0000'
-theme.bg_minimize   = '#444444'
+theme.bg_normal     = "#222222"
+theme.bg_focus      = "#535d6c"
+theme.bg_urgent     = "#ff0000"
+theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = '#bfbfbf'
-theme.fg_focus      = '#ffffff'
-theme.fg_urgent     = '#ffffff'
-theme.fg_minimize   = '#ffffff'
+theme.fg_normal     = "#aaaaaa"
+theme.fg_focus      = "#ffffff"
+theme.fg_urgent     = "#ffffff"
+theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = theme.user_vars_theme.client.gaps
-theme.border_width  = dpi(2)
-theme.border_normal = '#000000'
-theme.border_focus  = '#535d6c'
-theme.border_marked = '#91231c'
+theme.useless_gap   = user_desktop_appearance.gaps
+theme.border_width  = user_apps_appearance.borders
+theme.border_normal = "#000000"
+theme.border_focus  = "#535d6c"
+theme.border_marked = "#91231c"
 
-
-theme.wibar_bg = theme.user_vars_theme.statusbar.colors.bg_bar
-
--- TODO handle all bg and fg possibilities
-theme.taglist_bg_focus = '#0006'
-theme.taglist_bg_urgent = '#f004'
-
-theme.tasklist_bg_focus = '#0006'
-theme.tasklist_bg_normal = '#0000'
-theme.tasklist_bg_minimize = '#0000'
 -- theme.tasklist_plain_task_name = not statusbar_user_conf.widgets.tasklist.show_task_props
 -- theme.tasklist_disable_task_name = not statusbar_user_conf.widgets.tasklist.show_task_title
 
@@ -152,8 +146,6 @@ theme.system_icon = config_path .. 'graphics/icons/system_logo.svg'
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = theme.user_vars_theme.client.icon_theme
+theme.icon_theme = user_desktop_appearance.gtk_icon_theme
 
 return theme
-
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
