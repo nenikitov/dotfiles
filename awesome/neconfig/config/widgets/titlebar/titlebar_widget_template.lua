@@ -7,7 +7,7 @@ local utils_shapes = require("neconfig.config.utils.utils_shapes")
 local titlebar_buttons = require("neconfig.config.widgets.titlebar.titlebar_buttons")
 
 
-local function titlebar_widget_template(c, bg_col)
+local function titlebar_widget_template(c)
     local direction = utils_shapes.direction_of_side(user_titlebar.position)
     local buttons = titlebar_buttons(c)
     -- Function to init a widget inside a titlebar
