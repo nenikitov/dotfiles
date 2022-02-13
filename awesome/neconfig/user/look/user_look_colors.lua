@@ -29,7 +29,10 @@ local palette = {
 }
 
 
-local function create_scheme(color)
+--- Create a color scheme from the name of the color
+---@param color string Name of the color from the palette
+---@return table colors Corresponding background and foreground colors
+local function create_class(color)
     return {
         bg = palette.bg[color],
         fg = palette.fg[color]
@@ -39,33 +42,65 @@ end
 
 -- █▀▀ █▀█ █   █▀█ █▀█   █▀ █▀▀ █ █ █▀▀ █▀▄▀█ █▀▀
 -- █▄▄ █▄█ █▄▄ █▄█ █▀▄   ▄█ █▄▄ █▀█ ██▄ █ ▀ █ ██▄
-local scheme = {
+local classes = {
     -- Transparency
     transparency = palette.transparency,
 
     -- Neutral colors
-    neutral = create_scheme('normal'),
+    normal = create_class('normal'),
     surface = {
         bg = palette.bg.black,
         fg = palette.fg.white,
     },
 
     -- Accent colors
-    primary   = create_scheme('blue'),
-    secondary = create_scheme('magenta'),
-    tertiary  = create_scheme('yellow'),
-    error     = create_scheme('red'),
+    primary   = create_class('blue'),
+    secondary = create_class('magenta'),
+    tertiary  = create_class('yellow'),
+    error     = create_class('red'),
+}
 
-    -- Titlebar buttons
-    close    = create_scheme('red'),
-    maximize = create_scheme('green'),
-    minimize = create_scheme('yellow'),
-    on_top   = create_scheme('blue'),
-    floating = create_scheme('magenta'),
-    sticky   = create_scheme('cyan'),
+
+local class_blends = {
+    -- Invert background and foreground colors
+    invert = function(scheme)
+        return {
+            bg = scheme.fg,
+            fg = scheme.bg
+        }
+    end,
+    -- Use only the background color as the foreground
+    isolate_bg_as_fg = function(scheme)
+        return {
+            bg = '#0000',
+            fg = scheme.bg
+        }
+    end,
+    -- Use only the foreground color as the foreground
+    isolate_fg_as_fg = function(scheme)
+        return {
+            bg = '#0000',
+            fg = scheme.fg
+        }
+    end,
+    -- Use 2 background colors as background and foreground
+    blend_back_bg_fore_bg = function(back, fore)
+        return {
+            bg = back.bg,
+            fg = fore.bg
+        }
+    end,
+    -- Use background color from one color scheme and foreground from another
+    blend_back_bg_fore_fg = function(back, fore)
+        return {
+            bg = back.bg,
+            fg = fore.fg
+        }
+    end
 }
 
 return {
-    palette = palette,
-    scheme = scheme
+    palette       = palette,
+    classes       = classes,
+    class_blends  = class_blends
 }

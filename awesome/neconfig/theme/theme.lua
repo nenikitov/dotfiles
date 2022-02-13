@@ -17,7 +17,6 @@ local config_path = awful.util.getdir('config') .. '/neconfig/'
 -- Container for values
 local theme = {}
 
-
 theme.font          = user_look_desktop.font .. ' ' .. user_look_desktop.font_size
 
 theme.bg_normal     = "#222222"
@@ -32,10 +31,17 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = user_look_desktop.gaps
-theme.border_width  = user_look_apps.borders
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
-theme.border_marked = "#91231c"
+
+
+
+-- Borders
+theme.border_width = user_look_apps.border.width.border
+
+for border_type, color in pairs(user_look_apps.border.colors) do
+    theme['border_color_' .. border_type] = color
+end
+
+
 
 -- theme.tasklist_plain_task_name = not statusbar_user_conf.widgets.tasklist.show_task_props
 -- theme.tasklist_disable_task_name = not statusbar_user_conf.widgets.tasklist.show_task_title

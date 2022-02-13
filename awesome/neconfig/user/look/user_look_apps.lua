@@ -1,15 +1,33 @@
 -- Load custom modules
 local scaling = require('neconfig.config.utils.utils_scaling')
+local colors = require('neconfig.user.look.user_look_colors')
 
 
 
 -- ▄▀█ █▀█ █▀█ █▀   █   █▀█ █▀█ █▄▀
 -- █▀█ █▀▀ █▀▀ ▄█   █▄▄ █▄█ █▄█ █ █
 local apps_look = {
-    -- Width of borders around the application windows
-    borders = scaling.borders(2),
-    -- Show slight lighting effect on the borders near the titlebar
-    highlight_effect = true,
+    -- Borders around application windows
+    border = {
+        -- Width of borders
+        width = {
+            -- Real border that changes the colors for different client status
+            border    = scaling.borders(2),
+            -- Subtle 3D highlight effect
+            highlight = scaling.borders(1)
+        },
+        -- Colors of borders
+            -- - Keys can be ('normal', 'active', 'floating', 'maximized', 'fullscreen', 'urgent')
+            -- - Also 'highlight'
+        colors = {
+            normal = colors.classes.normal.bg,
+            active = colors.classes.primary.bg,
+            floating = colors.classes.secondary.bg,
+            urgent = colors.classes.error.bg,
+
+            highlight = colors.classes.normal.fg,
+        }
+    },
     -- Shape of the window
     shape = {
         -- Should the corners be rounded
