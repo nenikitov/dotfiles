@@ -13,12 +13,13 @@ client.connect_signal(
     'titlebar::update_color',
     function(c)
         gears.timer.weak_start_new(
-            0.1,
+            0.15,
             function()
                 local titlebar_color = utils_colors.get_client_side_color(c, user_titlebar.position)
                 awful.titlebar(
                     c,
                     {
+                        position = user_titlebar.position,
                         bg = titlebar_color
                     }
                 )
