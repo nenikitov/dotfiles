@@ -137,29 +137,17 @@ function utils_shapes.direction_of_side(side)
     return directions[side]
 end
 
---- Get the alignment information about a direction
----@param direction string 'horizontal' or 'vertical'
----@return table alignment Alignment info
---- - `direction` - 'halign' or 'valign'
---- - `beginning` - 'left' or 'top'
---- - `center` - 'center'
---- - `ending` - 'right' or 'bottom'
-function utils_shapes.alignments(direction)
-    local alignments = {
-        horizontal = {
-            direction = 'halign',
-            beginning = 'left',
-            center = 'center',
-            ending = 'right'
-        },
-        vertical = {
-            direction = 'valign',
-            beginning = 'top',
-            center = 'center',
-            ending = 'bottom'
-        }
+
+--- Get size property along a direction
+---@param direction string 'horizontal', 'vertical'
+---@return string size Size property
+function utils_shapes.size_prop_of_direction(direction)
+    local size_props = {
+        vertical = 'height',
+        horizontal = 'width'
     }
 
-    return alignments[direction]
+    return size_props[direction]
 end
+
 return utils_shapes
