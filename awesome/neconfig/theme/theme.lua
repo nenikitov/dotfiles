@@ -7,7 +7,7 @@ local gfs = require('gears.filesystem')
 -- Load custom modules
 local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local user_look_apps = require('neconfig.user.look.user_look_apps')
-
+local user_look_colors = require('neconfig.user.look.user_look_colors')
 
 -- Get variables
 local themes_path = gfs.get_themes_dir()
@@ -19,20 +19,20 @@ local theme = {}
 
 theme.font          = user_look_desktop.font .. ' ' .. user_look_desktop.font_size
 
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
-theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_normal     = '#222222'
+theme.bg_focus      = '#535d6c'
+theme.bg_urgent     = '#ff0000'
+theme.bg_minimize   = '#444444'
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = '#aaaaaa'
+theme.fg_focus      = '#ffffff'
+theme.fg_urgent     = '#ffffff'
+theme.fg_minimize   = '#ffffff'
 
 theme.useless_gap   = user_look_desktop.gaps
 
-theme.titlebar_bg = '#0000'
+-- theme.titlebar_bg = user_look_colors.classes.normal.bg
 
 -- Borders
 theme.border_width = user_look_apps.border.width.border

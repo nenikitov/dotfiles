@@ -12,13 +12,16 @@ require('neconfig.config.widgets.titlebar.titlebar_init')
 
 
 
-local function update_client_shape(c)
-    if not (c.maximized or c.fullscreen) then
-        c.shape = c.custom_shape
-    else
-        c.shape = nil
+client.connect_signal(
+    'shape::update',
+    function(c)
+        if not (c.maximized or c.fullscreen) then
+            c.shape = c.custom_shape
+        else
+            c.shape = nil
+        end
     end
-end
+)
 local function construct_custom_shape()
     local u_round = user_look_apps.shape.round
     local u_radius = user_look_apps.shape.radius
@@ -88,7 +91,7 @@ client.connect_signal(
 
         -- Generate rounded shape to switch to it when client is not maximized and update the shape
         c.custom_shape = construct_custom_shape()
-        update_client_shape(c)
+        c:emit_signal('shape::update')
     end
 )
 
@@ -96,13 +99,13 @@ client.connect_signal(
 client.connect_signal(
     'property::maximized',
     function(c)
-        update_client_shape(c)
+        c:emit_signal('shape::update')
     end
 )
 client.connect_signal(
     'property::fullscreen',
     function(c)
-        update_client_shape(c)
+        c:emit_signal('shape::update')
     end
 )
 
@@ -133,5 +136,12 @@ client.connect_signal(
     'unfocus',
     function(c)
         c.border_color = beautiful.border_normal
+    end
+)
+
+client.connect_signal(
+    'request::manage',
+    function(c)
+        c:emit_signal('titlebar::update_soon')
     end
 )
