@@ -5,12 +5,13 @@ local naughty = require('naughty')
 -- Load custom modules
 local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
 local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
+local user_look_colors = require('neconfig.user.look.user_look_colors')
 local utils_colors = require('neconfig.config.utils.utils_colors')
 local titlebar_widget_template = require('neconfig.config.widgets.titlebar.titlebar_widget_template')
 
 -- Update all titlebar colors now
 client.connect_signal(
-    'titlebar::update_now',
+    'titlebar::refresh_colors',
     function(c)
         -- Get color from user colors
         local all_colors = {
@@ -18,23 +19,16 @@ client.connect_signal(
             focus  = user_look_titlebar.bar.colors.focus or user_look_titlebar.bar.colors.normal,
             urgent = user_look_titlebar.bar.colors.urgent or user_look_titlebar.bar.colors.normal
         }
+
+        -- Calculate state of the current client
         local client_state = (client.focus == c) and 'focus' or 'normal'
         client_state = c.urgent and 'urgent' or client_state
         local current_color = all_colors[client_state]
 
-        -- Update client color
-        local client_color = utils_colors.get_client_side_color(c, user_titlebar.position)
-        if client_color == '#000000' or client_color == '#00000000' then
-            if c.previous_client_color then
-                client_color = c.previous_client_color
-            end
-        end
-        c.previous_client_color = client_color
-
         -- Replace 'border' or 'client' colors by their values
         local col_bg = current_color.bg
         if current_color.bg == 'client' then
-            col_bg = client_color
+            col_bg = c.client_color or user_look_colors.classes.primary.bg
         elseif current_color.bg == 'border' then
             col_bg = c.border_color
         end
@@ -48,14 +42,24 @@ client.connect_signal(
         )
     end
 )
--- Update all titlebar colors with a slight delay
+
 client.connect_signal(
-    'titlebar::update_soon',
+    'titlebar::update_client_color_now',
+    function(c)
+        c.client_color = utils_colors.get_client_side_color(c, user_titlebar.position)
+        c:emit_signal('titlebar::refresh_colors')
+        naughty.notify {
+            text = tostring(c.name .. ' - updating to ' .. c.client_color)
+        }
+    end
+)
+client.connect_signal(
+    'titlebar::update_client_color_later',
     function(c)
         gears.timer.weak_start_new(
-            0.15,
+            0.25,
             function()
-                c:emit_signal('titlebar::update_now')
+                c:emit_signal('titlebar::update_client_color_now')
             end
         )
     end
@@ -75,7 +79,7 @@ client.connect_signal(
 
         client_titlebar:setup(titlebar_widget_template(c))
 
-        c:emit_signal('titlebar::update_soon')
+        c:emit_signal('titlebar::update_client_color_later')
     end
 )
 
@@ -83,7 +87,5 @@ client.connect_signal(
 client.connect_signal(
     'request::border',
     function(c)
-        c:emit_signal('titlebar::update_now')
-        c:emit_signal('titlebar::update_soon')
     end
 )
