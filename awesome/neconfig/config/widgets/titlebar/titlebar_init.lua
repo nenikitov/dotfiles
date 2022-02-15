@@ -28,7 +28,7 @@ client.connect_signal(
         -- Replace 'border' or 'client' colors by their values
         local col_bg = current_color.bg
         if current_color.bg == 'client' then
-            col_bg = c.client_color or user_look_colors.classes.primary.bg
+            col_bg = c.client_color or user_look_colors.classes.normal.bg
         elseif current_color.bg == 'border' then
             col_bg = c.border_color
         end
@@ -48,23 +48,19 @@ client.connect_signal(
     function(c)
         c.client_color = utils_colors.get_client_side_color(c, user_titlebar.position)
         c:emit_signal('titlebar::refresh_colors')
-        naughty.notify {
-            text = tostring(c.name .. ' - updating to ' .. c.client_color)
-        }
     end
 )
 client.connect_signal(
     'titlebar::update_client_color_later',
     function(c)
         gears.timer.weak_start_new(
-            0.25,
+            0.3,
             function()
                 c:emit_signal('titlebar::update_client_color_now')
             end
         )
     end
 )
-
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules
 client.connect_signal(
@@ -87,5 +83,9 @@ client.connect_signal(
 client.connect_signal(
     'request::border',
     function(c)
+        if client.focus == c then
+            c:emit_signal('titlebar::update_client_color_later')
+        end
+        c:emit_signal('titlebar::refresh_colors')
     end
 )
