@@ -17,13 +17,15 @@ local apps_look = {
             highlight = scaling.borders(1)
         },
         -- Colors of borders
-            -- - Keys can be ('normal', 'active', 'floating', 'maximized', 'fullscreen', 'urgent', or a mix)
+            -- - Keys can be 'normal', 'active', 'floating', 'maximized', 'fullscreen', 'urgent', or a mix (like 'floating_active')
             -- - Also 'highlight'
+            -- - 'normal' and 'active' keys are mandatory
         colors = {
             normal = colors.classes.normal.bg,
             active = colors.classes.primary.bg,
-            floating_active = colors.classes.secondary.bg,
             urgent = colors.classes.error.bg,
+
+            floating_active = colors.classes.secondary.bg,
 
             highlight = colors.classes.normal.fg,
         }

@@ -117,31 +117,19 @@ if (user_interactions.focus.sloppy_focus) then
             c:emit_signal(
                 'request::activate',
                 'mouse_enter',
-                {raise = false}
+                { raise = false }
             )
         end
     )
 end
 
 
--- Change border color on focus
+-- Clean up client stuff when killing it
 client.connect_signal(
-    'focus',
+    'request::unmanage',
     function(c)
-        c.border_color = beautiful.border_focus
-    end
-)
--- Change border color on lost focus
-client.connect_signal(
-    'unfocus',
-    function(c)
-        c.border_color = beautiful.border_normal
-    end
-)
-
-client.connect_signal(
-    'request::manage',
-    function(c)
-        c:emit_signal('titlebar::update_soon')
+        c.custom_shape = nil
+        c.previous_titlebar_color = nil
+        collectgarbage('collect')
     end
 )

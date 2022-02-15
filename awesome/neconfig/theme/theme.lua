@@ -32,7 +32,7 @@ theme.fg_minimize   = '#ffffff'
 
 theme.useless_gap   = user_look_desktop.gaps
 
--- theme.titlebar_bg = user_look_colors.classes.normal.bg
+theme.titlebar_bg = user_look_colors.classes.normal.bg
 
 -- Borders
 theme.border_width = user_look_apps.border.width.border
