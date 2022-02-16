@@ -31,31 +31,6 @@ client.connect_signal(
         c:emit_signal('titlebar::update_client_color_later')
     end
 )
-
-
-
-
-client.connect_signal(
-    'titlebar::client_color_save',
-    function(c)
-        gears.timer.weak_start_new(
-            0.25,
-            function()
-                local all_client_colors = require(titlebar_colors_module) or {}
-                local client_color = utils_colors.get_client_side_color(c, user_titlebar.position)
-                all_client_colors[c.class] = client_color
-                utils_tables.save_table(
-                    all_client_colors,
-                    titlebar_colors_file,
-                    'titlebar_client_colors',
-                    '▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▀▀ █▀█ █   █▀█ █▀█ █▀',
-                    ' █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄▄ █▄▄ █ ██▄ █ ▀█  █    █▄▄ █▄█ █▄▄ █▄█ █▀▄ ▄█'
-                )
-                c:emit_signal('titlebar::refresh_colors')
-            end
-        )
-    end
-)
 -- Force update titlebar colors when borders change
 client.connect_signal(
     'request::border',
@@ -65,7 +40,7 @@ client.connect_signal(
 )
 
 
--- Refresh titlebar colors logic
+-- Refresh the color of the titlebar
 client.connect_signal(
     'titlebar::refresh_colors',
     function(c)
@@ -95,12 +70,58 @@ client.connect_signal(
             col_bg = c.border_color
         end
 
+        -- Construct the titlebar
         awful.titlebar(
             c,
             {
                 position = user_titlebar.position,
                 bg = col_bg
             }
+        )
+    end
+)
+
+
+-- Read the color from the client's edge and save it to the file
+client.connect_signal(
+    'titlebar::client_color_save_now',
+    function(c)
+        -- Read from the file containing the colors for all clients that were opened before
+        local all_client_colors = require(titlebar_colors_module) or {}
+        -- Add or update color
+        local client_color = utils_colors.get_client_side_color(c, user_titlebar.position)
+        all_client_colors[c.class] = client_color
+        -- Save the table
+        utils_tables.save_table(
+            all_client_colors,
+            titlebar_colors_file,
+            'titlebar_client_colors',
+            '▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▀▀ █▀█ █   █▀█ █▀█ █▀',
+            ' █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄▄ █▄▄ █ ██▄ █ ▀█  █    █▄▄ █▄█ █▄▄ █▄█ █▀▄ ▄█'
+        )
+        -- Refresh colors
+        c:emit_signal('titlebar::refresh_colors')
+    end
+)
+client.connect_signal(
+    'titlebar::client_color_save',
+    function(c)
+        gears.timer.weak_start_new(
+            0.25,
+            function()
+                -- Client's color is wrong when its not on the visible tag
+                -- This prevents it from updating if the client is not visible
+                local should_trust_clients_color = false
+                for _, t in ipairs(c:tags()) do
+                    if t.selected then
+                        should_trust_clients_color = true
+                    end
+                end
+
+                if should_trust_clients_color then
+                    c:emit_signal('titlebar::client_color_save_now')
+                end
+            end
         )
     end
 )

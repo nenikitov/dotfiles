@@ -20,6 +20,13 @@ local function titlebar_buttons(c)
                 end
             end
         ),
+        -- Refresh titlebar color on MMB
+        awful.button(
+            { }, 2,
+            function()
+                c:emit_signal('titlebar::client_color_save_now')
+            end
+        ),
         -- Resize client on RMB
         awful.button(
             { }, 3,

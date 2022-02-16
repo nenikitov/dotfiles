@@ -25,7 +25,12 @@ local function table_to_string(table, level)
         result = result .. indent_to(level + 1) .. k_string .. v_string .. ',\n'
     end
 
-    return result:sub(1, -3) .. '\n' .. indent_to(level) .. '}'
+
+    if result:sub(-2) == ',\n' then
+        result = result:sub(1, -3)
+    end
+
+    return result .. '\n' .. indent_to(level) .. '}'
 end
 --#endregion
 
