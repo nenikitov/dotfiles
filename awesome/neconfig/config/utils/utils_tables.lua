@@ -3,7 +3,6 @@ local utils_tables = {}
 
 --#region Helper functions
 local function table_to_string(table, level)
-    level = level or 0
     local function indent_to(l)
         return string.rep('    ', l)
     end
@@ -14,7 +13,7 @@ local function table_to_string(table, level)
         local k_string =
             (type(k) == 'number')
             and ''
-            or tostring(k) .. ' = '
+            or '[\'' .. k .. '\']' .. ' = '
         local v_string =
             (type(v) == 'table')
             and table_to_string(v, level + 1)
@@ -35,14 +34,20 @@ function utils_tables.to_string(table)
     return table_to_string(table, 0)
 end
 
-function utils_tables.save_table(table, table_name, path, comment)
+function utils_tables.save_table(table, path, table_name, ...)
     local file = io.open(path, 'w')
+
+    -- Comments
+    local comments = ''
+    for _, c in ipairs({...}) do
+        comments = comments .. '-- ' .. c .. '\n'
+    end
 
     file:write(
         -- Comment
-        comment and '-- ' .. comment or '',
+        comments ..
         -- Table
-        '\nlocal ' .. table_name .. ' = ' .. utils_tables.to_string(table),
+        'local ' .. table_name .. ' = ' .. utils_tables.to_string(table),
         -- Return
         '\n\nreturn ' .. table_name .. '\n'
     )
