@@ -1,5 +1,4 @@
 -- Load libraries local gears = require('gears')
-local naughty = require('naughty')
 local gears = require('gears')
 local lgi = require('lgi')
 local gdk = lgi.require('Gdk', '3.0')
@@ -9,6 +8,26 @@ local utils_shapes = require('neconfig.config.utils.utils_shapes')
 
 -- Container for functions
 local utils_colors = {}
+
+
+--#region Helper functions
+local function to_linear_c(channel)
+    if channel <= 0.04045 then
+        return channel / 12.92
+    else
+        return ((channel + 0.055) / 1.055) ^ 2.4
+    end
+end
+local function to_linear(color)
+    local r, g, b = gears.color.parse_color(color)
+
+    return to_linear_c(r), to_linear_c(g), to_linear_c(b)
+end
+local function get_luma(color)
+    local r, g, b = to_linear(color)
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+end
+--#endregion
 
 
 function utils_colors.get_client_side_color(client, side)
@@ -61,6 +80,30 @@ function utils_colors.get_client_side_color(client, side)
     end
 
     return max_color
+end
+
+
+function utils_colors.get_contrast(col1, col2)
+    local luma1 = get_luma(col1)
+    local luma2 = get_luma(col2)
+
+    return (math.max(luma1, luma2) + 0.05) / (math.min(luma1, luma2) + 0.05)
+end
+
+
+function utils_colors.get_most_contrast_color(bg_color, ...)
+    local max_contrast = 0
+    local max_contrast_color = nil
+    for _, c in ipairs({...}) do
+        local contrast = utils_colors.get_contrast(bg_color, c)
+
+        if contrast > max_contrast then
+            max_contrast = contrast
+            max_contrast_color = c
+        end
+    end
+
+    return max_contrast_color
 end
 
 

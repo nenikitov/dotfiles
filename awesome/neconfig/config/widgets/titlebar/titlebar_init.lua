@@ -1,7 +1,6 @@
 -- Load libraries
 local awful = require('awful')
 local gears = require('gears')
-local naughty = require('naughty')
 -- Load custom modules
 local utils_tables = require('neconfig.config.utils.utils_tables')
 local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
@@ -27,8 +26,6 @@ client.connect_signal(
         )
 
         client_titlebar:setup(titlebar_widget_template(c))
-
-        c:emit_signal('titlebar::update_client_color_later')
     end
 )
 -- Force update titlebar colors when borders change
@@ -56,7 +53,7 @@ client.connect_signal(
         client_state = c.urgent and 'urgent' or client_state
         local current_color = all_colors[client_state]
 
-        -- Replace 'border' or 'client' colors by their values
+        -- Replace 'border' or 'client' bg colors by their values
         local col_bg = current_color.bg
         if current_color.bg == 'client' then
             local all_client_colors = require(titlebar_colors_module)
@@ -70,12 +67,24 @@ client.connect_signal(
             col_bg = c.border_color
         end
 
+
+        -- Replace 'auto' or 'border' fg colors by their calues
+        local col_fg = current_color.fg
+        if current_color.fg == 'auto' then
+            col_fg = utils_colors.get_most_contrast_color(
+                col_bg,
+                user_look_colors.classes.normal.fg,
+                user_look_colors.classes.normal.bg
+            )
+        end
+
         -- Construct the titlebar
         awful.titlebar(
             c,
             {
                 position = user_titlebar.position,
-                bg = col_bg
+                bg = col_bg,
+                fg = col_fg
             }
         )
     end

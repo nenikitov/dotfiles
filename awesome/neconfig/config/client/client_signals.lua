@@ -17,10 +17,8 @@ client.connect_signal(
     function(c)
         if not (c.maximized or c.fullscreen) then
             c.shape = c.custom_shape
-            -- c.shape_bounding = c.custom_shape
         else
             c.shape = nil
-            -- c.shape_bounding = nil
         end
     end
 )
