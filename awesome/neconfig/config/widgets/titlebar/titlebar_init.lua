@@ -111,14 +111,7 @@ client.connect_signal(
             function()
                 -- Client's color is wrong when its not on the visible tag
                 -- This prevents it from updating if the client is not visible
-                local should_trust_clients_color = false
-                for _, t in ipairs(c:tags()) do
-                    if t.selected then
-                        should_trust_clients_color = true
-                    end
-                end
-
-                if should_trust_clients_color then
+                if c:isvisible() then
                     c:emit_signal('titlebar::client_color_save_now')
                 end
             end
