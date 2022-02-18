@@ -76,6 +76,8 @@ client.connect_signal(
                 user_look_colors.classes.normal.fg,
                 user_look_colors.classes.normal.bg
             )
+        elseif current_color.fg == 'border' then
+            col_fg = c.border_color
         end
 
         -- Construct the titlebar
