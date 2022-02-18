@@ -1,39 +1,15 @@
-# File structure
-```
-config
-    binds
-        client
-            client_buttons.lua
-            client_keys.lua
-        global
-            global_buttons.lua
-            global_keys.lua
-    client
-        client_rules.lua
-        client_signals.lua
-    main
-        autostart.lua
-        error_handling.lua
-        tag.lua
-        wallpaper.lua
-    widgets
-        popup
-            sub_widgets
-            utils
-            status_bar_init.lua
-        status_bar
-            sub_widgets
-            utils
-            status_bar_init.lua
-        title_bar
-            sub_widgets
-            title_bar_init.lua
-graphics
-    wallpapers
-    icons
-theme
-    ...
-    utils
-user
-    ...
-```
+floating_button
+    normal
+    normal_inactive
+    normal_inactive_hover
+    normal_inactive_press
+    focus
+    focus_active
+    focus_active_hover
+    focus_active_press
+    focus_inactive
+    focus_inactive_hover
+    focus_inactive_press
+    normal_active
+    normal_active_hover
+    normal_active_press

@@ -5,10 +5,12 @@ local wibox = require('wibox')
 local user_titlebar = require("neconfig.user.config.widgets.user_titlebar")
 local utils_shapes = require("neconfig.config.utils.utils_shapes")
 local titlebar_buttons = require("neconfig.config.widgets.titlebar.titlebar_buttons")
+local user_look_titlebar = require("neconfig.user.look.widgets.user_look_titlebar")
 
 
 local function titlebar_widget_template(c)
     local direction = utils_shapes.direction_of_side(user_titlebar.position)
+    local margin_side1, margin_side2 = utils_shapes.sides_along_direction(direction)
     local buttons = titlebar_buttons(c)
     -- Function to init a widget inside a titlebar
     local function init_widget(prototype)
@@ -60,25 +62,32 @@ local function titlebar_widget_template(c)
     -- Final widget
     return {
         {
-            beginning_section,
-            spacer,
+            {
+                beginning_section,
+                spacer,
+
+                layout = wibox.layout.align[direction]
+            },
+            center_section,
+            {
+                spacer,
+                spacer,
+                ending_section,
+
+                expand = 'inside',
+
+                layout = wibox.layout.align[direction]
+            },
+
+            expand = 'outside',
 
             layout = wibox.layout.align[direction]
         },
-        center_section,
-        {
-            spacer,
-            spacer,
-            ending_section,
 
-            expand = 'inside',
+        [margin_side1] = user_look_titlebar.margins,
+        [margin_side2] = user_look_titlebar.margins,
 
-            layout = wibox.layout.align[direction]
-        },
-
-        expand = 'outside',
-
-        layout = wibox.layout.align[direction]
+        widget = wibox.container.margin
     }
 end
 

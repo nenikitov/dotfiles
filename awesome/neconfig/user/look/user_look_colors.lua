@@ -25,7 +25,8 @@ local palette = {
         cyan    = '#9FECE3',
         white   = '#FFFFFF'
     },
-    transparency = 0.8
+    transparency = 0.8,
+    fully_transparent = '#00000000'
 }
 
 

@@ -175,4 +175,18 @@ function utils_shapes.pos_prop_of_direction(direction)
 end
 
 
+--- Get 2 sides along a direction
+---@param direction string 'horizontal', 'vertical'
+---@return string side1
+---@return string side2
+function utils_shapes.sides_along_direction(direction)
+    local sides = {
+        horizontal = { 'left', 'right' },
+        vertical = { 'top', 'bottom' }
+    }
+
+    return sides[direction][1], sides[direction][2]
+end
+
+
 return utils_shapes
