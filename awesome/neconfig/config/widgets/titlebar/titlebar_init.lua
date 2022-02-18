@@ -85,7 +85,7 @@ client.connect_signal(
             c,
             {
                 position = user_titlebar.position,
-                size = user_look_titlebar.size,
+                size = user_look_titlebar.size + 2 * user_look_titlebar.margin.other,
                 bg = col_bg,
                 fg = col_fg,
             }

@@ -7,8 +7,12 @@ local scaling = require('neconfig.config.utils.utils_scaling')
 -- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █   █▀█ █▀█ █▄▀
 --  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄▄ █▄█ █▄█ █ █
 local titlebar_look = {
+    -- Size of the titlebar
     size = user_look_desktop.font_size * 2.5,
-    margins = scaling.space(2),
+    margin = {
+        sides = scaling.space(4),
+        other = scaling.space(2)
+    },
 
     -- Colors of the titlebar
         -- - Keys can be 'normal', 'focus', 'urgent'

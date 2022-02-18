@@ -11,6 +11,7 @@ local user_look_titlebar = require("neconfig.user.look.widgets.user_look_titleba
 local function titlebar_widget_template(c)
     local direction = utils_shapes.direction_of_side(user_titlebar.position)
     local margin_side1, margin_side2 = utils_shapes.sides_along_direction(direction)
+    local margin_other1, margin_other2 = utils_shapes.sides_along_direction(utils_shapes.perp_direction(direction))
     local buttons = titlebar_buttons(c)
     -- Function to init a widget inside a titlebar
     local function init_widget(prototype)
@@ -84,8 +85,10 @@ local function titlebar_widget_template(c)
             layout = wibox.layout.align[direction]
         },
 
-        [margin_side1] = user_look_titlebar.margins,
-        [margin_side2] = user_look_titlebar.margins,
+        [margin_side1] = user_look_titlebar.margin.sides,
+        [margin_side2] = user_look_titlebar.margin.sides,
+        [margin_other1] = user_look_titlebar.margin.other,
+        [margin_other2] = user_look_titlebar.margin.other,
 
         widget = wibox.container.margin
     }
