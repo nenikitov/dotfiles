@@ -11,20 +11,18 @@ local client_keys = require('neconfig.user.config.binds.user_client_binds').keys
 local rules = {
     -- All clients will match this rule.
     {
+        id = 'global',
         rule = { },
         properties = {
-            border_width = beautiful.border_width,
-            border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
             raise = true,
-            keys = client_keys,
-            buttons = client_buttons,
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen
         }
     },
     -- Floating clients
     {
+        id = 'floating',
         rule_any = {
             class = {
                 'Arandr'
@@ -39,8 +37,12 @@ local rules = {
     },
     -- Add titlebars to normal clients and dialogs
     {
+        id = 'titlebars',
         rule_any = {
-            type = { 'normal', 'dialog' }
+            type = {
+                'normal',
+                'dialog'
+            }
         },
         properties = {
             titlebars_enabled = true

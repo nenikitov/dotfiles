@@ -1,6 +1,5 @@
 -- Load libraries
 local awful = require('awful')
-local beautiful = require('beautiful')
 local menubar_utils = require('menubar.utils')
 local gears = require('gears')
 -- Load custom modules
@@ -129,7 +128,6 @@ client.connect_signal(
     'request::unmanage',
     function(c)
         c.custom_shape = nil
-        c.previous_titlebar_color = nil
         collectgarbage('collect')
     end
 )
