@@ -6,7 +6,7 @@ local beautiful = require('beautiful')
 local menubar = require('menubar')
 
 -- Init error handling
-require('neconfig.config.main.error_handling')
+require('neconfig.config.main.main_error_handling')
 
 
 -- TODO implement if statement to enable / disable from config
@@ -19,10 +19,10 @@ local user_apps = require('neconfig.user.config.user_apps')
 -- Load the theme
 beautiful.init(os.getenv('HOME') .. '/.config/awesome/neconfig/theme/theme.lua')
 
-require('neconfig.config.main.wallpaper')
+require('neconfig.config.main.main_wallpaper')
 
 
-require('neconfig.config.main.tag')
+require('neconfig.config.main.main_tag')
 
 
 -- Load key binds
@@ -49,4 +49,4 @@ awful.rules.rules = rules
 require('neconfig.config.client.client_signals')
 
 -- Autostart
-require('neconfig.config.main.autostart')
+require('neconfig.config.main.main_autostart')

@@ -4,9 +4,28 @@ local user_look_colors = require('neconfig.user.look.user_look_colors')
 local scaling = require('neconfig.config.utils.utils_scaling')
 
 
--- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █   █▀█ █▀█ █▄▀
---  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄▄ █▄█ █▄█ █ █
+-- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █ █ █ █ █▀▄ █▀▀ █▀▀ ▀█▀   █   █▀█ █▀█ █▄▀
+--  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   ▀▄▀▄▀ █ █▄▀ █▄█ ██▄  █    █▄▄ █▄█ █▄█ █ █
 local titlebar_widget_look = {
+    -- Name: titlebar_name_button_prefix_img_state
+
+    -- name:   floating    - name of the button
+    --         maximize
+    --         ontop
+    --         sticky
+    --         close
+    --         minimize
+
+    -- prefix: normal      - window state
+    -- (opt)   focus
+
+    -- img:    active      - button state
+    --         inactive
+
+    -- state:  hover       - mouse state
+    -- (opt)   press
+
+
     -- Appearance of the titlebar buttons
     buttons = {
         -- Button for closing the client
