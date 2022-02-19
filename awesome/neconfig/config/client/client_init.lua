@@ -29,7 +29,7 @@ client.connect_signal(
 -- Apply rules
 ruled.client.connect_signal(
     'request::rules',
-    function ()
+    function()
         ruled.client.append_rules(client_rules)
     end
 )

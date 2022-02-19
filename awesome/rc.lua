@@ -6,7 +6,6 @@ local awful = require('awful')
 local beautiful = require('beautiful')
 local menubar = require('menubar')
 -- Load custom modules
-local user_desktop = require('neconfig.user.config.user_desktop')
 local user_apps = require('neconfig.user.config.user_apps')
 
 
@@ -27,7 +26,7 @@ require('neconfig.config.main.main_wallpaper')
 require('neconfig.config.main.main_tag')
 
 -- Init layouts
-awful.layout.layouts = user_desktop.layouts
+require('neconfig.config.main.main_layout')
 
 -- Load key binds
 require('neconfig.config.main.main_global_binds')

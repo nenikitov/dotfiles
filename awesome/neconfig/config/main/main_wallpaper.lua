@@ -1,18 +1,34 @@
 -- Load libraries
+local awful = require('awful')
 local beautiful = require('beautiful')
-local gears = require('gears')
+local wibox = require('wibox')
+-- Load custom modules
+local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 
 
 -- Set wallpaper
-local function set_wallpaper(s)
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        if type(wallpaper) == 'function' then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end
+screen.connect_signal(
+    'request::wallpaper',
+    function(s)
+        if beautiful.wallpaper and user_look_desktop.load_awesome_wallpaper then
+            awful.wallpaper {
+                screen = s,
+                widget = {
+                    {
+                        image = beautiful.wallpaper,
+                        upscale = true,
+                        downscale = true,
 
--- Re-set wallpaper when a screen's geometry changes (e.g. changing the resolution)
-screen.connect_signal('property::geometry', set_wallpaper)
+                        widget = wibox.widget.imagebox
+                    },
+
+                    valign = 'center',
+                    halign = 'center',
+                    tiled = false,
+
+                    widget = wibox.container.tile
+                }
+            }
+        end
+    end
+)

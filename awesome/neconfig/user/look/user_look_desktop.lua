@@ -11,7 +11,9 @@ local desktop_look = {
     gaps = scaling.space(3),
 
     gtk_icon_theme = 'Fluent-dark',
-    try_to_force_gtk_icon_theme = true
+    try_to_force_gtk_icon_theme = true,
+    load_awesome_wallpaper = false,
+
 }
 
 return desktop_look
