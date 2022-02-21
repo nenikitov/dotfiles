@@ -97,6 +97,17 @@ local client_keys = {
         end,
         { description = 'toggle keep on top', group = 'client - display' }
     ),
+    awful.key(
+        { super_key, less_key }, 'i',
+        function()
+           for _, c in ipairs(client.get()) do
+                if c.titlebars_enabled then
+                    awful.titlebar.toggle(c)
+                end
+            end
+        end,
+        { description = 'toggle titlebars', group = 'client - display'}
+    ),
     --#endregion
 
     --#region Screen

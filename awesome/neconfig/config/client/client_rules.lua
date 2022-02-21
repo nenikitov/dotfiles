@@ -47,7 +47,7 @@ local rules = {
         properties = {
             titlebars_enabled = true
         }
-    }
+    },
 }
 
 return rules

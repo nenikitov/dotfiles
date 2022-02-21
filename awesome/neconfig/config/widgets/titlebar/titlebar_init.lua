@@ -19,6 +19,7 @@ local titlebar_colors_module = 'neconfig.user.look.widgets.user_look_titlebar_cl
 client.connect_signal(
     'request::titlebars',
     function(c)
+        c.titlebars_enabled = true
         local client_titlebar = awful.titlebar(
             c,
             {
@@ -64,6 +65,8 @@ client.connect_signal(
 client.connect_signal(
     'titlebar::refresh_colors',
     function(c)
+        if not c.titlebars_enabled then return end
+
         -- Get color from user colors
         local all_colors = {
             normal = user_look_titlebar.colors.normal,
