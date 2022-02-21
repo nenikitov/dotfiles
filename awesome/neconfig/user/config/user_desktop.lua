@@ -1,8 +1,8 @@
 -- Load libraries
 local awful = require('awful')
-
--- Get variables
+-- Load custom modules
 local icons = require('neconfig.user.config.user_icons')
+
 
 -- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
 -- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
@@ -20,7 +20,10 @@ local desktop = {
     -- (the first one is selected by default)
     layouts = {
         awful.layout.suit.tile,
-        awful.layout.suit.spiral,
+        awful.layout.suit.tile.bottom,
+        awful.layout.suit.fair.horizontal,
+        awful.layout.suit.corner.nw,
+        awful.layout.suit.max,
         awful.layout.suit.floating,
 
         --[[ All available layouts

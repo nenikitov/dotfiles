@@ -1,6 +1,7 @@
 -- Load libraries
 local awful = require('awful')
 local gears = require('gears')
+local wibox = require('wibox')
 -- Load custom modules
 local utils_tables = require('neconfig.config.utils.utils_tables')
 local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
@@ -24,6 +25,28 @@ client.connect_signal(
                 position = user_titlebar.position,
             }
         )
+
+        --[[
+        local p = awful.popup {
+            widget = {
+                bg = '#f005',
+
+                forced_width = 20,
+                forced_height = 20,
+
+                widget = wibox.widget.background
+            },
+            visible = true,
+                ontop = true
+        }
+        awful.placement.top_right(
+            p,
+            {
+                parent = c,
+                attach = true,
+            }
+        )
+        ]]
 
         client_titlebar:setup(titlebar_widget_template(c))
     end
