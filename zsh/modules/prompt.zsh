@@ -7,6 +7,7 @@ precmd() {
     else
         git_repo="not a repo"
     fi
+    curr_date="$(date +%H:%M:%S)"
 }
 
 prompt_tl_elems=(
@@ -22,7 +23,7 @@ prompt_bl_elems=(
     "%{$reset_color%}"
 )
 prompt_br_elems=(
-    "%{$fg[cyan]%}""$(date +%H:%M:%S)"
+    "%{$fg[cyan]%}"'$curr_date'
     "%{$reset_color%}"' '
     "%{$fg[blue]%}"'%?'
     "%{$reset_color%}"
