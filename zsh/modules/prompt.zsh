@@ -18,15 +18,16 @@ prompt_tl_elems=(
     "%{$reset_color%}"
 )
 prompt_bl_elems=(
-    "%{$fg[green]%}"'%# '
+    "%{$fg[magenta]%}"'%# '
     "%{$reset_color%}"
 )
 prompt_br_elems=(
-    "%{$fg[blue]%}""$(date +%H:%M:%S)"
+    "%{$fg[cyan]%}""$(date +%H:%M:%S)"
     "%{$reset_color%}"' '
-    "%{$fg[magenta]%}"'%?'
+    "%{$fg[blue]%}"'%?'
     "%{$reset_color%}"
 )
 
 PS1=${(j::)prompt_tl_elems}$'\n'${(j::)prompt_bl_elems}
 RPS1=${(j::)prompt_br_elems}
+
