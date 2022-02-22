@@ -15,9 +15,5 @@ source $modules_path/prompt.zsh
 source $modules_path/completion.zsh
 
 
-# VI mode
-source $modules_path/vi-mode.zsh
-
-
 # Syntax highlighting
 source $plugins_path/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
