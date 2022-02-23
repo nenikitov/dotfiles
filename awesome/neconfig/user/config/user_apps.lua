@@ -1,5 +1,5 @@
--- ▄▀█ █▀█ █▀█ █▀
--- █▀█ █▀▀ █▀▀ ▄█
+-- ▄▀█ █▀█ █▀█ █▀
+-- █▀█ █▀▀ █▀▀ ▄█
 local apps = {
     -- Applications that can be opened with shortcuts
     default_apps = {

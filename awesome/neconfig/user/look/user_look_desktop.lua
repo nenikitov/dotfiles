@@ -2,8 +2,8 @@
 local scaling = require('neconfig.config.utils.utils_scaling')
 
 
--- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█   █   █▀█ █▀█ █▄▀
--- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀   █▄▄ █▄█ █▄█ █ █
+-- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█   █   █▀█ █▀█ █▄▀
+-- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀   █▄▄ █▄█ █▄█ █ █
 local desktop_look = {
     font = 'sans-serif',
     font_size = scaling.size(8),

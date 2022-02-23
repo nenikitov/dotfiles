@@ -1,5 +1,5 @@
--- ▀█▀ █▀▀ ▀▄▀ ▀█▀   █ █▀▀ █▀█ █▄ █ █▀
---  █  ██▄ █ █  █    █ █▄▄ █▄█ █ ▀█ ▄█
+-- ▀█▀ █▀▀ ▀▄▀ ▀█▀   █ █▀▀ █▀█ █▄ █ █▀
+--  █  ██▄ █ █  █    █ █▄▄ █▄█ █ ▀█ ▄█
 -- Unicode indexes of icons in Font Awesome. It may be different for other icon fonts
 local icons = {
     -- Tags

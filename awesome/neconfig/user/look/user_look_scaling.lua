@@ -1,5 +1,5 @@
--- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
--- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
+-- █▀ █▀▀ ▄▀█ █   █ █▄ █ █▀▀
+-- ▄█ █▄▄ █▀█ █▄▄ █ █ ▀█ █▄█
 local scaling = {
     -- Multiplier for the scale of the contents
     contents = 1.0,

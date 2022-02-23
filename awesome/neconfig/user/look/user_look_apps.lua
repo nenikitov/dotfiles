@@ -4,8 +4,8 @@ local colors = require('neconfig.user.look.user_look_colors')
 
 
 
--- ▄▀█ █▀█ █▀█ █▀   █   █▀█ █▀█ █▄▀
--- █▀█ █▀▀ █▀▀ ▄█   █▄▄ █▄█ █▄█ █ █
+-- ▄▀█ █▀█ █▀█ █▀   █   █▀█ █▀█ █▄▀
+-- █▀█ █▀▀ █▀▀ ▄█   █▄▄ █▄█ █▄█ █ █
 local apps_look = {
     -- Borders around application windows
     border = {

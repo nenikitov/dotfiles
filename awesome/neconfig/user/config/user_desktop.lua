@@ -4,8 +4,8 @@ local awful = require('awful')
 local icons = require('neconfig.user.config.user_icons')
 
 
--- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
--- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
+-- █▀▄ █▀▀ █▀ █▄▀ ▀█▀ █▀█ █▀█
+-- █▄▀ ██▄ ▄█ █ █  █  █▄█ █▀▀
 local desktop = {
     -- Names (and consequently the number) of tags
     tag_names = {

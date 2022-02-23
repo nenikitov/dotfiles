@@ -4,8 +4,8 @@ local user_look_colors = require('neconfig.user.look.user_look_colors')
 local scaling = require('neconfig.config.utils.utils_scaling')
 
 
--- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █   █▀█ █▀█ █▄▀
---  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄▄ █▄█ █▄█ █ █
+-- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █   █▀█ █▀█ █▄▀
+--  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄▄ █▄█ █▄█ █ █
 local titlebar_look = {
     -- Size of the titlebar
     size = user_look_desktop.font_size * 2.25,

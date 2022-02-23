@@ -2,8 +2,8 @@
 local statusbar_subwidget_list = require('neconfig.config.widgets.statusbar.statusbar_subwidget_list')
 
 
--- █▀ ▀█▀ ▄▀█ ▀█▀ █ █ █▀ █▄▄ ▄▀█ █▀█
--- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
+-- █▀ ▀█▀ ▄▀█ ▀█▀ █ █ █▀ █▄▄ ▄▀█ █▀█
+-- ▄█  █  █▀█  █  █▄█ ▄█ █▄█ █▀█ █▀▄
 -- Statusbars on the primary screen
 local primary = {
     -- Bar on top of the screen

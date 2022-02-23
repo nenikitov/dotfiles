@@ -2,8 +2,8 @@
 local titlebar_subwidget_list = require('neconfig.config.widgets.titlebar.titlebar_subwidget_list')
 
 
--- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█
---  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄
+-- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█
+--  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄
 local titlebar = {
     -- Position of the titlebar of the client
     position = 'top',

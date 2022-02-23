@@ -1,5 +1,5 @@
--- ▀█▀ █▀▀ █▀█ █▀▄▀█ █ █▄ █ ▄▀█ █     █▀▀ █▀█ █   █▀█ █▀█   █▀█ ▄▀█ █   █▀▀ ▀█▀ ▀█▀ █▀▀
---  █  ██▄ █▀▄ █ ▀ █ █ █ ▀█ █▀█ █▄▄   █▄▄ █▄█ █▄▄ █▄█ █▀▄   █▀▀ █▀█ █▄▄ ██▄  █   █  ██▄
+-- ▀█▀ █▀▀ █▀█ █▀▄▀█ █ █▄ █ ▄▀█ █     █▀▀ █▀█ █   █▀█ █▀█   █▀█ ▄▀█ █   █▀▀ ▀█▀ ▀█▀ █▀▀
+--  █  ██▄ █▀▄ █ ▀ █ █ █ ▀█ █▀█ █▄▄   █▄▄ █▄█ █▄▄ █▄█ █▀▄   █▀▀ █▀█ █▄▄ ██▄  █   █  ██▄
 local palette = {
     -- Colors used for background
     bg = {
@@ -41,8 +41,8 @@ local function create_class(color)
 end
 
 
--- █▀▀ █▀█ █   █▀█ █▀█   █▀ █▀▀ █ █ █▀▀ █▀▄▀█ █▀▀
--- █▄▄ █▄█ █▄▄ █▄█ █▀▄   ▄█ █▄▄ █▀█ ██▄ █ ▀ █ ██▄
+-- █▀▀ █▀█ █   █▀█ █▀█   █▀ █▀▀ █ █ █▀▀ █▀▄▀█ █▀▀
+-- █▄▄ █▄█ █▄▄ █▄█ █▀▄   ▄█ █▄▄ █▀█ ██▄ █ ▀ █ ██▄
 local classes = {
     -- Transparency
     transparency = palette.transparency,
@@ -62,46 +62,7 @@ local classes = {
 }
 
 
-local class_blends = {
-    -- Invert background and foreground colors
-    invert = function(scheme)
-        return {
-            bg = scheme.fg,
-            fg = scheme.bg
-        }
-    end,
-    -- Use only the background color as the foreground
-    isolate_bg_as_fg = function(scheme)
-        return {
-            bg = '#0000',
-            fg = scheme.bg
-        }
-    end,
-    -- Use only the foreground color as the foreground
-    isolate_fg_as_fg = function(scheme)
-        return {
-            bg = '#0000',
-            fg = scheme.fg
-        }
-    end,
-    -- Use 2 background colors as background and foreground
-    blend_back_bg_fore_bg = function(back, fore)
-        return {
-            bg = back.bg,
-            fg = fore.bg
-        }
-    end,
-    -- Use background color from one color scheme and foreground from another
-    blend_back_bg_fore_fg = function(back, fore)
-        return {
-            bg = back.bg,
-            fg = fore.fg
-        }
-    end
-}
-
 return {
-    palette       = palette,
-    classes       = classes,
-    class_blends  = class_blends
+    palette = palette,
+    classes = classes,
 }
