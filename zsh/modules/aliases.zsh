@@ -3,15 +3,16 @@ alias ls='exa --color=always -aF --group-directories-first --'
 # List all files with colors in long format with extra git info
 alias ll='exa --color=always -laFgh --group-directories-first --git --time-style=long-iso --'
 
+# Easy clear
+alias c='clear'
+# Better date format by default
+alias idate='date +"%A, %Y-%m-%d %H:%M:%S"'
+
 
 # Safety (prompt before overwrite)
 alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'
-
-
-# Clear
-alias c='clear'
 
 
 # Send 5 packets and stop
