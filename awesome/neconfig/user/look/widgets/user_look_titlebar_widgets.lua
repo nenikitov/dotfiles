@@ -1,10 +1,8 @@
 -- Load libraries
 local g_shape = require('gears').shape
 -- Load custom modules
-local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local user_look_colors = require('neconfig.user.look.user_look_colors')
 local scaling = require('neconfig.config.utils.utils_scaling')
-local user_look_apps = require('neconfig.user.look.user_look_apps')
 
 
 -- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █▄▄ █ █ ▀█▀ ▀█▀ █▀█ █▄ █ █▀   █▀█ █▀█ █▀▀ █▀ █▀▀ ▀█▀ █▀
