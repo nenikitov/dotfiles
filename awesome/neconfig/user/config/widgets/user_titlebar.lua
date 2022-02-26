@@ -26,6 +26,7 @@ local titlebar = {
             titlebar_subwidget_list.minimize,
             titlebar_subwidget_list.on_top,
             titlebar_subwidget_list.floating,
+            titlebar_subwidget_list.sticky
         }
     }
 }
