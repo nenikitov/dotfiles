@@ -24,7 +24,7 @@
     --card-border-radius:  0.5em;
     --card-padding-val:    0.5em;
     /* Active */
-    --active-bg-col:       #B33443;
+    --active-bg-col:       #42739F;
     --active-fg-col:       #FFFFFF;
     --active-border-col:   #000;
     --active-border-width: 0px;
