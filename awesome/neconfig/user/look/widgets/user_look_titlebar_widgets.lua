@@ -65,18 +65,18 @@ local whole_button_style = function(button_name)
             -- When the client is out of focus
             normal = button_presets.hollow_same(def_button_inactive_color),
             -- When the client is focused
-            focus = button_presets.hollow_same(user_look_colors.palette[button_color].bg),
+            focus = button_presets.hollow_same(user_look_colors.palette.bg[button_color]),
             -- When the button is hovered on
-            hover = button_presets.hollow_icon(user_look_colors.palette[button_color].bg),
+            hover = button_presets.hollow_icon(user_look_colors.palette.bg[button_color]),
             -- When the button is pressed
-            press = button_presets.hollow_icon(user_look_colors.palette[button_color].fg),
+            press = button_presets.hollow_icon(user_look_colors.palette.fg[button_color]),
         },
         -- When the button state is true (for example if the client maximized for maximize button)
         active = {
             normal = button_presets.filled_same(def_button_inactive_color),
-            focus = button_presets.filled_same(user_look_colors.palette[button_color].bg),
-            hover = button_presets.filled_icon(user_look_colors.palette[button_color].bg),
-            press = button_presets.filled_icon(user_look_colors.palette[button_color].fg),
+            focus = button_presets.filled_same(user_look_colors.palette.bg[button_color]),
+            hover = button_presets.filled_icon(user_look_colors.palette.bg[button_color]),
+            press = button_presets.filled_icon(user_look_colors.palette.fg[button_color]),
         }
     }
 end

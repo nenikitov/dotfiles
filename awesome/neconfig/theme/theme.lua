@@ -8,6 +8,7 @@ local gfs = require('gears.filesystem')
 local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local user_look_apps = require('neconfig.user.look.user_look_apps')
 local user_look_colors = require('neconfig.user.look.user_look_colors')
+local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
 
 -- Get variables
 local themes_path = gfs.get_themes_dir()
@@ -100,9 +101,27 @@ theme.menu_width  = dpi(100)
 -- Define the image to load
 
 --#region Titlebar icons
+-- TODO move to separate file
+local gears = require('gears')
+local cairo = require('lgi').cairo
+local function generate_titlebar_icon(icon_name, shape_props, size)
+    local img = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
+    local cr = cairo.Context(img)
+
+    cr:set_source(gears.color('#00000000'))
+    cr:paint()
+
+    cr:set_source(gears.color(shape_props.shape_bg))
+    shape_props.shape(cr, size, size)
+
+    cr:fill()
+
+    return img
+end
+theme.titlebar_close_button_focus               = generate_titlebar_icon('close.svg', user_look_titlebar_widgets.buttons.close.active.focus, 24)
 -- Close
 theme.titlebar_close_button_normal              = config_path .. 'graphics/icons/titlebar/close.svg'
-theme.titlebar_close_button_focus               = config_path .. 'graphics/icons/titlebar/close.svg'
+--theme.titlebar_close_button_focus               = generate_titlebar_icon('close.svg', user_look_titlebar_widgets.buttons.close.active.focus, 24)
 -- Maximize
 theme.titlebar_maximized_button_normal_inactive = config_path .. 'graphics/icons/titlebar/maximize_inactive.svg'
 theme.titlebar_maximized_button_normal_active   = config_path .. 'graphics/icons/titlebar/maximize_active.svg'
