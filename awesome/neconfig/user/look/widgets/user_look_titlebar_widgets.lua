@@ -9,12 +9,12 @@ local scaling = require('neconfig.config.utils.utils_scaling')
 --  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄█ █▄█  █   █  █▄█ █ ▀█ ▄█   █▀▀ █▀▄ ██▄ ▄█ ██▄  █  ▄█
 local def_button_shape = g_shape.circle
 local def_button_colors = {
-    close    = 'red',
-    maximize = 'green',
-    minimize = 'yellow',
-    on_top   = 'blue',
-    floating = 'magenta',
-    sticky   = 'cyan',
+    close     = 'red',
+    maximized = 'green',
+    minimize  = 'yellow',
+    ontop    = 'blue',
+    floating  = 'magenta',
+    sticky    = 'cyan',
 }
 local def_button_inactive_color = user_look_colors.classes.surface.bg
 local def_button_icon_color = user_look_colors.classes.normal.bg
@@ -90,11 +90,11 @@ local titlebar_widget_look = {
         -- Button for closing the client
         close = whole_button_style('close'),
         -- Button for maximizing the client
-        maximize = whole_button_style('maximize'),
+        maximized = whole_button_style('maximized'),
         -- Button for minimizing the client
         minimize = whole_button_style('minimize'),
         -- Button for making the client display on top of other clients
-        on_top = whole_button_style('on_top'),
+        ontop = whole_button_style('ontop'),
         -- Button for toggling floating mode
         floating = whole_button_style('floating'),
         -- Button for making the client display on all tags

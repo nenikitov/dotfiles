@@ -107,6 +107,8 @@ local cairo = require('lgi').cairo
 local rsvg = require('lgi').Rsvg
 local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
 local icon_scale = 0.5
+local titlebar_icon_path = config_path .. '/graphics/icons/titlebar/'
+local titlebar_button_size = 64
 local function generate_titlebar_icon(icon_path, shape_props, size)
     -- Draw background
     local img = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
@@ -146,53 +148,125 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
 
     return img
 end
+local function set_up_simple_button(icon, state)
+    -- Normal
+    theme['titlebar_' .. icon .. '_button_normal'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '.svg',
+        user_look_titlebar_widgets.buttons[icon][state].normal,
+        titlebar_button_size
+    )
+    -- Focus
+    theme['titlebar_' .. icon .. '_button_focus'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '.svg',
+        user_look_titlebar_widgets.buttons[icon][state].focus,
+        titlebar_button_size
+    )
+    -- Press
+    theme['titlebar_' .. icon .. '_button_focus_press'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '.svg',
+        user_look_titlebar_widgets.buttons[icon][state].press,
+        titlebar_button_size
+    )
+    theme['titlebar_' .. icon .. '_button_normal_press'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '.svg',
+        user_look_titlebar_widgets.buttons[icon][state].press,
+        titlebar_button_size
+    )
+    -- Hover
+    theme['titlebar_' .. icon .. '_button_focus_hover'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '.svg',
+        user_look_titlebar_widgets.buttons[icon][state].hover,
+        titlebar_button_size
+    )
+    theme['titlebar_' .. icon .. '_button_focus_hover'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '.svg',
+        user_look_titlebar_widgets.buttons[icon][state].hover,
+        titlebar_button_size
+    )
+end
+local function set_up_state_button(icon)
+    -- Normal
+    theme['titlebar_' .. icon .. '_button_normal_active'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_active.svg',
+        user_look_titlebar_widgets.buttons[icon].active.normal,
+        titlebar_button_size
+    )
+    -- Focus
+    theme['titlebar_' .. icon .. '_button_focus_active'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_active.svg',
+        user_look_titlebar_widgets.buttons[icon].active.focus,
+        titlebar_button_size
+    )
+    -- Press
+    theme['titlebar_' .. icon .. '_button_focus_active_press'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_active.svg',
+        user_look_titlebar_widgets.buttons[icon].active.press,
+        titlebar_button_size
+    )
+    theme['titlebar_' .. icon .. '_button_normal_active_press'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_active.svg',
+        user_look_titlebar_widgets.buttons[icon].active.press,
+        titlebar_button_size
+    )
+    -- Hover
+    theme['titlebar_' .. icon .. '_button_focus_active_hover'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_active.svg',
+        user_look_titlebar_widgets.buttons[icon].active.hover,
+        titlebar_button_size
+    )
+    theme['titlebar_' .. icon .. '_button_focus_active_hover'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_active.svg',
+        user_look_titlebar_widgets.buttons[icon].active.hover,
+        titlebar_button_size
+    )
 
-local titlebar_icon_path = config_path .. '/graphics/icons/titlebar/'
-local titlebar_button_size = 64
+    -- Normal
+    theme['titlebar_' .. icon .. '_button_normal_inactive'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_inactive.svg',
+        user_look_titlebar_widgets.buttons[icon].inactive.normal,
+        titlebar_button_size
+    )
+    -- Focus
+    theme['titlebar_' .. icon .. '_button_focus_inactive'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_inactive.svg',
+        user_look_titlebar_widgets.buttons[icon].inactive.focus,
+        titlebar_button_size
+    )
+    -- Press
+    theme['titlebar_' .. icon .. '_button_focus_inactive_press'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_inactive.svg',
+        user_look_titlebar_widgets.buttons[icon].inactive.press,
+        titlebar_button_size
+    )
+    theme['titlebar_' .. icon .. '_button_normal_inactive_press'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_inactive.svg',
+        user_look_titlebar_widgets.buttons[icon].inactive.press,
+        titlebar_button_size
+    )
+    -- Hover
+    theme['titlebar_' .. icon .. '_button_focus_inactive_hover'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_inactive.svg',
+        user_look_titlebar_widgets.buttons[icon].inactive.hover,
+        titlebar_button_size
+    )
+    theme['titlebar_' .. icon .. '_button_focus_inactive_hover'] = generate_titlebar_icon(
+        titlebar_icon_path .. icon .. '_inactive.svg',
+        user_look_titlebar_widgets.buttons[icon].inactive.hover,
+        titlebar_button_size
+    )
+end
 -- Close
-theme.titlebar_close_button_normal = generate_titlebar_icon(
-    titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.active.normal,
-    titlebar_button_size
-)
-theme.titlebar_close_button_focus = generate_titlebar_icon(
-    titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.active.focus,
-    titlebar_button_size
-)
-theme.titlebar_close_button_focus_press = generate_titlebar_icon(
-    titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.active.press,
-    titlebar_button_size
-)
-theme.titlebar_close_button_focus_hover = generate_titlebar_icon(
-    titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.active.hover,
-    titlebar_button_size
-)
+set_up_simple_button('close', 'active')
 -- Maximize
-theme.titlebar_maximized_button_normal_inactive = config_path .. 'graphics/icons/titlebar/maximize_inactive.svg'
-theme.titlebar_maximized_button_normal_active   = config_path .. 'graphics/icons/titlebar/maximize_active.svg'
-theme.titlebar_maximized_button_focus_inactive  = config_path .. 'graphics/icons/titlebar/maximize_inactive.svg'
-theme.titlebar_maximized_button_focus_active    = config_path .. 'graphics/icons/titlebar/maximize_active.svg'
+set_up_state_button('maximized')
 -- Minimize
-theme.titlebar_minimize_button_normal           = config_path .. 'graphics/icons/titlebar/minimize.svg'
-theme.titlebar_minimize_button_focus            = config_path .. 'graphics/icons/titlebar/minimize.svg'
+set_up_simple_button('minimize', 'inactive')
 -- On top
-theme.titlebar_ontop_button_normal_inactive     = config_path .. 'graphics/icons/titlebar/ontop_inactive.svg'
-theme.titlebar_ontop_button_normal_active       = config_path .. 'graphics/icons/titlebar/ontop_active.svg'
-theme.titlebar_ontop_button_focus_inactive      = config_path .. 'graphics/icons/titlebar/ontop_inactive.svg'
-theme.titlebar_ontop_button_focus_active        = config_path .. 'graphics/icons/titlebar/ontop_active.svg'
+set_up_state_button('ontop')
 -- Floating
-theme.titlebar_floating_button_normal_inactive  = config_path .. 'graphics/icons/titlebar/floating_inactive.svg'
-theme.titlebar_floating_button_normal_active    = config_path .. 'graphics/icons/titlebar/floating_active.svg'
-theme.titlebar_floating_button_focus_inactive   = config_path .. 'graphics/icons/titlebar/floating_inactive.svg'
-theme.titlebar_floating_button_focus_active     = config_path .. 'graphics/icons/titlebar/floating_active.svg'
+set_up_state_button('floating')
 -- Sticky
-theme.titlebar_sticky_button_normal_inactive    = config_path .. 'graphics/icons/titlebar/sticky_inactive.svg'
-theme.titlebar_sticky_button_normal_active      = config_path .. 'graphics/icons/titlebar/sticky_active.svg'
-theme.titlebar_sticky_button_focus_inactive     = config_path .. 'graphics/icons/titlebar/sticky_inactive.svg'
-theme.titlebar_sticky_button_focus_active       = config_path .. 'graphics/icons/titlebar/sticky_active.svg'
+set_up_state_button('sticky')
 --#endregion
 
 -- theme.titlebar_maximized_button_focus_inactive = config_path .. 'graphics/icons/maximize_inactive.png'
