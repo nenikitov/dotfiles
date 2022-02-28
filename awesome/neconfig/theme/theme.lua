@@ -106,7 +106,7 @@ local gears = require('gears')
 local cairo = require('lgi').cairo
 local rsvg = require('lgi').Rsvg
 local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
-local icon_image_size = 24
+local icon_scale = 0.5
 local function generate_titlebar_icon(icon_path, shape_props, size)
     -- Draw background
     local img = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
@@ -129,10 +129,9 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
     cr:stroke()
 
     -- Draw icon
-    local icon_scale = 0.5
     local real_icon_size = size * icon_scale
-    local cr_scale = real_icon_size / icon_image_size
-
+    local _, icon_h = gears.surface.get_size(gears.surface.load(icon_path))
+    local cr_scale = real_icon_size / icon_h
     cr:translate(-bw, -bw)
     cr:translate(
         (size - real_icon_size) / 2,
@@ -141,7 +140,6 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
     cr:scale(cr_scale, cr_scale)
     local icon_mask = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
     rsvg.Handle.new_from_file(icon_path):render_cairo(cairo.Context(icon_mask))
-
     cr:set_source(gears.color(shape_props.icon))
     cr:mask(cairo.Pattern.create_for_surface(icon_mask), 0, 0)
 
