@@ -68,8 +68,15 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
     cr:stroke()
 
     -- Draw icon
+    local icon_scale = 0.5
+    local cr_scale = size / icon_size * icon_scale
     cr:translate(-bw, -bw)
-    cr:scale(size / icon_size, size / icon_size)
+    -- TODO finish this
+    cr:translate(
+        (size - size / icon_size * icon_scale) / 2,
+        (size - size / icon_size * icon_scale) / 2
+    )
+    cr:scale(cr_scale, cr_scale)
     local icon_mask = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
     rsvg.Handle.new_from_file(icon_path):render_cairo(cairo.Context(icon_mask))
 
@@ -80,6 +87,6 @@ end
 
 beautiful.titlebar_close_button_focus = generate_titlebar_icon(
     '/home/nenikitov/.config/awesome/neconfig/graphics/icons/titlebar/close.svg',
-    user_look_titlebar_widgets.buttons.close.active.focus,
-    64
+    user_look_titlebar_widgets.buttons.close.active.hover,
+    128
 )
