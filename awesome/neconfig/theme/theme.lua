@@ -104,6 +104,9 @@ theme.menu_width  = dpi(100)
 -- TODO move to separate file
 local gears = require('gears')
 local cairo = require('lgi').cairo
+local rsvg = require('lgi').Rsvg
+local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
+local icon_image_size = 24
 local function generate_titlebar_icon(icon_path, shape_props, size)
     -- Draw background
     local img = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
@@ -123,17 +126,51 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
     cr:set_line_width(bw)
     cr:stroke()
 
-    -- Draw icon
-    cr:translate(-bw, -bw)
-    local icon = gears.color.recolor_image(icon_path, '#fff')
-    cr:set_source_surface(icon, 0, 0)
-    cr:paint()
 
-    return icon_path
+    -- Draw icon
+    local icon_scale = 0.5
+    local real_icon_size = size * icon_scale
+    local cr_scale = real_icon_size / icon_image_size
+
+    cr:translate(-bw, -bw)
+    cr:translate(
+        (size - real_icon_size) / 2,
+        (size - real_icon_size) / 2
+    )
+    cr:scale(cr_scale, cr_scale)
+    local icon_mask = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
+    rsvg.Handle.new_from_file(icon_path):render_cairo(cairo.Context(icon_mask))
+
+    cr:set_source(gears.color(shape_props.icon))
+    cr:mask(cairo.Pattern.create_for_surface(icon_mask), 0, 0)
+
+
+    return img
 end
+
+local titlebar_icon_path = config_path .. '/graphics/icons/titlebar/'
+local titlebar_button_size = 64
 -- Close
-theme.titlebar_close_button_normal              = config_path .. 'graphics/icons/titlebar/close.svg'
---theme.titlebar_close_button_focus               = config_path .. 'graphics/icons/titlebar/close.svg'
+theme.titlebar_close_button_normal = generate_titlebar_icon(
+    titlebar_icon_path .. 'close.svg',
+    user_look_titlebar_widgets.buttons.close.inactive.normal,
+    titlebar_button_size
+)
+theme.titlebar_close_button_focus = generate_titlebar_icon(
+    titlebar_icon_path .. 'close.svg',
+    user_look_titlebar_widgets.buttons.close.inactive.focus,
+    titlebar_button_size
+)
+theme.titlebar_close_button_focus_press = generate_titlebar_icon(
+    titlebar_icon_path .. 'close.svg',
+    user_look_titlebar_widgets.buttons.close.inactive.press,
+    titlebar_button_size
+)
+theme.titlebar_close_button_focus_hover = generate_titlebar_icon(
+    titlebar_icon_path .. 'close.svg',
+    user_look_titlebar_widgets.buttons.close.inactive.hover,
+    titlebar_button_size
+)
 -- Maximize
 theme.titlebar_maximized_button_normal_inactive = config_path .. 'graphics/icons/titlebar/maximize_inactive.svg'
 theme.titlebar_maximized_button_normal_active   = config_path .. 'graphics/icons/titlebar/maximize_active.svg'

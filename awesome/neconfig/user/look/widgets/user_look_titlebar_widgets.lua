@@ -42,7 +42,7 @@ local button_presets = {
         return {
             shape = def_button_shape,
             shape_bg = '#00000000',
-            icon = bg,
+            icon = '#00000000',
             border_width = def_border_width,
             border_color = bg
         }
@@ -51,7 +51,7 @@ local button_presets = {
         return {
             shape = def_button_shape,
             shape_bg = '#00000000',
-            icon = def_button_icon_color,
+            icon = bg,
             border_width = def_border_width,
             border_color = bg
         }
