@@ -120,12 +120,13 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
     local bw = shape_props.border_width
     cr:translate(bw, bw)
     shape_props.shape(cr, size - 2 * bw, size - 2 * bw)
+    -- Fill
     cr:set_source(gears.color(shape_props.shape_bg))
     cr:fill_preserve()
-    cr:set_source(gears.color(shape_props.border_color))
+    -- Border
     cr:set_line_width(bw)
+    cr:set_source(gears.color(shape_props.border_color))
     cr:stroke()
-
 
     -- Draw icon
     local icon_scale = 0.5
@@ -153,22 +154,22 @@ local titlebar_button_size = 64
 -- Close
 theme.titlebar_close_button_normal = generate_titlebar_icon(
     titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.inactive.normal,
+    user_look_titlebar_widgets.buttons.close.active.normal,
     titlebar_button_size
 )
 theme.titlebar_close_button_focus = generate_titlebar_icon(
     titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.inactive.focus,
+    user_look_titlebar_widgets.buttons.close.active.focus,
     titlebar_button_size
 )
 theme.titlebar_close_button_focus_press = generate_titlebar_icon(
     titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.inactive.press,
+    user_look_titlebar_widgets.buttons.close.active.press,
     titlebar_button_size
 )
 theme.titlebar_close_button_focus_hover = generate_titlebar_icon(
     titlebar_icon_path .. 'close.svg',
-    user_look_titlebar_widgets.buttons.close.inactive.hover,
+    user_look_titlebar_widgets.buttons.close.active.hover,
     titlebar_button_size
 )
 -- Maximize

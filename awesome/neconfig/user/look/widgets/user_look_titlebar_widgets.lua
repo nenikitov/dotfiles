@@ -18,7 +18,7 @@ local def_button_colors = {
 }
 local def_button_inactive_color = user_look_colors.classes.surface.bg
 local def_button_icon_color = user_look_colors.classes.normal.bg
-local def_border_width = scaling.borders(2)
+local def_border_width = scaling.borders(6)
 local button_presets = {
     filled_same = function(bg)
         return {
