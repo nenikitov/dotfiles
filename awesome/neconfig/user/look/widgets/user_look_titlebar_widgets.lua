@@ -41,7 +41,7 @@ local button_presets = {
     hollow_same = function(bg)
         return {
             shape = def_button_shape,
-            shape_bg = '#00000000',
+            shape_bg = '#400',
             icon = bg,
             border_width = def_border_width,
             border_color = bg
