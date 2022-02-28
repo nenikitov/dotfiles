@@ -45,6 +45,7 @@ require('neconfig.config.main.main_autostart')
 
 local gears = require('gears')
 local cairo = require('lgi').cairo
+local rsvg = require('lgi').Rsvg
 local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
 local function generate_titlebar_icon(icon_path, shape_props, size)
     -- Draw background
@@ -66,12 +67,17 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
     cr:stroke()
 
     -- Draw icon
-    local icon = gears.color.recolor_image(icon_path)
+    cr:translate(-bw, -bw)
+    cr:scale(128 / 24, 128 / 24)
+    --local icon = cairo.ImageSurface.create_from_png(icon_path)
+    local icon = rsvg.Handle.new_from_file(icon_path)
+    icon:render_cairo(cr)
 
     return img
 end
+
 beautiful.titlebar_close_button_focus = generate_titlebar_icon(
     '/home/nenikitov/.config/awesome/neconfig/graphics/icons/titlebar/close.svg',
-    user_look_titlebar_widgets.buttons.close.inactive.focus,
-    24
+    user_look_titlebar_widgets.buttons.close.active.focus,
+    128
 )

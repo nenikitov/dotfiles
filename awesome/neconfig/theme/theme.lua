@@ -104,31 +104,36 @@ theme.menu_width  = dpi(100)
 -- TODO move to separate file
 local gears = require('gears')
 local cairo = require('lgi').cairo
-local function generate_titlebar_icon(icon_name, shape_props, size)
+local function generate_titlebar_icon(icon_path, shape_props, size)
     -- Draw background
-    local bg = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
-    local bg_cr = cairo.Context(bg)
+    local img = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
+    local cr = cairo.Context(img)
 
-    bg_cr:set_source(gears.color('#00000000'))
-    bg_cr:paint()
+    cr:set_source(gears.color('#00000000'))
+    cr:paint()
 
 
     -- Draw shape
-    local shape = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
-    local shape_cr = cairo.Context(shape)
+    local bw = shape_props.border_width
+    cr:translate(bw, bw)
+    shape_props.shape(cr, size - 2 * bw, size - 2 * bw)
+    cr:set_source(gears.color(shape_props.shape_bg))
+    cr:fill_preserve()
+    cr:set_source(gears.color(shape_props.border_color))
+    cr:set_line_width(bw)
+    cr:stroke()
 
-    shape_cr:set_source(gears.color(shape_props.shape_bg))
-    shape_props.shape(shape_cr, size, size)
-    shape_cr:fill()
+    -- Draw icon
+    cr:translate(-bw, -bw)
+    local icon = gears.color.recolor_image(icon_path, '#fff')
+    cr:set_source_surface(icon, 0, 0)
+    cr:paint()
 
-    --bg_cr:set_source(shape, 0, 0)
-    bg_cr:paint()
-
-    return bg
+    return icon_path
 end
 -- Close
 theme.titlebar_close_button_normal              = config_path .. 'graphics/icons/titlebar/close.svg'
-theme.titlebar_close_button_focus              = config_path .. 'graphics/icons/titlebar/close.svg'
+--theme.titlebar_close_button_focus               = config_path .. 'graphics/icons/titlebar/close.svg'
 -- Maximize
 theme.titlebar_maximized_button_normal_inactive = config_path .. 'graphics/icons/titlebar/maximize_inactive.svg'
 theme.titlebar_maximized_button_normal_active   = config_path .. 'graphics/icons/titlebar/maximize_active.svg'
