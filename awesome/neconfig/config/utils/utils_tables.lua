@@ -2,14 +2,19 @@
 local utils_tables = {}
 
 --#region Helper functions
-local function table_to_string(table, level)
+local function table_to_string(t, level)
     local function indent_to(l)
         return string.rep('    ', l)
     end
 
     local result = '{\n'
 
-    for k, v in pairs(table) do
+    local keys = {}
+    for k in pairs(t) do table.insert(keys, k) end
+    table.sort(keys)
+
+    for _, k in ipairs(keys) do
+        local v = t[k]
         local k_string =
             (type(k) == 'number')
             and ''
