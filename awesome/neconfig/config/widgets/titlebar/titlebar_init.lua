@@ -15,11 +15,12 @@ local titlebar_colors_file = gears.filesystem.get_configuration_dir() .. 'neconf
 local titlebar_colors_module = 'neconfig.user.look.widgets.user_look_titlebar_client_colors'
 
 
--- Add a titlebar if titlebars_enabled is set to true in the rules
+-- Add a titlebar if titlebar_enabled is set to true in the rules
 client.connect_signal(
     'request::titlebars',
     function(c)
-        c.titlebars_enabled = true
+        c.has_titlebar = true
+
         local client_titlebar = awful.titlebar(
             c,
             {
@@ -27,29 +28,12 @@ client.connect_signal(
             }
         )
 
-        --[[
-        local p = awful.popup {
-            widget = {
-                bg = '#f005',
-
-                forced_width = 20,
-                forced_height = 20,
-
-                widget = wibox.widget.background
-            },
-            visible = true,
-                ontop = true
-        }
-        awful.placement.top_right(
-            p,
-            {
-                parent = c,
-                attach = true,
-            }
-        )
-        ]]
-
         client_titlebar:setup(titlebar_widget_template(c))
+
+        -- idk why it should be here
+        -- But it makes titlebars correctly update the visibility
+        -- So it stays
+        awful.titlebar.hide(c, user_titlebar.position)
     end
 )
 -- Force update titlebar colors when borders change
@@ -65,7 +49,7 @@ client.connect_signal(
 client.connect_signal(
     'titlebar::refresh_colors',
     function(c)
-        if not c.titlebars_enabled then return end
+        if not (c.has_titlebar and DECORATION_VISIBILITY.titlebars) then return end
 
         -- Get color from user colors
         local all_colors = {
@@ -154,5 +138,17 @@ client.connect_signal(
                 end
             end
         )
+    end
+)
+
+client.connect_signal(
+    'titlebar::update_visibility',
+    function(c)
+        if c.has_titlebar and DECORATION_VISIBILITY.titlebars then
+            awful.titlebar.show(c, user_titlebar.position)
+            c:emit_signal('titlebar::refresh_colors')
+        else
+            awful.titlebar.hide(c, user_titlebar.position)
+        end
     end
 )
