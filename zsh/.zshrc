@@ -23,6 +23,9 @@ source $modules_path/vi-mode.zsh
 # Completition
 source $modules_path/completion.zsh
 
+# Suggestions
+source $plugins_path/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Syntax highlighting
 source $plugins_path/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
