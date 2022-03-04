@@ -1,9 +1,5 @@
 -- Load libraries
 local awful = require('awful')
-local beautiful = require('beautiful')
--- Load custom modules
-local client_buttons = require('neconfig.user.config.binds.user_client_binds').buttons
-local client_keys = require('neconfig.user.config.binds.user_client_binds').keys
 
 
 -- Rules to apply to new clients (through the 'manage' signal).
@@ -17,7 +13,8 @@ local rules = {
             focus = awful.client.focus.filter,
             raise = true,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+            size_hints_honor = false,
         }
     },
     -- Floating clients

@@ -6,6 +6,23 @@ local user_titlebar = require("neconfig.user.config.widgets.user_titlebar")
 local utils_shapes = require("neconfig.config.utils.utils_shapes")
 local titlebar_buttons = require("neconfig.config.widgets.titlebar.titlebar_buttons")
 local user_look_titlebar = require("neconfig.user.look.widgets.user_look_titlebar")
+local titlebar_subwidget_list = require("neconfig.config.widgets.titlebar.titlebar_subwidget_list")
+
+
+--#region Helper functions
+local function is_resizable(c)
+    local h = c.size_hints
+
+    if h.max_width and h.min_width and h.max_height and h.min_height then
+        return not (h.max_width == h.min_width and h.max_height == h.min_height)
+    end
+
+    return true
+end
+local function is_tileable(c)
+    return not(c.floating and not is_resizable(c))
+end
+--#endregion
 
 
 local function titlebar_widget_template(c)
@@ -27,13 +44,33 @@ local function titlebar_widget_template(c)
             return prototype
         end
     end
+    -- Function to remove unusable widgets (such as maximize button for the client that cannot resize)
+    local function remove_unusable_buttons(widgets)
+        local new_widgets = {}
+
+        for _, w in ipairs(widgets) do
+            if w == titlebar_subwidget_list.maximize then
+                if is_resizable(c) then
+                    table.insert(new_widgets, w)
+                end
+            elseif w == titlebar_subwidget_list.floating then
+                if is_tileable(c) then
+                    table.insert(new_widgets, w)
+                end
+            else
+                table.insert(new_widgets, w)
+            end
+        end
+
+        return new_widgets
+    end
 
     -- Layouts for 3 sections
     local beginning_section = wibox.layout.fixed[direction](
         table.unpack(
             g_table.map(
                 init_widget,
-                user_titlebar.layout.beginning
+                remove_unusable_buttons(user_titlebar.layout.beginning)
             )
         )
     )
@@ -41,7 +78,7 @@ local function titlebar_widget_template(c)
         table.unpack(
             g_table.map(
                 init_widget,
-                user_titlebar.layout.center
+                remove_unusable_buttons(user_titlebar.layout.center)
             )
         )
     )
@@ -49,7 +86,7 @@ local function titlebar_widget_template(c)
         table.unpack(
             g_table.map(
                 init_widget,
-                g_table.reverse(user_titlebar.layout.ending)
+                g_table.reverse(remove_unusable_buttons(user_titlebar.layout.ending))
             )
         )
     )
