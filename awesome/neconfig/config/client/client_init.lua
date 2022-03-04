@@ -2,7 +2,7 @@
 local awful = require('awful')
 local ruled = require('ruled')
 -- Load custom modules
-local client_rules = require('neconfig.config.client.client_rules')
+local user_client_rules = require('neconfig.user.config.user_client_rules')
 local user_client_binds = require('neconfig.user.config.binds.user_client_binds')
 
 
@@ -30,7 +30,7 @@ client.connect_signal(
 ruled.client.connect_signal(
     'request::rules',
     function()
-        ruled.client.append_rules(client_rules)
+        ruled.client.append_rules(user_client_rules)
     end
 )
 
