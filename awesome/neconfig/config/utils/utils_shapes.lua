@@ -117,10 +117,22 @@ function utils_shapes.opposite_side(side)
         top = 'bottom',
         bottom = 'top',
         right = 'left',
-        left = 'right',
+        left = 'right'
     }
 
     return opposite_sides[side]
+end
+
+--- Get the direction perpendicular to a direction
+---@param direction string 'horizontal', 'vertical'
+---@return string direction Perpendicular direction
+function utils_shapes.perp_direction(direction)
+    local perp_directions = {
+        vertical = 'horizontal',
+        horizontal = 'vertical'
+    }
+
+    return perp_directions[direction]
 end
 
 --- Get the direction along a side
@@ -131,10 +143,50 @@ function utils_shapes.direction_of_side(side)
         top = 'horizontal',
         bottom = 'horizontal',
         right = 'vertical',
-        left = 'vertical',
+        left = 'vertical'
     }
 
     return directions[side]
 end
+
+
+--- Get size property along a direction
+---@param direction string 'horizontal', 'vertical'
+---@return string size Size property
+function utils_shapes.size_prop_of_direction(direction)
+    local size_props = {
+        vertical = 'height',
+        horizontal = 'width'
+    }
+
+    return size_props[direction]
+end
+
+--- Get position property along a direction
+---@param direction string 'horizontal', 'vertical'
+---@return string pos Position property
+function utils_shapes.pos_prop_of_direction(direction)
+    local pos_props = {
+        vertical = 'y',
+        horizontal = 'x'
+    }
+
+    return pos_props[direction]
+end
+
+
+--- Get 2 sides along a direction
+---@param direction string 'horizontal', 'vertical'
+---@return string side1
+---@return string side2
+function utils_shapes.sides_along_direction(direction)
+    local sides = {
+        horizontal = { 'left', 'right' },
+        vertical = { 'top', 'bottom' }
+    }
+
+    return sides[direction][1], sides[direction][2]
+end
+
 
 return utils_shapes

@@ -11,8 +11,8 @@ local resize_val = user_interactions.keyboard_client_movement.resize
 local move_val = user_interactions.keyboard_client_movement.move
 
 
--- █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
--- █▄▄ █▄▄ █ ██▄ █ ▀█  █    █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
+-- █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
+-- █▄▄ █▄▄ █ ██▄ █ ▀█  █    █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
 local client_buttons = {
     -- Activate on LMB
     awful.button(
@@ -52,8 +52,8 @@ local client_buttons = {
 }
 
 
--- █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
--- █▄▄ █▄▄ █ ██▄ █ ▀█  █    █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
+-- █▀▀ █   █ █▀▀ █▄ █ ▀█▀   █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
+-- █▄▄ █▄▄ █ ██▄ █ ▀█  █    █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
 local client_keys = {
     --#region Display mode
 
@@ -96,6 +96,17 @@ local client_keys = {
             c.ontop = not c.ontop
         end,
         { description = 'toggle keep on top', group = 'client - display' }
+    ),
+    awful.key(
+        { super_key, less_key }, 'i',
+        function()
+           for _, c in ipairs(client.get()) do
+                if c.titlebars_enabled then
+                    awful.titlebar.toggle(c)
+                end
+            end
+        end,
+        { description = 'toggle titlebars', group = 'client - display'}
     ),
     --#endregion
 

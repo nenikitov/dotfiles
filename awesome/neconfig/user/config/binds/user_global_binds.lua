@@ -7,6 +7,7 @@ local user_apps = require('neconfig.user.config.user_apps')
 local utils_apps = require('neconfig.config.utils.utils_apps')
 local user_menu = require('neconfig.user.config.widgets.user_menu')
 local user_desktop = require('neconfig.user.config.user_desktop')
+local user_titlebar= require('neconfig.user.config.widgets.user_titlebar')
 
 -- Get variables
 local tag_num = #(user_desktop.tag_names)
@@ -17,8 +18,15 @@ local less_key = user_interactions.keys.less_key
 local resize_master_val = user_interactions.keyboard_client_movement.master
 
 
--- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
--- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
+-- Other variables
+DECORATION_VISIBILITY = {
+    titlebars = user_titlebar.visible,
+    statusbars = true
+}
+
+
+-- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
+-- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ ▀ █ █▄█ █▄█ ▄█ ██▄   █▄█ █ █ ▀█ █▄▀ ▄█
 local global_buttons = {
     -- Toggle menu on RMB
     awful.button(
@@ -30,8 +38,8 @@ local global_buttons = {
 }
 
 
--- █▀▀ █▀█ █▄▄ ▄▀█ █     ▀█▀ ▄▀█ █▀▀   █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
--- █▄█ █▄█ █▄█ █▀█ █▄▄    █  █▀█ █▄█   █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
+-- █▀▀ █▀█ █▄▄ ▄▀█ █     ▀█▀ ▄▀█ █▀▀   █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
+-- █▄█ █▄█ █▄█ █▀█ █▄▄    █  █▀█ █▄█   █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
 local function tag_key_bind(i)
     local current_tag_keys = {
         --#region Display
@@ -105,8 +113,8 @@ for i = 1, tag_num do
 end
 
 
--- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
--- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
+-- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▄▀ █▀▀ █▄█ █▄▄ █▀█ ▄▀█ █▀█ █▀▄   █▄▄ █ █▄ █ █▀▄ █▀
+-- █▄█ █▄▄ █▄█ █▄█ █▀█ █▄▄   █ █ ██▄  █  █▄█ █▄█ █▀█ █▀▄ █▄▀   █▄█ █ █ ▀█ █▄▀ ▄█
 local global_keys = {
     --#region Awesome WM
 
@@ -146,6 +154,18 @@ local global_keys = {
             end
         end,
         { description = 'restore minimized', group = 'client - display' }
+    ),
+    -- Toggle titlebars on "SUPER" + "MORE" + I
+    awful.key(
+        { super_key, more_key }, 'i',
+        function()
+            DECORATION_VISIBILITY.titlebars = not DECORATION_VISIBILITY.titlebars
+
+            for _, c in ipairs(client.get()) do
+                c:emit_signal('titlebar::update_visibility')
+            end
+        end,
+        { description = 'toggle titlebars', group = 'client - display' }
     ),
     --#endregion
 

@@ -10,8 +10,8 @@ local user_apps = require('neconfig.user.config.user_apps')
 local terminal = user_apps.default_apps.terminal
 
 
--- █▀█ █ █ █ █▀▀ █▄▀   █▀▄▀█ █▀▀ █▄ █ █ █
--- ▀▀█ █▄█ █ █▄▄ █ █   █ ▀ █ ██▄ █ ▀█ █▄█
+-- █▀█ █ █ █ █▀▀ █▄▀   █▀▄▀█ █▀▀ █▄ █ █ █
+-- ▀▀█ █▄█ █ █▄▄ █ █   █ ▀ █ ██▄ █ ▀█ █▄█
 -- 'Awesome' submenu
 local menu_root_awesome = {
     -- Show hotkeys

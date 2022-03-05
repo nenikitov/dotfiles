@@ -1,3 +1,0 @@
-local titlebar_appearance = {
-    
-}

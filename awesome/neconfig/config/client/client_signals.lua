@@ -1,27 +1,29 @@
 -- Load libraries
 local awful = require('awful')
-local beautiful = require('beautiful')
 local menubar_utils = require('menubar.utils')
 local gears = require('gears')
 -- Load custom modules
 local user_interactions = require('neconfig.user.config.binds.user_interactions')
-local user_apps_appearance = require('neconfig.user.appearance.user_apps_appearance')
-local user_desktop_appearance = require('neconfig.user.appearance.user_desktop_appearance')
+local user_look_apps = require('neconfig.user.look.user_look_apps')
+local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local utils_shapes = require('neconfig.config.utils.utils_shapes')
 require('neconfig.config.widgets.titlebar.titlebar_init')
 
 
 
-local function update_client_shape(c)
-    if not (c.maximized or c.fullscreen) then
-        c.shape = c.custom_shape
-    else
-        c.shape = nil
+client.connect_signal(
+    'shape::update',
+    function(c)
+        if not (c.maximized or c.fullscreen) then
+            c.shape = c.custom_shape
+        else
+            c.shape = nil
+        end
     end
-end
+)
 local function construct_custom_shape()
-    local u_round = user_apps_appearance.shape.round
-    local u_radius = user_apps_appearance.shape.radius
+    local u_round = user_look_apps.shape.round
+    local u_radius = user_look_apps.shape.radius
 
     local titlebar_side = 'top'
     local titlebar_opp_side = utils_shapes.opposite_side(titlebar_side)
@@ -70,7 +72,7 @@ client.connect_signal(
         end
 
         -- Force set GTK icon
-        if user_desktop_appearance.try_to_force_gtk_icon_theme then
+        if user_look_desktop.try_to_force_gtk_icon_theme then
             if c.instance ~= nil then
                 local icon = menubar_utils.lookup_icon(c.instance)
                 local lower_icon = menubar_utils.lookup_icon(c.instance:lower())
@@ -88,7 +90,7 @@ client.connect_signal(
 
         -- Generate rounded shape to switch to it when client is not maximized and update the shape
         c.custom_shape = construct_custom_shape()
-        update_client_shape(c)
+        c:emit_signal('shape::update')
     end
 )
 
@@ -96,13 +98,13 @@ client.connect_signal(
 client.connect_signal(
     'property::maximized',
     function(c)
-        update_client_shape(c)
+        c:emit_signal('shape::update')
     end
 )
 client.connect_signal(
     'property::fullscreen',
     function(c)
-        update_client_shape(c)
+        c:emit_signal('shape::update')
     end
 )
 
@@ -114,24 +116,18 @@ if (user_interactions.focus.sloppy_focus) then
             c:emit_signal(
                 'request::activate',
                 'mouse_enter',
-                {raise = false}
+                { raise = false }
             )
         end
     )
 end
 
 
--- Change border color on focus
+-- Clean up client stuff when killing it
 client.connect_signal(
-    'focus',
+    'request::unmanage',
     function(c)
-        c.border_color = beautiful.border_focus
-    end
-)
--- Change border color on lost focus
-client.connect_signal(
-    'unfocus',
-    function(c)
-        c.border_color = beautiful.border_normal
+        c.custom_shape = nil
+        collectgarbage('collect')
     end
 )

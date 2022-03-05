@@ -12,7 +12,8 @@
         "net_now",
         "fs_now",
         "uptime_now",
-        "widget"
+        "widget",
+        "tag"
     ],
     "Lua.workspace.ignoreDir": [
         ".vscode",
