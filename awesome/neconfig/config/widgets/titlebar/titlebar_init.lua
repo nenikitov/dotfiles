@@ -66,12 +66,18 @@ client.connect_signal(
         -- Replace 'border' or 'client' bg colors by their values
         local col_bg = current_color.bg
         if current_color.bg == 'client' then
-            local all_client_colors = require(titlebar_colors_module)
-            if all_client_colors[c.class] then
-                col_bg = all_client_colors[c.class]
+            if c.class then
+                -- Class name exists, try to load the color
+                local all_client_colors = require(titlebar_colors_module)
+                if all_client_colors[c.class] then
+                    col_bg = all_client_colors[c.class]
+                else
+                    col_bg = user_look_colors.classes.normal.bg
+                    c:emit_signal('titlebar::client_color_save')
+                end
             else
+                -- Class name does not exist, set default color
                 col_bg = user_look_colors.classes.normal.bg
-                c:emit_signal('titlebar::client_color_save')
             end
         elseif current_color.bg == 'border' then
             col_bg = c.border_color
