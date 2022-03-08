@@ -101,35 +101,20 @@ local function titlebar_widget_template(c)
     return {
         {
             {
-                {
-                    beginning_section,
-                    spacer,
+                beginning_section,
+                spacer,
 
-                    layout = wibox.layout.align[direction]
-                },
-
-                bg = '#ff000033',
-                widget = wibox.container.background
+                layout = wibox.layout.align[direction]
             },
+            center_section,
             {
-                center_section,
+                spacer,
+                spacer,
+                ending_section,
 
-                bg = '#00ff0033',
-                widget = wibox.container.background
-            },
-            {
-                {
-                    spacer,
-                    spacer,
-                    ending_section,
+                expand = 'inside',
 
-                    expand = 'inside',
-
-                    layout = wibox.layout.align[direction]
-                },
-
-                bg = '#0000ff33',
-                widget = wibox.container.background
+                layout = wibox.layout.align[direction]
             },
 
             expand = 'outside',
