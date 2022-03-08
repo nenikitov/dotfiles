@@ -15,7 +15,7 @@ client.connect_signal(
     'shape::update',
     function(c)
         if not (c.maximized or c.fullscreen) then
-            c.shape = c.custom_shape
+            c.shape = c.custom_shape.shape
         else
             c.shape = nil
         end
@@ -54,7 +54,11 @@ local function construct_custom_shape()
         }
     end
 
-    return utils_shapes.better_rect {
+    return {
+        shape = utils_shapes.better_rect {
+            round = round,
+            radius = radius
+        },
         round = round,
         radius = radius
     }
