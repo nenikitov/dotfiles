@@ -23,36 +23,41 @@ local titlebar_colors_file = gears.filesystem.get_configuration_dir() .. 'neconf
 local titlebar_colors_module = 'neconfig.user.look.widgets.user_look_titlebar_client_colors'
 
 
+local beautiful = require('beautiful')
+local cairo = require("lgi").cairo
 -- Add a titlebar if titlebar_enabled is set to true in the rules
 client.connect_signal(
     'request::titlebars',
     function(c)
         c.has_titlebar = true
 
+        local wibox = require('wibox')
         -- Main titlebar
         local client_titlebar = awful.titlebar(
             c,
             { position = main_titlebar_pos }
         )
-        client_titlebar:setup(titlebar_widget_template(c))
+        local image = cairo.ImageSurface(cairo.Format.ARGB32, 64, 64)
+        local cr = cairo.Context(image)
+        cr:set_source(gears.color('#ff0000'))
+        utils_shapes.better_rect{ radius = 10, round = true }(cr, 64, 64)
+        cr:fill()
+
+        client_titlebar._dirty_area:union_rectangle(cairo.RectangleInt{
+            x = 0, y = 0, width = 64, height = 64
+        })
+
+        client_titlebar:setup(
+            {
+                image = image,
+                resize = false,
+                widget = wibox.widget.imagebox
+            }
+        )
         -- idk why it should be here
         -- But it makes titlebars correctly update the visibility
         -- So it stays
-        awful.titlebar.hide(c, main_titlebar_pos)
-
-        -- Opposite titlebar
-        awful.titlebar(
-            c,
-            { position = opposite_titlebar_pos, size = highlight_titlebar_size }
-        )
-        awful.titlebar(
-            c,
-            { position = side1_titlebar_pos, size = highlight_titlebar_size }
-        )
-        awful.titlebar(
-            c,
-            { position = side2_titlebar_pos, size = highlight_titlebar_size }
-        )
+        --awful.titlebar.hide(c, main_titlebar_pos)
     end
 )
 -- Force update titlebar colors when borders change
@@ -68,6 +73,7 @@ client.connect_signal(
 client.connect_signal(
     'titlebar::update_color',
     function(c)
+        --[[
         if not (c.has_titlebar and DECORATION_VISIBILITY.titlebars) then return end
 
         -- Get color from user colors
@@ -125,6 +131,7 @@ client.connect_signal(
                 fg = col_fg,
             }
         )
+        ]]
     end
 )
 
