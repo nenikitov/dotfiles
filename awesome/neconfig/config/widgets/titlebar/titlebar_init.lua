@@ -23,20 +23,23 @@ local titlebar_colors_file = gears.filesystem.get_configuration_dir() .. 'neconf
 local titlebar_colors_module = 'neconfig.user.look.widgets.user_look_titlebar_client_colors'
 
 
-local beautiful = require('beautiful')
-local cairo = require("lgi").cairo
 -- Add a titlebar if titlebar_enabled is set to true in the rules
 client.connect_signal(
     'request::titlebars',
     function(c)
         c.has_titlebar = true
 
-        local wibox = require('wibox')
         -- Main titlebar
         local client_titlebar = awful.titlebar(
             c,
             { position = main_titlebar_pos }
         )
+        client_titlebar:setup(titlebar_widget_template(c))
+
+        --[[
+        local wibox = require('wibox')
+        local beautiful = require('beautiful')
+        local cairo = require("lgi").cairo
         local image = cairo.ImageSurface(cairo.Format.ARGB32, 64, 64)
         local cr = cairo.Context(image)
         cr:set_source(gears.color('#ff0000'))
@@ -54,6 +57,8 @@ client.connect_signal(
                 widget = wibox.widget.imagebox
             }
         )
+        ]]
+
         -- idk why it should be here
         -- But it makes titlebars correctly update the visibility
         -- So it stays
@@ -73,7 +78,6 @@ client.connect_signal(
 client.connect_signal(
     'titlebar::update_color',
     function(c)
-        --[[
         if not (c.has_titlebar and DECORATION_VISIBILITY.titlebars) then return end
 
         -- Get color from user colors
@@ -131,7 +135,6 @@ client.connect_signal(
                 fg = col_fg,
             }
         )
-        ]]
     end
 )
 
