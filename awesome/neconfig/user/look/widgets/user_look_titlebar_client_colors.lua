@@ -18,7 +18,7 @@ local titlebar_client_colors = {
     ['Pcmanfm'] = '#272727',
     ['Qalculate-gtk'] = '#272727',
     ['qt5ct'] = '#222020',
-    ['Spotify'] = '#070707',
+    ['Spotify'] = '#393939',
     ['vlc'] = '#222020'
 }
 
