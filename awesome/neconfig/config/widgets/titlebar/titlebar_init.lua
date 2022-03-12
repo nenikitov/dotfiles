@@ -4,19 +4,14 @@ local gears = require('gears')
 -- Load custom modules
 local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
 local user_look_colors = require('neconfig.user.look.user_look_colors')
-local user_look_apps = require('neconfig.user.look.user_look_apps')
 local utils_tables = require('neconfig.config.utils.utils_tables')
 local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
 local utils_colors = require('neconfig.config.utils.utils_colors')
-local utils_shapes = require('neconfig.config.utils.utils_shapes')
 local titlebar_widget_template = require('neconfig.config.widgets.titlebar.titlebar_widget_template')
 
 -- Get variables
-local main_titlebar_pos = user_titlebar.position
-local side1_titlebar_pos, side2_titlebar_pos = utils_shapes.sides_along_direction(utils_shapes.direction_of_side(main_titlebar_pos))
-local opposite_titlebar_pos = utils_shapes.opposite_side(main_titlebar_pos)
-local highlight_titlebar_size = user_look_apps.border.width.highlight + user_look_apps.border.width.highlight_margin
-local main_titlebar_size = user_look_titlebar.size + 2 * user_look_titlebar.margin.other
+local titlebar_pos = user_titlebar.position
+local titlebar_size = user_look_titlebar.size + 2 * user_look_titlebar.margin.other
 
 -- Constants
 local titlebar_colors_file = gears.filesystem.get_configuration_dir() .. 'neconfig/user/look/widgets/user_look_titlebar_client_colors.lua'
@@ -32,37 +27,14 @@ client.connect_signal(
         -- Main titlebar
         local client_titlebar = awful.titlebar(
             c,
-            { position = main_titlebar_pos }
+            { position = titlebar_pos }
         )
         client_titlebar:setup(titlebar_widget_template(c))
-
-        --[[
-        local wibox = require('wibox')
-        local beautiful = require('beautiful')
-        local cairo = require("lgi").cairo
-        local image = cairo.ImageSurface(cairo.Format.ARGB32, 64, 64)
-        local cr = cairo.Context(image)
-        cr:set_source(gears.color('#ff0000'))
-        utils_shapes.better_rect{ radius = 10, round = true }(cr, 64, 64)
-        cr:fill()
-
-        client_titlebar._dirty_area:union_rectangle(cairo.RectangleInt{
-            x = 0, y = 0, width = 64, height = 64
-        })
-
-        client_titlebar:setup(
-            {
-                image = image,
-                resize = false,
-                widget = wibox.widget.imagebox
-            }
-        )
-        ]]
 
         -- idk why it should be here
         -- But it makes titlebars correctly update the visibility
         -- So it stays
-        --awful.titlebar.hide(c, main_titlebar_pos)
+        awful.titlebar.hide(c, titlebar_pos)
     end
 )
 -- Force update titlebar colors when borders change
@@ -130,7 +102,7 @@ client.connect_signal(
             c,
             {
                 position = user_titlebar.position,
-                size = main_titlebar_size,
+                size = titlebar_size,
                 bg = col_bg,
                 fg = col_fg,
             }

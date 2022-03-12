@@ -10,14 +10,7 @@ local apps_look = {
     -- Borders around application windows
     border = {
         -- Width of borders
-        width = {
-            -- Real border that changes the colors for different client status
-            border           = scaling.borders(2),
-            -- Subtle 3D highlight effect
-            highlight        = scaling.borders(2),
-            -- Margin between highlight and client contents
-            highlight_margin = scaling.borders(1)
-        },
+        width = scaling.borders(2),
         -- Colors of borders
             -- - Keys can be 'normal', 'active', 'floating', 'maximized', 'fullscreen', 'urgent', or a mix (like 'floating_active')
             -- - Also 'highlight'
