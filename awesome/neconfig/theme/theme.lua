@@ -36,7 +36,7 @@ theme.useless_gap   = user_look_desktop.gaps
 theme.titlebar_bg = user_look_colors.classes.normal.bg
 
 -- Borders
-theme.border_width = user_look_apps.border.width.border
+theme.border_width = user_look_apps.border.width
 
 for border_type, color in pairs(user_look_apps.border.colors) do
     theme['border_color_' .. border_type] = color

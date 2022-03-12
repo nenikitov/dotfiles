@@ -15,7 +15,7 @@ client.connect_signal(
     'shape::update',
     function(c)
         if not (c.maximized or c.fullscreen) then
-            c.shape = c.custom_shape
+            c.shape = c.custom_shape.shape
         else
             c.shape = nil
         end
@@ -54,7 +54,11 @@ local function construct_custom_shape()
         }
     end
 
-    return utils_shapes.better_rect {
+    return {
+        shape = utils_shapes.better_rect {
+            round = round,
+            radius = radius
+        },
         round = round,
         radius = radius
     }
@@ -73,17 +77,22 @@ client.connect_signal(
 
         -- Force set GTK icon
         if user_look_desktop.try_to_force_gtk_icon_theme then
-            if c.instance ~= nil then
+            local new_icon
+            if c.instance then
                 local icon = menubar_utils.lookup_icon(c.instance)
                 local lower_icon = menubar_utils.lookup_icon(c.instance:lower())
 
-                if icon ~= nil then
-                    c.icon = gears.surface(icon)._native
-                elseif lower_icon ~= nil then
-                    c.icon = gears.surface(lower_icon)._native
+                if icon then
+                    new_icon = gears.surface(icon)
+                elseif lower_icon then
+                    new_icon = gears.surface(lower_icon)
                 end
-            elseif c.icon == nil then
-                c.icon = gears.surface(menubar_utils.lookup_icon('application-default-icon'))._native
+            elseif c.icon then
+                new_icon = gears.surface(menubar_utils.lookup_icon('application-default-icon'))
+            end
+
+            if new_icon then
+                c.icon = new_icon._native
             end
         end
 

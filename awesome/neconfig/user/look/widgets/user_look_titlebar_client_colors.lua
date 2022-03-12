@@ -12,12 +12,13 @@ local titlebar_client_colors = {
     ['gammy'] = '#1b1c27',
     ['Gimp-2.10'] = '#484848',
     ['Inkscape'] = '#272727',
+    ['kitty'] = '#000000',
     ['Lxappearance'] = '#121212',
     ['Nitrogen'] = '#121212',
     ['Pcmanfm'] = '#272727',
     ['Qalculate-gtk'] = '#272727',
     ['qt5ct'] = '#222020',
-    ['Spotify'] = '#070707',
+    ['Spotify'] = '#393939',
     ['vlc'] = '#222020'
 }
 

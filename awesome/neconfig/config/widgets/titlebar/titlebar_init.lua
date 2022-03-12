@@ -1,14 +1,17 @@
 -- Load libraries
 local awful = require('awful')
 local gears = require('gears')
-local wibox = require('wibox')
 -- Load custom modules
-local utils_tables = require('neconfig.config.utils.utils_tables')
-local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
 local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
 local user_look_colors = require('neconfig.user.look.user_look_colors')
+local utils_tables = require('neconfig.config.utils.utils_tables')
+local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
 local utils_colors = require('neconfig.config.utils.utils_colors')
 local titlebar_widget_template = require('neconfig.config.widgets.titlebar.titlebar_widget_template')
+
+-- Get variables
+local titlebar_pos = user_titlebar.position
+local titlebar_size = user_look_titlebar.size + 2 * user_look_titlebar.margin.other
 
 -- Constants
 local titlebar_colors_file = gears.filesystem.get_configuration_dir() .. 'neconfig/user/look/widgets/user_look_titlebar_client_colors.lua'
@@ -21,33 +24,31 @@ client.connect_signal(
     function(c)
         c.has_titlebar = true
 
+        -- Main titlebar
         local client_titlebar = awful.titlebar(
             c,
-            {
-                position = user_titlebar.position,
-            }
+            { position = titlebar_pos }
         )
-
         client_titlebar:setup(titlebar_widget_template(c))
 
         -- idk why it should be here
         -- But it makes titlebars correctly update the visibility
         -- So it stays
-        awful.titlebar.hide(c, user_titlebar.position)
+        awful.titlebar.hide(c, titlebar_pos)
     end
 )
 -- Force update titlebar colors when borders change
 client.connect_signal(
     'request::border',
     function(c)
-        c:emit_signal('titlebar::refresh_colors')
+        c:emit_signal('titlebar::update_color')
     end
 )
 
 
 -- Refresh the color of the titlebar
 client.connect_signal(
-    'titlebar::refresh_colors',
+    'titlebar::update_color',
     function(c)
         if not (c.has_titlebar and DECORATION_VISIBILITY.titlebars) then return end
 
@@ -66,12 +67,18 @@ client.connect_signal(
         -- Replace 'border' or 'client' bg colors by their values
         local col_bg = current_color.bg
         if current_color.bg == 'client' then
-            local all_client_colors = require(titlebar_colors_module)
-            if all_client_colors[c.class] then
-                col_bg = all_client_colors[c.class]
+            if c.class then
+                -- Class name exists, try to load the color
+                local all_client_colors = require(titlebar_colors_module)
+                if all_client_colors[c.class] then
+                    col_bg = all_client_colors[c.class]
+                else
+                    col_bg = user_look_colors.classes.normal.bg
+                    c:emit_signal('titlebar::client_color_save')
+                end
             else
+                -- Class name does not exist, set default color
                 col_bg = user_look_colors.classes.normal.bg
-                c:emit_signal('titlebar::client_color_save')
             end
         elseif current_color.bg == 'border' then
             col_bg = c.border_color
@@ -95,7 +102,7 @@ client.connect_signal(
             c,
             {
                 position = user_titlebar.position,
-                size = user_look_titlebar.size + 2 * user_look_titlebar.margin.other,
+                size = titlebar_size,
                 bg = col_bg,
                 fg = col_fg,
             }
@@ -122,7 +129,7 @@ client.connect_signal(
             ' █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄▄ █▄▄ █ ██▄ █ ▀█  █    █▄▄ █▄█ █▄▄ █▄█ █▀▄ ▄█'
         )
         -- Refresh colors
-        c:emit_signal('titlebar::refresh_colors')
+        c:emit_signal('titlebar::update_color')
     end
 )
 client.connect_signal(
@@ -146,7 +153,7 @@ client.connect_signal(
     function(c)
         if c.has_titlebar and DECORATION_VISIBILITY.titlebars then
             awful.titlebar.show(c, user_titlebar.position)
-            c:emit_signal('titlebar::refresh_colors')
+            c:emit_signal('titlebar::update_color')
         else
             awful.titlebar.hide(c, user_titlebar.position)
         end

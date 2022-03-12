@@ -122,7 +122,7 @@ local client_keys = {
     ),
     -- Move client to previous screen on "SUPER" + "LESS" + O
     awful.key(
-        { super_key, more_key }, 'o',
+        { super_key, less_key }, 'o',
         function(c)
             c:move_to_screen(c.screen.index - 1)
         end,
