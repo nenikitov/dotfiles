@@ -55,8 +55,8 @@ client.connect_signal(
         -- Get color from user colors
         local all_colors = {
             normal = user_look_titlebar.colors.normal,
-            focus  = user_look_titlebar.colors.focus or user_look_titlebar.bar.colors.normal,
-            urgent = user_look_titlebar.colors.urgent or user_look_titlebar.bar.colors.normal
+            focus  = user_look_titlebar.colors.focus or user_look_titlebar.colors.normal,
+            urgent = user_look_titlebar.colors.urgent or user_look_titlebar.colors.normal
         }
 
         -- Calculate state of the current client
