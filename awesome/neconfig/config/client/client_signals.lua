@@ -9,6 +9,9 @@ local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local utils_shapes = require('neconfig.config.utils.utils_shapes')
 require('neconfig.config.widgets.titlebar.titlebar_init')
 
+-- Set icons to bigger size
+-- ? Does it work?
+awesome.set_preferred_icon_size(48)
 
 
 client.connect_signal(
@@ -63,7 +66,6 @@ local function construct_custom_shape()
         radius = radius
     }
 end
-
 
 -- Signal function to execute when a new client appears.
 client.connect_signal(

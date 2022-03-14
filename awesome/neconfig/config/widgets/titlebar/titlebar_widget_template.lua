@@ -2,11 +2,12 @@
 local g_table = require('gears').table
 local wibox = require('wibox')
 -- Load custom modules
-local user_titlebar = require("neconfig.user.config.widgets.user_titlebar")
-local utils_shapes = require("neconfig.config.utils.utils_shapes")
-local titlebar_buttons = require("neconfig.config.widgets.titlebar.titlebar_buttons")
-local user_look_titlebar = require("neconfig.user.look.widgets.user_look_titlebar")
-local titlebar_subwidget_list = require("neconfig.config.widgets.titlebar.titlebar_subwidget_list")
+local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
+local utils_shapes = require('neconfig.config.utils.utils_shapes')
+local titlebar_buttons = require('neconfig.config.widgets.titlebar.titlebar_buttons')
+local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
+local titlebar_subwidget_list = require('neconfig.config.widgets.titlebar.titlebar_subwidget_list')
+local custom_align = require('neconfig.lib.wibox.layout.align')
 
 
 --#region Helper functions
@@ -102,24 +103,23 @@ local function titlebar_widget_template(c)
         {
             {
                 beginning_section,
-                spacer,
-
-                layout = wibox.layout.align[direction]
+                bg = '#f002',
+                widget = wibox.container.background
             },
-            center_section,
             {
-                spacer,
-                spacer,
+                center_section,
+                bg = '#0f02',
+                widget = wibox.container.background
+            },
+            {
                 ending_section,
-
-                expand = 'inside',
-
-                layout = wibox.layout.align[direction]
+                bg = '#00f2',
+                widget = wibox.container.background
             },
 
-            expand = 'outside',
+            expand = 'justified',
 
-            layout = wibox.layout.align[direction]
+            layout = custom_align[direction]
         },
 
         [margin_side1] = user_look_titlebar.margin.sides,
