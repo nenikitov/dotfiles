@@ -35,14 +35,15 @@ local base = require("wibox.widget.base")
 
 local align = {}
 
+-- ! Rewrite this
 -- Calculate the layout of an align layout.
 -- @param context The context in which we are drawn.
 -- @param width The available width.
 -- @param height The available height.
-function align:layout(context, width, height)
+function align:layout_o(context, width, height)
     local result = {}
 
-    -- Draw will have to deal with all three align modes and should work in a
+    -- Draw will have to deal with all four align modes and should work in a
     -- way that makes sense if one or two of the widgets are missing (if they
     -- are all missing, it won't draw anything.) It should also handle the case
     -- where the fit something that isn't set to expand (for instance the
@@ -58,9 +59,9 @@ function align:layout(context, width, height)
 
     -- we will prioritize the middle widget unless the expand mode is "inside"
     --  if it is, we prioritize the first widget by not doing this block also,
-    --  if the second widget doesn't exist, we will prioritise the first one
+    --  if the second widget doesn't exist, we will prioritize the first one
     --  instead
-    if self._private.expand ~= "inside" and self._private.second then
+    if (self._private.expand ~= "inside" and self._private.expand ~= "justified") and self._private.second then
         local w, h = base.fit_widget(self, context, self._private.second, width, height)
         size_second = self._private.dir == "y" and h or w
         -- if all the space is taken, skip the rest, and draw just the middle
@@ -87,13 +88,13 @@ function align:layout(context, width, height)
                 --  the third widget the remaining space if there was no second
                 --  widget to take up any space (as the first if block is skipped
                 --  if this is the case)
-                if self._private.expand == "inside" or not self._private.second then
+                if self._private.expand == "inside" or self._private.expand == "justified" or not self._private.second then
                     size_remains = size_remains - h
                 end
             else
                 w, _ = base.fit_widget(self, context, self._private.first, size_remains, height)
                 size_first = w
-                if self._private.expand == "inside" or not self._private.second then
+                if self._private.expand == "inside" or self._private.expand == "justified" or not self._private.second then
                     size_remains = size_remains - w
                 end
             end
@@ -113,12 +114,12 @@ function align:layout(context, width, height)
             if self._private.dir == "y" then
                 _, h = base.fit_widget(self, context, self._private.third, width, size_remains)
                 -- give the middle widget the rest of the space for "inside" mode
-                if self._private.expand == "inside" then
+                if self._private.expand == "inside" or self._private.expand == "justified" then
                     size_remains = size_remains - h
                 end
             else
                 w, _ = base.fit_widget(self, context, self._private.third, size_remains, height)
-                if self._private.expand == "inside" then
+                if self._private.expand == "inside" or self._private.expand == "justified" then
                     size_remains = size_remains - w
                 end
             end
@@ -133,10 +134,10 @@ function align:layout(context, width, height)
         table.insert(result, base.place_widget_at(self._private.third, x, y, w, h))
     end
     -- here we either draw the second widget in the space set aside for it
-    -- in the beginning, or in the remaining space, if it is "inside"
+    -- in the beginning, or in the remaining space, if it is "inside" or "justified"
     if self._private.second and size_remains > 0 then
         local x, y, w, h = 0, 0, width, height
-        if self._private.expand == "inside" then
+        if self._private.expand == "inside" or self._private.expand == "justified" then
             if self._private.dir == "y" then
                 h = size_remains
                 x, y = 0, size_first
@@ -156,6 +157,92 @@ function align:layout(context, width, height)
         end
         table.insert(result, base.place_widget_at(self._private.second, x, y, w, h))
     end
+    return result
+end
+
+-- ! Delete this later
+local naughty = require('naughty')
+local function pr(c)
+    naughty.notify {
+        text = tostring(c)
+    }
+end
+
+
+-- Calculate the layout of an align layout.
+-- @param context The context in which we are drawn.
+-- @param width The available width.
+-- @param height The available height.
+function align:layout(context, width, height)
+    local result = {}
+    local size_remains = self._private.dir == "y" and height or width
+
+    local function get_size(child, size_remains)
+        if not child then
+            return 0
+        end
+
+        local is_vert = self._private.dir == "y"
+        local width_remains = is_vert and width or size_remains
+        local height_remains = is_vert and size_remains or height
+
+        local w, h = base.fit_widget(
+            self, context, self._private[child],
+            width_remains, height_remains
+        )
+        return is_vert and h or w
+    end
+    local function place_child(child, offset, size)
+        if size_remains <= 0 then
+            return
+        end
+
+        size = math.min(size, size_remains)
+        local is_vert = self._private.dir == "y"
+        local child_width = is_vert and width or size
+        local child_height = is_vert and size or height
+
+        local x_offset = (not is_vert) and offset or 0
+        local y_offset = (not is_vert) and 0 or offset
+
+        table.insert(
+            result,
+            base.place_widget_at(
+                self._private[child],
+                x_offset, y_offset,
+                child_width, child_height
+            )
+        )
+
+        size_remains = size_remains - size
+    end
+
+
+    local size_first  = get_size("first",  size_remains)
+    local size_second = get_size("second", size_remains)
+    local size_third  = get_size("third",  size_remains)
+
+    if self._private.expand == "none" then
+
+    elseif self._private.expand == "inside" then
+        place_child("first", 0, size_first)
+        place_child("third", size_remains, size_third)
+        place_child("second", size_first, size_remains)
+
+    elseif self._private.expand == "outside" then
+
+    elseif self._private.expand == "justified" then
+        if size_first > size_third then
+            place_child("first", 0, size_first)
+            place_child("third", math.max(size_remains, size_first), size_first)
+            place_child("second", size_first, size_remains)
+        else
+            place_child("third", size_remains - size_third, size_third)
+            place_child("first", 0, math.min(size_third, size_remains))
+            place_child("second", size_third, size_remains)
+        end
+    end
+
     return result
 end
 
@@ -266,6 +353,10 @@ end
 --   widgets are then given the remaining space on either side.
 --   If the center widget requires all available space, the outer widgets are
 --   not drawn at all.
+-- * `"justified"`: The widgets in the slots one and three are set to the same
+--   size, which is the maximum of their minimal required sizes. The second
+--   widget takes the remaining space in the middle. The longest side widget
+--   gets priority
 -- * `"none"`: All widgets are given their minimal required size or the
 --   remaining space, whichever is smaller. The center widget gets priority.
 --
@@ -276,7 +367,7 @@ end
 -- @tparam[opt="inside"] string mode How to use unused space.
 
 function align:set_expand(mode)
-    if mode == "none" or mode == "outside" then
+    if mode == "none" or mode == "outside" or mode == "justified" then
         self._private.expand = mode
     else
         self._private.expand = "inside"
