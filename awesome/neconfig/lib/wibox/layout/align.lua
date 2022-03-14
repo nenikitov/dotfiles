@@ -223,23 +223,83 @@ function align:layout(context, width, height)
     local size_third  = get_size("third",  size_remains)
 
     if self._private.expand == "none" then
-
+        local total_size = size_remains
+        place_child(
+            "second",
+            (size_remains - size_second) / 2,
+            size_second
+        )
+        local size_without_second = size_remains
+        place_child(
+            "first",
+            0,
+            math.min(size_first, size_second / 2)
+        )
+        place_child(
+            "third",
+            math.max(total_size - size_third, size_without_second / 2 + size_second),
+            size_third
+        )
     elseif self._private.expand == "inside" then
         place_child("first", 0, size_first)
-        place_child("third", size_remains, size_third)
+        place_child(
+            "third",
+            math.max(
+                size_remains + size_first - size_third,
+                size_first
+            ),
+            size_third
+        )
         place_child("second", size_first, size_remains)
-
     elseif self._private.expand == "outside" then
-
+        place_child(
+            "second",
+            (size_remains - size_second) / 2,
+            size_second
+        )
+        place_child(
+            "first",
+            0,
+            size_remains / 2
+        )
+        place_child(
+            "third",
+            size_remains + size_second,
+            size_remains
+        )
     elseif self._private.expand == "justified" then
         if size_first > size_third then
-            place_child("first", 0, size_first)
-            place_child("third", math.max(size_remains, size_first), size_first)
-            place_child("second", size_first, size_remains)
+            place_child(
+                "first",
+                0,
+                size_first
+            )
+            place_child(
+                "third",
+                math.max(size_remains, size_first),
+                size_first
+            )
+            place_child(
+                "second",
+                size_first,
+                size_remains
+            )
         else
-            place_child("third", size_remains - size_third, size_third)
-            place_child("first", 0, math.min(size_third, size_remains))
-            place_child("second", size_third, size_remains)
+            place_child(
+                "third",
+                size_remains - size_third,
+                size_third
+            )
+            place_child(
+                "first",
+                0,
+                math.min(size_third, size_remains)
+            )
+            place_child(
+                "second",
+                size_third,
+                size_remains
+            )
         end
     end
 
