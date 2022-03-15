@@ -40,7 +40,7 @@ local align = {}
 -- @param context The context in which we are drawn.
 -- @param width The available width.
 -- @param height The available height.
-function align:layout_o(context, width, height)
+function align:layouta(context, width, height)
     local result = {}
 
     -- Draw will have to deal with all four align modes and should work in a
@@ -177,14 +177,15 @@ function align:layout(context, width, height)
     local result = {}
     local size_remains = self._private.dir == "y" and height or width
 
-    local function get_size(child, size_remains)
+    -- Get the minimum required size of a child widget
+    local function get_size(child, max_size)
         if not child then
             return 0
         end
 
         local is_vert = self._private.dir == "y"
-        local width_remains = is_vert and width or size_remains
-        local height_remains = is_vert and size_remains or height
+        local width_remains = is_vert and width or max_size
+        local height_remains = is_vert and max_size or height
 
         local w, h = base.fit_widget(
             self, context, self._private[child],
@@ -192,12 +193,14 @@ function align:layout(context, width, height)
         )
         return is_vert and h or w
     end
+    -- Place a child widget inside the layout
     local function place_child(child, offset, size)
         if size_remains <= 0 then
             return
         end
 
         size = math.min(size, size_remains)
+
         local is_vert = self._private.dir == "y"
         local child_width = is_vert and width or size
         local child_height = is_vert and size or height
@@ -217,87 +220,149 @@ function align:layout(context, width, height)
         size_remains = size_remains - size
     end
 
-
+    -- Get the minimum sizes of all widgets
     local size_first  = get_size("first",  size_remains)
     local size_second = get_size("second", size_remains)
     local size_third  = get_size("third",  size_remains)
 
+    -- Size of the layout before any placements
+    local total_size  = size_remains
+
+    -- No widget is expanded, second is prioritized
     if self._private.expand == "none" then
-        local total_size = size_remains
+        local size_without_second = total_size - size_second
+        -- Second widget is prioritized
         place_child(
             "second",
+            -- Center of the layout
             (size_remains - size_second) / 2,
+            -- Not expanded, just minimum size
             size_second
         )
-        local size_without_second = size_remains
+        -- First follows
         place_child(
             "first",
+            -- Beginning of the layout
             0,
+            -- Minimum size
+            -- or until the second widget if can't fit
             math.min(size_first, size_second / 2)
         )
+        -- Third follows
         place_child(
             "third",
+            -- End of the layout (offset to fit its size)
+            -- or right after second widget if can't fit
             math.max(total_size - size_third, size_without_second / 2 + size_second),
-            size_third
+            -- Minimum size
+            -- or until the end of the layout it can't fit
+            math.min(size_third, size_without_second / 2)
         )
+    -- Center expanded, side widgets are prioritized
     elseif self._private.expand == "inside" then
-        place_child("first", 0, size_first)
-        place_child(
-            "third",
-            math.max(
-                size_remains + size_first - size_third,
-                size_first
-            ),
-            size_third
-        )
-        place_child("second", size_first, size_remains)
-    elseif self._private.expand == "outside" then
-        place_child(
-            "second",
-            (size_remains - size_second) / 2,
-            size_second
-        )
+        -- First widget is prioritized
         place_child(
             "first",
+            -- Beginning of the layout
             0,
+            -- Minimum size
+            size_first
+        )
+        -- Third follows
+        place_child(
+            "third",
+            -- End of the layout (offset to fit its size)
+            -- or right after first widget if no center widget
+            math.max(total_size - size_third, size_first),
+            -- Minimum size
+            size_third
+        )
+        place_child(
+            "second",
+            -- After the first
+            size_first,
+            -- Whatever is left - expand
+            size_remains
+        )
+    -- Sides expanded, center is prioritized
+    elseif self._private.expand == "outside" then
+        -- Second widget is prioritized
+        place_child(
+            "second",
+            -- Center of the layout
+            (size_remains - size_second) / 2,
+            -- Minimum size
+            size_second
+        )
+        -- First follows
+        place_child(
+            "first",
+            -- Begging of the layout
+            0,
+            -- Half of the remaining size - expand
+            -- because placing the center widget leaves space on 2 sides
             size_remains / 2
         )
         place_child(
             "third",
+            -- Right after the second
+            -- because size_remains is only for 1 side now and we add size of the second
             size_remains + size_second,
+            -- Whatever is left - expand
             size_remains
         )
+    -- Center expanded, side widgets are prioritized, but kept the same size
     elseif self._private.expand == "justified" then
+        -- Determine which of the sides is larger
         if size_first > size_third then
+            -- First is prioritized because it is larger
             place_child(
                 "first",
+                -- Begging of the layout
                 0,
+                -- Minimum size
                 size_first
             )
+            -- Third follows
             place_child(
                 "third",
+                -- End of the layout
+                -- or right after first widget if no center widget
                 math.max(size_remains, size_first),
+                -- Same size as first - expand
                 size_first
             )
+            -- Second follows
             place_child(
                 "second",
+                -- Right after first widget
                 size_first,
+                -- Whatever is left - expand
                 size_remains
             )
         else
+            -- Third is prioritized because it is larger
             place_child(
                 "third",
-                size_remains - size_third,
+                -- End of the layout (offset to fit its size)
+                total_size - size_third,
+                -- Minimum size
                 size_third
             )
+            -- First follows
             place_child(
                 "first",
+                -- Beginning of the layout
                 0,
+                -- Same as the third - expand
+                -- or until the third widget if no center widget
                 math.min(size_third, size_remains)
             )
             place_child(
                 "second",
+                -- Right after first widget
                 size_third,
+                -- Whatever is left - expand
                 size_remains
             )
         end

@@ -117,7 +117,7 @@ local function titlebar_widget_template(c)
                 widget = wibox.container.background
             },
 
-            expand = 'none',
+            expand = 'justified',
 
             layout = custom_align[direction]
         },
