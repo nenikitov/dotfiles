@@ -92,7 +92,7 @@ local function titlebar_widget_template(c)
         )
     )
 
-    -- Ugly hack with spacer widget that fills the remaining space to make empty regions of titlebars intractable
+    -- Ugly hack with spacer widget that fills the remaining space to make empty regions of titlebars interactive
     local spacer = {
         buttons = buttons,
 
@@ -102,19 +102,30 @@ local function titlebar_widget_template(c)
     return {
         {
             {
+                -- Ensure beginning section alignment and pad with interactive spacer
                 beginning_section,
-                bg = '#f002',
-                widget = wibox.container.background
+                spacer,
+                spacer,
+
+                layout = custom_align[direction]
             },
             {
+                -- Ensure center section alignment and pad with interactive spacer
+                spacer,
                 center_section,
-                bg = '#0f02',
-                widget = wibox.container.background
+                spacer,
+
+                expand = 'outside',
+
+                layout = custom_align[direction]
             },
             {
+                -- Ensure ending section alignment and pad with interactive spacer
+                spacer,
+                spacer,
                 ending_section,
-                bg = '#00f2',
-                widget = wibox.container.background
+
+                layout = custom_align[direction]
             },
 
             expand = 'justified',

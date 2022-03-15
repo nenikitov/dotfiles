@@ -29,12 +29,19 @@
 local table = table
 local pairs = pairs
 local type = type
-local floor = math.floor
+local max = math.max
+local min = math.min
 local gtable = require("gears.table")
 local base = require("wibox.widget.base")
 
 local align = {}
 
+local naughty = require('naughty')
+local function pr(c)
+    naughty.notify {
+        text = tostring(c)
+    }
+end
 
 -- Calculate the layout of an align layout.
 -- @param context The context in which we are drawn.
@@ -46,7 +53,7 @@ function align:layout(context, width, height)
 
     -- Get the minimum required size of a child widget
     local function get_size(child, max_size)
-        if not child then
+        if not self._private[child] then
             return 0
         end
 
@@ -62,11 +69,11 @@ function align:layout(context, width, height)
     end
     -- Place a child widget inside the layout
     local function place_child(child, offset, size)
-        if size_remains <= 0 then
+        if size_remains <= 0 or not self._private[child] then
             return
         end
 
-        size = math.min(size, size_remains)
+        size = min(size, size_remains)
 
         local is_vert = self._private.dir == "y"
         local child_width = is_vert and width or size
@@ -113,17 +120,17 @@ function align:layout(context, width, height)
             0,
             -- Minimum size
             -- or until the second widget if can't fit
-            math.min(size_first, size_second / 2)
+            min(size_first, size_second / 2)
         )
         -- Third follows
         place_child(
             "third",
             -- End of the layout (offset to fit its size)
             -- or right after second widget if can't fit
-            math.max(total_size - size_third, size_without_second / 2 + size_second),
+            max(total_size - size_third, size_without_second / 2 + size_second),
             -- Minimum size
             -- or until the end of the layout it can't fit
-            math.min(size_third, size_without_second / 2)
+            min(size_third, size_without_second / 2)
         )
     -- Center expanded, side widgets are prioritized
     elseif self._private.expand == "inside" then
@@ -140,7 +147,7 @@ function align:layout(context, width, height)
             "third",
             -- End of the layout (offset to fit its size)
             -- or right after first widget if no center widget
-            math.max(total_size - size_third, size_first),
+            max(total_size - size_third, size_first),
             -- Minimum size
             size_third
         )
@@ -195,7 +202,7 @@ function align:layout(context, width, height)
                 "third",
                 -- End of the layout
                 -- or right after first widget if no center widget
-                math.max(size_remains, size_first),
+                max(size_remains, size_first),
                 -- Same size as first - expand
                 size_first
             )
@@ -223,7 +230,7 @@ function align:layout(context, width, height)
                 0,
                 -- Same as the third - expand
                 -- or until the third widget if no center widget
-                math.min(size_third, size_remains)
+                min(size_third, size_remains)
             )
             place_child(
                 "second",
