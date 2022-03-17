@@ -8,6 +8,7 @@ local gfs = require('gears.filesystem')
 local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local user_look_apps = require('neconfig.user.look.user_look_apps')
 local user_look_colors = require('neconfig.user.look.user_look_colors')
+local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
 local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
 
 -- Get variables
@@ -108,7 +109,7 @@ local rsvg = require('lgi').Rsvg
 local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
 local icon_scale = 0.5
 local titlebar_icon_path = config_path .. '/graphics/icons/titlebar/'
-local titlebar_button_size = 64
+local titlebar_button_size = user_look_titlebar.size * 2
 local function generate_titlebar_icon(icon_path, shape_props, size)
     -- Draw background
     local img = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
@@ -119,8 +120,8 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
 
 
     -- Draw shape
-    local bw = shape_props.border_width
-    local sw = bw * 1.5
+    local bw = shape_props.border_width / 2
+    local sw = bw * 1.75
     local mw = math.max(sw / 2, bw)
     cr:translate(mw, mw)
     shape_props.shape(cr, size - 2 * mw, size - 2 * mw)
