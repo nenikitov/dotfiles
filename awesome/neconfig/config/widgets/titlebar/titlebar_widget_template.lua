@@ -102,35 +102,50 @@ local function titlebar_widget_template(c)
     return {
         {
             {
-                -- Ensure beginning section alignment and pad with interactive spacer
-                beginning_section,
-                spacer,
-                spacer,
+                {
+                    -- Ensure beginning section alignment and pad with interactive spacer
+                    beginning_section,
+                    spacer,
+                    spacer,
 
-                layout = custom_align[direction]
+                    layout = custom_align[direction]
+                },
+
+                bg = '#f002',
+                widget = wibox.container.background
             },
             {
-                -- Ensure center section alignment and pad with interactive spacer
-                spacer,
-                center_section,
-                spacer,
+                {
+                    -- Ensure center section alignment and pad with interactive spacer
+                    spacer,
+                    center_section,
+                    spacer,
 
-                expand = 'outside',
+                    expand = 'outside',
 
-                layout = custom_align[direction]
+                    layout = custom_align[direction]
+                },
+
+                bg = '#0f02',
+                widget = wibox.container.background
             },
             {
-                -- Ensure ending section alignment and pad with interactive spacer
-                spacer,
-                spacer,
-                ending_section,
+                {
+                    -- Ensure ending section alignment and pad with interactive spacer
+                    spacer,
+                    spacer,
+                    ending_section,
 
-                layout = custom_align[direction]
+                    layout = custom_align[direction]
+                },
+
+                bg = '#00f2',
+                widget = wibox.container.background
             },
 
             expand = 'justified',
 
-            layout = custom_align[direction]
+            layout = wibox.layout.align[direction]
         },
 
         [margin_side1] = user_look_titlebar.margin.sides,
