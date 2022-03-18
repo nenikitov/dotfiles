@@ -111,7 +111,7 @@ local function titlebar_widget_template(c)
                     layout = custom_align[direction]
                 },
 
-                bg = '#f002',
+                bg = '#f004',
                 widget = wibox.container.background
             },
             {
@@ -126,7 +126,7 @@ local function titlebar_widget_template(c)
                     layout = custom_align[direction]
                 },
 
-                bg = '#0f02',
+                bg = '#ff04',
                 widget = wibox.container.background
             },
             {
@@ -139,7 +139,7 @@ local function titlebar_widget_template(c)
                     layout = custom_align[direction]
                 },
 
-                bg = '#00f2',
+                bg = '#0f04',
                 widget = wibox.container.background
             },
 
