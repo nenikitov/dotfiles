@@ -13,12 +13,13 @@ local titlebar_client_colors = {
     ['Inkscape'] = '#272727',
     ['Lxappearance'] = '#121212',
     ['Nitrogen'] = '#121212',
+    ['obs'] = '#181819',
     ['Pcmanfm'] = '#272727',
     ['Qalculate-gtk'] = '#272727',
     ['qt5ct'] = '#222020',
     ['Spotify'] = '#393939',
     ['Steam'] = '#24272d',
-    ['vlc'] = '#222020',
+    ['vlc'] = '#222020'
 }
 
 return titlebar_client_colors
