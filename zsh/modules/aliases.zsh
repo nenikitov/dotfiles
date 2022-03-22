@@ -7,6 +7,7 @@ alias ll='exa --color=always -laFgh --group-directories-first --git --time-style
 alias c='clear'
 # Better date format by default
 alias idate='date +"%A, %Y-%m-%d %H:%M:%S"'
+alias ical='cal -m -w -3'
 
 
 # Safety (prompt before overwrite)
