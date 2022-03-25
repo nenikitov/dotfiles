@@ -7,7 +7,6 @@ local utils_shapes = require('neconfig.config.utils.utils_shapes')
 local titlebar_buttons = require('neconfig.config.widgets.titlebar.titlebar_buttons')
 local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
 local titlebar_subwidget_list = require('neconfig.config.widgets.titlebar.titlebar_subwidget_list')
-local custom_align = require('neconfig.lib.wibox.layout.align')
 
 
 --#region Helper functions
@@ -99,6 +98,50 @@ local function titlebar_widget_template(c)
         widget = wibox.container.background,
     }
     -- Final widget
+    -- ! Real final widget
+    return {
+        {
+            {
+                -- Ensure beginning section alignment and pad with interactive spacer
+                beginning_section,
+                spacer,
+                spacer,
+
+                layout = wibox.layout.align[direction]
+            },
+            {
+                -- Ensure center section alignment and pad with interactive spacer
+                spacer,
+                center_section,
+                spacer,
+
+                expand = 'outside',
+
+                layout = wibox.layout.align[direction]
+            },
+            {
+                -- Ensure ending section alignment and pad with interactive spacer
+                spacer,
+                spacer,
+                ending_section,
+
+                layout = wibox.layout.align[direction]
+            },
+
+            expand = 'justified',
+
+            layout = wibox.layout.align[direction]
+        },
+
+        [margin_side1] = user_look_titlebar.margin.sides,
+        [margin_side2] = user_look_titlebar.margin.sides,
+        [margin_other1] = user_look_titlebar.margin.other,
+        [margin_other2] = user_look_titlebar.margin.other,
+
+        widget = wibox.container.margin
+    }
+    --[[
+    -- ! Final widget with debug stuff
     return {
         {
             {
@@ -155,6 +198,7 @@ local function titlebar_widget_template(c)
 
         widget = wibox.container.margin
     }
+    ]]
 end
 
 return titlebar_widget_template
