@@ -12,7 +12,7 @@ precmd() {
 }
 
 
-##region PS1
+#region PS1
 
 # Top left PS1 elements
 ps1_tl_elems=(
@@ -40,10 +40,10 @@ ps1_br_elems=(
 PS1=${(j::)ps1_tl_elems}$'\n'${(j::)ps1_bl_elems}
 RPS1=${(j::)ps1_br_elems}
 
-##endregion
+#endregion
 
 
-##region PS2
+#region PS2
 
 # Left PS2 elements
 ps2_l_elems=(
@@ -60,10 +60,10 @@ ps2_r_elems=(
 PS2=${(j::)ps2_l_elems}
 RPS2=${(j::)ps2_r_elems}
 
-##endregion
+#endregion
 
 
-##region PS3
+#region PS3
 
 # Left PS3 elements
 ps3_elems=(
@@ -74,4 +74,4 @@ ps3_elems=(
 # Set up PS3
 PS3=${(j::)ps3_elems}
 
-##endregion
+#endregion
