@@ -23,4 +23,3 @@ compinit
 
 # Show hidden files in the completion list
 _comp_options+=(globdots)
-

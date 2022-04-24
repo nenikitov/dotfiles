@@ -1,5 +1,4 @@
 modules_path="${HOME}/.config/zsh/modules"
-plugins_path="/usr/share/zsh/plugins"
 
 # History
 HISTSIZE=10000
@@ -24,8 +23,7 @@ source $modules_path/vi-mode.zsh
 source $modules_path/completion.zsh
 
 # Suggestions
-source $plugins_path/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $modules_path/suggestions.zsh
 
 # Syntax highlighting
-source $plugins_path/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+source $modules_path/highlighting.zsh

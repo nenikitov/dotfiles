@@ -3,6 +3,7 @@ alias ls='exa --color=always -aF --group-directories-first --'
 # List all files with colors in long format with extra git info
 alias ll='exa --color=always -laFgh --group-directories-first --git --time-style=long-iso --icons --'
 
+
 # Easy clear
 alias c='clear'
 # Better date format by default
