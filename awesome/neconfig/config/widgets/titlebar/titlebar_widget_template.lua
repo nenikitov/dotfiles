@@ -95,8 +95,22 @@ local function titlebar_widget_template(c)
     local spacer = {
         buttons = buttons,
 
+        bg = '#0ff2',
+
         widget = wibox.container.background,
     }
+    --[[
+    return {
+        -- Ensure center section alignment and pad with interactive spacer
+        center_section,
+        spacer,
+        spacer,
+
+        expand = 'outside',
+
+        layout = wibox.layout.align[direction]
+    }
+    ]]
     -- Final widget
     -- ! Real final widget
     return {
@@ -115,17 +129,14 @@ local function titlebar_widget_template(c)
                 center_section,
                 spacer,
 
-                expand = 'outside',
-
                 layout = wibox.layout.align[direction]
             },
             {
                 -- Ensure ending section alignment and pad with interactive spacer
                 spacer,
-                spacer,
                 ending_section,
 
-                layout = wibox.layout.align[direction]
+                layout = wibox.layout.align[direction],
             },
 
             expand = 'justified',
@@ -147,14 +158,16 @@ local function titlebar_widget_template(c)
             {
                 {
                     -- Ensure beginning section alignment and pad with interactive spacer
+                    spacer,
+                    spacer,
                     beginning_section,
-                    spacer,
-                    spacer,
 
-                    layout = custom_align[direction]
+                    expand = 'inside',
+
+                    layout = wibox.layout.align[direction]
                 },
 
-                bg = '#f004',
+                bg = '#f002',
                 widget = wibox.container.background
             },
             {
@@ -166,23 +179,17 @@ local function titlebar_widget_template(c)
 
                     expand = 'outside',
 
-                    layout = custom_align[direction]
+                    layout = wibox.layout.align[direction]
                 },
 
-                bg = '#ff04',
+                bg = '#ff02',
                 widget = wibox.container.background
             },
             {
-                {
                     -- Ensure ending section alignment and pad with interactive spacer
-                    spacer,
-                    spacer,
                     ending_section,
 
-                    layout = custom_align[direction]
-                },
-
-                bg = '#0f04',
+                bg = '#0f02',
                 widget = wibox.container.background
             },
 

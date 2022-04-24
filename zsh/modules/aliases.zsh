@@ -14,6 +14,7 @@ alias ical='cal -m -w -3'
 alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'
+alias ln='ln -i'
 
 
 # Send 5 packets and stop
@@ -30,10 +31,10 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias less='less -R'
 alias man="env \
-        LESS_TERMCAP_md=$'\e[01;31m' \
-        LESS_TERMCAP_me=$'\e[0m' \
-        LESS_TERMCAP_us=$'\e[01;32m' \
-        LESS_TERMCAP_ue=$'\e[0m' \
-        LESS_TERMCAP_so=$'\e[01;43m' \
-        LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;43m' \
+    LESS_TERMCAP_se=$'\e[0m' \
     man '$@'"
