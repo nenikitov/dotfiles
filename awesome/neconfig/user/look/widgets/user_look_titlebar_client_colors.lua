@@ -10,6 +10,7 @@ local titlebar_client_colors = {
     ['dolphin-emu'] = '#222020',
     ['feh'] = '#646464',
     ['firefox'] = '#1c1b22ff',
+    ['flameshot'] = '#121212',
     ['gammy'] = '#1b1c27',
     ['Gimp-2.10'] = '#272727',
     ['Inkscape'] = '#272727',
@@ -26,7 +27,7 @@ local titlebar_client_colors = {
     ['qt5ct'] = '#222020',
     ['Spotify'] = '#393939',
     ['Steam'] = '#212934',
-    ['vlc'] = '#222020',
+    ['vlc'] = '#222020'
 }
 
 return titlebar_client_colors
