@@ -15,7 +15,7 @@ local titlebar_client_colors = {
     ['Gimp-2.10'] = '#272727',
     ['Inkscape'] = '#272727',
     ['libreoffice-startcenter'] = '#221816',
-    ['libreoffice-writer'] = '#272727',
+    ['libreoffice-writer'] = '#1e1e1e',
     ['Lxappearance'] = '#121212',
     ['Nitrogen'] = '#121212',
     ['notepad.exe'] = '#ffffff',
@@ -27,7 +27,8 @@ local titlebar_client_colors = {
     ['qt5ct'] = '#222020',
     ['Spotify'] = '#393939',
     ['Steam'] = '#212934',
-    ['vlc'] = '#222020'
+    ['vlc'] = '#222020',
+    ['Zenity'] = '#121212'
 }
 
 return titlebar_client_colors
