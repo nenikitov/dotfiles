@@ -20,3 +20,4 @@
 
 # Blacklist files
 /zsh/.zcompdump
+/**/.vscode
