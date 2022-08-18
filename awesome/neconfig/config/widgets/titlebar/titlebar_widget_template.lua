@@ -44,7 +44,7 @@ local function titlebar_widget_template(c)
             return prototype
         end
     end
-    -- Function to remove unusable widgets (such as maximize button for the client that cannot resize)
+    -- Remove unusable widgets (such as maximize button for the client that cannot resize)
     local function remove_unusable_buttons(widgets)
         local new_widgets = {}
 
@@ -64,61 +64,36 @@ local function titlebar_widget_template(c)
 
         return new_widgets
     end
+    -- Initialize a section with buttons and remove unusable buttons
+    local function prepare_section(section)
+        return wibox.layout.fixed[direction](
+            table.unpack(
+                g_table.map(
+                    init_widget,
+                    remove_unusable_buttons(section)
+                )
+            )
+        )
+    end
 
     -- Layouts for 3 sections
-    local beginning_section = wibox.layout.fixed[direction](
-        table.unpack(
-            g_table.map(
-                init_widget,
-                remove_unusable_buttons(user_titlebar.layout.beginning)
-            )
-        )
-    )
-    local center_section = wibox.layout.fixed[direction](
-        table.unpack(
-            g_table.map(
-                init_widget,
-                remove_unusable_buttons(user_titlebar.layout.center)
-            )
-        )
-    )
-    local ending_section = wibox.layout.fixed[direction](
-        table.unpack(
-            g_table.map(
-                init_widget,
-                g_table.reverse(remove_unusable_buttons(user_titlebar.layout.ending))
-            )
-        )
-    )
+    local beginning_section = prepare_section(user_titlebar.layout.beginning)
+    local center_section = prepare_section(user_titlebar.layout.center)
+    local ending_section = prepare_section(user_titlebar.layout.ending)
 
     -- Ugly hack with spacer widget that fills the remaining space to make empty regions of titlebars interactive
     local spacer = {
         buttons = buttons,
 
-        bg = '#0ff2',
-
         widget = wibox.container.background,
     }
-    --[[
-    return {
-        -- Ensure center section alignment and pad with interactive spacer
-        center_section,
-        spacer,
-        spacer,
 
-        expand = 'outside',
-
-        layout = wibox.layout.align[direction]
-    }
-    ]]
     -- Final widget
-    -- ! Real final widget
     return {
         {
             {
                 -- Ensure beginning section alignment and pad with interactive spacer
                 beginning_section,
-                spacer,
                 spacer,
 
                 layout = wibox.layout.align[direction]
@@ -129,17 +104,20 @@ local function titlebar_widget_template(c)
                 center_section,
                 spacer,
 
+                expand = wibox.layout.align.expand_modes.OUTSIDE,
+
                 layout = wibox.layout.align[direction]
             },
             {
                 -- Ensure ending section alignment and pad with interactive spacer
+                nil,
                 spacer,
                 ending_section,
 
-                layout = wibox.layout.align[direction],
+                layout = wibox.layout.align[direction]
             },
 
-            expand = 'justified',
+            expand = wibox.layout.align.expand_modes.JUSTIFIED,
 
             layout = wibox.layout.align[direction]
         },
@@ -151,61 +129,6 @@ local function titlebar_widget_template(c)
 
         widget = wibox.container.margin
     }
-    --[[
-    -- ! Final widget with debug stuff
-    return {
-        {
-            {
-                {
-                    -- Ensure beginning section alignment and pad with interactive spacer
-                    spacer,
-                    spacer,
-                    beginning_section,
-
-                    expand = 'inside',
-
-                    layout = wibox.layout.align[direction]
-                },
-
-                bg = '#f002',
-                widget = wibox.container.background
-            },
-            {
-                {
-                    -- Ensure center section alignment and pad with interactive spacer
-                    spacer,
-                    center_section,
-                    spacer,
-
-                    expand = 'outside',
-
-                    layout = wibox.layout.align[direction]
-                },
-
-                bg = '#ff02',
-                widget = wibox.container.background
-            },
-            {
-                    -- Ensure ending section alignment and pad with interactive spacer
-                    ending_section,
-
-                bg = '#0f02',
-                widget = wibox.container.background
-            },
-
-            expand = 'justified',
-
-            layout = wibox.layout.align[direction]
-        },
-
-        [margin_side1] = user_look_titlebar.margin.sides,
-        [margin_side2] = user_look_titlebar.margin.sides,
-        [margin_other1] = user_look_titlebar.margin.other,
-        [margin_other2] = user_look_titlebar.margin.other,
-
-        widget = wibox.container.margin
-    }
-    ]]
 end
 
 return titlebar_widget_template
