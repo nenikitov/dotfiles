@@ -14,8 +14,10 @@ local apps = {
         'numlockx on',
         -- Turn on touchpad gestures
         'touchegg',
+	-- Network icon in system tray
+	'nm-applet',
         -- Launch compositor for transparency and animations
-        'picom --xrender-sync-fence --experimental-backends',
+        'picom --xrender-sync-fence',
         -- Set wallpaper
         'nitrogen --restore', --'nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers/ --save',
         -- Adjust blue light level (wait so gammy consistently detects the system tray)

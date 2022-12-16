@@ -7,63 +7,63 @@ local scaling = require('neconfig.config.utils.utils_scaling')
 
 -- ▀█▀ █ ▀█▀ █   █▀▀ █▄▄ ▄▀█ █▀█   █▄▄ █ █ ▀█▀ ▀█▀ █▀█ █▄ █ █▀   █▀█ █▀█ █▀▀ █▀ █▀▀ ▀█▀ █▀
 --  █  █  █  █▄▄ ██▄ █▄█ █▀█ █▀▄   █▄█ █▄█  █   █  █▄█ █ ▀█ ▄█   █▀▀ █▀▄ ██▄ ▄█ ██▄  █  ▄█
-local def_button_shape = g_shape.circle
-local def_button_colors = {
+local button_shape = g_shape.circle
+local button_colors = {
     close     = 'red',
     maximized = 'green',
     minimize  = 'yellow',
-    ontop    = 'blue',
+    ontop     = 'blue',
     floating  = 'magenta',
     sticky    = 'cyan',
 }
-local def_button_inactive_color = user_look_colors.classes.surface.bg
-local def_button_icon_color = user_look_colors.classes.normal.bg
-local def_border_width = scaling.borders(6)
+local button_inactive_color = user_look_colors.classes.surface.bg
+local button_icon_color = user_look_colors.classes.normal.bg
+local button_border_width = scaling.borders(6)
 local button_presets = {
     filled_same = function(bg)
         return {
-            shape = def_button_shape,
+            shape = button_shape,
             shape_bg = bg,
             icon = bg,
-            border_width = def_border_width,
+            border_width = button_border_width,
             border_color = bg
         }
     end,
     filled_icon = function(bg)
         return {
-            shape = def_button_shape,
+            shape = button_shape,
             shape_bg = bg,
-            icon = def_button_icon_color,
-            border_width = def_border_width,
+            icon = button_icon_color,
+            border_width = button_border_width,
             border_color = bg
         }
     end,
     hollow_same = function(bg)
         return {
-            shape = def_button_shape,
+            shape = button_shape,
             shape_bg = '#00000000',
             icon = '#00000000',
-            border_width = def_border_width,
+            border_width = button_border_width,
             border_color = bg
         }
     end,
     hollow_icon = function(bg)
         return {
-            shape = def_button_shape,
+            shape = button_shape,
             shape_bg = '#00000000',
             icon = bg,
-            border_width = def_border_width,
+            border_width = button_border_width,
             border_color = bg
         }
     end
 }
 local whole_button_style = function(button_name)
-    local button_color = def_button_colors[button_name]
+    local button_color = button_colors[button_name]
     return {
         -- When the button state is false (for example if the client not maximized for maximize button)
         inactive = {
             -- When the client is out of focus
-            normal = button_presets.hollow_same(def_button_inactive_color),
+            normal = button_presets.hollow_same(button_inactive_color),
             -- When the client is focused
             focus = button_presets.hollow_same(user_look_colors.palette.bg[button_color]),
             -- When the button is hovered on
@@ -73,7 +73,7 @@ local whole_button_style = function(button_name)
         },
         -- When the button state is true (for example if the client maximized for maximize button)
         active = {
-            normal = button_presets.filled_same(def_button_inactive_color),
+            normal = button_presets.filled_same(button_inactive_color),
             focus = button_presets.filled_same(user_look_colors.palette.bg[button_color]),
             hover = button_presets.filled_icon(user_look_colors.palette.bg[button_color]),
             press = button_presets.filled_icon(user_look_colors.palette.fg[button_color]),

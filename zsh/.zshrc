@@ -10,7 +10,7 @@ HISTFILE=~/.cache/zsh/history
 source $modules_path/prompt.zsh
 
 # Path
-export PATH=$HOME/.cargo/bin:$PATH
+export PATH="$PATH:$HOME/.cargo/bin:$HOME/.dotnet/tools"
 
 # Aliases and exports
 source $modules_path/exports.zsh

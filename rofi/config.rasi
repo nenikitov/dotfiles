@@ -2,27 +2,29 @@ configuration {
     /* Behavior */
     modi: "window,drun,run";
     terminal: "alacritty";
-    case-sensitive: false;
-    cycle: true;
     scroll-method: 0;
     click-to-exit: true;
-    matching: "prefix";
 
+    /* Searching */
+    matching: "prefix";
+    case-sensitive: false;
+    normalize-match: true;
+    cycle: true;
+    sort: true;
+    sorting-method: "fzf";
 
     /* Display */
     location: 0;
     sidebar-mode: true;
     show-icons: true;
     drun-display-format: "{name}";
-    window-format: "{w}{c}";
+    window-format: "{w} {c}";
     monitor: "-5";
-
 
     /* Appearence */
     font: "mono 12";
-    /*icon-theme: ;*/
 }
 
 @theme "netheme.rasi"
 
-/* vim:ft=css
+/* vim:ft=css */
