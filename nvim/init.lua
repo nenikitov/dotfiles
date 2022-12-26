@@ -1,2 +1,2 @@
-require('neconfig.init')
+require('neconfig')
 
