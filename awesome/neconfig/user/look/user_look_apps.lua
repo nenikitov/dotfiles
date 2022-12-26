@@ -10,7 +10,7 @@ local apps_look = {
     -- Borders around application windows
     border = {
         -- Width of borders
-        width = scaling.borders(2),
+        width = scaling.borders(1),
         -- Colors of borders
             -- - Keys can be 'normal', 'active', 'floating', 'maximized', 'fullscreen', 'urgent', or a mix (like 'floating_active')
             -- - Also 'highlight'
@@ -37,8 +37,8 @@ local apps_look = {
         -- Radius of the corners
             -- Can be a value (number) to set all corners, or a table (with keys specified above) to set individual corners
         radius = {
-            titlebar = scaling.radius(9),
-            other    = scaling.radius(6)
+            titlebar = scaling.radius(10),
+            other    = scaling.radius(5)
         }
     }
 }

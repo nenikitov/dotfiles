@@ -8,7 +8,7 @@ window:
         y: 3
     opacity: 0.8
 font:
-    size: 8.0
+    size: 10.0
 cursor:
     unfocused_hollow: true
     blink_interval: 750
