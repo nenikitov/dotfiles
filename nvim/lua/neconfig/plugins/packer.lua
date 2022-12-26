@@ -18,7 +18,7 @@ if fn.empty(fn.glob(INSTALL_PATH)) ~= 0 then
         '--depth', '1',
         CLONE_PATH, INSTALL_PATH
     })
-    print('Installed packer, reopen Neovim')
+    vim.notify('Installed packer, reopen Neovim')
     vim.cmd('packadd packer.nvim')
     packer_bootstrapped = true
 end
@@ -41,7 +41,7 @@ end
 -- Try to load
 local packer_status, packer = pcall(require, 'packer')
 if not packer_status then
-    print('Error while loading packer')
+    vim.notify('Error while loading packer')
     return
 end
 
@@ -63,12 +63,24 @@ return packer.startup(function(use)
     -- Plugins
     
     -- Essentials
-    use 'wbthomason/packer.nvim'    -- Packer itself
-    use 'nvim-lua/popup.nvim'       -- Popup API
-    use 'nvim-lua/plenary.nvim'     -- Utility library
+    use 'wbthomason/packer.nvim'            -- Packer itself
+    use 'nvim-lua/popup.nvim'               -- Popup API
+    use 'nvim-lua/plenary.nvim'             -- Utility library
+    use 'nvim-tree/nvim-web-devicons'     -- Icons for plugins
 
     -- Color scheme
-    use 'Mofiqul/vscode.nvim'       -- VSCode colorscheme
+    use 'Mofiqul/vscode.nvim'               -- VSCode colorscheme
+
+    -- Completion
+    use 'hrsh7th/nvim-cmp'                  -- Completion engine
+    use 'hrsh7th/cmp-buffer'                -- From buffer
+    use 'hrsh7th/cmp-path'                  -- From file paths
+    use 'hrsh7th/cmp-cmdline'               -- In command line
+    use 'saadparwaiz1/cmp_luasnip'          -- From snippets
+
+    -- Snippets
+    use 'L3MON4D3/LuaSnip'                  -- Snippet engine
+    use 'rafamadriz/friendly-snippets'      -- Collection of snippets
 
 
     -- Set up the configuration if packer was just installed

@@ -37,6 +37,9 @@ local function map(mode, keys, func, description, options)
     vim.keymap.set(mode, keys, func, options)
 end
 
+-- Container for plugin keymaps functions
+local M = {}
+
 --#endregion
 
 
@@ -94,4 +97,29 @@ map(MODE.VISUAL, '>', '>gv', 'Indent without quitting visual mode')
 map(MODE.VISUAL, 'p', '"_dP', 'Paste in visual mode and keep clipboard')
 
 --#endregion
+
+
+--#region Completion
+local function has_words_before()
+    local unpack = unpack or table.unpack
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+function M.completion(cmp, luasnip)
+    return {
+        -- Documentation
+        ['<C-u>']     = cmp.mapping.scroll_docs(-1),
+        ['<C-i>']     = cmp.mapping.scroll_docs(1),
+        -- Items
+        ['<C-j>']     = cmp.mapping.select_next_item(),
+        ['<C-k>']     = cmp.mapping.select_prev_item(),
+        -- Confirm & abort
+        ['<C-SPACE>'] = cmp.mapping.complete(),
+        ['<C-e>']     = cmp.mapping.abort(),
+        ['<C-l>']     = cmp.mapping.confirm { select = true },
+    }
+end
+--#endregion
+
+return M
 
