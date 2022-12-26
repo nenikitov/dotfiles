@@ -1,2 +1,2 @@
-require('neconfig.options')
-require('neconfig.keymaps')
+require('neconfig.user')
+require('neconfig.plugins')
