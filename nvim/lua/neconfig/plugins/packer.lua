@@ -67,6 +67,9 @@ return packer.startup(function(use)
     use 'nvim-lua/popup.nvim'       -- Popup API
     use 'nvim-lua/plenary.nvim'     -- Utility library
 
+    -- Color scheme
+    use 'Mofiqul/vscode.nvim'       -- VSCode colorscheme
+
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then
