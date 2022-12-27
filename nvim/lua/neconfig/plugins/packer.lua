@@ -75,8 +75,8 @@ return packer.startup(function(use)
     use 'hrsh7th/nvim-cmp'                      -- Completion engine
     use 'hrsh7th/cmp-buffer'                        -- From buffer
     use 'hrsh7th/cmp-path'                          -- From file paths
-    use 'hrsh7th/cmp-cmdline'                       -- In command line
     use 'hrsh7th/cmp-nvim-lsp'                      -- From LSP
+    use 'hrsh7th/cmp-nvim-lua'                      -- Additional Neovim lua features
     use 'saadparwaiz1/cmp_luasnip'                  -- From snippets
 
     -- Snippets

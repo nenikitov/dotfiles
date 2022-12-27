@@ -54,7 +54,7 @@ vim.g.mapleader = ' '
 -- Split
 map(MODE.NORMAL, '<A-UP>',    ':split<CR>',  'Split vertically')
 map(MODE.NORMAL, '<A-DOWN>',  ':split<CR>',  'Split vertically')
-map(MODE.NORMAL, '<A-LEFT>',  ':vsplit<CR>', 'Split horizontally') 
+map(MODE.NORMAL, '<A-LEFT>',  ':vsplit<CR>', 'Split horizontally')
 map(MODE.NORMAL, '<A-RIGHT>', ':vsplit<CR>', 'Split horizontally')
 -- Close
 map(

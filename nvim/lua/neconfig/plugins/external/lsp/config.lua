@@ -101,6 +101,7 @@ for _, server in ipairs(SERVERS) do
     local custom_configuration_status, custom_configuration = pcall(require, 'neconfig.plugins.external.lsp.servers.' .. server)
 
     if custom_configuration_status then
+        vim.notify(tostring(custom_configuration.settings.Lua.diagnostics.globals[1]))
         options = vim.tbl_deep_extend('keep', custom_configuration, options)
     end
 
