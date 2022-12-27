@@ -20,7 +20,7 @@ local lspconfig = require('lspconfig')
 -- Handlers
 local handlers = require('neconfig.plugins.external.lsp.handlers')
 
-local SERVERS = {
+local servers = {
     'sumneko_lua'
 }
 
@@ -39,7 +39,7 @@ mason.setup {
     }
 }
 masonlspconfig.setup {
-    ensure_installed = SERVERS
+    ensure_installed = servers
 }
 
 --#endregion
@@ -92,12 +92,12 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
 
 --#region Server settings
 
-local DEFAULT_OPTIONS = {
+local default_options = {
     on_attach = handlers.on_attach,
     capabilities = handlers.capabilities(),
 }
-for _, server in ipairs(SERVERS) do
-    local options = DEFAULT_OPTIONS
+for _, server in ipairs(servers) do
+    local options = default_options
     local custom_configuration_status, custom_configuration = pcall(require, 'neconfig.plugins.external.lsp.servers.' .. server)
 
     if custom_configuration_status then

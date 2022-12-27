@@ -1,9 +1,9 @@
 --#region Helpers
 
 local fn = vim.fn
-local CLONE_PATH = 'https://github.com/wbthomason/packer.nvim'
-local INSTALL_PATH = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim/'
-local RELOAD_ON_PLUGINS_UPDATE = true
+local clone_path = 'https://github.com/wbthomason/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim/'
+local reload_on_plugin_update = true
 
 --#endregion
 
@@ -12,11 +12,11 @@ local RELOAD_ON_PLUGINS_UPDATE = true
 
 -- Install packer if not already installed
 local packer_bootstrapped = false
-if fn.empty(fn.glob(INSTALL_PATH)) ~= 0 then
+if fn.empty(fn.glob(install_path)) ~= 0 then
     fn.system({
         'git', 'clone',
         '--depth', '1',
-        CLONE_PATH, INSTALL_PATH
+        clone_path, install_path
     })
     vim.notify('Installed packer, reopen Neovim', vim.log.levels.WARN)
     vim.cmd('packadd packer.nvim')
@@ -24,7 +24,7 @@ if fn.empty(fn.glob(INSTALL_PATH)) ~= 0 then
 end
 
 -- Reload Neovim if the plugins file was modified
-if RELOAD_ON_PLUGINS_UPDATE then
+if reload_on_plugin_update then
     vim.cmd([[
         augroup packer_use_config
             autocmd!
@@ -63,39 +63,42 @@ return packer.startup(function(use)
     -- Plugins
 
     -- Essentials
-    use 'wbthomason/packer.nvim'                -- Packer itself
-    use 'nvim-lua/popup.nvim'                   -- Popup API
-    use 'nvim-lua/plenary.nvim'                 -- Utility library
-    use 'nvim-tree/nvim-web-devicons'           -- Icons for plugins
+    use 'wbthomason/packer.nvim'                    -- Packer itself
+    use 'nvim-lua/popup.nvim'                       -- Popup API
+    use 'nvim-lua/plenary.nvim'                     -- Utility library
+    use 'nvim-tree/nvim-web-devicons'               -- Icons for plugins
 
     -- Color scheme
-    use 'Mofiqul/vscode.nvim'                   -- VSCode colorscheme
+    use 'Mofiqul/vscode.nvim'                       -- VSCode colorscheme
 
     -- Completion
-    use 'hrsh7th/nvim-cmp'                      -- Completion engine
-    use 'hrsh7th/cmp-buffer'                        -- From buffer
-    use 'hrsh7th/cmp-path'                          -- From file paths
-    use 'hrsh7th/cmp-nvim-lsp'                      -- From LSP
-    use 'hrsh7th/cmp-nvim-lua'                      -- Additional Neovim lua features
-    use 'saadparwaiz1/cmp_luasnip'                  -- From snippets
+    use 'hrsh7th/nvim-cmp'                          -- Completion engine
+    use 'hrsh7th/cmp-buffer'                            -- From buffer
+    use 'hrsh7th/cmp-path'                              -- From file paths
+    use 'hrsh7th/cmp-nvim-lsp'                          -- From LSP
+    use 'hrsh7th/cmp-nvim-lua'                          -- Additional Neovim lua features
+    use 'saadparwaiz1/cmp_luasnip'                      -- From snippets
 
     -- Snippets
-    use 'L3MON4D3/LuaSnip'                      -- Snippet engine
-    use 'rafamadriz/friendly-snippets'          -- Collection of snippets
+    use 'L3MON4D3/LuaSnip'                          -- Snippet engine
+    use 'rafamadriz/friendly-snippets'              -- Collection of snippets
 
     -- LSP
-    use 'williamboman/mason.nvim'               -- Manager for LSPs, DAPs, linters, and formatters
-    use 'williamboman/mason-lspconfig.nvim'     -- Bridge lspconfig and mason
-    use 'neovim/nvim-lspconfig'                 -- Main LSP config
+    use 'williamboman/mason.nvim'                   -- Manager for LSPs, DAPs, linters, and formatters
+    use 'williamboman/mason-lspconfig.nvim'         -- Bridge lspconfig and mason
+    use 'neovim/nvim-lspconfig'                     -- Main LSP config
 
     -- Telescope
-    use 'nvim-telescope/telescope.nvim'         -- Fuzzy finder
+    use 'nvim-telescope/telescope.nvim'             -- Fuzzy finder
 
     -- Treesitter
-    use {
+    use {                                           -- Better syntax hightlighting
         'nvim-treesitter/nvim-treesitter',
         run = ":TSUpdate"
     }
+    use 'p00f/nvim-ts-rainbow'                          -- Rainbow paranthesis
+    use 'nvim-treesitter/playground'                    -- Preview of the highlight tree
+    use 'windwp/nvim-ts-autotag'                        -- Autoclose and rename HTML tags
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

@@ -4,16 +4,16 @@
 local cmd = vim.cmd
 
 -- Name of the colorscheme
-local COLORSCHEME = 'vscode'
+local colorscheme = 'vscode'
 -- Name of the colorscheme to fall back if the color scheme was not found
-local COLORSCHEME_FALLBACK = 'default'
+local colorscheme_fallback = 'default'
 
 --#endregion
 
-cmd('colorscheme ' .. COLORSCHEME_FALLBACK)
-local colorscheme_status, _ = pcall(cmd, 'colorscheme ' .. COLORSCHEME)
+cmd('colorscheme ' .. colorscheme_fallback)
+local colorscheme_status, _ = pcall(cmd, 'colorscheme ' .. colorscheme)
 if not colorscheme_status then
-    vim.notify('Color scheme ' .. COLORSCHEME .. ' not found', vim.log.levels.WARN)
+    vim.notify('Color scheme ' .. colorscheme .. ' not found', vim.log.levels.WARN)
     return
 end
 
