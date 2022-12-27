@@ -13,7 +13,7 @@ local COLORSCHEME_FALLBACK = 'default'
 cmd('colorscheme ' .. COLORSCHEME_FALLBACK)
 local colorscheme_status, _ = pcall(cmd, 'colorscheme ' .. COLORSCHEME)
 if not colorscheme_status then
-    vim.notify('Color scheme ' .. COLORSCHEME .. ' not found')
+    vim.notify('Color scheme ' .. COLORSCHEME .. ' not found', vim.log.levels.WARN)
     return
 end
 

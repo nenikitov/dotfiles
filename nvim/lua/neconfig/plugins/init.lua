@@ -1,3 +1,3 @@
 require('neconfig.plugins.packer')
-require('neconfig.plugins.completion')
+require('neconfig.plugins.external')
 

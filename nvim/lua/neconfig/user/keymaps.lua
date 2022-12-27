@@ -100,11 +100,6 @@ map(MODE.VISUAL, 'p', '"_dP', 'Paste in visual mode and keep clipboard')
 
 
 --#region Completion
-local function has_words_before()
-    local unpack = unpack or table.unpack
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
 function M.completion(cmp, luasnip)
     return {
         -- Documentation
@@ -118,6 +113,52 @@ function M.completion(cmp, luasnip)
         ['<C-e>']     = cmp.mapping.abort(),
         ['<C-l>']     = cmp.mapping.confirm { select = true },
     }
+end
+--#endregion
+
+
+--#region LSP
+function M.lsp()
+    local buffer_option = { buffer = true }
+    -- Diagnostics
+    map(MODE.NORMAL, '<LEADER>do', vim.diagnostic.open_float, 'Open diagnostics menu')
+    map(MODE.NORMAL, '<LEADER>d[', vim.diagnostic.goto_prev,  'Go to previous diagnostic')
+    map(MODE.NORMAL, '<LEADER>d]', vim.diagnostic.goto_next,  'Go to next diagnostic')
+    map(MODE.NORMAL, '<LEADER>dl', vim.diagnostic.setloclist, 'Show diagnostic list')
+    -- Go do
+    map(MODE.NORMAL, '<LEADER>lgd', vim.lsp.buf.definition,     'Go to definition',     buffer_option)
+    map(MODE.NORMAL, '<LEADER>lgi', vim.lsp.buf.implementation, 'Go to implementation', buffer_option)
+    map(MODE.NORMAL, '<LEADER>lgr', vim.lsp.buf.references,     'Go to references',     buffer_option)
+    -- Documentation
+    map(MODE.NORMAL, '<LEADER>ldh', vim.lsp.buf.hover,          'Show documentation',    buffer_option)
+    map(MODE.NORMAL, '<LEADER>lds', vim.lsp.buf.signature_help, 'Show singature', buffer_option)
+    -- Workspace folders
+    map(MODE.NORMAL, '<LEADER>lwa', vim.lsp.buf.add_workspace_folder,    'Add the folder to workspaces',      buffer_option)
+    map(MODE.NORMAL, '<LEADER>lwr', vim.lsp.buf.remove_workspace_folder, 'Remove the folder from workspaces', buffer_option)
+    map(
+        MODE.NORMAL,
+        '<LEADER>lwl',
+        function()
+            print(vim.inspect(
+                vim.lsp.buf.list_workspace_folders()
+            ))
+        end,
+        'List workspace folders',
+        buffer_option
+    )
+    -- Refactor
+    map(MODE.NORMAL, '<LEADER>lrr', vim.lsp.buf.rename, buffer_option)
+    map(
+        MODE.NORMAL,
+        '<LEADER>lrf',
+        function()
+            vim.lsp.buf.format { async = true }
+        end,
+        'Format document',
+        buffer_option
+    )
+    -- Code action
+    map(MODE.NORMAL, '<LEADER>lca', vim.lsp.buf.code_action, 'Show automatic fixes', buffer_option)
 end
 --#endregion
 

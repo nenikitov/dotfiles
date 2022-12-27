@@ -1,9 +1,9 @@
 --#region Helpers
 
--- Load smp
+-- Load cmp
 local cmp_status, cmp = pcall(require, 'cmp')
 if not cmp_status then
-    vim.notify('Completion engine not available')
+    vim.notify('Completion engine not available', vim.log.levels.ERROR)
     return
 end
 
@@ -30,15 +30,13 @@ cmp.setup {
         require('neconfig.user.keymaps').completion(cmp, luasnip)
     ),
     sources = cmp.config.sources {
+        { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
     },
     formatting = {
         fields = { 'kind', 'abbr', 'menu' }
-    },
-    experimental = {
-        ghost_text = true
     },
     window = {
         documentation = cmp.config.window.bordered()
