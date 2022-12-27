@@ -94,11 +94,15 @@ return packer.startup(function(use)
     -- Treesitter
     use {                                           -- Better syntax hightlighting
         'nvim-treesitter/nvim-treesitter',
-        run = ":TSUpdate"
+        run = ':TSUpdate'
     }
-    use 'p00f/nvim-ts-rainbow'                          -- Rainbow paranthesis
     use 'nvim-treesitter/playground'                    -- Preview of the highlight tree
+    use 'nvim-treesitter/nvim-treesitter-refactor'      -- Refactoring
+    use 'p00f/nvim-ts-rainbow'                          -- Rainbow paranthesis
     use 'windwp/nvim-ts-autotag'                        -- Autoclose and rename HTML tags
+
+    -- Other
+    use 'lukas-reineke/indent-blankline.nvim'       -- Indent lines and scopes
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

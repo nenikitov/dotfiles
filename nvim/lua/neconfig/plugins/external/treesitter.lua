@@ -1,7 +1,7 @@
 --#region Helpers
 
 -- Treesitter
-local treesitter_status, treesitter = pcall(require, "nvim-treesitter.configs")
+local treesitter_status, treesitter = pcall(require, 'nvim-treesitter.configs')
 if not treesitter_status then
     vim.notify('Treesitter not available', vim.log.levels.ERROR)
     return
@@ -37,9 +37,9 @@ treesitter.setup {
             color_of_identifier('Type'),
         },
         termcolors = {
-            "Yellow",
-            "Magenta",
-            "Blue",
+            'Yellow',
+            'Magenta',
+            'Blue',
         }
     },
     -- Playground
@@ -49,6 +49,15 @@ treesitter.setup {
     -- Autotag
     autotag = {
         enable = true
+    },
+    -- Refactor
+    refactor = {
+        hightlight_definitions = {
+            enable = true
+        },
+        highlight_current_scope = {
+            enable = true
+        }
     }
 }
 

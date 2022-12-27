@@ -49,13 +49,13 @@ masonlspconfig.setup {
 
 -- Signs
 local signs = {
-    Error = "",
-    Warn  = "",
-    Hint  = "",
-    Info  = ""
+    Error = '',
+    Warn  = '',
+    Hint  = '',
+    Info  = ''
 }
 for type, icon in pairs(signs) do
-    local sign = "DiagnosticSign" .. type
+    local sign = 'DiagnosticSign' .. type
     vim.fn.sign_define(
         sign,
         {
