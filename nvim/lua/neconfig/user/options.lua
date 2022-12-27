@@ -33,7 +33,6 @@ o.background = 'dark'           -- Hint at dark color scheme
 
 
 --#region Menu UI
-o.cmdheight = 2                 -- Set the height of the command line
 o.showtabline = 2               -- Always show file tabs
 o.signcolumn = "yes"            -- Show an additional line before the line numbers
 o.number = true                 -- Show line numbers
@@ -67,7 +66,7 @@ o.splitright = true             -- Focus the split to the right
 o.expandtab = true              -- Convert <TAB> to <SPACE>s automatically
 o.shiftwidth = 4                -- Set the size of indentation
 o.tabstop = 4                   -- Set the size of <TAB>
-o.smartindent = ture            -- Indent automatically the lines
+o.smartindent = true            -- Indent automatically the lines
 --#endregion
 
 

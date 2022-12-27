@@ -162,5 +162,39 @@ function M.lsp()
 end
 --#endregion
 
+
+--#region Telescope
+
+function M.telescope_pickers(telescope)
+    map(MODE.NORMAL, '<LEADER>tf', telescope.find_files,    'Open file picker')
+    map(MODE.NORMAL, '<LEADER>tg', telescope.live_grep,     'Open grep picker')
+    map(MODE.NORMAL, '<LEADER>tb', telescope.buffers,       'Open buffers picker')
+    map(MODE.NORMAL, '<LEADER>tq', telescope.quickfix,      'Open quick fix picker')
+    map(MODE.NORMAL, '<LEADER>ts', telescope.spell_suggest, 'Open spell suggestion picker')
+    map(MODE.NORMAL, '<LEADER>td', telescope.diagnostics,   'Open diagnostics picker')
+end
+
+function M.telescope(actions)
+    return {
+        i = {
+            ['<C-k>'] = actions.move_selection_previous,
+            ['<C-j>'] = actions.move_selection_next,
+            ['<C-l>'] = actions.select_default,
+            ['<C-c>'] = actions.close
+        },
+        n = {
+            ['gg']    = actions.move_to_top,
+            ['G']     = actions.move_to_bottom,
+            ['k']     = actions.move_selection_previous,
+            ['j']     = actions.move_selection_next,
+            ['l']     = actions.select_default,
+            ['q']     = actions.close,
+            ['<ESC>'] = actions.close
+        }
+    }
+end
+
+--#endregion
+
 return M
 

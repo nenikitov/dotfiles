@@ -61,7 +61,7 @@ packer.init {
 
 return packer.startup(function(use)
     -- Plugins
-    
+
     -- Essentials
     use 'wbthomason/packer.nvim'                -- Packer itself
     use 'nvim-lua/popup.nvim'                   -- Popup API
@@ -87,6 +87,9 @@ return packer.startup(function(use)
     use 'williamboman/mason.nvim'               -- Manager for LSPs, DAPs, linters, and formatters
     use 'williamboman/mason-lspconfig.nvim'     -- Bridge lspconfig and mason
     use 'neovim/nvim-lspconfig'                 -- Main LSP config
+
+    -- Telescope
+    use 'nvim-telescope/telescope.nvim'         -- Fuzzy finder
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

@@ -57,21 +57,36 @@ local signs = {
 for type, icon in pairs(signs) do
     local sign = "DiagnosticSign" .. type
     vim.fn.sign_define(
-      sign,
-      {
-          text = icon,
-          texthl = sign,
-          numhl = sign
-      }
+        sign,
+        {
+            text = icon,
+            texthl = sign,
+            numhl = sign
+        }
     )
 end
 
--- Other options
+-- Other diagnostic options
 vim.diagnostic.config {
     update_in_insert = true,
-    severity_sort = true
+    severity_sort = true,
+    float = {
+        focusable = false,
+        style = 'minimal',
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = ''
+    }
 }
 
+-- LSP borders
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+    vim.lsp.handlers.hover, { border = 'rounded' }
+)
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help, { border = 'rounded' }
+)
 --#endregion
 
 
