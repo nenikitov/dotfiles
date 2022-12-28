@@ -108,6 +108,7 @@ return packer.startup(function(use)
     -- Other
     use 'lukas-reineke/indent-blankline.nvim'           -- Indent lines and scopes
     use 'windwp/nvim-autopairs'                         -- Automatically insert pair characters
+    use 'lewis6991/gitsigns.nvim'                       -- Git integration
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

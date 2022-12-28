@@ -1,4 +1,4 @@
---#region Helpers
+--#region Helpersoption
 
 -- Shortcut to access vim options
 local o = vim.opt
@@ -34,7 +34,7 @@ o.background = 'dark'           -- Hint at dark color scheme
 
 --#region Menu UI
 o.showtabline = 2               -- Always show file tabs
-o.signcolumn = 'yes'            -- Show an additional line before the line numbers
+o.signcolumn = 'yes:2'          -- Show an additional line before the line numbers
 o.number = true                 -- Show line numbers
 o.relativenumber = true         -- Make the line numbers relative
 o.numberwidth = 5               -- Set minimum width of the line number column
