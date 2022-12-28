@@ -27,6 +27,23 @@ treesitter.setup {
     indent = {
         enable = true
     },
+    -- Autotag
+    autotag = {
+        enable = true
+    },
+    -- Refactor
+    refactor = {
+        hightlight_definitions = {
+            enable = true
+        },
+        highlight_current_scope = {
+            enable = true
+        }
+    },
+    -- Context comment string
+    context_commentstring = {
+        enable = true
+    },
     -- Rainbow parentheses
     rainbow = {
         enable = true,
@@ -46,18 +63,5 @@ treesitter.setup {
     playground = {
         enable = true
     },
-    -- Autotag
-    autotag = {
-        enable = true
-    },
-    -- Refactor
-    refactor = {
-        hightlight_definitions = {
-            enable = true
-        },
-        highlight_current_scope = {
-            enable = true
-        }
-    }
 }
 

@@ -62,48 +62,52 @@ return packer.startup(function(use)
     -- Plugins
 
     -- Essentials
-    use 'wbthomason/packer.nvim'                    -- Packer itself
-    use 'nvim-lua/popup.nvim'                       -- Popup API
-    use 'nvim-lua/plenary.nvim'                     -- Utility library
-    use 'nvim-tree/nvim-web-devicons'               -- Icons for plugins
+    use 'wbthomason/packer.nvim'                        -- Packer itself
+    use 'nvim-lua/popup.nvim'                           -- Popup API
+    use 'nvim-lua/plenary.nvim'                         -- Utility library
+    use 'nvim-tree/nvim-web-devicons'                   -- Icons for plugins
 
     -- Color scheme
-    use 'Mofiqul/vscode.nvim'                       -- VSCode colorscheme
+    use 'Mofiqul/vscode.nvim'                           -- VSCode colorscheme
 
     -- Completion
-    use 'hrsh7th/nvim-cmp'                          -- Completion engine
-    use 'hrsh7th/cmp-buffer'                            -- From buffer
-    use 'hrsh7th/cmp-path'                              -- From file paths
-    use 'hrsh7th/cmp-nvim-lsp'                          -- From LSP
-    use 'hrsh7th/cmp-nvim-lua'                          -- Additional Neovim lua features
-    use 'saadparwaiz1/cmp_luasnip'                      -- From snippets
+    use 'hrsh7th/nvim-cmp'                              -- Completion engine
+    use 'hrsh7th/cmp-buffer'                                -- From buffer
+    use 'hrsh7th/cmp-path'                                  -- From file paths
+    use 'hrsh7th/cmp-nvim-lsp'                              -- From LSP
+    use 'hrsh7th/cmp-nvim-lua'                              -- Additional Neovim lua features
+    use 'saadparwaiz1/cmp_luasnip'                          -- From snippets
 
     -- Snippets
-    use 'L3MON4D3/LuaSnip'                          -- Snippet engine
-    use 'rafamadriz/friendly-snippets'              -- Collection of snippets
+    use 'L3MON4D3/LuaSnip'                              -- Snippet engine
+    use 'rafamadriz/friendly-snippets'                  -- Collection of snippets
 
     -- LSP
-    use 'williamboman/mason.nvim'                   -- Manager for LSPs, DAPs, linters, and formatters
-    use 'williamboman/mason-lspconfig.nvim'         -- Bridge lspconfig and mason
-    use 'neovim/nvim-lspconfig'                     -- Main LSP config
-    use 'ray-x/lsp_signature.nvim'                  -- Automatically show signature when typing a function
+    use 'williamboman/mason.nvim'                       -- Manager for LSPs, DAPs, linters, and formatters
+    use 'williamboman/mason-lspconfig.nvim'             -- Bridge lspconfig and mason
+    use 'neovim/nvim-lspconfig'                         -- Main LSP config
+    use 'ray-x/lsp_signature.nvim'                      -- Automatically show signature when typing a function
 
     -- Telescope
-    use 'nvim-telescope/telescope.nvim'             -- Fuzzy finder
+    use 'nvim-telescope/telescope.nvim'                 -- Fuzzy finder
 
     -- Treesitter
-    use {                                           -- Better syntax hightlighting
+    use {                                               -- Better syntax hightlighting
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
-    use 'nvim-treesitter/playground'                    -- Preview of the highlight tree
-    use 'nvim-treesitter/nvim-treesitter-refactor'      -- Refactoring
-    use 'p00f/nvim-ts-rainbow'                          -- Rainbow paranthesis
-    use 'windwp/nvim-ts-autotag'                        -- Autoclose and rename HTML tags
+    use 'nvim-treesitter/playground'                        -- Preview of the highlight tree
+    use 'nvim-treesitter/nvim-treesitter-refactor'          -- Refactoring
+    use 'p00f/nvim-ts-rainbow'                              -- Rainbow paranthesis
+    use 'windwp/nvim-ts-autotag'                            -- Autoclose and rename HTML tags
+
+    -- Comments
+    use 'numToStr/Comment.nvim'                         -- Easy commenting
+    use 'JoosepAlviste/nvim-ts-context-commentstring'   -- Smarter commentstring with embedded languages
 
     -- Other
-    use 'lukas-reineke/indent-blankline.nvim'       -- Indent lines and scopes
-    use 'windwp/nvim-autopairs'                     -- Automatically insert pair characters
+    use 'lukas-reineke/indent-blankline.nvim'           -- Indent lines and scopes
+    use 'windwp/nvim-autopairs'                         -- Automatically insert pair characters
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

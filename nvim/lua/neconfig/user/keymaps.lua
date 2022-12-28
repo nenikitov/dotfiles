@@ -195,5 +195,25 @@ end
 
 --#endregion
 
+
+--#region Telescope
+
+function M.comment_toggler()
+    return {
+        line  = '<LEADER>ccc',
+        block = '<LEADER>cbc'
+    }
+end
+
+function M.comment_opleader()
+    return {
+        line  = '<LEADER>cc',
+        block = '<LEADER>cb'
+    }
+end
+
+--#endregion
+
+
 return M
 
