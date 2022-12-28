@@ -17,6 +17,9 @@ end
 -- LSP config
 local lspconfig = require('lspconfig')
 
+-- LSP signature
+local lsp_signature_status, lsp_signature = pcall(require, 'lsp_signature')
+
 -- Handlers
 local handlers = require('neconfig.plugins.external.lsp.handlers')
 
@@ -81,12 +84,17 @@ vim.diagnostic.config {
 }
 
 -- LSP borders
+local lsp_style = {
+    border = 'rounded',
+    width = 64
+}
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-    vim.lsp.handlers.hover, { border = 'rounded' }
+    vim.lsp.handlers.hover, lsp_style
 )
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-    vim.lsp.handlers.signature_help, { border = 'rounded' }
+    vim.lsp.handlers.signature_help, lsp_style
 )
+
 --#endregion
 
 
@@ -106,6 +114,20 @@ for _, server in ipairs(servers) do
     end
 
     lspconfig[server].setup(options)
+end
+
+--#endregion
+
+
+--#region Other plugins
+
+if lsp_signature_status then
+    lsp_signature.setup {
+        handler_opts = {
+            max_width = 64
+        },
+        hint_enable = false
+    }
 end
 
 --#endregion

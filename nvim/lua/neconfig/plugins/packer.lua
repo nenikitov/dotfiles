@@ -11,8 +11,7 @@ local reload_on_plugin_update = true
 --#region Installation
 
 -- Install packer if not already installed
-local packer_bootstrapped = false
-if fn.empty(fn.glob(install_path)) ~= 0 then
+local packer_bootstrapped = false if fn.empty(fn.glob(install_path)) ~= 0 then
     fn.system({
         'git', 'clone',
         '--depth', '1',
@@ -87,6 +86,7 @@ return packer.startup(function(use)
     use 'williamboman/mason.nvim'                   -- Manager for LSPs, DAPs, linters, and formatters
     use 'williamboman/mason-lspconfig.nvim'         -- Bridge lspconfig and mason
     use 'neovim/nvim-lspconfig'                     -- Main LSP config
+    use 'ray-x/lsp_signature.nvim'                  -- Automatically show signature when typing a function
 
     -- Telescope
     use 'nvim-telescope/telescope.nvim'             -- Fuzzy finder
