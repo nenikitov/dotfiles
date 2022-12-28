@@ -27,7 +27,7 @@ treesitter.setup {
     indent = {
         enable = true
     },
-    -- Rainbow parenthesis
+    -- Rainbow parentheses
     rainbow = {
         enable = true,
         extended_mode = true,
