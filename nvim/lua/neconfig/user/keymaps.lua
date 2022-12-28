@@ -215,5 +215,16 @@ end
 --#endregion
 
 
+--#region Gitsigns
+
+function M.gitsigns(gitsigns)
+    map(mode.NORMAL, '<LEADER>gd', gitsigns.preview_hunk, 'Preview the differences in the current hunk')
+    map(mode.NORMAL, '<LEADER>gb', gitsigns.blame_line,   'Blame current line')
+    map(mode.NORMAL, '<LEADER>gr', gitsigns.reset_hunk,   'Reset current hunk')
+end
+
+--#endregion
+
+
 return M
 

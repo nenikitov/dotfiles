@@ -35,5 +35,7 @@ gitsigns.setup {
     }
 }
 
+require('neconfig.user.keymaps').gitsigns(gitsigns)
+
 --#endregion
 
