@@ -76,8 +76,8 @@ map(mode.NORMAL, '<C-j>', '<C-w>j', 'Go to split on the bottom')
 map(mode.NORMAL, '<C-h>', '<C-w>h', 'Go to split on the left')
 map(mode.NORMAL, '<C-l>', '<C-w>l', 'Go to split on the right')
 -- Resize
-map(mode.NORMAL, '<C-UP>',    ':resize -1<CR>',          'Increase the size of the split vertically')
-map(mode.NORMAL, '<C-DOWN>',  ':resize +1<CR>',          'Decrease the size of the split vertically')
+map(mode.NORMAL, '<C-UP>',    ':resize +1<CR>',          'Increase the size of the split vertically')
+map(mode.NORMAL, '<C-DOWN>',  ':resize -1<CR>',          'Decrease the size of the split vertically')
 map(mode.NORMAL, '<C-LEFT>',  ':vertical resize -1<CR>', 'Increase the size of the split horizontally')
 map(mode.NORMAL, '<C-RIGHT>', ':vertical resize +1<CR>', 'Decrease the size of the split horizontally')
 
@@ -164,7 +164,7 @@ end
 
 --#region Telescope
 
-function M.telescope_pickers(telescope)
+function M.telescope_menus(telescope)
     map(mode.NORMAL, '<LEADER>tf', telescope.find_files,    'Open file picker')
     map(mode.NORMAL, '<LEADER>tg', telescope.live_grep,     'Open grep picker')
     map(mode.NORMAL, '<LEADER>tb', telescope.buffers,       'Open buffers picker')
@@ -173,7 +173,7 @@ function M.telescope_pickers(telescope)
     map(mode.NORMAL, '<LEADER>td', telescope.diagnostics,   'Open diagnostics picker')
 end
 
-function M.telescope(actions)
+function M.telescope_navigation(actions)
     return {
         i = {
             ['<C-k>'] = actions.move_selection_previous,
@@ -228,8 +228,124 @@ end
 
 --#region NvimTree
 
-function M.nvim_tree(nvim_tree)
+function M.nvim_tree_menus(nvim_tree)
     map(mode.NORMAL, '<LEADER>ff', nvim_tree.tree.toggle, 'Open file explorer')
+end
+
+function M.nvim_tree_navigation()
+    return {
+        -- Faster navigation
+        {
+            key    = { 'l', '<CR>', '<2-LeftMouse>' },
+            action = 'edit'
+        },
+        {
+            key    = 'h',
+            action = 'parent_node'
+        },
+        {
+            key    = 'H',
+            action = 'close_node'
+        },
+        -- Parent directory
+        {
+            key    = { '>', '<2-RightMouse>' },
+            action = 'cd'
+        },
+        {
+            key    = '<',
+            action = 'dir_up'
+        },
+        -- Collapse
+        {
+            key    = '[',
+            action = 'collapse_all'
+        },
+        {
+            key    = ']',
+            action = 'expand_all'
+        },
+        -- Path copy
+        {
+            key    = 'y',
+            action = 'copy_name'
+        },
+        {
+            key    = 'gy',
+            action = 'copy_path'
+        },
+        {
+            key    = 'gY',
+            action = 'copy_absolute_path'
+        },
+        -- File manipulation
+        {
+            key    = 'a',
+            action = 'create'
+        },
+        {
+            key    = 'd',
+            action = 'remove'
+        },
+        {
+            key    = 'D',
+            action = 'trash'
+        },
+        {
+            key    = 'r',
+            action = 'rename'
+        },
+        {
+            key    = 'R',
+            action = 'full_rename'
+        },
+        {
+            key    = 'c',
+            action = 'copy'
+        },
+        {
+            key    = 'x',
+            action = 'cut'
+        },
+        {
+            key    = 'p',
+            action = 'paste'
+        },
+        {
+            key    = 'm',
+            action = 'toggle_mark'
+        },
+        {
+            key    = 'b',
+            action = 'bulk_move'
+        },
+        -- Filtering
+        {
+            key    = 'f',
+            action = 'live_filter'
+        },
+        {
+            key    = 'F',
+            action = 'clear_live_filter'
+        },
+        -- Other
+        {
+            key    = 'i',
+            action = 'toggle_file_info'
+        },
+        {
+            key    = 'o',
+            action = 'system_open'
+        },
+        {
+            key    = '?',
+            action = 'toggle_help'
+        },
+        {
+            key    = { 'q', '<ESC>' },
+            action = 'close'
+        },
+    }
 end
 
 --#endregion

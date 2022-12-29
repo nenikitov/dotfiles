@@ -29,11 +29,30 @@ nvim_tree.setup {
             hint    = '',
             info    = ''
         }
+    },
+    view = {
+        side = 'right',
+        mappings = {
+            custom_only = true,
+            list = require('neconfig.user.keymaps').nvim_tree_navigation()
+        }
+    },
+    renderer = {
+        highlight_git = true,
+        indent_markers = {
+            enable = true
+        },
+        icons = {
+            git_placement = 'after'
+        }
+    },
+    git = {
+        ignore = false
     }
 }
 
 -- Mappings
-require('neconfig.user.keymaps').nvim_tree(nvim_tree_api)
+require('neconfig.user.keymaps').nvim_tree_menus(nvim_tree_api)
 
 --#endregion
 

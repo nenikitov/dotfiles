@@ -19,11 +19,11 @@ local telescope_actions = require('telescope.actions')
 
 telescope.setup {
     defaults = {
-        mappings = require('neconfig.user.keymaps').telescope(telescope_actions)
+        mappings = require('neconfig.user.keymaps').telescope_navigation(telescope_actions)
     }
 }
 
-require('neconfig.user.keymaps').telescope_pickers(telescope_builtin)
+require('neconfig.user.keymaps').telescope_menus(telescope_builtin)
 
 --#endregion
 
