@@ -96,6 +96,10 @@ map(mode.VISUAL, '>', '>gv', 'Indent without quitting visual mode')
 -- Keep clipboard when pasting in visual mode
 map(mode.VISUAL, 'p', '"_dP', 'Paste in visual mode and keep clipboard')
 
+-- Better SHIFT+direction navigation
+map(mode.NORMAL, 'H', '^', 'Go to the beginning of the line')
+map(mode.NORMAL, 'L', '$', 'Go to the end of the line')
+
 --#endregion
 
 
