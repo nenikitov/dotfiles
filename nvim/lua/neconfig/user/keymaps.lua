@@ -226,5 +226,14 @@ end
 --#endregion
 
 
+--#region NvimTree
+
+function M.nvim_tree(nvim_tree)
+    map(mode.NORMAL, '<LEADER>ff', nvim_tree.tree.toggle, 'Open file explorer')
+end
+
+--#endregion
+
+
 return M
 

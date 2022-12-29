@@ -6,4 +6,5 @@ require('neconfig.plugins.external.indent_blankline')
 require('neconfig.plugins.external.autopairs')
 require('neconfig.plugins.external.comments')
 require('neconfig.plugins.external.gitsigns')
+require('neconfig.plugins.external.nvim_tree')
 

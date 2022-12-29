@@ -105,6 +105,13 @@ return packer.startup(function(use)
     use 'numToStr/Comment.nvim'                         -- Easy commenting
     use 'JoosepAlviste/nvim-ts-context-commentstring'   -- Smarter commentstring with embedded languages
 
+    -- File explorer
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons'
+        }
+    }
     -- Other
     use 'lukas-reineke/indent-blankline.nvim'           -- Indent lines and scopes
     use 'windwp/nvim-autopairs'                         -- Automatically insert pair characters
