@@ -3,7 +3,7 @@
 -- CMP
 local cmp_status, cmp = pcall(require, 'cmp')
 if not cmp_status then
-    vim.notify('Completion engine not available', vim.log.levels.ERROR)
+    vim.notify('CMP not available', vim.log.levels.ERROR)
     return
 end
 
@@ -14,6 +14,8 @@ if not luasnip_status then
     return
 end
 require('luasnip.loaders.from_vscode').lazy_load()
+
+local icons = require('neconfig.user.icons').completion
 
 --#endregion
 
@@ -28,7 +30,7 @@ cmp.setup {
         end
     },
     mapping = cmp.mapping.preset.insert(
-        require('neconfig.user.keymaps').completion(cmp, luasnip)
+        require('neconfig.user.keymaps').completion(cmp)
     ),
     sources = cmp.config.sources {
         { name = 'nvim_lsp' },
@@ -38,11 +40,17 @@ cmp.setup {
         { name = 'path' },
     },
     formatting = {
-        fields = { 'kind', 'abbr', 'menu' }
+        fields = { 'kind', 'abbr', 'menu' },
+        format = function(entry, vim_item)
+            vim_item.kind = icons[vim_item.kind] .. ' '
+            vim_item.menu = '[' .. entry.source.name .. ']'
+            return vim_item
+        end
     },
     window = {
         documentation = cmp.config.window.bordered()
     }
 }
+
 --#endregion
 

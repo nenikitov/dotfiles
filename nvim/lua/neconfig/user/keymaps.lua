@@ -1,5 +1,6 @@
 --#region Helpers
 
+
 -- List of modes
 local mode = {
     ALL          = '',
@@ -103,11 +104,15 @@ map({ mode.NORMAL, mode.VISUAL }, 'L', '$', 'Go to the end of the line')
 -- Paste in insert mode
 map(mode.INSERT, '<C-v>', '<C-r>+', 'Paste directly in insert mode')
 
+-- Clear search
+map(mode.NORMAL, '<M-/>', ':let @/ = ""<CR>', 'Clear previous search highlighting')
+
 --#endregion
 
 
 --#region Completion
-function M.completion(cmp, luasnip)
+
+function M.completion(cmp)
     return {
         -- Documentation
         ['<C-u>']     = cmp.mapping.scroll_docs(-1),
@@ -121,9 +126,12 @@ function M.completion(cmp, luasnip)
         ['<C-l>']     = cmp.mapping.confirm { select = true },
     }
 end
+
 --#endregion
 
+
 --#region LSP
+
 function M.lsp()
     local buffer_option = { buffer = true }
     -- Diagnostics
@@ -166,6 +174,7 @@ function M.lsp()
     -- Code action
     map(mode.NORMAL, '<LEADER>lca', vim.lsp.buf.code_action, 'Show automatic fixes', buffer_option)
 end
+
 --#endregion
 
 
@@ -371,7 +380,6 @@ function M.bufferline(bufdelete)
 end
 
 --#endregion
-
 
 return M
 

@@ -1,5 +1,12 @@
 --#region Helpers
 
+-- LspConfig
+local lspconfig_status, lspconfig = pcall(require, 'lspconfig')
+if not lspconfig_status then
+    vim.notify('LSP not available', vim.log.levels.ERROR)
+    return
+end
+
 -- Mason
 local mason_status, mason = pcall(require, 'mason')
 if not mason_status then
@@ -13,9 +20,6 @@ if not masonlspconfig_status then
     vim.notify('Mason-lspconfig not available', vim.log.levels.ERROR)
     return
 end
-
--- LSP config
-local lspconfig = require('lspconfig')
 
 -- LSP signature
 local lsp_signature_status, lsp_signature = pcall(require, 'lsp_signature')

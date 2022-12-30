@@ -21,7 +21,10 @@ end
 --#region Gitsigns
 
 gitsigns.setup {
-    signs = giticons
+    signs = giticons,
+    preview_config = {
+        border = 'rounded'
+    }
 }
 
 require('neconfig.user.keymaps').gitsigns(gitsigns)

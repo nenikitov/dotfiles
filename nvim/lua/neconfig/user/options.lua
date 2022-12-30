@@ -54,13 +54,8 @@ o.wrap = false                  -- Do not wrap the text
 o.scrolloff = 8                 -- Keep lines on top and below the cursor when scrolling
 o.sidescrolloff = 16            -- Keep characters on the left and right of the cursor when scrolling
 o.list = true                   -- Show special white-space characters
-o.listchars = {                 -- How these special white-space characters are displayed
-    tab = '→ ',
-    trail = '·',
-    nbsp = '␣',
-    extends = '▶',
-    precedes = '◀'
-}
+o.listchars =                   -- How these special white-space characters are displayed
+    require('neconfig.user.icons').listchars
 --#endregion
 
 

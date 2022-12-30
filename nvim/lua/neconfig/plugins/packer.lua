@@ -73,6 +73,7 @@ return packer.startup(function(use)
     -- Completion
     use 'hrsh7th/nvim-cmp'                              -- Completion engine
     use 'hrsh7th/cmp-buffer'                                -- From buffer
+    use 'hrsh7th/cmp-cmdline'                               -- From commandline
     use 'hrsh7th/cmp-path'                                  -- From file paths
     use 'hrsh7th/cmp-nvim-lsp'                              -- From LSP
     use 'hrsh7th/cmp-nvim-lua'                              -- Additional Neovim lua features
@@ -87,6 +88,7 @@ return packer.startup(function(use)
     use 'williamboman/mason-lspconfig.nvim'             -- Bridge lspconfig and mason
     use 'neovim/nvim-lspconfig'                         -- Main LSP config
     use 'ray-x/lsp_signature.nvim'                      -- Automatically show signature when typing a function
+    use 'jose-elias-alvarez/null-ls.nvim'               -- Hook non-LSP sources into LSP system
 
     -- Telescope
     use 'nvim-telescope/telescope.nvim'                 -- Fuzzy finder
