@@ -1,9 +1,9 @@
 return {
     diagnostics = {
-        error    = '',
-        warning  = '',
-        hint     = '',
-        info     = ''
+        error   = '',
+        warning = '',
+        hint    = '',
+        info    = ''
     },
     gitsigns = {
         add          = '┃',
