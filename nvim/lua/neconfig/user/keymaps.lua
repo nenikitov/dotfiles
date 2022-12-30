@@ -96,9 +96,12 @@ map(mode.VISUAL, '>', '>gv', 'Indent without quitting visual mode')
 -- Keep clipboard when pasting in visual mode
 map(mode.VISUAL, 'p', '"_dP', 'Paste in visual mode and keep clipboard')
 
--- Better SHIFT+direction navigation
-map(mode.NORMAL, 'H', '^', 'Go to the beginning of the line')
-map(mode.NORMAL, 'L', '$', 'Go to the end of the line')
+-- Better SHIFT + direction navigation
+map({ mode.NORMAL, mode.VISUAL }, 'H', '^', 'Go to the beginning of the line')
+map({ mode.NORMAL, mode.VISUAL }, 'L', '$', 'Go to the end of the line')
+
+-- Paste in insert mode
+map(mode.INSERT, '<C-v>', '<C-r>+', 'Paste directly in insert mode')
 
 --#endregion
 
@@ -134,7 +137,7 @@ function M.lsp()
     map(mode.NORMAL, '<LEADER>lgr', vim.lsp.buf.references,     'Go to references',     buffer_option)
     -- Documentation
     map(mode.NORMAL, '<LEADER>ldh', vim.lsp.buf.hover,          'Show documentation',    buffer_option)
-    map(mode.NORMAL, '<LEADER>lds', vim.lsp.buf.signature_help, 'Show singature', buffer_option)
+    map(mode.NORMAL, '<LEADER>lds', vim.lsp.buf.signature_help, 'Show singature',        buffer_option)
     -- Workspace folders
     map(mode.NORMAL, '<LEADER>lwa', vim.lsp.buf.add_workspace_folder,    'Add the folder to workspaces',      buffer_option)
     map(mode.NORMAL, '<LEADER>lwr', vim.lsp.buf.remove_workspace_folder, 'Remove the folder from workspaces', buffer_option)
@@ -350,6 +353,21 @@ function M.nvim_tree_navigation()
             action = 'close'
         },
     }
+end
+
+--#endregion
+
+
+--#region Bufferline
+
+function M.bufferline(bufdelete)
+    map(mode.NORMAL, '<M-h>',       ':BufferLineCyclePrev<CR>',                   'Go to previous buffer')
+    map(mode.NORMAL, '<M-l>',       ':BufferLineCycleNext<CR>',                   'Go to next buffer')
+    map(mode.NORMAL, '<M-j>',       ':BufferLineMovePrev<CR>',                    'Move buffer to the left')
+    map(mode.NORMAL, '<M-k>',       ':BufferLineMoveNext<CR>',                    'Move buffer to the right')
+    map(mode.NORMAL, '<LEADER>bpp', ':BufferLinePick<CR>',                        'Select a buffer')
+    map(mode.NORMAL, '<LEADER>bpc', ':BufferLinePickClose<CR>',                   'Close a buffer')
+    map(mode.NORMAL, '<LEADER>bc',  function() bufdelete.bufdelete(0, false) end, 'Close a buffer')
 end
 
 --#endregion

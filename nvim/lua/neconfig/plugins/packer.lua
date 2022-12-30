@@ -106,12 +106,22 @@ return packer.startup(function(use)
     use 'JoosepAlviste/nvim-ts-context-commentstring'   -- Smarter commentstring with embedded languages
 
     -- File explorer
-    use {
+    use {                                               -- Tree file explorer with icons
         'nvim-tree/nvim-tree.lua',
         requires = {
             'nvim-tree/nvim-web-devicons'
         }
     }
+
+    -- Tabs
+    use {                                               -- Better looking tabs
+        'akinsho/bufferline.nvim',
+        requires = {
+            'nvim-tree/nvim-web-devicons'
+        }
+    }
+    use 'famiu/bufdelete.nvim'                          -- More buffer close commands
+
     -- Other
     use 'lukas-reineke/indent-blankline.nvim'           -- Indent lines and scopes
     use 'windwp/nvim-autopairs'                         -- Automatically insert pair characters

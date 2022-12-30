@@ -7,32 +7,21 @@ if not gitsigns_status then
     return
 end
 
+local icons = require('neconfig.user.icons').gitsigns
+local giticons = {}
+for k, v in pairs(icons) do
+    giticons[k] = {
+        text = v
+    }
+end
+
 --#endregion
 
 
 --#region Gitsigns
 
 gitsigns.setup {
-    signs = {
-        add = {
-            text = '┃'
-        },
-        change = {
-            text = '┃'
-        },
-        delete = {
-            text = '▶'
-        },
-        topdelete = {
-            text = '▶'
-        },
-        changedelete = {
-            text = '▶'
-        },
-        untracked = {
-            text = '┋'
-        },
-    }
+    signs = giticons
 }
 
 require('neconfig.user.keymaps').gitsigns(gitsigns)

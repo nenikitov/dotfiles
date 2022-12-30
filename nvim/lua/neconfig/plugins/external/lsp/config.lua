@@ -23,6 +23,8 @@ local lsp_signature_status, lsp_signature = pcall(require, 'lsp_signature')
 -- Handlers
 local handlers = require('neconfig.plugins.external.lsp.handlers')
 
+local icons = require('neconfig.user.icons').diagnostics
+
 local servers = {
     'sumneko_lua'
 }
@@ -51,14 +53,9 @@ masonlspconfig.setup {
 --#region Display
 
 -- Signs
-local signs = {
-    Error = '',
-    Warn  = '',
-    Hint  = '',
-    Info  = ''
-}
-for type, icon in pairs(signs) do
-    local sign = 'DiagnosticSign' .. type
+for type, icon in pairs(icons) do
+    type = type == 'warning' and 'warn' or type
+    local sign = 'DiagnosticSign' .. type:gsub('^%l', string.upper)
     vim.fn.sign_define(
         sign,
         {
@@ -75,11 +72,14 @@ vim.diagnostic.config {
     severity_sort = true,
     float = {
         focusable = false,
-        style = 'minimal',
+        style  = 'minimal',
         border = 'rounded',
         source = 'always',
         header = '',
         prefix = ''
+    },
+    virtual_text = {
+        prefix = '●'
     }
 }
 

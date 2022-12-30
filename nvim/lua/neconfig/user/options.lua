@@ -37,7 +37,7 @@ o.showtabline = 2               -- Always show file tabs
 o.signcolumn = 'yes:2'          -- Show an additional line before the line numbers
 o.number = true                 -- Show line numbers
 o.relativenumber = true         -- Make the line numbers relative
-o.numberwidth = 5               -- Set minimum width of the line number column
+o.numberwidth = 4               -- Set minimum width of the line number column
 o.completeopt = {               -- Configure the the completetion options for Insert mode
     'menu',                           -- Popup menu
     'menuone',                        -- Popup menu even when one match

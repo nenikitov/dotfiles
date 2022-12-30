@@ -7,4 +7,5 @@ require('neconfig.plugins.external.autopairs')
 require('neconfig.plugins.external.comments')
 require('neconfig.plugins.external.gitsigns')
 require('neconfig.plugins.external.nvim_tree')
+require('neconfig.plugins.external.bufferline')
 
