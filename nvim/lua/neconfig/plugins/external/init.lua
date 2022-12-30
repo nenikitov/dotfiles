@@ -8,4 +8,6 @@ require('neconfig.plugins.external.comments')
 require('neconfig.plugins.external.gitsigns')
 require('neconfig.plugins.external.nvim_tree')
 require('neconfig.plugins.external.bufferline')
+require('neconfig.plugins.external.toggleterm')
+require('neconfig.plugins.external.whichkey')
 

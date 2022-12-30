@@ -53,14 +53,14 @@ vim.g.mapleader = ' '
 --#region Splits
 
 -- Split
-map(mode.NORMAL, '<A-UP>',    ':split<CR>',  'Split vertically')
-map(mode.NORMAL, '<A-DOWN>',  ':split<CR>',  'Split vertically')
-map(mode.NORMAL, '<A-LEFT>',  ':vsplit<CR>', 'Split horizontally')
-map(mode.NORMAL, '<A-RIGHT>', ':vsplit<CR>', 'Split horizontally')
+map(mode.NORMAL, '<A-UP>',    '<CMD>split<CR>',  'Split vertically')
+map(mode.NORMAL, '<A-DOWN>',  '<CMD>split<CR>',  'Split vertically')
+map(mode.NORMAL, '<A-LEFT>',  '<CMD>vsplit<CR>', 'Split horizontally')
+map(mode.NORMAL, '<A-RIGHT>', '<CMD>vsplit<CR>', 'Split horizontally')
 -- Close
 map(
     mode.NORMAL,
-    '<C-c>',
+    '<M-c>',
     function()
         local buffer_number = vim.api.nvim_get_current_buf()
         if not vim.bo[buffer_number].modified then
@@ -72,15 +72,15 @@ map(
     'Close the current buffer'
 )
 -- Go to
-map(mode.NORMAL, '<C-k>', '<C-w>k', 'Go to split on the top')
-map(mode.NORMAL, '<C-j>', '<C-w>j', 'Go to split on the bottom')
-map(mode.NORMAL, '<C-h>', '<C-w>h', 'Go to split on the left')
-map(mode.NORMAL, '<C-l>', '<C-w>l', 'Go to split on the right')
+map({ mode.NORMAL, mode.TERM }, '<C-k>', '<CMD>wincmd k<CR>', 'Go to split on the top')
+map({ mode.NORMAL, mode.TERM }, '<C-j>', '<CMD>wincmd j<CR>', 'Go to split on the bottom')
+map({ mode.NORMAL, mode.TERM }, '<C-h>', '<CMD>wincmd h<CR>', 'Go to split on the left')
+map({ mode.NORMAL, mode.TERM }, '<C-l>', '<CMD>wincmd l<CR>', 'Go to split on the right')
 -- Resize
-map(mode.NORMAL, '<C-UP>',    ':resize +1<CR>',          'Increase the size of the split vertically')
-map(mode.NORMAL, '<C-DOWN>',  ':resize -1<CR>',          'Decrease the size of the split vertically')
-map(mode.NORMAL, '<C-LEFT>',  ':vertical resize -1<CR>', 'Increase the size of the split horizontally')
-map(mode.NORMAL, '<C-RIGHT>', ':vertical resize +1<CR>', 'Decrease the size of the split horizontally')
+map({ mode.NORMAL, mode.TERM }, '<C-UP>',    '<CMD>resize +1<CR>',          'Increase the size of the split vertically')
+map({ mode.NORMAL, mode.TERM }, '<C-DOWN>',  '<CMD>resize -1<CR>',          'Decrease the size of the split vertically')
+map({ mode.NORMAL, mode.TERM }, '<C-LEFT>',  '<CMD>vertical resize -1<CR>', 'Increase the size of the split horizontally')
+map({ mode.NORMAL, mode.TERM }, '<C-RIGHT>', '<CMD>vertical resize +1<CR>', 'Decrease the size of the split horizontally')
 
 --#endregion
 
@@ -105,7 +105,7 @@ map({ mode.NORMAL, mode.VISUAL }, 'L', '$', 'Go to the end of the line')
 map(mode.INSERT, '<C-v>', '<C-r>+', 'Paste directly in insert mode')
 
 -- Clear search
-map(mode.NORMAL, '<M-/>', ':let @/ = ""<CR>', 'Clear previous search highlighting')
+map(mode.NORMAL, '<M-/>', '<CMD>let @/ = ""<CR>', 'Clear previous search highlighting')
 
 --#endregion
 
@@ -370,13 +370,33 @@ end
 --#region Bufferline
 
 function M.bufferline(bufdelete)
-    map(mode.NORMAL, '<M-h>',       ':BufferLineCyclePrev<CR>',                   'Go to previous buffer')
-    map(mode.NORMAL, '<M-l>',       ':BufferLineCycleNext<CR>',                   'Go to next buffer')
-    map(mode.NORMAL, '<M-j>',       ':BufferLineMovePrev<CR>',                    'Move buffer to the left')
-    map(mode.NORMAL, '<M-k>',       ':BufferLineMoveNext<CR>',                    'Move buffer to the right')
-    map(mode.NORMAL, '<LEADER>bpp', ':BufferLinePick<CR>',                        'Select a buffer')
-    map(mode.NORMAL, '<LEADER>bpc', ':BufferLinePickClose<CR>',                   'Close a buffer')
+    map(mode.NORMAL, '<M-h>',       '<CMD>BufferLineCyclePrev<CR>',               'Go to previous buffer')
+    map(mode.NORMAL, '<M-l>',       '<CMD>BufferLineCycleNext<CR>',               'Go to next buffer')
+    map(mode.NORMAL, '<M-j>',       '<CMD>BufferLineMovePrev<CR>',                'Move buffer to the left')
+    map(mode.NORMAL, '<M-k>',       '<CMD>BufferLineMoveNext<CR>',                'Move buffer to the right')
+    map(mode.NORMAL, '<LEADER>bpp', '<CMD>BufferLinePick<CR>',                    'Select a buffer')
+    map(mode.NORMAL, '<LEADER>bpc', '<CMD>BufferLinePickClose<CR>',               'Close a buffer')
     map(mode.NORMAL, '<LEADER>bc',  function() bufdelete.bufdelete(0, false) end, 'Close a buffer')
+end
+
+--#endregion
+
+
+--#region Toggleterm
+
+function M.toggleterm_open()
+    return '<M-\\>'
+end
+
+function M.toggleterm()
+    -- Show / hide all terminals
+    map({ mode.NORMAL, mode.TERM }, '<M-CR>', '<CMD>ToggleTermToggleAll<CR>', 'Show / hide all popup terminals')
+end
+
+function M.toggleterm_hook()
+    local opts = { buffer = 0 }
+    -- Show / hide all terminals
+    map(mode.TERM, '<A-SPACE>', '<C-\\><C-n>', 'Go into insert mode in terminal', opts)
 end
 
 --#endregion

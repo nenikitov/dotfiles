@@ -21,7 +21,7 @@ o.undofile = true               -- Save file history in a file to keep undos bet
 
 
 --#region Delays
-o.timeoutlen = 1000             -- Wait for a mapped sequence to complete
+o.timeoutlen = 500              -- Wait for a mapped sequence to complete
 o.ttimeoutlen = 0               -- Wait for a keycode sequence to complete
 --#endreigon
 
