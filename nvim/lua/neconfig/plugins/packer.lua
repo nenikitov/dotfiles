@@ -89,6 +89,7 @@ return packer.startup(function(use)
     use 'neovim/nvim-lspconfig'                         -- Main LSP config
     use 'ray-x/lsp_signature.nvim'                      -- Automatically show signature when typing a function
     use 'jose-elias-alvarez/null-ls.nvim'               -- Hook non-LSP sources into LSP system
+    use 'j-hui/fidget.nvim'                             -- LSP progress
 
     -- Telescope
     use 'nvim-telescope/telescope.nvim'                 -- Fuzzy finder

@@ -1,5 +1,7 @@
 --#region Helpers
 
+-- Container for plugin keymaps functions
+local M = {}
 
 -- List of modes
 local mode = {
@@ -38,8 +40,22 @@ local function map(modes, keys, func, description, options)
     vim.keymap.set(modes, keys, func, options)
 end
 
--- Container for plugin keymaps functions
-local M = {}
+local whichkey_prefixes = {}
+local function add_to_whichkey_prefixes(modes, path, name)
+    if whichkey_prefixes[modes] == nil then
+        whichkey_prefixes[modes] = {}
+    end
+
+    local target = whichkey_prefixes[modes]
+    for _, p in ipairs(path) do
+        if target[p] == nil then
+            target[p] = {}
+        end
+        target = target[p]
+    end
+
+    target.name = name
+end
 
 --#endregion
 
@@ -47,6 +63,7 @@ local M = {}
 --#region Leader key
 map(mode.ALL, '<SPACE>', '<NOP>')
 vim.g.mapleader = ' '
+add_to_whichkey_prefixes(mode.ALL, { '<LEADER>' }, 'custom')
 --#endregion
 
 
@@ -110,6 +127,15 @@ map(mode.NORMAL, '<M-/>', '<CMD>let @/ = ""<CR>', 'Clear previous search highlig
 --#endregion
 
 
+--#region Which key
+
+function M.whichkey_groups()
+    return whichkey_prefixes
+end
+
+--#endregion
+
+
 --#region Completion
 
 function M.completion(cmp)
@@ -132,6 +158,12 @@ end
 
 --#region LSP
 
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'd' }, 'diagnostics')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l' }, 'LSP')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'g'}, 'go to')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'd'}, 'documentation')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'w'}, 'workspace')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'r'}, 'refactor')
 function M.lsp()
     local buffer_option = { buffer = true }
     -- Diagnostics
@@ -161,7 +193,7 @@ function M.lsp()
         buffer_option
     )
     -- Refactor
-    map(mode.NORMAL, '<LEADER>lrr', vim.lsp.buf.rename, buffer_option)
+    map(mode.NORMAL, '<LEADER>lrr', vim.lsp.buf.rename, 'Rename symbol', buffer_option)
     map(
         mode.NORMAL,
         '<LEADER>lrf',
@@ -172,7 +204,7 @@ function M.lsp()
         buffer_option
     )
     -- Code action
-    map(mode.NORMAL, '<LEADER>lca', vim.lsp.buf.code_action, 'Show automatic fixes', buffer_option)
+    map(mode.NORMAL, '<LEADER>lra', vim.lsp.buf.code_action, 'Show automatic fixes', buffer_option)
 end
 
 --#endregion
@@ -180,6 +212,7 @@ end
 
 --#region Telescope
 
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 't' }, 'telescope')
 function M.telescope_menus(telescope, builtin)
     map(mode.NORMAL, '<LEADER>tf', builtin.find_files,                     'Open file picker')
     map(mode.NORMAL, '<LEADER>tg', builtin.live_grep,                      'Open grep picker')
@@ -215,6 +248,9 @@ end
 
 --#region Telescope
 
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'c' }, 'comment')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'c', 'c' }, 'inline')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'c', 'b' }, 'block')
 function M.comment_toggler()
     return {
         line  = '<LEADER>ccc',
@@ -222,6 +258,7 @@ function M.comment_toggler()
     }
 end
 
+add_to_whichkey_prefixes(mode.VISUAL, { '<LEADER>', 'c' }, 'comment')
 function M.comment_opleader()
     return {
         line  = '<LEADER>cc',
@@ -234,6 +271,7 @@ end
 
 --#region Gitsigns
 
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'g' }, 'git')
 function M.gitsigns(gitsigns)
     map(mode.NORMAL, '<LEADER>gd', gitsigns.preview_hunk, 'Preview the differences in the current hunk')
     map(mode.NORMAL, '<LEADER>gb', gitsigns.blame_line,   'Blame current line')
@@ -245,6 +283,7 @@ end
 
 --#region NvimTree
 
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'f' }, 'files')
 function M.nvim_tree_menus(nvim_tree)
     map(mode.NORMAL, '<LEADER>ff', nvim_tree.tree.toggle, 'Open file explorer')
 end
@@ -370,6 +409,8 @@ end
 
 --#region Bufferline
 
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'b' }, 'buffer')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'b', 'p' }, 'picker')
 function M.bufferline(bufdelete)
     map(mode.NORMAL, '<M-h>',       '<CMD>BufferLineCyclePrev<CR>',               'Go to previous buffer')
     map(mode.NORMAL, '<M-l>',       '<CMD>BufferLineCycleNext<CR>',               'Go to next buffer')

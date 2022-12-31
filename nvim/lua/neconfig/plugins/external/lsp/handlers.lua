@@ -26,9 +26,14 @@ function H.capabilities()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     if cmp_lsp_status then
         capabilities = cmp_lsp.default_capabilities(capabilities)
+    else
+        vim.notify('CMP LSP not available', vim.log.levels.WARN)
     end
+
     if luasnip_status then
         capabilities.textDocument.completion.completionItem.snippetSupport = true
+    else
+        vim.notify('LuaSnip not available', vim.log.levels.WARN)
     end
     return capabilities
 end

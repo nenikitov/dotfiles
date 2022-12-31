@@ -21,8 +21,11 @@ if not masonlspconfig_status then
     return
 end
 
--- LSP signature
+-- Live function signature
 local lsp_signature_status, lsp_signature = pcall(require, 'lsp_signature')
+
+-- LSP progress
+local figet_status, fidget = pcall(require, 'fidget')
 
 -- Handlers
 local handlers = require('neconfig.plugins.external.lsp.handlers')
@@ -155,6 +158,21 @@ if lsp_signature_status then
         },
         hint_enable = false
     }
+else
+    vim.notify('LSP signature not available', vim.log.levels.WARN)
+end
+
+if figet_status then
+    fidget.setup {
+        text = {
+            spinner = 'dots_snake',
+        },
+        widow = {
+            border = 'rounded'
+        }
+    }
+else
+    vim.notify('Fidget not available', vim.log.levels.WARN)
 end
 
 --#endregion

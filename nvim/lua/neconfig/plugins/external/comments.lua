@@ -12,6 +12,8 @@ local context_commentstring_status, context_commentstring = pcall(require, 'ts_c
 local pre_hook = nil
 if context_commentstring_status then
     pre_hook = context_commentstring.create_pre_hook()
+else
+    vim.notify('Context commentstring not available', vim.log.levels.WARN)
 end
 
 --#endregion

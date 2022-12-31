@@ -12,11 +12,20 @@ end
 
 --#region Whichkey
 
+-- Whichkey
 whichkey.setup {
     window = {
         border = 'rounded'
     }
 }
+
+-- Keymap groups
+for mode, group in pairs(require('neconfig.user.keymaps').whichkey_groups()) do
+    if mode == '' then
+        mode = nil
+    end
+    whichkey.register(group, { mode = mode, prefix = '' })
+end
 
 --#endregion
 

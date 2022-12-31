@@ -36,6 +36,8 @@ if cmp_status then
         'confirm_done',
         autopairs_cmp.on_confirm_done()
     )
+else
+    vim.notify('CMP not available', vim.log.levels.WARN)
 end
 
 -- Add spaces between parentheses

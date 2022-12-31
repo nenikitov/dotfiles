@@ -1,4 +1,6 @@
+-- Make sure this one is first
 require('neconfig.plugins.external.impatient')
+
 require('neconfig.plugins.external.completion')
 require('neconfig.plugins.external.lsp')
 require('neconfig.plugins.external.telescope')
@@ -10,5 +12,7 @@ require('neconfig.plugins.external.gitsigns')
 require('neconfig.plugins.external.nvim_tree')
 require('neconfig.plugins.external.bufferline')
 require('neconfig.plugins.external.toggleterm')
+
+-- And this one is last
 require('neconfig.plugins.external.whichkey')
 
