@@ -180,13 +180,14 @@ end
 
 --#region Telescope
 
-function M.telescope_menus(telescope)
-    map(mode.NORMAL, '<LEADER>tf', telescope.find_files,    'Open file picker')
-    map(mode.NORMAL, '<LEADER>tg', telescope.live_grep,     'Open grep picker')
-    map(mode.NORMAL, '<LEADER>tb', telescope.buffers,       'Open buffers picker')
-    map(mode.NORMAL, '<LEADER>tq', telescope.quickfix,      'Open quick fix picker')
-    map(mode.NORMAL, '<LEADER>ts', telescope.spell_suggest, 'Open spell suggestion picker')
-    map(mode.NORMAL, '<LEADER>td', telescope.diagnostics,   'Open diagnostics picker')
+function M.telescope_menus(telescope, builtin)
+    map(mode.NORMAL, '<LEADER>tf', builtin.find_files,                     'Open file picker')
+    map(mode.NORMAL, '<LEADER>tg', builtin.live_grep,                      'Open grep picker')
+    map(mode.NORMAL, '<LEADER>tb', builtin.buffers,                        'Open buffers picker')
+    map(mode.NORMAL, '<LEADER>tq', builtin.quickfix,                       'Open quick fix picker')
+    map(mode.NORMAL, '<LEADER>ts', builtin.spell_suggest,                  'Open spell suggestion picker')
+    map(mode.NORMAL, '<LEADER>td', builtin.diagnostics,                    'Open diagnostics picker')
+    map(mode.NORMAL, '<LEADER>tp', telescope.extensions.projects.projects, 'Open project picker')
 end
 
 function M.telescope_navigation(actions)

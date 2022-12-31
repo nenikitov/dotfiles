@@ -12,11 +12,11 @@ local reload_on_plugin_update = true
 
 -- Install packer if not already installed
 local packer_bootstrapped = false if fn.empty(fn.glob(install_path)) ~= 0 then
-    fn.system({
+    fn.system {
         'git', 'clone',
         '--depth', '1',
         clone_path, install_path
-    })
+    }
     vim.notify('Installed packer, reopen Neovim', vim.log.levels.WARN)
     vim.cmd('packadd packer.nvim')
     packer_bootstrapped = true
@@ -92,6 +92,7 @@ return packer.startup(function(use)
 
     -- Telescope
     use 'nvim-telescope/telescope.nvim'                 -- Fuzzy finder
+    use 'ahmedkhalf/project.nvim'                           -- Project browser
 
     -- Treesitter
     use {                                               -- Better syntax hightlighting

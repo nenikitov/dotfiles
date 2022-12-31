@@ -12,15 +12,27 @@ end
 
 --#region Toggle term
 
+-- Configuration
 toggleterm.setup {
     open_mapping = require('neconfig.user.keymaps').toggleterm_open(),
     hide_numbers = true,
-    persist_size = false
+    persist_size = false,
+    size = 20
 }
 
+-- Keymaps
 require('neconfig.user.keymaps').toggleterm()
+vim.cmd([[
+    autocmd! TermOpen term://* lua require("neconfig.user.keymaps").toggleterm_hook()
+]])
 
-vim.cmd('autocmd! TermOpen term://* lua require("neconfig.user.keymaps").toggleterm_hook()')
+-- Open 1 terminal on enter
+vim.cmd([[
+    augroup open_term
+        autocmd!
+        autocmd VimEnter * lua vim.cmd('ToggleTerm') vim.cmd('ToggleTermToggleAll')
+    augroup end
+]])
 
 --#endregion
 
