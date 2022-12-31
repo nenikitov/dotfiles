@@ -92,6 +92,7 @@ return packer.startup(function(use)
 
     -- Telescope
     use 'nvim-telescope/telescope.nvim'                 -- Fuzzy finder
+    use 'nvim-telescope/telescope-ui-select.nvim'           -- UI Selection through telescope
     use 'ahmedkhalf/project.nvim'                           -- Project browser
 
     -- Treesitter
@@ -131,6 +132,7 @@ return packer.startup(function(use)
     use 'lewis6991/gitsigns.nvim'                       -- Git integration
     use 'akinsho/toggleterm.nvim'                       -- Pop up terminal
     use 'folke/which-key.nvim'                          -- Pop up with shortcuts
+    use 'lewis6991/impatient.nvim'                      -- Faster loading times
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

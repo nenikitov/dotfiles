@@ -7,17 +7,12 @@ if not telescope_status then
     return
 end
 
--- Project
-local project_status, project = pcall(require, 'project_nvim')
-if not project_status then
-    vim.notify('Project not available', vim.log.levels.ERROR)
-    return
-end
-
 -- Telescope actions
 local telescope_builtin = require('telescope.builtin')
 -- Telescope actions
 local telescope_actions = require('telescope.actions')
+-- Telescope themes
+local telescope_themes = require('telescope.themes')
 
 --#endregion
 
@@ -28,14 +23,20 @@ local telescope_actions = require('telescope.actions')
 telescope.setup {
     defaults = {
         mappings = require('neconfig.user.keymaps').telescope_navigation(telescope_actions)
+    },
+    extensions = {
+        project = {
+            detection_methods = { 'pattern' }
+        },
+        ['ui-select'] = {
+            telescope_themes.get_dropdown()
+        }
     }
 }
 
 -- Extensions
-project.setup {
-    detection_methods = { 'pattern' }
-}
 telescope.load_extension('projects')
+telescope.load_extension('ui-select')
 
 -- Keymaps
 require('neconfig.user.keymaps').telescope_menus(telescope, telescope_builtin)
