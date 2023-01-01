@@ -12,9 +12,6 @@ local function link_highlight(group_1, group_2)
 end
 
 local icons = require('neconfig.user.icons').completion
-for k, v in pairs(icons) do
-    icons[k] = v .. ' '
-end
 
 local default_keys = {
     '?',

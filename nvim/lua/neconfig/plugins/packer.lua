@@ -127,6 +127,14 @@ return packer.startup(function(use)
     }
     use 'famiu/bufdelete.nvim'                          -- More buffer close commands
 
+    -- Status line
+    use {                                               -- Fancy status line
+        'nvim-lualine/lualine.nvim',
+        requires = {
+            'kyazdani42/nvim-web-devicons', opt = true
+        }
+    }
+
     -- Other
     use 'lukas-reineke/indent-blankline.nvim'           -- Indent lines and scopes
     use 'windwp/nvim-autopairs'                         -- Automatically insert pair characters

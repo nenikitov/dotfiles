@@ -15,6 +15,7 @@ require('neconfig.plugins.external.toggleterm')
 require('neconfig.plugins.external.range_highlight')
 require('neconfig.plugins.external.shade')
 require('neconfig.plugins.external.aerial')
+require('neconfig.plugins.external.lualine')
 
 -- And this one is last
 require('neconfig.plugins.external.whichkey')
