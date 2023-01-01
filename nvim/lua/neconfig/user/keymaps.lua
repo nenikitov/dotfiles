@@ -277,6 +277,8 @@ function M.gitsigns(gitsigns)
     map(mode.NORMAL, '<LEADER>gd', gitsigns.preview_hunk, 'Preview the differences in the current hunk')
     map(mode.NORMAL, '<LEADER>gb', gitsigns.blame_line,   'Blame current line')
     map(mode.NORMAL, '<LEADER>gr', gitsigns.reset_hunk,   'Reset current hunk')
+    map(mode.NORMAL, '<LEADER>gk', gitsigns.prev_hunk,    'Go to previous hunk')
+    map(mode.NORMAL, '<LEADER>gj', gitsigns.next_hunk,    'Go to next hunk')
 end
 
 --#endregion
