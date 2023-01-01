@@ -36,6 +36,7 @@ nvim_tree.setup {
     },
     view = {
         side = 'right',
+        width = 30,
         mappings = {
             custom_only = true,
             list = require('neconfig.user.keymaps').nvim_tree_navigation()

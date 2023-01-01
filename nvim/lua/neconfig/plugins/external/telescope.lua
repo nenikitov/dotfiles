@@ -30,6 +30,11 @@ telescope.setup {
         },
         ['ui-select'] = {
             telescope_themes.get_dropdown()
+        },
+        aerial = {
+            show_nesting = {
+                ['_'] = true
+            }
         }
     }
 }
@@ -37,6 +42,7 @@ telescope.setup {
 -- Extensions
 telescope.load_extension('projects')
 telescope.load_extension('ui-select')
+telescope.load_extension('aerial')
 
 -- Keymaps
 require('neconfig.user.keymaps').telescope_menus(telescope, telescope_builtin)

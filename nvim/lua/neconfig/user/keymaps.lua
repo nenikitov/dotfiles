@@ -221,6 +221,7 @@ function M.telescope_menus(telescope, builtin)
     map(mode.NORMAL, '<LEADER>ts', builtin.spell_suggest,                  'Open spell suggestion picker')
     map(mode.NORMAL, '<LEADER>td', builtin.diagnostics,                    'Open diagnostics picker')
     map(mode.NORMAL, '<LEADER>tp', telescope.extensions.projects.projects, 'Open project picker')
+    map(mode.NORMAL, '<LEADER>tt', telescope.extensions.aerial.aerial,     'Open symbol tree picker')
 end
 
 function M.telescope_navigation(actions)
@@ -440,6 +441,38 @@ function M.toggleterm_hook()
     -- Show / hide all terminals
     map(mode.TERM, '<A-SPACE>', '<C-\\><C-n>', 'Go into insert mode in terminal', opts)
 end
+
+--#endregion
+
+
+--#region Toggleterm
+
+function M.aerial_menus()
+    map(mode.NORMAL, '<LEADER>ldt', '<CMD>AerialToggle<CR>', 'Show symbol tree')
+end
+
+function M.aerial_navigation(aerial)
+    return {
+        -- Faster navigation
+        ['l'] = aerial.tree_open,
+        ['L'] = aerial.jump,
+        ['h'] = {
+            callback = function()
+                aerial.tree_close.callback()
+                aerial.tree_open.callback()
+            end,
+            desc = 'Go to previous level in the tree'
+        },
+        ['H']             = aerial.tree_close,
+        ['<2-LeftMouse>'] = 'actions.jump',
+        ['<CR>']          = 'actions.jump',
+        -- Other
+        ['q']             = 'actions.close',
+        ['<EC>']          = 'actions.close',
+        ['?']             = 'actions.show_help',
+    }
+end
+
 
 --#endregion
 

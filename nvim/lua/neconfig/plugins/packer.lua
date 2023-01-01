@@ -134,6 +134,14 @@ return packer.startup(function(use)
     use 'akinsho/toggleterm.nvim'                       -- Pop up terminal
     use 'folke/which-key.nvim'                          -- Pop up with shortcuts
     use 'lewis6991/impatient.nvim'                      -- Faster loading times
+    use {                                               -- Highlight ranges
+        'winston0410/range-highlight.nvim',
+        requires = {
+            'winston0410/cmd-parser.nvim'
+        }
+    }
+    use 'sunjon/Shade.nvim'                             -- Darken inactive splits
+    use 'stevearc/aerial.nvim'                          -- Outline of the symbols
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

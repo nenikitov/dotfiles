@@ -51,13 +51,6 @@ bufferline.setup {
         indicator = {
             style = 'underline'
         },
-        offsets = {
-            {
-                filetype = 'NvimTree',
-                text = 'NvimTree',
-                text_align = 'center'
-            }
-        },
         show_close_icon = false,
         custom_areas = {
             right = function()
