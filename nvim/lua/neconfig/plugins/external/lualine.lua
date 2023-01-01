@@ -12,6 +12,19 @@ end
 
 --#region LuaLine
 
+-- Custom components
+local function spaces()
+    return 'Spaces: ' .. vim.api.nvim_buf_get_option(0, 'shiftwidth')
+end
+local function progress_graphic()
+    local current_line = vim.fn.line(".")
+    local total_lines = vim.fn.line("$")
+    local chars = { '⠀', '⠁', '⠉', '⠋', '⠛', '⠟', '⠿', '⡿' ,'⣿', '█' }
+    local line_ratio = current_line / total_lines
+    local index = math.ceil(line_ratio * #chars)
+return chars[index]
+end
+
 -- Sections
 -- ╭───┬───┬─────────────────────────────────┬───┬───╮
 -- │ A │ B │ C                             X │ Y │ Z │
@@ -20,7 +33,10 @@ end
 lualine.setup {
     options = {
         component_separators = '|',
-        section_separators = ' '
+        section_separators = ' ',
+        disabled_filetypes = {
+            'NvimTree', 'aerial'
+        }
     },
     sections = {
         lualine_a = {
@@ -46,9 +62,11 @@ lualine.setup {
         lualine_y = {
             'encoding',
             'fileformat',
+            spaces,
             'filetype'
         },
         lualine_z = {
+            progress_graphic,
             'progress',
             'location'
         }
