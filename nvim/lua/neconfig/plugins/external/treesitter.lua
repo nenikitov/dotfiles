@@ -67,6 +67,13 @@ treesitter.setup {
     playground = {
         enable = true
     },
+    -- Navigation
+    textobjects = {
+        select = {
+            enable = true,
+            keymaps = require('neconfig.user.keymaps').treesitter_textobjects(),
+        }
+    }
 }
 
 --#endregion

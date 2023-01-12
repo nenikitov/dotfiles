@@ -12,6 +12,7 @@ local mode = {
     VISUAL_BLOCK = 'x',
     TERM         = 't',
     COMMAND      = 'c',
+    OPPERATOR    = 'o'
 }
 
 -- Default options for keybinds
@@ -478,6 +479,23 @@ function M.aerial_navigation(aerial)
     }
 end
 
+--#endregion
+
+
+--#region Navigation
+
+function M.treesitter_textobjects()
+    return {
+        -- Function
+        ['if'] = { query = '@function.inner',   desc = 'function body' },
+        ['af'] = { query = '@function.outer',   desc = 'function declaration' },
+        -- Class
+        ['ic'] = { query = '@class.inner',      desc = 'class body' },
+        ['ac'] = { query = '@class.outer',      desc = 'class declaration' },
+        -- Comment
+        ['id'] = { query = '@comment.outer',    desc = 'comment' },
+    }
+end
 
 --#endregion
 

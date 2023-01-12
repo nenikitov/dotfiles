@@ -135,6 +135,11 @@ return packer.startup(function(use)
         }
     }
 
+    -- Navigation
+    use 'nvim-treesitter/nvim-treesitter-textobjects'   -- Using treesitter objects (classes, functions)
+    -- use 'bkad/CamelCaseMotion'                          -- Using camel case
+    use 'chaoren/vim-wordmotion'
+
     -- Other
     use 'lukas-reineke/indent-blankline.nvim'           -- Indent lines and scopes
     use 'windwp/nvim-autopairs'                         -- Automatically insert pair characters
