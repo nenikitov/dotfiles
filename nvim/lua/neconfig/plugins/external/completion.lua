@@ -29,9 +29,7 @@ cmp.setup {
             luasnip.lsp_expand(args.body)
         end
     },
-    mapping = cmp.mapping.preset.insert(
-        require('neconfig.user.keymaps').completion(cmp)
-    ),
+    mapping = require('neconfig.user.keymaps').completion(cmp),
     sources = cmp.config.sources {
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
@@ -51,6 +49,12 @@ cmp.setup {
         documentation = cmp.config.window.bordered()
     }
 }
+
+cmp.setup.cmdline(':', {
+    sources = {
+        { name = 'cmdline' }
+    },
+})
 
 --#endregion
 

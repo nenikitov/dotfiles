@@ -15,8 +15,12 @@ end
 
 --#endregion
 
+
+--#region Treesitter
+
+-- Treesitter
 treesitter.setup {
-    -- Treesitter
+    -- General
     ensure_installed = 'all',
     sync_install = false,
     auto_install = true,
@@ -64,4 +68,6 @@ treesitter.setup {
         enable = true
     },
 }
+
+--#endregion
 

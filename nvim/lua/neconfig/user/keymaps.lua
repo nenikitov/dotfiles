@@ -139,17 +139,20 @@ end
 --#region Completion
 
 function M.completion(cmp)
+    local function mapping(callback)
+        return cmp.mapping(callback, { 'i', 'c' })
+    end
     return {
         -- Documentation
-        ['<C-u>']     = cmp.mapping.scroll_docs(-1),
-        ['<C-i>']     = cmp.mapping.scroll_docs(1),
+        ['<C-u>']     = mapping(cmp.mapping.scroll_docs(-1)),
+        ['<C-i>']     = mapping(cmp.mapping.scroll_docs(1)),
         -- Items
-        ['<C-j>']     = cmp.mapping.select_next_item(),
-        ['<C-k>']     = cmp.mapping.select_prev_item(),
+        ['<C-j>']     = mapping(cmp.mapping.select_next_item()),
+        ['<C-k>']     = mapping(cmp.mapping.select_prev_item()),
         -- Confirm & abort
-        ['<C-SPACE>'] = cmp.mapping.complete(),
-        ['<C-e>']     = cmp.mapping.abort(),
-        ['<C-l>']     = cmp.mapping.confirm { select = true },
+        ['<C-SPACE>'] = mapping(cmp.mapping.complete()),
+        ['<C-e>']     = mapping(cmp.mapping.abort()),
+        ['<C-l>']     = mapping(cmp.mapping.confirm { select = true }),
     }
 end
 

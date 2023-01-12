@@ -39,9 +39,9 @@ o.number = true                 -- Show line numbers
 o.relativenumber = true         -- Make the line numbers relative
 o.numberwidth = 4               -- Set minimum width of the line number column
 o.completeopt = {               -- Configure the the completetion options for Insert mode
-    'menu',                           -- Popup menu
-    'menuone',                        -- Popup menu even when one match
-    'noselect'                        -- No selection by default
+    'menu',                         -- Popup menu
+    'menuone',                      -- Popup menu even when one match
+    'noselect'                      -- No selection by default
 }
 o.pumheight = 10                -- Set the size of popup menus
 --#endregion
@@ -56,6 +56,7 @@ o.sidescrolloff = 16            -- Keep characters on the left and right of the 
 o.list = true                   -- Show special white-space characters
 o.listchars =                   -- How these special white-space characters are displayed
     require('neconfig.user.icons').listchars
+o.showmode = false              -- Hide mode from the command line
 --#endregion
 
 
@@ -75,9 +76,9 @@ o.smartindent = true            -- Indent automatically the lines
 
 --#region Typing
 o.backspace = {                 -- Configure what can be erased with <BACKSPACE>
-    'eol',                            -- Line breaks
-    'indent',                         -- Indentation
-    'start'                           -- Start of insert
+    'eol',                          -- Line breaks
+    'indent',                       -- Indentation
+    'start'                         -- Start of insert
 }
 --#endregion
 

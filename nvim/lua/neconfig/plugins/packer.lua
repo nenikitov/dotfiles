@@ -68,7 +68,7 @@ return packer.startup(function(use)
     use 'nvim-tree/nvim-web-devicons'                   -- Icons for plugins
 
     -- Color scheme
-    use 'Mofiqul/vscode.nvim'                           -- VSCode colorscheme
+    use 'Mofiqul/vscode.nvim'                           -- VSCode
 
     -- Completion
     use 'hrsh7th/nvim-cmp'                              -- Completion engine
