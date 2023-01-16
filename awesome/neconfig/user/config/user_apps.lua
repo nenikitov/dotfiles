@@ -36,9 +36,9 @@ local apps = {
         volume_set  = '',
         volume_mute = '',
         -- Media commands,
-        media_toggle   = '',
-        media_next     = '',
-        media_previous = ''
+        media_toggle   = 'playerctl play-pause',
+        media_next     = 'playerctl next',
+        media_previous = 'playerctl previous'
     }
 }
 

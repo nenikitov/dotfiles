@@ -164,7 +164,7 @@ local global_keys = {
     awful.key(
         { super_key, more_key }, 's',
         function()
-            awful.spawn.with_shell('flameshot gui')
+            utils_apps.take_screenshot()
         end,
         { description = 'screenshot', group = 'utilities' }
     ),
@@ -407,6 +407,38 @@ local global_keys = {
         { description = 'restore previous tag', group = 'tag - display' }
     ),
     -- All other tag related keys will be added later
+
+    --#endregion
+
+    --#region Audio
+
+    -- Toggle media on MEDIA PLAY/PAUSE
+    awful.key(
+        { }, 'XF86AudioPlay',
+        function()
+            utils_apps.media_toggle()
+        end,
+        { description = 'play / pause media', group = 'utilities - media' }
+    ),
+
+    -- Next media on MEDIA NEXT
+    awful.key(
+        { }, 'XF86AudioNext',
+        function()
+            utils_apps.media_next()
+        end,
+        { description = 'next media', group = 'utilities - media' }
+    ),
+
+    -- Previous media on MEDIA PREVIOUS
+    awful.key(
+        { }, 'XF86AudioPrev',
+        function()
+            utils_apps.media_previous()
+        end,
+        { description = 'previous media', group = 'utilities - media' }
+    ),
+
     --#endregion
 }
 -- Add all other tag related keys
