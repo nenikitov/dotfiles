@@ -6,9 +6,8 @@ window:
     padding:
         x: 3
         y: 3
-    opacity: 0.8
 font:
-    size: 10.0
+    size: 9.0
 cursor:
     unfocused_hollow: true
     blink_interval: 750
@@ -23,8 +22,31 @@ selection:
 
 # Colors
 schemes:
-    # NeTheme
+    # NeTheme - current
     netheme: &netheme
+      primary:
+          background: '#131211'
+          foreground: '#c8c8c8'
+      normal:
+        black:   '#323232'
+        red:     '#c93947'
+        green:   '#8bc43e'
+        yellow:  '#db9a44'
+        blue:    '#4a6bd1'
+        magenta: '#924fd0'
+        cyan:    '#41bfb4'
+        white:   '#bebebe'
+      bright:
+        black:   '#4c4c4c'
+        red:     '#f57586'
+        green:   '#bfed81'
+        yellow:  '#f5cf7b'
+        blue:    '#86aeed'
+        magenta: '#c99af4'
+        cyan:    '#9bf2eb'
+        white:   '#ffffff'
+    # NeTheme - old
+    netheme_old: &netheme_old
         primary:
             background: '#080808'
             foreground: '#CCCCCC'
@@ -46,8 +68,8 @@ schemes:
             magenta: '#D09CE3'
             cyan:    '#9FECE3'
             white:   '#FFFFFF'
-    # NeTheme
-    netheme_old: &netheme_old
+    # NeTheme - oldest
+    netheme_oldest: &netheme_oldest
         primary:
             background: '#080808'
             foreground: '#BFBFBF'
