@@ -3,7 +3,7 @@
 local titlebar_client_colors = {
     ['7zfm'] = '#353535',
     ['7zg'] = '#353535',
-    ['Alacritty'] = '#080808cc',
+    ['Alacritty'] = '#131211ff',
     ['Ardour'] = '#3d3d3d',
     ['Ardour-7.2.0'] = '#3d3d3d',
     ['Audacious'] = '#121212',

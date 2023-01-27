@@ -14,8 +14,8 @@ local apps = {
         'numlockx on',
         -- Turn on touchpad gestures
         'touchegg',
-	-- Network icon in system tray
-	'nm-applet',
+        -- Network icon in system tray
+        'nm-applet',
         -- Launch compositor for transparency and animations
         'picom --xrender-sync-fence',
         -- Set wallpaper
