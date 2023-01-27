@@ -12,7 +12,7 @@ local mode = {
     VISUAL_BLOCK = 'x',
     TERM         = 't',
     COMMAND      = 'c',
-    OPPERATOR    = 'o'
+    OPERATOR     = 'o'
 }
 
 -- Default options for keybinds
@@ -78,16 +78,22 @@ map(mode.NORMAL, '<A-RIGHT>', '<CMD>vsplit<CR>', 'Split horizontally')
 -- Close
 map(
     mode.NORMAL,
-    '<M-c>',
+    '<A-c>',
     function()
-        local buffer_number = vim.api.nvim_get_current_buf()
-        if not vim.bo[buffer_number].modified then
-            vim.cmd('q')
-        else
-            print('Cannot close a modified buffer')
+        local closed = pcall(vim.cmd, 'q')
+        if not closed then
+            vim.notify('Cannot close this buffer', vim.log.levels.INFO)
         end
     end,
     'Close the current buffer'
+)
+map(
+    mode.NORMAL,
+    '<A-S-c>',
+    function()
+        vim.cmd('q!')
+    end,
+    'Force close the current buffer'
 )
 -- Go to
 map({ mode.NORMAL, mode.TERM }, '<C-k>', '<CMD>wincmd k<CR>', 'Go to split on the top')
@@ -123,7 +129,7 @@ map({ mode.NORMAL, mode.VISUAL }, 'L', '$', 'Go to the end of the line')
 map(mode.INSERT, '<C-v>', '<C-r>+', 'Paste directly in insert mode')
 
 -- Clear search
-map(mode.NORMAL, '<M-/>', '<CMD>let @/ = ""<CR>', 'Clear previous search highlighting')
+map(mode.NORMAL, '<A-/>', '<CMD>let @/ = ""<CR>', 'Clear previous search highlighting')
 
 --#endregion
 
@@ -145,8 +151,8 @@ function M.completion(cmp)
     end
     return {
         -- Documentation
-        ['<C-u>']     = mapping(cmp.mapping.scroll_docs(-1)),
-        ['<C-i>']     = mapping(cmp.mapping.scroll_docs(1)),
+        ['<C-u>']     = mapping(cmp.mapping.scroll_docs(1)),
+        ['<C-i>']     = mapping(cmp.mapping.scroll_docs(-1)),
         -- Items
         ['<C-j>']     = mapping(cmp.mapping.select_next_item()),
         ['<C-k>']     = mapping(cmp.mapping.select_prev_item()),
@@ -224,6 +230,7 @@ function M.telescope_menus(telescope, builtin)
     map(mode.NORMAL, '<LEADER>tq', builtin.quickfix,                       'Open quick fix picker')
     map(mode.NORMAL, '<LEADER>ts', builtin.spell_suggest,                  'Open spell suggestion picker')
     map(mode.NORMAL, '<LEADER>td', builtin.diagnostics,                    'Open diagnostics picker')
+    map(mode.NORMAL, '<LEADER>tl', builtin.filetypes,                      'Open file type picker')
     map(mode.NORMAL, '<LEADER>tp', telescope.extensions.projects.projects, 'Open project picker')
     map(mode.NORMAL, '<LEADER>tt', telescope.extensions.aerial.aerial,     'Open symbol tree picker')
 end
@@ -419,13 +426,14 @@ end
 add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'b' }, 'buffer')
 add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'b', 'p' }, 'picker')
 function M.bufferline(bufdelete)
-    map(mode.NORMAL, '<M-h>',       '<CMD>BufferLineCyclePrev<CR>',               'Go to previous buffer')
-    map(mode.NORMAL, '<M-l>',       '<CMD>BufferLineCycleNext<CR>',               'Go to next buffer')
-    map(mode.NORMAL, '<M-j>',       '<CMD>BufferLineMovePrev<CR>',                'Move buffer to the left')
-    map(mode.NORMAL, '<M-k>',       '<CMD>BufferLineMoveNext<CR>',                'Move buffer to the right')
+    map(mode.NORMAL, '<A-h>',       '<CMD>BufferLineCyclePrev<CR>',               'Go to previous buffer')
+    map(mode.NORMAL, '<A-l>',       '<CMD>BufferLineCycleNext<CR>',               'Go to next buffer')
+    map(mode.NORMAL, '<A-j>',       '<CMD>BufferLineMovePrev<CR>',                'Move buffer to the left')
+    map(mode.NORMAL, '<A-k>',       '<CMD>BufferLineMoveNext<CR>',                'Move buffer to the right')
     map(mode.NORMAL, '<LEADER>bpp', '<CMD>BufferLinePick<CR>',                    'Select a buffer')
     map(mode.NORMAL, '<LEADER>bpc', '<CMD>BufferLinePickClose<CR>',               'Close a buffer')
-    map(mode.NORMAL, '<LEADER>bc',  function() bufdelete.bufdelete(0, false) end, 'Close a buffer')
+    map(mode.NORMAL, '<LEADER>bpc', '<CMD>BufferLinePickClose<CR>',               'Close a buffer')
+    map(mode.NORMAL, '<LEADER>bn',  '<CMD>enew<CR>',                              'Create a new empty buffer')
 end
 
 --#endregion
@@ -434,12 +442,12 @@ end
 --#region Toggleterm
 
 function M.toggleterm_open()
-    return '<M-\\>'
+    return '<A-\\>'
 end
 
 function M.toggleterm()
     -- Show / hide all terminals
-    map({ mode.NORMAL, mode.TERM }, '<M-CR>', '<CMD>ToggleTermToggleAll<CR>', 'Show / hide all popup terminals')
+    map({ mode.NORMAL, mode.TERM }, '<A-CR>', '<CMD>ToggleTermToggleAll<CR>', 'Show / hide all popup terminals')
 end
 
 function M.toggleterm_hook()

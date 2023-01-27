@@ -10,7 +10,11 @@ end
 local function color_of_identifier(identifier)
     local colors = vim.api.nvim_get_hl_by_name(identifier, true)
     local foreground = colors.foreground
-    return '#' .. string.format('%06x', foreground)
+    if foreground ~= nil then
+        return '#' .. string.format('%06x', foreground)
+    else
+        return nil
+    end
 end
 
 --#endregion

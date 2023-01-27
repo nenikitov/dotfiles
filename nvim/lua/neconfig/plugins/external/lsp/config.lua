@@ -33,7 +33,11 @@ local handlers = require('neconfig.plugins.external.lsp.handlers')
 local icons = require('neconfig.user.icons').diagnostics
 
 local servers = {
-    'sumneko_lua'
+    'sumneko_lua',      -- Lua
+    'html',             -- HTML
+    'tsserver',         -- JavaScript and TypeScript
+    'jsonls',           -- JSON
+    'rust_analyzer',    -- Rust
 }
 
 --#endregion

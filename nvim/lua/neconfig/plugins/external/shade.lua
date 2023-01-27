@@ -11,9 +11,9 @@ end
 
 --#region Range highlight
 
-shade.setup {
-    overlay_opacity = 90
-}
+-- shade.setup {
+--     overlay_opacity = 90
+-- }
 
 --#endregion
 

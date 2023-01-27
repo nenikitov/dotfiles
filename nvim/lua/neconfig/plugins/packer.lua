@@ -11,7 +11,8 @@ local reload_on_plugin_update = true
 --#region Installation
 
 -- Install packer if not already installed
-local packer_bootstrapped = false if fn.empty(fn.glob(install_path)) ~= 0 then
+local packer_bootstrapped = false
+if fn.empty(fn.glob(install_path)) ~= 0 then
     fn.system {
         'git', 'clone',
         '--depth', '1',
@@ -68,7 +69,10 @@ return packer.startup(function(use)
     use 'nvim-tree/nvim-web-devicons'                   -- Icons for plugins
 
     -- Color scheme
-    use 'Mofiqul/vscode.nvim'                           -- VSCode
+    -- use 'Mofiqul/vscode.nvim'                           -- VSCode
+    -- use 'nenikitov/necode.nvim'                           -- VSCode
+    use '~/SharedFiles/Projects/nvim/necode.nvim'       -- My version of VSCode
+    use '~/SharedFiles/Projects/nvim/termcolors.nvim'       -- My custom color scheme
 
     -- Completion
     use 'hrsh7th/nvim-cmp'                              -- Completion engine
@@ -137,7 +141,6 @@ return packer.startup(function(use)
 
     -- Navigation
     use 'nvim-treesitter/nvim-treesitter-textobjects'   -- Using treesitter objects (classes, functions)
-    -- use 'bkad/CamelCaseMotion'                          -- Using camel case
     use 'chaoren/vim-wordmotion'
 
     -- Other
@@ -155,6 +158,7 @@ return packer.startup(function(use)
     }
     use 'sunjon/Shade.nvim'                             -- Darken inactive splits
     use 'stevearc/aerial.nvim'                          -- Outline of the symbols
+    use 'uga-rosa/ccc.nvim'                             -- Color picker
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

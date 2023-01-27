@@ -4,9 +4,9 @@
 local cmd = vim.cmd
 
 -- Name of the colorscheme
-local colorscheme = 'vscode'
+local colorscheme = 'termcolors'
 -- Name of the colorscheme to fall back if the color scheme was not found
-local colorscheme_fallback = 'default'
+local colorscheme_fallback = 'industry'
 
 --#endregion
 

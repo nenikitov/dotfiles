@@ -6,7 +6,7 @@ local o = vim.opt
 --#endregion
 
 
---#regioon Files and backup
+--#region Files and backup
 o.fileencoding = 'utf-8'        -- Set default file encoding
 o.backup = false                -- Do not backup if the file is overriden
 o.writebackup = false           -- Do not backup if the file is overriden
@@ -27,7 +27,7 @@ o.ttimeoutlen = 0               -- Wait for a keycode sequence to complete
 
 
 --#region Colors
-o.termguicolors = true          -- Enable true color
+o.termguicolors = false          -- Enable true color
 o.background = 'dark'           -- Hint at dark color scheme
 --#endreigon
 
@@ -86,6 +86,6 @@ o.backspace = {                 -- Configure what can be erased with <BACKSPACE>
 --#region Search
 o.ignorecase = true             -- Do case-insensitive searches
 o.smartcase = true              -- Do case-sensitive searches if the pattern has an uppercase
-o.hlsearch= true                -- Hightlight search matches
+o.hlsearch= true                -- Highlight search matches
 --#endregion
 
