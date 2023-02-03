@@ -69,8 +69,7 @@ return packer.startup(function(use)
     use 'nvim-tree/nvim-web-devicons'                   -- Icons for plugins
 
     -- Color scheme
-    -- use 'Mofiqul/vscode.nvim'                           -- VSCode
-    -- use 'nenikitov/necode.nvim'                           -- VSCode
+    use 'Mofiqul/vscode.nvim'                           -- VSCode
     use '~/SharedFiles/Projects/nvim/necode.nvim'       -- My version of VSCode
     use '~/SharedFiles/Projects/nvim/termcolors.nvim'       -- My custom color scheme
 
@@ -159,6 +158,8 @@ return packer.startup(function(use)
     use 'sunjon/Shade.nvim'                             -- Darken inactive splits
     use 'stevearc/aerial.nvim'                          -- Outline of the symbols
     use 'uga-rosa/ccc.nvim'                             -- Color picker
+    use 'rcarriga/nvim-notify'                          -- Fancy notifications
+    use 'petertriho/nvim-scrollbar'                     -- Scrollbar
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

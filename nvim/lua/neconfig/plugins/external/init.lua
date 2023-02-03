@@ -1,6 +1,8 @@
--- Make sure this one is first
+-- Make sure these ones are first and in this order
 require('neconfig.plugins.external.impatient')
+require('neconfig.plugins.external.notify')
 
+-- Order doesn't matter here
 require('neconfig.plugins.external.completion')
 require('neconfig.plugins.external.lsp')
 require('neconfig.plugins.external.telescope')
@@ -16,7 +18,8 @@ require('neconfig.plugins.external.range_highlight')
 require('neconfig.plugins.external.shade')
 require('neconfig.plugins.external.aerial')
 require('neconfig.plugins.external.lualine')
+require('neconfig.plugins.external.scrollbar')
 
--- And this one is last
+-- And these ones should be last and in this order
 require('neconfig.plugins.external.whichkey')
 

@@ -168,23 +168,25 @@ end
 
 --#region LSP
 
-add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'd' }, 'diagnostics')
-add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l' }, 'LSP')
-add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'g'}, 'go to')
-add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'd'}, 'documentation')
-add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'w'}, 'workspace')
-add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'r'}, 'refactor')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l' },      'LSP')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'g'},      'go to')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'd'},      'documentation')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'w'},      'workspace')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'r'},      'refactor')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'e' },     'errors')
 function M.lsp()
     local buffer_option = { buffer = true }
     -- Diagnostics
-    map(mode.NORMAL, '<LEADER>do', vim.diagnostic.open_float, 'Open diagnostics menu')
-    map(mode.NORMAL, '<LEADER>d[', vim.diagnostic.goto_prev,  'Go to previous diagnostic')
-    map(mode.NORMAL, '<LEADER>d]', vim.diagnostic.goto_next,  'Go to next diagnostic')
-    map(mode.NORMAL, '<LEADER>dl', vim.diagnostic.setloclist, 'Show diagnostic list')
+    -- <LEADER>lel for diagnostic list
+    map(mode.NORMAL, '<LEADER>leo', vim.diagnostic.open_float, 'Open diagnostics menu')
+    map(mode.NORMAL, '<LEADER>lek', vim.diagnostic.goto_prev,  'Go to previous diagnostic')
+    map(mode.NORMAL, '<LEADER>lej', vim.diagnostic.goto_next,  'Go to next diagnostic')
+    -- Code action
+    map(mode.NORMAL, '<LEADER>lea', vim.lsp.buf.code_action, 'Show automatic fixes', buffer_option)
     -- Go do
-    map(mode.NORMAL, '<LEADER>lgd', vim.lsp.buf.definition,     'Go to definition',     buffer_option)
-    map(mode.NORMAL, '<LEADER>lgi', vim.lsp.buf.implementation, 'Go to implementation', buffer_option)
-    map(mode.NORMAL, '<LEADER>lgr', vim.lsp.buf.references,     'Go to references',     buffer_option)
+    -- <LEADER>lgd for go to definition
+    -- <LEADER>lgi for go to implementation
+    -- <LEADER>lgr for go to references
     -- Documentation
     map(mode.NORMAL, '<LEADER>ldh', vim.lsp.buf.hover,          'Show documentation',    buffer_option)
     map(mode.NORMAL, '<LEADER>lds', vim.lsp.buf.signature_help, 'Show singature',        buffer_option)
@@ -213,8 +215,6 @@ function M.lsp()
         'Format document',
         buffer_option
     )
-    -- Code action
-    map(mode.NORMAL, '<LEADER>lra', vim.lsp.buf.code_action, 'Show automatic fixes', buffer_option)
 end
 
 --#endregion
@@ -224,15 +224,23 @@ end
 
 add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 't' }, 'telescope')
 function M.telescope_menus(telescope, builtin)
-    map(mode.NORMAL, '<LEADER>tf', builtin.find_files,                     'Open file picker')
-    map(mode.NORMAL, '<LEADER>tg', builtin.live_grep,                      'Open grep picker')
-    map(mode.NORMAL, '<LEADER>tb', builtin.buffers,                        'Open buffers picker')
-    map(mode.NORMAL, '<LEADER>tq', builtin.quickfix,                       'Open quick fix picker')
-    map(mode.NORMAL, '<LEADER>ts', builtin.spell_suggest,                  'Open spell suggestion picker')
-    map(mode.NORMAL, '<LEADER>td', builtin.diagnostics,                    'Open diagnostics picker')
-    map(mode.NORMAL, '<LEADER>tl', builtin.filetypes,                      'Open file type picker')
-    map(mode.NORMAL, '<LEADER>tp', telescope.extensions.projects.projects, 'Open project picker')
-    map(mode.NORMAL, '<LEADER>tt', telescope.extensions.aerial.aerial,     'Open symbol tree picker')
+    -- All
+    map(mode.NORMAL, '<LEADER>tt',  '<CMD>Telescope<cr>', 'Open all pickers')
+    -- Diagnostics
+    map(mode.NORMAL, '<LEADER>lel', builtin.diagnostics,         'Open diagnostics list')
+    map(mode.NORMAL, '<LEADER>lgd', builtin.lsp_definitions,     'Go to definition')
+    map(mode.NORMAL, '<LEADER>lgi', builtin.lsp_implementations, 'Go to implementation')
+    map(mode.NORMAL, '<LEADER>lgr', builtin.lsp_references,      'Go to references')
+    -- Other
+    map(mode.NORMAL, '<LEADER>tf',  builtin.find_files,                     'Open file picker')
+    map(mode.NORMAL, '<LEADER>tg',  builtin.live_grep,                      'Open grep picker')
+    map(mode.NORMAL, '<LEADER>tb',  builtin.buffers,                        'Open buffers picker')
+    map(mode.NORMAL, '<LEADER>td',  builtin.diagnostics,                    'Open diagnostics picker')
+    map(mode.NORMAL, '<LEADER>tl',  builtin.filetypes,                      'Open file type picker')
+    -- Extensions
+    map(mode.NORMAL, '<LEADER>tp',  telescope.extensions.projects.projects, 'Open project picker')
+    map(mode.NORMAL, '<LEADER>ts',  telescope.extensions.aerial.aerial,     'Open symbol tree picker')
+    map(mode.NORMAL, '<LEADER>tn',  telescope.extensions.notify.notify,     'Open notifications picker')
 end
 
 function M.telescope_navigation(actions)

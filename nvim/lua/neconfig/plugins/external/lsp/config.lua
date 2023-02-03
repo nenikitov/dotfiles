@@ -31,6 +31,7 @@ local figet_status, fidget = pcall(require, 'fidget')
 local handlers = require('neconfig.plugins.external.lsp.handlers')
 
 local icons = require('neconfig.user.icons').diagnostics
+local utils = require('neconfig.utils')
 
 local servers = {
     'sumneko_lua',      -- Lua
@@ -66,7 +67,7 @@ masonlspconfig.setup {
 -- Signs
 for type, icon in pairs(icons) do
     type = type == 'warning' and 'warn' or type
-    local sign = 'DiagnosticSign' .. type:gsub('^%l', string.upper)
+    local sign = 'DiagnosticSign' .. utils.convert_case(type, utils.cases.SNAKE, utils.cases.CAMEL)
     vim.fn.sign_define(
         sign,
         {
