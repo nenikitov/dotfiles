@@ -30,7 +30,7 @@ treesitter.setup {
     auto_install = true,
     highlight = {
         enable = true,
-        additional_vim_regex_highlighting = false
+        additional_vim_regex_highlighting = true
     },
     indent = {
         enable = true
@@ -54,7 +54,7 @@ treesitter.setup {
     },
     -- Rainbow parentheses
     rainbow = {
-        enable = true,
+        enable = false,
         extended_mode = true,
          colors = {
             color_of_identifier('Special'),
@@ -79,6 +79,10 @@ treesitter.setup {
         }
     }
 }
+
+
+-- Keymaps
+require('neconfig.user.keymaps').treesitter()
 
 --#endregion
 

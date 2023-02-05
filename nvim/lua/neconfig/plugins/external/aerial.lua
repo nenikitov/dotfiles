@@ -120,7 +120,7 @@ local groups = {
     { 'TypeParameter', { '@type', 'Identifier' } },
     { 'Variable',      { 'Identifier' } },
 }
-for _, g in ipairs(groups) do
+--[[ for _, g in ipairs(groups) do
     local aerial_name_text = 'Aerial' .. g[1]
     local aerial_name_icon = aerial_name_text .. 'Icon'
 
@@ -140,7 +140,7 @@ for _, g in ipairs(groups) do
             break
         end
     end
-end
+end ]]
 vim.cmd('hi link AerialLine NvimTreeCursorLine')
 vim.cmd('hi link AerialGuide LineNr')
 

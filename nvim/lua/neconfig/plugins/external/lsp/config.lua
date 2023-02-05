@@ -39,6 +39,7 @@ local servers = {
     'tsserver',         -- JavaScript and TypeScript
     'jsonls',           -- JSON
     'rust_analyzer',    -- Rust
+    'pyright',          -- Python
 }
 
 --#endregion

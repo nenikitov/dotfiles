@@ -82,7 +82,7 @@ lualine.setup {
         lualine_z = {}
     },
     extensions = {
-        'aerial'
+        -- 'aerial'
     }
 }
 

@@ -498,7 +498,15 @@ end
 --#endregion
 
 
---#region Navigation
+--#region Treesitter
+
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 's' }, 'tresitter')
+function M.treesitter()
+    map(mode.NORMAL, '<LEADER>sn', '<CMD>TSNodeUnderCursor<CR>',              'Show TS node')
+    map(mode.NORMAL, '<LEADER>sh', '<CMD>TSHighlightCapturesUnderCursor<CR>', 'Show TS highlight')
+    map(mode.NORMAL, '<LEADER>sp', '<CMD>TSPlaygroundToggle<CR>',             'Toggle TS playground')
+    map(mode.NORMAL, '<LEADER>si', '<CMD>Inspect<CR>',                        'Inspect current highlight group')
+end
 
 function M.treesitter_textobjects()
     return {

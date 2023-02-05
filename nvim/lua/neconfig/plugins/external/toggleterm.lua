@@ -17,7 +17,7 @@ toggleterm.setup {
     open_mapping = require('neconfig.user.keymaps').toggleterm_open(),
     hide_numbers = true,
     persist_size = false,
-    size = 20
+    size = 15
 }
 
 -- Keymaps
