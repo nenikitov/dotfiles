@@ -17,14 +17,15 @@ local icons = require('neconfig.user.icons').diagnostics
 --#endregion
 
 
---#region Gitsigns
+--#region Scrollbar
 
 scrollbar.setup {
     marks = {
         Cursor = {
             text = 'I'
         }
-    }
+    },
+    set_highlights = false
 }
 
 if scrollbar_git_status then

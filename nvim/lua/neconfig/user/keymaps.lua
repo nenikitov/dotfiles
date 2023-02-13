@@ -239,7 +239,7 @@ function M.telescope_menus(telescope, builtin)
     map(mode.NORMAL, '<LEADER>tl',  builtin.filetypes,                      'Open file type picker')
     -- Extensions
     map(mode.NORMAL, '<LEADER>tp',  telescope.extensions.projects.projects, 'Open project picker')
-    map(mode.NORMAL, '<LEADER>ts',  telescope.extensions.aerial.aerial,     'Open symbol tree picker')
+    -- map(mode.NORMAL, '<LEADER>ts',  telescope.extensions.aerial.aerial,     'Open symbol tree picker')
     map(mode.NORMAL, '<LEADER>tn',  telescope.extensions.notify.notify,     'Open notifications picker')
 end
 
@@ -500,13 +500,13 @@ end
 
 --#region Treesitter
 
-add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 's' }, 'tresitter')
+add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 's' }, 'treesitter')
 function M.treesitter()
     map(mode.NORMAL, '<LEADER>sn', '<CMD>TSNodeUnderCursor<CR>',              'Show TS node')
     map(mode.NORMAL, '<LEADER>sh', '<CMD>TSHighlightCapturesUnderCursor<CR>', 'Show TS highlight')
     map(mode.NORMAL, '<LEADER>sp', '<CMD>TSPlaygroundToggle<CR>',             'Toggle TS playground')
-    map(mode.NORMAL, '<LEADER>si', '<CMD>Inspect<CR>',                        'Inspect current highlight group')
 end
+map(mode.NORMAL, '<LEADER>si', '<CMD>Inspect<CR>',                        'Inspect current highlight group')
 
 function M.treesitter_textobjects()
     return {

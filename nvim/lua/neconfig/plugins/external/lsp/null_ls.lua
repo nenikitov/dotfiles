@@ -17,6 +17,12 @@ local sources = {
     code_actions.eslint,
     diagnostics.eslint,
     formatting.eslint,
+    -- StyLua
+    formatting.stylua,
+    -- Prettier
+    formatting.prettierd.with {
+        filetypes = { 'markdown' }
+    }
 }
 
 --#endregion

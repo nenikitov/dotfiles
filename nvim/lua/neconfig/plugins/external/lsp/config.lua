@@ -21,9 +21,6 @@ if not masonlspconfig_status then
     return
 end
 
--- Live function signature
-local lsp_signature_status, lsp_signature = pcall(require, 'lsp_signature')
-
 -- LSP progress
 local figet_status, fidget = pcall(require, 'fidget')
 
@@ -34,7 +31,7 @@ local icons = require('neconfig.user.icons').diagnostics
 local utils = require('neconfig.utils')
 
 local servers = {
-    'sumneko_lua',      -- Lua
+    'lua_ls',      -- Lua
     'html',             -- HTML
     'tsserver',         -- JavaScript and TypeScript
     'jsonls',           -- JSON
@@ -93,7 +90,8 @@ vim.diagnostic.config {
     },
     virtual_text = {
         prefix = '●'
-    }
+    },
+    signs = false
 }
 
 -- Only one sign in sign column
@@ -156,17 +154,6 @@ end
 
 
 --#region Other plugins
-
-if lsp_signature_status then
-    lsp_signature.setup {
-        handler_opts = {
-            max_width = 64
-        },
-        hint_enable = false
-    }
-else
-    vim.notify('LSP signature not available', vim.log.levels.WARN)
-end
 
 if figet_status then
     fidget.setup {

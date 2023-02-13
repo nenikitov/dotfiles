@@ -71,7 +71,13 @@ return packer.startup(function(use)
     -- Color scheme
     use 'Mofiqul/vscode.nvim'                           -- VSCode
     use '~/SharedFiles/Projects/nvim/necode.nvim'       -- My version of VSCode
-    use '~/SharedFiles/Projects/nvim/termcolors.nvim'       -- My custom color scheme
+    use {                                               -- My custom color scheme
+        '~/SharedFiles/Projects/nvim/termcolors.nvim',
+        requires = {
+            '~/SharedFiles/Projects/nvim/highlight-builder.nvim'
+        }
+    }
+    use 'tomasiser/vim-code-dark'
 
     -- Completion
     use 'hrsh7th/nvim-cmp'                              -- Completion engine
@@ -90,7 +96,6 @@ return packer.startup(function(use)
     use 'williamboman/mason.nvim'                       -- Manager for LSPs, DAPs, linters, and formatters
     use 'williamboman/mason-lspconfig.nvim'             -- Bridge lspconfig and mason
     use 'neovim/nvim-lspconfig'                         -- Main LSP config
-    use 'ray-x/lsp_signature.nvim'                      -- Automatically show signature when typing a function
     use 'jose-elias-alvarez/null-ls.nvim'               -- Hook non-LSP sources into LSP system
     use 'j-hui/fidget.nvim'                             -- LSP progress
 
@@ -156,10 +161,18 @@ return packer.startup(function(use)
         }
     }
     use 'sunjon/Shade.nvim'                             -- Darken inactive splits
-    use 'stevearc/aerial.nvim'                          -- Outline of the symbols
+    -- use 'stevearc/aerial.nvim'                          -- Outline of the symbols
     use 'uga-rosa/ccc.nvim'                             -- Color picker
     use 'rcarriga/nvim-notify'                          -- Fancy notifications
+    use {                                               -- Fancy command line and popups
+        'folke/noice.nvim',
+        requires = {
+            'MunifTanjim/nui.nvim',
+            'rcarriga/nvim-notify'
+        }
+    }
     use 'petertriho/nvim-scrollbar'                     -- Scrollbar
+    use 'ggandor/leap.nvim'                             -- Fast navigation
 
     -- Set up the configuration if packer was just installed
     if packer_bootstrapped then

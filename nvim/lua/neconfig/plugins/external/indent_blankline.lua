@@ -12,8 +12,10 @@ end
 --#region Indent lines and scope
 
 blankline.setup {
-    show_current_context = true,
+    show_current_context = true
 }
+
+-- vim.cmd [[ let g:indent_blankline_char_list = ['|', '¦', '┆', '┊'] ]]
 
 --#endregion
 

@@ -10,7 +10,7 @@ end
 --#endregion
 
 
---#region Gitsigns
+--#region Notify
 
 notify.setup {
     stages = 'slide',

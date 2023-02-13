@@ -35,7 +35,7 @@ lualine.setup {
         component_separators = '|',
         section_separators = ' ',
         disabled_filetypes = {
-            'NvimTree', 'aerial'
+            'NvimTree', -- 'aerial'
         }
     },
     sections = {
@@ -52,7 +52,7 @@ lualine.setup {
         },
         lualine_c = {
             {
-                'aerial',
+                -- 'aerial',
                 sep = ' > '
             }
         },
