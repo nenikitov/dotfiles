@@ -22,7 +22,14 @@ local sources = {
     -- Prettier
     formatting.prettierd.with {
         filetypes = { 'markdown' }
-    }
+    },
+    -- CSpell
+    -- diagnostics.cspell.with {
+    --     diagnostics_postprocess = function(d)
+    --         d.severity = vim.diagnostic.severity.HINT
+    --     end
+    -- },
+    -- code_actions.cspell,
 }
 
 --#endregion

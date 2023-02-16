@@ -52,17 +52,7 @@ treesitter.setup {
     -- Rainbow parentheses
     rainbow = {
         enable = false,
-        extended_mode = true,
-         colors = {
-            color_of_identifier('Special'),
-            color_of_identifier('Statement'),
-            color_of_identifier('Type'),
-        },
-        termcolors = {
-            'Yellow',
-            'Magenta',
-            'Blue',
-        }
+        extended_mode = true
     },
     -- Playground
     playground = {

@@ -33,7 +33,7 @@ end
 lualine.setup {
     options = {
         component_separators = '|',
-        section_separators = ' ',
+        section_separators = '▒',
         disabled_filetypes = {
             'NvimTree', -- 'aerial'
         }

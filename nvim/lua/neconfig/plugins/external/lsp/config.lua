@@ -31,12 +31,12 @@ local icons = require('neconfig.user.icons').diagnostics
 local utils = require('neconfig.utils')
 
 local servers = {
-    'lua_ls',      -- Lua
-    'html',             -- HTML
-    'tsserver',         -- JavaScript and TypeScript
-    'jsonls',           -- JSON
-    'rust_analyzer',    -- Rust
-    'pyright',          -- Python
+    'lua_ls', -- Lua
+    'html', -- HTML
+    'tsserver', -- JavaScript and TypeScript
+    'jsonls', -- JSON
+    'rust_analyzer', -- Rust
+    'pyright', -- Python
 }
 
 --#endregion
@@ -82,11 +82,11 @@ vim.diagnostic.config {
     severity_sort = true,
     float = {
         focusable = false,
-        style  = 'minimal',
-        border = 'rounded',
-        source = 'always',
-        header = '',
-        prefix = ''
+        style     = 'minimal',
+        border    = 'rounded',
+        source    = 'always',
+        header    = '',
+        prefix    = ''
     },
     virtual_text = {
         prefix = '●'
@@ -140,7 +140,8 @@ local default_options = {
 }
 for _, server in ipairs(servers) do
     local options = default_options
-    local custom_configuration_status, custom_configuration = pcall(require, 'neconfig.plugins.external.lsp.servers.' .. server)
+    local custom_configuration_status, custom_configuration = pcall(require,
+        'neconfig.plugins.external.lsp.servers.' .. server)
 
     if custom_configuration_status then
         vim.notify(tostring(custom_configuration.settings.Lua.diagnostics.globals[1]))
@@ -169,4 +170,3 @@ else
 end
 
 --#endregion
-

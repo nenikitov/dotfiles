@@ -27,7 +27,7 @@ o.ttimeoutlen = 0               -- Wait for a keycode sequence to complete
 
 
 --#region Colors
-o.termguicolors = false          -- Enable true color
+o.termguicolors = false         -- Enable true color
 o.background = 'dark'           -- Hint at dark color scheme
 --#endreigon
 
@@ -80,6 +80,8 @@ o.backspace = {                 -- Configure what can be erased with <BACKSPACE>
     'indent',                       -- Indentation
     'start'                         -- Start of insert
 }
+vim.cmd                         -- Disable auto comment
+    [[ set formatoptions-=cro ]]
 --#endregion
 
 

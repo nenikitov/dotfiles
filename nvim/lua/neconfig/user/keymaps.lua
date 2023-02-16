@@ -442,6 +442,7 @@ function M.bufferline(bufdelete)
     map(mode.NORMAL, '<LEADER>bpc', '<CMD>BufferLinePickClose<CR>',               'Close a buffer')
     map(mode.NORMAL, '<LEADER>bpc', '<CMD>BufferLinePickClose<CR>',               'Close a buffer')
     map(mode.NORMAL, '<LEADER>bn',  '<CMD>enew<CR>',                              'Create a new empty buffer')
+    map(mode.NORMAL, '<LEADER>br',  '<CMD>edit<CR>',                              'Refresh current buffer')
 end
 
 --#endregion

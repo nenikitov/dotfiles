@@ -171,7 +171,7 @@ return packer.startup(function(use)
             'rcarriga/nvim-notify'
         }
     }
-    use 'petertriho/nvim-scrollbar'                     -- Scrollbar
+    use 'lewis6991/satellite.nvim'                      -- Scrollbar
     use 'ggandor/leap.nvim'                             -- Fast navigation
 
     -- Set up the configuration if packer was just installed
