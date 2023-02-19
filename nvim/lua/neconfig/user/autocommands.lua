@@ -26,8 +26,15 @@ ac(
 )
 
 -- Disable auto comments on all files
-vim.cmd [[ autocmd BufEnter * set formatoptions-=cro ]]
-vim.cmd [[ autocmd BufEnter * setlocal formatoptions-=cro ]]
+ac(
+    'BufEnter',
+    {
+        callback = function()
+            vim.cmd([[set formatoptions-=cro]])
+        end,
+        group = ag('format_general')
+    }
+)
 
 -- Ensure that the file is fully refreshed if modified outside
 ac(
