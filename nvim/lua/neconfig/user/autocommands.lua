@@ -13,7 +13,6 @@ end
 --#region Auto commmands
 
 -- Fast close buffers that are only for info
-local group_fast_close = ag('fast_close')
 ac(
     'FileType',
     {
@@ -22,7 +21,7 @@ ac(
             vim.keymap.set('n', 'q',     '<CMD>close<CR>', { silent = true, buffer = 0 })
             vim.keymap.set('n', '<ESC>', '<CMD>close<CR>', { silent = true, buffer = 0 })
         end,
-        group = group_fast_close
+        group = ag('fast_close')
     }
 )
 
@@ -30,6 +29,28 @@ ac(
 vim.cmd [[ autocmd BufEnter * set formatoptions-=cro ]]
 vim.cmd [[ autocmd BufEnter * setlocal formatoptions-=cro ]]
 
+-- Ensure that the file is fully refreshed if modified outside
+ac(
+    { 'FocusGained', 'BufWinEnter' },
+    {
+        command = 'checktime',
+        group = ag('change_outside')
+    }
+)
+
+-- Remove trailing spaces
+ac(
+    'BufWritePre',
+    {
+        callback = function()
+            local cursor = vim.api.nvim_win_get_cursor(0)
+            local row, col = cursor[1], cursor[2]
+            vim.api.nvim_command([[%s/\s\+$//e]])
+            vim.api.nvim_win_set_cursor(0, { row, col })
+        end,
+        group = ag('trailing_spaces')
+    }
+)
 
 --#endregion
 

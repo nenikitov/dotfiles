@@ -11,6 +11,7 @@ o.fileencoding = 'utf-8'        -- Set default file encoding
 o.backup = false                -- Do not backup if the file is overriden
 o.writebackup = false           -- Do not backup if the file is overriden
 o.swapfile = false              -- Do not create swap for buffers
+o.autoread = true               -- Automatically re-read the file if it was modified outside vim
 --#endregion
 
 
@@ -88,6 +89,6 @@ vim.cmd                         -- Disable auto comment
 --#region Search
 o.ignorecase = true             -- Do case-insensitive searches
 o.smartcase = true              -- Do case-sensitive searches if the pattern has an uppercase
-o.hlsearch= true                -- Highlight search matches
+o.hlsearch = true               -- Highlight search matches
 --#endregion
 
