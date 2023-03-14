@@ -1,4 +1,15 @@
-local listchars = {
+--#region Helpers
+
+--- Module return.
+local M = {}
+
+--#endregion
+
+
+
+--#region Icons
+
+M.list_chars = {
     tab      = '→ ',
     trail    = '·',
     nbsp     = '␣',
@@ -6,14 +17,14 @@ local listchars = {
     precedes = '◀'
 }
 
-local diagnostics = {
+M.diagnostics = {
     error   = '',
     warning = '',
     hint    = '',
     info    = ''
 }
 
-local gitsigns = {
+M.git_signs = {
     add          = '┃',
     change       = '┃',
     delete       = '',
@@ -24,7 +35,7 @@ local gitsigns = {
 
 local scrollbar_diagnostic = { '-', '=' }
 local scrollbar_git = { '┃' }
-local scollbar = {
+M.scrollbar = {
     cursor     = 'I',
     search     = '/',
     error      = scrollbar_diagnostic,
@@ -37,7 +48,7 @@ local scollbar = {
     git_delete = scrollbar_git
 }
 
-local nvim_tree = {
+M.nvim_tree = {
     folder = {
         default      = '',
         open         = '',
@@ -48,7 +59,7 @@ local nvim_tree = {
     }
 }
 
-local completion = {
+M.completion = {
     Array         = '',
     Boolean       = '',
     Class         = 'ﴯ',
@@ -85,11 +96,12 @@ local completion = {
     Variable      = '',
 }
 
-return {
-    completion = completion,
-    diagnostics = diagnostics,
-    gitsigns = gitsigns,
-    listchars = listchars,
-    nvim_tree = nvim_tree,
-    scollbar = scollbar,
-}
+--#endregion
+
+
+
+--#region Exports
+
+return M
+
+--#endregion

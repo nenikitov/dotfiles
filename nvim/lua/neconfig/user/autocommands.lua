@@ -1,16 +1,17 @@
 --#region Helpers
 
--- Autocmd
+--- Shortcut to `vim.api.nvim_create_autocmd`.
 local ac = vim.api.nvim_create_autocmd
+--- Shortcut to `vim.api.nvim_create_autogroup`.
 local function ag(name)
     return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
-
 --#endregion
 
 
---#region Auto commmands
+
+--#region Auto commands
 
 -- Fast close buffers that are only for info
 ac(
@@ -45,7 +46,7 @@ ac(
     }
 )
 
--- Remove trailing spaces
+-- Remove trailing spaces when writing
 ac(
     'BufWritePre',
     {

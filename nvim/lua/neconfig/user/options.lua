@@ -1,10 +1,13 @@
 --#region Helpers
 
--- Shortcut to access vim options
+--- Shortcut to `vim.opt`.
 local o = vim.opt
 
 --#endregion
 
+
+
+--#region Options
 
 -- Files and backup
 o.fileencoding = 'utf-8'        -- Set default file encoding
@@ -45,13 +48,13 @@ o.pumheight = 10                -- Set the size of popup menus
 
 -- Editor UI
 o.mouse = 'a'                   -- Enable mouse in all modes
-o.cursorline = true             -- Hightlight the line where the cursor is
+o.cursorline = true             -- Highlight the line where the cursor is
 o.wrap = false                  -- Do not wrap the text
-o.scrolloff = 8                 -- Keep lines on top and below the cursor when scrolling
-o.sidescrolloff = 16            -- Keep characters on the left and right of the cursor when scrolling
+o.scrolloff = 4                 -- Keep lines on top and below the cursor when scrolling
+o.sidescrolloff = 8             -- Keep characters on the left and right of the cursor when scrolling
 o.list = true                   -- Show special white-space characters
 o.listchars =                   -- How these special white-space characters are displayed
-    require('neconfig.user.icons').listchars
+    require('neconfig.user.icons').list_chars
 o.showmode = false              -- Hide mode from the command line
 
 
@@ -73,11 +76,14 @@ o.backspace = {                 -- Configure what can be erased with <BACKSPACE>
     'indent',                       -- Indentation
     'start'                         -- Start of insert
 }
-vim.cmd                         -- Disable auto comment
+vim.cmd(                        -- Disable auto comment
     [[ set formatoptions-=cro ]]
+)
 
 
 -- Search
 o.ignorecase = true             -- Do case-insensitive searches
 o.smartcase = true              -- Do case-sensitive searches if the pattern has an uppercase
 o.hlsearch = true               -- Highlight search matches
+
+--#endregion

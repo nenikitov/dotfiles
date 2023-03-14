@@ -1,18 +1,27 @@
 --#region Helpers
 
--- Shortcut to access vim command
+-- Imports
+local log = require "neconfig.utils.log"
+
+--- Shortcut to `vim.cmd`.
 local cmd = vim.cmd
 
--- Name of the colorscheme
+--- Name of the colorscheme.
 local colorscheme = 'termcolors'
--- Name of the colorscheme to fall back if the color scheme was not found
-local colorscheme_fallback = 'industry'
+--- Name of the colorscheme to fall back if the color scheme was not found.
+local colorscheme_fallback = 'default'
 
 --#endregion
 
-cmd('colorscheme ' .. colorscheme_fallback)
+
+
+--#region Color scheme
+
 local colorscheme_status, _ = pcall(cmd, 'colorscheme ' .. colorscheme)
 if not colorscheme_status then
-    vim.notify('Color scheme ' .. colorscheme .. ' not available', vim.log.levels.WARN)
+    log.warning('Color scheme ' .. colorscheme .. ' not available')
+    cmd('colorscheme ' .. colorscheme_fallback)
     return
 end
+
+--#endregion
