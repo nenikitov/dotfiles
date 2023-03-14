@@ -120,7 +120,7 @@ schemes:
             background: '#141417'
             foreground: '#eeeeee'
         normal:
-            black:   '#1c1c1f'
+            black:   '#242427'
             red:     '#d62c2c'
             green:   '#2c904d'
             yellow:  '#ff7135'
@@ -129,7 +129,7 @@ schemes:
             cyan:    '#14b5a7'
             white:   '#cbcbcb'
         bright:
-            black:   '#555555'
+            black:   '#666666'
             red:     '#ff478d'
             green:   '#42dd76'
             yellow:  '#ffb638'
