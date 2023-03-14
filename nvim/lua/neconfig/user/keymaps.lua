@@ -87,14 +87,7 @@ map(
     end,
     'Close the current buffer'
 )
-map(
-    mode.NORMAL,
-    '<A-S-c>',
-    function()
-        vim.cmd('q!')
-    end,
-    'Force close the current buffer'
-)
+map( { mode.NORMAL, mode.TERM }, '<A-S-c>', '<CMD>quitall!<CR>', 'Force close everything')
 -- Go to
 map({ mode.NORMAL, mode.TERM }, '<C-k>', '<CMD>wincmd k<CR>', 'Go to split on the top')
 map({ mode.NORMAL, mode.TERM }, '<C-j>', '<CMD>wincmd j<CR>', 'Go to split on the bottom')
@@ -112,7 +105,7 @@ map({ mode.NORMAL, mode.TERM }, '<C-RIGHT>', '<CMD>vertical resize +1<CR>', 'Dec
 --#region Editing
 
 -- Faster exit out of insert mode
-map(mode.INSERT, '<A-SPACE>', '<ESC>', 'Exit out of insert mode')
+map({ mode.INSERT, mode.VISUAL, mode.TERM }, '<A-SPACE>', '<ESC>', 'Exit out of insert mode')
 
 -- Do not exit out of visual mode when indenting
 map(mode.VISUAL, '<', '<gv', 'Unindent without quitting visual mode')
@@ -126,7 +119,7 @@ map({ mode.NORMAL, mode.VISUAL }, 'H', '^', 'Go to the beginning of the line')
 map({ mode.NORMAL, mode.VISUAL }, 'L', '$', 'Go to the end of the line')
 
 -- Paste in insert mode
-map(mode.INSERT, '<C-v>', '<C-r>+', 'Paste directly in insert mode')
+map(mode.INSERT, '<C-v>', '<ESC>pi', 'Paste directly in insert mode')
 
 -- Clear search
 map(mode.NORMAL, '<A-/>', '<CMD>let @/ = ""<CR>', 'Clear previous search highlighting')

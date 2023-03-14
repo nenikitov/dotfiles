@@ -15,7 +15,9 @@ local code_actions = null_ls.builtins.code_actions
 local sources = {
     -- ESLint
     code_actions.eslint,
-    diagnostics.eslint,
+    diagnostics.eslint.with {
+        method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+    },
     formatting.eslint,
     -- StyLua
     formatting.stylua,
@@ -24,11 +26,12 @@ local sources = {
         filetypes = { 'markdown' }
     },
     -- CSpell
-    -- diagnostics.cspell.with {
-    --     diagnostics_postprocess = function(d)
-    --         d.severity = vim.diagnostic.severity.HINT
-    --     end
-    -- },
+    diagnostics.cspell.with {
+        diagnostics_postprocess = function(d)
+            d.severity = vim.diagnostic.severity.HINT
+        end,
+        method = null_ls.methods.DIAGNOSTICS_ON_SAVE
+    },
     -- code_actions.cspell,
 }
 

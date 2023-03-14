@@ -31,12 +31,14 @@ local icons = require('neconfig.user.icons').diagnostics
 local utils = require('neconfig.utils')
 
 local servers = {
-    'lua_ls', -- Lua
-    'html', -- HTML
-    'tsserver', -- JavaScript and TypeScript
-    'jsonls', -- JSON
+    'lua_ls',        -- Lua
+    'html',          -- HTML
+    'cssls',         -- CSS
+    'tsserver',      -- JavaScript and TypeScript
+    'jsonls',        -- JSON
     'rust_analyzer', -- Rust
-    'pyright', -- Python
+    'pyright',       -- Python
+    'jdtls',         -- Java
 }
 
 --#endregion

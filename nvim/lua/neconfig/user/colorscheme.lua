@@ -13,7 +13,7 @@ local colorscheme_fallback = 'industry'
 cmd('colorscheme ' .. colorscheme_fallback)
 local colorscheme_status, _ = pcall(cmd, 'colorscheme ' .. colorscheme)
 if not colorscheme_status then
-    vim.notify('Color scheme ' .. colorscheme .. ' not found', vim.log.levels.WARN)
+    vim.notify('Color scheme ' .. colorscheme .. ' not available', vim.log.levels.WARN)
     return
 end
 

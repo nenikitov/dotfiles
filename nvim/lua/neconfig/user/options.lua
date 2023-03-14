@@ -1,4 +1,4 @@
---#region Helpersoption
+--#region Helpers
 
 -- Shortcut to access vim options
 local o = vim.opt

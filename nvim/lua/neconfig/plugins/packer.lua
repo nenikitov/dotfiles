@@ -23,7 +23,7 @@ if fn.empty(fn.glob(install_path)) ~= 0 then
     packer_bootstrapped = true
 end
 
--- Reload Neovim if the plugins file was modified
+-- Sync packer if the plugins file was modified
 if reload_on_plugin_update then
     vim.cmd([[
         augroup packer_use_config
