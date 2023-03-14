@@ -1,3 +1,4 @@
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nvim'
+export VISUAL="${EDITOR}"
+export GIT_EDITOR="${EDITOR}"
 
