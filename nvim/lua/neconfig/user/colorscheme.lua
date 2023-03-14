@@ -16,4 +16,3 @@ if not colorscheme_status then
     vim.notify('Color scheme ' .. colorscheme .. ' not available', vim.log.levels.WARN)
     return
 end
-

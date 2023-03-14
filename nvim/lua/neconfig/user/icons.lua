@@ -93,4 +93,3 @@ return {
     nvim_tree = nvim_tree,
     scollbar = scollbar,
 }
-
