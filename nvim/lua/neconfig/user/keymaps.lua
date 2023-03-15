@@ -192,7 +192,6 @@ function M.telescope_navigation()
             ['<Tab>'] = actions.toggle_selection,
             ['<C-/>'] = actions.which_key,
             ['<C-_>'] = actions.which_key,
-            ['<C-j>'] = actions.nop,
         },
         n = {
             ['q']     = actions.close,
@@ -264,6 +263,52 @@ function M.cmp()
 end
 
 
+--- LSP related.
+function M.lsp()
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l' }, 'lsp')
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'd' }, 'documentation')
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'e' }, 'errors')
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'g' }, 'go to')
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'r' }, 'refactor')
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'w' }, 'workspace')
+
+    local builtin = require('telescope.builtin')
+
+    local buffer_option = { buffer = true }
+
+    -- Documentation
+    map(mode.NORMAL,  '<LEADER>ldo',  vim.lsp.buf.hover,                    'Show documentation',       buffer_option)
+    map(mode.NORMAL,  '<LEADER>lds',  vim.lsp.buf.signature_help,           'Show signature',           buffer_option)
+    -- Errors
+    map(mode.NORMAL,  '<LEADER>lel',  builtin.diagnostics,                  'Show error list',          buffer_option)
+    map(mode.NORMAL,  '<LEADER>leo',  vim.diagnostic.open_float,            'Show current error',       buffer_option)
+    map(mode.NORMAL,  '<LEADER>lek',  vim.diagnostic.goto_prev,             'Go to previous error',     buffer_option)
+    map(mode.NORMAL,  '<LEADER>lej',  vim.diagnostic.goto_next,             'Go to next error',         buffer_option)
+    map(mode.NORMAL,  '<LEADER>lea',  vim.lsp.buf.code_action,              'Show automatic fixes',     buffer_option)
+    -- Go to
+    map(mode.NORMAL,  '<LEADER>lgd',  builtin.lsp_definitions,              'Go to definition',         buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgr',  builtin.lsp_references,               'Go to references',         buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgi',  builtin.lsp_implementations,          'Go to implementation',     buffer_option)
+    -- Refactor
+    map(mode.NORMAL,  '<LEADER>lrr',  vim.lsp.buf.rename,                   'Rename',                   buffer_option)
+    map(
+        mode.NORMAL,
+        '<LEADER>lrf',
+        function() vim.lsp.buf.format { async = true } end,
+        'Rename',
+        buffer_option
+    )
+    -- Workspace
+    map(mode.NORMAL,  '<LEADER>lwa',  vim.lsp.buf.add_workspace_folder,     'Add workspace folder',     buffer_option)
+    map(mode.NORMAL,  '<LEADER>lwr',  vim.lsp.buf.remove_workspace_folder,  'Remove workspace folder',  buffer_option)
+    map(
+        mode.NORMAL,
+        '<LEADER>lwl',
+        function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+        'Show workspace folders list',
+        buffer_option
+    )
+end
 
 --#endregion
 
