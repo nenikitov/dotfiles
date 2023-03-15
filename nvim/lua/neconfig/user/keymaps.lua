@@ -216,6 +216,29 @@ function M.telescope_navigation()
     })
 end
 
+
+--- Control cmp menus.
+function M.cmp()
+    local mapping = require('cmp').mapping
+
+    local function map_cmp(callback)
+        return mapping(callback, { mode.INSERT, mode.COMMAND })
+    end
+
+    return {
+        -- Documentation
+        ['<C-u>']     = map_cmp(mapping.scroll_docs(1)),
+        ['<C-i>']     = map_cmp(mapping.scroll_docs(-1)),
+        -- Items
+        ['<C-j>']     = map_cmp(mapping.select_next_item()),
+        ['<C-k>']     = map_cmp(mapping.select_prev_item()),
+        -- Confirm & abort
+        ['<C-SPACE>'] = map_cmp(mapping.complete()),
+        ['<C-e>']     = map_cmp(mapping.abort()),
+        ['<C-l>']     = map_cmp(mapping.confirm { select = true }),}
+end
+
+
 --#endregion
 
 
