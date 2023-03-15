@@ -41,6 +41,7 @@ local function map(modes, keys, func, description, options)
     vim.keymap.set(modes, keys, func, options)
 end
 
+
 --- Prefixes passed to WhichKey for more documentation.
 local whichkey_prefixes = {}
 
@@ -106,15 +107,15 @@ function M.general()
         'Close current window'
     )
     -- Go to
-    map({ mode.NORMAL, mode.TERM }, '<A-k>',  '<CMD>wincmd k<CR>',  'Go to split on the top')
-    map({ mode.NORMAL, mode.TERM }, '<A-j>',  '<CMD>wincmd j<CR>',  'Go to split on the bottom')
-    map({ mode.NORMAL, mode.TERM }, '<A-h>',  '<CMD>wincmd h<CR>',  'Go to split on the left')
-    map({ mode.NORMAL, mode.TERM }, '<A-l>',  '<CMD>wincmd l<CR>',  'Go to split on the right')
+    map({ mode.NORMAL, mode.TERM }, '<C-k>',  '<CMD>wincmd k<CR>',  'Go to split on the top')
+    map({ mode.NORMAL, mode.TERM }, '<C-j>',  '<CMD>wincmd j<CR>',  'Go to split on the bottom')
+    map({ mode.NORMAL, mode.TERM }, '<C-h>',  '<CMD>wincmd h<CR>',  'Go to split on the left')
+    map({ mode.NORMAL, mode.TERM }, '<C-l>',  '<CMD>wincmd l<CR>',  'Go to split on the right')
     -- Resize
-    map({ mode.NORMAL, mode.TERM }, '<A-UP>',     '<CMD>resize +1<CR>',           'Increase the size of the split vertically')
-    map({ mode.NORMAL, mode.TERM }, '<A-DOWN>',   '<CMD>resize -1<CR>',           'Decrease the size of the split vertically')
-    map({ mode.NORMAL, mode.TERM }, '<A-RIGHT>',  '<CMD>vertical resize +1<CR>',  'Increase the size of the split horizontally')
-    map({ mode.NORMAL, mode.TERM }, '<A-LEFT>',   '<CMD>vertical resize -1<CR>',  'Decrease the size of the split horizontally')
+    map({ mode.NORMAL, mode.TERM }, '<C-UP>',     '<CMD>resize +1<CR>',           'Increase the size of the split vertically')
+    map({ mode.NORMAL, mode.TERM }, '<C-DOWN>',   '<CMD>resize -1<CR>',           'Decrease the size of the split vertically')
+    map({ mode.NORMAL, mode.TERM }, '<C-RIGHT>',  '<CMD>vertical resize +1<CR>',  'Increase the size of the split horizontally')
+    map({ mode.NORMAL, mode.TERM }, '<C-LEFT>',   '<CMD>vertical resize -1<CR>',  'Decrease the size of the split horizontally')
 
     -- Faster exit to normal mode
     map({ mode.INSERT, mode.VISUAL, mode.TERM },  '<A-SPACE>',  '<ESC>',  'Exit to normal mode')
@@ -123,11 +124,15 @@ function M.general()
     map(mode.VISUAL,  '>',  '>gv',  'Indent without quitting visual mode')
     -- Keep clipboard when pasting in visual mode
     map(mode.VISUAL,  'p',  '"_dP',  'Paste in visual mode and keep clipboard')
-    -- Faster beginning/end of line navigation
+    -- Faster navigation
     map({ mode.NORMAL, mode.VISUAL },  'H',  '^',  'Go to the beginning of the line')
     map({ mode.NORMAL, mode.VISUAL },  'L',  '$',  'Go to the end of the line')
+    map(mode.INSERT,  '<C-k>',  '<UP>',     'Move up')
+    map(mode.INSERT,  '<C-j>',  '<DOWN>',   'Move down')
+    map(mode.INSERT,  '<C-h>',  '<LEFT>',   'Move left')
+    map(mode.INSERT,  '<C-l>',  '<RIGHT>',  'Move right')
     -- Paste in insert mode
-    map(mode.INSERT,  '<C-v>',  '<ESC>pi',  'Paste directly in insert mode')
+    map(mode.INSERT,  '<C-v>',  '<ESC>pa',  'Paste directly in insert mode')
 
     -- Clear search
     map(mode.NORMAL,  '<A-/>',  '<CMD>let @/ = ""<CR>',  'Clear search')
@@ -219,7 +224,9 @@ end
 
 --- Control cmp menus.
 function M.cmp()
-    local mapping = require('cmp').mapping
+    local cmp = require('cmp')
+    local mapping = cmp.mapping
+    local luasnip = require('luasnip')
 
     local function map_cmp(callback)
         return mapping(callback, { mode.INSERT, mode.COMMAND })
@@ -232,11 +239,30 @@ function M.cmp()
         -- Items
         ['<C-j>']     = map_cmp(mapping.select_next_item()),
         ['<C-k>']     = map_cmp(mapping.select_prev_item()),
-        -- Confirm & abort
+        -- Confirm & abort with jumps
         ['<C-SPACE>'] = map_cmp(mapping.complete()),
         ['<C-e>']     = map_cmp(mapping.abort()),
-        ['<C-l>']     = map_cmp(mapping.confirm { select = true }),}
+        ['<C-l>']     = map_cmp(function(fallback)
+            if cmp.visible() then
+                cmp.confirm { select = true }
+            elseif luasnip.jumpable(1) then
+                luasnip.jump(1)
+            else
+                fallback()
+            end
+        end),
+        ['<C-h>']     = map_cmp(function(fallback)
+            if cmp.visible() then
+                cmp.abort()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end),
+    }
 end
+
 
 
 --#endregion

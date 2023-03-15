@@ -11,6 +11,7 @@ local l = vim.log.levels
 --#endregion
 
 
+
 --#region Log
 
 --- Log a message as an info.
