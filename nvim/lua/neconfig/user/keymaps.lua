@@ -67,6 +67,16 @@ end
 
 
 
+--#region
+
+function M.whichkey_prefixes()
+    return whichkey_prefixes
+end
+
+--#endregion
+
+
+
 --#region Keymaps
 
 function M.general()
@@ -84,9 +94,9 @@ function M.general()
     map(mode.NOT_TYPING, '<LEADER>bh',  '<CMD>split<CR>',   'Spilt window horizontally')
     map(mode.NOT_TYPING, '<LEADER>bv',  '<CMD>vsplit<CR>',  'Spilt window vertically')
     -- Manipulation
-    map(mode.NOT_TYPING, '<LEADER>bn',  '<CMD>enew<CR>',     'Create a new empty buffer')
-    map(mode.NOT_TYPING, '<LEADER>br',  '<CMD>edit<CR>',     'Refresh current buffer')
-    map(mode.NOT_TYPING, '<LEADER>bd',  '<CMD>bdelete<CR>',  'Delete current buffer')
+    map(mode.NOT_TYPING, '<LEADER>bn',  '<CMD>enew<CR>',      'Create a new empty buffer')
+    map(mode.NOT_TYPING, '<LEADER>br',  '<CMD>edit<CR>',      'Refresh current buffer')
+    map(mode.NOT_TYPING, '<LEADER>bd',  '<CMD>bdelete<CR>',   'Delete current buffer')
     map(
         mode.NOT_TYPING,
         '<LEADER>bc',
@@ -108,35 +118,23 @@ function M.general()
     map({ mode.NORMAL, mode.TERM }, '<A-DOWN>',   '<CMD>resize -1<CR>',           'Decrease the size of the split vertically')
     map({ mode.NORMAL, mode.TERM }, '<A-RIGHT>',  '<CMD>vertical resize +1<CR>',  'Increase the size of the split horizontally')
     map({ mode.NORMAL, mode.TERM }, '<A-LEFT>',   '<CMD>vertical resize -1<CR>',  'Decrease the size of the split horizontally')
+
+    -- Faster exit to normal mode
+    map({ mode.INSERT, mode.VISUAL, mode.TERM },  '<A-SPACE>',  '<ESC>',  'Exit to normal mode')
+    -- Indent without exiting visual
+    map(mode.VISUAL,  '<',  '<gv',  'Unindent without quitting visual mode')
+    map(mode.VISUAL,  '>',  '>gv',  'Indent without quitting visual mode')
+    -- Keep clipboard when pasting in visual mode
+    map(mode.VISUAL,  'p',  '"_dP',  'Paste in visual mode and keep clipboard')
+    -- Faster beginning/end of line navigation
+    map({ mode.NORMAL, mode.VISUAL },  'H',  '^',  'Go to the beginning of the line')
+    map({ mode.NORMAL, mode.VISUAL },  'L',  '$',  'Go to the end of the line')
+    -- Paste in insert mode
+    map(mode.INSERT,  '<C-v>',  '<ESC>pi',  'Paste directly in insert mode')
+
+    -- Clear search
+    map(mode.NORMAL,  '<A-/>',  '<CMD>let @/ = ""<CR>',  'Clear search')
 end
-
-
-
---[[
---#region Editing
-
--- Faster exit out of insert mode
-map({ mode.INSERT, mode.VISUAL, mode.TERM }, '<A-SPACE>', '<ESC>', 'Exit out of insert mode')
-
--- Do not exit out of visual mode when indenting
-map(mode.VISUAL, '<', '<gv', 'Unindent without quitting visual mode')
-map(mode.VISUAL, '>', '>gv', 'Indent without quitting visual mode')
-
--- Keep clipboard when pasting in visual mode
-map(mode.VISUAL, 'p', '"_dP', 'Paste in visual mode and keep clipboard')
-
--- Better SHIFT + direction navigation
-map({ mode.NORMAL, mode.VISUAL }, 'H', '^', 'Go to the beginning of the line')
-map({ mode.NORMAL, mode.VISUAL }, 'L', '$', 'Go to the end of the line')
-
--- Paste in insert mode
-map(mode.INSERT, '<C-v>', '<ESC>pi', 'Paste directly in insert mode')
-
--- Clear search
-map(mode.NORMAL, '<A-/>', '<CMD>let @/ = ""<CR>', 'Clear previous search highlighting')
-
---#endregion
---]]
 
 
 
