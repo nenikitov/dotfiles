@@ -67,18 +67,15 @@ end
 
 
 
---#region
+--#region Keymaps
 
+--- WhichKey prefixes for better documentation.
 function M.whichkey_prefixes()
     return whichkey_prefixes
 end
 
---#endregion
 
-
-
---#region Keymaps
-
+--- General keymaps.
 function M.general()
     -- Leader key
     add_to_whichkey_prefixes(mode.ALL, { '<LEADER>' }, 'custom')
@@ -135,6 +132,88 @@ function M.general()
     -- Clear search
     map(mode.NORMAL,  '<A-/>',  '<CMD>let @/ = ""<CR>',  'Clear search')
 end
+
+
+-- TODO Add lazy keymaps
+
+
+--- Open telescope pickers (menus).
+function M.telescope_pickers()
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 't' }, 'telescope')
+
+    local builtin = require('telescope.builtin')
+
+    -- All
+    map(mode.NORMAL,  '<LEADER>tt',  builtin.builtin,  'Open built-in picker picker')
+
+    -- Other
+    map(mode.NORMAL,  '<LEADER>tf',  builtin.find_files,  'Open files picker')
+    map(mode.NORMAL,  '<LEADER>tg',  builtin.live_grep,   'Open grep picker')
+    map(mode.NORMAL,  '<LEADER>tl',  builtin.filetypes,   'Open file type picker')
+    map(mode.NORMAL,  '<LEADER>th',  builtin.highlights,  'Open highlights picker')
+end
+
+--- Telescope in-picker navigation.
+function M.telescope_navigation()
+    local actions = require('telescope.actions')
+    local mappings_default = require('telescope.mappings').default_mappings
+
+    local mappings_empty = {
+        i = {},
+        n = {}
+    }
+    for k, _ in pairs(mappings_default.i) do
+        mappings_empty.i[k] = false
+    end
+    for k, _ in pairs(mappings_default.n) do
+        mappings_empty.n[k] = false
+    end
+
+    return vim.tbl_deep_extend('force', mappings_empty, {
+        i = {
+            ['<C-c>'] = actions.close,
+
+            ['<C-j>'] = actions.move_selection_next,
+            ['<C-k>'] = actions.move_selection_previous,
+
+            ['<C-l>'] = actions.select_default,
+            ['<C-h>'] = actions.select_horizontal,
+            ['<C-v>'] = actions.select_vertical,
+
+            ['<C-u>'] = actions.preview_scrolling_up,
+            ['<C-i>'] = actions.preview_scrolling_down,
+
+            ['<Tab>'] = actions.toggle_selection,
+            ['<C-/>'] = actions.which_key,
+            ['<C-_>'] = actions.which_key,
+            ['<C-j>'] = actions.nop,
+        },
+        n = {
+            ['q']     = actions.close,
+            ['<ESC>'] = actions.close,
+            ['<C-c>'] = actions.close,
+
+            ['j'] = actions.move_selection_next,
+            ['k'] = actions.move_selection_previous,
+            ['l'] = actions.select_default,
+            ['h'] = actions.select_horizontal,
+            ['v'] = actions.select_vertical,
+
+            ['gg'] = actions.move_to_top,
+            ['G']  = actions.move_to_bottom,
+
+            ['u'] = actions.preview_scrolling_up,
+            ['i'] = actions.preview_scrolling_down,
+
+            ['<Tab>'] = actions.toggle_selection,
+            ['?']     = actions.which_key,
+            ['<C-/>'] = actions.which_key,
+            ['<C-_>'] = actions.which_key,
+        }
+    })
+end
+
+--#endregion
 
 
 
