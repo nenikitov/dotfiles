@@ -17,6 +17,10 @@ M.list_chars = {
     precedes = '◀'
 }
 
+M.telescope = ''
+
+
+
 M.diagnostics = {
     error   = '',
     warning = '',

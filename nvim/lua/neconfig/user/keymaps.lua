@@ -176,6 +176,7 @@ function M.telescope_navigation()
             ['<C-j>'] = actions.move_selection_next,
             ['<C-k>'] = actions.move_selection_previous,
 
+            ['<CR>']  = actions.select_default,
             ['<C-l>'] = actions.select_default,
             ['<C-h>'] = actions.select_horizontal,
             ['<C-v>'] = actions.select_vertical,
@@ -190,14 +191,16 @@ function M.telescope_navigation()
         },
         n = {
             ['q']     = actions.close,
-            ['<ESC>'] = actions.close,
+            ['<esc>'] = actions.close,
             ['<C-c>'] = actions.close,
 
             ['j'] = actions.move_selection_next,
             ['k'] = actions.move_selection_previous,
-            ['l'] = actions.select_default,
-            ['h'] = actions.select_horizontal,
-            ['v'] = actions.select_vertical,
+
+            ['<CR>']  = actions.select_default,
+            ['l']     = actions.select_default,
+            ['h']     = actions.select_horizontal,
+            ['v']     = actions.select_vertical,
 
             ['gg'] = actions.move_to_top,
             ['G']  = actions.move_to_bottom,
