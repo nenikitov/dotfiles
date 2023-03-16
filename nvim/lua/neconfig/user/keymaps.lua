@@ -1,7 +1,7 @@
 --#region Helpers
 
 -- Imports
-local log = require "neconfig.utils.log"
+local log = require('neconfig.utils.log')
 
 --- Module return.
 local M = {}
@@ -18,7 +18,6 @@ local mode = {
     VISUAL_BLOCK = 'x',
     OPERATOR     = 'o',
     TERM         = 't',
-
     ALL          = '',
     NOT_TYPING   = { 'n', 'v', 'x' }
 }
@@ -75,26 +74,25 @@ function M.whichkey_prefixes()
     return whichkey_prefixes
 end
 
-
 --- General keymaps.
 function M.general()
     -- Leader key
     add_to_whichkey_prefixes(mode.ALL, { '<LEADER>' }, 'custom')
-    map(mode.ALL, '<SPACE>', '<NOP>')
+    map(mode.ALL,  '<SPACE>',  '<NOP>')
     vim.g.mapleader = ' '
 
     -- Close
-    map(mode.ALL, '<A-S-c>', '<CMD>quitall!<CR>', 'Force quit everything')
+    map(mode.ALL,  '<A-S-c>',  '<CMD>quitall!<CR>',  'Force quit everything')
 
     -- Buffer
     add_to_whichkey_prefixes(mode.NOT_TYPING, { '<LEADER>', 'b' }, 'buffer/window')
     -- Split
-    map(mode.NOT_TYPING, '<LEADER>bh',  '<CMD>split<CR>',   'Spilt window horizontally')
-    map(mode.NOT_TYPING, '<LEADER>bv',  '<CMD>vsplit<CR>',  'Spilt window vertically')
+    map(mode.NOT_TYPING,  '<LEADER>bh',  '<CMD>split<CR>',   'Spilt window horizontally')
+    map(mode.NOT_TYPING,  '<LEADER>bv',  '<CMD>vsplit<CR>',  'Spilt window vertically')
     -- Manipulation
-    map(mode.NOT_TYPING, '<LEADER>bn',  '<CMD>enew<CR>',      'Create a new empty buffer')
-    map(mode.NOT_TYPING, '<LEADER>br',  '<CMD>edit<CR>',      'Refresh current buffer')
-    map(mode.NOT_TYPING, '<LEADER>bd',  '<CMD>bdelete<CR>',   'Delete current buffer')
+    map(mode.NOT_TYPING,  '<LEADER>bn',  '<CMD>enew<CR>',     'Create a new empty buffer')
+    map(mode.NOT_TYPING,  '<LEADER>br',  '<CMD>edit<CR>',     'Refresh current buffer')
+    map(mode.NOT_TYPING,  '<LEADER>bd',  '<CMD>bdelete<CR>',  'Delete current buffer')
     map(
         mode.NOT_TYPING,
         '<LEADER>bc',
@@ -107,15 +105,15 @@ function M.general()
         'Close current window'
     )
     -- Go to
-    map({ mode.NORMAL, mode.TERM }, '<C-k>',  '<CMD>wincmd k<CR>',  'Go to split on the top')
-    map({ mode.NORMAL, mode.TERM }, '<C-j>',  '<CMD>wincmd j<CR>',  'Go to split on the bottom')
-    map({ mode.NORMAL, mode.TERM }, '<C-h>',  '<CMD>wincmd h<CR>',  'Go to split on the left')
-    map({ mode.NORMAL, mode.TERM }, '<C-l>',  '<CMD>wincmd l<CR>',  'Go to split on the right')
+    map({ mode.NORMAL, mode.TERM },  '<C-k>',  '<CMD>wincmd k<CR>',  'Go to split on the top')
+    map({ mode.NORMAL, mode.TERM },  '<C-j>',  '<CMD>wincmd j<CR>',  'Go to split on the bottom')
+    map({ mode.NORMAL, mode.TERM },  '<C-h>',  '<CMD>wincmd h<CR>',  'Go to split on the left')
+    map({ mode.NORMAL, mode.TERM },  '<C-l>',  '<CMD>wincmd l<CR>',  'Go to split on the right')
     -- Resize
-    map({ mode.NORMAL, mode.TERM }, '<C-UP>',     '<CMD>resize +1<CR>',           'Increase the size of the split vertically')
-    map({ mode.NORMAL, mode.TERM }, '<C-DOWN>',   '<CMD>resize -1<CR>',           'Decrease the size of the split vertically')
-    map({ mode.NORMAL, mode.TERM }, '<C-RIGHT>',  '<CMD>vertical resize +1<CR>',  'Increase the size of the split horizontally')
-    map({ mode.NORMAL, mode.TERM }, '<C-LEFT>',   '<CMD>vertical resize -1<CR>',  'Decrease the size of the split horizontally')
+    map({ mode.NORMAL, mode.TERM },  '<C-UP>',     '<CMD>resize +1<CR>',           'Increase the size of the split vertically')
+    map({ mode.NORMAL, mode.TERM },  '<C-DOWN>',   '<CMD>resize -1<CR>',           'Decrease the size of the split vertically')
+    map({ mode.NORMAL, mode.TERM },  '<C-RIGHT>',  '<CMD>vertical resize +1<CR>',  'Increase the size of the split horizontally')
+    map({ mode.NORMAL, mode.TERM },  '<C-LEFT>',   '<CMD>vertical resize -1<CR>',  'Decrease the size of the split horizontally')
 
     -- Faster exit to normal mode
     map({ mode.INSERT, mode.VISUAL, mode.TERM },  '<A-SPACE>',  '<ESC>',  'Exit to normal mode')
@@ -137,7 +135,6 @@ function M.general()
     -- Clear search
     map(mode.NORMAL,  '<A-/>',  '<CMD>let @/ = ""<CR>',  'Clear search')
 end
-
 
 -- TODO Add lazy keymaps
 
@@ -177,18 +174,14 @@ function M.telescope_navigation()
     return vim.tbl_deep_extend('force', mappings_empty, {
         i = {
             ['<C-c>'] = actions.close,
-
             ['<C-j>'] = actions.move_selection_next,
             ['<C-k>'] = actions.move_selection_previous,
-
             ['<CR>']  = actions.select_default,
             ['<C-l>'] = actions.select_default,
             ['<C-h>'] = actions.select_horizontal,
             ['<C-v>'] = actions.select_vertical,
-
             ['<C-u>'] = actions.preview_scrolling_up,
             ['<C-i>'] = actions.preview_scrolling_down,
-
             ['<Tab>'] = actions.toggle_selection,
             ['<C-/>'] = actions.which_key,
             ['<C-_>'] = actions.which_key,
@@ -197,21 +190,16 @@ function M.telescope_navigation()
             ['q']     = actions.close,
             ['<esc>'] = actions.close,
             ['<C-c>'] = actions.close,
-
-            ['j'] = actions.move_selection_next,
-            ['k'] = actions.move_selection_previous,
-
+            ['j']     = actions.move_selection_next,
+            ['k']     = actions.move_selection_previous,
             ['<CR>']  = actions.select_default,
             ['l']     = actions.select_default,
             ['h']     = actions.select_horizontal,
             ['v']     = actions.select_vertical,
-
-            ['gg'] = actions.move_to_top,
-            ['G']  = actions.move_to_bottom,
-
-            ['u'] = actions.preview_scrolling_up,
-            ['i'] = actions.preview_scrolling_down,
-
+            ['gg']    = actions.move_to_top,
+            ['G']     = actions.move_to_bottom,
+            ['u']     = actions.preview_scrolling_up,
+            ['i']     = actions.preview_scrolling_down,
             ['<Tab>'] = actions.toggle_selection,
             ['?']     = actions.which_key,
             ['<C-/>'] = actions.which_key,
@@ -219,7 +207,6 @@ function M.telescope_navigation()
         }
     })
 end
-
 
 --- Control cmp menus.
 function M.cmp()
@@ -262,7 +249,6 @@ function M.cmp()
     }
 end
 
-
 --- LSP related.
 function M.lsp()
     add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l' }, 'lsp')
@@ -277,20 +263,20 @@ function M.lsp()
     local buffer_option = { buffer = true }
 
     -- Documentation
-    map(mode.NORMAL,  '<LEADER>ldo',  vim.lsp.buf.hover,                    'Show documentation',       buffer_option)
-    map(mode.NORMAL,  '<LEADER>lds',  vim.lsp.buf.signature_help,           'Show signature',           buffer_option)
+    map(mode.NORMAL,  '<LEADER>ldo',  vim.lsp.buf.hover,           'Show documentation',  buffer_option)
+    map(mode.NORMAL,  '<LEADER>lds',  vim.lsp.buf.signature_help,  'Show signature',      buffer_option)
     -- Errors
-    map(mode.NORMAL,  '<LEADER>lel',  builtin.diagnostics,                  'Show error list',          buffer_option)
-    map(mode.NORMAL,  '<LEADER>leo',  vim.diagnostic.open_float,            'Show current error',       buffer_option)
-    map(mode.NORMAL,  '<LEADER>lek',  vim.diagnostic.goto_prev,             'Go to previous error',     buffer_option)
-    map(mode.NORMAL,  '<LEADER>lej',  vim.diagnostic.goto_next,             'Go to next error',         buffer_option)
-    map(mode.NORMAL,  '<LEADER>lea',  vim.lsp.buf.code_action,              'Show automatic fixes',     buffer_option)
+    map(mode.NORMAL,  '<LEADER>lel',  builtin.diagnostics,        'Show error list',       buffer_option)
+    map(mode.NORMAL,  '<LEADER>leo',  vim.diagnostic.open_float,  'Show current error',    buffer_option)
+    map(mode.NORMAL,  '<LEADER>lek',  vim.diagnostic.goto_prev,   'Go to previous error',  buffer_option)
+    map(mode.NORMAL,  '<LEADER>lej',  vim.diagnostic.goto_next,   'Go to next error',      buffer_option)
+    map(mode.NORMAL,  '<LEADER>lea',  vim.lsp.buf.code_action,    'Show automatic fixes',  buffer_option)
     -- Go to
-    map(mode.NORMAL,  '<LEADER>lgd',  builtin.lsp_definitions,              'Go to definition',         buffer_option)
-    map(mode.NORMAL,  '<LEADER>lgr',  builtin.lsp_references,               'Go to references',         buffer_option)
-    map(mode.NORMAL,  '<LEADER>lgi',  builtin.lsp_implementations,          'Go to implementation',     buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgd',  builtin.lsp_definitions,      'Go to definition',      buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgr',  builtin.lsp_references,       'Go to references',      buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgi',  builtin.lsp_implementations,  'Go to implementation',  buffer_option)
     -- Refactor
-    map(mode.NORMAL,  '<LEADER>lrr',  vim.lsp.buf.rename,                   'Rename',                   buffer_option)
+    map(mode.NORMAL,  '<LEADER>lrr',  vim.lsp.buf.rename,  'Rename',  buffer_option)
     map(
         mode.NORMAL,
         '<LEADER>lrf',
@@ -304,7 +290,18 @@ function M.lsp()
     map(
         mode.NORMAL,
         '<LEADER>lwl',
-        function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+        function()
+            log.info(
+                '# Workspace folders\n\n' ..
+                table.concat(
+                    vim.tbl_map(
+                        function(f) return '- `' .. f .. '`' end,
+                        vim.lsp.buf.list_workspace_folders()
+                    ),
+                    '\n'
+                )
+            )
+        end,
         'Show workspace folders list',
         buffer_option
     )

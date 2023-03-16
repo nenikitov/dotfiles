@@ -17,16 +17,31 @@ M.list_chars = {
     precedes = '◀'
 }
 
-M.telescope = ''
-
-
-
+M.virtual_text_prefix = '■'
 M.diagnostics = {
     error   = '',
     warning = '',
     hint    = '',
     info    = ''
 }
+
+M.telescope = ' '
+M.cmdline = {
+    cmdline     = '>_',
+    search_down = ' ',
+    search_up   = ' ',
+    filter      = '$_',
+    lua         = '󰢱 ',
+    help        = ' ',
+}
+M.notify = {
+    error  = '',
+    warn   = '',
+    info   = '',
+    debug  = '',
+    trace  = '󰝶',
+}
+
 
 M.git_signs = {
     add          = '┃',

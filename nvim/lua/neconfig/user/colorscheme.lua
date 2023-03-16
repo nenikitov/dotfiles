@@ -1,7 +1,7 @@
 --#region Helpers
 
 -- Imports
-local log = require("neconfig.utils.log")
+local log = require('neconfig.utils.log')
 
 --- Shortcut to `vim.cmd`.
 local cmd = vim.cmd
