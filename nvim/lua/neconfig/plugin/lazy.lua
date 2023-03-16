@@ -27,7 +27,12 @@ vim.opt.rtp:prepend(path_install)
 
 -- Setup
 require('lazy').setup(
-    'neconfig.plugin.config'
+    'neconfig.plugin.config',
+    {
+        install = {
+            colorscheme = { 'slate' }
+        }
+    }
 )
 
 --#endregion

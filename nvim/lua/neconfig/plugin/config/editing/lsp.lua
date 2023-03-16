@@ -27,8 +27,9 @@ return {
         -- Auto installer
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
-        -- Auto configuration
+        -- Sources for Neovim
         'folke/neodev.nvim',
+
     },
     config = function()
         local neodev = require('neodev')

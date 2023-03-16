@@ -149,10 +149,11 @@ function M.telescope_pickers()
     map(mode.NORMAL,  '<LEADER>tt',  builtin.builtin,  'Open built-in picker picker')
 
     -- Other
-    map(mode.NORMAL,  '<LEADER>tf',  builtin.find_files,  'Open files picker')
-    map(mode.NORMAL,  '<LEADER>tg',  builtin.live_grep,   'Open grep picker')
-    map(mode.NORMAL,  '<LEADER>tl',  builtin.filetypes,   'Open file type picker')
-    map(mode.NORMAL,  '<LEADER>th',  builtin.highlights,  'Open highlights picker')
+    map(mode.NORMAL,  '<LEADER>tf',  builtin.find_files,   'Open files picker')
+    map(mode.NORMAL,  '<LEADER>tg',  builtin.live_grep,    'Open grep picker')
+    map(mode.NORMAL,  '<LEADER>tl',  builtin.filetypes,    'Open file type picker')
+    map(mode.NORMAL,  '<LEADER>th',  builtin.highlights,   'Open highlights picker')
+    map(mode.NORMAL,  '<LEADER>tc',  builtin.colorscheme,  'Open colorscheme picker')
 end
 
 --- Telescope in-picker navigation.

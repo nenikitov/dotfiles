@@ -46,7 +46,7 @@ M.cases = {
         end
     },
     SNAKE = {
-        example = 'sname_case',
+        example = 'snake_case',
         split = function(str)
             return split(str, '_')
         end,
@@ -57,9 +57,9 @@ M.cases = {
     CAMEL = {
         example = 'CamelCase',
         split = function(str)
-            return map(
-                split(str:gsub('([A-Z])', ' $1'), ' '),
-                function(v) return v:lower() end
+            return vim.tbl_map(
+                function(v) return v:lower() end,
+                split(str:gsub('([A-Z])', ' $1'), ' ')
             )
         end,
         join = function (words)
