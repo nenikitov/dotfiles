@@ -28,7 +28,7 @@ o.ttimeoutlen = 0               -- Wait for a keycode sequence to complete
 
 
 -- Colors
-o.termguicolors = true         -- Enable true color
+o.termguicolors = false         -- Enable true color
 o.background = 'dark'           -- Hint at dark color scheme
 
 
