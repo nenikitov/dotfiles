@@ -3,12 +3,9 @@ return {
     dependencies = {
         'MunifTanjim/nui.nvim',
         'rcarriga/nvim-notify',
-        'mrded/nvim-lsp-notify'
     },
     config = function()
         local noice = require('noice')
-        local notify = require('notify')
-        local lsp_notify = require('lsp-notify');
 
         noice.setup {
             presets = {
@@ -39,8 +36,8 @@ return {
                 },
                 hover = { enabled = true },
                 signature = { enabled = true },
-                -- Manually handled by `nvim-lsp-notify`
-                progress = { enabled = false, },
+                -- Manually handled by `nvim-lsp-notify` or `fidget`
+                progress = { enabled = false },
                 message = { enabled = false },
             },
             smart_move = {
@@ -48,27 +45,6 @@ return {
             },
             -- Manually handled by `notify`
             messages = { enabled = false },
-        }
-
-        notify.setup {
-            timeout = 2000,
-            top_down = false,
-            stages = 'slide',
-            -- on_open = function(win)
-            --     vim.api.nvim_win_set_config(win, { border = 'none' })
-            -- end,
-            icons = (function()
-                local icons = {}
-                for k, v in pairs(require('neconfig.user.icons').notify) do
-                    local case = require('neconfig.utils.case')
-                    icons[case.convert_case(k, case.cases.SNAKE, case.cases.SCREAMING)] = v
-                end
-                return icons
-            end)(),
-        }
-
-        lsp_notify.setup {
-            notify = notify
         }
     end
 }

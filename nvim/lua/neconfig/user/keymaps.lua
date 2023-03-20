@@ -22,7 +22,7 @@ local mode = {
     NOT_TYPING   = { 'n', 'v', 'x' }
 }
 
---- Default options for keyminds.
+--- Default options for keybinds.
 local default_options = {
     noremap = true,
     silent = true
@@ -306,6 +306,10 @@ function M.lsp()
         'Show workspace folders list',
         buffer_option
     )
+end
+
+function M.neo_tree_menu()
+    map(mode.NOT_TYPING,  '<LEADER>f', '<CMD>Neotree toggle<CR>',  'Show file browser')
 end
 
 --#endregion

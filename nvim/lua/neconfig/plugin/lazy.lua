@@ -31,6 +31,9 @@ require('lazy').setup(
     {
         install = {
             colorscheme = { 'slate' }
+        },
+        ui = {
+            border = 'rounded'
         }
     }
 )
