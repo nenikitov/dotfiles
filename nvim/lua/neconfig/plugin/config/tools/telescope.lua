@@ -8,7 +8,7 @@ return {
             defaults = {
                 mappings = require('neconfig.user.keymaps').telescope_navigation(),
                 prompt_prefix = require('neconfig.user.icons').telescope .. ' '
-            }
+            },
         }
 
         require('neconfig.user.keymaps').telescope_pickers()

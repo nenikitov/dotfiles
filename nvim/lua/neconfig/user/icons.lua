@@ -75,7 +75,18 @@ M.nvim_tree = {
         empty_open   = '',
         symlink      = '',
         symlink_open = ''
-    }
+    },
+    git = {
+        unstaged  = '',
+        staged    = '',
+        unmerged  = '',
+        renamed   = '',
+        untracked = '',
+        deleted   = '󰧧',
+        ignored   = '',
+    },
+    modified = '',
+    bookmark = '󰃀'
 }
 
 M.completion = {

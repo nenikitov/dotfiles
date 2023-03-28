@@ -87,7 +87,7 @@ function M.general()
     -- Buffer
     add_to_whichkey_prefixes(mode.NOT_TYPING, { '<LEADER>', 'b' }, 'buffer/window')
     -- Split
-    map(mode.NOT_TYPING,  '<LEADER>bh',  '<CMD>split<CR>',   'Spilt window horizontally')
+    map(mode.NOT_TYPING,  '<LEADER>bs',  '<CMD>split<CR>',   'Spilt window horizontally')
     map(mode.NOT_TYPING,  '<LEADER>bv',  '<CMD>vsplit<CR>',  'Spilt window vertically')
     -- Manipulation
     map(mode.NOT_TYPING,  '<LEADER>bn',  '<CMD>enew<CR>',     'Create a new empty buffer')
@@ -179,7 +179,7 @@ function M.telescope_navigation()
             ['<C-k>'] = actions.move_selection_previous,
             ['<CR>']  = actions.select_default,
             ['<C-l>'] = actions.select_default,
-            ['<C-h>'] = actions.select_horizontal,
+            ['<C-s>'] = actions.select_horizontal,
             ['<C-v>'] = actions.select_vertical,
             ['<C-u>'] = actions.preview_scrolling_up,
             ['<C-i>'] = actions.preview_scrolling_down,
@@ -308,8 +308,50 @@ function M.lsp()
     )
 end
 
-function M.neo_tree_menu()
-    map(mode.NOT_TYPING,  '<LEADER>f', '<CMD>Neotree toggle<CR>',  'Show file browser')
+function M.nvim_tree_menu()
+    map(mode.NOT_TYPING,  '<LEADER>f', '<CMD>NvimTreeToggle<CR>',  'Show file browser')
+end
+
+function M.nvim_tree_window(buffer_number)
+    local api = require('nvim-tree.api')
+    local buffer_option = { buffer = buffer_number, noremap = true, silent = true, nowait = true }
+
+    -- Open
+    map(mode.NORMAL,  'l',              api.node.open.edit,        'Open',                      buffer_option)
+    map(mode.NORMAL,  '<CR>',           api.node.open.edit,        'Open',                      buffer_option)
+    map(mode.NORMAL,  '<2-LeftMouse>',  api.node.open.edit,        'Open',                      buffer_option)
+    map(mode.NORMAL,  's',              api.node.open.horizontal,  'Open in horizontal split',  buffer_option)
+    map(mode.NORMAL,  'v',              api.node.open.vertical,    'Open in vertical split',    buffer_option)
+    map(mode.NORMAL,  'o',              api.node.run.system,       'System open',               buffer_option)
+    map(mode.NORMAL,  'L',              api.node.open.preview,     'Preview',                   buffer_option)
+    -- Fast navigation
+    map(mode.NORMAL,  'h',  api.node.navigate.parent,        'Go to parent',      buffer_option)
+    map(mode.NORMAL,  'H',  api.node.navigate.parent_close,  'Close node',        buffer_option)
+    map(mode.NORMAL,  'J',  api.node.navigate.sibling.next,  'Next sibling',      buffer_option)
+    map(mode.NORMAL,  'K',  api.node.navigate.sibling.prev,  'Previous sibling',  buffer_option)
+    -- Collapse
+    map(mode.NORMAL,  '>',  api.tree.expand_all,    'Expand all',    buffer_option)
+    map(mode.NORMAL,  '<',  api.tree.collapse_all,  'Collapse all',  buffer_option)
+    -- Path copy
+    map(mode.NORMAL,  'y',   api.fs.copy.filename,      'Copy file name',      buffer_option)
+    map(mode.NORMAL,  'gy',  api.fs.copy.relative_path, 'Copy relative path',  buffer_option)
+    map(mode.NORMAL,  'gY',  api.fs.copy.absolute_path, 'Copy absolute path',  buffer_option)
+    -- File manipulation
+    map(mode.NORMAL,  'a',  api.fs.create,        'New file',               buffer_option)
+    map(mode.NORMAL,  'd',  api.fs.remove,        'Delete',                 buffer_option)
+    map(mode.NORMAL,  'r',  api.fs.rename,        'Rename',                 buffer_option)
+    map(mode.NORMAL,  'R',  api.fs.rename_sub,    'Full rename',            buffer_option)
+    map(mode.NORMAL,  'c',  api.fs.copy.node,     'Copy file',              buffer_option)
+    map(mode.NORMAL,  'x',  api.fs.cut,           'Cut file',               buffer_option)
+    map(mode.NORMAL,  'p',  api.fs.paste,         'Paste file',             buffer_option)
+    map(mode.NORMAL,  'm',  api.marks.toggle,     'Mark file',              buffer_option)
+    map(mode.NORMAL,  'M',  api.marks.bulk.move,  'Bulk move marked files', buffer_option)
+    -- Other
+    map(mode.NORMAL,  'i',      api.node.show_info_popup,  'Info',         buffer_option)
+    map(mode.NORMAL,  '?',      api.tree.toggle_help,      'Help',         buffer_option)
+    map(mode.NORMAL,  ';',      api.node.run.cmd,          'Command',      buffer_option)
+    map(mode.NORMAL,  'q',      api.tree.close,            'Quit',         buffer_option)
+    map(mode.NORMAL,  '<ESC>',  api.tree.close,            'Quit',         buffer_option)
 end
 
 --#endregion
