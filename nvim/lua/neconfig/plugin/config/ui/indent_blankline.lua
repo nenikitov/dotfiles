@@ -3,7 +3,7 @@ return {
     config = function()
         require('indent_blankline').setup {
             show_current_context = true,
-            char_blankline = '┆'
+            show_trailing_blankline_indent = false,
         }
     end,
 }
