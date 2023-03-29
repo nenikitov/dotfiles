@@ -420,6 +420,27 @@ function M.treesitter_textobjects_move()
     }
 end
 
+--- Easy commenting.
+function M.comment()
+    add_to_whichkey_prefixes(mode.NOT_TYPING, { '<LEADER>', 'c' }, 'comment')
+
+    return {
+        toggler = {
+            line  = '<LEADER>c/',
+            block = '<LEADER>c?'
+        },
+        opleader = {
+            line  = '<LEADER>cc',
+            block = '<LEADER>cb'
+        },
+        extra = {
+            above = '<LEADER>cO',
+            below = '<LEADER>co',
+            eol   = '<LEADER>cA'
+        }
+    }
+end
+
 --#endregion
 
 
