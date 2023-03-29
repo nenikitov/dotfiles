@@ -1,5 +1,6 @@
 return {
-    'nvim-tree/nvim-tree.lua',
+    --'nvim-tree/nvim-tree.lua',
+    dir = '~/SharedFiles/Projects/nvim/nvim-tree.lua/',
     dependencies = {
         'nvim-tree/nvim-web-devicons',
     },
@@ -13,9 +14,10 @@ return {
             reload_on_bufenter = true,
             view = {
                 width = 35,
-                side = 'right'
+                side = 'right',
+                preserve_window_proportions = true
             },
-            on_attach = require('neconfig.user.keymaps').nvim_tree_window,
+            on_attach = require('neconfig.user.keymaps').nvim_tree_navigation,
             renderer = {
                 add_trailing = true,
                 highlight_git = true,

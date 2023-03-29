@@ -308,11 +308,13 @@ function M.lsp()
     )
 end
 
+--- File browser.
 function M.nvim_tree_menu()
     map(mode.NOT_TYPING,  '<LEADER>f', '<CMD>NvimTreeToggle<CR>',  'Show file browser')
 end
 
-function M.nvim_tree_window(buffer_number)
+--- File browser navigation.
+function M.nvim_tree_navigation(buffer_number)
     local api = require('nvim-tree.api')
     local buffer_option = { buffer = buffer_number, noremap = true, silent = true, nowait = true }
 
@@ -352,6 +354,56 @@ function M.nvim_tree_window(buffer_number)
     map(mode.NORMAL,  ';',      api.node.run.cmd,          'Command',      buffer_option)
     map(mode.NORMAL,  'q',      api.tree.close,            'Quit',         buffer_option)
     map(mode.NORMAL,  '<ESC>',  api.tree.close,            'Quit',         buffer_option)
+end
+
+--- Treesitter.
+function M.treesitter()
+    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 's' }, 'treesitter')
+
+    map(mode.NORMAL, '<LEADER>sn', '<CMD>TSNodeUnderCursor<CR>',              'Show TS node')
+    map(mode.NORMAL, '<LEADER>sh', '<CMD>TSHighlightCapturesUnderCursor<CR>', 'Show TS highlight')
+    map(mode.NORMAL, '<LEADER>sp', '<CMD>TSPlaygroundToggle<CR>',             'Toggle TS playground')
+    map(mode.NORMAL, '<LEADER>si', '<CMD>Inspect<CR>',                        'Inspect current highlight group')
+end
+
+--- Syntax aware selection.
+function M.treesitter_textobjects_select()
+    return {
+        -- Function
+        ['if'] = { query = '@function.inner', desc = 'Function body' },
+        ['af'] = { query = '@function.outer', desc = 'Function' },
+        -- Block
+        ['ib'] = { query = '@block.inner', desc = 'Block body' },
+        ['ab'] = { query = '@block.outer', desc = 'Block' },
+        -- Class
+        ['ic'] = { query = '@class.inner', desc = 'Class body' },
+        ['ac'] = { query = '@class.outer', desc = 'Class' },
+        -- Parameter
+        ['ip'] = { query = '@parameter.inner', desc = 'Parameter body' },
+        ['ap'] = { query = '@parameter.outer', desc = 'Parameter' },
+
+        -- Comment
+        ['id'] = { query = '@comment.outer',  desc = 'Comment' },
+    }
+end
+
+function M.treesitter_textobjects_move()
+    return {
+        goto_next_start = {
+            [']f'] = { query = '@function.outer',  desc = 'Function' },
+            [']b'] = { query = '@block.outer',     desc = 'Block' },
+            [']c'] = { query = '@class.outer',     desc = 'Class' },
+            [']p'] = { query = '@parameter.outer', desc = 'Parameter' },
+            [']d'] = { query = '@comment.outer',   desc = 'Comment' },
+        },
+        goto_previous_start = {
+            ['[f'] = { query = '@function.outer',  desc = 'Function' },
+            ['[b'] = { query = '@block.outer',     desc = 'Block' },
+            ['[c'] = { query = '@class.outer',     desc = 'Class' },
+            ['[p'] = { query = '@parameter.outer', desc = 'Parameter' },
+            ['[d'] = { query = '@comment.outer',   desc = 'Comment' },
+        }
+    }
 end
 
 --#endregion
