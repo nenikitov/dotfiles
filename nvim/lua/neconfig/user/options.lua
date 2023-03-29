@@ -35,6 +35,7 @@ o.background = 'dark'           -- Hint at dark color scheme
 -- Menu UI
 o.showtabline = 2               -- Always show file tabs
 o.signcolumn = 'yes:1'          -- Show an additional line before the line numbers
+o.foldcolumn = '1'              -- Show fold column
 o.number = true                 -- Show line numbers
 o.relativenumber = true         -- Make the line numbers relative
 o.numberwidth = 4               -- Set minimum width of the line number column
