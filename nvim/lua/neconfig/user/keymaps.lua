@@ -396,12 +396,26 @@ function M.treesitter_textobjects_move()
             [']p'] = { query = '@parameter.outer', desc = 'Parameter' },
             [']d'] = { query = '@comment.outer',   desc = 'Comment' },
         },
+        goto_next_end = {
+            [']F'] = { query = '@function.outer',  desc = 'Function' },
+            [']B'] = { query = '@block.outer',     desc = 'Block' },
+            [']C'] = { query = '@class.outer',     desc = 'Class' },
+            [']P'] = { query = '@parameter.outer', desc = 'Parameter' },
+            [']D'] = { query = '@comment.outer',   desc = 'Comment' },
+        },
         goto_previous_start = {
             ['[f'] = { query = '@function.outer',  desc = 'Function' },
             ['[b'] = { query = '@block.outer',     desc = 'Block' },
             ['[c'] = { query = '@class.outer',     desc = 'Class' },
             ['[p'] = { query = '@parameter.outer', desc = 'Parameter' },
             ['[d'] = { query = '@comment.outer',   desc = 'Comment' },
+        },
+        goto_previous_end = {
+            ['[F'] = { query = '@function.outer',  desc = 'Function' },
+            ['[B'] = { query = '@block.outer',     desc = 'Block' },
+            ['[C'] = { query = '@class.outer',     desc = 'Class' },
+            ['[P'] = { query = '@parameter.outer', desc = 'Parameter' },
+            ['[D'] = { query = '@comment.outer',   desc = 'Comment' },
         }
     }
 end
