@@ -43,7 +43,7 @@ M.notify = {
 }
 
 
-M.git_signs = {
+M.gitsigns = {
     add          = '┃',
     change       = '┃',
     delete       = '',

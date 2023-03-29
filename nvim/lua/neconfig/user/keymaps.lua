@@ -442,6 +442,19 @@ function M.comment()
     }
 end
 
+--- Git integration.
+function M.gitsigns()
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'g' }, 'git')
+
+    local gitsigns = require('gitsigns')
+
+    map(mode.NORMAL, '<LEADER>gd', gitsigns.preview_hunk, 'Preview the differences in the current hunk')
+    map(mode.NORMAL, '<LEADER>gb', gitsigns.blame_line,   'Blame current line')
+    map(mode.NORMAL, '<LEADER>gr', gitsigns.reset_hunk,   'Reset current hunk')
+    map(mode.NORMAL, '[g',         gitsigns.prev_hunk,    'Previous hunk')
+    map(mode.NORMAL, ']g',         gitsigns.next_hunk,    'Next hunk')
+end
+
 --#endregion
 
 
