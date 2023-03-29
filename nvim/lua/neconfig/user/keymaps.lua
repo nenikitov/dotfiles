@@ -42,22 +42,23 @@ end
 
 
 --- Prefixes passed to WhichKey for more documentation.
-local whichkey_prefixes = {}
+local which_key_prefixes = {}
 
 --- Add a description to WhichKey prefix.
 ---@param modes Mode | Mode[] Modes in which prefix will exist.
 ---@param path string[] Key combination.
 ---@param description string Description.
-local function add_to_whichkey_prefixes(modes, path, description)
+local function add_to_which_key_prefixes(modes, path, description)
     if type(modes) == 'string' then
         modes = { modes };
     end
 
     for _, m in ipairs(modes) do
-        whichkey_prefixes[m] = whichkey_prefixes[m] or {}
-        local target = whichkey_prefixes[m]
+        which_key_prefixes[m] = which_key_prefixes[m] or {}
+        local target = which_key_prefixes[m]
         for _, p in ipairs(path) do
             target[p] = target[p] or {}
+            target = target[p]
         end
         target.name = description
     end
@@ -70,14 +71,14 @@ end
 --#region Keymaps
 
 --- WhichKey prefixes for better documentation.
-function M.whichkey_prefixes()
-    return whichkey_prefixes
+function M.which_key_prefixes()
+    return which_key_prefixes
 end
 
 --- General keymaps.
 function M.general()
     -- Leader key
-    add_to_whichkey_prefixes(mode.ALL, { '<LEADER>' }, 'custom')
+    add_to_which_key_prefixes(mode.ALL, { '<LEADER>' }, 'custom')
     map(mode.ALL,  '<SPACE>',  '<NOP>')
     vim.g.mapleader = ' '
 
@@ -85,7 +86,7 @@ function M.general()
     map(mode.ALL,  '<A-S-c>',  '<CMD>quitall!<CR>',  'Force quit everything')
 
     -- Buffer
-    add_to_whichkey_prefixes(mode.NOT_TYPING, { '<LEADER>', 'b' }, 'buffer/window')
+    add_to_which_key_prefixes(mode.NOT_TYPING, { '<LEADER>', 'b' }, 'buffer/window')
     -- Split
     map(mode.NOT_TYPING,  '<LEADER>bs',  '<CMD>split<CR>',   'Spilt window horizontally')
     map(mode.NOT_TYPING,  '<LEADER>bv',  '<CMD>vsplit<CR>',  'Spilt window vertically')
@@ -141,7 +142,7 @@ end
 
 --- Open telescope pickers (menus).
 function M.telescope_pickers()
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 't' }, 'telescope')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 't' }, 'telescope')
 
     local builtin = require('telescope.builtin')
 
@@ -252,12 +253,12 @@ end
 
 --- LSP related.
 function M.lsp()
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l' }, 'lsp')
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'd' }, 'documentation')
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'e' }, 'errors')
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'g' }, 'go to')
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'r' }, 'refactor')
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'w' }, 'workspace')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l' }, 'lsp')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'd' }, 'documentation')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'e' }, 'errors')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'g' }, 'go to')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'r' }, 'refactor')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'w' }, 'workspace')
 
     local builtin = require('telescope.builtin')
 
@@ -358,7 +359,7 @@ end
 
 --- Treesitter.
 function M.treesitter()
-    add_to_whichkey_prefixes(mode.NORMAL, { '<LEADER>', 's' }, 'treesitter')
+    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 's' }, 'treesitter')
 
     map(mode.NORMAL, '<LEADER>sn', '<CMD>TSNodeUnderCursor<CR>',              'Show TS node')
     map(mode.NORMAL, '<LEADER>sh', '<CMD>TSHighlightCapturesUnderCursor<CR>', 'Show TS highlight')
@@ -422,7 +423,7 @@ end
 
 --- Easy commenting.
 function M.comment()
-    add_to_whichkey_prefixes(mode.NOT_TYPING, { '<LEADER>', 'c' }, 'comment')
+    add_to_which_key_prefixes(mode.NOT_TYPING, { '<LEADER>', 'c' }, 'comment')
 
     return {
         toggler = {

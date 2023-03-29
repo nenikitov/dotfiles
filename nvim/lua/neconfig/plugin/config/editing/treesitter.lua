@@ -10,8 +10,7 @@ local languages = {
 
     'html', 'css', 'scss',
     'javascript', 'jsdoc',
-    'tsx', 'typescript',
-    'json', 'json5', 'jsonc', 'jsonnet',
+    'tsx', 'typescript', 'json', 'json5', 'jsonc', 'jsonnet',
 
     'bash',
     'lua', 'luadoc', 'luap',
