@@ -270,8 +270,8 @@ function M.lsp()
     -- Errors
     map(mode.NORMAL,  '<LEADER>lel',  builtin.diagnostics,        'Show error list',       buffer_option)
     map(mode.NORMAL,  '<LEADER>leo',  vim.diagnostic.open_float,  'Show current error',    buffer_option)
-    map(mode.NORMAL,  '<LEADER>lek',  vim.diagnostic.goto_prev,   'Go to previous error',  buffer_option)
-    map(mode.NORMAL,  '<LEADER>lej',  vim.diagnostic.goto_next,   'Go to next error',      buffer_option)
+    map(mode.NORMAL,  '[e',           vim.diagnostic.goto_prev,   'Go to previous error',  buffer_option)
+    map(mode.NORMAL,  ']e',           vim.diagnostic.goto_next,   'Go to next error',      buffer_option)
     map(mode.NORMAL,  '<LEADER>lea',  vim.lsp.buf.code_action,    'Show automatic fixes',  buffer_option)
     -- Go to
     map(mode.NORMAL,  '<LEADER>lgd',  builtin.lsp_definitions,      'Go to definition',      buffer_option)

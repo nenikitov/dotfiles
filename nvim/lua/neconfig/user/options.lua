@@ -35,7 +35,6 @@ o.background = 'dark'           -- Hint at dark color scheme
 -- Menu UI
 o.showtabline = 2               -- Always show file tabs
 o.signcolumn = 'yes:1'          -- Show an additional line before the line numbers
-o.foldcolumn = '1'              -- Show fold column
 o.number = true                 -- Show line numbers
 o.relativenumber = true         -- Make the line numbers relative
 o.numberwidth = 4               -- Set minimum width of the line number column
@@ -46,6 +45,11 @@ o.completeopt = {               -- Configure the the completion options for Inse
 }
 o.pumheight = 10                -- Set the size of popup menus
 
+-- Folding
+o.foldcolumn = '1'              -- Show fold column
+o.foldlevel = 99
+o.foldlevelstart = -1           -- Don't fold by default
+o.foldenable = true             -- Enable folding
 
 -- Editor UI
 o.mouse = 'a'                   -- Enable mouse in all modes
