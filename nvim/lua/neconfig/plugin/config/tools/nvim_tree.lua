@@ -1,6 +1,6 @@
 return {
-    --'nvim-tree/nvim-tree.lua',
-    dir = '~/SharedFiles/Projects/nvim/nvim-tree.lua/',
+    'nvim-tree/nvim-tree.lua',
+    --dir = '~/SharedFiles/Projects/nvim/nvim-tree.lua/',
     dependencies = {
         'nvim-tree/nvim-web-devicons',
     },

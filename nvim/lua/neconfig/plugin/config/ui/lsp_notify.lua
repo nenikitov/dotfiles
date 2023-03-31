@@ -1,5 +1,6 @@
 return {
-    dir = '~/SharedFiles/Projects/nvim/nvim-lsp-notify',
+    'mrded/nvim-lsp-notify',
+    --dir = '~/SharedFiles/Projects/nvim/nvim-lsp-notify',
     dependencies = {
         'rcarriga/nvim-notify',
     },
