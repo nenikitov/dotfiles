@@ -17,6 +17,13 @@ M.list_chars = {
     precedes = '◀'
 }
 
+M.fillchars = {
+    fold = ' ',
+    foldsep = ' ',
+    foldopen = '',
+    foldclose = ''
+}
+
 M.virtual_text_prefix = '■'
 M.diagnostics = {
     error   = '',

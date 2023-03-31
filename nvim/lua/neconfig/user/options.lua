@@ -50,6 +50,8 @@ o.foldcolumn = '1'              -- Show fold column
 o.foldlevel = 99
 o.foldlevelstart = -1           -- Don't fold by default
 o.foldenable = true             -- Enable folding
+o.fillchars =                   -- Status column characters
+    require('neconfig.user.icons').fillchars
 
 -- Editor UI
 o.mouse = 'a'                   -- Enable mouse in all modes
@@ -59,7 +61,7 @@ o.scrolloff = 4                 -- Keep lines on top and below the cursor when s
 o.sidescrolloff = 8             -- Keep characters on the left and right of the cursor when scrolling
 o.list = true                   -- Show special white-space characters
 o.listchars =                   -- How these special white-space characters are displayed
-    require('neconfig.user.icons').list_chars
+    require('neconfig.user.icons').listchars
 o.showmode = false              -- Hide mode from the command line
 
 
