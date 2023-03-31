@@ -2,7 +2,7 @@ local servers = {
     -- Lua
     lua_ls = {
         Lua = {
-            workspace = { checkThridParty = false },
+            workspace = { checkThirdParty = false },
             telemetry = { enable = false }
         }
     },
