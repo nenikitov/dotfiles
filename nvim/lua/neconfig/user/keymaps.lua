@@ -40,27 +40,31 @@ local function map(modes, keys, func, description, options)
     vim.keymap.set(modes, keys, func, options)
 end
 
+---@type fun(mode: string, keys: string, description: string)
+local which_key_prefixes_registered_function = nil
 
 --- Prefixes passed to WhichKey for more documentation.
+--- @type {Mode: {string: string}}
 local which_key_prefixes = {}
 
 --- Add a description to WhichKey prefix.
 ---@param modes Mode | Mode[] Modes in which prefix will exist.
----@param path string[] Key combination.
+---@param keys string Key combination.
 ---@param description string Description.
-local function add_to_which_key_prefixes(modes, path, description)
+local function add_to_which_key_prefixes(modes, keys, description)
     if type(modes) == 'string' then
         modes = { modes };
     end
 
-    for _, m in ipairs(modes) do
-        which_key_prefixes[m] = which_key_prefixes[m] or {}
-        local target = which_key_prefixes[m]
-        for _, p in ipairs(path) do
-            target[p] = target[p] or {}
-            target = target[p]
+    for _, mode in ipairs(modes) do
+        which_key_prefixes[mode] = which_key_prefixes[mode] or {}
+        if which_key_prefixes[mode][keys] ~= description then
+            which_key_prefixes[mode][keys] = description
+
+            if which_key_prefixes_registered_function then
+                which_key_prefixes_registered_function(mode, keys, description)
+            end
         end
-        target.name = description
     end
 end
 
@@ -71,14 +75,20 @@ end
 --#region Keymaps
 
 --- WhichKey prefixes for better documentation.
-function M.which_key_prefixes()
-    return which_key_prefixes
+---@param listener fun(mode: string, keys: string, description: string)
+function M.which_key_prefixes_register(listener)
+    which_key_prefixes_registered_function = listener
+    for mode, prefixes in pairs(which_key_prefixes) do
+        for keys, description in pairs(prefixes) do
+            listener(mode, keys, description)
+        end
+    end
 end
 
 --- General keymaps.
 function M.general()
     -- Leader key
-    add_to_which_key_prefixes(mode.ALL, { '<LEADER>' }, 'custom')
+    add_to_which_key_prefixes(mode.ALL, '<LEADER>', 'custom')
     map(mode.ALL,  '<SPACE>',  '<NOP>')
     vim.g.mapleader = ' '
 
@@ -86,7 +96,7 @@ function M.general()
     map(mode.ALL,  '<A-S-c>',  '<CMD>quitall!<CR>',  'Force quit everything')
 
     -- Buffer
-    add_to_which_key_prefixes(mode.NOT_TYPING, { '<LEADER>', 'b' }, 'buffer/window')
+    add_to_which_key_prefixes(mode.NOT_TYPING, '<LEADER>b', 'buffer/window')
     -- Split
     map(mode.NOT_TYPING,  '<LEADER>bs',  '<CMD>split<CR>',   'Spilt window horizontally')
     map(mode.NOT_TYPING,  '<LEADER>bv',  '<CMD>vsplit<CR>',  'Spilt window vertically')
@@ -142,7 +152,7 @@ end
 
 --- Open telescope pickers (menus).
 function M.telescope_pickers()
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 't' }, 'telescope')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>t', 'telescope')
 
     local builtin = require('telescope.builtin')
 
@@ -253,12 +263,12 @@ end
 
 --- LSP related.
 function M.lsp()
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l' }, 'lsp')
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'd' }, 'documentation')
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'e' }, 'errors')
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'g' }, 'go to')
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'r' }, 'refactor')
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'l', 'w' }, 'workspace')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>l', 'lsp')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>ld', 'documentation')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>le', 'errors')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>lg', 'go to')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>lr', 'refactor')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>lw', 'workspace')
 
     local builtin = require('telescope.builtin')
 
@@ -359,7 +369,7 @@ end
 
 --- Treesitter.
 function M.treesitter()
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 's' }, 'treesitter')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>s', 'treesitter')
 
     map(mode.NORMAL, '<LEADER>sn', '<CMD>TSNodeUnderCursor<CR>',              'Show TS node')
     map(mode.NORMAL, '<LEADER>sh', '<CMD>TSHighlightCapturesUnderCursor<CR>', 'Show TS highlight')
@@ -423,7 +433,7 @@ end
 
 --- Easy commenting.
 function M.comment()
-    add_to_which_key_prefixes(mode.NOT_TYPING, { '<LEADER>', 'c' }, 'comment')
+    add_to_which_key_prefixes(mode.NOT_TYPING, '<LEADER>c', 'comment')
 
     return {
         toggler = {
@@ -444,7 +454,7 @@ end
 
 --- Git integration.
 function M.gitsigns()
-    add_to_which_key_prefixes(mode.NORMAL, { '<LEADER>', 'g' }, 'git')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>g', 'git')
 
     local gitsigns = require('gitsigns')
 

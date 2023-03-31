@@ -9,6 +9,11 @@ return {
                 mappings = require('neconfig.user.keymaps').telescope_navigation(),
                 prompt_prefix = require('neconfig.user.icons').telescope .. ' '
             },
+            pickers = {
+                colorscheme = {
+                    enable_preview = true
+                }
+            }
         }
 
         require('neconfig.user.keymaps').telescope_pickers()

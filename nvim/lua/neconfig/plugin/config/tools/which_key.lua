@@ -1,6 +1,5 @@
 return {
     'folke/which-key.nvim',
-    priority = 1,
     config = function()
         local which_key = require('which-key')
 
@@ -10,11 +9,14 @@ return {
             }
         }
 
-        for mode, group in pairs(require('neconfig.user.keymaps').which_key_prefixes()) do
-            if mode == '' then
-                mode = nil
-            end
-            which_key.register(group, { mode = mode, prefix = '' })
-        end
+        require('neconfig.user.keymaps').which_key_prefixes_register(function(mode, keys, description)
+            which_key.register(
+                { name = description },
+                {
+                    prefix = keys,
+                    mode = mode
+                }
+            )
+        end)
     end
 }
