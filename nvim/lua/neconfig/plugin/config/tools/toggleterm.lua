@@ -4,7 +4,7 @@ return {
         require('toggleterm').setup {
             size = function(term)
                 if term.direction == 'horizontal' then
-                    return 20
+                    return 12
                 else
                     return vim.o.columns * 0.3
                 end
@@ -14,7 +14,9 @@ return {
                 local win = vim.wo[t.window]
                 win.signcolumn = 'no'
                 win.foldcolumn = '0'
-            end
+            end,
+            persist_size = false,
+            persist_mode = false
         }
 
         -- Keymaps
