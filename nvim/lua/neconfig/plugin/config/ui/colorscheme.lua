@@ -45,5 +45,12 @@ return {
     },
     colorscheme {
         'rebelot/kanagawa.nvim',
-    }
+    },
+    colorscheme {
+        'wuelnerdotexe/vim-enfocado',
+        config = function()
+            vim.g['enfocado_style'] = 'neon'
+        end
+    },
+
 }

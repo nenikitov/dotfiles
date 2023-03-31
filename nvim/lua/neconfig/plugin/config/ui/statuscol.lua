@@ -17,6 +17,14 @@ return {
                     text = { builtin.foldfunc, ' ' },
                     click = 'v:lua.ScFa'
                 }
+            },
+            ft_ignore = {
+                'NvimTree',
+                'neo-tree',
+                'notify'
+            },
+            bt_ignore = {
+                'terminal'
             }
         }
     end
