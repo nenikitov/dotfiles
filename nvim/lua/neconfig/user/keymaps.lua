@@ -465,6 +465,17 @@ function M.gitsigns()
     map(mode.NORMAL, ']g',         gitsigns.next_hunk,    'Next hunk')
 end
 
+--- Toggle term open.
+function M.toggleterm_open()
+    return '<A-\\>'
+end
+
+--- More toggle term keymaps.
+function M.toggleterm()
+    map({ mode.NORMAL, mode.TERM }, '<A-CR>', '<CMD>ToggleTermToggleAll<CR>', 'Show/hide all popup terminals')
+    map(mode.TERM, '<ESC>', '<C-\\><C-n>')
+end
+
 --#endregion
 
 

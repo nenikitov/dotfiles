@@ -21,7 +21,8 @@ return {
             ft_ignore = {
                 'NvimTree',
                 'neo-tree',
-                'notify'
+                'notify',
+                'toggleterm'
             },
             bt_ignore = {
                 'terminal'

@@ -66,16 +66,19 @@ return {
                 enable_autocmd = false
             },
             textobjects = {
-                enable = true,
+                -- TODO fix insert mode and enable
+                enable = false,
                 select = {
-                    enable = true,
+                    -- TODO fix insert mode and enable
+                    enable = false,
                     lookahead = true,
                     keymaps = require('neconfig.user.keymaps').treesitter_textobjects_select()
                 },
                 move = vim.tbl_deep_extend(
                     'force',
                     {
-                        enable = true
+                        -- TODO fix insert mode and enable
+                        enable = false
                     },
                     require('neconfig.user.keymaps').treesitter_textobjects_move()
                 )

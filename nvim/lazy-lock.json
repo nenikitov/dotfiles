@@ -39,8 +39,8 @@
   "range-highlight.nvim": { "branch": "master", "commit": "8b5e8ccb3460b2c3675f4639b9f54e64eaab36d9" },
   "statuscol.nvim": { "branch": "main", "commit": "f131b2fdec1017c7936e3b6cd22858d4c4c0c742" },
   "telescope.nvim": { "branch": "master", "commit": "942fe5faef47b21241e970551eba407bc10d9547" },
+  "toggleterm.nvim": { "branch": "main", "commit": "ed6c92d6708e5208360347f2281de99602061dc8" },
   "vim-enfocado": { "branch": "main", "commit": "ce03fe4785322aeecafb96a24d32288931172fc5" },
-  "vim-wordmotion": { "branch": "master", "commit": "81d9bd298376ab0dc465c85d55afa4cb8d5f47a1" },
   "vscode.nvim": { "branch": "main", "commit": "bd66a0f0bbf36942f41088570318b41427e469b2" },
   "which-key.nvim": { "branch": "main", "commit": "4b73390eec680b4c061ea175eb32c0ff3412271d" }
 }
