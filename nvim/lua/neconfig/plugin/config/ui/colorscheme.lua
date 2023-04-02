@@ -51,11 +51,5 @@ return {
         config = function()
             vim.g['enfocado_style'] = 'neon'
         end
-    },
-    colorscheme {
-        'jacoborus/tender.vim'
-    },
-    colorscheme {
-        'ellisonleao/gruvbox.nvim'
     }
 }
