@@ -476,8 +476,28 @@ end
 
 --- More toggle term keymaps.
 function M.toggleterm()
-    map({ mode.NORMAL, mode.TERM }, '<A-CR>', '<CMD>ToggleTermToggleAll<CR>', 'Show/hide all popup terminals')
     map(mode.TERM, '<ESC>', '<C-\\><C-n>')
+    map(
+        { mode.NORMAL, mode.TERM },
+        '<A-CR>',
+        function()
+            vim.cmd('ToggleTermToggleAll')
+
+            local toggle_term_exists = false
+            for _, b in ipairs(vim.api.nvim_list_bufs()) do
+                local name = vim.api.nvim_buf_get_name(b)
+                if name:find('toggleterm#') then
+                    toggle_term_exists = true
+                    break
+                end
+            end
+
+            if not toggle_term_exists then
+                vim.cmd('ToggleTerm')
+            end
+        end,
+        'Show/hide all popup terminals'
+    )
 end
 
 --#endregion

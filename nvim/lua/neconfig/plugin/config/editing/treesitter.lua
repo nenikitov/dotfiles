@@ -3,7 +3,7 @@ local languages = {
     'diff', 'regex',
     'git_config', 'git_rebase', 'gitattributes', 'gitcommit', 'gitignore',
 
-    'help',
+    'vimdoc',
     'markdown', 'markdown_inline', 'org',
 
     'comment',

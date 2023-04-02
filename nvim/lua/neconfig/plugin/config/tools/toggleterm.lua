@@ -21,17 +21,5 @@ return {
 
         -- Keymaps
         require('neconfig.user.keymaps').toggleterm()
-
-        -- Open a terminal on startup
-        vim.api.nvim_create_autocmd(
-            'VimEnter',
-            {
-                callback = function()
-                    vim.cmd('ToggleTerm')
-                    vim.cmd('ToggleTermToggleAll')
-                end,
-                group = vim.api.nvim_create_augroup('open_terminal', { clear = true })
-            }
-        )
     end
 }
