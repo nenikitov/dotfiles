@@ -10,6 +10,10 @@ return {
         }
 
         require('neconfig.user.keymaps').which_key_prefixes_register(function(mode, keys, description)
+            if mode == '' then
+                mode = nil
+            end
+
             which_key.register(
                 { name = description },
                 {

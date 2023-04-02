@@ -1,7 +1,17 @@
 return {
     'lewis6991/satellite.nvim',
-    enabled = false,
     config = function()
-        require('satellite').setup()
+        require('satellite').setup {
+            handlers = {
+                winblend = 0,
+                gitsigns = {
+                    signs = {
+                        add    = '┃',
+                        change = '┃',
+                        delete = '┃',
+                    }
+                }
+            }
+        }
     end
 }

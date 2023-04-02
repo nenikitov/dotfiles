@@ -6,10 +6,10 @@ local log = require('neconfig.utils.log')
 --- Module return.
 local M = {}
 
----@alias Mode '' | 'n' | 'i' | 'c' | 'v' | 'x' | 'o' | 't'
+---@alias KeymapMode '' | 'n' | 'i' | 'c' | 'v' | 'x' | 'o' | 't'
 
 --- List of modes.
----@type {string: Mode | Mode[]}
+---@type {string: KeymapMode | KeymapMode[]}
 local mode = {
     NORMAL       = 'n',
     INSERT       = 'i',
@@ -29,7 +29,7 @@ local default_options = {
 }
 
 --- Add a keymap.
----@param modes Mode | Mode[] Modes in which keymap will exist.
+---@param modes KeymapMode | KeymapMode[] Modes in which keymap will exist.
 ---@param keys string Key combination.
 ---@param func string | fun() What to do when keymap is triggered.
 ---@param description string? Description.
@@ -44,11 +44,11 @@ end
 local which_key_prefixes_registered_function = nil
 
 --- Prefixes passed to WhichKey for more documentation.
---- @type {Mode: {string: string}}
+--- @type {KeymapMode: {string: string}}
 local which_key_prefixes = {}
 
 --- Add a description to WhichKey prefix.
----@param modes Mode | Mode[] Modes in which prefix will exist.
+---@param modes KeymapMode | KeymapMode[] Modes in which prefix will exist.
 ---@param keys string Key combination.
 ---@param description string Description.
 local function add_to_which_key_prefixes(modes, keys, description)
@@ -104,6 +104,7 @@ function M.general()
     map(mode.NOT_TYPING,  '<LEADER>bn',  '<CMD>enew<CR>',     'Create a new empty buffer')
     map(mode.NOT_TYPING,  '<LEADER>br',  '<CMD>edit<CR>',     'Refresh current buffer')
     map(mode.NOT_TYPING,  '<LEADER>bd',  '<CMD>bdelete<CR>',  'Delete current buffer')
+    map(mode.NOT_TYPING,  '<LEADER>ba',  '<C-w>=',            'Resize splits automatically')
     map(
         mode.NOT_TYPING,
         '<LEADER>bc',
@@ -192,9 +193,12 @@ function M.telescope_navigation()
             ['<C-l>'] = actions.select_default,
             ['<C-s>'] = actions.select_horizontal,
             ['<C-v>'] = actions.select_vertical,
-            ['<C-u>'] = actions.preview_scrolling_up,
-            ['<C-i>'] = actions.preview_scrolling_down,
+            ['<C-y>'] = actions.preview_scrolling_up,
+            ['<C-e>'] = actions.preview_scrolling_down,
             ['<Tab>'] = actions.toggle_selection,
+            ['<C-w>'] = function()
+                vim.api.nvim_input('<ESC>diwa')
+            end,
             ['<C-/>'] = actions.which_key,
             ['<C-_>'] = actions.which_key,
         },
@@ -205,13 +209,13 @@ function M.telescope_navigation()
             ['j']     = actions.move_selection_next,
             ['k']     = actions.move_selection_previous,
             ['<CR>']  = actions.select_default,
-            ['l']     = actions.select_default,
-            ['h']     = actions.select_horizontal,
-            ['v']     = actions.select_vertical,
+            ['<C-l>'] = actions.select_default,
+            ['<C-h>'] = actions.select_horizontal,
+            ['<C-v>'] = actions.select_vertical,
             ['gg']    = actions.move_to_top,
             ['G']     = actions.move_to_bottom,
-            ['u']     = actions.preview_scrolling_up,
-            ['i']     = actions.preview_scrolling_down,
+            ['y']     = actions.preview_scrolling_up,
+            ['e']     = actions.preview_scrolling_down,
             ['<Tab>'] = actions.toggle_selection,
             ['?']     = actions.which_key,
             ['<C-/>'] = actions.which_key,
