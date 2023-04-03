@@ -1,4 +1,15 @@
-local listchars = {
+--#region Helpers
+
+--- Module return.
+local M = {}
+
+--#endregion
+
+
+
+--#region Icons
+
+M.list_chars = {
     tab      = '→ ',
     trail    = '·',
     nbsp     = '␣',
@@ -6,14 +17,41 @@ local listchars = {
     precedes = '◀'
 }
 
-local diagnostics = {
+M.fillchars = {
+    fold = ' ',
+    foldsep = ' ',
+    foldopen = '',
+    foldclose = ''
+}
+
+M.virtual_text_prefix = '■'
+M.diagnostics = {
     error   = '',
     warning = '',
     hint    = '',
     info    = ''
 }
 
-local gitsigns = {
+M.telescope = ' '
+M.cmdline = {
+    cmdline     = '>_',
+    search_down = ' ',
+    search_up   = ' ',
+    filter      = '$_',
+    lua         = '󰢱 ',
+    help        = ' ',
+}
+
+M.notify = {
+    error  = '',
+    warn   = '',
+    info   = '',
+    debug  = '',
+    trace  = '󰝶',
+}
+
+
+M.gitsigns = {
     add          = '┃',
     change       = '┃',
     delete       = '',
@@ -22,22 +60,7 @@ local gitsigns = {
     untracked    = '┋'
 }
 
-local scrollbar_diagnostic = { '-', '=' }
-local scrollbar_git = { '┃' }
-local scollbar = {
-    cursor     = 'I',
-    search     = '/',
-    error      = scrollbar_diagnostic,
-    warn       = scrollbar_diagnostic,
-    info       = scrollbar_diagnostic,
-    hint       = scrollbar_diagnostic,
-    misc       = scrollbar_diagnostic,
-    git_add    = scrollbar_git,
-    git_change = scrollbar_git,
-    git_delete = scrollbar_git
-}
-
-local nvim_tree = {
+M.nvim_tree = {
     folder = {
         default      = '',
         open         = '',
@@ -45,10 +68,21 @@ local nvim_tree = {
         empty_open   = '',
         symlink      = '',
         symlink_open = ''
-    }
+    },
+    git = {
+        unstaged  = '',
+        staged    = '',
+        unmerged  = '',
+        renamed   = '',
+        untracked = '',
+        deleted   = '󰧧',
+        ignored   = '',
+    },
+    modified = '',
+    bookmark = '󰃀'
 }
 
-local completion = {
+M.completion = {
     Array         = '',
     Boolean       = '',
     Class         = 'ﴯ',
@@ -85,12 +119,20 @@ local completion = {
     Variable      = '',
 }
 
-return {
-    completion = completion,
-    diagnostics = diagnostics,
-    gitsigns = gitsigns,
-    listchars = listchars,
-    nvim_tree = nvim_tree,
-    scollbar = scollbar,
+M.bufferline = {
+    buffer_close = '',
+    buffer_modified = '●',
+    close = '',
+    left_trunc = '',
+    right_trunc = '',
 }
 
+--#endregion
+
+
+
+--#region Exports
+
+return M
+
+--#endregion

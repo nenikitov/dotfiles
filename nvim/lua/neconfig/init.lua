@@ -1,3 +1,2 @@
 require('neconfig.user')
-require('neconfig.plugins')
-
+require('neconfig.plugin')
