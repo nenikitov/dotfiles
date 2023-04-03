@@ -7,7 +7,7 @@ local log = require('neconfig.utils.log')
 local cmd = vim.cmd
 
 --- Name of the colorscheme.
-local colorscheme = 'enfocado'
+local colorscheme = 'horizon'
 --- Name of the colorscheme to fall back if the color scheme was not found.
 local colorscheme_fallback = 'slate'
 

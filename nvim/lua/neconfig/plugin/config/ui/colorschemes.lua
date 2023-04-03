@@ -51,5 +51,8 @@ return {
         config = function()
             vim.g['enfocado_style'] = 'neon'
         end
+    },
+    colorscheme {
+        'LunarVim/horizon.nvim'
     }
 }

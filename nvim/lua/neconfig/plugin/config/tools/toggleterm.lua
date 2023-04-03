@@ -12,7 +12,7 @@ return {
             open_mapping = require('neconfig.user.keymaps').toggleterm_open(),
             on_open = function(t)
                 local win = vim.wo[t.window]
-                win.signcolumn = 'no'
+                win.signcolumn = 'yes:1'
                 win.foldcolumn = '0'
             end,
             persist_size = false,

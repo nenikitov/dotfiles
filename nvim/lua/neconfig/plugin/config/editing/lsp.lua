@@ -29,7 +29,6 @@ return {
         'williamboman/mason-lspconfig.nvim',
         -- Sources for Neovim
         'folke/neodev.nvim',
-
     },
     config = function()
         local neodev = require('neodev')
@@ -39,9 +38,19 @@ return {
 
         -- Installer
         neodev.setup()
-        mason.setup()
+        mason.setup {
+            ui = {
+                border = 'rounded',
+                icons = {
+                    package_installed = '●',
+                    package_pending = '',
+                    package_uninstalled = '○'
+                },
+                keymaps = require('neconfig.user.keymaps').mason()
+            }
+        }
         mason_lspconfig.setup {
-            ensure_installed = vim.tbl_keys(servers)
+            ensure_installed = vim.tbl_keys(servers),
         }
 
         -- Configure
@@ -112,5 +121,7 @@ return {
                 orig_signs_handler.hide(ns, bufnr)
             end
         }
+
+        require('neconfig.user.keymaps').lsp_plugin()
     end
 }

@@ -38,4 +38,6 @@ require('lazy').setup(
     }
 )
 
+require('neconfig.user.keymaps').lazy_plugin()
+
 --#endregion

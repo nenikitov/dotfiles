@@ -1,5 +1,5 @@
 return {
-    'lewis6991/satellite.nvim',
+    'nenikitov/satellite.nvim',
     config = function()
         require('satellite').setup {
             handlers = {
@@ -10,6 +10,9 @@ return {
                         change = '┃',
                         delete = '┃',
                     }
+                },
+                diagnostic = {
+                    min_severity = vim.diagnostic.severity.INFO
                 }
             }
         }

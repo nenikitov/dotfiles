@@ -56,13 +56,13 @@ local function add_to_which_key_prefixes(modes, keys, description)
         modes = { modes };
     end
 
-    for _, mode in ipairs(modes) do
-        which_key_prefixes[mode] = which_key_prefixes[mode] or {}
-        if which_key_prefixes[mode][keys] ~= description then
-            which_key_prefixes[mode][keys] = description
+    for _, m in ipairs(modes) do
+        which_key_prefixes[m] = which_key_prefixes[mode] or {}
+        if which_key_prefixes[m][keys] ~= description then
+            which_key_prefixes[m][keys] = description
 
             if which_key_prefixes_registered_function then
-                which_key_prefixes_registered_function(mode, keys, description)
+                which_key_prefixes_registered_function(m, keys, description)
             end
         end
     end
@@ -148,7 +148,21 @@ function M.general()
     map(mode.NORMAL,  '<A-/>',  '<CMD>let @/ = ""<CR>',  'Clear search')
 end
 
--- TODO Add lazy keymaps
+
+--- Lazy plugin.
+function M.lazy_plugin()
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>p', 'plugins')
+
+    map(mode.NORMAL, '<LEADER>pp', '<CMD>Lazy<CR>', 'Open Lazy')
+end
+
+--- Lsp plugin.
+function M.lsp_plugin()
+    map(mode.NORMAL, '<LEADER>pm', '<CMD>Mason<CR>',   'Open Mason')
+    map(mode.NORMAL, '<LEADER>pl', '<CMD>LspInfo<CR>', 'Open LspInfo')
+end
+
+
 
 
 --- Open telescope pickers (menus).
@@ -156,16 +170,20 @@ function M.telescope_pickers()
     add_to_which_key_prefixes(mode.NORMAL, '<LEADER>t', 'telescope')
 
     local builtin = require('telescope.builtin')
+    local extensions = require('telescope').extensions
 
     -- All
-    map(mode.NORMAL,  '<LEADER>tt',  builtin.builtin,  'Open built-in picker picker')
+    map(mode.NORMAL,  '<LEADER>tt',  builtin.builtin,  'Open built-in pickers picker')
 
     -- Other
-    map(mode.NORMAL,  '<LEADER>tf',  builtin.find_files,   'Open files picker')
-    map(mode.NORMAL,  '<LEADER>tg',  builtin.live_grep,    'Open grep picker')
-    map(mode.NORMAL,  '<LEADER>tl',  builtin.filetypes,    'Open file type picker')
-    map(mode.NORMAL,  '<LEADER>th',  builtin.highlights,   'Open highlights picker')
-    map(mode.NORMAL,  '<LEADER>tc',  builtin.colorscheme,  'Open colorscheme picker')
+    map(mode.NORMAL,  '<LEADER>tf',  builtin.find_files,        'Open files picker')
+    map(mode.NORMAL,  '<LEADER>tg',  builtin.live_grep,         'Open grep picker')
+    map(mode.NORMAL,  '<LEADER>tl',  builtin.filetypes,         'Open file type picker')
+    map(mode.NORMAL,  '<LEADER>th',  builtin.highlights,        'Open highlights picker')
+    map(mode.NORMAL,  '<LEADER>tc',  builtin.colorscheme,       'Open colorscheme picker')
+    map(mode.NORMAL,  '<LEADER>tc',  builtin.colorscheme,       'Open colorscheme picker')
+    -- Extensions
+    map(mode.NORMAL,  '<LEADER>tn',  extensions.notify.notify,  'Open notifications picker')
 end
 
 --- Telescope in-picker navigation.
@@ -264,6 +282,26 @@ function M.cmp()
         end),
     }
 end
+
+
+--- Inside mason menu.
+function M.mason()
+    return {
+        toggle_package_expand = '<CR>',
+
+        install_package       = 'i',
+        update_package        = 'u',
+        check_package_version = 'c',
+        uninstall_package     = 'd',
+
+        update_all_packages     = 'U',
+        check_outdated_packages = 'C',
+
+        cancel_installation   = '<C-c>',
+        apply_language_filter = 'f'
+    }
+end
+
 
 --- LSP related.
 function M.lsp()
@@ -373,12 +411,12 @@ end
 
 --- Treesitter.
 function M.treesitter()
-    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>s', 'treesitter')
+    add_to_which_key_prefixes(mode.NORMAL, '<LEADER>h', 'highlight')
 
-    map(mode.NORMAL, '<LEADER>sn', '<CMD>TSNodeUnderCursor<CR>',              'Show TS node')
-    map(mode.NORMAL, '<LEADER>sh', '<CMD>TSHighlightCapturesUnderCursor<CR>', 'Show TS highlight')
-    map(mode.NORMAL, '<LEADER>sp', '<CMD>TSPlaygroundToggle<CR>',             'Toggle TS playground')
-    map(mode.NORMAL, '<LEADER>si', '<CMD>Inspect<CR>',                        'Inspect current highlight group')
+    map(mode.NORMAL, '<LEADER>hn', '<CMD>TSNodeUnderCursor<CR>',              'Show TS node')
+    map(mode.NORMAL, '<LEADER>hh', '<CMD>TSHighlightCapturesUnderCursor<CR>', 'Show TS highlight')
+    map(mode.NORMAL, '<LEADER>hp', '<CMD>TSPlaygroundToggle<CR>',             'Toggle TS playground')
+    map(mode.NORMAL, '<LEADER>hi', '<CMD>Inspect<CR>',                        'Inspect current highlight group')
 end
 
 --- Syntax aware selection.
