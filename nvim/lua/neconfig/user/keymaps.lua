@@ -176,12 +176,12 @@ function M.telescope_pickers()
     map(mode.NORMAL,  '<LEADER>tt',  builtin.builtin,  'Open built-in pickers picker')
 
     -- Other
-    map(mode.NORMAL,  '<LEADER>tf',  builtin.find_files,        'Open files picker')
-    map(mode.NORMAL,  '<LEADER>tg',  builtin.live_grep,         'Open grep picker')
-    map(mode.NORMAL,  '<LEADER>tl',  builtin.filetypes,         'Open file type picker')
-    map(mode.NORMAL,  '<LEADER>th',  builtin.highlights,        'Open highlights picker')
-    map(mode.NORMAL,  '<LEADER>tc',  builtin.colorscheme,       'Open colorscheme picker')
-    map(mode.NORMAL,  '<LEADER>tc',  builtin.colorscheme,       'Open colorscheme picker')
+    map(mode.NORMAL,  '<LEADER>tf',  builtin.find_files,   'Open files picker')
+    map(mode.NORMAL,  '<LEADER>tg',  builtin.live_grep,    'Open grep picker')
+    map(mode.NORMAL,  '<LEADER>tl',  builtin.filetypes,    'Open file type picker')
+    map(mode.NORMAL,  '<LEADER>tm',  builtin.help_tags,    'Open help picker')
+    map(mode.NORMAL,  '<LEADER>th',  builtin.highlights,   'Open highlights picker')
+    map(mode.NORMAL,  '<LEADER>tc',  builtin.colorscheme,  'Open colorscheme picker')
     -- Extensions
     map(mode.NORMAL,  '<LEADER>tn',  extensions.notify.notify,  'Open notifications picker')
 end
@@ -254,14 +254,14 @@ function M.cmp()
 
     return {
         -- Documentation
-        ['<C-u>']     = map_cmp(mapping.scroll_docs(1)),
-        ['<C-i>']     = map_cmp(mapping.scroll_docs(-1)),
+        ['<C-y>']     = map_cmp(mapping.scroll_docs(1)),
+        ['<C-e>']     = map_cmp(mapping.scroll_docs(-1)),
         -- Items
         ['<C-j>']     = map_cmp(mapping.select_next_item()),
         ['<C-k>']     = map_cmp(mapping.select_prev_item()),
         -- Confirm & abort with jumps
         ['<C-SPACE>'] = map_cmp(mapping.complete()),
-        ['<C-e>']     = map_cmp(mapping.abort()),
+        ['<C-q>']     = map_cmp(mapping.abort()),
         ['<C-l>']     = map_cmp(function(fallback)
             if cmp.visible() then
                 cmp.confirm { select = true }

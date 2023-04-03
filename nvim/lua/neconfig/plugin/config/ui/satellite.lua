@@ -1,5 +1,5 @@
 return {
-    'nenikitov/satellite.nvim',
+    'lewis6991/satellite.nvim',
     config = function()
         require('satellite').setup {
             handlers = {
