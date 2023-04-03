@@ -512,7 +512,7 @@ function M.toggleterm_open()
     return '<A-\\>'
 end
 
---- More toggle term keymaps.
+--- Other toggle term keymaps.
 function M.toggleterm()
     map(mode.TERM, '<ESC>', '<C-\\><C-n>')
     map(
@@ -536,6 +536,19 @@ function M.toggleterm()
         end,
         'Show/hide all popup terminals'
     )
+end
+
+--- Bufferline.
+function M.bufferline()
+    -- Tabs
+    map(mode.NOT_TYPING,  '<A-h>',  '<CMD>BufferLineCyclePrev<CR>',  'Go to previous buffer')
+    map(mode.NOT_TYPING,  '<A-l>',  '<CMD>BufferLineCycleNext<CR>',  'Go to next buffer')
+    map(mode.NOT_TYPING,  '<A-j>',  '<CMD>BufferLineMovePrev<CR>',   'Move buffer to the left')
+    map(mode.NOT_TYPING,  '<A-k>',  '<CMD>BufferLineMoveNext<CR>',   'Move buffer to the right')
+    -- Picker
+    add_to_which_key_prefixes(mode.NOT_TYPING, '<LEADER>bp', 'picker')
+    map(mode.NOT_TYPING,  '<LEADER>bpp',  '<CMD>BufferLinePick<CR>',       'Select')
+    map(mode.NOT_TYPING,  '<LEADER>bpc',  '<CMD>BufferLinePickClose<CR>',  'Close')
 end
 
 --#endregion

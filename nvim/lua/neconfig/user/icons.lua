@@ -41,6 +41,7 @@ M.cmdline = {
     lua         = '󰢱 ',
     help        = ' ',
 }
+
 M.notify = {
     error  = '',
     warn   = '',
@@ -57,21 +58,6 @@ M.gitsigns = {
     topdelete    = '',
     changedelete = '',
     untracked    = '┋'
-}
-
-local scrollbar_diagnostic = { '-', '=' }
-local scrollbar_git = { '┃' }
-M.scrollbar = {
-    cursor     = 'I',
-    search     = '/',
-    error      = scrollbar_diagnostic,
-    warn       = scrollbar_diagnostic,
-    info       = scrollbar_diagnostic,
-    hint       = scrollbar_diagnostic,
-    misc       = scrollbar_diagnostic,
-    git_add    = scrollbar_git,
-    git_change = scrollbar_git,
-    git_delete = scrollbar_git
 }
 
 M.nvim_tree = {
@@ -131,6 +117,14 @@ M.completion = {
     Unit          = '',
     Value         = '',
     Variable      = '',
+}
+
+M.bufferline = {
+    buffer_close = '',
+    buffer_modified = '●',
+    close = '',
+    left_trunc = '',
+    right_trunc = '',
 }
 
 --#endregion
