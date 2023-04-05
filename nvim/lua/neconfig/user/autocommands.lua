@@ -17,7 +17,7 @@ end
 ac(
     'FileType',
     {
-        pattern = { 'help', 'man', 'lspinfo' },
+        pattern = { 'help', 'man', 'lspinfo', 'notify' },
         callback = function()
             vim.keymap.set('n', 'q',     '<CMD>close<CR>', { silent = true, buffer = 0 })
             vim.keymap.set('n', '<ESC>', '<CMD>close<CR>', { silent = true, buffer = 0 })

@@ -1,40 +1,3 @@
----@param str string
----@param length integer
----@return string centered
-local function center(str, length)
-    local str_length = str:len()
-
-    if str_length >= length then
-        return str
-    else
-        local left = math.floor((length - str_length) / 2)
-        local right = length - (str_length + left)
-
-        return (
-            (' '):rep(left)
-            .. str
-            .. (' '):rep(right)
-        )
-    end
-end
-
----@param section string[]
----@return string[] centered
-local function center_section(section)
-    local max_length = 0
-    for _, s in ipairs(section) do
-        local str_length = s:len()
-        if str_length > max_length then
-            max_length = str_length
-        end
-    end
-
-    return vim.tbl_map(
-        function(s) return center(s, max_length) end,
-        section
-    )
-end
-
 return {
     'goolord/alpha-nvim',
     dependencies = {
@@ -42,60 +5,174 @@ return {
     },
     event = 'VimEnter',
     config = function()
-        local theme = require('alpha.themes.dashboard')
+        local utils_logo = require('neconfig.utils.logo')
 
-        theme.section.header.val = center_section {
-            [[     .          .     ]],
-            [[   ';;,.        ::'   ]],
-            [[ ,:::;,,        :ccc, ]],
-            [[,::c::,,,,.     :cccc,]],
-            [[,cccc:;;;;;.    cllll,]],
-            [[,cccc;.;;;;;,   cllll;]],
-            [[:cccc; .;;;;;;. coooo;]],
-            [[;llll;   ,:::::'loooo;]],
-            [[;llll:    ':::::loooo:]],
-            [[:oooo:     .::::llodd:]],
-            [[.;ooo:       ;cclooo:.]],
-            [[  .;oc        'coo;.  ]],
-            [[    .'         .,.    ]],
-            [[]],
-            [[An editor that you don't want to exit]],
+        ---@param left string
+        ---@param middle string
+        ---@param right string
+        ---@param width integer
+        ---@return string
+        local function align_strings(left, middle, right, width)
+            local s = width - #left - #middle - #right
+            local l = math.floor(s / 2)
+            local r = s - l
+
+            return (
+                left .. (' '):rep(l)
+                .. middle
+                .. (' '):rep(r) .. right
+            )
+        end
+
+        local width = 50
+        local separator = '====='
+
+        ---@param keys string
+        ---@param description string
+        ---@param command string?
+        ---@return table
+        local function button(keys, description, command)
+            return {
+                type = 'button',
+                val = description,
+                on_press = function()
+                    local keys = vim.api.nvim_replace_termcodes(command or keys, true, false, true)
+                    vim.api.nvim_feedkeys(keys, 't', false)
+                end,
+                opts = {
+                    position = 'center',
+                    shortcut = keys,
+                    keymap =
+                        command
+                        and {
+                            'n',
+                            keys,
+                            command,
+                            { noremap = true, silent = true, nowait = true }
+                        }
+                        or nil,
+                    cursor = 5,
+                    width = width,
+                    align_shortcut = 'right',
+                    hl_shortcut = 'Keyword'
+                }
+            }
+        end
+
+        ---@param text string
+        ---@param highlight string?
+        ---@return table
+        local function span(text, highlight)
+            return {
+                type = 'text',
+                val = text,
+                opts = {
+                    position = 'center',
+                    hl = highlight or 'Normal'
+                }
+            }
+        end
+
+        local b = utils_logo.span_generator('DevIconLua')
+        local c = utils_logo.span_generator('DevIconMint')
+        local g = utils_logo.span_generator('DevIconBash')
+        local gd = utils_logo.span_generator('DevIconXls')
+        local gdd = utils_logo.span_generator('DevIconVim')
+        local logo = utils_logo.new_logo {
+            { c[[     .]]          ,g[[          ]],   gd[[.     ]]              },
+            { c[[   ';;]]          ,g[[,.        ]],   gd[[::'   ]]              },
+            { b[[ ,:]],   c[[::;]] ,g[[,,        ]],   gd[[:ccc, ]]              },
+            { b[[,::c]],  c[[::]]  ,g[[,,,,.     ]],   gd[[:cccc,]]              },
+            { b[[,cccc]], c[[:]]   ,g[[;;;;;.    ]],   gd[[cllll,]]              },
+            { b[[,cccc;]]          ,g[[.;;;;;,   ]],   gd[[cllll;]]              },
+            { b[[:cccc;]]          ,g[[ .;;;;;;. ]],   gd[[coooo;]]              },
+            { b[[;llll;]]          ,g[[   ,:::::']],   gd[[loooo;]]              },
+            { b[[;llll:]]          ,g[[    ':::::]],   gdd[[l]],     gd[[oooo:]] },
+            { b[[:oooo:]]          ,g[[     .::::]],   gdd[[ll]],    gd[[odd:]]  },
+            { b[[.;ooo:]]          ,g[[       ;cc]],   gdd[[loo]],   gd[[o:.]]   },
+            { b[[  .;oc]]          ,g[[        'c]],   gdd[[oo;.  ]]             },
+            { b[[    .']]          ,g[[         .]],   gdd[[,.    ]]             },
         }
-        local blue = 'DevIconLua'
-        local cyan = 'DevIconMint'
-        local green = 'DevIconBash'
-        local green_darker = 'DevIconXls'
-        local green_darkest = 'DevIconVim'
-        -- TODO Create a logo coloring utility
-        theme.section.header.opts.hl = {
-            { { cyan, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { cyan, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { cyan, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { blue, 0, 999 }, { cyan, 11, 999 },  { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darkest, 23, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darker, 23, 999 }, { green_darkest, 25, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darker, 23, 999 }, { green_darkest, 26, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darker, 23, 999 } },
-            { { blue, 0, 999 }, { green, 13, 999 }, { green_darker, 23, 999 } },
-            { {'String', 0, 999 } },
-            { {'String', 0, 999 } },
+        logo = {
+            type = 'text',
+            val = logo.text,
+            opts = {
+                position= 'center',
+                hl = logo.highlights
+            }
         }
 
-        theme.section.buttons.val = {
-            theme.button('<LEADER>bn', '  New file')
+        local header = span('An editor that you don\'t want to exit', 'Number')
+
+
+        local buttons = {
+            type = 'group',
+            val = {
+                span(align_strings(separator, ' New ', separator, width), 'Title'),
+                button('<LEADER>bn', '  New file'),
+                span(align_strings(separator, ' Open ', separator, width), 'Title'),
+                button('<LEADER>tf', '  Go to file'),
+                button('<LEADER>tg', '  Search string'),
+                button('<LEADER>f',  '  Open file list'),
+                span(align_strings(separator, ' Other ', separator, width), 'Title'),
+                button('<LEADER>pp', '  Open plugin manager'),
+                button(':q', '󰗼  Quit', '<CMD>q<CR>'),
+            }
         }
 
-        local lazy_stats = require('lazy').stats()
-        theme.section.footer.val = center_section {
-            tostring(os.date(' %Y-%m-%d   %H:%M:%S')),
-            ' ' .. lazy_stats.count .. '  󱦟 ' .. math.floor(lazy_stats.times['LazyDone'] + 0.5) .. ' ms',
-            ' ' .. os.getenv('USER'),
+        local lazy = require('lazy')
+
+        ---@param total integer
+        ---@param loaded integer?
+        ---@param time number?
+        ---@return string
+        local function lazy_text(total, loaded, time)
+            return (
+                ' ' .. (loaded and loaded .. '/' .. total or total)
+                .. '  󱦟 ' .. (time and math.floor(time + 0.5) or '___') .. ' ms'
+            )
+        end
+        local lazy_span = span(lazy_text(lazy.stats().count), 'Number')
+
+        local footer = {
+            type = 'group',
+            val = {
+                span(tostring(os.date(' %Y-%m-%d   %H:%M:%S')), 'Number'),
+                lazy_span,
+                span(' ' .. os.getenv('USER'), 'Number')
+            }
         }
 
-        require('alpha').setup(theme.config)
+        vim.api.nvim_create_autocmd(
+            'User',
+            {
+                pattern = 'LazyVimStarted',
+                callback = function()
+                    local stats = lazy.stats()
+                    lazy_span.val = lazy_text(stats.loaded, stats.loaded, stats.startuptime)
+                    vim.cmd('AlphaRedraw')
+                end
+            }
+        )
+
+        require('alpha').setup {
+            layout = {
+                { type = 'padding', val = 2 },
+                logo,
+                { type = 'padding', val = 1 },
+                header,
+
+
+                { type = 'padding', val = 2 },
+                buttons,
+
+
+                { type = 'padding', val = 2 },
+                footer
+            },
+            opts = {
+                margin = 5
+            }
+        }
     end,
 }

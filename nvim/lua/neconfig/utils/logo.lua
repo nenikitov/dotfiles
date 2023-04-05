@@ -32,16 +32,25 @@ function M.new_span(body, highlight)
     }
 end
 
+--- Create a new span generator for the logo.
+---@param highlight string
+---@return fun(body: string): LogoSpan
+function M.span_generator(highlight)
+    return function(body)
+        return M.new_span(body, highlight)
+    end
+end
+
 --- Create a new logo with colors.
----@param ... LogoLine
+---@param lines LogoLine[]
 ---@return { text: string[], highlights: table[] }
-function M.new_logo(...)
+function M.new_logo(lines)
     ---@type string[]
     local text = {}
     ---@type table[]
     local highlights = {}
 
-    for _, line in ipairs({...}) do
+    for _, line in ipairs(lines) do
         local t = ''
         local h = {}
 
