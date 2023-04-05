@@ -28,13 +28,14 @@ return {
         local separator = '====='
 
         ---@param keys string
+        ---@param icon string
         ---@param description string
         ---@param command string?
         ---@return table
-        local function button(keys, description, command)
+        local function button(keys, icon, description, command)
             return {
                 type = 'button',
-                val = description,
+                val = icon .. '  ' .. description,
                 on_press = function()
                     local keys = vim.api.nvim_replace_termcodes(command or keys, true, false, true)
                     vim.api.nvim_feedkeys(keys, 't', false)
@@ -51,9 +52,10 @@ return {
                             { noremap = true, silent = true, nowait = true }
                         }
                         or nil,
-                    cursor = 5,
+                    cursor = #icon + 2,
                     width = width,
                     align_shortcut = 'right',
+                    hl = { {'Function', 0, #icon} },
                     hl_shortcut = 'Keyword'
                 }
             }
@@ -109,14 +111,14 @@ return {
             type = 'group',
             val = {
                 span(align_strings(separator, ' New ', separator, width), 'Title'),
-                button('<LEADER>bn', '  New file'),
+                button('<LEADER>bn', '', 'New file'),
                 span(align_strings(separator, ' Open ', separator, width), 'Title'),
-                button('<LEADER>tf', '  Go to file'),
-                button('<LEADER>tg', '  Search string'),
-                button('<LEADER>f',  '  Open file list'),
+                button('<LEADER>tf', '','Go to file'),
+                button('<LEADER>tg', '', 'Search string'),
+                button('<LEADER>f',  '', 'Show file browser'),
                 span(align_strings(separator, ' Other ', separator, width), 'Title'),
-                button('<LEADER>pp', '  Open plugin manager'),
-                button(':q', '󰗼  Quit', '<CMD>q<CR>'),
+                button('<LEADER>pp', '', 'Open plugin manager'),
+                button(':q', '󰗼', 'Quit', '<CMD>q<CR>'),
             }
         }
 
@@ -155,6 +157,7 @@ return {
             }
         )
 
+
         require('alpha').setup {
             layout = {
                 { type = 'padding', val = 2 },
@@ -162,10 +165,8 @@ return {
                 { type = 'padding', val = 1 },
                 header,
 
-
                 { type = 'padding', val = 2 },
                 buttons,
-
 
                 { type = 'padding', val = 2 },
                 footer
