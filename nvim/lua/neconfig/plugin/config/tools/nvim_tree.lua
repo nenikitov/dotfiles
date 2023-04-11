@@ -33,9 +33,12 @@ return {
                     glyphs = require('neconfig.user.icons').nvim_tree
                 },
                 special_files = {
-                    'Cargo.toml', 'package.json',
-                    'Makefile',
                     'README.md', 'readme.md',
+                    'README.txt', 'readme.txt',
+                    'README', 'readme',
+
+                    'LICENSE.txt', 'license.txt',
+                    'LICENSE', 'license',
                 }
             },
             update_focused_file = {

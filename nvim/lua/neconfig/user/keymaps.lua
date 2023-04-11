@@ -326,9 +326,13 @@ function M.lsp()
     map(mode.NORMAL,  ']e',           vim.diagnostic.goto_next,   'Go to next error',      buffer_option)
     map(mode.NORMAL,  '<LEADER>lea',  vim.lsp.buf.code_action,    'Show automatic fixes',  buffer_option)
     -- Go to
-    map(mode.NORMAL,  '<LEADER>lgd',  builtin.lsp_definitions,      'Go to definition',      buffer_option)
-    map(mode.NORMAL,  '<LEADER>lgr',  builtin.lsp_references,       'Go to references',      buffer_option)
-    map(mode.NORMAL,  '<LEADER>lgi',  builtin.lsp_implementations,  'Go to implementation',  buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgd',  builtin.lsp_definitions,      'Go to definition',       buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgr',  builtin.lsp_references,       'Go to references',       buffer_option)
+    map(mode.NORMAL,  '<LEADER>lge',  builtin.lsp_implementations,  'Go to implementation',   buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgi',  builtin.lsp_incoming_calls,   'Go to incoming call',    buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgi',  builtin.lsp_outgoing_calls,   'Go to outgoing call',    buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgs',  builtin.lsp_document_symbols, 'Go to symbol',           buffer_option)
+    map(mode.NORMAL,  '<LEADER>lgt',  builtin.lsp_type_definitions, 'Go to type definition',  buffer_option)
     -- Refactor
     map(mode.NORMAL,  '<LEADER>lrr',  vim.lsp.buf.rename,  'Rename',  buffer_option)
     map(
@@ -534,7 +538,7 @@ function M.toggleterm()
                 vim.cmd('ToggleTerm')
             end
         end,
-        'Show/hide all popup terminals'
+        'Toggle terminal'
     )
 end
 

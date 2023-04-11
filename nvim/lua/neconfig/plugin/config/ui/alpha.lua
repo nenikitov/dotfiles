@@ -1,5 +1,5 @@
 return {
-    'goolord/alpha-nvim',
+    'nenikitov/alpha-nvim',
     dependencies = {
         'nvim-tree/nvim-web-devicons',
     },
@@ -117,8 +117,10 @@ return {
                 button('<LEADER>tg', '', 'Search string'),
                 button('<LEADER>f',  '', 'Show file browser'),
                 span(align_strings(separator, ' Other ', separator, width), 'Title'),
+                -- TODO
+                button('<A-CR>',     '', 'Toggle terminal'),
                 button('<LEADER>pp', '', 'Open plugin manager'),
-                button(':q', '󰗼', 'Quit', '<CMD>q<CR>'),
+                button(':q', '󰩈', 'Quit', '<CMD>q<CR>'),
             }
         }
 
@@ -172,7 +174,11 @@ return {
                 footer
             },
             opts = {
-                margin = 5
+                margin = 5,
+                keymap = {
+                    press = { '<CR>', 'l' },
+                    queue_press = nil
+                }
             }
         }
     end,

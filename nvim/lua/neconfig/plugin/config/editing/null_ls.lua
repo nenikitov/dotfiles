@@ -24,7 +24,11 @@ return {
             -- CSpell
             diagnostics.cspell.with {
                 diagnostics_postprocess = function(d)
+                    -- Set as hint
                     d.severity = vim.diagnostic.severity.HINT
+                    -- Limit to first character
+                    d.end_col = math.min(d.col + 1, d.end_col)
+                    d.end_lnum = d.lnum
                 end,
                 method = null_ls.methods.DIAGNOSTICS_ON_SAVE
             },

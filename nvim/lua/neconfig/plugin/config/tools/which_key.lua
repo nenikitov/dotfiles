@@ -1,5 +1,6 @@
 return {
     'folke/which-key.nvim',
+    priority = 900,
     config = function()
         local which_key = require('which-key')
 

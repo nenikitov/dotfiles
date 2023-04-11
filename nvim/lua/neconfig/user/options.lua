@@ -61,7 +61,7 @@ o.scrolloff = 4                 -- Keep lines on top and below the cursor when s
 o.sidescrolloff = 8             -- Keep characters on the left and right of the cursor when scrolling
 o.list = true                   -- Show special white-space characters
 o.listchars =                   -- How these special white-space characters are displayed
-    require('neconfig.user.icons').listchars
+    require('neconfig.user.icons').list_chars
 o.showmode = false              -- Hide mode from the command line
 
 

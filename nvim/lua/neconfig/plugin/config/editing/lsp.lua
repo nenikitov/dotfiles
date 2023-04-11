@@ -2,14 +2,14 @@ local servers = {
     -- Lua
     lua_ls = {
         Lua = {
-            workspace = { checkThirdParty = false },
-            telemetry = { enable = false }
+            workspace = { checkThirdParty = false }
         }
     },
     -- HTML
     html = {},
     -- CSS
     cssls = {},
+    cssmodules_ls = {},
     -- JavaScript and TypeScript
     tsserver = {},
     -- JSON
@@ -17,7 +17,13 @@ local servers = {
     -- Rust
     rust_analyzer = {},
     -- Python
-    pyright = {}
+    pyright = {},
+    -- YAML
+    yamlls = {
+        yaml = {
+          keyOrdering = false
+        }
+    }
 }
 
 
@@ -42,8 +48,8 @@ return {
             ui = {
                 border = 'rounded',
                 icons = {
-                    package_installed = '●',
-                    package_pending = '',
+                    package_installed   = '●',
+                    package_pending     = '',
                     package_uninstalled = '○'
                 },
                 keymaps = require('neconfig.user.keymaps').mason()
@@ -81,10 +87,44 @@ return {
                 prefix = require('neconfig.user.icons').virtual_text_prefix
             },
             float = {
+                border = 'rounded',
                 header = '',
+                source = 'always'
             },
             signs = false
         }
+
+        -- Show popup on hover
+        vim.api.nvim_create_autocmd('CursorHold', {
+            callback = function()
+                local cursor = vim.api.nvim_win_get_cursor(0)
+                local diagnostics = vim.tbl_filter(
+                    function(d) return cursor[2] >= d.col and cursor[2] < d.end_col end,
+                    vim.diagnostic.get(0, { lnum = cursor[1] - 1 }) or {}
+                )
+                if #diagnostics ~= 0 then
+                    vim.diagnostic.open_float(
+                        nil,
+                        {
+                            focusable = false,
+                            close_events = {
+                                'BufLeave',
+                                'CursorMoved',
+                                'InsertEnter',
+                                'FocusLost'
+                            },
+                            scope = 'cursor',
+                        }
+                    )
+                else
+                    -- Forces to be silent
+                    local n = vim.notify
+                    vim.notify = function() end
+                    pcall(vim.lsp.buf.hover)
+                    vim.notify = n
+                end
+            end
+        })
 
         -- Signs
         for type, icon in pairs(require('neconfig.user.icons').diagnostics) do
