@@ -117,11 +117,8 @@ return {
                         }
                     )
                 else
-                    -- Forces to be silent
-                    local n = vim.notify
-                    vim.notify = function() end
-                    pcall(vim.lsp.buf.hover)
-                    vim.notify = n
+                    -- TODO make it silent
+                    vim.lsp.buf.hover()
                 end
             end
         })
