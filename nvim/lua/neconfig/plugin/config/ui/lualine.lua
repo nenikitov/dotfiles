@@ -11,8 +11,7 @@ return {
                 return 'sw ' .. sw
             else
                 return 'sw ' .. sw .. ' ts ' .. ts
-            end
-        end
+            end end
 
         local function progress_graphic()
             local current_line = vim.fn.line(".")
@@ -92,6 +91,7 @@ return {
                     },
                     {
                         'filetype',
+                        colored = false,
                         fmt = hide(60)
                     }
                 },

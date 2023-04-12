@@ -40,6 +40,7 @@ M.cmdline = {
     filter      = '$_',
     lua         = '󰢱 ',
     help        = ' ',
+    rename      = ' ',
 }
 
 M.notify = {

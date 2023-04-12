@@ -334,12 +334,18 @@ function M.lsp()
     map(mode.NORMAL,  '<LEADER>lgs',  builtin.lsp_document_symbols, 'Go to symbol',           buffer_option)
     map(mode.NORMAL,  '<LEADER>lgt',  builtin.lsp_type_definitions, 'Go to type definition',  buffer_option)
     -- Refactor
-    map(mode.NORMAL,  '<LEADER>lrr',  vim.lsp.buf.rename,  'Rename',  buffer_option)
+    map(
+        mode.NORMAL,
+        '<LEADER>lrr',
+        function () return ':IncRename ' .. vim.fn.expand('<cword>') end,
+        'Rename',
+        vim.tbl_extend('force', buffer_option, { expr = true })
+    )
     map(
         mode.NORMAL,
         '<LEADER>lrf',
         function() vim.lsp.buf.format { async = true } end,
-        'Rename',
+        'Format',
         buffer_option
     )
     -- Workspace
@@ -553,6 +559,15 @@ function M.bufferline()
     add_to_which_key_prefixes(mode.NOT_TYPING, '<LEADER>bp', 'picker')
     map(mode.NOT_TYPING,  '<LEADER>bpp',  '<CMD>BufferLinePick<CR>',       'Select')
     map(mode.NOT_TYPING,  '<LEADER>bpc',  '<CMD>BufferLinePickClose<CR>',  'Close')
+end
+
+
+--- Split join.
+function M.split_join()
+    local treesj = require('treesj')
+
+    map(mode.NORMAL,  '<LEADER>lrj',  treesj.join,   'Join block of code')
+    map(mode.NORMAL,  '<LEADER>lrs',  treesj.split,  'Split block of code')
 end
 
 --#endregion

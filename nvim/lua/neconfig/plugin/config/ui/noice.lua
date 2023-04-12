@@ -9,7 +9,6 @@ return {
 
         noice.setup {
             presets = {
-                inc_rename = true,
                 lsp_doc_border = true
             },
             cmdline = {
@@ -28,6 +27,9 @@ return {
                         -- Config
                         {
                             lua = { pattern = '^:%s*lua%s+' },
+                        },
+                        {
+                            rename = { pattern = '^:%s*IncRename%s+' }
                         }
                     )
             },
