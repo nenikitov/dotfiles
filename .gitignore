@@ -19,3 +19,4 @@
 
 # Blacklist files
 /zsh/.zcompdump
+*.lock
