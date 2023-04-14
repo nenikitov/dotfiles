@@ -143,7 +143,12 @@ return {
             val = {
                 span(tostring(os.date(' %Y-%m-%d   %H:%M:%S')), 'Number'),
                 lazy_span,
-                span(' ' .. os.getenv('USER'), 'Number')
+                (function()
+                    local user = os.getenv('USER') or os.getenv('USERNAME')
+                    if user then
+                        return span(' ' .. user, 'Number')
+                    end
+                end)()
             }
         }
 
