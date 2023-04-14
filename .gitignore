@@ -23,3 +23,4 @@
 # Blacklist files
 /zsh/.zcompdump
 /**/.vscode
+*.lock
