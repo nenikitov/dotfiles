@@ -21,7 +21,7 @@ local servers = {
     -- YAML
     yamlls = {
         yaml = {
-          keyOrdering = false
+            keyOrdering = false
         }
     }
 }

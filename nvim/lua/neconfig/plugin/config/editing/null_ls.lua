@@ -18,9 +18,7 @@ return {
             -- StyLua
             formatting.stylua,
             -- Prettier
-            formatting.prettierd.with {
-                filetypes = { 'markdown' }
-            },
+            formatting.prettierd,
             -- CSpell
             diagnostics.cspell.with {
                 diagnostics_postprocess = function(d)
