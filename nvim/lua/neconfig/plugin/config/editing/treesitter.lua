@@ -34,6 +34,7 @@ return {
         'JoosepAlviste/nvim-ts-context-commentstring',
         'windwp/nvim-ts-autotag',
         'nvim-treesitter/playground',
+        'theRealCarneiro/hyprland-vim-syntax'
     },
     build = function()
         require('nvim-treesitter.install').update {
