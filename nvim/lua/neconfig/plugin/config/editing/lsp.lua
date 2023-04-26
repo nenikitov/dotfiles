@@ -95,6 +95,7 @@ return {
         }
 
         -- Show popup on hover
+        --[[
         vim.api.nvim_create_autocmd('CursorHold', {
             callback = function()
                 local cursor = vim.api.nvim_win_get_cursor(0)
@@ -122,6 +123,7 @@ return {
                 end
             end
         })
+        ]]
 
         -- Signs
         for type, icon in pairs(require('neconfig.user.icons').diagnostics) do

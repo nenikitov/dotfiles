@@ -21,7 +21,7 @@ local languages = {
     'cmake', 'make',
     'rust',
 
-    'sql',
+    'sql', 'commonlisp',
 
     'toml', 'yaml',
 }
@@ -34,7 +34,8 @@ return {
         'JoosepAlviste/nvim-ts-context-commentstring',
         'windwp/nvim-ts-autotag',
         'nvim-treesitter/playground',
-        'theRealCarneiro/hyprland-vim-syntax'
+        'theRealCarneiro/hyprland-vim-syntax',
+        'elkowar/yuck.vim'
     },
     build = function()
         require('nvim-treesitter.install').update {

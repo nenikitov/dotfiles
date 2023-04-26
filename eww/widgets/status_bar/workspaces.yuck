@@ -1,0 +1,21 @@
+(defwidget workspaces[monitor]
+    (box
+        :space-evenly false
+        (box
+            :class 'workspaces background'
+            :space-evenly false
+            (for w in {monitor['workspaces']}
+                (box
+                    :class {
+                        'workspace '
+                        + ' ' + (w['active'] ? 'active' : '')
+                    }
+                    (label
+                        :text {w['name']}
+                        :justify 'center'
+                    )
+                )
+            )
+        )
+    )
+)
