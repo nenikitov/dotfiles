@@ -1,17 +1,17 @@
-(defwidget workspaces[monitor]
+(defwidget clients[monitor]
     (box
         :space-evenly false
         (box
-            :class 'workspaces background'
+            :class 'clients background'
             :space-evenly false
-            (for w in {monitor['workspaces']}
+            (for c in {monitor['clients']}
                 (box
                     :class {
-                        'workspace'
-                        + ' ' + (w['active'] ? 'active' : '')
+                        'client'
+                        + ' ' + (c['active'] ? 'active' : '')
                     }
                     (label
-                        :text {w['name']}
+                        :text {c['title']}
                         :justify 'center'
                     )
                 )

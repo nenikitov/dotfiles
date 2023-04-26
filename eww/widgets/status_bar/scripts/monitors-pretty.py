@@ -91,7 +91,7 @@ def get():
             ]
         }
         output.append(monitor_info)
-    print(json.dumps(output, ensure_ascii=False))
+    print(json.dumps(output, ensure_ascii=False, indent=4))
 
 
 get()
@@ -101,4 +101,6 @@ SOCK.connect(f"/tmp/hypr/{HYPRLAND_INSTANCE}/.socket2.sock")
 while True:
     data = SOCK.recv(4096)
     if data:
+        print('=======')
+        print(data)
         get()
