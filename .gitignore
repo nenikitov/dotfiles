@@ -8,6 +8,7 @@
 # Configuration files
 !/alacritty
 !/awesome
+!/eww
 !/flameshot
 !/fontconfig
 !/gammyconf
@@ -23,5 +24,6 @@
 
 # Blacklist files
 /zsh/.zcompdump
-/**/.vscode
+/**/.vscode/
 *.lock
+/**/__pycache__/

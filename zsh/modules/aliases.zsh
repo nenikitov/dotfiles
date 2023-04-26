@@ -6,6 +6,8 @@ alias ll='exa --color=always -laFgh --group-directories-first --git --time-style
 
 # Easy clear
 alias c='clear'
+# Easy nvim
+alias v='nvim'
 # Clear and ls
 alias cls='clear && ls'
 # Better date format by default
@@ -24,7 +26,7 @@ alias ln='ln -i'
 eval $(thefuck --alias)
 
 # Send 5 packets and stop
-alias ping='ping -c 5' 
+alias ping='ping -c 5'
 # Automatically create subdirectories
 alias mkdir='mkdir -pv'
 # CD and MKDIR at the same time

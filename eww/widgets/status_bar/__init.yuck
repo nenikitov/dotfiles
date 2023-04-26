@@ -1,0 +1,34 @@
+(include 'widgets/status_bar/workspaces.yuck')
+
+(defwidget status_bar [monitor]
+    (centerbox
+        :orientation "h"
+        (workspaces
+            :monitor monitor
+        )
+        'windows'
+        'tools'
+    )
+)
+
+(deflisten monitors
+    :initial '[]'
+    'python ~/.config/eww/widgets/status_bar/scripts/monitors.py'
+)
+
+(defwindow status_bar
+    :monitor 0
+    :geometry (geometry
+        :x '0%'
+        :y '5px'
+        :width '90%'
+        :height '30px'
+        :anchor 'top center'
+    )
+    ;:stacking 'fg'
+    ;:namespace 'status_bar'
+    :exclusive true
+    (status_bar
+        :monitor {monitors[0]}
+    )
+)
