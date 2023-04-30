@@ -1,0 +1,20 @@
+#!/bin/env python
+
+import gi
+gi.require_version('Gtk', '4.0')
+from gi.repository import Gtk
+from gi.repository import Gio
+
+ICON_THEME = Gtk.IconTheme.new()
+def get_icon(app_name):
+    icon = ICON_THEME.lookup_icon(
+        app_name,
+        None,
+        -1, 1,
+        Gtk.TextDirection.LTR,
+        Gtk.IconLookupFlags.PRELOAD
+    )
+    return icon.get_file().get_path()
+
+
+print(get_icon('Xonotic'))

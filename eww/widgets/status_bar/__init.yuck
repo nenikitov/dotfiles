@@ -1,5 +1,6 @@
 (include 'widgets/status_bar/workspaces.yuck')
 (include 'widgets/status_bar/clients.yuck')
+(include 'widgets/status_bar/tools.yuck')
 
 (defwidget status_bar [monitor]
     (centerbox
@@ -10,7 +11,7 @@
         (clients
             :monitor monitor
         )
-        'tools'
+        (tools)
     )
 )
 

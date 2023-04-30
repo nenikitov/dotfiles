@@ -17,6 +17,7 @@ WORKSPACE_NAMES = [
     '󰓃',
     '󰍡'
 ]
+data = ''
 
 def print(*args, **kwargs):
     builtins.print(*args, **kwargs, flush=True)
@@ -32,9 +33,9 @@ def get():
     ]))
     workspaces.sort(key=lambda w: w['id'])
 
-    clients: t.List[t.Dict] = json.loads(subprocess.check_output([
+    clients: t.List[t.Dict] = [ c for c in json.loads(subprocess.check_output([
         'hyprctl', 'clients', '-j'
-    ]))
+    ])) if c['pid'] != -1 ]
 
     active_client: t.Dict = json.loads(subprocess.check_output([
         'hyprctl', 'activewindow', '-j'
