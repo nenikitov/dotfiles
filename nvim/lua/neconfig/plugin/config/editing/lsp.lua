@@ -17,7 +17,9 @@ local servers = {
     -- Rust
     rust_analyzer = {},
     -- Python
-    pyright = {},
+    pyright = {
+        useLibraryCodeForTypes = true
+    },
     -- YAML
     yamlls = {
         yaml = {

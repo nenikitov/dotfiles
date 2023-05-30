@@ -120,7 +120,7 @@ return {
                 -- TODO
                 button('<A-CR>',     '', 'Toggle terminal'),
                 button('<LEADER>pp', '', 'Open plugin manager'),
-                button(':q', '󰩈', 'Quit', '<CMD>q<CR>'),
+                button(':q<CR>', '󰩈', 'Quit'),
             }
         }
 
