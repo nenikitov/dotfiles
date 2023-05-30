@@ -7,6 +7,7 @@ window:
         x: 6
         y: 6
     dynamic_padding: true
+    dynamic_title: true
 font:
     size: 12.0
 cursor:
@@ -23,6 +24,29 @@ selection:
 
 # Colors
 schemes:
+    # Horizon
+    horizon: &horizon
+        primary:
+            background: '#1C1E26'
+            foreground: '#D5D8DA'
+        normal:
+            black: '#2E303E'
+            white: '#CCCCCC'
+            blue: '#26BBD9'
+            cyan: '#59E3E3'
+            green: '#29D398'
+            purple: '#EE64AE'
+            red: '#E95678'
+            yellow: '#FAB795'
+        bright:
+            black: '#767676'
+            white: '#F2F2F2'
+            blue: '#3FC6DE'
+            cyan: '#6BE6E6'
+            green: '#3FDAA4'
+            purple: '#F075B7'
+            red: '#EC6A88'
+            yellow: '#FBC3A7'
     # ChatGPT
     chatgpt: &chatgpt
         primary:
@@ -259,5 +283,5 @@ schemes:
             cyan:    '#8CEDFF'
             white:   '#F8F8F2'
 
-colors: *vivid_black
+colors: *horizon
 
