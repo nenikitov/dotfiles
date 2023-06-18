@@ -7,23 +7,23 @@ HISTFILE=~/.cache/zsh/history
 
 
 # Prompt
-source $modules_path/prompt.zsh
-
-# Path
-export PATH="$PATH:$HOME/.cargo/bin:$HOME/.dotnet/tools"
+source "${modules_path}/prompt.zsh"
 
 # Aliases and exports
-source $modules_path/exports.zsh
-source $modules_path/aliases.zsh
+source "${modules_path}/exports.zsh"
+source "${modules_path}/aliases.zsh"
 
 # VI-mode
-source $modules_path/vi-mode.zsh
+source "${modules_path}/vi-mode.zsh"
 
 # Completition
-source $modules_path/completion.zsh
+source "${modules_path}/completion.zsh"
 
 # Suggestions
-source $modules_path/suggestions.zsh
+source "${modules_path}/suggestions.zsh"
 
 # Syntax highlighting
-source $modules_path/highlighting.zsh
+source "${modules_path}/highlighting.zsh"
+
+# Dynamic title
+source "${modules_path}/title.zsh"

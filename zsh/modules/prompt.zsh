@@ -1,15 +1,18 @@
 autoload -U colors && colors
+autoload -Uz add-zsh-hook
+
 setopt PROMPT_SUBST
 
 
 # Refresh prompt variables before prompt is drawn
-precmd() {
+_zsh_prompt_precmd() {
     if git_repo="$(git remote get-url origin 2> /dev/null)"; then
 	git_repo="$(basename $git_repo .git) - $(git rev-parse --abbrev-ref HEAD)"
     else
         git_repo='not a repo'
     fi
 }
+add-zsh-hook precmd _zsh_prompt_precmd
 
 
 #region PS1

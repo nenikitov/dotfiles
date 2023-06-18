@@ -23,7 +23,7 @@ alias ln='ln -i'
 
 
 # Correct command mistakes
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
 
 # Send 5 packets and stop
 alias ping='ping -c 5'
