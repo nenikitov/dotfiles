@@ -11,8 +11,10 @@ return {
             end)(),
             preview_config = {
                 border = 'single'
-            }
+            },
+            on_attach = function(bufnr)
+                require('neconfig.user.keymaps').gitsigns()
+            end
         }
-        require('neconfig.user.keymaps').gitsigns()
     end
 }
