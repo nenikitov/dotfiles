@@ -1,3 +1,6 @@
+local utils_table = require('neconfig.utils.table')
+local utils_case = require('neconfig.utils.case')
+
 return {
     'rcarriga/nvim-notify',
     config = function()
@@ -5,14 +8,14 @@ return {
             timeout = 2000,
             top_down = false,
             stages = 'slide',
-            icons = (function()
-                local icons = {}
-                for k, v in pairs(require('neconfig.user.icons').notify) do
-                    local case = require('neconfig.utils.case')
-                    icons[case.convert_case(k, case.cases.SNAKE, case.cases.SCREAMING)] = v
+            icons = utils_table.pairs_map(
+                require('neconfig.user.icons').notify,
+                function(key, value)
+                    return
+                        utils_case.convert_case(key, utils_case.cases.SNAKE, utils_case.cases.SCREAMING),
+                        value .. ' '
                 end
-                return icons
-            end)(),
+            )
         }
     end
 }

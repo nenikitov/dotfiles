@@ -55,6 +55,7 @@ o.fillchars =                   -- Status column characters
 
 -- Editor UI
 o.mouse = 'a'                   -- Enable mouse in all modes
+o.mousemoveevent = true         -- Enable mouse movement tracking
 o.cursorline = true             -- Highlight the line where the cursor is
 o.wrap = false                  -- Do not wrap the text
 o.scrolloff = 4                 -- Keep lines on top and below the cursor when scrolling

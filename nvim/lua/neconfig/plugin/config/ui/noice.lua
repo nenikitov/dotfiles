@@ -1,3 +1,5 @@
+local utils_table = require('neconfig.utils.table')
+
 return {
     'folke/noice.nvim',
     dependencies = {
@@ -17,13 +19,12 @@ return {
                     vim.tbl_deep_extend(
                         'force',
                         -- Icons
-                        (function()
-                            local icons = {}
-                            for k, v in pairs(require('neconfig.user.icons').cmdline) do
-                                icons[k] = { icon = v }
+                        utils_table.pairs_map(
+                            require('neconfig.user.icons').cmdline,
+                            function(key, value)
+                                return key, { icon = value }
                             end
-                            return icons
-                        end)(),
+                        ),
                         -- Config
                         {
                             lua = { pattern = '^:%s*lua%s+' },
