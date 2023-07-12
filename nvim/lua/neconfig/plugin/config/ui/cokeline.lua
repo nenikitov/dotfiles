@@ -35,6 +35,9 @@ return {
         'nvim-tree/nvim-web-devicons',
     },
     config = function()
+        local is_picking_focus = require('cokeline.mappings').is_picking_focus
+        local is_picking_close = require('cokeline.mappings').is_picking_close
+
         require('cokeline').setup {
             show_if_buffers_are_at_least = 0,
             rendering = {
@@ -44,6 +47,9 @@ return {
                 -- Icon
                 {
                     text = function(buffer)
+                        if is_picking_focus() or is_picking_close() then
+                            return ' ' .. buffer.pick_letter .. ' '
+                        end
                         return ' ' .. buffer.devicon.icon
                     end,
                     fg = function(buffer)
@@ -51,7 +57,7 @@ return {
                     end,
                 },
                 {
-                    text = '  '
+                    text = '  ',
                 },
                 {
                     text = function(buffer)
@@ -59,7 +65,7 @@ return {
                             return ' '
                         end
                         return ''
-                    end
+                    end,
                 },
                 -- Prefix
                 {
@@ -89,7 +95,7 @@ return {
                     end,
                 },
                 {
-                    text = '  '
+                    text = '  ',
                 },
                 -- Modified / close icon
                 {
@@ -109,43 +115,7 @@ return {
                 },
             },
         }
+
+        require('neconfig.user.keymaps').coke_line()
     end,
 }
-
---[[ return {
-    'akinsho/bufferline.nvim',
-    dependencies = {
-        'nvim-tree/nvim-web-devicons'
-    },
-    config = function()
-        local icons = require('neconfig.user.icons')
-
-        require('bufferline').setup {
-            options = {
-                indicator = {
-                    style = 'underline'
-                },
-                diagnostics = 'nvim_lsp',
-                diagnostics_update_in_insert = true,
-                diagnostics_indicator = function (_, _, diagnostics_dict, _)
-                    local diagnostics_string = ' '
-                    for _, type in ipairs { 'error', 'warning', 'info', 'hint' } do
-                        local number = diagnostics_dict[type]
-                        if number and number ~= 0 then
-                            local icon = icons.diagnostics[type]
-                            diagnostics_string = diagnostics_string .. icon .. ' ' .. number .. ' '
-                        end
-                    end
-                    return '[' .. diagnostics_string:sub(1, -1) .. ']'
-                end,
-                show_close_icon = true,
-                -- Icons
-                buffer_close_icon = icons.buffer_line.close,
-                modified_icon = icons.buffer_line.modified,
-                close_icon = icons.buffer_line.close,
-            }
-        }
-
-        require('neconfig.user.keymaps').bufferline()
-    end
-} ]]

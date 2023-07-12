@@ -550,16 +550,17 @@ function M.toggleterm()
 end
 
 --- Bufferline.
-function M.bufferline()
+function M.coke_line()
+    local cokeline = require('cokeline.mappings')
     -- Tabs
-    map(mode.NOT_TYPING,  '<A-h>',  '<CMD>BufferLineCyclePrev<CR>',  'Go to previous buffer')
-    map(mode.NOT_TYPING,  '<A-l>',  '<CMD>BufferLineCycleNext<CR>',  'Go to next buffer')
-    map(mode.NOT_TYPING,  '<A-j>',  '<CMD>BufferLineMovePrev<CR>',   'Move buffer to the left')
-    map(mode.NOT_TYPING,  '<A-k>',  '<CMD>BufferLineMoveNext<CR>',   'Move buffer to the right')
+    map(mode.NOT_TYPING,  '<A-h>',  function() cokeline.by_step('focus', '-1') end,  'Go to previous buffer')
+    map(mode.NOT_TYPING,  '<A-l>',  function() cokeline.by_step('focus', '1') end,   'Go to next buffer')
+    map(mode.NOT_TYPING,  '<A-j>',  function() cokeline.by_step('switch', '-1') end, 'Move buffer to the left')
+    map(mode.NOT_TYPING,  '<A-k>',  function() cokeline.by_step('switch', '1') end,  'Move buffer to the right')
     -- Picker
     add_to_which_key_prefixes(mode.NOT_TYPING, '<LEADER>bp', 'picker')
-    map(mode.NOT_TYPING,  '<LEADER>bpp',  '<CMD>BufferLinePick<CR>',       'Select')
-    map(mode.NOT_TYPING,  '<LEADER>bpc',  '<CMD>BufferLinePickClose<CR>',  'Close')
+    map(mode.NOT_TYPING,  '<LEADER>bpp',  function() cokeline.pick('focus') end,  'Select')
+    map(mode.NOT_TYPING,  '<LEADER>bpc',  function() cokeline.pick('close') end,  'Close')
 end
 
 
