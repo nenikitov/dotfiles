@@ -136,7 +136,7 @@ M.completion = {
     Specifier         = '',
     Statement         = '',
     SwitchStatement   = '󰔡',
-    String            = '',
+    String            = '',
     Struct            = '',
     Text              = '',
     Terminal          = '',
@@ -148,12 +148,10 @@ M.completion = {
     WhileStatement    = '󰕇',
 }
 
-M.bufferline = {
-    buffer_close = '',
-    buffer_modified = '●',
-    close = '',
-    left_trunc = '',
-    right_trunc = '',
+M.buffer_line = {
+    diagnostics = M.diagnostics,
+    modified    = '●',
+    close       = '󰖭'
 }
 
 --#endregion

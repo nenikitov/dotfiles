@@ -204,6 +204,7 @@ function M.telescope_navigation()
 
     return vim.tbl_deep_extend('force', mappings_empty, {
         i = {
+            ['<C-q>'] = actions.close,
             ['<C-c>'] = actions.close,
             ['<C-j>'] = actions.move_selection_next,
             ['<C-k>'] = actions.move_selection_previous,

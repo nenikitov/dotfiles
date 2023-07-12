@@ -17,6 +17,7 @@ local colorscheme_fallback = 'slate'
 
 --#region Color scheme
 
+---@diagnostic disable-next-line: param-type-mismatch
 local colorscheme_status, _ = pcall(cmd, 'colorscheme ' .. colorscheme)
 if not colorscheme_status then
     log.warning('Color scheme ' .. colorscheme .. ' not available')

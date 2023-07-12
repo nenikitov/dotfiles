@@ -16,6 +16,11 @@ return {
                         end
                     )
                 },
+                ui = {
+                    bar = {
+                        separator = ' > '
+                    }
+                }
             }
         }
     end
