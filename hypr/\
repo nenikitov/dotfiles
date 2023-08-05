@@ -9,20 +9,18 @@ general {
     col.group_border_active = rgba(7A21A6FF) rgba(A6212CFF) 90deg
 }
 
-# Gaps
-general {
-    gaps_in = 4
-    gaps_out = 8
-}
+# # Gaps
+# general {
+#     gaps_in = 4
+#     gaps_out = 8
+# }
 
 # Blur
-decoration {
-    blur {
-        enabled = true
-        size = 8
-        passes = 4
-        xray = false
-    }
+decoration:blur {
+    #enable = true
+    #size = 8
+    #passes = 4
+    #xray = false
 }
 
 # Shadow
