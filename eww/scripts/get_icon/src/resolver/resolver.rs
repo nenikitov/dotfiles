@@ -1,7 +1,5 @@
 use std::{cmp::Ordering, collections::HashSet, fmt::Display, path::PathBuf};
 
-use crate::args::Args;
-
 #[derive(Debug, Clone)]
 pub enum Theme {
     UserSelected,
@@ -42,9 +40,11 @@ impl IconCollection for Vec<Icon> {
         for icon in self {
             if theme_current_name != icon.theme {
                 theme_current.sort();
-                themes.push((theme_current_name.clone(), theme_current));
 
-                theme_current = Vec::new();
+                if !theme_current.is_empty() {
+                    themes.push((theme_current_name.clone(), theme_current));
+                    theme_current = Vec::new();
+                }
                 theme_current_name = icon.theme.to_string();
             }
             theme_current.push(icon);
@@ -77,8 +77,7 @@ impl IconCollection for Vec<Icon> {
                     .flatten()
                     .collect();
                 icons.append(&mut to_add);
-            }
-        };
+            } };
 
         for theme in themes {
             match theme {
@@ -87,7 +86,6 @@ impl IconCollection for Vec<Icon> {
                 Theme::Any => {
                     let theme_names: HashSet<String> =
                         grouped.iter().map(|i| i.0.clone()).collect();
-                    let theme_names = theme_names.difference(&theme_names);
                     for t in theme_names {
                         append_with_theme(t.clone())
                     }
