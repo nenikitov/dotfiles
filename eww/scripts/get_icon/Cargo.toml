@@ -1,0 +1,10 @@
+[package]
+name = "get_icon"
+version = "0.1.0"
+edition = "2021"
+description = "Tool to look up icons for applications"
+
+[dependencies]
+linicon = "2.3"
+clap = { version = "4.3", features = ["derive"] }
+clap_complete = "4.3.2"
