@@ -2,7 +2,8 @@ local servers = {
     -- Lua
     lua_ls = {
         Lua = {
-            workspace = { checkThirdParty = false }
+            workspace = { checkThirdParty = false },
+            format = { enable = false }
         }
     },
     -- HTML

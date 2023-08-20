@@ -9,7 +9,7 @@ window:
     dynamic_padding: true
     dynamic_title: true
 font:
-    size: 12.0
+    size: 14.0
 cursor:
     unfocused_hollow: true
     blink_interval: 750
@@ -26,28 +26,27 @@ selection:
 schemes:
     # Horizon
     horizon: &horizon
-        primary:
-            background: '#1C1E26'
-            foreground: '#D5D8DA'
-        normal:
-            black: '#2E303E'
-            white: '#CCCCCC'
-            blue: '#26BBD9'
-            cyan: '#59E3E3'
-            green: '#29D398'
-            purple: '#EE64AE'
-            red: '#E95678'
-            yellow: '#FAB795'
-        bright:
-            black: '#767676'
-            white: '#F2F2F2'
-            blue: '#3FC6DE'
-            cyan: '#6BE6E6'
-            green: '#3FDAA4'
-            purple: '#F075B7'
-            red: '#EC6A88'
-            yellow: '#FBC3A7'
-    # ChatGPT
+      primary:
+        background: '#1C1E26'
+        foreground: '#D5D8DA'
+      normal:
+        black:   '#2E303E'
+        red:     '#E95678'
+        green:   '#27D796'
+        yellow:  '#FAB795'
+        blue:    '#26BBD9'
+        magenta: '#B877DB'
+        cyan:    '#25B2BC'
+        white:   '#CCCCCC'
+      bright:
+        black:   '#767676'
+        red:     '#F09383'
+        green:   '#09F7A0'
+        yellow:  '#FAC29A'
+        blue:    '#3FC6DE'
+        magenta: '#F075B7'
+        cyan:    '#6BE6E6'
+        white:   '#F2F2F2'
     chatgpt: &chatgpt
         primary:
             background: '#1C1C1C'
@@ -73,6 +72,29 @@ schemes:
     # NeTheme - current
     netheme: &netheme
         primary:
+            background: '#14161E'
+            foreground: '#B4BFC5'
+        normal:
+            black:   '#20232B'
+            red:     '#ED3A66'
+            green:   '#70B74B'
+            yellow:  '#F89861'
+            blue:    '#26B1E4'
+            magenta: '#B570EB'
+            cyan:    '#3CAEB2'
+            white:   '#A6ACB0'
+        bright:
+            black:   '#5F656F'
+            red:     '#F3848A'
+            green:   '#B9D583'
+            yellow:  '#F2CBA5'
+            blue:    '#AED1FC'
+            magenta: '#D39FED'
+            cyan:    '#89DACC'
+            white:   '#DDEBF2'
+    # NeTheme - old
+    netheme_old: &netheme_old
+        primary:
             background: '#131211'
             foreground: '#c8c8c8'
         normal:
@@ -93,8 +115,8 @@ schemes:
             magenta: '#dd9af4'
             cyan:    '#9bf2eb'
             white:   '#ffffff'
-    # NeTheme - old
-    netheme_old: &netheme_old
+    # NeTheme - older
+    netheme_older: &netheme_older
         primary:
             background: '#080808'
             foreground: '#CCCCCC'
@@ -283,5 +305,4 @@ schemes:
             cyan:    '#8CEDFF'
             white:   '#F8F8F2'
 
-colors: *horizon
-
+colors: *netheme

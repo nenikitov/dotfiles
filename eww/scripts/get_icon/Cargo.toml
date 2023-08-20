@@ -1,0 +1,11 @@
+[package]
+name = "get_icon"
+version = "0.1.0"
+edition = "2021"
+description = "Tool to look up icons for applications"
+
+[dependencies]
+clap = { version = "4.3", features = ["derive"] }
+clap_complete = "4.3.2"
+freedesktop-desktop-entry = "0.5.0"
+linicon = "2.3"
