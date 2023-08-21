@@ -7,7 +7,7 @@ pub enum Theme {
     Any,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Ord)]
 pub struct Icon {
     pub path: PathBuf,
     pub theme: String,
@@ -18,16 +18,10 @@ pub struct Icon {
 impl PartialOrd for Icon {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         match (self.scalable, other.scalable) {
-            (true, false) => Some(Ordering::Greater),
-            (false, true) => Some(Ordering::Less),
-            _ => other.size.1.partial_cmp(&self.size.1),
+            (true, false) => Some(Ordering::Less),
+            (false, true) => Some(Ordering::Greater),
+            _ => other.size.0.partial_cmp(&self.size.0),
         }
-    }
-}
-
-impl Ord for Icon {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.partial_cmp(other).unwrap()
     }
 }
 
@@ -50,7 +44,9 @@ impl IconCollection for Vec<Icon> {
             theme_current.push(icon);
         }
 
+        theme_current.sort();
         themes.push((theme_current_name.clone(), theme_current));
+
         themes
     }
 
@@ -77,7 +73,8 @@ impl IconCollection for Vec<Icon> {
                     .flatten()
                     .collect();
                 icons.append(&mut to_add);
-            } };
+            }
+        };
 
         for theme in themes {
             match theme {

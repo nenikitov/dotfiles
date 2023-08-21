@@ -1,4 +1,4 @@
-use std::{borrow::Cow, cmp::Ordering, fs, path::PathBuf};
+use std::{borrow::Cow, fs, path::PathBuf};
 
 use freedesktop_desktop_entry::{default_paths, DesktopEntry, Iter};
 
@@ -9,7 +9,7 @@ use super::{
 
 pub struct IconResolverDesktop {}
 
-#[derive(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum DesktopSimilarity {
     VagueSubstring,
     StartsEnds,
@@ -34,6 +34,7 @@ impl IconResolverDesktop {
     }
 
     fn check_entry(name: &str, path: &PathBuf, entry: &DesktopEntry) -> Option<DesktopSimilarity> {
+        dbg!(name);
         let info: Vec<_> = vec![
             entry.name(None).map(Cow::into_owned),
             entry.icon().map(String::from),
@@ -74,27 +75,23 @@ impl IconResolverDesktop {
 
 impl IconResolver for IconResolverDesktop {
     fn resolve(name: &str, size: Option<u16>) -> Option<Vec<Icon>> {
-        let icons: Vec<_> = Iter::new(default_paths())
+        let mut icons: Vec<_> = Iter::new(default_paths())
             .filter_map(|path| {
                 let entry = fs::read_to_string(&path).ok()?;
                 let entry = DesktopEntry::decode(&path, &entry).ok()?;
-                let similarity = Self::check_entry(name, &path, &entry);
-                Some((similarity, entry.exec().to_owned()))
+                let similarity = Self::check_entry(name, &path, &entry)?;
+                let icon = entry.icon().map(str::to_string)?;
+                Some((similarity, icon))
             })
             .collect();
+        icons.sort_by(|a, b| a.0.cmp(&b.0));
 
-        todo!();
+        let icons: Option<Vec<_>> = icons
+            .into_iter()
+            .map(|(_, i)| IconResolverLinicon::resolve(&i, size))
+            .collect();
+        let icons = icons?;
 
-        // for path in Iter::new(default_paths()) {
-        //     if let Ok(bytes) = fs::read_to_string(&path) {
-        //         if let Ok(entry) = DesktopEntry::decode(&path, &bytes) {
-        //             if Self::check_entry(name, &path, &entry) {
-        //                 if let Some(icon) = entry.icon() {
-        //                     return IconResolverLinicon::resolve(icon, size);
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        Some(icons.into_iter().flatten().collect())
     }
 }
