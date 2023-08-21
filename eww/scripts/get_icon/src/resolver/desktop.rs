@@ -7,7 +7,9 @@ use super::{
     resolver::{Icon, IconResolver},
 };
 
-pub struct IconResolverDesktop {}
+pub struct IconResolverDesktop {
+    linicon: IconResolverLinicon,
+}
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum DesktopSimilarity {
@@ -73,8 +75,14 @@ impl IconResolverDesktop {
     }
 }
 
+impl IconResolverDesktop {
+    pub fn new(linicon: IconResolverLinicon) -> Self {
+        Self { linicon }
+    }
+}
+
 impl IconResolver for IconResolverDesktop {
-    fn resolve(name: &str, size: Option<u16>) -> Option<Vec<Icon>> {
+    fn resolve(&self, name: &str, size: Option<u16>) -> Option<Vec<Icon>> {
         let mut icons: Vec<_> = Iter::new(default_paths())
             .filter_map(|path| {
                 let entry = fs::read_to_string(&path).ok()?;
@@ -88,7 +96,7 @@ impl IconResolver for IconResolverDesktop {
 
         let icons: Option<Vec<_>> = icons
             .into_iter()
-            .map(|(_, i)| IconResolverLinicon::resolve(&i, size))
+            .map(|(_, i)| self.linicon.resolve(&i, size))
             .collect();
         let icons = icons?;
 

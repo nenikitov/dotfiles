@@ -109,7 +109,7 @@ impl Display for Theme {
 }
 
 pub trait IconResolver {
-    fn resolve(name: &str, size: Option<u16>) -> Option<Vec<Icon>>;
+    fn resolve(&self, name: &str, size: Option<u16>) -> Option<Vec<Icon>>;
 }
 
 pub trait IconCollection {
