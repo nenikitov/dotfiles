@@ -17,10 +17,6 @@ pub struct Args {
     /// Theme priority (comma separated) [possible values: <USER-SELECTED> <ANY> or theme name ("hicolor", etc)]
     #[arg(long, short = 't', value_parser = theme_parser, value_delimiter = ',', default_value = "<USER-SELECTED>,<ANY>")]
     pub themes: Vec<Theme>,
-
-    /// Whether to return only one icon
-    #[arg(long, short = 'l', value_parser = clap::value_parser!(u16).range(1..))]
-    pub limit: Option<u16>,
 }
 
 fn theme_parser(s: &str) -> Result<Theme, String> {

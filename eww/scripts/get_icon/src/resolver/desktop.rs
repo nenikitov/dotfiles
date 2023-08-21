@@ -36,7 +36,6 @@ impl IconResolverDesktop {
     }
 
     fn check_entry(name: &str, path: &PathBuf, entry: &DesktopEntry) -> Option<DesktopSimilarity> {
-        dbg!(name);
         let info: Vec<_> = vec![
             entry.name(None).map(Cow::into_owned),
             entry.icon().map(String::from),

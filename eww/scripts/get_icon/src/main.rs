@@ -3,23 +3,23 @@ mod resolver;
 
 use std::collections::HashMap;
 
-use args::Args;
 use clap::Parser;
 use resolver::default::IconResolverDefault;
 
-use crate::resolver::{
+use args::Args;
+use resolver::{
     desktop::IconResolverDesktop,
     exception::IconResolverException,
     linicon::IconResolverLinicon,
-    resolver::{IconCollection, IconResolver, Theme},
+    resolver::{IconCollection, IconResolver},
 };
 
 fn main() {
     let args = Args::parse();
 
-    let resolvers: [Box<dyn IconResolver>; 4] = {
+    let resolvers: Vec<Box<dyn IconResolver>> = {
         let linicon = IconResolverLinicon::default();
-        [
+        vec![
             Box::new(IconResolverException::new(linicon, {
                 let m: HashMap<String, String> = HashMap::new();
                 // TODO: Add exceptions here
@@ -39,18 +39,27 @@ fn main() {
         ]
     };
 
+    let current = linicon::get_system_theme().unwrap_or(String::from("hicolor"));
+    let icons: HashMap<_, _> = args
+        .names
+        .into_iter()
+        .map(|n| {
+            for r in &resolvers {
+                let icons = r
+                    .resolve(&n, args.size)
+                    .map(|i| i.order_by_theme_preference(&args.themes, &current));
+                if let Some(icons) = icons {
+                    if icons.len() > 0 {
+                        return (n, icons[0].path.clone());
+                    }
+                }
+            }
+            unreachable!("Will be resolved by the default resolver");
+        })
+        .collect();
+
     println!(
-        "{:#?}",
-        IconResolverLinicon::default()
-            .resolve(&args.names[0], None)
-            .unwrap()
-            .order_by_theme_preference(
-                vec![
-                    Theme::UserSelected,
-                    Theme::Custom("Fluent-dark".to_string()),
-                    Theme::Any
-                ],
-                String::from("Fluent-dark"),
-            )
-    )
+        "{}",
+        serde_json::to_string(&icons).expect("Will always produce valid JSON")
+    );
 }

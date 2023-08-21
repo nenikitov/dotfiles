@@ -21,7 +21,9 @@ impl IconResolver for IconResolverLinicon {
         let icons: Vec<_> = linicon::themes()
             .into_iter()
             .map(|t| {
-                let mut icons = linicon::lookup_icon(name).from_theme(t.name);
+                let mut icons = linicon::lookup_icon(name)
+                    .from_theme(t.name)
+                    .use_fallback_themes(false);
                 if let Some(size) = size {
                     icons = icons.with_size(size);
                 }
@@ -33,10 +35,6 @@ impl IconResolver for IconResolverLinicon {
             .flatten()
             .collect();
 
-        if icons.len() > 0 {
-            Some(icons)
-        } else {
-            None
-        }
+        Some(icons)
     }
 }

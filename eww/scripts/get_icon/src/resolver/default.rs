@@ -15,7 +15,7 @@ impl IconResolverDefault {
 }
 
 impl IconResolver for IconResolverDefault {
-    fn resolve(&self, name: &str, size: Option<u16>) -> Option<Vec<Icon>> {
+    fn resolve(&self, _: &str, size: Option<u16>) -> Option<Vec<Icon>> {
         for icon in &self.icons {
             if let Some(icon) = self.linicon.resolve(&icon, size) {
                 return Some(icon);

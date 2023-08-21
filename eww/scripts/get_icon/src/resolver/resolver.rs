@@ -1,5 +1,7 @@
 use std::{cmp::Ordering, collections::HashSet, fmt::Display, path::PathBuf};
 
+use serde::{Deserialize, Serialize};
+
 #[derive(Debug, Clone)]
 pub enum Theme {
     UserSelected,
@@ -7,7 +9,7 @@ pub enum Theme {
     Any,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Ord)]
+#[derive(Debug, PartialEq, Eq, Clone, Ord, Serialize, Deserialize)]
 pub struct Icon {
     pub path: PathBuf,
     pub theme: String,
@@ -58,7 +60,7 @@ impl IconCollection for Vec<Icon> {
             .collect()
     }
 
-    fn order_by_theme_preference(self, themes: Vec<Theme>, current: String) -> Self {
+    fn order_by_theme_preference(self, themes: &Vec<Theme>, current: &String) -> Self {
         let grouped = self.group_by_theme();
         let mut icons: Self = Vec::new();
         let mut used_theme_names: HashSet<String> = HashSet::new();
@@ -79,7 +81,7 @@ impl IconCollection for Vec<Icon> {
         for theme in themes {
             match theme {
                 Theme::UserSelected => append_with_theme(current.clone()),
-                Theme::Custom(name) => append_with_theme(name),
+                Theme::Custom(name) => append_with_theme(name.clone()),
                 Theme::Any => {
                     let theme_names: HashSet<String> =
                         grouped.iter().map(|i| i.0.clone()).collect();
@@ -115,5 +117,5 @@ pub trait IconResolver {
 pub trait IconCollection {
     fn group_by_theme(self) -> Vec<(String, Vec<Icon>)>;
     fn order_by_theme(self) -> Self;
-    fn order_by_theme_preference(self, themes: Vec<Theme>, current: String) -> Self;
+    fn order_by_theme_preference(self, themes: &Vec<Theme>, current: &String) -> Self;
 }
