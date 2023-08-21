@@ -1,18 +1,17 @@
 mod args;
 mod resolver;
 
-use std::collections::HashMap;
+use std::{collections::HashMap, path::PathBuf};
 
 use clap::Parser;
-use resolver::default::IconResolverDefault;
+use resolver::fallback::IconResolverFallback;
 
 use args::Args;
 use resolver::{
-    desktop::IconResolverDesktop,
-    exception::IconResolverException,
-    linicon::IconResolverLinicon,
-    resolver::{IconCollection, IconResolver},
+    desktop::IconResolverDesktop, exception::IconResolverException, linicon::IconResolverLinicon,
 };
+
+use crate::resolver::{IconCollection, IconFallback, IconResolver};
 
 fn main() {
     let args = Args::parse();
@@ -21,19 +20,20 @@ fn main() {
         let linicon = IconResolverLinicon::default();
         vec![
             Box::new(IconResolverException::new(linicon, {
-                let m: HashMap<String, String> = HashMap::new();
+                let m: HashMap<String, IconFallback> = HashMap::new();
                 // TODO: Add exceptions here
                 m
             })),
             Box::new(linicon),
             Box::new(IconResolverDesktop::new(linicon)),
-            Box::new(IconResolverDefault::new(
+            Box::new(IconResolverFallback::new(
                 linicon,
                 vec![
-                    String::from("application-default-icon"),
-                    String::from("default-application"),
-                    String::from("document"),
-                    String::from("folder"),
+                    IconFallback::Theme(String::from("application-default-icon")),
+                    IconFallback::Theme(String::from("default-application")),
+                    IconFallback::Theme(String::from("document")),
+                    IconFallback::Theme(String::from("folder")),
+                    IconFallback::Local(PathBuf::from("resources").join("default.svg")),
                 ],
             )),
         ]

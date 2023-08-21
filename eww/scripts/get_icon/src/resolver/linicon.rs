@@ -1,12 +1,12 @@
 use linicon::{IconPath, IconType};
 
-use super::resolver::{Icon, IconResolver};
+use crate::resolver::{IconResolved, IconResolver};
 
-impl Into<Icon> for IconPath {
-    fn into(self) -> Icon {
-        Icon {
+impl Into<IconResolved> for IconPath {
+    fn into(self) -> IconResolved {
+        IconResolved {
             path: self.path,
-            theme: self.theme,
+            theme: Some(self.theme),
             scalable: self.icon_type == IconType::SVG,
             size: (self.min_size, self.max_size),
         }
@@ -17,7 +17,7 @@ impl Into<Icon> for IconPath {
 pub struct IconResolverLinicon {}
 
 impl IconResolver for IconResolverLinicon {
-    fn resolve(&self, name: &str, size: Option<u16>) -> Option<Vec<Icon>> {
+    fn resolve(&self, name: &str, size: Option<u16>) -> Option<Vec<IconResolved>> {
         let icons: Vec<_> = linicon::themes()
             .into_iter()
             .map(|t| {
@@ -28,7 +28,7 @@ impl IconResolver for IconResolverLinicon {
                     icons = icons.with_size(size);
                 }
                 let icons: Vec<_> = icons.collect::<Result<_, _>>().ok()?;
-                let icons: Vec<Icon> = icons.into_iter().map(|i| i.into()).collect();
+                let icons: Vec<IconResolved> = icons.into_iter().map(|i| i.into()).collect();
                 Some(icons)
             })
             .flat_map(|i| i)

@@ -1,6 +1,6 @@
 use clap::Parser;
 
-use crate::resolver::resolver::Theme;
+use crate::resolver::Theme;
 
 /// Tool to look up icons for applications
 #[derive(Parser, Debug)]

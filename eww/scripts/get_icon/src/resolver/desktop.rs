@@ -2,10 +2,8 @@ use std::{borrow::Cow, fs, path::PathBuf};
 
 use freedesktop_desktop_entry::{default_paths, DesktopEntry, Iter};
 
-use super::{
-    linicon::IconResolverLinicon,
-    resolver::{Icon, IconResolver},
-};
+use super::linicon::IconResolverLinicon;
+use crate::resolver::{IconResolved, IconResolver};
 
 pub struct IconResolverDesktop {
     linicon: IconResolverLinicon,
@@ -81,7 +79,7 @@ impl IconResolverDesktop {
 }
 
 impl IconResolver for IconResolverDesktop {
-    fn resolve(&self, name: &str, size: Option<u16>) -> Option<Vec<Icon>> {
+    fn resolve(&self, name: &str, size: Option<u16>) -> Option<Vec<IconResolved>> {
         let mut icons: Vec<_> = Iter::new(default_paths())
             .filter_map(|path| {
                 let entry = fs::read_to_string(&path).ok()?;
