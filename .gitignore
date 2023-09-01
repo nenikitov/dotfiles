@@ -6,6 +6,7 @@
 # Git ignore
 !/.gitignore
 # Configuration files
+!/ags
 !/alacritty
 !/awesome
 !/eww

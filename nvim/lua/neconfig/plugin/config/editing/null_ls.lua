@@ -10,11 +10,11 @@ return {
 
         local sources = {
             -- ESLint
-            code_actions.eslint,
-            diagnostics.eslint.with {
-                method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-            },
-            formatting.eslint,
+            -- code_actions.eslint,
+            -- diagnostics.eslint.with {
+            --     method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+            -- },
+            -- formatting.eslint,
             -- StyLua
             formatting.stylua,
             -- Prettier
