@@ -2,6 +2,8 @@
 
 import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
+import Applications from 'resource:///com/github/Aylur/ags/service/applications.js';
+import Bluetooth from 'resource:///com/github/Aylur/ags/service/bluetooth.js';
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Battery from 'resource:///com/github/Aylur/ags/service/battery.js';
@@ -27,6 +29,11 @@ const Workspaces = ({ monitor }) =>
     connections: [
       [
         Hyprland,
+        (widget, a) => {},
+        'urgent-window'
+      ],
+      /* [
+        Hyprland,
         (box) => {
           const workspaces = Hyprland.HyprctlGet('workspaces')
             .filter((w) => w.monitor === monitor.name)
@@ -48,7 +55,7 @@ const Workspaces = ({ monitor }) =>
             })
           );
         },
-      ],
+      ] */,
     ],
   });
 
