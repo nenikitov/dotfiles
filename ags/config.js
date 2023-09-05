@@ -22,52 +22,70 @@ import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 import * as config from './user.js';
 
-const Workspaces = ({ monitor }) =>
-  Box({
+/**
+ * @param {object} args
+ * @param {import('resource:///com/github/Aylur/ags/service/hyprland.js').Monitor} args.monitor
+ */
+function Workspaces({ monitor }) {
+  return Box({
     className: 'workspaces',
     connections: [
       [
         Hyprland,
         (box) => {
-          const workspaces = Hyprland.HyprctlGet('workspaces')
-            .filter((w) => w.monitor === monitor.name)
-            .map((w) => {
-              //w.id_monitor = w.id % config.WORKSPACES_PER_MONITOR;
-              return w;
-            });
+          const workspaces = (config.WORKSPACES[monitor.name] ?? config.WORKSPACES['default']).map(
+            (w) => ({ name: w, active: false, hasWindows: false, hasFullscreen: false })
+          );
 
-          const workspaceNames = config.WORKSPACES[monitor.name] ?? config.WORKSPACES['default'];
+          const hyprlandWorkspaces = Hyprland.HyprctlGet('workspaces').filter(
+            (w) => w.monitor === monitor.name
+          );
 
-          console.log(workspaceNames);
+          for (const w of hyprlandWorkspaces) {
+            const id = w.id % config.WORKSPACES_PER_MONITOR - 1;
+            const template = workspaces[id];
+            workspaces[id] = {
+              name: template.name ?? w.name,
+              active: false,
+              hasWindows: w.windows > 0,
+              hasFullscreen: w.hasfullscreen
+            }
+          }
 
-          const arr = Array.from({ length: 10 }, (_, i) => i + 1);
-          box.children = arr.map((i) =>
+          const activeId = Hyprland.HyprctlGet('monitors').find(m => m.id == monitor.id)?.activeWorkspace.id ?? 0;
+          workspaces[activeId - 1].active = true;
+
+          box.children = workspaces.map((w) =>
             Button({
-              onClicked: () => execAsync(`hyprctl dispatch workspace ${i}`),
-              child: Label({ label: `${i}` }),
-              className: Hyprland.active.workspace.id == i ? 'focused' : '',
+              child: Label({ label: (w.active ? '_' : '') + (w.hasWindows ? '.' : '') + w.name }),
             })
           );
         },
-      ]
+      ],
     ],
   });
+}
 
 const Left = ({ monitor }) =>
   Box({
     children: [Workspaces({ monitor }), Label({ label: 'hello' })],
   });
 
-const Bar = ({ monitor }) =>
-  Window({
+/**
+ * @param {object} args
+ * @param {import('resource:///com/github/Aylur/ags/service/hyprland.js').Monitor} args.monitor
+ */
+function Bar({ monitor }) {
+  return Window({
     name: `bar${monitor?.id || ''}`,
     className: 'bar',
-    monitor,
+    monitor: monitor.id,
     anchor: ['top', 'left', 'right'],
     exclusive: true,
     child: Left({ monitor }),
   });
+}
 
 export default {
-  windows: [Bar({ monitor: { id: 1, name: 'eDP-1' } })],
+  windows: [...Hyprland.HyprctlGet('monitors').map((monitor) => Bar({ monitor }))],
 };

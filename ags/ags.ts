@@ -108,7 +108,7 @@ declare module 'resource:///com/github/Aylur/ags/service/hyprland.js' {
 
   export interface WorkspaceShort {
     id: number;
-    name: number;
+    name: string;
   }
 
   export interface Workspace extends WorkspaceShort {
