@@ -3,6 +3,8 @@
   "compilerOptions": {
     "target": "ES6",
     "checkJs": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false
   }
 }

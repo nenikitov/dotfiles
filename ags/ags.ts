@@ -26,7 +26,7 @@ declare module 'resource:///com/github/Aylur/ags/service/audio.js' {
   export interface Stream {
     name: string;
     description: string | null;
-    iconNAme: string;
+    iconName: string;
     id: number;
     isMuted: boolean;
     volume: number;
@@ -241,7 +241,7 @@ declare module 'resource:///com/github/Aylur/ags/service/hyprland.js' {
 }
 
 declare module 'resource:///com/github/Aylur/ags/service/mpris.js' {
-  export interface Player {
+  export interface Player extends Service {
     busName: string;
     name: string;
     identity: string;
@@ -403,18 +403,21 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
     typeof import('resource:///com/github/Aylur/ags/service/hyprland.js').default;
   type Mpris =
     typeof import('resource:///com/github/Aylur/ags/service/mpris.js').default;
+  type Player = import('resource:///com/github/Aylur/ags/service/mpris.js').Player;
   type Network =
     typeof import('resource:///com/github/Aylur/ags/service/network.js').default;
   type Notifications =
     typeof import('resource:///com/github/Aylur/ags/service/notifications.js').default;
 
-  type Command<W extends Widget, Args extends any[] = never[]> = string | ((widget: W, ...args: Args) => void);
+  type Command<W extends Widget> =
+    | string
+    | ((widget: W, ...args: any[]) => void);
   type Justification = 'left' | 'center' | 'right' | 'fill';
   type Truncate = 'none' | 'start' | 'middle' | 'end';
   type Scroll = 'always' | 'automatic' | 'external' | 'never';
   type Anchor = 'top' | 'bottom' | 'left' | 'right';
 
-  interface WindowArgs {
+  interface WindowArgs extends CommonArgs<WindowType> {
     child: Widget;
     name: string;
     anchor: Anchor | Anchor[];
@@ -430,122 +433,125 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
     monitor: number;
     popup: boolean;
   }
-  export function Window(args: Partial<WindowArgs>): Widget;
+  type WindowType = WindowArgs;
+  export function Window(args: Partial<WindowArgs>): WindowArgs;
 
-  type ConnectionBuilder<
-    W extends Widget,
-    Ser extends Service = Service,
-    Sig extends string | undefined = undefined,
-    Args extends any[] = never[]
-  > = [Ser, Command<W>] | [Ser, Command<W>, 'changed'] | [Ser, Command<W, Args>, Sig];
+  type Connection<W extends Widget> = [Service, Command<W>, string] | [Service, Command<W>]; // TODO
 
-  type Connection<W> =
-    | ConnectionBuilder<W, Applications>
-    | ConnectionBuilder<W, Audio, 'speaker-changed' | 'microphone-changed'>
-    | ConnectionBuilder<W, Bluetooth>
-    | ConnectionBuilder<W, Hyprland, 'urgent-window', [string]>;
-
-  interface CommonArgs<W> {
+  interface CommonArgs<W extends Widget> {
     className: string;
+    label: string;
     connections: Connection<W>[];
   }
 
-  interface BoxArgs extends CommonArgs<BoxArgs> {
+  interface BoxArgs extends CommonArgs<BoxType> {
     children: Widget[];
     vertical: boolean;
   }
-  export function Box(args: Partial<BoxArgs>): Widget & BoxArgs;
+  type BoxType = Widget & BoxArgs
+  export function Box(args: Partial<BoxArgs>): BoxType;
 
-  interface ButtonArgs extends CommonArgs {
+  interface ButtonArgs extends CommonArgs<ButtonType> {
     child: Widget;
-    onClicked: Command;
-    onPrimaryClick: Command;
-    onSecondaryClick: Command;
-    onMiddleClick: Command;
-    onPrimaryClickRelease: Command;
-    onSecondaryClickRelease: Command;
-    onMiddleClickRelease: Command;
-    onScrollUp: Command;
-    onScrollDown: Command;
+    onClicked: Command<ButtonType>;
+    onPrimaryClick: Command<ButtonType>
+    onSecondaryClick: Command<ButtonType>
+    onMiddleClick: Command<ButtonType>
+    onPrimaryClickRelease: Command<ButtonType>
+    onSecondaryClickRelease: Command<ButtonType>
+    onMiddleClickRelease: Command<ButtonType>
+    onScrollUp: Command<ButtonType>
+    onScrollDown: Command<ButtonType>;
   }
+  type ButtonType = Widget & ButtonArgs;
   export function Button(args: Partial<ButtonArgs>): Widget;
 
-  interface ButtonArgs extends CommonArgs {
+  interface CenterBoxArgs extends CommonArgs<CenterBoxType> {
     startWidget: Widget;
     centerWidget: Widget;
     endWidget: Widget;
   }
-  export function CenterBox(args: Partial<CenterBoxArgs>): Widget;
+  type CenterBoxType = Widget & CenterBoxArgs;
+  export function CenterBox(args: Partial<CenterBoxArgs>): CenterBoxType;
 
-  interface EntryArgs extends CommonArgs {
-    onChange: Command;
-    onAccept: Command;
+  interface EntryArgs extends CommonArgs<EntryType> {
+    onChange: Command<EntryType>;
+    onAccept: Command<EntryType>;
   }
-  export function Entry(args: Partial<EntryArgs>): Widget;
+  type EntryType = Widget & EntryArgs;
+  export function Entry(args: Partial<EntryArgs>): EntryType;
 
-  interface EventBoxArgs extends CommonArgs {
+  interface EventBoxArgs extends CommonArgs<EventBoxType> {
     child: Widget;
-    onPrimaryClick: Command;
-    onSecondaryClick: Command;
-    onMiddleClick: Command;
-    onPrimaryClickRelease: Command;
-    onSecondaryClickRelease: Command;
-    onMiddleClickRelease: Command;
-    onHoverRelease: Command;
-    onHoverLost: Command;
-    onScrollUp: Command;
-    onScrollDown: Command;
+    onPrimaryClick: Command<EventBoxType>
+    onSecondaryClick: Command<EventBoxType>;
+    onMiddleClick: Command<EventBoxType>;
+    onPrimaryClickRelease: Command<EventBoxType>;
+    onSecondaryClickRelease: Command<EventBoxType>;
+    onMiddleClickRelease: Command<EventBoxType>;
+    onHoverRelease: Command<EventBoxType>;
+    onHoverLost: Command<EventBoxType>;
+    onScrollUp: Command<EventBoxType>;
+    onScrollDown: Command<EventBoxType>;
   }
-  export function EventBox(args: Partial<EventBoxArgs>): Widget;
+  type EventBoxType = Widget & EventBoxArgs;
+  export function EventBox(args: Partial<EventBoxArgs>): EventBoxType;
 
-  interface IconArgs extends CommonArgs {
+  interface IconArgs extends CommonArgs<IconType> {
     icon: string;
     size: number;
   }
-  export function Icon(args: Partial<IconArgs>): Widget;
+  type IconType = Widget & IconArgs;
+  export function Icon(args: Partial<IconArgs>): IconType;
 
-  interface LabelArgs extends CommonArgs {
+  interface LabelArgs extends CommonArgs<LabelType> {
     justification: Justification;
     truncate: Truncate;
   }
-  export function Label(args: Partial<LabelArgs>): Widget;
+  type LabelType = Widget & LabelArgs;
+  export function Label(args: Partial<LabelArgs>): LabelType;
 
-  interface OverlayArgs extends CommonArgs {
+  interface OverlayArgs extends CommonArgs<OverlayType> {
     child: Widget;
     overlays: Widget[];
     passthrough: boolean;
   }
-  export function Overlay(args: Partial<OverlayArgs>): Widget;
+  type OverlayType = Widget & OverlayArgs;
+  export function Overlay(args: Partial<OverlayArgs>): OverlayType;
 
-  interface ProgressBarArgs extends CommonArgs {
+  interface ProgressBarArgs extends CommonArgs<ProgressBarType> {
     vertical: boolean;
     value: number;
   }
-  export function ProgressBar(args: Partial<ProgressBarArgs>): Widget;
+  type ProgressBarType = Widget & ProgressBarArgs;
+  export function ProgressBar(args: Partial<ProgressBarArgs>): ProgressBarType;
 
-  interface RevealerArgs extends CommonArgs {
+  interface RevealerArgs extends CommonArgs<RevealerType> {
     child: Widget;
     transition: 'none' | 'crossfade' | 'slide_left' | 'slide_right' | 'slide_down' | 'slide_up';
   }
-  export function Revealer(args: Partial<RevealerArgs>): Widget;
+  type RevealerType = Widget & RevealerArgs;
+  export function Revealer(args: Partial<RevealerArgs>): RevealerType;
 
-  interface ScrollableArgs extends CommonArgs {
+  interface ScrollableArgs extends CommonArgs<ScrollableType> {
     child: Widget;
     hscroll: Scroll;
     vscroll: Scroll;
   }
-  export function Scrollable(args: Partial<ScrollableArgs>): Widget;
+  type ScrollableType = Widget & ScrollableArgs;
+  export function Scrollable(args: Partial<ScrollableArgs>): ScrollableType;
 
-  interface SliderArgs extends CommonArgs {
+  interface SliderArgs extends CommonArgs<SliderType> {
     vertical: boolean;
     value: number;
     min: number;
     max: number;
-    onChange: Command;
+    onChange: Command<SliderType>;
   }
-  export function Slider(args: Partial<SliderArgs>): Widget;
+  type SliderType = Widget & SliderArgs;
+  export function Slider(args: Partial<SliderArgs>): SliderArgs;
 
-  interface StackArgs extends CommonArgs {
+  interface StackArgs extends CommonArgs<StackType> {
     items: [string, Widget][];
     shown: string;
     transition:
@@ -570,22 +576,42 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
     | 'over_left_right'
     | 'over_right_left';
   }
-  export function Stack(args: Partial<StackArgs>): Widget;
+  type StackType = Widget & StackArgs;
+  export function Stack(args: Partial<StackArgs>): StackType;
 
-  interface MenuArgs extends CommonArgs {
-    children: Widget[]; // TODO
-    onPopup: Command;
-    onMoveScroll: Command;
+  interface MenuArgs extends CommonArgs<MenuType> {
+    children: MenuItemType[]; // TODO
+    onPopup: Command<MenuType>;
+    onMoveScroll: Command<MenuType>;
   }
-  export function Menu(args: Partial<MenuArgs>): Widget;
+  type MenuType = Widget & MenuArgs;
+  export function Menu(args: Partial<MenuArgs>): MenuType;
 
-  interface MenuItemArgs extends CommonArgs {
+  interface MenuItemArgs extends CommonArgs<MenuItemType> {
     child: Widget;
-    onActivate: Command;
-    onSelect: Command;
-    onDeselect: Command;
+    onActivate: Command<MenuItemType>;
+    onSelect: Command<MenuItemType>;
+    onDeselect: Command<MenuItemType>;
   }
+  type MenuItemType = Widget & MenuItemArgs;
   export function MenuItem(args: Partial<MenuItemArgs>): Widget;
+}
+
+//#endregion
+
+//#region Utils
+
+declare module 'resource:///com/github/Aylur/ags/utils.js' {
+  export function exec(command: string): string;
+  export function execAsync(command: string | string[]): Promise<string>;
+  export function subprocess(cmd: string | string[], callback: (out: string) => void, onError: (err: Error) => void, bind?: Widget): void;
+  export function readFile(path: string): string;
+  export function readFileAsync(path: string): Promise<string>;
+  export function writeFile(string: string, path: string): string;
+  export function writeFileAsync(string: string, path: string): Promise<object>; // TODO
+  export function timeout(ms: number, callback: () => void): void;
+  export function interval(ms: number, callback: () => void, bind?: Widget): void;
+  export function lookUpIcon(name?: string, size?: number): object; // TODO
 }
 
 //#endregion

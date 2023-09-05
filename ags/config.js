@@ -2,7 +2,6 @@
 
 import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
-import Applications from 'resource:///com/github/Aylur/ags/service/applications.js';
 import Bluetooth from 'resource:///com/github/Aylur/ags/service/bluetooth.js';
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
@@ -29,16 +28,11 @@ const Workspaces = ({ monitor }) =>
     connections: [
       [
         Hyprland,
-        (widget, a) => {},
-        'urgent-window'
-      ],
-      /* [
-        Hyprland,
         (box) => {
           const workspaces = Hyprland.HyprctlGet('workspaces')
             .filter((w) => w.monitor === monitor.name)
             .map((w) => {
-              w.id_monitor = w.id % config.WORKSPACES_PER_MONITOR;
+              //w.id_monitor = w.id % config.WORKSPACES_PER_MONITOR;
               return w;
             });
 
@@ -55,7 +49,7 @@ const Workspaces = ({ monitor }) =>
             })
           );
         },
-      ] */,
+      ]
     ],
   });
 
@@ -64,7 +58,7 @@ const Left = ({ monitor }) =>
     children: [Workspaces({ monitor }), Label({ label: 'hello' })],
   });
 
-const Bar = ({ monitor } = {}) =>
+const Bar = ({ monitor }) =>
   Window({
     name: `bar${monitor?.id || ''}`,
     className: 'bar',
