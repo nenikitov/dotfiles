@@ -42,18 +42,24 @@ function Workspaces({ monitor }) {
           );
 
           for (const w of hyprlandWorkspaces) {
-            const id = w.id % config.WORKSPACES_PER_MONITOR - 1;
+            const id = (w.id % config.WORKSPACES_PER_MONITOR) - 1;
             const template = workspaces[id];
             workspaces[id] = {
-              name: template.name ?? w.name,
+              name:
+                template?.name ??
+                (w.name == String(w.id) ? w.id % config.WORKSPACES_PER_MONITOR : w.name),
               active: false,
               hasWindows: w.windows > 0,
-              hasFullscreen: w.hasfullscreen
-            }
+              hasFullscreen: w.hasfullscreen,
+            };
           }
 
-          const activeId = Hyprland.HyprctlGet('monitors').find(m => m.id == monitor.id)?.activeWorkspace.id ?? 0;
-          workspaces[activeId - 1].active = true;
+          const activeId =
+            ((Hyprland.HyprctlGet('monitors').find((m) => m.id == monitor.id)?.activeWorkspace.id ??
+              1) %
+              config.WORKSPACES_PER_MONITOR) -
+            1;
+          workspaces[activeId].active = true;
 
           box.children = workspaces.map((w) =>
             Button({
