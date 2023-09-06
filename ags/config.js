@@ -1,5 +1,7 @@
 #!/usr/bin/env gjs
 
+const { DateTime } = imports.gi.GLib;
+
 import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import Bluetooth from 'resource:///com/github/Aylur/ags/service/bluetooth.js';
@@ -34,7 +36,13 @@ function Workspaces({ monitor }) {
         Hyprland,
         (box) => {
           const workspaces = (config.WORKSPACES[monitor.name] ?? config.WORKSPACES['default']).map(
-            (w) => ({ name: w, active: false, hasWindows: false, hasFullscreen: false })
+            (w, i) => ({
+              id: i + 1,
+              name: w,
+              active: false,
+              hasWindows: false,
+              hasFullscreen: false,
+            })
           );
 
           const hyprlandWorkspaces = Hyprland.HyprctlGet('workspaces').filter(
@@ -45,6 +53,7 @@ function Workspaces({ monitor }) {
             const id = (w.id % config.WORKSPACES_PER_MONITOR) - 1;
             const template = workspaces[id];
             workspaces[id] = {
+              id: template?.id ?? id + 1,
               name:
                 template?.name ??
                 (w.name == String(w.id) ? w.id % config.WORKSPACES_PER_MONITOR : w.name),
@@ -64,6 +73,9 @@ function Workspaces({ monitor }) {
           box.children = workspaces.map((w) =>
             Button({
               child: Label({ label: (w.active ? '_' : '') + (w.hasWindows ? '.' : '') + w.name }),
+              onClicked: () => {
+                execAsync(`hyprctl dispatch split-workspace ${w.id}`);
+              },
             })
           );
         },
@@ -72,10 +84,46 @@ function Workspaces({ monitor }) {
   });
 }
 
-const Left = ({ monitor }) =>
-  Box({
-    children: [Workspaces({ monitor }), Label({ label: 'hello' })],
+const SECOND = 1000;
+/**
+ * @param {object} args
+ * @param {string} [args.format]
+ * @param {number} [args.interval]
+ * @param {import('resource:///com/github/Aylur/ags/widget.js').Justification} [args.justification]
+ */
+function Clock({ format = '%A %Y-%m-%d %H:%M:%S', interval = SECOND }) {
+  return Label({
+    connections: [
+      [
+        interval,
+        (label) => {
+          label.label = DateTime.new_now_local().format(format);
+        },
+      ],
+    ],
   });
+}
+
+function Left({ monitor }) {
+  return Box({
+    children: [Workspaces({ monitor })],
+  });
+}
+
+function Right() {
+  return Box({
+    children: [
+      Box({
+        children: [
+          Clock({ format: '%H:%M:%S' }),
+          Clock({ format: '%a %Y-%m-%d', interval: 60 * SECOND }),
+        ],
+        vertical: true,
+      }),
+    ],
+    halign: 'end',
+  });
+}
 
 /**
  * @param {object} args
@@ -88,10 +136,14 @@ function Bar({ monitor }) {
     monitor: monitor.id,
     anchor: ['top', 'left', 'right'],
     exclusive: true,
-    child: Left({ monitor }),
+    child: CenterBox({
+      startWidget: Left({ monitor }),
+      endWidget: Right(),
+    }),
   });
 }
 
 export default {
+  style: App.configDir + '/style.css',
   windows: [...Hyprland.HyprctlGet('monitors').map((monitor) => Bar({ monitor }))],
 };

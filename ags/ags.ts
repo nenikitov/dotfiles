@@ -413,6 +413,7 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
     | string
     | ((widget: W, ...args: any[]) => void);
   type Justification = 'left' | 'center' | 'right' | 'fill';
+  type Align = 'start' | 'center' | 'end' | 'fill' | 'baseline';
   type Truncate = 'none' | 'start' | 'middle' | 'end';
   type Scroll = 'always' | 'automatic' | 'external' | 'never';
   type Anchor = 'top' | 'bottom' | 'left' | 'right';
@@ -441,7 +442,8 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
   interface CommonArgs<W extends Widget> {
     className: string;
     label: string;
-    connections: Connection<W>[];
+    connections: (Connection<W> | number)[];
+    halign: Align,
   }
 
   interface BoxArgs extends CommonArgs<BoxType> {
