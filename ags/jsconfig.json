@@ -5,6 +5,7 @@
     "checkJs": true,
     "esModuleInterop": true,
     "strict": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "strictNullChecks": false
   }
 }

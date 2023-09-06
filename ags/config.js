@@ -56,7 +56,7 @@ function Workspaces({ monitor }) {
               id: template?.id ?? id + 1,
               name:
                 template?.name ??
-                (w.name == String(w.id) ? w.id % config.WORKSPACES_PER_MONITOR : w.name),
+                (w.name == String(w.id) ? String(w.id % config.WORKSPACES_PER_MONITOR) : w.name),
               active: false,
               hasWindows: w.windows > 0,
               hasFullscreen: w.hasfullscreen,
@@ -101,6 +101,7 @@ function Clock({ format = '%A %Y-%m-%d %H:%M:%S', interval = SECOND }) {
         },
       ],
     ],
+    justification: 'center',
   });
 }
 
@@ -112,15 +113,7 @@ function Left({ monitor }) {
 
 function Right() {
   return Box({
-    children: [
-      Box({
-        children: [
-          Clock({ format: '%H:%M:%S' }),
-          Clock({ format: '%a %Y-%m-%d', interval: 60 * SECOND }),
-        ],
-        vertical: true,
-      }),
-    ],
+    children: [Clock({ format: '%H:%M:%S\n%a %Y-%m-%d' })],
     halign: 'end',
   });
 }
