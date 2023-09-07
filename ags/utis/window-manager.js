@@ -1,6 +1,18 @@
 import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Applications from 'resource:///com/github/Aylur/ags/service/applications.js';
 
+/*
+connect(
+  Hyprland.instance,
+  {
+    connect: () => {}
+  },
+  () => {
+    console.log('here');
+  }
+)
+*/
+
 /**
  * @returns {Monitor[]}
  */
@@ -8,6 +20,7 @@ export function getMonitors() {
   const monitors = Hyprland.HyprctlGet('monitors');
   const workspaces = Hyprland.HyprctlGet('workspaces');
   const clients = Hyprland.HyprctlGet('clients');
+  const activeClient = Hyprland.HyprctlGet('activewindow');
 
   return monitors.map((m) => {
     /** @type {Workspace[]} */
@@ -32,7 +45,7 @@ export function getMonitors() {
               id: c.address,
               pid: c.pid,
               title: c.title,
-              active: false,
+              active: c.address === activeClient.address,
               position: c.at,
               size: c.size,
               hidden: c.hidden,
@@ -53,7 +66,7 @@ export function getMonitors() {
     return {
       id: m.id,
       name: m.name,
-      active: false,
+      active: m.focused,
       position: [m.x, m.y],
       size: [m.width, m.height],
       scale: m.scale,

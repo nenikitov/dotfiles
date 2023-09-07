@@ -20,7 +20,7 @@ import {
   Slider,
   ProgressBar,
 } from 'resource:///com/github/Aylur/ags/widget.js';
-import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import { execAsync, connect } from 'resource:///com/github/Aylur/ags/utils.js';
 
 import * as config from './user.js';
 import { getMonitors } from './utis/window-manager.js';
@@ -36,8 +36,8 @@ function Workspaces({ monitor }) {
       [
         Hyprland,
         (box) => {
-          const w = getMonitors();
-          console.log(w);
+          // const w = getMonitors();
+          // console.log(w);
           const workspaces = (config.WORKSPACES[monitor.name] ?? config.WORKSPACES['default']).map(
             (w, i) => ({
               id: i + 1,
