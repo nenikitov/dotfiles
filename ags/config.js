@@ -23,6 +23,7 @@ import {
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 import * as config from './user.js';
+import { getMonitors } from './utis/window-manager.js';
 
 /**
  * @param {object} args
@@ -35,6 +36,8 @@ function Workspaces({ monitor }) {
       [
         Hyprland,
         (box) => {
+          const w = getMonitors();
+          console.log(w);
           const workspaces = (config.WORKSPACES[monitor.name] ?? config.WORKSPACES['default']).map(
             (w, i) => ({
               id: i + 1,
@@ -72,7 +75,7 @@ function Workspaces({ monitor }) {
 
           box.children = workspaces.map((w) =>
             Button({
-              child: Label({ label: (w.active ? '_' : '') + (w.hasWindows ? '.' : '') + w.name }),
+              child: Label({ label: (w.active ? '▪' : '') + (w.hasWindows ? '_' : '') + w.name }),
               onClicked: () => {
                 execAsync(`hyprctl dispatch split-workspace ${w.id}`);
               },
@@ -91,13 +94,13 @@ const SECOND = 1000;
  * @param {number} [args.interval]
  * @param {import('resource:///com/github/Aylur/ags/widget.js').Justification} [args.justification]
  */
-function Clock({ format = '%A %Y-%m-%d %H:%M:%S', interval = SECOND }) {
+function Clock({ interval = SECOND }) {
   return Label({
     connections: [
       [
         interval,
         (label) => {
-          label.label = DateTime.new_now_local().format(format);
+          label.label = DateTime.new_now_local().format(config.CLOCK_FORMAT);
         },
       ],
     ],
@@ -113,7 +116,7 @@ function Left({ monitor }) {
 
 function Right() {
   return Box({
-    children: [Clock({ format: '%H:%M:%S\n%a %Y-%m-%d' })],
+    children: [Clock({})],
     halign: 'end',
   });
 }

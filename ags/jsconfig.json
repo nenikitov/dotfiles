@@ -4,6 +4,7 @@
     "target": "ES6",
     "checkJs": true,
     "esModuleInterop": true,
+    "moduleResolution": "nodenext",
     "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": false
