@@ -20,74 +20,14 @@ import {
   Slider,
   ProgressBar,
 } from 'resource:///com/github/Aylur/ags/widget.js';
-import { execAsync, connect } from 'resource:///com/github/Aylur/ags/utils.js';
+import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 import * as config from './user.js';
-import { getMonitors } from './utis/window-manager.js';
-
-/**
- * @param {object} args
- * @param {import('resource:///com/github/Aylur/ags/service/hyprland.js').Monitor} args.monitor
- */
-function Workspaces({ monitor }) {
-  return Box({
-    className: 'workspaces',
-    connections: [
-      [
-        Hyprland,
-        (box) => {
-          // const w = getMonitors();
-          // console.log(w);
-          const workspaces = (config.WORKSPACES[monitor.name] ?? config.WORKSPACES['default']).map(
-            (w, i) => ({
-              id: i + 1,
-              name: w,
-              active: false,
-              hasWindows: false,
-              hasFullscreen: false,
-            })
-          );
-
-          const hyprlandWorkspaces = Hyprland.HyprctlGet('workspaces').filter(
-            (w) => w.monitor === monitor.name
-          );
-
-          for (const w of hyprlandWorkspaces) {
-            const id = (w.id % config.WORKSPACES_PER_MONITOR) - 1;
-            const template = workspaces[id];
-            workspaces[id] = {
-              id: template?.id ?? id + 1,
-              name:
-                template?.name ??
-                (w.name == String(w.id) ? String(w.id % config.WORKSPACES_PER_MONITOR) : w.name),
-              active: false,
-              hasWindows: w.windows > 0,
-              hasFullscreen: w.hasfullscreen,
-            };
-          }
-
-          const activeId =
-            ((Hyprland.HyprctlGet('monitors').find((m) => m.id == monitor.id)?.activeWorkspace.id ??
-              1) %
-              config.WORKSPACES_PER_MONITOR) -
-            1;
-          workspaces[activeId].active = true;
-
-          box.children = workspaces.map((w) =>
-            Button({
-              child: Label({ label: (w.active ? '▪' : '') + (w.hasWindows ? '_' : '') + w.name }),
-              onClicked: () => {
-                execAsync(`hyprctl dispatch split-workspace ${w.id}`);
-              },
-            })
-          );
-        },
-      ],
-    ],
-  });
-}
+import WindowManager from './services/window-manager.js';
+import { Workspaces } from './bar/modules/workspaces.js';
 
 const SECOND = 1000;
+
 /**
  * @param {object} args
  * @param {string} [args.format]
@@ -108,6 +48,10 @@ function Clock({ interval = SECOND }) {
   });
 }
 
+/**
+ * @param {object} args
+ * @param {import('resource:///com/github/Aylur/ags/service/hyprland.js').Monitor} args.monitor
+ */
 function Left({ monitor }) {
   return Box({
     children: [Workspaces({ monitor })],

@@ -1,6 +1,10 @@
 //#region Services
 
-interface Service { }
+interface Service {
+  instance: {
+    connect: (signal: string | 'changed', callback: () => void) => void;
+  };
+}
 
 declare module 'resource:///com/github/Aylur/ags/service/applications.js' {
   export interface App {
@@ -393,25 +397,17 @@ interface Widget { }
 declare module 'resource:///com/github/Aylur/ags/widget.js' {
   type Applications =
     typeof import('resource:///com/github/Aylur/ags/service/applications.js').default;
-  type Audio =
-    typeof import('resource:///com/github/Aylur/ags/service/audio.js').default;
-  type Battery =
-    typeof import('resource:///com/github/Aylur/ags/service/battery.js').default;
-  type Bluetooth =
-    typeof import('resource:///com/github/Aylur/ags/service/bluetooth.js').default;
-  type Hyprland =
-    typeof import('resource:///com/github/Aylur/ags/service/hyprland.js').default;
-  type Mpris =
-    typeof import('resource:///com/github/Aylur/ags/service/mpris.js').default;
+  type Audio = typeof import('resource:///com/github/Aylur/ags/service/audio.js').default;
+  type Battery = typeof import('resource:///com/github/Aylur/ags/service/battery.js').default;
+  type Bluetooth = typeof import('resource:///com/github/Aylur/ags/service/bluetooth.js').default;
+  type Hyprland = typeof import('resource:///com/github/Aylur/ags/service/hyprland.js').default;
+  type Mpris = typeof import('resource:///com/github/Aylur/ags/service/mpris.js').default;
   type Player = import('resource:///com/github/Aylur/ags/service/mpris.js').Player;
-  type Network =
-    typeof import('resource:///com/github/Aylur/ags/service/network.js').default;
+  type Network = typeof import('resource:///com/github/Aylur/ags/service/network.js').default;
   type Notifications =
     typeof import('resource:///com/github/Aylur/ags/service/notifications.js').default;
 
-  type Command<W extends Widget> =
-    | string
-    | ((widget: W, ...args: any[]) => void);
+  type Command<W extends Widget> = string | ((widget: W, ...args: any[]) => void);
   type Justification = 'left' | 'center' | 'right' | 'fill';
   type Align = 'start' | 'center' | 'end' | 'fill' | 'baseline';
   type Truncate = 'none' | 'start' | 'middle' | 'end';
@@ -437,32 +433,35 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
   type WindowType = WindowArgs;
   export function Window(args: Partial<WindowArgs>): WindowArgs;
 
-  type Connection<W extends Widget> = [Service, Command<W>, string] | [Service, Command<W>]; // TODO
+  type Connection<W extends Widget> =
+    | [Service, Command<W>, string]
+    | [Service, Command<W>]
+    | [number, Command<W>]; // TODO
 
   interface CommonArgs<W extends Widget> {
     className: string;
     label: string;
     connections: (Connection<W> | number)[];
-    halign: Align,
+    halign: Align;
   }
 
   interface BoxArgs extends CommonArgs<BoxType> {
     children: Widget[];
     vertical: boolean;
   }
-  type BoxType = Widget & BoxArgs
+  type BoxType = Widget & BoxArgs;
   export function Box(args: Partial<BoxArgs>): BoxType;
 
   interface ButtonArgs extends CommonArgs<ButtonType> {
     child: Widget;
     onClicked: Command<ButtonType>;
-    onPrimaryClick: Command<ButtonType>
-    onSecondaryClick: Command<ButtonType>
-    onMiddleClick: Command<ButtonType>
-    onPrimaryClickRelease: Command<ButtonType>
-    onSecondaryClickRelease: Command<ButtonType>
-    onMiddleClickRelease: Command<ButtonType>
-    onScrollUp: Command<ButtonType>
+    onPrimaryClick: Command<ButtonType>;
+    onSecondaryClick: Command<ButtonType>;
+    onMiddleClick: Command<ButtonType>;
+    onPrimaryClickRelease: Command<ButtonType>;
+    onSecondaryClickRelease: Command<ButtonType>;
+    onMiddleClickRelease: Command<ButtonType>;
+    onScrollUp: Command<ButtonType>;
     onScrollDown: Command<ButtonType>;
   }
   type ButtonType = Widget & ButtonArgs;
@@ -485,7 +484,7 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
 
   interface EventBoxArgs extends CommonArgs<EventBoxType> {
     child: Widget;
-    onPrimaryClick: Command<EventBoxType>
+    onPrimaryClick: Command<EventBoxType>;
     onSecondaryClick: Command<EventBoxType>;
     onMiddleClick: Command<EventBoxType>;
     onPrimaryClickRelease: Command<EventBoxType>;
@@ -601,12 +600,34 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
 
 //#endregion
 
+//#region Variable
+
+declare module 'resource:///com/github/Aylur/ags/variable.js' {
+  type VariableCommand = string | string[] | (() => void);
+
+  interface VariableArgs {
+    listen: string;
+    poll: [number, VariableCommand];
+  }
+  export default function Variable<T>(
+    initial: T,
+    options: Partial<VariableArgs>
+  ): Service & { value: T };
+}
+
+//#endregion
+
 //#region Utils
 
 declare module 'resource:///com/github/Aylur/ags/utils.js' {
   export function exec(command: string): string;
   export function execAsync(command: string | string[]): Promise<string>;
-  export function subprocess(cmd: string | string[], callback: (out: string) => void, onError: (err: Error) => void, bind?: Widget): void;
+  export function subprocess(
+    cmd: string | string[],
+    callback: (out: string) => void,
+    onError: (err: Error) => void,
+    bind?: Widget
+  ): void;
   export function readFile(path: string): string;
   export function readFileAsync(path: string): Promise<string>;
   export function writeFile(string: string, path: string): string;

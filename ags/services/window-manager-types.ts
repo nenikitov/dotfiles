@@ -18,9 +18,15 @@ interface Client {
   desktopInfo?: ClientDesktopInfo;
 }
 
+interface WorkspaceInfo {
+  name: string;
+  icon: string;
+}
+
 interface Workspace {
   id: number;
-  name: string;
+  index: number;
+  display: WorkspaceInfo;
   active: boolean;
   clients: Client[];
 }
@@ -33,4 +39,12 @@ interface Monitor {
   size: [number, number];
   scale: number;
   workspaces: Workspace[];
+}
+
+interface WindowManagerConfig {
+  defaultWorkspaces: {
+    [monitorName: string]: WorkspaceInfo[];
+    default: WorkspaceInfo[];
+  };
+  workspacesPerMonitor: number;
 }

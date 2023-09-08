@@ -1,8 +1,15 @@
-/** @type {{ [monitor: string]: string[], default: string[] }} */
-export const WORKSPACES = {
-  default: ['', '', '', '', ''],
-};
-
-export const WORKSPACES_PER_MONITOR = 10;
+/** @type {WindowManagerConfig} */
+export const windowManager = {
+  defaultWorkspaces: {
+    default: [
+      { icon: '', name: 'Home' },
+      { icon: '', name: 'Term' },
+      { icon: '', name: 'Web' },
+      { icon: '', name: 'Media' },
+      { icon: '', name: 'Comm' },
+    ],
+  },
+  workspacesPerMonitor: 10
+}
 
 export const CLOCK_FORMAT = '%H:%M:%S\n%a %Y-%m-%d';
