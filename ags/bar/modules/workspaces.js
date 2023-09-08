@@ -5,16 +5,10 @@ import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 /** @type {WorkspacesConfig} */
 const defaultArgs = {
   format: (workspace) => {
-    return (
-      (workspace.active ? '👉' : '') +
-      (workspace.clients.length > 0 ? '=' : '') +
-      workspace.display.icon +
-      ' ' +
-      workspace.display.name +
-      ' (' +
-      workspace.id +
-      ')'
-    );
+    const active = workspace.active ? '👉' : '';
+    const clients = workspace.clients.length > 0 ? '=' : '';
+    const display = workspace.display.icon || workspace.display.name;
+    return active + clients + display;
   },
   hideEmpty: false,
   allMonitors: false,
@@ -32,12 +26,19 @@ export function Workspaces({ monitor, ...args }) {
       [
         WindowManager,
         (box) => {
-          const monitorData = WindowManager.value.find((m) => monitor.id === m.id);
-          if (!monitorData) {
+          let workspaces = config.hideEmpty
+            ? WindowManager.value.find((m) => monitor.id === m.id)?.workspaces
+            : WindowManager.value.map((m) => m.workspaces).flat();
+
+          if (!workspaces) {
             return;
           }
 
-          box.children = monitorData.workspaces.map((w) =>
+          if (config.hideEmpty) {
+            workspaces = workspaces.filter((w) => w.clients.length !== 0 || w.active);
+          }
+
+          box.children = workspaces.map((w) =>
             Button({
               child: Label({
                 label: config.format(w),
