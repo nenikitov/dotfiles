@@ -5,10 +5,7 @@ import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 /** @type {WorkspacesConfig} */
 const defaultArgs = {
   format: (workspace) => {
-    const active = workspace.active ? '👉' : '';
-    const clients = workspace.clients.length > 0 ? '=' : '';
-    const display = workspace.display.icon || workspace.display.name;
-    return active + clients + display;
+    return workspace.display.icon || workspace.display.name;
   },
   hideEmpty: false,
   allMonitors: false,
