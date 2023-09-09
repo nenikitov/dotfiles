@@ -443,6 +443,7 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
     label: string;
     connections: (Connection<W> | number)[];
     halign: Align;
+    tooltip_text: string;
   }
 
   interface BoxArgs extends CommonArgs<BoxType> {

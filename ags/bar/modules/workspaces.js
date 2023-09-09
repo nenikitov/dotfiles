@@ -26,28 +26,44 @@ export function Workspaces({ monitor, ...args }) {
       [
         WindowManager,
         (box) => {
-          let workspaces = config.hideEmpty
-            ? WindowManager.value.find((m) => monitor.id === m.id)?.workspaces
-            : WindowManager.value.map((m) => m.workspaces).flat();
+          let monitors = config.allMonitors
+            ? [WindowManager.value.find((m) => monitor.id === m.id)]
+            : WindowManager.value;
 
-          if (!workspaces) {
+          if (!monitors || monitors.length === 0) {
             return;
           }
 
-          if (config.hideEmpty) {
-            workspaces = workspaces.filter((w) => w.clients.length !== 0 || w.active);
-          }
+          box.children = monitors.map((m) => {
+            let workspaces = m.workspaces;
+            if (config.hideEmpty) {
+              workspaces = workspaces.filter((w) => w.clients.length !== 0 || w.active);
+            }
 
-          box.children = workspaces.map((w) =>
-            Button({
-              child: Label({
-                label: config.format(w),
-              }),
-              onClicked: () => {
-                execAsync(`hyprctl dispatch workspace ${w.id}`);
-              },
-            })
-          );
+            return Box({
+              className: `workspace-group ${m.id}`,
+              children: workspaces.map((w) =>
+                Button({
+                  className: [
+                    'workspace',
+                    w.index,
+                    w.active ? 'active' : undefined,
+                    w.clients.length > 0 ? 'occupied' : undefined,
+                    String(w.index) === w.display.name ? 'misc' : undefined,
+                  ]
+                    .filter((e) => e !== undefined)
+                    .join(' '),
+                  child: Label({
+                    label: config.format(w),
+                  }),
+                  tooltip_text: w.display.name,
+                  onClicked: () => {
+                    execAsync(`hyprctl dispatch workspace ${w.id}`);
+                  },
+                })
+              ),
+            });
+          });
         },
       ],
     ],
