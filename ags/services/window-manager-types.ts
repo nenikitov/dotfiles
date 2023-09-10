@@ -1,10 +1,14 @@
+interface Focusable {
+  focus: () => void;
+}
+
 interface ClientDesktopInfo {
   name: string | null;
   description: string | null;
   icon: string;
 }
 
-interface Client {
+interface Client extends Focusable {
   id: string;
   pid: number;
   title: string;
@@ -23,7 +27,7 @@ interface WorkspaceInfo {
   icon: string;
 }
 
-interface Workspace {
+interface Workspace extends Focusable {
   id: number;
   index: number;
   display: WorkspaceInfo;
@@ -31,7 +35,7 @@ interface Workspace {
   clients: Client[];
 }
 
-interface Monitor {
+interface Monitor extends Focusable {
   id: number;
   name: string;
   active: boolean;

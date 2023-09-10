@@ -2,10 +2,11 @@ import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Applications from 'resource:///com/github/Aylur/ags/service/applications.js';
 import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 import * as user from '../user.js';
+import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 const WORKSPACES_PER_MONITOR = 10;
 
-const WindowManager = Variable(/** @type {Monitor[]} */([]), {});
+const WindowManager = Variable(/** @type {Monitor[]} */ ([]), {});
 
 Hyprland.instance.connect('changed', () => {
   WindowManager.value = getInfo(user.windowManager);
@@ -45,6 +46,7 @@ function getInfo(config) {
               floating: c.floating,
               pinned: c.pinned,
               fullscreen: c.fullscreen,
+              focus: () => execAsync(`hyprctl dispatch focuswindow address:${c.address}`),
             };
             const queriedInfo =
               Applications.query(c.initialClass)[0] ?? Applications.query(c.initialTitle)[0];
@@ -70,6 +72,7 @@ function getInfo(config) {
           },
           active: w.id === m.activeWorkspace.id,
           clients: clients,
+          focus: () => {},
         };
       });
 
@@ -82,8 +85,13 @@ function getInfo(config) {
           display: defaults,
           active: false,
           clients: [],
+          focus: () => {},
         });
       }
+    }
+
+    for (const w of workspaces) {
+      w.focus = () => execAsync(`hyprctl dispatch workspace ${w.id}`);
     }
 
     return {
@@ -94,6 +102,7 @@ function getInfo(config) {
       size: [m.width, m.height],
       scale: m.scale,
       workspaces: workspaces.sort((a, b) => a.id - b.id),
+      focus: () => execAsync(`hyprctl dispatch focusmonitor ${m.id}`),
     };
   });
 }

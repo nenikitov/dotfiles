@@ -1,14 +1,17 @@
 import WindowManager from '../../services/window-manager.js';
 import { Box, Button, Label } from 'resource:///com/github/Aylur/ags/widget.js';
-import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 /** @type {WorkspacesConfig} */
 const defaultArgs = {
   format: (workspace) => {
     return workspace.display.icon || workspace.display.name;
   },
+  formatTooltip: (workspace) => {
+    return workspace.display.name;
+  },
   hideEmpty: false,
   allMonitors: false,
+  vertical: false,
 };
 
 /**
@@ -19,6 +22,7 @@ export function Workspaces({ monitor, ...args }) {
 
   return Box({
     className: 'workspaces',
+    vertical: config.vertical,
     connections: [
       [
         WindowManager,
@@ -39,6 +43,7 @@ export function Workspaces({ monitor, ...args }) {
 
             return Box({
               className: `workspace-group ${m.id}`,
+              vertical: config.vertical,
               children: workspaces.map((w) =>
                 Button({
                   className: [
@@ -53,10 +58,8 @@ export function Workspaces({ monitor, ...args }) {
                   child: Label({
                     label: config.format(w),
                   }),
-                  tooltip_text: w.display.name,
-                  onClicked: () => {
-                    execAsync(`hyprctl dispatch workspace ${w.id}`);
-                  },
+                  tooltip_text: config.formatTooltip(w),
+                  onClicked: () => w.focus(),
                 })
               ),
             });
