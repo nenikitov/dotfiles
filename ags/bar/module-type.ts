@@ -1,0 +1,3 @@
+interface Module {
+  vertical: boolean;
+}
