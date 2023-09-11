@@ -21,7 +21,7 @@ export function Workspaces({ monitor, ...args }) {
   const config = Object.assign({}, defaultArgs, args);
 
   return Box({
-    className: 'workspaces',
+    className: 'workspaces' + (args.class ? ` ${args.class}` : ''),
     vertical: config.vertical,
     connections: [
       [
