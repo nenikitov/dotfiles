@@ -1,4 +1,4 @@
-interface Module {
+interface ModuleConfig {
   vertical: boolean;
   class?: string;
 }

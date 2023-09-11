@@ -1,52 +1,11 @@
 #!/usr/bin/env gjs
 
-const { DateTime } = imports.gi.GLib;
-
 import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
-import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
-import Bluetooth from 'resource:///com/github/Aylur/ags/service/bluetooth.js';
-import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
-import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
-import Battery from 'resource:///com/github/Aylur/ags/service/battery.js';
 import App from 'resource:///com/github/Aylur/ags/app.js';
-import {
-  Box,
-  Button,
-  Stack,
-  Label,
-  Icon,
-  CenterBox,
-  Window,
-  Slider,
-  ProgressBar,
-} from 'resource:///com/github/Aylur/ags/widget.js';
-import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import { Box, CenterBox, Window } from 'resource:///com/github/Aylur/ags/widget.js';
 
-import * as config from './user.js';
-import WindowManager from './services/window-manager.js';
 import { Workspaces } from './bar/modules/workspaces.js';
-
-const SECOND = 1000;
-
-/**
- * @param {object} args
- * @param {string} [args.format]
- * @param {number} [args.interval]
- * @param {import('resource:///com/github/Aylur/ags/widget.js').Justification} [args.justification]
- */
-function Clock({ interval = SECOND }) {
-  return Label({
-    connections: [
-      [
-        interval,
-        (label) => {
-          label.label = DateTime.new_now_local().format(config.CLOCK_FORMAT);
-        },
-      ],
-    ],
-    justification: 'center',
-  });
-}
+import { Clock } from './bar/modules/clock.js';
 
 /**
  * @param {object} args
@@ -60,7 +19,12 @@ function Left({ monitor }) {
 
 function Right() {
   return Box({
-    children: [Clock({})],
+    children: [
+      Clock({
+        format: '%H:%M:%S\n%a %Y-%m-%d',
+        formatTooltip: '%H:%M:%S\n%A\n%B %d, %Y\n%Z (%:z)',
+      }),
+    ],
     halign: 'end',
   });
 }

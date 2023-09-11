@@ -444,6 +444,7 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
     connections: (Connection<W> | number)[];
     halign: Align;
     tooltip_text: string;
+    angle: number;
   }
 
   interface BoxArgs extends CommonArgs<BoxType> {
