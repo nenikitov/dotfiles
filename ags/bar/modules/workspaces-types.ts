@@ -1,4 +1,4 @@
-interface WorkspacesConfig extends Module {
+interface WorkspacesConfig extends ModuleConfig {
   format: (workspace: Workspace) => string;
   formatTooltip: (workspace: Workspace) => string;
   hideEmpty: boolean;

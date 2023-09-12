@@ -20,6 +20,7 @@ export function Clock(args) {
   const config = Object.assign({}, defaultArgs, args);
 
   return Label({
+    className: 'clock' + (args.class ? ` ${args.class}` : ''),
     justification: config.justification,
     angle: config.vertical ? 90 : 0,
     connections: [

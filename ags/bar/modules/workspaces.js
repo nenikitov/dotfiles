@@ -7,7 +7,14 @@ const defaultArgs = {
     return workspace.display.icon || workspace.display.name;
   },
   formatTooltip: (workspace) => {
-    return workspace.display.name;
+    return (
+      workspace.index +
+      ' - ' +
+      (workspace.display.name || workspace.display.icon) +
+      '\n' +
+      workspace.clients.length +
+      ' opened'
+    );
   },
   hideEmpty: false,
   allMonitors: false,

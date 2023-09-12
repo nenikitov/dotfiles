@@ -3,13 +3,11 @@ export const windowManager = {
   defaultWorkspaces: {
     default: [
       { icon: '', name: 'Home' },
-      { icon: '', name: 'Term' },
+      { icon: '', name: 'Terminal' },
       { icon: '', name: 'Web' },
       { icon: '', name: 'Media' },
-      { icon: '', name: 'Comm' },
+      { icon: '', name: 'Communication' },
     ],
   },
   workspacesPerMonitor: 10
 }
-
-export const CLOCK_FORMAT = '%H:%M:%S\n%a %Y-%m-%d';
