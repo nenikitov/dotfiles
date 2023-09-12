@@ -2,13 +2,13 @@ const { DateTime } = imports.gi.GLib;
 
 import { Box, Button, Label } from 'resource:///com/github/Aylur/ags/widget.js';
 
-const SECOND = 1000;
+import { seconds } from '../../utils/time.js';
 
 /** @type {ClockConfig} */
 const defaultArgs = {
   format: '%X',
   formatTooltip: '%c',
-  interval: SECOND,
+  interval: seconds(1),
   vertical: false,
   justification: 'center',
 };

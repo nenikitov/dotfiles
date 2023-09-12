@@ -3,8 +3,8 @@ local servers = {
     lua_ls = {
         Lua = {
             workspace = { checkThirdParty = false },
-            format = { enable = false }
-        }
+            format = { enable = false },
+        },
     },
     -- HTML
     html = {},
@@ -19,16 +19,23 @@ local servers = {
     rust_analyzer = {},
     -- Python
     pyright = {
-        useLibraryCodeForTypes = true
+        useLibraryCodeForTypes = true,
     },
     -- YAML
     yamlls = {
         yaml = {
-            keyOrdering = false
-        }
-    }
+            keyOrdering = false,
+        },
+    },
+    -- Erlang
+    erlangls = {},
+    -- C/C++
+    clangd = {},
+    -- Clojure
+    clojure_lsp = {},
+    -- C#
+    omnisharp = {},
 }
-
 
 return {
     'neovim/nvim-lspconfig',
@@ -51,12 +58,12 @@ return {
             ui = {
                 border = 'rounded',
                 icons = {
-                    package_installed   = '●',
-                    package_pending     = '',
-                    package_uninstalled = '○'
+                    package_installed = '●',
+                    package_pending = '',
+                    package_uninstalled = '○',
                 },
-                keymaps = require('neconfig.user.keymaps').mason()
-            }
+                keymaps = require('neconfig.user.keymaps').mason(),
+            },
         }
         mason_lspconfig.setup {
             ensure_installed = vim.tbl_keys(servers),
@@ -68,7 +75,7 @@ return {
         )
         capabilities.textDocument.foldingRange = {
             dynamicRegistration = false,
-            lineFoldingOnly = true
+            lineFoldingOnly = true,
         }
         mason_lspconfig.setup_handlers {
             function(server_name)
@@ -77,9 +84,9 @@ return {
                     on_attach = function()
                         require('neconfig.user.keymaps').lsp()
                     end,
-                    settings = servers[server_name]
+                    settings = servers[server_name],
                 }
-            end
+            end,
         }
 
         -- Virtual text and floating windows
@@ -87,14 +94,14 @@ return {
             update_in_insert = true,
             severity_sort = true,
             virtual_text = {
-                prefix = require('neconfig.user.icons').virtual_text_prefix
+                prefix = require('neconfig.user.icons').virtual_text_prefix,
             },
             float = {
                 border = 'rounded',
                 header = '',
-                source = 'always'
+                source = 'always',
             },
-            signs = false
+            signs = false,
         }
 
         -- Show popup on hover
@@ -132,15 +139,13 @@ return {
         for type, icon in pairs(require('neconfig.user.icons').diagnostics) do
             local case = require('neconfig.utils.case')
             type = type == 'warning' and 'warn' or type
-            local sign = 'DiagnosticSign' .. case.convert_case(type, case.cases.SNAKE, case.cases.CAMEL)
-            vim.fn.sign_define(
-                sign,
-                {
-                    text = icon,
-                    texthl = sign,
-                    numhl = sign
-                }
-            )
+            local sign = 'DiagnosticSign'
+                .. case.convert_case(type, case.cases.SNAKE, case.cases.CAMEL)
+            vim.fn.sign_define(sign, {
+                text = icon,
+                texthl = sign,
+                numhl = sign,
+            })
         end
         -- Only one sign in sign column
         local ns = vim.api.nvim_create_namespace('diagnostic_signs')
@@ -161,9 +166,9 @@ return {
             end,
             hide = function(_, bufnr)
                 orig_signs_handler.hide(ns, bufnr)
-            end
+            end,
         }
 
         require('neconfig.user.keymaps').lsp_plugin()
-    end
+    end,
 }

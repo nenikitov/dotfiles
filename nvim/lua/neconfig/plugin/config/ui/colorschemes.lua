@@ -11,14 +11,14 @@ local function colorscheme_loader()
         config = function()
             -- Load colorscheme here
             require('neconfig.user.colorscheme')
-        end
+        end,
     }
 end
 
 return {
     colorscheme_loader(),
     colorscheme {
-        'Mofiqul/vscode.nvim'
+        'Mofiqul/vscode.nvim',
     },
     colorscheme {
         'marko-cerovac/material.nvim',
@@ -32,15 +32,15 @@ return {
                     'nvim-web-devicons',
                     'telescope',
                     'which-key',
-                }
+                },
             }
             vim.g['material_style'] = 'deep ocean'
-        end
+        end,
     },
     colorscheme {
         dir = '~/SharedFiles/Projects/nvim/termcolors.nvim',
         dependencies = {
-            dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim'
+            dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim',
         },
     },
     colorscheme {
@@ -50,9 +50,9 @@ return {
         'wuelnerdotexe/vim-enfocado',
         config = function()
             vim.g['enfocado_style'] = 'neon'
-        end
+        end,
     },
     colorscheme {
-        'LunarVim/horizon.nvim'
-    }
+        'LunarVim/horizon.nvim',
+    },
 }

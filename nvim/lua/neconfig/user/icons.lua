@@ -26,17 +26,17 @@ M.fillchars = {
 
 M.virtual_text_prefix = '■'
 M.diagnostics = {
-    error   = '',
-    warning = '',
-    hint    = '󰛨',
-    info    = '',
+    error   = '', -- 
+    warning = '', -- 
+    hint    = '󰛨', -- 
+    info    = '', -- 
 }
 
-M.telescope = ' '
+M.telescope = ' '
 M.cmdline = {
     cmdline     = ' ',
-    search_down = M.telescope .. '',
-    search_up   = M.telescope .. '',
+    search_down = ' ',
+    search_up   = ' ',
     filter      = ' ',
     lua         = '󰢱 ',
     help        = ' ',
@@ -67,8 +67,8 @@ M.nvim_tree = {
         open         = '',
         empty        = '',
         empty_open   = '',
-        symlink      = '',
-        symlink_open = ''
+        symlink      = '󰄾',
+        symlink_open = '󰄼'
     },
     git = {
         unstaged  = '',
@@ -105,7 +105,7 @@ M.completion = {
     File              = '',
     Folder            = '',
     ForStatement      = '󰕇',
-    Function          = '',
+    Function          = '',
     Identifier        = '󰀫',
     IfStatement       = '󰇉',
     Interface         = '',

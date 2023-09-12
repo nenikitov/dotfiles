@@ -7,3 +7,5 @@ interface KeyboardState {
     scroll: boolean;
   };
 }
+
+type LedState = 0 | 1;

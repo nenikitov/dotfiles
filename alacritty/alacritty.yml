@@ -9,7 +9,7 @@ window:
     dynamic_padding: true
     dynamic_title: true
 font:
-    size: 14.0
+    size: 12.0
 cursor:
     unfocused_hollow: true
     blink_interval: 750
