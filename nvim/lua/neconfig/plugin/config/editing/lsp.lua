@@ -28,13 +28,14 @@ local servers = {
         },
     },
     -- Erlang
-    erlangls = {},
+    -- erlangls = {},
     -- C/C++
     clangd = {},
     -- Clojure
     clojure_lsp = {},
     -- C#
     omnisharp = {},
+    omnisharp_mono = {},
 }
 
 return {
