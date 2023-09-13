@@ -1,11 +1,11 @@
+type KeyboardLed = 'numlock' | 'capslock' | 'scrolllock';
+
 interface KeyboardState {
   layout: string;
   submap: string;
-  locks: {
+  led: {
     caps: boolean;
     num: boolean;
     scroll: boolean;
   };
 }
-
-type LedState = 0 | 1;

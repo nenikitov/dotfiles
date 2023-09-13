@@ -36,7 +36,7 @@ export function Workspaces({ monitor, ...args }) {
         (box) => {
           let monitors = config.allMonitors
             ? WindowManager.value
-            : [WindowManager.value.find((m) => monitor.id === m.id)];
+            : WindowManager.value.filter((m) => monitor.id === m.id);
 
           if (!monitors || monitors.length === 0) {
             return;

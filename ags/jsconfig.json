@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "ES6",
     "lib": [
-      "es2022"
+      "ES2022"
     ],
     "checkJs": true,
     "esModuleInterop": true,

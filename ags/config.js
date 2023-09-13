@@ -2,10 +2,12 @@
 
 import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import App from 'resource:///com/github/Aylur/ags/app.js';
-import { Box, CenterBox, Window } from 'resource:///com/github/Aylur/ags/widget.js';
+import { Box, CenterBox, Window, Label } from 'resource:///com/github/Aylur/ags/widget.js';
 
 import { Workspaces } from './bar/modules/workspaces.js';
 import { Clock } from './bar/modules/clock.js';
+
+import KeyboardState from './services/keyboard-state.js';
 
 /**
  * @param {object} args
@@ -23,6 +25,16 @@ function Right() {
       Clock({
         format: '%H:%M:%S\n%a %Y-%m-%d',
         formatTooltip: '%H:%M:%S\n%A\n%B %d, %Y\n%Z (%:z)',
+      }),
+      Label({
+        connections: [
+          [
+            KeyboardState,
+            (label) => {
+              label.label = JSON.stringify(KeyboardState.value);
+            },
+          ],
+        ],
       }),
     ],
     halign: 'end',

@@ -1,9 +1,11 @@
 //#region Services
 
 interface Service {
-  instance: {
-    connect: (signal: string | 'changed', callback: () => void) => void;
-  };
+  connect: (signal: string | 'changed', callback: () => void) => void;
+}
+
+interface ServiceSingleton {
+  instance: Service
 }
 
 declare module 'resource:///com/github/Aylur/ags/service/applications.js' {
@@ -18,7 +20,7 @@ declare module 'resource:///com/github/Aylur/ags/service/applications.js' {
     match(term: string): boolean;
   }
 
-  interface Applications extends Service {
+  interface Applications extends ServiceSingleton {
     query(term: string): App[];
   }
 
@@ -36,7 +38,7 @@ declare module 'resource:///com/github/Aylur/ags/service/audio.js' {
     volume: number;
   }
 
-  interface Audio extends Service {
+  interface Audio extends ServiceSingleton {
     microphone: Stream;
     speaker: Stream;
     apps: Stream[];
@@ -49,7 +51,7 @@ declare module 'resource:///com/github/Aylur/ags/service/audio.js' {
 }
 
 declare module 'resource:///com/github/Aylur/ags/service/battery.js' {
-  interface Battery extends Service {
+  interface Battery extends ServiceSingleton {
     available: boolean;
     percent: number;
     charging: boolean;
@@ -75,7 +77,7 @@ declare module 'resource:///com/github/Aylur/ags/service/bluetooth.js' {
     setConnection(connect: boolean): void;
   }
 
-  interface Bluetooth extends Service {
+  interface Bluetooth extends ServiceSingleton {
     enabled: boolean;
     devices: Device[];
     connectedDevices: Device[];
@@ -218,7 +220,7 @@ declare module 'resource:///com/github/Aylur/ags/service/hyprland.js' {
     wl_socket: string;
   }
 
-  interface Hyprland extends Service {
+  interface Hyprland extends ServiceSingleton {
     active: { client: ClientShort; monitor: string; workspace: WorkspaceShort };
     monitors: Map<number, Monitor>;
     workspaces: Map<number, Workspace>;
@@ -245,7 +247,7 @@ declare module 'resource:///com/github/Aylur/ags/service/hyprland.js' {
 }
 
 declare module 'resource:///com/github/Aylur/ags/service/mpris.js' {
-  export interface Player extends Service {
+  export interface Player extends ServiceSingleton {
     busName: string;
     name: string;
     identity: string;
@@ -325,7 +327,7 @@ declare module 'resource:///com/github/Aylur/ags/service/network.js' {
     scan(): void;
   }
 
-  interface Network extends Service {
+  interface Network extends ServiceSingleton {
     connectivity: 'unknown' | 'none' | 'portal' | 'limited' | 'full';
     primary: 'wifi' | 'wired';
     wired?: Wired;
@@ -352,7 +354,7 @@ declare module 'resource:///com/github/Aylur/ags/service/notifications.js' {
     image: string | null;
   }
 
-  interface Notifications extends Service {
+  interface Notifications extends ServiceSingleton {
     dnd: boolean;
     popups: Notification[];
     notifications: Notification[];
@@ -433,9 +435,11 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
   type WindowType = WindowArgs;
   export function Window(args: Partial<WindowArgs>): WindowArgs;
 
+  type ConnectionService = Service | ServiceSingleton;
+
   type Connection<W extends Widget> =
-    | [Service, Command<W>, string]
-    | [Service, Command<W>]
+    | [ConnectionService, Command<W>, string]
+    | [ConnectionService, Command<W>]
     | [number, Command<W>]; // TODO
 
   interface CommonArgs<W extends Widget> {
@@ -605,15 +609,15 @@ declare module 'resource:///com/github/Aylur/ags/widget.js' {
 //#region Variable
 
 declare module 'resource:///com/github/Aylur/ags/variable.js' {
-  type VariableCommand = string | string[] | (() => void);
+  type VariableCommand = string | string[];
 
-  interface VariableArgs {
-    listen: string;
-    poll: [number, VariableCommand];
+  interface VariableArgs<T> {
+    listen: VariableCommand | [VariableCommand, (out: string) => T];
+    poll: [number, VariableCommand] | [number, () => T] | [number, VariableCommand, (out: string) => T];
   }
   export default function Variable<T>(
     initial: T,
-    options: Partial<VariableArgs>
+    options: Partial<VariableArgs<T>>
   ): Service & { value: T };
 }
 
