@@ -1,7 +1,7 @@
 //#region Services
 
 interface Service {
-  connect: (signal: string | 'changed', callback: () => void) => void;
+  connect: (signal: string | 'changed', callback: (...args: any[]) => void) => void;
 }
 
 interface ServiceSingleton {
