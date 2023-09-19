@@ -26,6 +26,6 @@
 
 # Blacklist files
 /zsh/.zcompdump
-/**/.vscode/
 *.lock
+/**/.vscode/
 /**/__pycache__/

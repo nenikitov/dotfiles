@@ -17,10 +17,10 @@ Hyprland.instance.connect('changed', () => {
  * @returns {Monitor[]}
  */
 function getInfo(config) {
-  const monitorsAll = Hyprland.HyprctlGet('monitors');
-  const workspacesAll = Hyprland.HyprctlGet('workspaces');
-  const clientsAll = Hyprland.HyprctlGet('clients');
-  const clientActive = Hyprland.HyprctlGet('activewindow');
+  const monitorsAll = Array.from(Hyprland.monitors.values());
+  const workspacesAll = Array.from(Hyprland.workspaces.values());
+  const clientsAll = Array.from(Hyprland.clients.values());
+  const clientActive = Hyprland.active.client;
 
   return monitorsAll.map((m) => {
     const workspacesDefaults =

@@ -31,6 +31,8 @@ return {
                 method = null_ls.methods.DIAGNOSTICS_ON_SAVE
             },
             code_actions.cspell,
+            -- C#
+            formatting.csharpier,
         }
 
         null_ls.setup {
