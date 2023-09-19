@@ -40,9 +40,10 @@ local rules = {
         id = 'floating',
         rule_any = {
             class = {
+                'Arandr',
+                'flameshot',
                 'Nitrogen',
                 'Qalculate-gtk',
-                'Arandr'
             }
         },
         properties = {

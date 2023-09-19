@@ -2,11 +2,11 @@
 local g_table = require('gears').table
 local wibox = require('wibox')
 -- Load custom modules
-local user_titlebar = require("neconfig.user.config.widgets.user_titlebar")
-local utils_shapes = require("neconfig.config.utils.utils_shapes")
-local titlebar_buttons = require("neconfig.config.widgets.titlebar.titlebar_buttons")
-local user_look_titlebar = require("neconfig.user.look.widgets.user_look_titlebar")
-local titlebar_subwidget_list = require("neconfig.config.widgets.titlebar.titlebar_subwidget_list")
+local user_titlebar = require('neconfig.user.config.widgets.user_titlebar')
+local utils_shapes = require('neconfig.config.utils.utils_shapes')
+local titlebar_buttons = require('neconfig.config.widgets.titlebar.titlebar_buttons')
+local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
+local titlebar_subwidget_list = require('neconfig.config.widgets.titlebar.titlebar_subwidget_list')
 
 
 --#region Helper functions
@@ -44,7 +44,7 @@ local function titlebar_widget_template(c)
             return prototype
         end
     end
-    -- Function to remove unusable widgets (such as maximize button for the client that cannot resize)
+    -- Remove unusable widgets (such as maximize button for the client that cannot resize)
     local function remove_unusable_buttons(widgets)
         local new_widgets = {}
 
@@ -64,60 +64,60 @@ local function titlebar_widget_template(c)
 
         return new_widgets
     end
+    -- Initialize a section with buttons and remove unusable buttons
+    local function prepare_section(section)
+        return wibox.layout.fixed[direction](
+            table.unpack(
+                g_table.map(
+                    init_widget,
+                    remove_unusable_buttons(section)
+                )
+            )
+        )
+    end
 
     -- Layouts for 3 sections
-    local beginning_section = wibox.layout.fixed[direction](
-        table.unpack(
-            g_table.map(
-                init_widget,
-                remove_unusable_buttons(user_titlebar.layout.beginning)
-            )
-        )
-    )
-    local center_section = wibox.layout.fixed[direction](
-        table.unpack(
-            g_table.map(
-                init_widget,
-                remove_unusable_buttons(user_titlebar.layout.center)
-            )
-        )
-    )
-    local ending_section = wibox.layout.fixed[direction](
-        table.unpack(
-            g_table.map(
-                init_widget,
-                g_table.reverse(remove_unusable_buttons(user_titlebar.layout.ending))
-            )
-        )
-    )
+    local beginning_section = prepare_section(user_titlebar.layout.beginning)
+    local center_section = prepare_section(user_titlebar.layout.center)
+    local ending_section = prepare_section(user_titlebar.layout.ending)
 
-    -- Ugly hack with spacer widget that fills the remaining space to make empty regions of titlebars intractable
+    -- Ugly hack with spacer widget that fills the remaining space to make empty regions of titlebars interactive
     local spacer = {
         buttons = buttons,
 
         widget = wibox.container.background,
     }
+
     -- Final widget
     return {
         {
             {
+                -- Ensure beginning section alignment and pad with interactive spacer
                 beginning_section,
                 spacer,
 
                 layout = wibox.layout.align[direction]
             },
-            center_section,
             {
+                -- Ensure center section alignment and pad with interactive spacer
                 spacer,
+                center_section,
+                spacer,
+
+                expand = wibox.layout.align.expand_modes.OUTSIDE,
+
+                layout = wibox.layout.align[direction]
+            },
+            {
+                -- Ensure ending section alignment and pad with interactive spacer
+                nil,
                 spacer,
                 ending_section,
-
-                expand = 'inside',
 
                 layout = wibox.layout.align[direction]
             },
 
-            expand = 'outside',
+            expand = wibox.layout.align.expand_modes.JUSTIFIED,
 
             layout = wibox.layout.align[direction]
         },

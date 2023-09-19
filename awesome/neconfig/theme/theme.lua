@@ -8,6 +8,7 @@ local gfs = require('gears.filesystem')
 local user_look_desktop = require('neconfig.user.look.user_look_desktop')
 local user_look_apps = require('neconfig.user.look.user_look_apps')
 local user_look_colors = require('neconfig.user.look.user_look_colors')
+local user_look_titlebar = require('neconfig.user.look.widgets.user_look_titlebar')
 local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
 
 -- Get variables
@@ -108,7 +109,7 @@ local rsvg = require('lgi').Rsvg
 local user_look_titlebar_widgets = require('neconfig.user.look.widgets.user_look_titlebar_widgets')
 local icon_scale = 0.5
 local titlebar_icon_path = config_path .. '/graphics/icons/titlebar/'
-local titlebar_button_size = 64
+local titlebar_button_size = user_look_titlebar.size * 2
 local function generate_titlebar_icon(icon_path, shape_props, size)
     -- Draw background
     local img = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
@@ -119,22 +120,28 @@ local function generate_titlebar_icon(icon_path, shape_props, size)
 
 
     -- Draw shape
-    local bw = shape_props.border_width
-    cr:translate(bw, bw)
-    shape_props.shape(cr, size - 2 * bw, size - 2 * bw)
-    -- Fill
-    cr:set_source(gears.color(shape_props.shape_bg))
-    cr:fill_preserve()
+    local bw = shape_props.border_width / 2
+    local sw = bw * 1.75
+    local mw = math.max(sw / 2, bw)
+    cr:translate(mw, mw)
+    shape_props.shape(cr, size - 2 * mw, size - 2 * mw)
+    -- Shadow
+    cr:set_line_width(sw)
+    cr:set_source(gears.color('#000000'))
+    cr:stroke_preserve()
     -- Border
     cr:set_line_width(bw)
     cr:set_source(gears.color(shape_props.border_color))
-    cr:stroke()
+    cr:stroke_preserve()
+    -- Fill
+    cr:set_source(gears.color(shape_props.shape_bg))
+    cr:fill_preserve()
 
     -- Draw icon
     local real_icon_size = size * icon_scale
     local _, icon_h = gears.surface.get_size(gears.surface.load(icon_path))
     local cr_scale = real_icon_size / icon_h
-    cr:translate(-bw, -bw)
+    cr:translate(-mw, -mw)
     cr:translate(
         (size - real_icon_size) / 2,
         (size - real_icon_size) / 2

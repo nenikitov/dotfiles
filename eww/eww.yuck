@@ -1,0 +1,70 @@
+(defwindow osd
+    :monitor 0
+    :geometry (geometry
+        :x "64px"
+        :y "64px"
+        :width "48px"
+        :height "192px"
+        :anchor "top right"
+    )
+    :stacking "fg"
+    :exclusive false
+    :focusable false
+    (wid :icon "/usr/share/icons/Fluent-dark/symbolic/status/audio-volume-medium-symbolic.svg")
+)
+
+;; (defvar icon_names "audio-volume-medium-symbolic firefox")
+;; (deflisten icon_paths "scripts/target/release/get-icon $(eww get icon_names)")
+
+(defwidget wid [icon]
+    (box
+        :orientation "v"
+        :space-evenly false
+        (box
+            :height 16
+        )
+        (label
+            :text "69"
+            :limit-width 3
+            :class "red"
+            :height 22
+        )
+        (overlay
+            :orientation "h"
+            :vexpand true
+            :space-evenly false
+            (scale
+                :value 69
+                :orientation "v"
+                :min 0
+                :max 100
+                :flipped true
+            )
+            (centerbox
+                (box)
+                (box
+                    :width 20
+                )
+                (box
+                    :vexpand true
+                    :orientation "v"
+                    (for _ in "[1, 2, 3, 4, 5, 6]"
+                        (label
+                            :text "-"
+                            :xalign 0
+                        )
+                    )
+                )
+            )
+        )
+        (image
+            :path icon
+            :height 22
+            :image-height 16
+        )
+        (box
+            :height 16
+        )
+    )
+)
+

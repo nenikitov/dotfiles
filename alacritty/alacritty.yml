@@ -4,11 +4,12 @@ window:
         columns: 120
         lines: 35
     padding:
-        x: 3
-        y: 3
-    opacity: 0.8
+        x: 6
+        y: 6
+    dynamic_padding: true
+    dynamic_title: true
 font:
-    size: 8.0
+    size: 12.0
 cursor:
     unfocused_hollow: true
     blink_interval: 750
@@ -23,8 +24,99 @@ selection:
 
 # Colors
 schemes:
-    # NeTheme
+    # Horizon
+    horizon: &horizon
+      primary:
+        background: '#1C1E26'
+        foreground: '#D5D8DA'
+      normal:
+        black:   '#2E303E'
+        red:     '#E95678'
+        green:   '#27D796'
+        yellow:  '#FAB795'
+        blue:    '#26BBD9'
+        magenta: '#B877DB'
+        cyan:    '#25B2BC'
+        white:   '#CCCCCC'
+      bright:
+        black:   '#767676'
+        red:     '#F09383'
+        green:   '#09F7A0'
+        yellow:  '#FAC29A'
+        blue:    '#3FC6DE'
+        magenta: '#F075B7'
+        cyan:    '#6BE6E6'
+        white:   '#F2F2F2'
+    chatgpt: &chatgpt
+        primary:
+            background: '#1C1C1C'
+            foreground: '#A2A2A2'
+        normal:
+            black:   '#2C2C2C'
+            red:     '#A8342D'
+            green:   '#5CA372'
+            yellow:  '#D2A164'
+            blue:    '#3C45A7'
+            magenta: '#8F61A3'
+            cyan:    '#2D8687'
+            white:   '#A2A2A2'
+        bright:
+            black:   '#5C5C5C'
+            red:     '#E57A7A'
+            green:   '#A2D19A'
+            yellow:  '#E2C38E'
+            blue:    '#7B8DEA'
+            magenta: '#BB84E4'
+            cyan:    '#53B2B8'
+            white:   '#EEEEEE'
+    # NeTheme - current
     netheme: &netheme
+        primary:
+            background: '#14161E'
+            foreground: '#B4BFC5'
+        normal:
+            black:   '#20232B'
+            red:     '#ED3A66'
+            green:   '#70B74B'
+            yellow:  '#F89861'
+            blue:    '#26B1E4'
+            magenta: '#B570EB'
+            cyan:    '#3CAEB2'
+            white:   '#A6ACB0'
+        bright:
+            black:   '#5F656F'
+            red:     '#F3848A'
+            green:   '#B9D583'
+            yellow:  '#F2CBA5'
+            blue:    '#AED1FC'
+            magenta: '#D39FED'
+            cyan:    '#89DACC'
+            white:   '#DDEBF2'
+    # NeTheme - old
+    netheme_old: &netheme_old
+        primary:
+            background: '#131211'
+            foreground: '#c8c8c8'
+        normal:
+            black:   '#262626'
+            red:     '#c93947'
+            green:   '#8bc43e'
+            yellow:  '#db9a44'
+            blue:    '#4a6bd1'
+            magenta: '#9f51bf'
+            cyan:    '#41bfb4'
+            white:   '#bebebe'
+        bright:
+            black:   '#5c5c5c'
+            red:     '#f57586'
+            green:   '#bfed81'
+            yellow:  '#f5cf7b'
+            blue:    '#86aeed'
+            magenta: '#dd9af4'
+            cyan:    '#9bf2eb'
+            white:   '#ffffff'
+    # NeTheme - older
+    netheme_older: &netheme_older
         primary:
             background: '#080808'
             foreground: '#CCCCCC'
@@ -46,8 +138,8 @@ schemes:
             magenta: '#D09CE3'
             cyan:    '#9FECE3'
             white:   '#FFFFFF'
-    # NeTheme
-    netheme_old: &netheme_old
+    # NeTheme - oldest
+    netheme_oldest: &netheme_oldest
         primary:
             background: '#080808'
             foreground: '#BFBFBF'
@@ -69,6 +161,52 @@ schemes:
             magenta: '#D573FF'
             cyan:    '#73F3FF'
             white:   '#FFFFFF'
+    # Vivid black bearded theme from VSCode
+    vivid_black: &vivid_black
+        primary:
+            background: '#141417'
+            foreground: '#eeeeee'
+        normal:
+            black:   '#242427'
+            red:     '#d62c2c'
+            green:   '#2c904d'
+            yellow:  '#ff7135'
+            blue:    '#238dd6'
+            magenta: '#a95eff'
+            cyan:    '#14b5a7'
+            white:   '#cbcbcb'
+        bright:
+            black:   '#666666'
+            red:     '#ff478d'
+            green:   '#42dd76'
+            yellow:  '#ffb638'
+            blue:    '#28a9ff'
+            magenta: '#e66dff'
+            cyan:    '#14e5d4'
+            white:   '#ffffff'
+    # VSCode default
+    vscode: &vscode
+        primary:
+            background: '#1e1e1e'
+            foreground: '#d4d4d4'
+        normal:
+            black:   '#404040'
+            red:     '#f44747'
+            green:   '#6a9955'
+            yellow:  '#ce9178'
+            blue:    '#569cd6'
+            magenta: '#b267e6'
+            cyan:    '#4ec9b0'
+            white:   '#a6a6a6'
+        bright:
+            black:   '#707070'
+            red:     '#d16969'
+            green:   '#b5cea8'
+            yellow:  '#dcdcaa'
+            blue:    '#4fc1ff'
+            magenta: '#c586c0'
+            cyan:    '#9cdcfe'
+            white:   '#ffffff'
     # Color schemes below are from https://github.com/alacritty/alacritty/wiki/Color-schemes
     # Argonaut
     argonaut: &argonaut

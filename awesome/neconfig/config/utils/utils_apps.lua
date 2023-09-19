@@ -40,7 +40,19 @@ function utils_apps.brightness_set(value)
 end
 
 function utils_apps.take_screenshot()
-    
+    awful.spawn.with_shell(user_apps.utilities.screenshot)
+end
+
+function utils_apps.media_toggle()
+    awful.spawn.with_shell(user_apps.utilities.media_toggle)
+end
+
+function utils_apps.media_next()
+    awful.spawn.with_shell(user_apps.utilities.media_next)
+end
+
+function utils_apps.media_previous()
+    awful.spawn.with_shell(user_apps.utilities.media_previous)
 end
 
 return utils_apps

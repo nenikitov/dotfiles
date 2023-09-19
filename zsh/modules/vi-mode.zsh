@@ -1,8 +1,8 @@
-# Basic vi mode
-bindkey -v
-export KEYTIMEOUT=1
+# Disable vim mode
+set -o emacs
 
-# Cursor
+# Edit in default editor
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
+

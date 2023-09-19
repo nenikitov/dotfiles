@@ -1,0 +1,5 @@
+plugins = [
+    "Duckonaut/split-monitor-workspaces",
+    "VortexCoyote/hyprfocus",
+    # hyprgrass ???
+]

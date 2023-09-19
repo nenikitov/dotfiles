@@ -7,7 +7,6 @@ local user_apps = require('neconfig.user.config.user_apps')
 local utils_apps = require('neconfig.config.utils.utils_apps')
 local user_menu = require('neconfig.user.config.widgets.user_menu')
 local user_desktop = require('neconfig.user.config.user_desktop')
-local user_titlebar= require('neconfig.user.config.widgets.user_titlebar')
 
 -- Get variables
 local tag_num = #(user_desktop.tag_names)
@@ -17,12 +16,6 @@ local more_key = user_interactions.keys.more_key
 local less_key = user_interactions.keys.less_key
 local resize_master_val = user_interactions.keyboard_client_movement.master
 
-
--- Other variables
-DECORATION_VISIBILITY = {
-    titlebars = user_titlebar.visible,
-    statusbars = true
-}
 
 
 -- █▀▀ █   █▀█ █▄▄ ▄▀█ █     █▀▄▀█ █▀█ █ █ █▀ █▀▀   █▄▄ █ █▄ █ █▀▄ █▀
@@ -159,13 +152,21 @@ local global_keys = {
     awful.key(
         { super_key, more_key }, 'i',
         function()
-            DECORATION_VISIBILITY.titlebars = not DECORATION_VISIBILITY.titlebars
+            GLOBALS.decoration_visibility.titlebars = not GLOBALS.decoration_visibility.titlebars
 
             for _, c in ipairs(client.get()) do
                 c:emit_signal('titlebar::update_visibility')
             end
         end,
         { description = 'toggle titlebars', group = 'client - display' }
+    ),
+    -- Screenshot on "SUPER" + "MORE" + S
+    awful.key(
+        { super_key, more_key }, 's',
+        function()
+            utils_apps.take_screenshot()
+        end,
+        { description = 'screenshot', group = 'utilities' }
     ),
     --#endregion
 
@@ -406,6 +407,38 @@ local global_keys = {
         { description = 'restore previous tag', group = 'tag - display' }
     ),
     -- All other tag related keys will be added later
+
+    --#endregion
+
+    --#region Audio
+
+    -- Toggle media on MEDIA PLAY/PAUSE
+    awful.key(
+        { }, 'XF86AudioPlay',
+        function()
+            utils_apps.media_toggle()
+        end,
+        { description = 'play / pause media', group = 'utilities - media' }
+    ),
+
+    -- Next media on MEDIA NEXT
+    awful.key(
+        { }, 'XF86AudioNext',
+        function()
+            utils_apps.media_next()
+        end,
+        { description = 'next media', group = 'utilities - media' }
+    ),
+
+    -- Previous media on MEDIA PREVIOUS
+    awful.key(
+        { }, 'XF86AudioPrev',
+        function()
+            utils_apps.media_previous()
+        end,
+        { description = 'previous media', group = 'utilities - media' }
+    ),
+
     --#endregion
 }
 -- Add all other tag related keys

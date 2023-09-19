@@ -50,13 +50,13 @@ client.connect_signal(
 client.connect_signal(
     'titlebar::update_color',
     function(c)
-        if not (c.has_titlebar and DECORATION_VISIBILITY.titlebars) then return end
+        if not (c.has_titlebar and GLOBALS.decoration_visibility.titlebars) then return end
 
         -- Get color from user colors
         local all_colors = {
             normal = user_look_titlebar.colors.normal,
-            focus  = user_look_titlebar.colors.focus or user_look_titlebar.bar.colors.normal,
-            urgent = user_look_titlebar.colors.urgent or user_look_titlebar.bar.colors.normal
+            focus  = user_look_titlebar.colors.focus or user_look_titlebar.colors.normal,
+            urgent = user_look_titlebar.colors.urgent or user_look_titlebar.colors.normal
         }
 
         -- Calculate state of the current client
@@ -151,7 +151,7 @@ client.connect_signal(
 client.connect_signal(
     'titlebar::update_visibility',
     function(c)
-        if c.has_titlebar and DECORATION_VISIBILITY.titlebars then
+        if c.has_titlebar and GLOBALS.decoration_visibility.titlebars then
             awful.titlebar.show(c, user_titlebar.position)
             c:emit_signal('titlebar::update_color')
         else

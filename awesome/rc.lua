@@ -13,6 +13,10 @@ local user_apps = require('neconfig.user.config.user_apps')
 require('neconfig.config.main.main_error_handling')
 
 
+-- Globals
+require('neconfig.config.main.main_globals')
+
+
 -- TODO implement if statement to enable / disable from config
 require('awful.autofocus')
 

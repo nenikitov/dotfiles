@@ -6,11 +6,18 @@
 # Git ignore
 !/.gitignore
 # Configuration files
+!/ags
 !/alacritty
 !/awesome
+!/eww
 !/flameshot
+!/fontconfig
 !/gammyconf
+!/gammastep
+!/htop
+!/hypr
 !/neofetch
+!/nvim
 !/picom
 !/rofi
 !/touchegg
@@ -20,3 +27,5 @@
 # Blacklist files
 /zsh/.zcompdump
 *.lock
+/**/.vscode/
+/**/__pycache__/

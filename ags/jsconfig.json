@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json.schemastore.org/jsconfig",
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": [
+      "ES2022"
+    ],
+    "checkJs": true,
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false
+  }
+}

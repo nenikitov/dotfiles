@@ -7,8 +7,8 @@
    viewBox="0 0 6.3500002 6.3500002"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="titlebar_floating_inactive.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   sodipodi:docname="floating_inactive.svg"
    inkscape:export-filename="/home/nenikitov/.config/awesome/neconfig/graphics/icons/maximize_inactive.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -29,8 +29,8 @@
      units="px"
      width="44px"
      inkscape:zoom="23.157468"
-     inkscape:cx="10.039958"
-     inkscape:cy="15.20028"
+     inkscape:cx="9.6297229"
+     inkscape:cy="15.178689"
      inkscape:window-width="1904"
      inkscape:window-height="1018"
      inkscape:window-x="6"
@@ -91,15 +91,7 @@
        id="path10115" />
     <path
        style="fill:none;stroke:#ffffff;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 3.175,3.1750001 c -2.91041663,0 -2.91041663,0 -2.91041663,0 v 0"
-       id="path10115-7" />
-    <path
-       style="fill:none;stroke:#ffffff;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 6.0854168,2.1166667 c -2.9104167,0 -2.9104167,0 -2.9104167,0 v 0"
-       id="path10115-7-5" />
-    <path
-       style="fill:none;stroke:#ffffff;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 6.0854168,4.2333335 c -2.9104167,0 -2.9104167,0 -2.9104167,0 v 0"
+       d="m 6.0854169,3.175 c -2.9104167,0 -2.9104167,0 -2.9104167,0 v 0"
        id="path10115-7-5-9" />
   </g>
 </svg>
