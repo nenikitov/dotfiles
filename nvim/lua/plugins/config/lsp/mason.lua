@@ -6,7 +6,10 @@ return {
     dependencies = {
         'williamboman/mason-lspconfig.nvim',
     },
-    config = true,
+    config = function (_, opts)
+        require('mason').setup(opts)
+        keymaps.mason_open()
+    end,
     opts = function()
         return {
             ui = {

@@ -36,6 +36,7 @@ return {
 
         -- Keymaps
         keymaps.diagnostics()
+        keymaps.lsp_open()
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('UserLspConfig', {}),
             callback = function(environment)
@@ -64,6 +65,9 @@ return {
             },
             signs = false,
         }
+
+        -- Borders
+        require('lspconfig.ui.windows').default_options.border = icons.border
 
         -- Signs
         for type, icon in pairs {

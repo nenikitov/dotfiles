@@ -168,6 +168,10 @@ function M.telescope_navigation()
     }
 end
 
+function M.mason_open()
+    map('n', '<LEADER>pm', '<CMD>Mason<CR>', 'Open LSP install manager')
+end
+
 function M.mason_navigation()
     return {
         toggle_package_expand = 'l',
@@ -225,8 +229,9 @@ end
 function M.diagnostics()
     local telescope = require('telescope.builtin')
 
+    map('n', '<LEADER>te', telescope.diagnostics, 'Show all diagnostics')
+
     map('n', '<LEADER>eo', vim.diagnostic.open_float, 'Show diagnostic under cursor')
-    map('n', '<LEADER>el', telescope.diagnostics, 'Show all diagnostics')
     map('n',
         '[e',
         function()
@@ -244,14 +249,19 @@ function M.diagnostics()
     )
 end
 
+function M.lsp_open()
+    map('n', '<LEADER>pl', '<CMD>LspInfo<CR>', 'Open LSP info')
+end
+
 function M.lsp(buf)
     local telescope = require('telescope.builtin')
     local opts = { buffer = buf }
 
+    map('n', '<LEADER>ts', telescope.lsp_document_symbols, 'Show document symbols', opts)
+
     map('n', '<LEADER>sr', telescope.lsp_references, 'Show references', opts)
     map('n', '<LEADER>sd', telescope.lsp_definitions, 'Show definitions', opts)
     map('n', '<LEADER>si', telescope.lsp_implementations, 'Show implementations', opts)
-    map('n', '<LEADER>sl', telescope.lsp_document_symbols, 'Show document symbols', opts)
     map('n', '<LEADER>so', vim.lsp.buf.hover, 'Show hover', opts)
     map('n', '<LEADER>ss', vim.lsp.buf.signature_help, 'Show signature', opts)
 
@@ -259,6 +269,8 @@ function M.lsp(buf)
 
     map('n', '<LEADER>rr', vim.lsp.buf.rename, 'Rename', opts)
     map('n', '<LEADER>rf', function() vim.lsp.buf.format { async = true } end, 'Rename', opts)
+
+    map('n', '<LEADER>lr', '<CMD>LspRestart<ENTER>', 'Restart', opts)
 end
 
 return M
