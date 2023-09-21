@@ -1,5 +1,14 @@
 # TODO
 
+```sh
+if [[ ]]; then
+    shell
+    if [[ ]]; then
+        shell
+    fi
+fi
+```
+
 - LSP
     - [ ] Install and configure more servers
     - [ ] Show signature on typing inside a function

@@ -14,7 +14,8 @@ M.fill_chars = {
     fold      = ' ',
     foldsep   = ' ',
     foldopen  = tty.choose('', 'v'),
-    foldclose = tty.choose('', '>')
+    foldclose = tty.choose('', '>'),
+    eob       = '`'
 }
 
 M.border = tty.choose(

@@ -45,6 +45,7 @@ o.scrolloff = 4                            -- Keep lines above/below of the curs
 o.sidescrolloff = 8                        -- Keep characters left/right of the cursor
 o.list = true                              -- Show special characters
 o.listchars = icons.list_chars             -- How special characters are displayed
+o.fillchars = icons.fill_chars             -- How status and other line characters are displayed
 
 o.cursorline = true                        -- Highlight current line
 o.showmode = false                         -- Hide mode from command line
@@ -55,6 +56,12 @@ o.expandtab = true                         -- Convert <TAB> to <SPACE>s automati
 o.shiftwidth = 4                           -- Set the size of indentation
 o.tabstop = 4                              -- Set the size of <TAB>
 o.smartindent = true                       -- Indent automatically
+
+-- Folding
+o.foldcolumn = '1'                         -- Show fold column
+o.foldlevel = 99                           -- Deepest folds
+o.foldlevelstart = -1                      -- Don't fold by default
+o.foldenable = true                        -- Enable folding
 
 -- Typing
 o.backspace = {                            -- Configure what can be erased with <BACKSPACE>

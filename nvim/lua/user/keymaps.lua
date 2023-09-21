@@ -64,6 +64,9 @@ function M.general()
     map('x', '<', '<gv', 'Unindent without exiting visual')
     map('x', '>', '>gv', 'Indent without exiting visual')
 
+    -- Move lines
+    map('x', 'J', ":m '>+1<ENTER>gv=gv", "Move lines to bottom")
+    map('x', 'K', ":m '<-2<ENTER>gv=gv", "Move lines to top")
 
     -- Yank in visual without moving
     map('x', 'y', 'ygv<ESC>', 'Yank without moving')
@@ -75,12 +78,10 @@ function M.general()
     map('', 'H', '^', 'To first non-blank character of the line')
     map('', 'L', '$', 'To the end of the line')
 
-    -- Clear search
+    -- Search
     map('', '<A-/>', function() vim.fn.setreg('/', '') end, 'Clear search')
-
-    -- Remove whole words in insert mode
-    map('i', '<C-BS>', '<C-w>', 'Remove word to the left')
-    map('i', '<A-BS>', '<C-u>', 'Remove all to the left')
+    map('n', 'n', 'nzzzv', 'Go to next search and put cursor in the middle')
+    map('n', 'N', 'Nzzzv', 'Go to next search and put cursor in the middle')
 
     -- Redo
     map('n', 'U', '<C-r>', 'Redo')
@@ -271,6 +272,11 @@ function M.lsp(buf)
     map('n', '<LEADER>rf', function() vim.lsp.buf.format { async = true } end, 'Rename', opts)
 
     map('n', '<LEADER>lr', '<CMD>LspRestart<ENTER>', 'Restart', opts)
+end
+
+function M.treesitter()
+    map('n', '<LEADER>hi', vim.show_pos, 'Show highlight')
+    map('n', '<LEADER>hl', vim.treesitter.inspect_tree, 'Show highlight tree')
 end
 
 return M
