@@ -49,10 +49,10 @@ function M.general()
     map('', '<LEADER>bw', '<CMD>write<RETURN>', 'Write buffer')
 
     -- Go to
-    map({'', 't'}, '<C-h>', '<CMD>wincmd h<RETURN>', 'Go to split on left')
-    map({'', 't'}, '<C-j>', '<CMD>wincmd j<RETURN>', 'Go to split on bottom')
-    map({'', 't'}, '<C-k>', '<CMD>wincmd k<RETURN>', 'Go to split on top')
-    map({'', 't'}, '<C-l>', '<CMD>wincmd l<RETURN>', 'Go to split on right')
+    map({ '', 't' }, '<C-h>', '<CMD>wincmd h<RETURN>', 'Go to split on left')
+    map({ '', 't' }, '<C-j>', '<CMD>wincmd j<RETURN>', 'Go to split on bottom')
+    map({ '', 't' }, '<C-k>', '<CMD>wincmd k<RETURN>', 'Go to split on top')
+    map({ '', 't' }, '<C-l>', '<CMD>wincmd l<RETURN>', 'Go to split on right')
 
     -- Resize
     map('', '<A-h>', "<CMD>vertical resize -2<RETURN>")
@@ -204,6 +204,8 @@ function M.completion()
         ['<C-l>'] = map_cmp(function(fallback)
             if cmp.visible() then
                 cmp.confirm()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
             else
                 fallback()
             end
@@ -211,6 +213,8 @@ function M.completion()
         ['<C-h>'] = map_cmp(function(fallback)
             if cmp.visible() then
                 cmp.abort()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
             else
                 fallback()
             end
@@ -219,6 +223,42 @@ function M.completion()
 end
 
 function M.diagnostics()
+    local telescope = require('telescope.builtin')
+
+    map('n', '<LEADER>eo', vim.diagnostic.open_float, 'Show diagnostic under cursor')
+    map('n', '<LEADER>el', telescope.diagnostics, 'Show all diagnostics')
+    map('n',
+        '[e',
+        function()
+            vim.diagnostic.goto_prev({ float = false })
+        end,
+        'To previous diagnostic'
+    )
+    map(
+        'n',
+        ']e',
+        function()
+            vim.diagnostic.goto_next({ float = false })
+        end,
+        'To next diagnostic'
+    )
+end
+
+function M.lsp(buf)
+    local telescope = require('telescope.builtin')
+    local opts = { buffer = buf }
+
+    map('n', '<LEADER>sr', telescope.lsp_references, 'Show references', opts)
+    map('n', '<LEADER>sd', telescope.lsp_definitions, 'Show definitions', opts)
+    map('n', '<LEADER>si', telescope.lsp_implementations, 'Show implementations', opts)
+    map('n', '<LEADER>sl', telescope.lsp_document_symbols, 'Show document symbols', opts)
+    map('n', '<LEADER>so', vim.lsp.buf.hover, 'Show hover', opts)
+    map('n', '<LEADER>ss', vim.lsp.buf.signature_help, 'Show signature', opts)
+
+    map('n', '<LEADER>ea', vim.lsp.buf.code_action, 'Automatic fix', opts)
+
+    map('n', '<LEADER>rr', vim.lsp.buf.rename, 'Rename', opts)
+    map('n', '<LEADER>rf', function() vim.lsp.buf.format { async = true } end, 'Rename', opts)
 end
 
 return M

@@ -22,21 +22,19 @@ M.border = tty.choose(
     { '┌', '─', '┐', '│', '┘', '─', '└', '│' }
 )
 
-M.virtual_text_prefix = '■'
-
 M.diagnostics = {
-    error   = tty.choose('', 'E'), -- 
-    warning = tty.choose('', 'W'), -- 
-    hint    = tty.choose('󰛨', 'H'), -- 󰛩  
-    info    = tty.choose('', 'I'), -- 
+    error   = tty.choose('', 'E'), --  
+    warning = tty.choose('', 'W'), --  
+    hint    = tty.choose('󰛩', 'H'), -- 󰛨 󰛩  
+    info    = tty.choose('', 'I'), --  
 }
 
 M.notify = {
-    error  = M.diagnostics.error,
-    warn   = M.diagnostics.warning,
-    info   = M.diagnostics.info,
-    debug  = tty.choose('', 'D'), -- 
-    trace  = tty.choose('󰙏', 'T'), -- 
+    error = M.diagnostics.error,
+    warn  = M.diagnostics.warning,
+    info  = M.diagnostics.info,
+    debug = tty.choose('', 'D'), --  
+    trace = tty.choose('', 'T'), -- 󰙏 
 }
 
 M.gitsigns = {
@@ -142,15 +140,15 @@ M.buffer_line = {
 }
 
 M.cmd_line = {
-    cmdline     = tty.choose(' ',  '>_'),
+    cmdline     = tty.choose(' ', '>_'),
     search_down = tty.choose(' ', '/↓'),
     search_up   = tty.choose(' ', '/↑'),
-    filter      = tty.choose(' ',  '[→'),
-    lua         = tty.choose('󰢱 ',  'lua'),
-    help        = tty.choose(' ',  '[|]'),
-    rename      = tty.choose('󰙏 ',  '←┘'),
-    calculator  = tty.choose(' ',  '='),
-    bash        = tty.choose(' ',  '#!'),
+    filter      = tty.choose(' ', '[→'),
+    lua         = tty.choose('󰢱 ', 'lua'),
+    help        = tty.choose(' ', '[|]'),
+    rename      = tty.choose('󰙏 ', '←┘'),
+    calculator  = tty.choose(' ', '='),
+    bash        = tty.choose(' ', '#!'),
 }
 
 M.lazy = {
