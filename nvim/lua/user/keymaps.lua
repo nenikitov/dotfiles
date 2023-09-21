@@ -168,4 +168,57 @@ function M.telescope_navigation()
     }
 end
 
+function M.mason_navigation()
+    return {
+        toggle_package_expand = 'l',
+        install_package = 'i',
+        update_package = 'u',
+        check_package_version = 'c',
+        uninstall_package = 'd',
+        update_all_packages = 'U',
+        check_outdated_packages = 'C',
+        cancel_installation = '<C-c>',
+        apply_language_filter = 'f',
+        toggle_package_install_log = 'l',
+        toggle_help = '?',
+    }
+end
+
+function M.completion()
+    local cmp = require('cmp')
+    local luasnip = require('luasnip')
+
+    local mapping = cmp.mapping
+
+    local function map_cmp(callback)
+        return mapping(callback, { 'i', 'c' })
+    end
+
+    return {
+        ['<C-y>'] = map_cmp(mapping.scroll_docs(1)),
+        ['<C-e>'] = map_cmp(mapping.scroll_docs(-1)),
+        ['<C-j>'] = map_cmp(mapping.select_next_item()),
+        ['<C-k>'] = map_cmp(mapping.select_prev_item()),
+        ['<C-SPACE>'] = map_cmp(mapping.complete()),
+        ['<C-q>'] = map_cmp(mapping.abort()),
+        ['<C-l>'] = map_cmp(function(fallback)
+            if cmp.visible() then
+                cmp.confirm()
+            else
+                fallback()
+            end
+        end),
+        ['<C-h>'] = map_cmp(function(fallback)
+            if cmp.visible() then
+                cmp.abort()
+            else
+                fallback()
+            end
+        end),
+    }
+end
+
+function M.diagnostics()
+end
+
 return M

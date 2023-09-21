@@ -172,6 +172,12 @@ M.lazy = {
     list       = '-',
 }
 
+M.mason = {
+    package_installed = M.lazy.loaded,
+    package_pending = M.lazy.task,
+    package_uninstalled = M.lazy.not_loaded,
+}
+
 M.telescope = tty.choose(' ', '>')
 
 
