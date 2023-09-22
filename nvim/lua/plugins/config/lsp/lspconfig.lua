@@ -1,6 +1,5 @@
 local keymaps = require('user.keymaps')
 local icons = require('user.icons')
-local languages = require('languages.lsp')
 
 return {
     'neovim/nvim-lspconfig',
@@ -8,10 +7,13 @@ return {
         'williamboman/mason-lspconfig.nvim',
         'hrsh7th/cmp-nvim-lsp',
         'folke/neodev.nvim',
+        'b0o/schemastore.nvim'
     },
     config = function()
         local mason_lspconfig = require('mason-lspconfig')
         local lspconfig = require('lspconfig')
+
+        local languages = require('languages.lsp')()
 
         require('neodev').setup()
 
