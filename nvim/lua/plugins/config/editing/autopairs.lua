@@ -1,5 +1,3 @@
-local keymaps = require('user.keymaps')
-
 return {
     'windwp/nvim-autopairs',
     dependencies = {
@@ -9,6 +7,7 @@ return {
         local autopairs = require('nvim-autopairs')
         local Rule = require('nvim-autopairs.rule')
         local cond = require('nvim-autopairs.conds')
+        local ts_cond = require('nvim-autopairs.ts-conds')
 
         autopairs.setup(opts)
 
@@ -17,10 +16,16 @@ return {
             require('nvim-autopairs.completion.cmp').on_confirm_done()
         )
 
-        autopairs.add_rule(
+        autopairs.add_rules {
             Rule('$', '$', { 'tex', 'latex', 'markdown' })
-            :with_pair(cond.not_before_regex('[^%s%$]'))
-        )
+                :with_pair(ts_cond.is_not_ts_node({ "inline_formula" }))
+                :with_pair(cond.not_before_regex('[^%s%$]')),
+            Rule('<', '>')
+                :with_pair(cond.before_regex('%a+'))
+                :with_move(cond.after_text('>')),
+            Rule('|', '|', { 'rust' })
+                :with_move(cond.after_text('|')),
+        }
     end,
     opts = function()
         return {

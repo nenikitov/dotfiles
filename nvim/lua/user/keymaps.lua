@@ -292,4 +292,22 @@ function M.gitsigns(buf)
     map('n', ']g', gitsigns.next_hunk, 'Next hunk', opts)
 end
 
+function M.comment()
+    return {
+        toggler = {
+            line = '<LEADER>/',
+            block = '<LEADER>?',
+        },
+        opleader = {
+            line = '<LEADER>cc',
+            block = '<LEADER>cb',
+        },
+        extra = {
+            above = '<LEADER>cO',
+            below = '<LEADER>co',
+            eol = '<LEADER>cA',
+        },
+    }
+end
+
 return M
