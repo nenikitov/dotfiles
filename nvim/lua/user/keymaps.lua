@@ -252,6 +252,7 @@ end
 
 function M.lsp_open()
     map('n', '<LEADER>pl', '<CMD>LspInfo<CR>', 'Open LSP info')
+    map('n', '<LEADER>pL', '<CMD>LspLog<CR>', 'Open LSP log')
 end
 
 function M.lsp(buf)
@@ -267,6 +268,7 @@ function M.lsp(buf)
     map('n', '<LEADER>ss', vim.lsp.buf.signature_help, 'Show signature', opts)
 
     map('n', '<LEADER>ea', vim.lsp.buf.code_action, 'Automatic fix', opts)
+    map('n', '<LEADER>ec', vim.lsp.codelens.run, 'Codelens', opts)
 
     map('n', '<LEADER>rr', vim.lsp.buf.rename, 'Rename', opts)
     map('n', '<LEADER>rf', function() vim.lsp.buf.format { async = true } end, 'Rename', opts)
@@ -277,6 +279,17 @@ end
 function M.treesitter()
     map('n', '<LEADER>hi', vim.show_pos, 'Show highlight')
     map('n', '<LEADER>hl', vim.treesitter.inspect_tree, 'Show highlight tree')
+end
+
+function M.gitsigns(buf)
+    local gitsigns = require('gitsigns')
+    local opts = { buffer = buf }
+
+    map('n', '<LEADER>gd', gitsigns.preview_hunk, 'Preview the differences in the current hunk', opts)
+    map('n', '<LEADER>gb', gitsigns.blame_line, 'Blame current line', opts)
+    map('n', '<LEADER>gr', gitsigns.reset_hunk, 'Reset current hunk', opts)
+    map('n', '[g', gitsigns.prev_hunk, 'Previous hunk', opts)
+    map('n', ']g', gitsigns.next_hunk, 'Next hunk', opts)
 end
 
 return M

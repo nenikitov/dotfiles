@@ -13,8 +13,8 @@ M.list_chars = {
 M.fill_chars = {
     fold      = ' ',
     foldsep   = ' ',
-    foldopen  = tty.choose('', 'v'),
-    foldclose = tty.choose('', '>'),
+    foldopen  = tty.choose('', 'v'),
+    foldclose = tty.choose('', '>'),
     eob       = '`'
 }
 
@@ -41,9 +41,9 @@ M.notify = {
 M.gitsigns = {
     add          = tty.choose('┃', '│'),
     change       = tty.choose('┃', '│'),
-    delete       = '▶',
-    topdelete    = '▲',
-    changedelete = '▼',
+    delete       = tty.choose('', '▶'),
+    topdelete    = tty.choose('', '▲'),
+    changedelete = tty.choose('', '▼'),
     untracked    = tty.choose('┋', '║'),
 }
 

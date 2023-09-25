@@ -67,9 +67,18 @@ return {
             float = {
                 border = icons.border,
                 header = '',
-                source = true
+                source = 'if_many',
+                prefix = function(diagnostic)
+                    return ({
+                        [vim.diagnostic.severity.ERROR] = icons.diagnostics.error,
+                        [vim.diagnostic.severity.WARN] = icons.diagnostics.warning,
+                        [vim.diagnostic.severity.HINT] = icons.diagnostics.hint,
+                        [vim.diagnostic.severity.INFO] = icons.diagnostics.info,
+                    })[diagnostic.severity] .. '  '
+                end
             },
-            signs = false,
+            --signs = false,
+            signs = true,
         }
 
         -- Borders
@@ -85,27 +94,5 @@ return {
             local sign = 'DiagnosticSign' .. type
             vim.fn.sign_define(sign, { text = icon, texthl = sign, numhl = sign })
         end
-
-        -- Only one sign in sign column
-        local ns = vim.api.nvim_create_namespace('diagnostic_signs')
-        local orig_signs_handler = vim.diagnostic.handlers.signs
-        vim.diagnostic.handlers.signs = {
-            show = function(_, bufnr, _, opts)
-                local all_diagnostics = vim.diagnostic.get(bufnr)
-                -- Get worst diagnostics
-                local max_severity_per_line = {}
-                for _, d in pairs(all_diagnostics) do
-                    local m = max_severity_per_line[d.lnum]
-                    if not m or d.severity < m.severity then
-                        max_severity_per_line[d.lnum] = d
-                    end
-                end
-                local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
-                orig_signs_handler.show(ns, bufnr, filtered_diagnostics, opts)
-            end,
-            hide = function(_, bufnr)
-                orig_signs_handler.hide(ns, bufnr)
-            end,
-        }
     end
 }
