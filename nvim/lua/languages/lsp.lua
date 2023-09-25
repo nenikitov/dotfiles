@@ -24,7 +24,13 @@ return function()
         },
         tsserver = {},
         pylsp = {},
-        rust_analyzer = {},
+        rust_analyzer = {
+            ['rust-analyzer'] = {
+                cargo = {
+                    allFeatures = true
+                }
+            }
+        },
         taplo = {},
         yamlls = {
             yaml = {

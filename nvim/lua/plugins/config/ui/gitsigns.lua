@@ -3,7 +3,6 @@ local icons = require('user.icons')
 
 return {
     'lewis6991/gitsigns.nvim',
-    config = true,
     opts = function()
         return {
             signs = vim.tbl_map(

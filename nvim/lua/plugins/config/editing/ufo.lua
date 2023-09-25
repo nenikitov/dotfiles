@@ -6,7 +6,6 @@ return {
         'kevinhwang91/promise-async',
         'nvim-treesitter/nvim-treesitter'
     },
-    config = true,
     opts = function()
         local promise = require('promise')
         local ufo = require('ufo')

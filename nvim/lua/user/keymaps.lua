@@ -142,7 +142,7 @@ function M.telescope_navigation()
                 vim.api.nvim_input('<ESC>vbdi')
             end,
             ['<C-u>'] = function()
-                vim.api.nvim_input('<ESC>v^di')
+                vim.api.nvim_input('<ESC>v^3ldi')
             end,
             ['<C-/>'] = actions.which_key,
             ['<C-_>'] = actions.which_key,
