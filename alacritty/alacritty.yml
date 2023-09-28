@@ -72,25 +72,25 @@ schemes:
     # NeTheme - current
     netheme: &netheme
         primary:
-            background: '#14161E'
-            foreground: '#B4BFC5'
+            background: '#1A1C22'
+            foreground: '#B7C2C8'
         normal:
-            black:   '#20232B'
-            red:     '#ED3A66'
-            green:   '#70B74B'
-            yellow:  '#F89861'
-            blue:    '#26B1E4'
-            magenta: '#B570EB'
-            cyan:    '#3CAEB2'
-            white:   '#A6ACB0'
+            black:   '#20232A'
+            red:     '#D9526B'
+            green:   '#7CB854'
+            yellow:  '#F7A074'
+            blue:    '#3D90E3'
+            magenta: '#C388EB'
+            cyan:    '#52AEBA'
+            white:   '#959A9E'
         bright:
-            black:   '#5F656F'
-            red:     '#F3848A'
-            green:   '#B9D583'
-            yellow:  '#F2CBA5'
-            blue:    '#AED1FC'
-            magenta: '#D39FED'
-            cyan:    '#89DACC'
+            black:   '#5F6774'
+            red:     '#F8929D'
+            green:   '#BCDE79'
+            yellow:  '#F9C097'
+            blue:    '#85BDF6'
+            magenta: '#DDADF5'
+            cyan:    '#95E4DD'
             white:   '#DDEBF2'
     # NeTheme - old
     netheme_old: &netheme_old
