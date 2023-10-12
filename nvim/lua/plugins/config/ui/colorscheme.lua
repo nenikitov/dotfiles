@@ -18,5 +18,11 @@ return {
     colorscheme_loader(),
     colorscheme {
         'akinsho/horizon.nvim'
+    },
+    colorscheme {
+        dir = '~/SharedFiles/Projects/nvim/termcolors.nvim/',
+        dependencies = {
+            'nenikitov/highlight-builder.nvim'
+        }
     }
 }

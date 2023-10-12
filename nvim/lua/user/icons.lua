@@ -28,6 +28,7 @@ M.diagnostics = {
     warning = tty.choose('', 'W'), --  
     hint    = tty.choose('󰛩', 'H'), -- 󰛨 󰛩  
     info    = tty.choose('', 'I'), --  
+    -- TODO(Add ok diagnostics)
 }
 
 M.notify = {
@@ -179,5 +180,9 @@ M.mason = {
 
 M.telescope = tty.choose(' ', '>')
 
+M.indent = {
+    char     = tty.choose('│', '│'),
+    tab_char = tty.choose('┆', '║')
+}
 
 return M

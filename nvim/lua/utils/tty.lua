@@ -1,5 +1,6 @@
 local M = {}
 
+-- jfldsjfldj
 local term = os.getenv('TERM')
 
 function M.is_gui()

@@ -49,7 +49,7 @@ o.fillchars = icons.fill_chars             -- How status and other line characte
 
 o.cursorline = true                        -- Highlight current line
 o.showmode = false                         -- Hide mode from command line
-o.termguicolors = tty.choose(true, false)  -- Use full color
+--o.termguicolors = tty.choose(true, false)  -- Use full color
 
 -- Indentation
 o.expandtab = true                         -- Convert <TAB> to <SPACE>s automatically
@@ -62,6 +62,8 @@ o.foldcolumn = '1'                         -- Show fold column
 o.foldlevel = 99                           -- Deepest folds
 o.foldlevelstart = -1                      -- Don't fold by default
 o.foldenable = true                        -- Enable folding
+o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+o.foldtext = 'v:lua.vim.treesitter.foldext()'
 
 -- Typing
 o.backspace = {                            -- Configure what can be erased with <BACKSPACE>
