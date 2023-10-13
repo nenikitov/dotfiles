@@ -6,13 +6,13 @@ return {
     },
     config = function(_, opts)
         require('nvim-treesitter.configs').setup {
-            highlight = opts
+            highlight = opts,
         }
     end,
     opts = function()
         return {
             enable = true,
-            additional_vim_regex_highlighting = false
+            additional_vim_regex_highlighting = false,
         }
-    end
+    end,
 }

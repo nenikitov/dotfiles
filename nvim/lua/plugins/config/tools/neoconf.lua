@@ -1,4 +1,5 @@
 return {
     'folke/neoconf.nvim',
-    config = true
+    config = true,
+    enabled = false
 }

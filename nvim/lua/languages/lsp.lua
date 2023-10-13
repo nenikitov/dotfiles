@@ -4,14 +4,6 @@ return function()
     local schemastore = require('schemastore')
 
     return {
-        lua_ls = {
-            Lua = {
-                workspace = { checkThirdParty = false },
-                telemetry = { enable = false },
-            }
-        },
-        bashls = {},
-        clangd = {},
         cssls = {},
         cssmodules_ls = {},
         eslint = {},

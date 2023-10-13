@@ -1,12 +1,6 @@
 return function()
     return {
-        install = {
-            'stylua',
-            'prettierd',
-        },
         filetypes = {
-            ['*'] = { 'trim_newlines', 'trim_whitespace' },
-            lua = { 'stylua' },
             javascript = { 'prettier' },
             javascriptreact = { 'prettier' },
             typescript = { 'prettier' },
@@ -17,7 +11,6 @@ return function()
             json = { 'prettier' },
             jsonc = { 'prettier' },
             yaml = { 'prettier' },
-            markdown = { 'prettier', 'injected' },
         },
     }
 end

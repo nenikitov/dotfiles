@@ -5,7 +5,7 @@ local cmd = vim.cmd
 
 local M = {}
 
-M.colorscheme = tty.choose('termcolors', 'termcolors')
+M.colorscheme = tty.choose('horizon', 'slate')
 M.colorscheme_fallback = 'slate'
 
 function M.apply()

@@ -5,12 +5,13 @@ return {
     },
     config = function(_, opts)
         require('nvim-treesitter.configs').setup {
-            endwise = opts
+            endwise = opts,
         }
     end,
     opts = function()
         return {
-            enable = true
+            enable = true,
         }
-    end
+    end,
+    enabled = false
 }
