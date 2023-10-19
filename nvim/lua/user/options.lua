@@ -7,6 +7,7 @@ local o = vim.opt
 o.swapfile = false                         -- Do not create swap file for buffers
 o.clipboard = 'unnamedplus'                -- Use system clipboard
 o.undofile = true
+o.autoread = true
 
 -- Input
 o.timeoutlen = 500                         -- Wait for a mapped sequence to complete
@@ -49,7 +50,7 @@ o.fillchars = icons.fill_chars             -- How status and other line characte
 
 o.cursorline = true                        -- Highlight current line
 o.showmode = false                         -- Hide mode from command line
---o.termguicolors = tty.choose(true, false)  -- Use full color
+o.termguicolors = tty.choose(true, false)  -- Use full color
 
 -- Indentation
 o.expandtab = true                         -- Convert <TAB> to <SPACE>s automatically

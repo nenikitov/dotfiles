@@ -1,6 +1,9 @@
 local language = require('utils.language')
 
 return {
+    {
+        'b0o/SchemaStore.nvim',
+    },
     language.mason {
         -- Language server
         'jsonls',
@@ -12,7 +15,16 @@ return {
         'jsonc',
     },
     language.servers {
-        jsonls = {},
+        jsonls = function()
+            return {
+                settings = {
+                    json = {
+                        schemas = require('schemastore').json.schemas(),
+                        validate = { enable = true },
+                    },
+                },
+            }
+        end,
     },
     language.formatters {
         lua = { 'prettierd' },

@@ -24,7 +24,7 @@ function M.treesitter(languages)
     }
 end
 
----@param servers { [string]:table }
+---@param servers { [string]:table | fun(): table }
 ---@return LazySpec
 function M.servers(servers)
     return {
@@ -39,7 +39,7 @@ end
 ---@return LazySpec
 function M.linters(linters)
     return {
-        'mfussenegger/nvim-lint',
+        dir = '~/SharedFiles/Projects/nvim/nvim-lint/',
         opts = {
             linters_by_ft = linters,
         },

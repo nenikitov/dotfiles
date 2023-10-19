@@ -1,10 +1,6 @@
 local language = require('utils.language')
 
 return {
-    {
-        'folke/neodev.nvim',
-        opts = {}
-    },
     language.mason {
         -- Language server
         'lua_ls',
@@ -25,6 +21,9 @@ return {
                 telemetry = { enable = false },
             },
         },
+    },
+    language.linters {
+        lua = { 'luacheck' },
     },
     language.formatters {
         lua = { 'stylua' },

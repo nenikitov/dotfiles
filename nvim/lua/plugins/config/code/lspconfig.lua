@@ -10,7 +10,8 @@ return {
         'folke/neodev.nvim',
     },
     config = function(_, opts)
-        vim.notify('lspconfig')
+        require('neodev').setup()
+
         local mason_lspconfig = require('mason-lspconfig')
         local lspconfig = require('lspconfig')
 
@@ -24,6 +25,9 @@ return {
         mason_lspconfig.setup_handlers {
             function(server_name)
                 local config = opts.servers[server_name] or {}
+                if type(config) == 'function' then
+                    config = config()
+                end
                 lspconfig[server_name].setup {
                     capabilities = capabilities,
                     settings = config,
@@ -48,6 +52,7 @@ return {
             update_in_insert = true,
             severity_sort = true,
             virtual_text = {
+                source = 'if_many',
                 prefix = function(diagnostic)
                     return ({
                         [vim.diagnostic.severity.ERROR] = icons.diagnostics.error,
@@ -60,7 +65,7 @@ return {
             float = {
                 border = icons.border,
                 header = '',
-                source = 'if_many',
+                source = true,
                 prefix = function(diagnostic)
                     return ({
                         [vim.diagnostic.severity.ERROR] = icons.diagnostics.error,

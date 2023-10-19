@@ -88,7 +88,7 @@ function M.general()
     -- Redo
     map('n', 'U', '<C-r>', 'Redo')
 
-    -- Normal mode in ternimal
+    -- Normal mode in terminal
     map('t', '<ESC><ESC>', '<C-\\><C-n>')
 end
 
@@ -114,7 +114,7 @@ function M.telescope_open()
     map('n', '<LEADER>tr', builtin.live_grep, 'Regex')
 
     map('n', '<LEADER>tm', builtin.help_tags, 'Help')
-    map('n', '<LEADER>th', builtin.highlights, 'Hightlights')
+    map('n', '<LEADER>th', builtin.highlights, 'Highlights')
     map('n', '<LEADER>tc', builtin.colorscheme, 'Colorscheme')
     map('n', '<LEADER>tl', builtin.filetypes, 'File type')
 end
@@ -269,7 +269,7 @@ end
 function M.conform()
     local conform = require('conform')
     map({ 'n', 'v' }, '<LEADER>rf', function()
-        conform.format { async = true, lsp_fallback = 'always' }
+        conform.format { async = true }
     end, 'Format')
 end
 

@@ -3,14 +3,16 @@ local language = require('utils.language')
 return {
     language.mason {
         -- Language server
-        'clangd',
-        'cpplint',
+        'yamlls',
     },
     language.treesitter {
-        'c',
-        'cpp',
+        'yaml',
     },
     language.servers {
-        clangd = {},
+        yamlls = {
+            yaml = {
+                keyOrdering = false,
+            },
+        },
     },
 }
