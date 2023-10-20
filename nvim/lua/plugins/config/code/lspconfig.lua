@@ -1,5 +1,6 @@
 local keymaps = require('user.keymaps')
 local icons = require('user.icons')
+local language = require('utils.language')
 
 return {
     'neovim/nvim-lspconfig',
@@ -7,11 +8,10 @@ return {
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
         'hrsh7th/cmp-nvim-lsp',
-        'folke/neodev.nvim',
+        'folke/neoconf.nvim',
+        language.get_before_lsp()
     },
     config = function(_, opts)
-        require('neodev').setup()
-
         local mason_lspconfig = require('mason-lspconfig')
         local lspconfig = require('lspconfig')
 
@@ -93,9 +93,7 @@ return {
             vim.fn.sign_define(sign, { text = icon, texthl = sign, numhl = sign })
         end
     end,
-    opts = function()
-        return {
-            servers = {},
-        }
-    end,
+    opts = {
+        servers = language.get_servers()
+    },
 }

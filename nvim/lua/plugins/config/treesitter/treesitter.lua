@@ -1,4 +1,5 @@
 local keymaps = require('user.keymaps')
+local language = require('utils.language')
 
 return {
     'nvim-treesitter/nvim-treesitter',
@@ -7,26 +8,26 @@ return {
         require('nvim-treesitter.configs').setup(opts)
         keymaps.treesitter()
     end,
-    opts = function()
-        return {
-            ensure_installed = {
-                'query',
-                'vim',
-                'vimdoc',
+    opts = {
+        ensure_installed = {
+            'query',
+            'vim',
+            'vimdoc',
 
-                'git_config',
-                'git_rebase',
-                'gitattributes',
-                'gitcommit',
-                'gitignore',
+            'git_config',
+            'git_rebase',
+            'gitattributes',
+            'gitcommit',
+            'gitignore',
 
-                'awk',
-                'passwd',
-                'comment',
-                'diff',
-                'regex',
-            },
-            sync_install = false,
-        }
-    end,
+            'awk',
+            'passwd',
+            'comment',
+            'diff',
+            'regex',
+
+            language.get_treesitter()
+        },
+        sync_install = false,
+    }
 }

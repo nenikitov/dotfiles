@@ -1,4 +1,5 @@
 local keymaps = require('user.keymaps')
+local language = require('utils.language')
 
 return {
     'stevearc/conform.nvim',
@@ -9,11 +10,10 @@ return {
         require('conform').setup(opts)
         keymaps.conform()
     end,
-    opts = function()
-        return {
-            formatters_by_ft = {
-                ['*'] = { 'trim_newlines', 'trim_whitespace' },
-            },
-        }
-    end,
+    opts = {
+        formatters_by_ft = {
+            ['*'] = { 'trim_newlines', 'trim_whitespace' },
+            unpack(language.get_formatters()),
+        },
+    },
 }

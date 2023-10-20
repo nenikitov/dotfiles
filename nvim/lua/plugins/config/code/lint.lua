@@ -2,7 +2,7 @@ local language = require('utils.language')
 
 return {
     language.mason {
-        'cspell'
+        'cspell',
     },
     {
         --'mfussenegger/nvim-lint',
@@ -32,13 +32,12 @@ return {
                 end,
             })
         end,
-        opts = function()
-            return {
-                linters_by_ft = {
-                    --['*'] = { 'cspell' },
-                },
-                events = { 'BufWritePost', 'BufReadPost', 'BufEnter', 'InsertLeave', 'TextChanged' },
-            }
-        end,
+        opts = {
+            linters_by_ft = {
+                --['*'] = { 'cspell' },
+                unpack(language.get_linters()),
+            },
+            events = { 'BufWritePost', 'BufReadPost', 'BufEnter', 'InsertLeave', 'TextChanged' },
+        },
     },
 }
