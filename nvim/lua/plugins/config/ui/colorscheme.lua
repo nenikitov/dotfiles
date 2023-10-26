@@ -17,6 +17,26 @@ end
 return {
     colorscheme_loader(),
     colorscheme {
-        'akinsho/horizon.nvim'
-    }
+        'akinsho/horizon.nvim',
+    },
+    colorscheme {
+        'rebelot/kanagawa.nvim',
+    },
+    colorscheme {
+        'folke/tokyonight.nvim',
+    },
+    colorscheme {
+        'catppuccin/nvim',
+        name = 'catppuccin',
+    },
+    colorscheme {
+        'joshdick/onedark.vim',
+    },
+    colorscheme {
+        dir = '~/SharedFiles/Projects/nvim/termcolors.nvim/',
+        dependencies = {
+            dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim/',
+            --'nenikitov/highlight-builder.nvim',
+        },
+    },
 }

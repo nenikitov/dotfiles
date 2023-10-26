@@ -5,10 +5,12 @@ local cmd = vim.cmd
 
 local M = {}
 
-M.colorscheme = tty.choose('horizon', 'slate')
+--M.colorscheme = tty.choose('horizon', 'slate')
+M.colorscheme = 'termcolors'
 M.colorscheme_fallback = 'slate'
 
 function M.apply()
+    ---@diagnostic disable-next-line: param-type-mismatch `cmd` is callable
     local colorscheme_status, _ = pcall(cmd, 'colorscheme ' .. M.colorscheme)
     if not colorscheme_status then
         log.warning('Color scheme ' .. M.colorscheme .. ' not available')

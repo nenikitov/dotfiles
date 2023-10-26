@@ -1,4 +1,3 @@
-local languages = require('languages.treesitter')
 local keymaps = require('user.keymaps')
 
 return {
@@ -10,8 +9,24 @@ return {
     end,
     opts = function()
         return {
-            ensure_installed = languages,
+            ensure_installed = {
+                'query',
+                'vim',
+                'vimdoc',
+
+                'git_config',
+                'git_rebase',
+                'gitattributes',
+                'gitcommit',
+                'gitignore',
+
+                'awk',
+                'passwd',
+                'comment',
+                'diff',
+                'regex',
+            },
             sync_install = false,
         }
-    end
+    end,
 }

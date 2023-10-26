@@ -7,6 +7,7 @@ local o = vim.opt
 o.swapfile = false                         -- Do not create swap file for buffers
 o.clipboard = 'unnamedplus'                -- Use system clipboard
 o.undofile = true
+o.autoread = true
 
 -- Input
 o.timeoutlen = 500                         -- Wait for a mapped sequence to complete
@@ -62,6 +63,8 @@ o.foldcolumn = '1'                         -- Show fold column
 o.foldlevel = 99                           -- Deepest folds
 o.foldlevelstart = -1                      -- Don't fold by default
 o.foldenable = true                        -- Enable folding
+o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+o.foldtext = 'v:lua.vim.treesitter.foldext()'
 
 -- Typing
 o.backspace = {                            -- Configure what can be erased with <BACKSPACE>

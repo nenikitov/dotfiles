@@ -40,7 +40,8 @@ return {
                     if tty.is_gui() then
                         item.kind = icons.completion[item.kind]
                         if vim.tbl_contains({ 'path' }, entry.source.name) then
-                            local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+                            local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item()
+                                .label)
                             if icon then
                                 item.kind = icon
                                 item.kind_hl_group = hl_group

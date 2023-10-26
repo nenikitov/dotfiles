@@ -1,9 +1,9 @@
 # TODO
 
 ```sh
-if [[ ]]; then
-    shell
-    if [[ ]]; then
+if [[ f ]]; then
+    shell --command -e
+    if [[ f ]]; then
         shell
     fi
 fi

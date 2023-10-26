@@ -49,24 +49,24 @@ function M.general()
     map('', '<LEADER>bw', '<CMD>write<RETURN>', 'Write buffer')
 
     -- Go to
-    map({ '', 't' }, '<C-h>', '<CMD>wincmd h<RETURN>', 'Go to split on left')
-    map({ '', 't' }, '<C-j>', '<CMD>wincmd j<RETURN>', 'Go to split on bottom')
-    map({ '', 't' }, '<C-k>', '<CMD>wincmd k<RETURN>', 'Go to split on top')
-    map({ '', 't' }, '<C-l>', '<CMD>wincmd l<RETURN>', 'Go to split on right')
+    map({ '', 't' }, '<A-h>', '<CMD>wincmd h<RETURN>', 'Go to split on left')
+    map({ '', 't' }, '<A-j>', '<CMD>wincmd j<RETURN>', 'Go to split on bottom')
+    map({ '', 't' }, '<A-k>', '<CMD>wincmd k<RETURN>', 'Go to split on top')
+    map({ '', 't' }, '<A-l>', '<CMD>wincmd l<RETURN>', 'Go to split on right')
 
     -- Resize
-    map('', '<A-h>', "<CMD>vertical resize -2<RETURN>")
-    map('', '<A-j>', "<CMD>resize -1<RETURN>")
-    map('', '<A-k>', "<CMD>resize +1<RETURN>")
-    map('', '<A-l>', "<CMD>vertical resize +2<RETURN>")
+    map({ '', 't' }, '<A-H>', '<CMD>vertical resize -2<RETURN>')
+    map({ '', 't' }, '<A-J>', '<CMD>resize -1<RETURN>')
+    map({ '', 't' }, '<A-K>', '<CMD>resize +1<RETURN>')
+    map({ '', 't' }, '<A-L>', '<CMD>vertical resize +2<RETURN>')
 
     -- Indent without exiting visual
     map('x', '<', '<gv', 'Unindent without exiting visual')
     map('x', '>', '>gv', 'Indent without exiting visual')
 
     -- Move lines
-    map('x', 'J', ":m '>+1<ENTER>gv=gv", "Move lines to bottom")
-    map('x', 'K', ":m '<-2<ENTER>gv=gv", "Move lines to top")
+    map('x', 'J', ":m '>+1<ENTER>gv=gv", 'Move lines to bottom')
+    map('x', 'K', ":m '<-2<ENTER>gv=gv", 'Move lines to top')
 
     -- Yank in visual without moving
     map('x', 'y', 'ygv<ESC>', 'Yank without moving')
@@ -79,14 +79,16 @@ function M.general()
     map('', 'L', '$', 'To the end of the line')
 
     -- Search
-    map('', '<A-/>', function() vim.fn.setreg('/', '') end, 'Clear search')
+    map('', '<A-/>', function()
+        vim.fn.setreg('/', '')
+    end, 'Clear search')
     map('n', 'n', 'nzzzv', 'Go to next search and put cursor in the middle')
     map('n', 'N', 'Nzzzv', 'Go to next search and put cursor in the middle')
 
     -- Redo
     map('n', 'U', '<C-r>', 'Redo')
 
-    -- Normal mode in ternimal
+    -- Normal mode in terminal
     map('t', '<ESC><ESC>', '<C-\\><C-n>')
 end
 
@@ -101,23 +103,18 @@ function M.telescope_open()
     map('n', '<LEADER>tt', builtin.builtin, 'Builtin pickers')
 
     map('n', '<LEADER>tf', builtin.find_files, 'Files')
-    map(
-        'n',
-        '<LEADER>tg',
-        function()
-            vim.fn.system('git rev-parse --is-inside-work-tree')
-            if vim.v.shell_error == 0 then
-                builtin.git_files()
-            else
-                builtin.find_files()
-            end
-        end,
-        'Git files'
-    )
+    map('n', '<LEADER>tg', function()
+        vim.fn.system('git rev-parse --is-inside-work-tree')
+        if vim.v.shell_error == 0 then
+            builtin.git_files()
+        else
+            builtin.find_files()
+        end
+    end, 'Git files')
     map('n', '<LEADER>tr', builtin.live_grep, 'Regex')
 
     map('n', '<LEADER>tm', builtin.help_tags, 'Help')
-    map('n', '<LEADER>th', builtin.highlights, 'Hightlights')
+    map('n', '<LEADER>th', builtin.highlights, 'Highlights')
     map('n', '<LEADER>tc', builtin.colorscheme, 'Colorscheme')
     map('n', '<LEADER>tl', builtin.filetypes, 'File type')
 end
@@ -165,7 +162,7 @@ function M.telescope_navigation()
             ['?'] = actions.which_key,
             ['<C-/>'] = actions.which_key,
             ['<C-_>'] = actions.which_key,
-        }
+        },
     }
 end
 
@@ -233,21 +230,12 @@ function M.diagnostics()
     map('n', '<LEADER>te', telescope.diagnostics, 'Show all diagnostics')
 
     map('n', '<LEADER>eo', vim.diagnostic.open_float, 'Show diagnostic under cursor')
-    map('n',
-        '[e',
-        function()
-            vim.diagnostic.goto_prev({ float = false })
-        end,
-        'To previous diagnostic'
-    )
-    map(
-        'n',
-        ']e',
-        function()
-            vim.diagnostic.goto_next({ float = false })
-        end,
-        'To next diagnostic'
-    )
+    map('n', '[e', function()
+        vim.diagnostic.goto_prev { float = false }
+    end, 'To previous diagnostic')
+    map('n', ']e', function()
+        vim.diagnostic.goto_next { float = false }
+    end, 'To next diagnostic')
 end
 
 function M.lsp_open()
@@ -271,9 +259,18 @@ function M.lsp(buf)
     map('n', '<LEADER>ec', vim.lsp.codelens.run, 'Codelens', opts)
 
     map('n', '<LEADER>rr', vim.lsp.buf.rename, 'Rename', opts)
-    map('n', '<LEADER>rf', function() vim.lsp.buf.format { async = true } end, 'Rename', opts)
+    map('n', '<LEADER>rl', function()
+        vim.lsp.buf.format { async = true }
+    end, 'Format with LSP', opts)
 
     map('n', '<LEADER>lr', '<CMD>LspRestart<ENTER>', 'Restart', opts)
+end
+
+function M.conform()
+    local conform = require('conform')
+    map({ 'n', 'v' }, '<LEADER>rf', function()
+        conform.format { async = true }
+    end, 'Format')
 end
 
 function M.treesitter()
@@ -285,9 +282,28 @@ function M.gitsigns(buf)
     local gitsigns = require('gitsigns')
     local opts = { buffer = buf }
 
-    map('n', '<LEADER>gd', gitsigns.preview_hunk, 'Preview the differences in the current hunk', opts)
+    map(
+        'n',
+        '<LEADER>gd',
+        gitsigns.preview_hunk,
+        'Preview the differences in the current hunk',
+        opts
+    )
+
     map('n', '<LEADER>gb', gitsigns.blame_line, 'Blame current line', opts)
+
+    map('v', '<leader>gr', function()
+        gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') }
+    end, 'Reset selected lines')
     map('n', '<LEADER>gr', gitsigns.reset_hunk, 'Reset current hunk', opts)
+    map('n', '<LEADER>gR', gitsigns.reset_buffer, 'Reset current buffer', opts)
+
+    map('v', '<leader>gs', function()
+        gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') }
+    end, 'Stage selected lines')
+    map('n', '<LEADER>gs', gitsigns.stage_hunk, 'Stage current hunk', opts)
+    map('n', '<LEADER>gS', gitsigns.stage_buffer, 'Stage current buffer', opts)
+
     map('n', '[g', gitsigns.prev_hunk, 'Previous hunk', opts)
     map('n', ']g', gitsigns.next_hunk, 'Next hunk', opts)
 end
@@ -308,6 +324,11 @@ function M.comment()
             eol = '<LEADER>cA',
         },
     }
+end
+
+function M.neo_tree_open()
+    local neo_tree = require('neo-tree.command')
+    map('n', '<LEADER>f', '<CMD>Neotree<ENTER>', 'Show file explorer')
 end
 
 return M
