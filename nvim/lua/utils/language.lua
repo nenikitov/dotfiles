@@ -96,8 +96,13 @@ function M.get_before_lsp()
 end
 
 function M.after_lsp(spec)
+    local dependency_lsp = {
+        'neovim/nvim-lspconfig',
+    }
     if spec.dependencies then
-        table.insert(spec.dependencies, 'neovim/nvim-lspconfig')
+        table.insert(spec.dependencies, dependency_lsp)
+    else
+        spec.dependencies = dependency_lsp
     end
 
     return spec

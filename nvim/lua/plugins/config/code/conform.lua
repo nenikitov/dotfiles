@@ -11,9 +11,8 @@ return {
         keymaps.conform()
     end,
     opts = {
-        formatters_by_ft = {
+        formatters_by_ft = vim.tbl_deep_extend('force', {
             ['*'] = { 'trim_newlines', 'trim_whitespace' },
-            unpack(language.get_formatters()),
-        },
+        }, language.get_formatters()),
     },
 }

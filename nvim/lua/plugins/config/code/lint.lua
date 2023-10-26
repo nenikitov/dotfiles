@@ -1,16 +1,17 @@
 local language = require('utils.language')
 
 return {
-    language.mason {
-        'cspell',
-    },
     {
         --'mfussenegger/nvim-lint',
         dir = '~/SharedFiles/Projects/nvim/nvim-lint/',
         dependencies = {
             'williamboman/mason.nvim',
+            'WhoIsSethDaniel/mason-tool-installer.nvim',
         },
         config = function(_, opts)
+            --require('mason-registry').get_package('cspell'):install()
+            -- TODO Add install CSPELL
+
             local lint = require('lint')
 
             local all_filetypes = opts.linters_by_ft['*']
@@ -33,10 +34,9 @@ return {
             })
         end,
         opts = {
-            linters_by_ft = {
+            linters_by_ft = vim.tbl_deep_extend('force', {
                 --['*'] = { 'cspell' },
-                unpack(language.get_linters()),
-            },
+            }, language.get_linters()),
             events = { 'BufWritePost', 'BufReadPost', 'BufEnter', 'InsertLeave', 'TextChanged' },
         },
     },

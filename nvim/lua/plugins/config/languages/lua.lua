@@ -31,8 +31,6 @@ language.formatters {
 return {
     language.before_lsp {
         'folke/neodev.nvim',
-        config = function()
-            require('neodev').setup()
-        end,
+        config = true
     },
 }

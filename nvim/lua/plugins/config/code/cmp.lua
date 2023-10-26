@@ -13,7 +13,7 @@ return {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
         -- Icons
-        'nvim-tree/nvim-web-devicons'
+        'nvim-tree/nvim-web-devicons',
     },
     config = function()
         local cmp = require('cmp')
@@ -30,7 +30,7 @@ return {
                 { name = 'buffer' },
                 {
                     name = 'path',
-                    option = { trailing_slash = true }
+                    option = { trailing_slash = true },
                 },
             },
             mapping = keymaps.completion(),
@@ -40,8 +40,9 @@ return {
                     if tty.is_gui() then
                         item.kind = icons.completion[item.kind]
                         if vim.tbl_contains({ 'path' }, entry.source.name) then
-                            local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item()
-                                .label)
+                            local icon, hl_group = require('nvim-web-devicons').get_icon(
+                                entry:get_completion_item().label
+                            )
                             if icon then
                                 item.kind = icon
                                 item.kind_hl_group = hl_group
@@ -53,25 +54,28 @@ return {
 
                     item.menu = '[' .. entry.source.name .. ']'
                     return item
-                end
+                end,
             },
             window = {
-                completion = { border = icons.border },
+                completion = {
+                    border = icons.border,
+                    winhighlight = 'Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
+                },
                 documentation = { border = icons.border },
-            }
+            },
         }
 
         cmp.setup.cmdline(':', {
             sources = {
                 { name = 'path' },
                 { name = 'cmdline' },
-            }
+            },
         })
 
         cmp.setup.cmdline({ '/', '?' }, {
             sources = {
                 { name = 'buffer' },
-            }
+            },
         })
     end,
 }

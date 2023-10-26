@@ -26,7 +26,7 @@ return {
             'diff',
             'regex',
 
-            language.get_treesitter()
+            unpack(language.get_treesitter())
         },
         sync_install = false,
     }
