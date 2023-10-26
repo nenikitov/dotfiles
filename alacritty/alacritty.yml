@@ -24,53 +24,30 @@ selection:
 
 # Colors
 schemes:
-    # Horizon
-    horizon: &horizon
-      primary:
-        background: '#1C1E26'
-        foreground: '#D5D8DA'
-      normal:
-        black:   '#2E303E'
-        red:     '#E95678'
-        green:   '#27D796'
-        yellow:  '#FAB795'
-        blue:    '#26BBD9'
-        magenta: '#B877DB'
-        cyan:    '#25B2BC'
-        white:   '#CCCCCC'
-      bright:
-        black:   '#767676'
-        red:     '#F09383'
-        green:   '#09F7A0'
-        yellow:  '#FAC29A'
-        blue:    '#3FC6DE'
-        magenta: '#F075B7'
-        cyan:    '#6BE6E6'
-        white:   '#F2F2F2'
-    chatgpt: &chatgpt
-        primary:
-            background: '#1C1C1C'
-            foreground: '#A2A2A2'
-        normal:
-            black:   '#2C2C2C'
-            red:     '#A8342D'
-            green:   '#5CA372'
-            yellow:  '#D2A164'
-            blue:    '#3C45A7'
-            magenta: '#8F61A3'
-            cyan:    '#2D8687'
-            white:   '#A2A2A2'
-        bright:
-            black:   '#5C5C5C'
-            red:     '#E57A7A'
-            green:   '#A2D19A'
-            yellow:  '#E2C38E'
-            blue:    '#7B8DEA'
-            magenta: '#BB84E4'
-            cyan:    '#53B2B8'
-            white:   '#EEEEEE'
-    # NeTheme - current
+    # NeTheme
     netheme: &netheme
+        primary:
+            background: '#171A22'
+            foreground: '#B7C2C8'
+        normal:
+            black:   '#20232B'
+            red:     '#DA5261'
+            green:   '#56B877'
+            yellow:  '#DB8878'
+            blue:    '#4788F0'
+            magenta: '#AF6ADB'
+            cyan:    '#49B2BB'
+            white:   '#8B909D'
+        bright:
+            black:   '#555A66'
+            red:     '#fa788e'
+            green:   '#A7FA9C'
+            yellow:  '#F9C097'
+            blue:    '#81B5FF'
+            magenta: '#D9A1FF'
+            cyan:    '#69F3FF'
+            white:   '#DDEBF2'
+    netheme_old: &netheme_old
         primary:
             background: '#1A1C22'
             foreground: '#B7C2C8'
@@ -92,75 +69,6 @@ schemes:
             magenta: '#DDADF5'
             cyan:    '#95E4DD'
             white:   '#DDEBF2'
-    # NeTheme - old
-    netheme_old: &netheme_old
-        primary:
-            background: '#131211'
-            foreground: '#c8c8c8'
-        normal:
-            black:   '#262626'
-            red:     '#c93947'
-            green:   '#8bc43e'
-            yellow:  '#db9a44'
-            blue:    '#4a6bd1'
-            magenta: '#9f51bf'
-            cyan:    '#41bfb4'
-            white:   '#bebebe'
-        bright:
-            black:   '#5c5c5c'
-            red:     '#f57586'
-            green:   '#bfed81'
-            yellow:  '#f5cf7b'
-            blue:    '#86aeed'
-            magenta: '#dd9af4'
-            cyan:    '#9bf2eb'
-            white:   '#ffffff'
-    # NeTheme - older
-    netheme_older: &netheme_older
-        primary:
-            background: '#080808'
-            foreground: '#CCCCCC'
-        normal:
-            black:   '#3A3A3A'
-            red:     '#B33443'
-            green:   '#7F912A'
-            yellow:  '#B97845'
-            blue:    '#42739F'
-            magenta: '#8C5AA2'
-            cyan:    '#5AA79D'
-            white:   '#B0B0B0'
-        bright:
-            black:   '#5A5A5A'
-            red:     '#FF7587'
-            green:   '#D0E171'
-            yellow:  '#F2B286'
-            blue:    '#87BDE5'
-            magenta: '#D09CE3'
-            cyan:    '#9FECE3'
-            white:   '#FFFFFF'
-    # NeTheme - oldest
-    netheme_oldest: &netheme_oldest
-        primary:
-            background: '#080808'
-            foreground: '#BFBFBF'
-        normal:
-            black:   '#323232'
-            red:     '#A6212C'
-            green:   '#21A642'
-            yellow:  '#A66321'
-            blue:    '#2163A6'
-            magenta: '#7A21A6'
-            cyan:    '#219BA6'
-            white:   '#A6A6A6'
-        bright:
-            black:   '#808080'
-            red:     '#FF737E'
-            green:   '#73FF93'
-            yellow:  '#FFB473'
-            blue:    '#73B4FF'
-            magenta: '#D573FF'
-            cyan:    '#73F3FF'
-            white:   '#FFFFFF'
     # Vivid black bearded theme from VSCode
     vivid_black: &vivid_black
         primary:
@@ -184,102 +92,29 @@ schemes:
             magenta: '#e66dff'
             cyan:    '#14e5d4'
             white:   '#ffffff'
-    # VSCode default
-    vscode: &vscode
+    # Horizon
+    horizon: &horizon
         primary:
-            background: '#1e1e1e'
-            foreground: '#d4d4d4'
+            background: '#1C1E26'
+            foreground: '#D5D8DA'
         normal:
-            black:   '#404040'
-            red:     '#f44747'
-            green:   '#6a9955'
-            yellow:  '#ce9178'
-            blue:    '#569cd6'
-            magenta: '#b267e6'
-            cyan:    '#4ec9b0'
-            white:   '#a6a6a6'
+            black:   '#2E303E'
+            red:     '#E95678'
+            green:   '#27D796'
+            yellow:  '#FAB795'
+            blue:    '#26BBD9'
+            magenta: '#B877DB'
+            cyan:    '#25B2BC'
+            white:   '#CCCCCC'
         bright:
-            black:   '#707070'
-            red:     '#d16969'
-            green:   '#b5cea8'
-            yellow:  '#dcdcaa'
-            blue:    '#4fc1ff'
-            magenta: '#c586c0'
-            cyan:    '#9cdcfe'
-            white:   '#ffffff'
-    # Color schemes below are from https://github.com/alacritty/alacritty/wiki/Color-schemes
-    # Argonaut
-    argonaut: &argonaut
-        primary:
-            background: '#292C3E'
-            foreground: '#EBEBEB'
-        cursor:
-            text:    '#FF261E'
-            cursor:  '#FF261E'
-        normal:
-            black:   '#0D0D0D'
-            red:     '#FF301B'
-            green:   '#A0E521'
-            yellow:  '#FFC620'
-            blue:    '#1BA6FA'
-            magenta: '#8763B8'
-            cyan:    '#21DEEF'
-            white:   '#EBEBEB'
-        bright:
-            black:   '#6D7070'
-            red:     '#FF4352'
-            green:   '#B8E466'
-            yellow:  '#FFD750'
-            blue:    '#1BA6FA'
-            magenta: '#A578EA'
-            cyan:    '#73FBF1'
-            white:   '#FEFEF8'
-    # Ayu Dark
-    ayudark: &ayudark
-        primary:
-            background: '#0A0E14'
-            foreground: '#B3B1AD'
-        normal:
-            black:   '#01060E'
-            red:     '#EA6C73'
-            green:   '#91B362'
-            yellow:  '#F9AF4F'
-            blue:    '#53BDFA'
-            magenta: '#FAE994'
-            cyan:    '#90E1C6'
-            white:   '#C7C7C7'
-        bright:
-            black:   '#686868'
-            red:     '#F07178'
-            green:   '#C2D94C'
-            yellow:  '#FFB454'
-            blue:    '#59C2FF'
-            magenta: '#FFEE99'
-            cyan:    '#95E6CB'
-            white:   '#FFFFFF'
-    # Blood moon
-    bloodmoon: &bloodmoon
-        primary:
-            background: '#10100E'
-            foreground: '#C6C6C4'
-        normal:
-            black:   '#10100E'
-            red:     '#C40233'
-            green:   '#009F6B'
-            yellow:  '#FFD700'
-            blue:    '#0087BD'
-            magenta: '#9A4EAE'
-            cyan:    '#20B2AA'
-            white:   '#C6C6C4'
-        bright:
-            black:   '#696969'
-            red:     '#FF2400'
-            green:   '#03C03C'
-            yellow:  '#FDFF00'
-            blue:    '#007FFF'
-            magenta: '#FF1493'
-            cyan:    '#00CCCC'
-            white:   '#FFFAFA'
+            black:   '#767676'
+            red:     '#F09383'
+            green:   '#09F7A0'
+            yellow:  '#FAC29A'
+            blue:    '#3FC6DE'
+            magenta: '#F075B7'
+            cyan:    '#6BE6E6'
+            white:   '#F2F2F2'
     # Other color schemes not done by me
     # Monokai theme from https://github.com/yosukes-dev/monokai-windows-terminal
     monokai: &monokai
