@@ -2,8 +2,8 @@ local language = require('utils.language')
 
 return {
     {
-        --'mfussenegger/nvim-lint',
-        dir = '~/SharedFiles/Projects/nvim/nvim-lint/',
+        'mfussenegger/nvim-lint',
+        -- dir = '~/SharedFiles/Projects/nvim/nvim-lint/',
         dependencies = {
             'williamboman/mason.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
