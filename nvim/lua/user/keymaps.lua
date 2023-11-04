@@ -269,7 +269,7 @@ end
 function M.conform()
     local conform = require('conform')
     map({ 'n', 'v' }, '<LEADER>rf', function()
-        conform.format { async = true }
+        conform.format { async = true, lsp_fallback = true }
     end, 'Format')
 end
 
