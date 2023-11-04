@@ -93,7 +93,8 @@ function M.general()
 end
 
 function M.lazy_open()
-    map('n', '<LEADER>pp', '<CMD>Lazy<CR>', 'Open package manager') end
+    map('n', '<LEADER>pp', '<CMD>Lazy<CR>', 'Open package manager')
+end
 
 function M.telescope_open()
     local builtin = require('telescope.builtin')
@@ -323,6 +324,10 @@ function M.comment()
             eol = '<LEADER>cA',
         },
     }
+end
+
+function M.toggleterm_open()
+    return '<A-CR>'
 end
 
 function M.neo_tree_open()

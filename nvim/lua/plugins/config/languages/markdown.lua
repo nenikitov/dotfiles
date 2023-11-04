@@ -3,7 +3,7 @@ local language = require('utils.language')
 language.mason {
     -- Language server
     'marksman',
-    -- Linter
+    -- Formatter
     'prettier',
 }
 language.treesitter {
