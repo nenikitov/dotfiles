@@ -9,7 +9,7 @@ return {
         'williamboman/mason-lspconfig.nvim',
         'hrsh7th/cmp-nvim-lsp',
         'folke/neoconf.nvim',
-        language.get_before_lsp()
+        language.get_before_lsp(),
     },
     config = function(_, opts)
         local mason_lspconfig = require('mason-lspconfig')
@@ -81,6 +81,14 @@ return {
 
         -- Borders
         require('lspconfig.ui.windows').default_options.border = icons.border
+        vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+            border = icons.border
+        })
+
+        vim.lsp.handlers['textDocument/signatureHelp'] =
+            vim.lsp.with(vim.lsp.handlers.signature_help, {
+                border = icons.border
+            })
 
         -- Signs
         for type, icon in pairs {
@@ -94,6 +102,6 @@ return {
         end
     end,
     opts = {
-        servers = language.get_servers()
+        servers = language.get_servers(),
     },
 }

@@ -145,11 +145,9 @@ M.cmd_line = {
     cmdline     = tty.choose(' ', '>_'),
     search_down = tty.choose(' ', '/↓'),
     search_up   = tty.choose(' ', '/↑'),
-    filter      = tty.choose(' ', '[→'),
     lua         = tty.choose('󰢱 ', 'lua'),
     help        = tty.choose(' ', '[|]'),
     rename      = tty.choose('󰙏 ', '←┘'),
-    calculator  = tty.choose(' ', '='),
     bash        = tty.choose(' ', '#!'),
 }
 

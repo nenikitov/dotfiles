@@ -8,7 +8,9 @@ return {
         'nvim-tree/nvim-web-devicons',
     },
     config = function(_, opts)
-        require('telescope').setup(opts)
+        local telescope = require('telescope')
+        telescope.setup(opts)
+
         keymaps.telescope_open()
     end,
     opts = function()
@@ -25,13 +27,13 @@ return {
                     icons.border[3],
                     icons.border[5],
                     icons.border[7],
-                }
+                },
             },
             pickers = {
                 colorscheme = {
-                    enable_preview = true
-                }
-            }
+                    enable_preview = true,
+                },
+            },
         }
-    end
+    end,
 }
