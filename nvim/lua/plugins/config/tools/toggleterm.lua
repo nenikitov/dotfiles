@@ -13,6 +13,9 @@ return {
             float_opts = {
                 border = icons.border,
             },
+            highlights = {
+                FloatBorder = { link = 'WinSeparator' }
+            }
         },
     },
 }

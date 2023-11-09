@@ -16,7 +16,7 @@ language.treesitter {
 language.servers {
     lua_ls = {
         Lua = {
-            workspace = { checkThirdParty = false },
+            workspace = { checkThirdParty = 'Disable' },
             telemetry = { enable = false },
         },
     },
@@ -31,6 +31,6 @@ language.formatters {
 return {
     language.before_lsp {
         'folke/neodev.nvim',
-        config = true
+        config = true,
     },
 }

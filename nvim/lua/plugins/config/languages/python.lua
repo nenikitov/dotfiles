@@ -1,14 +1,27 @@
 local language = require('utils.language')
 
 language.mason {
-    'pylsp',
+    -- Lanugage server
+    --'pylsp',
+    'pyright',
+    -- Formatter
+    'black',
+    'isort',
 }
 language.treesitter {
     'python',
     'pymanifest',
 }
 language.servers {
-    pylsp = {},
+    pyright = {
+        --plugins = {
+        --    black = { enabled = true },
+        --    isort = { enabled = true, profile = 'black' },
+        --},
+    },
+}
+language.formatters {
+    python = { 'black', 'isort' },
 }
 
 return {}

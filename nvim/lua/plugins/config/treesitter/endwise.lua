@@ -13,5 +13,4 @@ return {
             enable = true,
         }
     end,
-    enabled = false
 }

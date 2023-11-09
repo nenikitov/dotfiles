@@ -17,7 +17,8 @@ return {
         return {
             defaults = {
                 default_mappings = keymaps.telescope_navigation(),
-                prompt_prefix = icons.telescope .. ' ',
+                prompt_prefix = icons.telescope.prompt .. ' ',
+                selection_caret = icons.telescope.selection,
                 borderchars = {
                     icons.border[2],
                     icons.border[4],

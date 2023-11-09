@@ -23,7 +23,7 @@ local default_options = {
 ---@param modes KeymapMode | KeymapMode[] Modes in which keymap will exist.
 ---@param keys string Key combination.
 ---@param func string | fun() What to do when keymap is triggered.
----@param description string? Description.
+---@param description string Description.
 ---@param options table? Options.
 local function map(modes, keys, func, description, options)
     options = vim.tbl_deep_extend('force', default_options, options or {})
@@ -31,11 +31,52 @@ local function map(modes, keys, func, description, options)
     vim.keymap.set(modes, keys, func, options)
 end
 
+---@alias WhichKeyGroupOpts {description: string, buffer: number?}
+---@alias WhichKeyListener fun(mode: string, keys: string, opts: WhichKeyGroupOpts)
+---@type WhichKeyListener
+local whichkey_listener = nil
+
+--- @type {[KeymapMode]: {[string]: WhichKeyGroupOpts }}
+local whichkey_groups = {}
+
+--- Add a keymap group to whichkey
+---@param modes KeymapMode | KeymapMode[] Modes in which keymap will exist.
+---@param keys string Key combination.
+---@param description string Description.
+---@param buffer number? Buffer to attach this group to. Defaults to all.
+local function whichkey_group(modes, keys, description, buffer)
+    if type(modes) == 'string' then
+        modes = { modes }
+    end
+
+    for _, m in ipairs(modes) do
+        whichkey_groups[m] = whichkey_groups[m] or {}
+        whichkey_groups[m][keys] = { description = description, buffer = buffer }
+
+        if whichkey_listener then
+            whichkey_listener(m, keys, whichkey_groups[m][keys])
+        end
+    end
+end
+
+--- Register a function to add WhichKey prefixes
+---@param listener WhichKeyListener
+function M.whichkey_register(listener)
+    whichkey_listener = listener
+    for mode, prefixes in pairs(whichkey_groups) do
+        for keys, description in pairs(prefixes) do
+            listener(mode, keys, description)
+        end
+    end
+end
+
 function M.general()
     -- Leader
     vim.g.mapleader = ' '
     vim.g.maplocalleader = ' '
-    map('', '<SPACE>', '<NOP>')
+    map('', '<SPACE>', '<NOP>', 'Leader')
+
+    whichkey_group('n', '<LEADER>b', 'buffer/window/split')
 
     -- Split
     map('', '<LEADER>bs', '<CMD>split<RETURN>', 'Split horizontally')
@@ -45,7 +86,9 @@ function M.general()
     map('', '<LEADER>bn', '<CMD>enew<RETURN>', 'Create a new empty buffer')
     map('', '<LEADER>br', '<CMD>edit<RETURN>', 'Refresh buffer')
     map('', '<LEADER>bd', '<CMD>bdelete<RETURN>', 'Delete buffer')
+    map('', '<LEADER>bD', '<CMD>bdelete!<RETURN>', 'Foce delete buffer')
     map('', '<LEADER>bq', '<CMD>quit<RETURN>', 'Quit window')
+    map('', '<LEADER>bQ', '<CMD>quit!<RETURN>', 'Force quit window')
     map('', '<LEADER>bw', '<CMD>write<RETURN>', 'Write buffer')
 
     -- Go to
@@ -55,10 +98,10 @@ function M.general()
     map({ '', 't' }, '<A-l>', '<CMD>wincmd l<RETURN>', 'Go to split on right')
 
     -- Resize
-    map({ '', 't' }, '<A-H>', '<CMD>vertical resize -2<RETURN>')
-    map({ '', 't' }, '<A-J>', '<CMD>resize -1<RETURN>')
-    map({ '', 't' }, '<A-K>', '<CMD>resize +1<RETURN>')
-    map({ '', 't' }, '<A-L>', '<CMD>vertical resize +2<RETURN>')
+    map({ '', 't' }, '<A-H>', '<CMD>vertical resize -2<RETURN>', 'Decrease width')
+    map({ '', 't' }, '<A-J>', '<CMD>resize -1<RETURN>', 'Decrease height')
+    map({ '', 't' }, '<A-K>', '<CMD>resize +1<RETURN>', 'Increase height')
+    map({ '', 't' }, '<A-L>', '<CMD>vertical resize +2<RETURN>', 'Increase width')
 
     -- Indent without exiting visual
     map('x', '<', '<gv', 'Unindent without exiting visual')
@@ -89,21 +132,25 @@ function M.general()
     map('n', 'U', '<C-r>', 'Redo')
 
     -- Normal mode in terminal
-    map('t', '<ESC><ESC>', '<C-\\><C-n>')
+    map('t', '<ESC><ESC>', '<C-\\><C-n>', 'Normal mode')
 end
 
 function M.lazy_open()
+    whichkey_group('n', '<LEADER>p', 'plugins')
+
     map('n', '<LEADER>pp', '<CMD>Lazy<CR>', 'Open package manager')
 end
 
 function M.telescope_open()
+    whichkey_group('n', '<LEADER>t', 'telescope search')
+
     local builtin = require('telescope.builtin')
     -- local extensions = require('telescope.extensions')
 
     map('n', '<LEADER>tt', builtin.builtin, 'Builtin pickers')
 
     map('n', '<LEADER>tf', builtin.find_files, 'Files')
-    map('n', '<LEADER>tg', function()
+    map('n', '<LEADER>tF', function()
         vim.fn.system('git rev-parse --is-inside-work-tree')
         if vim.v.shell_error == 0 then
             builtin.git_files()
@@ -167,6 +214,8 @@ function M.telescope_navigation()
 end
 
 function M.mason_open()
+    whichkey_group('n', '<LEADER>p', 'plugins')
+
     map('n', '<LEADER>pm', '<CMD>Mason<CR>', 'Open LSP install manager')
 end
 
@@ -225,6 +274,9 @@ function M.completion()
 end
 
 function M.diagnostics()
+    whichkey_group('n', '<LEADER>t', 'telescope')
+    whichkey_group('n', '<LEADER>e', 'error')
+
     local telescope = require('telescope.builtin')
 
     map('n', '<LEADER>te', telescope.diagnostics, 'Show all diagnostics')
@@ -239,11 +291,18 @@ function M.diagnostics()
 end
 
 function M.lsp_open()
+    whichkey_group('n', '<LEADER>p', 'plugin')
+
     map('n', '<LEADER>pl', '<CMD>LspInfo<CR>', 'Open LSP info')
     map('n', '<LEADER>pL', '<CMD>LspLog<CR>', 'Open LSP log')
 end
 
 function M.lsp(buf)
+    whichkey_group('n', '<LEADER>t', 'telescope')
+    whichkey_group('n', '<LEADER>s', 'symbol', buf)
+    whichkey_group('n', '<LEADER>r', 'refactor', buf)
+    whichkey_group('n', '<LEADER>l', 'lsp', buf)
+
     local telescope = require('telescope.builtin')
     local opts = { buffer = buf }
 
@@ -259,7 +318,7 @@ function M.lsp(buf)
     map('n', '<LEADER>ec', vim.lsp.codelens.run, 'Codelens', opts)
 
     map('n', '<LEADER>rr', vim.lsp.buf.rename, 'Rename', opts)
-    map('n', '<LEADER>rl', function()
+    map('n', '<LEADER>rF', function()
         vim.lsp.buf.format { async = true }
     end, 'Format with LSP', opts)
 
@@ -267,6 +326,8 @@ function M.lsp(buf)
 end
 
 function M.conform()
+    whichkey_group({ 'n', 'v' }, '<LEADER>r', 'refactor')
+
     local conform = require('conform')
     map({ 'n', 'v' }, '<LEADER>rf', function()
         conform.format { async = true, lsp_fallback = true }
@@ -274,11 +335,15 @@ function M.conform()
 end
 
 function M.treesitter()
+    whichkey_group('n', '<LEADER>h', 'highlights')
+
     map('n', '<LEADER>hi', vim.show_pos, 'Show highlight')
     map('n', '<LEADER>hl', vim.treesitter.inspect_tree, 'Show highlight tree')
 end
 
 function M.gitsigns(buf)
+    whichkey_group({ 'n', 'v' }, '<LEADER>g', 'git')
+
     local gitsigns = require('gitsigns')
     local opts = { buffer = buf }
 
@@ -309,6 +374,8 @@ function M.gitsigns(buf)
 end
 
 function M.comment()
+    whichkey_group({ 'n', 'o' }, '<LEADER>c', 'comments')
+
     return {
         toggler = {
             line = '<LEADER>/',
@@ -333,6 +400,53 @@ end
 function M.neo_tree_open()
     local neo_tree = require('neo-tree.command')
     map('n', '<LEADER>f', '<CMD>Neotree<ENTER>', 'Show file explorer')
+end
+
+function M.neogen()
+    whichkey_group('n', '<LEADER>d', 'generate docs')
+
+    local neogen = require('neogen')
+
+    map('n', '<LEADER>dd', neogen.generate, 'Auto')
+    map('n', '<LEADER>dt', function()
+        neogen.generate { type = 'type' }
+    end, 'Type')
+    map('n', '<LEADER>df', function()
+        neogen.generate { type = 'func' }
+    end, 'Function')
+    map('n', '<LEADER>de', function()
+        neogen.generate { type = 'file' }
+    end, 'File')
+    map('n', '<LEADER>dc', function()
+        neogen.generate { type = 'class' }
+    end, 'Class')
+end
+
+function M.dropbar_navigation()
+    local defaults = require('dropbar.configs').opts.menu.keymaps
+    local menu = require('dropbar.utils.menu')
+
+    return {
+        l = defaults['<CR>'],
+        h = function()
+            local m = menu.get_current()
+            if not m then
+                return
+            end
+            m:close()
+        end,
+        q = function()
+            menu.exec('close')
+        end,
+        ['<ESC>'] = function()
+            menu.exec('close')
+        end,
+        i = function() end,
+    }
+end
+
+function M.dropbar_open()
+    map('n', '<LEADER>b', require('dropbar.api').pick, 'Pick a breadcrumb')
 end
 
 return M

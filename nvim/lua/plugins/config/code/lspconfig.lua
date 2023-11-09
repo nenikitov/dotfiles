@@ -75,8 +75,7 @@ return {
                     })[diagnostic.severity] .. '  '
                 end,
             },
-            --signs = false,
-            signs = true,
+            signs = false,
         }
 
         -- Borders

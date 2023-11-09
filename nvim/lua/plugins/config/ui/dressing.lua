@@ -5,10 +5,8 @@ return {
     opts = function()
         return {
             input = {
-                border = icons.border,
-                win_options = {
-                    listchars = vim.o.listchars,
-                },
+                -- Is handled by Noice
+                enabled = false,
             },
             select = {
                 telescope = require('telescope.themes').get_dropdown {

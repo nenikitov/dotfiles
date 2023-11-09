@@ -18,8 +18,8 @@ return {
         window = {
             position = 'float',
             popup = {
-                border = 'single'
-            }
-        }
-    }
+                border = 'single',
+            },
+        },
+    },
 }

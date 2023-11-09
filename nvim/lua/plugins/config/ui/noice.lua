@@ -8,6 +8,14 @@ return {
         'nvim-treesitter/nvim-treesitter',
     },
     opts = {
+        routes = {
+            {
+                view = 'notify',
+                filter = {
+                    event = 'msg_showmode',
+                },
+            },
+        },
         cmdline = {
             format = {
                 cmdline = {
@@ -28,6 +36,7 @@ return {
                     lang = 'regex',
                 },
                 filter = {
+                    title = 'Shell',
                     pattern = '^:%s*!',
                     icon = icons.cmd_line.bash,
                     lang = 'bash',
@@ -38,10 +47,9 @@ return {
                     lang = 'lua',
                 },
                 calculator = {
-                    pattern = { '^:=' },
-                    icon = icons.cmd_line.lua,
+                    pattern = { '^:%s*=', '^:%s*lua%s+=' },
+                    icon = icons.cmd_line.calculator,
                     lang = 'lua',
-                    conceal = false,
                 },
                 help = {
                     pattern = '^:%s*he?l?p?%s+',
