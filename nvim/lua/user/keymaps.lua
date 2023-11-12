@@ -446,7 +446,9 @@ function M.dropbar_navigation()
 end
 
 function M.dropbar_open()
-    map('n', '<LEADER>b', require('dropbar.api').pick, 'Pick a breadcrumb')
+    whichkey_group('n', '<LEADER>s', 'symbol')
+
+    map('n', '<LEADER>sb', require('dropbar.api').pick, 'Pick a breadcrumb')
 end
 
 return M

@@ -218,4 +218,14 @@ M.dropbar = {
     },
 }
 
+M.todo = {
+    fix = M.notify.debug,
+    todo = tty.choose('', 'T'),
+    hack = tty.choose('', 'P'),
+    warning = M.diagnostics.warning,
+    performance = tty.choose('', 'S'),
+    note = M.notify.trace,
+    test = tty.choose('', 'U'),
+}
+
 return M

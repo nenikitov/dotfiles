@@ -18,4 +18,11 @@ language.formatters {
     markdown = { 'injected', 'prettier' },
 }
 
-return {}
+return {
+    {
+        'iamcco/markdown-preview.nvim',
+        build = function()
+            vim.fn['mkdp#util#install']()
+        end,
+    },
+}
