@@ -228,4 +228,15 @@ M.todo = {
     test = tty.choose('', 'U'),
 }
 
+M.satellite = {
+    moving = tty.choose({ '⎺', '⎻', '⎼', '⎽' }, { '─' }),
+    increasing = tty.choose({ '-', '=', '≡', '≣' }, { '-', '=', '≡' }),
+    search = tty.choose({ '⠁', '⠉', '⠋', '⠛', '⠟', '⠿', '⡿', '⣿' }, { '-', '=', '≡' }),
+    git = {
+        add = M.gitsigns.add,
+        change = M.gitsigns.change,
+        delete = '-',
+    },
+}
+
 return M

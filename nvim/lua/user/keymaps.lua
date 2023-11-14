@@ -435,12 +435,7 @@ function M.dropbar_navigation()
             end
             m:close()
         end,
-        q = function()
-            menu.exec('close')
-        end,
-        ['<ESC>'] = function()
-            menu.exec('close')
-        end,
+        ['<ESC>'] = defaults['q'],
         i = function() end,
     }
 end

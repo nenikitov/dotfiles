@@ -88,7 +88,10 @@ function M.before_lsp(spec)
     end
 
     table.insert(before_lsp, insert)
-    return spec
+    return vim.tbl_deep_extend('force', spec, {
+        -- HACK(nenikitov): no clue how setting a lower priority makes it load before...
+        priority = 10,
+    })
 end
 
 function M.get_before_lsp()
