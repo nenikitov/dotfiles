@@ -4,6 +4,7 @@ local icons = require('user.icons')
 return {
     'folke/todo-comments.nvim',
     --dir = '~/SharedFiles/Projects/nvim/todo-comments.nvim',
+    enabled = false,
     dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-telescope/telescope.nvim',
