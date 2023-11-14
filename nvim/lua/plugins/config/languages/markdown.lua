@@ -10,6 +10,8 @@ language.treesitter {
     'markdown',
     'markdown_inline',
     'latex',
+    'html',
+    'css',
 }
 language.servers {
     marksman = {},

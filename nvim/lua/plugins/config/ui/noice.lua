@@ -10,10 +10,17 @@ return {
     opts = {
         routes = {
             {
-                view = 'notify',
                 filter = {
-                    event = 'msg_showmode',
+                    event = 'msg_show',
+                    any = {
+                        { find = '%d+L, %d+B written' },
+                        { find = '; after #%d+' },
+                        { find = '; before #%d+' },
+                        { find = '%d fewer lines' },
+                        { find = '%d more lines' },
+                    },
                 },
+                opts = { skip = true },
             },
         },
         cmdline = {

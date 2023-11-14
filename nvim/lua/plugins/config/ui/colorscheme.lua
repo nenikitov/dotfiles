@@ -33,12 +33,12 @@ return {
         'joshdick/onedark.vim',
     },
     colorscheme {
-        'nenikitov/termcolors.nvim',
-        branch = 'remake',
-        --dir = '~/SharedFiles/Projects/nvim/termcolors.nvim/',
+        --'nenikitov/termcolors.nvim',
+        --branch = 'remake',
+        dir = '~/SharedFiles/Projects/nvim/termcolors.nvim/',
         dependencies = {
             'nenikitov/highlight-builder.nvim',
-            -- dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim/',
+            dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim/',
         },
     },
 }
