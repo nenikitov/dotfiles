@@ -6,5 +6,5 @@ interface WorkspacesConfig extends ModuleConfig {
 }
 
 interface WorkspacesArgs extends Partial<WorkspacesConfig> {
-  monitor: import('resource:///com/github/Aylur/ags/service/hyprland.js').Monitor;
+  monitor: number;
 }

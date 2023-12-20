@@ -1,4 +1,4 @@
-type KeyboardLed = 'numlock' | 'capslock' | 'scrolllock';
+type KeyboardLed = "numlock" | "capslock" | "scrolllock";
 
 interface KeyboardState {
   layout: string;

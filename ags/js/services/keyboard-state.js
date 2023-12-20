@@ -1,14 +1,14 @@
-import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
-import Variable from 'resource:///com/github/Aylur/ags/variable.js';
-import { seconds } from '../utils/time.js';
+import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
+import Variable from "resource:///com/github/Aylur/ags/variable.js";
+
+import { seconds } from "../utils/time.js";
 
 const POLL_RATE = seconds(0.1);
-const DEFAULT_LAYOUT = 'us';
 
 const Keyboard = Variable(
-  /** @type {KeyboardState} */({
-    layout: DEFAULT_LAYOUT,
-    submap: '',
+  /** @type {KeyboardState} */ ({
+    layout: "",
+    submap: "",
     led: {
       caps: false,
       num: false,
@@ -34,43 +34,45 @@ function createLedVariable(led) {
   const variable = Variable(false, {
     poll: [
       POLL_RATE,
-      ['bash', '-c', `cat /sys/class/leds/input[0-9]*::${led}/brightness`],
-      (out) => out.split('\n')[0] === '1',
+      ["bash", "-c", `cat /sys/class/leds/input[0-9]*::${led}/brightness`],
+      (out) => out.split("\n")[0].trim() === "1",
     ],
   });
 
-  const key = {
-    capslock: 'caps',
-    numlock: 'num',
-    scrolllock: 'scroll',
-  }[led];
+  const key =
+    /** @type {{[key: string]: keyof KeyboardState["led"]}} */
+    ({
+      capslock: "caps",
+      numlock: "num",
+      scrolllock: "scroll",
+    })[led];
 
-  variable.connect('changed', () => {
+  variable.connect("changed", () => {
     changeState((state) => {
       state.led[key] = variable.value;
     });
   });
 }
 
-createLedVariable('capslock');
-createLedVariable('numlock');
-createLedVariable('scrolllock');
+createLedVariable("capslock");
+createLedVariable("numlock");
+createLedVariable("scrolllock");
 
-Hyprland.instance.connect(
-  'keyboard-layout',
+Hyprland.connect(
+  "keyboard-layout",
   /**
    * @param {string} keyboard
    * @param {string} layout
    */
-  (keyboard, layout) => {
+  (_, keyboard, layout) => {
     changeState((state) => {
       state.layout = layout;
     });
   }
 );
 
-Hyprland.instance.connect(
-  'submap',
+Hyprland.connect(
+  "submap",
   /**
    * @param {string} submap
    */

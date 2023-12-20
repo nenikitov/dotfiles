@@ -1,13 +1,13 @@
-const second = 1000;
-const minute = 60 * second;
-const hour = 60 * minute;
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
 
 /**
  * @param {number} n
  * @returns {number}
  */
 export function seconds(n) {
-  return second * n;
+  return SECOND * n;
 }
 
 /**
@@ -15,7 +15,7 @@ export function seconds(n) {
  * @returns {number}
  */
 export function minutes(n) {
-  return minute * n;
+  return MINUTE * n;
 }
 
 /**
@@ -23,5 +23,5 @@ export function minutes(n) {
  * @returns {number}
  */
 export function hours(n) {
-  return hour * n;
+  return HOUR * n;
 }
