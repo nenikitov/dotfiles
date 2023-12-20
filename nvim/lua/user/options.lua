@@ -73,7 +73,7 @@ o.backspace = {                            -- Configure what can be erased with 
     'start'                                    -- Start of insert
 }
 vim.cmd(                                   -- Disable auto comment
-    [[ set formatoptions-=cro ]]
+    [[ set formatoptions-=co ]]
 )
 
 -- Search
