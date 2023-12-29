@@ -1,0 +1,25 @@
+# Monokai theme from https://github.com/yosukes-dev/monokai-windows-terminal
+
+[colors.primary]
+background = "#1A1A1A"
+foreground = "#F8F8F2"
+
+[colors.normal]
+black = "#1B1D1E"
+blue = "#465457"
+cyan = "#56C2D6"
+green = "#82B414"
+magenta = "#8C54FE"
+red = "#F92672"
+white = "#CCCCC6"
+yellow = "#FD971F"
+
+[colors.bright]
+black = "#505354"
+blue = "#899CA1"
+cyan = "#8CEDFF"
+green = "#B6E354"
+magenta = "#9E6FFE"
+red = "#FF5995"
+white = "#F8F8F2"
+yellow = "#FEED6C"
