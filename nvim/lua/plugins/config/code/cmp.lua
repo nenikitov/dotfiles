@@ -15,6 +15,7 @@ return {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-calc',
+        'f3fora/cmp-spell',
         -- Icons
         'nvim-tree/nvim-web-devicons',
     },
@@ -32,6 +33,7 @@ return {
                 { name = 'luasnip' },
                 { name = 'calc' },
                 { name = 'buffer' },
+                { name = 'spell' },
                 {
                     name = 'path',
                     option = { trailing_slash = true },

@@ -1,5 +1,8 @@
 local icons = require('user.icons')
 
+local important = 70
+local not_important = 90
+
 return {
     'nvim-lualine/lualine.nvim',
     opts = function()
@@ -10,8 +13,8 @@ return {
         local function hide(min_width)
             return function(str)
                 local width
-                if vim.api.nvim_get_option_value('laststatus') == 3 then
-                    width = vim.api.nvim_get_option_value('columns')
+                if vim.api.nvim_get_option_value('laststatus', {}) == 3 then
+                    width = vim.api.nvim_get_option_value('columns', {})
                 else
                     width = vim.fn.winwidth(0)
                 end
@@ -55,6 +58,7 @@ return {
                     {
                         'branch',
                         icon = icons.status_bar.branch,
+                        fmt = hide(important),
                     },
                     {
                         'diff',
@@ -80,10 +84,12 @@ return {
                 lualine_x = {
                     {
                         'encoding',
+                        fmt = hide(not_important),
                     },
                     {
                         'fileformat',
                         symbols = icons.status_bar.file_format,
+                        fmt = hide(not_important),
                     },
                     -- Fancy spaces
                     {
@@ -103,6 +109,7 @@ return {
                     },
                     {
                         'filetype',
+                        fmt = hide(not_important),
                     },
                 },
                 lualine_y = {
@@ -125,11 +132,13 @@ return {
                                 )
                             end
                         end,
+                        fmt = hide(important),
                     },
                 },
                 lualine_z = {
                     {
                         'progress',
+                        fmt = hide(not_important),
                     },
                     {
                         'location',

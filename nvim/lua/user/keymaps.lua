@@ -342,7 +342,7 @@ function M.treesitter()
 end
 
 function M.gitsigns(buf)
-    whichkey_group({ 'n', 'v' }, '<LEADER>g', 'git')
+    whichkey_group({ 'n', 'v' }, '<LEADER>g', 'git', buf)
 
     local gitsigns = require('gitsigns')
     local opts = { buffer = buf }

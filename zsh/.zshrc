@@ -5,6 +5,8 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
 
+# TTY Color scheme
+#source "${modules_path}/tty-colorscheme.zsh"
 
 # Prompt
 source "${modules_path}/prompt.zsh"

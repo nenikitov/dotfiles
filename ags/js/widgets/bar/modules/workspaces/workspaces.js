@@ -1,5 +1,6 @@
-import WindowManager from '../../services/window-manager.js';
-import { Box, Button, Label } from 'resource:///com/github/Aylur/ags/widget.js';
+import Widget from "resource:///com/github/Aylur/ags/widget.js";
+
+import WindowManager from "../../../../services/window-manager.js";
 
 /** @type {WorkspacesConfig} */
 const defaultArgs = {
@@ -9,11 +10,11 @@ const defaultArgs = {
   formatTooltip: (workspace) => {
     return (
       workspace.index +
-      ' - ' +
+      " - " +
       (workspace.display.name || workspace.display.icon) +
-      '\n' +
+      "\n" +
       workspace.clients.length +
-      ' opened'
+      " opened"
     );
   },
   hideEmpty: false,
@@ -27,8 +28,8 @@ const defaultArgs = {
 export function Workspaces({ monitor, ...args }) {
   const config = Object.assign({}, defaultArgs, args);
 
-  return Box({
-    className: 'workspaces' + (args.class ? ` ${args.class}` : ''),
+  return Widget.Box({
+    class_name: "workspaces" + (args.class ? ` ${args.class}` : ""),
     vertical: config.vertical,
     connections: [
       [
@@ -36,7 +37,7 @@ export function Workspaces({ monitor, ...args }) {
         (box) => {
           let monitors = config.allMonitors
             ? WindowManager.value
-            : WindowManager.value.filter((m) => monitor.id === m.id);
+            : WindowManager.value.filter((m) => monitor === m.id);
 
           if (!monitors || monitors.length === 0) {
             return;
@@ -48,25 +49,25 @@ export function Workspaces({ monitor, ...args }) {
               workspaces = workspaces.filter((w) => w.clients.length !== 0 || w.active);
             }
 
-            return Box({
-              className: `workspace-group ${m.id}`,
+            return Widget.Box({
+              class_name: `workspace-group ${m.id}`,
               vertical: config.vertical,
               children: workspaces.map((w) =>
-                Button({
-                  className: [
-                    'workspace',
+                Widget.Button({
+                  class_name: [
+                    "workspace",
                     w.index,
-                    w.active ? 'active' : undefined,
-                    w.clients.length > 0 ? 'occupied' : undefined,
-                    String(w.index) === w.display.name ? 'misc' : undefined,
+                    w.active ? "active" : undefined,
+                    w.clients.length > 0 ? "occupied" : undefined,
+                    String(w.index) === w.display.name ? "misc" : undefined,
                   ]
                     .filter((e) => e !== undefined)
-                    .join(' '),
-                  child: Label({
+                    .join(" "),
+                  child: Widget.Label({
                     label: config.format(w),
                   }),
                   tooltip_text: config.formatTooltip(w),
-                  onClicked: () => w.focus(),
+                  on_clicked: () => w.focus(),
                 })
               ),
             });

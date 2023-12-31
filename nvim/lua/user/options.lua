@@ -73,8 +73,8 @@ o.backspace = {                             -- Configure what can be erased with
     'indent',                                   -- Indentation
     'start'                                     -- Start of insert
 }
-vim.cmd(                                    -- Disable auto comment
-    [[ set formatoptions-=cro ]]
+vim.cmd(                                   -- Disable auto comment
+    [[ set formatoptions-=co ]]
 )
 
 -- Search

@@ -17,7 +17,7 @@ language.servers {
     marksman = {},
 }
 language.formatters {
-    markdown = { 'injected', 'prettier' },
+    markdown = { 'injected' },
 }
 
 return {
