@@ -314,11 +314,11 @@ function M.lsp(buf)
     map('n', '<LEADER>so', vim.lsp.buf.hover, 'Show hover', opts)
     map('n', '<LEADER>ss', vim.lsp.buf.signature_help, 'Show signature', opts)
 
-    map('n', '<LEADER>ea', vim.lsp.buf.code_action, 'Automatic fix', opts)
+    map({ 'n', 'v' }, '<LEADER>ea', vim.lsp.buf.code_action, 'Automatic fix', opts)
     map('n', '<LEADER>ec', vim.lsp.codelens.run, 'Codelens', opts)
 
     map('n', '<LEADER>rr', vim.lsp.buf.rename, 'Rename', opts)
-    map('n', '<LEADER>rF', function()
+    map({ 'n', 'v' }, '<LEADER>rF', function()
         vim.lsp.buf.format { async = true }
     end, 'Format with LSP', opts)
 

@@ -248,7 +248,7 @@ M.status_bar = {
         section = '',
     },
     macro = tty.choose('  ', '@'),
-    branch = tty.choose(' ', ' '),
+    branch = tty.choose(' ', 'git'),
     diagnostics = {
         error = M.diagnostics.error .. ' ',
         warn = M.diagnostics.warning .. ' ',
