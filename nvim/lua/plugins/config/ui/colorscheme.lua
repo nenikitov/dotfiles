@@ -35,9 +35,11 @@ return {
     colorscheme {
         'nenikitov/termcolors.nvim',
         --dir = '~/SharedFiles/Projects/nvim/termcolors.nvim/',
+        --'nenikitov/termcolors.nvim',
+        --branch = 'remake',
         dependencies = {
             'nenikitov/highlight-builder.nvim',
-            -- dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim/',
+            dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim/',
         },
     },
     colorscheme {

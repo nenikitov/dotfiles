@@ -10,12 +10,14 @@ language.treesitter {
     'markdown',
     'markdown_inline',
     'latex',
+    'html',
+    'css',
 }
 language.servers {
     marksman = {},
 }
 language.formatters {
-    markdown = { 'injected', 'prettier' },
+    markdown = { 'injected' },
 }
 
 return {

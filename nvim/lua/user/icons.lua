@@ -231,12 +231,48 @@ M.todo = {
 M.satellite = {
     moving = tty.choose({ '⎺', '⎻', '⎼', '⎽' }, { '─' }),
     increasing = tty.choose({ '-', '=', '≡', '≣' }, { '-', '=', '≡' }),
-    search = tty.choose({ '⠁', '⠉', '⠋', '⠛', '⠟', '⠿', '⡿', '⣿' }, { '-', '=', '≡' }),
+    search = tty.choose(
+        { '⠁', '⠉', '⠋', '⠛', '⠟', '⠿', '⡿', '⣿' },
+        { '-', '=', '≡' }
+    ),
     git = {
         add = M.gitsigns.add,
         change = M.gitsigns.change,
         delete = '-',
     },
+}
+
+M.status_bar = {
+    separator = {
+        component = '|',
+        section = '',
+    },
+    macro = tty.choose('  ', '@'),
+    branch = tty.choose(' ', 'git'),
+    diagnostics = {
+        error = M.diagnostics.error .. ' ',
+        warn = M.diagnostics.warning .. ' ',
+        info = M.diagnostics.info .. ' ',
+        hint = M.diagnostics.hint .. ' ',
+    },
+    diff = {
+        added = tty.choose('', '+') .. ' ',
+        modified = tty.choose('', '~') .. ' ',
+        removed = tty.choose('', '-') .. ' ',
+    },
+    file_name = {
+        modified = M.nvim_tree.modified,
+        readonly = tty.choose(' ', '-'),
+    },
+    file_format = {
+        unix = tty.choose('󰌽', 'lf'),
+        dos = tty.choose('󰕰', 'crlf'),
+        mac = tty.choose('', 'cr'),
+    },
+    space = {
+        space = tty.choose('󱁐', 'sw') .. ' ',
+        tab = tty.choose('', 'ts') .. ' ',
+    }
 }
 
 return M
