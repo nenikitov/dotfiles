@@ -71,9 +71,9 @@ export function Workspaces({ monitor, ...args }) {
                       label: config.format(w),
                     }),
                     setup: (self) => {
-                      const grid = new Gtk.Grid({ column_homogeneous: true });
+                      const workspaceDots = new Gtk.Grid({ column_homogeneous: true });
                       for (const c of w.clients.slice(0, config.maxDots)) {
-                        grid.add(
+                        workspaceDots.add(
                           Widget.Box({
                             child: Widget.Icon({
                               class_name: ["client-dot", c.active ? "active" : undefined]
@@ -85,7 +85,17 @@ export function Workspaces({ monitor, ...args }) {
                           })
                         );
                       }
-                      self.overlays = [grid];
+
+                      const workpaceLine = Widget.Box({
+                        child: Widget.Icon({
+                          class_name: "workspace-line",
+                          size: 2,
+                        }),
+                        vpack: "end",
+                        homogeneous: true,
+                      });
+
+                      self.overlays = [workspaceDots, workpaceLine];
                     },
                   }),
                   tooltip_text: config.formatTooltip(w),

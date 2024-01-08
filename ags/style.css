@@ -2,19 +2,14 @@
   background: transparent;
 }
 
-.workspace {
-  border: 2px solid transparent;
-}
-
-.workspace.active {
-  border-bottom-color: red;
-}
-
 .workspace .client-dot {
   background: white;
   border-radius: 100%;
 }
-
 .workspace .client-dot.active {
   background: cyan;
+}
+
+.workspace.active .workspace-line {
+  background: white;
 }
