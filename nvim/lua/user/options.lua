@@ -7,7 +7,6 @@ local o = vim.opt
 o.swapfile = false                         -- Do not create swap file for buffers
 o.clipboard = 'unnamedplus'                -- Use system clipboard
 o.undofile = true
-o.autoread = true
 
 -- Input
 o.timeoutlen = 500                         -- Wait for a mapped sequence to complete
@@ -67,11 +66,6 @@ o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 o.foldtext = 'v:lua.vim.treesitter.foldext()'
 
 -- Typing
-o.backspace = {                            -- Configure what can be erased with <BACKSPACE>
-    'eol',                                     -- Line breaks
-    'indent',                                  -- Indentation
-    'start'                                    -- Start of insert
-}
 vim.cmd(                                   -- Disable auto comment
     [[ set formatoptions-=co ]]
 )
