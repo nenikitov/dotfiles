@@ -5,7 +5,7 @@ import { execAsync } from "resource:///com/github/Aylur/ags/utils.js";
 
 import * as user from "../../user.js";
 
-const WORKSPACES_PER_MONITOR = 10;
+const SPECIAL_WORKSPACE_ID = -99;
 
 const WindowManager = Variable(/** @type {Monitor[]} */ ([]), {});
 export default WindowManager;
@@ -54,17 +54,19 @@ function parseClient(client) {
 }
 
 /**
+ * @param {number} workspacesPerMonitor
  * @param {Hyprland["clients"]} clientsAll
  * @param {WorkspaceInfo[]} workspacesDefaults
- * @param {Hyprland["monitors"][0]} m
+ * @param {Hyprland["monitors"][0]} monitor
  * @returns {(workspace: Hyprland["workspaces"][0]) => Workspace}
  */
-function parseWorkspace(clientsAll, workspacesDefaults, m) {
+function parseWorkspace(workspacesPerMonitor, clientsAll, workspacesDefaults, monitor) {
   return (workspace) => {
     const clients = clientsAll.filter((c) => c.workspace.id === workspace.id).map(parseClient);
 
-    const index = ((workspace.id - 1) % WORKSPACES_PER_MONITOR) + 1;
-    const defaults = workspacesDefaults[index - 1];
+    const special = workspace.id === SPECIAL_WORKSPACE_ID;
+    const index = special ? workspace.id : ((workspace.id - 1) % workspacesPerMonitor) + 1;
+    const defaults = special ? { icon: "", name: "" } : workspacesDefaults[index - 1];
 
     return {
       id: workspace.id,
@@ -76,7 +78,7 @@ function parseWorkspace(clientsAll, workspacesDefaults, m) {
             ? defaults?.name ?? workspace.name
             : workspace.name,
       },
-      active: workspace.id === m.activeWorkspace.id,
+      active: workspace.id === monitor.activeWorkspace.id,
       clients: clients,
       focus: () => {},
     };
@@ -94,8 +96,10 @@ function parseMonitor(config) {
 
     /** @type {Workspace[]} */
     const workspaces = Hyprland.workspaces
-      .filter((w) => w.monitor === monitor.name)
-      .map(parseWorkspace(Hyprland.clients, workspacesDefaults, monitor));
+      .filter((w) => w.id != SPECIAL_WORKSPACE_ID && w.monitor === monitor.name)
+      .map(
+        parseWorkspace(config.workspacesPerMonitor, Hyprland.clients, workspacesDefaults, monitor)
+      );
 
     for (const [index, defaults] of workspacesDefaults.entries()) {
       const id = monitor.id * config.workspacesPerMonitor + index + 1;

@@ -13,3 +13,7 @@
 .workspace.active .workspace-line {
   background: white;
 }
+
+.dbg {
+    background: red;
+}

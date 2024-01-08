@@ -23,6 +23,7 @@ const defaultArgs = {
   allMonitors: false,
   maxDots: 3,
   vertical: false,
+  special: "first",
 };
 
 /**
@@ -71,9 +72,11 @@ export function Workspaces({ monitor, ...args }) {
                       label: config.format(w),
                     }),
                     setup: (self) => {
-                      const workspaceDots = new Gtk.Grid({ column_homogeneous: true });
+                      const workspaceDotsGrid = new Gtk.Grid({
+                        column_homogeneous: true,
+                      });
                       for (const c of w.clients.slice(0, config.maxDots)) {
-                        workspaceDots.add(
+                        workspaceDotsGrid.add(
                           Widget.Box({
                             child: Widget.Icon({
                               class_name: ["client-dot", c.active ? "active" : undefined]
@@ -85,6 +88,11 @@ export function Workspaces({ monitor, ...args }) {
                           })
                         );
                       }
+                      const workspaceDots = Widget.Box({
+                        child: workspaceDotsGrid,
+                        vpack: "start",
+                        homogeneous: true,
+                      });
 
                       const workpaceLine = Widget.Box({
                         child: Widget.Icon({
