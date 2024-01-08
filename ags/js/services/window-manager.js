@@ -66,8 +66,6 @@ function parseWorkspace(clientsAll, workspacesDefaults, m) {
     const index = ((workspace.id - 1) % WORKSPACES_PER_MONITOR) + 1;
     const defaults = workspacesDefaults[index - 1];
 
-    console.error(m.activeWorkspace.id);
-
     return {
       id: workspace.id,
       index,

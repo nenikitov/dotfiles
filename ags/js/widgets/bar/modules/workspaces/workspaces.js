@@ -1,3 +1,5 @@
+import Gtk from "gi://Gtk";
+
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
 import WindowManager from "../../../../services/window-manager.js";
@@ -19,6 +21,7 @@ const defaultArgs = {
   },
   hideEmpty: false,
   allMonitors: false,
+  maxDots: 3,
   vertical: false,
 };
 
@@ -61,10 +64,29 @@ export function Workspaces({ monitor, ...args }) {
                     w.clients.length > 0 ? "occupied" : undefined,
                     String(w.index) === w.display.name ? "misc" : undefined,
                   ]
-                    .filter((e) => e !== undefined)
+                    .filter(Boolean)
                     .join(" "),
-                  child: Widget.Label({
-                    label: config.format(w),
+                  child: Widget.Overlay({
+                    child: Widget.Label({
+                      label: config.format(w),
+                    }),
+                    setup: (self) => {
+                      const grid = new Gtk.Grid({ column_homogeneous: true });
+                      for (const c of w.clients.slice(0, config.maxDots)) {
+                        grid.add(
+                          Widget.Box({
+                            child: Widget.Icon({
+                              class_name: ["client-dot", c.active ? "active" : undefined]
+                                .filter(Boolean)
+                                .join(" "),
+                              size: 2,
+                            }),
+                            hpack: "center",
+                          })
+                        );
+                      }
+                      self.overlays = [grid];
+                    },
                   }),
                   tooltip_text: config.formatTooltip(w),
                   on_clicked: () => w.focus(),

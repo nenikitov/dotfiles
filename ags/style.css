@@ -9,3 +9,12 @@
 .workspace.active {
   border-bottom-color: red;
 }
+
+.workspace .client-dot {
+  background: white;
+  border-radius: 100%;
+}
+
+.workspace .client-dot.active {
+  background: cyan;
+}

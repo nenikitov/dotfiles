@@ -3,6 +3,7 @@ interface WorkspacesConfig extends ModuleConfig {
   formatTooltip: (workspace: Workspace) => string;
   hideEmpty: boolean;
   allMonitors: boolean;
+  maxDots: 3;
 }
 
 interface WorkspacesArgs extends Partial<WorkspacesConfig> {
