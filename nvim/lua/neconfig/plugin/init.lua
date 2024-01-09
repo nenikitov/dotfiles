@@ -1,1 +1,0 @@
-require('neconfig.plugin.lazy')

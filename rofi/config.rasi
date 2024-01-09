@@ -1,6 +1,6 @@
 configuration {
     /* Behavior */
-    modi: "window,drun,run";
+    modi: "drun,run";
     terminal: "alacritty";
     scroll-method: 0;
     click-to-exit: true;

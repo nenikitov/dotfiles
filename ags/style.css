@@ -2,10 +2,18 @@
   background: transparent;
 }
 
-.workspace {
-  border: 2px solid transparent;
+.workspace .client-dot {
+  background: white;
+  border-radius: 100%;
+}
+.workspace .client-dot.active {
+  background: cyan;
 }
 
-.workspace.active {
-  border-bottom-color: red;
+.workspace.active .workspace-line {
+  background: white;
+}
+
+.dbg {
+    background: red;
 }

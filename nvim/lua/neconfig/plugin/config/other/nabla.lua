@@ -1,3 +1,0 @@
-return {
-    'jbyuki/nabla.nvim'
-}

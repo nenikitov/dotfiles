@@ -1,7 +1,7 @@
 # List all files with colors
-alias ls='exa --color=always -aF --group-directories-first'
+alias ls='eza --color=always -aF --group-directories-first'
 # List all files with colors in long format with extra git info
-alias ll='exa --color=always -laFgh --group-directories-first --git --time-style=long-iso --icons'
+alias ll='eza --color=always -laFgh --group-directories-first --git --time-style=long-iso --icons'
 
 
 # Easy clear
