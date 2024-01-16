@@ -24,7 +24,7 @@ function getInfo(config) {
 
 /**
  * @param {Hyprland["clients"][0]} client
- * @return Client
+ * @returns {Client}
  */
 function parseClient(client) {
   /** @type {Client} */
@@ -36,9 +36,12 @@ function parseClient(client) {
     position: client.at,
     size: client.size,
     hidden: client.hidden,
+    mapped: client.mapped,
     floating: client.floating,
     pinned: client.pinned,
     fullscreen: client.fullscreen,
+    class: client.class,
+    initialClass: client.initialClass,
     focus: () => execAsync(`hyprctl dispatch focuswindow address:${client.address}`),
   };
   const queriedInfo =
@@ -62,7 +65,10 @@ function parseClient(client) {
  */
 function parseWorkspace(workspacesPerMonitor, clientsAll, workspacesDefaults, monitor) {
   return (workspace) => {
-    const clients = clientsAll.filter((c) => c.workspace.id === workspace.id).map(parseClient);
+    const clients = clientsAll
+      .filter((c) => c.workspace.id === workspace.id)
+      .filter((c) => c.mapped && !c.hidden)
+      .map(parseClient);
 
     const special = workspace.id === SPECIAL_WORKSPACE_ID;
     const index = special ? workspace.id : ((workspace.id - 1) % workspacesPerMonitor) + 1;

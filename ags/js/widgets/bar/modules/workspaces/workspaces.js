@@ -3,6 +3,7 @@ import Gtk from "gi://Gtk";
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
 import WindowManager from "../../../../services/window-manager.js";
+import { groupBy } from "../../../../utils/iterator.js";
 
 /** @type {WorkspacesConfig} */
 const defaultArgs = {
@@ -75,11 +76,15 @@ export function Workspaces({ monitor, ...args }) {
                       const workspaceDotsGrid = new Gtk.Grid({
                         column_homogeneous: true,
                       });
-                      for (const c of w.clients.slice(0, config.maxDots)) {
+                      const clients = groupBy(w.clients, (e) => e.initialClass);
+                      for (const c of Object.values(clients).slice(0, config.maxDots)) {
                         workspaceDotsGrid.add(
                           Widget.Box({
                             child: Widget.Icon({
-                              class_name: ["client-dot", c.active ? "active" : undefined]
+                              class_name: [
+                                "client-dot",
+                                c.some((c) => c.active) ? "active" : undefined,
+                              ]
                                 .filter(Boolean)
                                 .join(" "),
                               size: 2,
