@@ -11,6 +11,7 @@ language.mason {
 language.treesitter {
     'python',
     'pymanifest',
+    'requirements',
 }
 language.servers {
     pyright = {
