@@ -16,10 +16,13 @@ interface Client extends Focusable {
   position: [number, number];
   size: [number, number];
   hidden: boolean;
+  mapped: boolean;
   floating: boolean;
   pinned: boolean;
   fullscreen: boolean;
   desktopInfo?: ClientDesktopInfo;
+  class: string;
+  initialClass: string;
 }
 
 interface WorkspaceInfo {
