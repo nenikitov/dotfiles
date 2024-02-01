@@ -2,6 +2,7 @@ import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
 import { Clock } from "./modules/clock/clock.js";
 import { Workspaces } from "./modules/workspaces/workspaces.js";
+import { Battery } from "./modules/battery/battery.js";
 
 /**
  * @typedef {import("gtk-3.0/gtk-3.0").Gtk.Widget} GtkWidget
@@ -39,6 +40,7 @@ function End(monitor) {
     class_name: "end",
     hpack: "end",
     children: [
+      Battery({}),
       Clock({
         format: "%H:%M:%S\n%a %Y-%m-%d",
         formatTooltip: "%H:%M:%S\n%A\n%B %d, %Y\n%Z (%:z)",
