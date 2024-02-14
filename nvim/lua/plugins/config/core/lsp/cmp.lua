@@ -1,5 +1,3 @@
----@diagnostic disable: missing-fields
-
 local keymaps = require('user.keymaps')
 local icons = require('user.icons')
 local tty = require('utils.tty')
@@ -61,6 +59,7 @@ return {
                     item.menu = '[' .. entry.source.name .. ']'
                     return item
                 end,
+                expandable_indicator = true,
             },
             window = {
                 completion = {

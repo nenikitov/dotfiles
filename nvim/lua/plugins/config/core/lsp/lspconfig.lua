@@ -67,12 +67,21 @@ return {
                 header = '',
                 source = true,
                 prefix = function(diagnostic)
-                    return ({
+                    local icon = ({
                         [vim.diagnostic.severity.ERROR] = icons.diagnostics.error,
                         [vim.diagnostic.severity.WARN] = icons.diagnostics.warning,
                         [vim.diagnostic.severity.HINT] = icons.diagnostics.hint,
                         [vim.diagnostic.severity.INFO] = icons.diagnostics.info,
                     })[diagnostic.severity] .. '  '
+                    local highlight = 'DiagnosticSign'
+                        .. ({
+                            [vim.diagnostic.severity.ERROR] = 'Error',
+                            [vim.diagnostic.severity.WARN] = 'Warn',
+                            [vim.diagnostic.severity.HINT] = 'Hint',
+                            [vim.diagnostic.severity.INFO] = 'Info',
+                        })[diagnostic.severity]
+
+                    return icon, highlight
                 end,
             },
             signs = true,
@@ -81,12 +90,12 @@ return {
         -- Borders
         require('lspconfig.ui.windows').default_options.border = icons.border
         vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-            border = icons.border
+            border = icons.border,
         })
 
         vim.lsp.handlers['textDocument/signatureHelp'] =
             vim.lsp.with(vim.lsp.handlers.signature_help, {
-                border = icons.border
+                border = icons.border,
             })
 
         -- Signs
