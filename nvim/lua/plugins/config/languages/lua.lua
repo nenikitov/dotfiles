@@ -28,9 +28,9 @@ language.formatters {
     lua = { 'stylua' },
 }
 
-return {
-    language.before_lsp {
-        'folke/neodev.nvim',
-        config = true,
-    },
+language.before_lsp {
+    'folke/neodev.nvim',
+    config = true,
 }
+
+return {}

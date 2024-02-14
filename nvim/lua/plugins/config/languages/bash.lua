@@ -11,5 +11,4 @@ language.servers {
     bashls = {},
 }
 
-return {
-}
+return {}

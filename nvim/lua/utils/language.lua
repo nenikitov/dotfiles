@@ -72,43 +72,12 @@ end
 local before_lsp = {}
 
 ---@param spec LazySpec
----@return LazySpec
 function M.before_lsp(spec)
-    local insert
-    if type(spec) == 'string' then
-        insert = spec
-    else
-        insert = spec[1]
-    end
-    if spec.dir then
-        insert = { spec.dir }
-    end
-    if spec.name then
-        insert = spec.name
-    end
-
-    table.insert(before_lsp, insert)
-    return vim.tbl_deep_extend('force', spec, {
-        -- HACK(nenikitov): no clue how setting a lower priority makes it load before...
-        priority = 10,
-    })
+    table.insert(before_lsp, spec)
 end
 
 function M.get_before_lsp()
     return before_lsp
-end
-
-function M.after_lsp(spec)
-    local dependency_lsp = {
-        'neovim/nvim-lspconfig',
-    }
-    if spec.dependencies then
-        table.insert(spec.dependencies, dependency_lsp)
-    else
-        spec.dependencies = dependency_lsp
-    end
-
-    return spec
 end
 
 return M

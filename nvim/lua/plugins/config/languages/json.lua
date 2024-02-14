@@ -27,8 +27,8 @@ language.formatters {
     lua = { 'prettierd' },
 }
 
-return {
-    language.before_lsp {
-        'b0o/SchemaStore.nvim',
-    },
+language.before_lsp {
+    'b0o/SchemaStore.nvim',
 }
+
+return {}
