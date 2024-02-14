@@ -14,5 +14,6 @@ return {
         formatters_by_ft = vim.tbl_deep_extend('force', {
             ['*'] = { 'trim_newlines', 'trim_whitespace' },
         }, language.get_formatters()),
+        log_level = vim.log.levels.DEBUG
     },
 }

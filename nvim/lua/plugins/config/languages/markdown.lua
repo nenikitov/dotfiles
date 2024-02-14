@@ -3,8 +3,10 @@ local language = require('utils.language')
 language.mason {
     -- Language server
     'marksman',
+    'texlab',
     -- Formatter
     'prettier',
+    'latexindent',
 }
 language.treesitter {
     'markdown',
@@ -15,9 +17,11 @@ language.treesitter {
 }
 language.servers {
     marksman = {},
+    texlab = {},
 }
 language.formatters {
     markdown = { 'injected' },
+    tex = { 'latexindent' },
 }
 
 return {

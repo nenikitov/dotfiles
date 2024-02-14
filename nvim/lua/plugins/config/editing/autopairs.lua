@@ -18,18 +18,17 @@ return {
 
         autopairs.add_rules {
             Rule('$', '$', { 'tex', 'latex', 'markdown' })
-                :with_pair(ts_cond.is_not_ts_node({ "inline_formula" }))
+                :with_pair(ts_cond.is_not_ts_node { 'inline_formula' })
                 :with_pair(cond.not_before_regex('[^%s%$]')),
-            Rule('<', '>')
-                :with_pair(cond.before_regex('%a+'))
-                :with_move(cond.after_text('>')),
-            Rule('|', '|', { 'rust' })
-                :with_move(cond.after_text('|')),
+            Rule('<', '>', { 'rust' }):with_pair(cond.before_regex('[%a:]+')):with_move(function(o)
+                return o.char == '>'
+            end),
+            Rule('|', '|', { 'rust' }):with_move(cond.after_text('|')),
         }
     end,
     opts = function()
         return {
             check_ts = true,
         }
-    end
+    end,
 }
