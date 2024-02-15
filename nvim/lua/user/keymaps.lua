@@ -250,8 +250,13 @@ function M.completion()
         ['<C-e>'] = map_cmp(mapping.scroll_docs(-1)),
         ['<C-j>'] = map_cmp(mapping.select_next_item()),
         ['<C-k>'] = map_cmp(mapping.select_prev_item()),
-        ['<C-SPACE>'] = map_cmp(mapping.complete()),
-        ['<C-q>'] = map_cmp(mapping.abort()),
+        ['<C-SPACE>'] = function(_)
+            if cmp.visible() then
+                cmp.abort()
+            else
+                cmp.complete()
+            end
+        end,
         ['<C-l>'] = map_cmp(function(fallback)
             if cmp.visible() then
                 cmp.confirm()
