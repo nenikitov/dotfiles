@@ -9,7 +9,6 @@ return {
     },
     config = function(_, opts)
         require('dropbar').setup(opts)
-
         keymaps.dropbar_open()
     end,
     opts = function()
@@ -30,9 +29,9 @@ return {
                 entry = {
                     padding = {
                         left = 0,
-                        right = 0
-                    }
-                }
+                        right = 0,
+                    },
+                },
             },
         }
     end,

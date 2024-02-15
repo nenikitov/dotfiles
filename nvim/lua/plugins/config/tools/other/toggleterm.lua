@@ -14,8 +14,8 @@ return {
                 border = icons.border,
             },
             highlights = {
-                FloatBorder = { link = 'WinSeparator' }
-            }
+                FloatBorder = { link = 'WinSeparator' },
+            },
         },
     },
 }

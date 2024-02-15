@@ -10,7 +10,7 @@ return {
             },
             select = {
                 telescope = require('telescope.themes').get_dropdown {
-                    borderchars = require('plugins.config.tools.telescope').opts().defaults.borderchars
+                    borderchars = require('plugins.config.tools.files.telescope').opts().defaults.borderchars,
                 },
             },
         }

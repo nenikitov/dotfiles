@@ -1,5 +1,4 @@
 local keymaps = require('user.keymaps')
-local icons = require('user.icons')
 
 return {
     'nvim-neo-tree/neo-tree.nvim',
@@ -10,7 +9,6 @@ return {
     },
     config = function(_, opts)
         require('neo-tree').setup(opts)
-
         keymaps.neo_tree_open()
     end,
     opts = {

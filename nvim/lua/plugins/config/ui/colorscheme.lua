@@ -3,6 +3,7 @@ local function colorscheme(args)
     return args
 end
 
+-- TODO(nenikitov): Make this into a standalone plugin
 local function colorscheme_loader()
     return {
         dir = '',

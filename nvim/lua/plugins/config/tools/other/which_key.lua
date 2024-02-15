@@ -6,7 +6,6 @@ return {
     priority = 900,
     config = function(_, opts)
         local which_key = require('which-key')
-
         which_key.setup(opts)
 
         keymaps.whichkey_register(function(mode, keys, o)

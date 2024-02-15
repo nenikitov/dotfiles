@@ -8,9 +8,7 @@ return {
         'nvim-tree/nvim-web-devicons',
     },
     config = function(_, opts)
-        local telescope = require('telescope')
-        telescope.setup(opts)
-
+        require('telescope').setup(opts)
         keymaps.telescope_open()
     end,
     opts = function()
