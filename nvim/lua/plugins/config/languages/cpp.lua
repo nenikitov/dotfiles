@@ -1,16 +1,15 @@
 local language = require('utils.language')
 
-language.mason {
-    -- Language server
-    'clangd',
-    'cpplint',
+return language.register {
+    tools = {
+        -- Language servers
+        'clangd',
+    },
+    parsers = {
+        'c',
+        'cpp',
+    },
+    servers = {
+        clangd = {},
+    },
 }
-language.treesitter {
-    'c',
-    'cpp',
-}
-language.servers {
-    clangd = {},
-}
-
-return {}

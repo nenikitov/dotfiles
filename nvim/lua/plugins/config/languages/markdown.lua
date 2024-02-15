@@ -1,34 +1,35 @@
 local language = require('utils.language')
 
-language.mason {
-    -- Language server
-    'marksman',
-    'texlab',
-    -- Formatter
-    'prettier',
-    'latexindent',
-}
-language.treesitter {
-    'markdown',
-    'markdown_inline',
-    'latex',
-    'html',
-    'css',
-}
-language.servers {
-    marksman = {},
-    texlab = {},
-}
-language.formatters {
-    markdown = { 'injected' },
-    tex = { 'latexindent' },
-}
-
-return {
-    {
-        'iamcco/markdown-preview.nvim',
-        build = function()
-            vim.fn['mkdp#util#install']()
-        end,
+return language.register {
+    tools = {
+        -- Language server
+        'marksman',
+        'texlab',
+        -- Formatter
+        'prettier',
+        'latexindent',
+    },
+    parsers = {
+        'markdown',
+        'markdown_inline',
+        'latex',
+        'html',
+        'css',
+    },
+    servers = {
+        marksman = {},
+        texlab = {},
+    },
+    formatters = {
+        markdown = { 'injected' },
+        tex = { 'latexindent' },
+    },
+    plugins = {
+        after_core = {
+            'iamcco/markdown-preview.nvim',
+            build = function()
+                vim.fn['mkdp#util#install']()
+            end,
+        },
     },
 }

@@ -9,7 +9,8 @@ return {
         'williamboman/mason-lspconfig.nvim',
         'hrsh7th/cmp-nvim-lsp',
         'folke/neoconf.nvim',
-        language.get_before_lsp(),
+        -- TODO(nenikitov): This is before LSP, make this before everything in core
+        language.plugins_before_core(),
     },
     config = function(_, opts)
         local mason_lspconfig = require('mason-lspconfig')
@@ -110,6 +111,6 @@ return {
         end
     end,
     opts = {
-        servers = language.get_servers(),
+        servers = language.servers(),
     },
 }

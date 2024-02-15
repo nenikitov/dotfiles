@@ -26,7 +26,7 @@ return {
             'diff',
             'regex',
 
-            unpack(language.get_treesitter()),
+            unpack(language.parsers()),
         },
         sync_install = false,
         highlight = {

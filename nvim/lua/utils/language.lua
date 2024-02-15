@@ -1,83 +1,127 @@
 local M = {}
 
----@type string[]
-local mason = {}
+---@alias LanguageParsers string[]
+---@alias LanguageTools string[]
+---@alias LanguageServers {[string]: (table | fun(): table)}
+---@alias LanguageFormatters {[string]: (string | string[])[]}
+---@alias LanguageLinters {[string]: string[]}
+---@alias LanguagePlugins LazySpec
 
----@param tools string[]
-function M.mason(tools)
-    vim.list_extend(mason, tools)
+---@class LanguageSpec
+---@field parsers LanguageParsers | nil Names of TreeSitter parsers (see `TSInstall`) to install.
+---@field tools LanguageTools | nil Names of tools (see`:MasonInstall` or `lspconfig`) to install.
+---@field servers LanguageServers | nil Configuration for LSP servers, key is server name, value is server config.
+---@field linters LanguageLinters | nil Configuration for linters, key is filetype name, value is linters.
+---@field formatters LanguageServers | nil Configuration for formatters, key is filetype name, value is formatters.
+---@field plugins { before_core: LanguagePlugins | nil, after_core: LanguagePlugins | nil } | nil Configuration for formatters, key is filetype name, value is formatters.
+
+---@type LanguageParsers
+local parsers = {}
+function M.parsers()
+    return parsers
 end
 
-function M.get_mason()
-    return mason
+---@type LanguageTools
+local tools = {}
+function M.tools()
+    return tools
 end
 
----@type string[]
-local treesitter_parsers = {}
-
----@param parsers string[]
-function M.treesitter(parsers)
-    vim.list_extend(treesitter_parsers, parsers)
-end
-
-function M.get_treesitter()
-    return treesitter_parsers
-end
-
----@alias ServerConfig { [string]: (table | fun(): table) }
----@type ServerConfig
+---@type LanguageServers
 local servers = {}
-
----@param config ServerConfig
-function M.servers(config)
-    local s = vim.tbl_deep_extend('force', servers, config)
-    ---@cast s -nil
-    servers = s
-end
-
-function M.get_servers()
+function M.servers()
     return servers
 end
 
----@alias Linters {[string]: string[]}
----@type Linters
-local linters = {}
-
----@param config Linters
-function M.linters(config)
-    local l = vim.tbl_deep_extend('force', linters, config)
-    ---@cast l -nil
-    linters = l
-end
-
-function M.get_linters()
-    return linters
-end
-
----@alias Formatters {[string]: (string | string[])[]}
----@type Formatters
+---@type LanguageFormatters
 local formatters = {}
-
----@param config Linters
-function M.formatters(config)
-    local f = vim.tbl_deep_extend('force', formatters, config)
-    ---@cast f -nil
-    formatters = f
-end
-
-function M.get_formatters()
+function M.formatters()
     return formatters
 end
 
-local before_lsp = {}
-
----@param spec LazySpec
-function M.before_lsp(spec)
-    table.insert(before_lsp, spec)
+---@type LanguageLinters
+local linters = {}
+function M.linters()
+    return linters
 end
 
-function M.get_before_lsp()
-    return before_lsp
+---@type LanguagePlugins[]
+local plugins_before_core = {}
+function M.plugins_before_core()
+    return plugins_before_core
+end
+
+local CORE_DEPENDENCIES = {
+    'nvim-treesitter/nvim-treesitter',
+    'neovim/nvim-lspconfig',
+}
+
+---@param spec LanguagePlugins | LanguagePlugins[]
+---@return LanguagePlugins
+local function add_core_dependency(spec)
+    if type(spec) == 'string' then
+        -- Just a string
+        return {
+            spec,
+            dependencies = CORE_DEPENDENCIES,
+        }
+    elseif not vim.tbl_islist(spec) then
+        -- Singular plugin spec
+        if spec.dependencies == nil then
+            -- Without dependencies
+            spec.dependencies = CORE_DEPENDENCIES
+        else
+            -- With dependencies
+            if type(spec.dependencies) == 'string' then
+                spec.dependencies = {
+                    spec.dependencies,
+                    unpack(CORE_DEPENDENCIES),
+                }
+            else
+                ---@diagnostic disable-next-line: param-type-mismatch `spec.dependencies` isn't a string, so it's a table
+                vim.list_extend(spec.dependencies, CORE_DEPENDENCIES)
+            end
+        end
+
+        return spec
+    else
+        -- Multiple specs
+        return vim.tbl_map(add_core_dependency, spec)
+    end
+end
+
+---@param language LanguageSpec
+function M.register(language)
+    if language.parsers ~= nil then
+        vim.list_extend(parsers, language.parsers)
+    end
+    if language.tools ~= nil then
+        vim.list_extend(tools, language.tools)
+    end
+    if language.servers ~= nil then
+        local s = vim.tbl_deep_extend('force', servers, language.servers)
+        ---@cast s -nil
+        servers = s
+    end
+    if language.linters ~= nil then
+        local l = vim.tbl_deep_extend('force', linters, language.linters)
+        ---@cast l -nil
+        linters = l
+    end
+    if language.formatters ~= nil then
+        local f = vim.tbl_deep_extend('force', formatters, language.formatters)
+        ---@cast f -nil
+        formatters = f
+    end
+    if language.plugins ~= nil and language.plugins.before_core ~= nil then
+        table.insert(plugins_before_core, language.plugins.before_core)
+    end
+
+    if language.plugins ~= nil and language.plugins.after_core ~= nil then
+        return add_core_dependency(language.plugins.after_core)
+    else
+        return {}
+    end
 end
 
 return M

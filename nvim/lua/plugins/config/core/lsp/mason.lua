@@ -10,7 +10,7 @@ return {
         },
         opts = {
             ensure_installed = {
-                unpack(language.get_mason()),
+                unpack(language.tools()),
             },
         },
     },

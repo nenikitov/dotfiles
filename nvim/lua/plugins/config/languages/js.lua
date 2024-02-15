@@ -1,28 +1,27 @@
 local language = require('utils.language')
 
-language.mason {
-    -- Language server
-    'tsserver',
-    -- Linter
-    'eslint',
-    -- Formatter
-    'prettierd',
+return language.register {
+    tools = {
+        -- Language server
+        'tsserver',
+        'eslint',
+        -- Formatter
+        'prettierd',
+    },
+    parsers = {
+        'javascript',
+        'jsdoc',
+        'tsx',
+        'typescript',
+    },
+    servers = {
+        tsserver = {},
+        eslint = {},
+    },
+    formatters = {
+        javascript = { 'prettierd' },
+        typescript = { 'prettierd' },
+        javascriptreact = { 'prettierd' },
+        typescriptreact = { 'prettierd' },
+    },
 }
-language.treesitter {
-    'javascript',
-    'jsdoc',
-    'tsx',
-    'typescript',
-}
-language.servers {
-    eslint = {},
-    tsserver = {},
-}
-language.formatters {
-    javascript = { 'prettier' },
-    typescript = { 'prettier' },
-    javascriptreact = { 'prettier' },
-    typescriptreact = { 'prettier' },
-}
-
-return {}

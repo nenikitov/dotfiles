@@ -36,7 +36,7 @@ return {
         opts = {
             linters_by_ft = vim.tbl_deep_extend('force', {
                 --['*'] = { 'cspell' },
-            }, language.get_linters()),
+            }, language.linters()),
             events = { 'BufWritePost', 'BufReadPost', 'BufEnter', 'InsertLeave', 'TextChanged' },
         },
     },

@@ -1,14 +1,14 @@
 local language = require('utils.language')
 
-language.mason {
-    -- Language server
-    'bashls',
+return language.register {
+    tools = {
+        -- Language servers
+        'bashls',
+    },
+    parsers = {
+        'bash',
+    },
+    servers = {
+        bashls = {},
+    },
 }
-language.treesitter {
-    'bash'
-}
-language.servers {
-    bashls = {},
-}
-
-return {}

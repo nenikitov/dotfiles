@@ -1,18 +1,18 @@
 local language = require('utils.language')
 
-language.mason {
-    -- Language server
-    'yamlls',
-}
-language.treesitter {
-    'yaml',
-}
-language.servers {
-    yamlls = {
-        yaml = {
-            keyOrdering = false,
+return language.register {
+    tools = {
+        -- Language server
+        'yamlls',
+    },
+    parsers = {
+        'yaml',
+    },
+    servers = {
+        yamlls = {
+            yaml = {
+                keyOrdering = false,
+            },
         },
     },
 }
-
-return {}
