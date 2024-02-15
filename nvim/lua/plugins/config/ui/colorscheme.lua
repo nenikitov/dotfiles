@@ -1,49 +1,29 @@
-local function colorscheme(args)
-    args.priority = 1000
-    return args
-end
-
--- TODO(nenikitov): Make this into a standalone plugin
-local function colorscheme_loader()
-    return {
-        dir = '',
-        name = 'autoload-colorscheme',
-        priority = 999,
-        config = function()
-            require('user.colorscheme').apply()
-        end,
-    }
-end
+local colorscheme = require('user.colorscheme')
 
 return {
-    colorscheme_loader(),
-    colorscheme {
-        'akinsho/horizon.nvim',
-    },
-    colorscheme {
-        'rebelot/kanagawa.nvim',
-    },
-    colorscheme {
-        'folke/tokyonight.nvim',
-    },
-    colorscheme {
-        'catppuccin/nvim',
-        name = 'catppuccin',
-    },
-    colorscheme {
-        'joshdick/onedark.vim',
-    },
-    colorscheme {
-        'nenikitov/termcolors.nvim',
-        --dir = '~/SharedFiles/Projects/nvim/termcolors.nvim/',
-        --'nenikitov/termcolors.nvim',
-        --branch = 'remake',
+    {
+        'nenikitov/colorscheme-loader.nvim',
+        priority = 1000,
         dependencies = {
-            'nenikitov/highlight-builder.nvim',
-            dir = '~/SharedFiles/Projects/nvim/highlight-builder.nvim/',
+            'akinsho/horizon.nvim',
+            'rebelot/kanagawa.nvim',
+            'folke/tokyonight.nvim',
+            {
+                'catppuccin/nvim',
+                name = 'catppuccin',
+            },
+            'joshdick/onedark.vim',
+            'Mofiqul/vscode.nvim',
+            {
+                'nenikitov/termcolors.nvim',
+                dependencies = {
+                    'nenikitov/highlight-builder.nvim',
+                },
+            },
+        },
+        opts = {
+            custom = colorscheme.colorscheme,
+            fallback = colorscheme.colorscheme_fallback,
         },
     },
-    colorscheme {
-        'Mofiqul/vscode.nvim'
-    }
 }
