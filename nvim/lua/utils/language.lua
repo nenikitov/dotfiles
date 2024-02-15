@@ -78,7 +78,7 @@ local function add_core_dependency(spec)
                     unpack(CORE_DEPENDENCIES),
                 }
             else
-                ---@diagnostic disable-next-line: param-type-mismatch `spec.dependencies` isn't a string, so it's a table
+                ---@diagnostic disable-next-line: param-type-mismatch -- `spec.dependencies` isn't a string, so it's a table
                 vim.list_extend(spec.dependencies, CORE_DEPENDENCIES)
             end
         end
