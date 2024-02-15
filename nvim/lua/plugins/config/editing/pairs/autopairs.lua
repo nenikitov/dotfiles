@@ -16,6 +16,7 @@ return {
             require('nvim-autopairs.completion.cmp').on_confirm_done()
         )
 
+        -- TODO(nenikitov): Make this language specific
         autopairs.add_rules {
             Rule('$', '$', { 'tex', 'latex', 'markdown' })
                 :with_pair(ts_cond.is_not_ts_node { 'inline_formula' })
