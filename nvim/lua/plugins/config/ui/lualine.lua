@@ -1,31 +1,35 @@
 local icons = require('user.icons')
+local lsp = require('utils.lsp')
 
-local important = 70
-local not_important = 90
+local IMPORTANT = 70
+local NOT_IMPORTANT = 90
+
+---@param min_width number
+---@return fun(str: string): string
+local function hide(min_width)
+    return function(str)
+        local width
+        if vim.api.nvim_get_option_value('laststatus', {}) == 3 then
+            width = vim.api.nvim_get_option_value('columns', {})
+        else
+            width = vim.fn.winwidth(0)
+        end
+
+        if width < min_width then
+            return ''
+        else
+            return str
+        end
+    end
+end
 
 return {
     'nvim-lualine/lualine.nvim',
     opts = function()
         local noice = require('noice')
 
-        ---@param min_width number
-        ---@return fun(str: string): string
-        local function hide(min_width)
-            return function(str)
-                local width
-                if vim.api.nvim_get_option_value('laststatus', {}) == 3 then
-                    width = vim.api.nvim_get_option_value('columns', {})
-                else
-                    width = vim.fn.winwidth(0)
-                end
-
-                if width < min_width then
-                    return ''
-                else
-                    return str
-                end
-            end
-        end
+        local lsp_handler = lsp.progress_handler()
+        lsp_handler.assign()
 
         return {
             options = {
@@ -36,7 +40,6 @@ return {
             -- ┌───┬───┬─────────────────────────────────┬───┬───┐
             -- │ A │ B │ C                             X │ Y │ Z │
             -- └───┴───┴─────────────────────────────────┴───┴───┘
-            --  ███|░░░| -                             - |░░░|███
             sections = {
                 lualine_a = {
                     'mode',
@@ -47,10 +50,17 @@ return {
                             ---@type string
                             local mode = noice.api.status.mode.get()
                             local macro = mode:match('^recording @(.*)$')
+
                             return icons.status_bar.macro .. macro
                         end,
                         cond = function()
                             return noice.api.status.mode.has()
+                        end,
+                    },
+                    -- LSP progress
+                    {
+                        function()
+                            return vim.inspect(lsp_handler.status, { newline = '', indent = '' })
                         end,
                     },
                 },
@@ -58,7 +68,7 @@ return {
                     {
                         'branch',
                         icon = icons.status_bar.branch,
-                        fmt = hide(important),
+                        fmt = hide(IMPORTANT),
                     },
                     {
                         'diff',
@@ -84,12 +94,12 @@ return {
                 lualine_x = {
                     {
                         'encoding',
-                        fmt = hide(not_important),
+                        fmt = hide(NOT_IMPORTANT),
                     },
                     {
                         'fileformat',
                         symbols = icons.status_bar.file_format,
-                        fmt = hide(not_important),
+                        fmt = hide(NOT_IMPORTANT),
                     },
                     -- Fancy spaces
                     {
@@ -109,7 +119,7 @@ return {
                     },
                     {
                         'filetype',
-                        fmt = hide(not_important),
+                        fmt = hide(NOT_IMPORTANT),
                     },
                 },
                 lualine_y = {
@@ -132,13 +142,13 @@ return {
                                 )
                             end
                         end,
-                        fmt = hide(important),
+                        fmt = hide(IMPORTANT),
                     },
                 },
                 lualine_z = {
                     {
                         'progress',
-                        fmt = hide(not_important),
+                        fmt = hide(NOT_IMPORTANT),
                     },
                     {
                         'location',

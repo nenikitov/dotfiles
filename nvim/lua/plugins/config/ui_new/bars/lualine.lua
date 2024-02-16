@@ -27,6 +27,18 @@ return {
     opts = function()
         local noice = require('noice')
 
+        local lsp_status = false
+        local old_handler = vim.lsp.handlers['$/progress']
+        vim.lsp.handlers['$/progress'] = function(err, result, context, config)
+            old_handler(err, result, context, config)
+
+            if result.value.kind == 'report' then
+                lsp_status = result.value
+            elseif result.value.kind == 'end' then
+                lsp_status = result.value
+            end
+        end
+
         return {
             options = {
                 component_separators = icons.status_bar.separator.component,
@@ -51,6 +63,12 @@ return {
                         cond = function()
                             return noice.api.status.mode.has()
                         end,
+                    },
+                    -- LSP progress
+                    {
+                        function()
+                            return vim.inspect(lsp_status)
+                        end
                     },
                 },
                 lualine_b = {
