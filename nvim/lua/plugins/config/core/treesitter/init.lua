@@ -26,6 +26,8 @@ return {
             'diff',
             'regex',
 
+            'disassembly',
+
             unpack(language.parsers()),
         },
         sync_install = false,

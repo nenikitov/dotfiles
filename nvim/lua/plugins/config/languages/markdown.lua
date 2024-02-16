@@ -15,6 +15,7 @@ return language.register {
         'latex',
         'html',
         'css',
+        'mermaid',
     },
     servers = {
         marksman = {},

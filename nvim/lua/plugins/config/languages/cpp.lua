@@ -8,6 +8,7 @@ return language.register {
     parsers = {
         'c',
         'cpp',
+        'printf',
     },
     servers = {
         clangd = {},
