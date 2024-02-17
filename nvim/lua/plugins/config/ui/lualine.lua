@@ -1,5 +1,6 @@
 local icons = require('user.icons')
 local lsp = require('utils.lsp')
+local system = require('utils.system')
 
 local IMPORTANT = 70
 local NOT_IMPORTANT = 90
@@ -31,8 +32,11 @@ return {
         local lsp_handler = lsp.progress_handler()
         lsp_handler.assign()
 
+        local spinner = 1
+
         return {
             options = {
+                theme = 'wombat',
                 component_separators = icons.status_bar.separator.component,
                 section_separators = icons.status_bar.separator.section,
             },
@@ -42,7 +46,12 @@ return {
             -- └───┴───┴─────────────────────────────────┴───┴───┘
             sections = {
                 lualine_a = {
-                    'mode',
+                    {
+                        'mode',
+                        fmt = function(s)
+                            return icons.status_bar.mode[s]
+                        end,
+                    },
                     'selectioncount',
                     -- Recording
                     {
@@ -55,12 +64,6 @@ return {
                         end,
                         cond = function()
                             return noice.api.status.mode.has()
-                        end,
-                    },
-                    -- LSP progress
-                    {
-                        function()
-                            return vim.inspect(lsp_handler.status, { newline = '', indent = '' })
                         end,
                     },
                 },
@@ -143,6 +146,16 @@ return {
                             end
                         end,
                         fmt = hide(IMPORTANT),
+                    },
+                    {
+                        function()
+                            if vim.tbl_count(lsp_handler.status) ~= 0 then
+                                spinner = (spinner % #icons.status_bar.lsp.animation) + 1
+                                return icons.status_bar.lsp.animation[spinner]
+                            else
+                                return icons.status_bar.lsp.done
+                            end
+                        end,
                     },
                 },
                 lualine_z = {

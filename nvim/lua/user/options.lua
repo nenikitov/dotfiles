@@ -1,4 +1,4 @@
-local tty = require('utils.tty')
+local system = require('utils.system')
 local icons = require('user.icons')
 
 local o = vim.opt
@@ -50,7 +50,7 @@ o.laststatus = 3                            -- Global statusline
 
 o.cursorline = true                         -- Highlight current line
 o.showmode = false                          -- Hide mode from command line
-o.termguicolors = tty.choose(true, false)   -- Use full color
+o.termguicolors = system.is_gui_choose(true, false)   -- Use full color
 
 -- Indentation
 o.expandtab = true                          -- Convert <TAB> to <SPACE>s automatically

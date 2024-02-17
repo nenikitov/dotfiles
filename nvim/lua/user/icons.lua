@@ -1,4 +1,4 @@
-local tty = require('utils.tty')
+local system = require('utils.system')
 
 -- All available tty symbols are [here](https://en.wikipedia.org/wiki/Code_page_437)
 
@@ -7,69 +7,69 @@ local M = {}
 M.list_chars = {
     tab = '→ ',
     trail = '·',
-    nbsp = tty.choose('␣', '▬'),
-    extends = tty.choose('…', '»'),
-    precedes = tty.choose('…', '«'),
+    nbsp = system.is_gui_choose('␣', '▬'),
+    extends = system.is_gui_choose('…', '»'),
+    precedes = system.is_gui_choose('…', '«'),
 }
 
 M.fill_chars = {
     fold = ' ',
     foldsep = ' ',
-    foldopen = tty.choose('', 'v'),
-    foldclose = tty.choose('', '>'),
+    foldopen = system.is_gui_choose('', 'v'),
+    foldclose = system.is_gui_choose('', '>'),
     eob = '`',
 }
 
-M.border = tty.choose(
+M.border = system.is_gui_choose(
     { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     { '┌', '─', '┐', '│', '┘', '─', '└', '│' }
 )
 
 M.diagnostics = {
-    error = tty.choose('', 'E'), --  
-    warning = tty.choose('', 'W'), --  
-    hint = tty.choose('󰛩', 'H'), -- 󰛨 󰛩  
-    info = tty.choose('', 'I'), --  
-    ok = tty.choose('', 'K'), --  
+    error = system.is_gui_choose('', 'E'), --  
+    warning = system.is_gui_choose('', 'W'), --  
+    hint = system.is_gui_choose('󰛩', 'H'), -- 󰛨 󰛩  
+    info = system.is_gui_choose('', 'I'), --  
+    ok = system.is_gui_choose('', 'K'), --  
 }
 
 M.notify = {
     error = M.diagnostics.error,
     warn = M.diagnostics.warning,
     info = M.diagnostics.info,
-    debug = tty.choose('', 'D'), --  
-    trace = tty.choose('', 'T'), -- 󰙏 
+    debug = system.is_gui_choose('', 'D'), --  
+    trace = system.is_gui_choose('', 'T'), -- 󰙏 
 }
 
 M.gitsigns = {
-    add = tty.choose('┃', '│'),
-    change = tty.choose('┃', '│'),
-    delete = tty.choose('', '▶'),
-    topdelete = tty.choose('', '▲'),
-    changedelete = tty.choose('', '▼'),
-    untracked = tty.choose('┋', '║'),
+    add = system.is_gui_choose('┃', '│'),
+    change = system.is_gui_choose('┃', '│'),
+    delete = system.is_gui_choose('', '▶'),
+    topdelete = system.is_gui_choose('', '▲'),
+    changedelete = system.is_gui_choose('', '▼'),
+    untracked = system.is_gui_choose('┋', '║'),
 }
 
 M.nvim_tree = {
     folder = {
-        default = tty.choose('', '>'),
-        open = tty.choose('', 'v'),
-        empty = tty.choose('', '>'),
-        empty_open = tty.choose('', 'v'),
-        symlink = tty.choose('󰄾', '→'),
-        symlink_open = tty.choose('󰄼', '↓'),
+        default = system.is_gui_choose('', '>'),
+        open = system.is_gui_choose('', 'v'),
+        empty = system.is_gui_choose('', '>'),
+        empty_open = system.is_gui_choose('', 'v'),
+        symlink = system.is_gui_choose('󰄾', '→'),
+        symlink_open = system.is_gui_choose('󰄼', '↓'),
     },
     git = {
-        unstaged = tty.choose('', '[]'),
-        staged = tty.choose('', '√'),
-        unmerged = tty.choose('', '|τ'),
-        renamed = tty.choose('', '←┘'),
-        untracked = tty.choose('', '+'),
-        deleted = tty.choose('', 'X'),
-        ignored = tty.choose('', '-'),
+        unstaged = system.is_gui_choose('', '[]'),
+        staged = system.is_gui_choose('', '√'),
+        unmerged = system.is_gui_choose('', '|τ'),
+        renamed = system.is_gui_choose('', '←┘'),
+        untracked = system.is_gui_choose('', '+'),
+        deleted = system.is_gui_choose('', 'X'),
+        ignored = system.is_gui_choose('', '-'),
     },
-    modified = tty.choose('', '∙'),
-    bookmark = tty.choose('󰃀', '♦'),
+    modified = system.is_gui_choose('', '∙'),
+    bookmark = system.is_gui_choose('󰃀', '♦'),
 }
 
 M.completion = {
@@ -149,37 +149,37 @@ M.completion = {
 
 M.buffer_line = {
     diagnostics = M.diagnostics,
-    modified = tty.choose('', '∙'),
-    close = tty.choose('󰖭', 'x'),
+    modified = system.is_gui_choose('', '∙'),
+    close = system.is_gui_choose('󰖭', 'x'),
 }
 
 M.cmd_line = {
-    cmdline = tty.choose(' ', '>_'),
-    search_down = tty.choose(' ', '/↓'),
-    search_up = tty.choose(' ', '/↑'),
-    lua = tty.choose('󰢱 ', 'lua'),
-    help = tty.choose(' ', '[|]'),
-    rename = tty.choose('󰙏 ', '←┘'),
-    bash = tty.choose(' ', '#!'),
-    calculator = tty.choose(' ', '= '),
+    cmdline = system.is_gui_choose(' ', '>_'),
+    search_down = system.is_gui_choose(' ', '/↓'),
+    search_up = system.is_gui_choose(' ', '/↑'),
+    lua = system.is_gui_choose('󰢱 ', 'lua'),
+    help = system.is_gui_choose(' ', '[|]'),
+    rename = system.is_gui_choose('󰙏 ', '←┘'),
+    bash = system.is_gui_choose(' ', '#!'),
+    calculator = system.is_gui_choose(' ', '= '),
 }
 
 M.lazy = {
-    cmd = tty.choose(M.cmd_line.cmdline, ''),
-    config = tty.choose(M.completion.Declaration, ''),
-    event = tty.choose(M.completion.Event, ''),
-    ft = tty.choose(M.completion.File, ''),
-    init = tty.choose(M.completion.Constructor, ''),
-    import = tty.choose('󰶮 ', ''),
-    keys = tty.choose('󰥻', ''),
-    lazy = tty.choose('󰒲 ', 'Zzz'),
-    loaded = tty.choose('●', '+'),
-    not_loaded = tty.choose('○', '-'),
-    plugin = tty.choose(M.completion.Module, '■'),
-    runtime = tty.choose('', ''),
-    source = tty.choose(M.completion.TypeParameter, ''),
-    start = tty.choose('', '►'),
-    task = tty.choose('', '√'),
+    cmd = system.is_gui_choose(M.cmd_line.cmdline, ''),
+    config = system.is_gui_choose(M.completion.Declaration, ''),
+    event = system.is_gui_choose(M.completion.Event, ''),
+    ft = system.is_gui_choose(M.completion.File, ''),
+    init = system.is_gui_choose(M.completion.Constructor, ''),
+    import = system.is_gui_choose('󰶮 ', ''),
+    keys = system.is_gui_choose('󰥻', ''),
+    lazy = system.is_gui_choose('󰒲 ', 'Zzz'),
+    loaded = system.is_gui_choose('●', '+'),
+    not_loaded = system.is_gui_choose('○', '-'),
+    plugin = system.is_gui_choose(M.completion.Module, '■'),
+    runtime = system.is_gui_choose('', ''),
+    source = system.is_gui_choose(M.completion.TypeParameter, ''),
+    start = system.is_gui_choose('', '►'),
+    task = system.is_gui_choose('', '√'),
     list = '-',
 }
 
@@ -190,21 +190,21 @@ M.mason = {
 }
 
 M.telescope = {
-    prompt = tty.choose(' ', '>'),
-    selection = tty.choose(' ', '> '),
+    prompt = system.is_gui_choose(' ', '>'),
+    selection = system.is_gui_choose(' ', '> '),
 }
 
 M.indent = {
-    char = tty.choose('│', '│'),
-    tab_char = tty.choose('┆', '║'),
+    char = system.is_gui_choose('│', '│'),
+    tab_char = system.is_gui_choose('┆', '║'),
 }
 
-M.lsp_signature = tty.choose(' ', '■')
+M.lsp_signature = system.is_gui_choose(' ', '■')
 
 M.whichkey = {
     breadcrumb = '>',
-    separator = tty.choose('➜', '→'),
-    group = tty.choose(' ', '■ '),
+    separator = system.is_gui_choose('➜', '→'),
+    group = system.is_gui_choose(' ', '■ '),
 }
 
 M.dropbar = {
@@ -220,18 +220,18 @@ M.dropbar = {
 
 M.todo = {
     fix = M.notify.debug,
-    todo = tty.choose('', 'T'),
-    hack = tty.choose('', 'P'),
+    todo = system.is_gui_choose('', 'T'),
+    hack = system.is_gui_choose('', 'P'),
     warning = M.diagnostics.warning,
-    performance = tty.choose('', 'S'),
+    performance = system.is_gui_choose('', 'S'),
     note = M.notify.trace,
-    test = tty.choose('', 'U'),
+    test = system.is_gui_choose('', 'U'),
 }
 
 M.satellite = {
-    moving = tty.choose({ '⎺', '⎻', '⎼', '⎽' }, { '─' }),
-    increasing = tty.choose({ '-', '=', '≡', '≣' }, { '-', '=', '≡' }),
-    search = tty.choose(
+    moving = system.is_gui_choose({ '⎺', '⎻', '⎼', '⎽' }, { '─' }),
+    increasing = system.is_gui_choose({ '-', '=', '≡', '≣' }, { '-', '=', '≡' }),
+    search = system.is_gui_choose(
         { '⠁', '⠉', '⠋', '⠛', '⠟', '⠿', '⡿', '⣿' },
         { '-', '=', '≡' }
     ),
@@ -247,8 +247,27 @@ M.status_bar = {
         component = '|',
         section = '',
     },
-    macro = tty.choose('  ', '@'),
-    branch = tty.choose(' ', 'git'),
+    mode = {
+        ['NORMAL'] = system.is_gui_choose(' ', '') .. 'NORMAL',
+        ['O-PENDING'] = system.is_gui_choose(' ', '') .. 'O-PENDING',
+        ['INSERT'] = system.is_gui_choose('󰲶 ', '') .. 'INSERT',
+        ['VISUAL'] = system.is_gui_choose('󱊔 ', '') .. 'VISUAL',
+        ['V-BLOCK'] = system.is_gui_choose('󱊗 ', '') .. 'V-BLOCK',
+        ['V-LINE'] = system.is_gui_choose('󱊖 ', '') .. 'V-LINE',
+        ['V-REPLACE'] = system.is_gui_choose('󱊙 ', '') .. 'V-REPLACE',
+        ['REPLACE'] = system.is_gui_choose('󰷮 ', '') .. 'REPLACE',
+        ['COMMAND'] = system.is_gui_choose(' ', '') .. 'COMMAND',
+        ['SHELL'] = system.is_gui_choose(' ', '') .. 'SHELL',
+        ['TERMINAL'] = system.is_gui_choose(' ', '') .. 'TERMINAL',
+        ['EX'] = system.is_gui_choose(' ', '') .. 'EX',
+        ['SELECT'] = system.is_gui_choose('󱊔"', '') .. 'SELECT',
+        ['S-BLOCK'] = system.is_gui_choose('󱊗"', '') .. 'S-BLOCK',
+        ['S-LINE'] = system.is_gui_choose('󱊖"', '') .. 'S-LINE',
+        ['CONFIRM'] = system.is_gui_choose(' ', '') .. 'CONFIRM',
+        ['MORE'] = system.is_gui_choose(' ', '') .. 'MORE',
+    },
+    macro = system.is_gui_choose(' ', '@'),
+    branch = system.is_gui_choose('', 'git'),
     diagnostics = {
         error = M.diagnostics.error .. ' ',
         warn = M.diagnostics.warning .. ' ',
@@ -256,23 +275,49 @@ M.status_bar = {
         hint = M.diagnostics.hint .. ' ',
     },
     diff = {
-        added = tty.choose('', '+') .. ' ',
-        modified = tty.choose('', '~') .. ' ',
-        removed = tty.choose('', '-') .. ' ',
+        added = system.is_gui_choose('', '+') .. ' ',
+        modified = system.is_gui_choose('', '~') .. ' ',
+        removed = system.is_gui_choose('', '-') .. ' ',
     },
     file_name = {
         modified = M.nvim_tree.modified,
-        readonly = tty.choose(' ', '-'),
+        readonly = system.is_gui_choose(' ', '-'),
     },
     file_format = {
-        unix = tty.choose('󰌽', 'lf'),
-        dos = tty.choose('󰕰', 'crlf'),
-        mac = tty.choose('', 'cr'),
+        unix = system.is_gui_choose('󰌽', 'lf'),
+        dos = system.is_gui_choose('󰕰', 'crlf'),
+        mac = system.is_gui_choose('', 'cr'),
     },
     space = {
-        space = tty.choose('󱁐', 'sw') .. ' ',
-        tab = tty.choose('', 'ts') .. ' ',
-    }
+        space = system.is_gui_choose('󱁐', 'sw') .. ' ',
+        tab = system.is_gui_choose('', 'ts') .. ' ',
+    },
+    lsp = {
+        done = system.is_gui_choose('', '(√)'),
+        animation = system.is_gui_choose({
+            '⠋',
+            '⠙',
+            '⠸',
+            '⢰',
+            '⣠',
+            '⣄',
+            '⡆',
+            '⠇',
+        }, {
+            '   ',
+            '.  ',
+            '.. ',
+            '...',
+            ' ..',
+            '  .',
+            '   ',
+            '  .',
+            ' ..',
+            '...',
+            '.. ',
+            '.  ',
+        }),
+    },
 }
 
 return M

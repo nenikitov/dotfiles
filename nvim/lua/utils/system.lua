@@ -11,12 +11,18 @@ end
 ---@param gui T
 ---@param tty T
 ---@return T
-function M.choose(gui, tty)
+function M.is_gui_choose(gui, tty)
     if M.is_gui() then
         return gui
     else
         return tty
     end
+end
+
+--- Copy some text to system clipboard
+---@param text string
+function M.copy(text)
+    vim.fn.setreg('+', text)
 end
 
 return M

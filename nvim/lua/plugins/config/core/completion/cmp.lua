@@ -1,6 +1,6 @@
 local keymaps = require('user.keymaps')
 local icons = require('user.icons')
-local tty = require('utils.tty')
+local system = require('utils.system')
 
 return {
     'hrsh7th/nvim-cmp',
@@ -41,7 +41,7 @@ return {
             formatting = {
                 fields = { 'kind', 'abbr', 'menu' },
                 format = function(entry, item)
-                    if tty.is_gui() then
+                    if system.is_gui() then
                         item.kind = icons.completion[item.kind]
                         if vim.tbl_contains({ 'path' }, entry.source.name) then
                             local icon, hl_group = require('nvim-web-devicons').get_icon(

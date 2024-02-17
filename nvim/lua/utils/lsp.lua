@@ -6,6 +6,7 @@ local M = {}
 ---@field percent number?
 ---@field done boolean
 
+---@return table
 function M.progress_handler()
     ---@type LspTaskStatus[][]
     local status = {}
