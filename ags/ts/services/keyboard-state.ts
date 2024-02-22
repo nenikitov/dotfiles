@@ -3,10 +3,10 @@ import Variable from "resource:///com/github/Aylur/ags/variable.js";
 
 import { seconds } from "../utils/time.js";
 
-const POLL_RATE = seconds(0.1);
+export const POLL_RATE = seconds(0.1);
 
 const Keyboard = Variable(
-  /** @type {KeyboardState} */ ({
+  /** @type {KeyboardState} */ {
     layout: "",
     submap: "",
     led: {
@@ -14,23 +14,17 @@ const Keyboard = Variable(
       num: false,
       scroll: false,
     },
-  }),
+  },
   {}
 );
 
-/**
- * @param {(state: KeyboardState) => void} transform
- */
-function changeState(transform) {
+function changeState(transform: (state: KeyboardState) => void) {
   const newState = { ...Keyboard.value };
   transform(newState);
   Keyboard.value = newState;
 }
 
-/**
- * @param {KeyboardLed} led
- */
-function createLedVariable(led) {
+function createLedVariable(led: KeyboardLed) {
   const variable = Variable(false, {
     poll: [
       POLL_RATE,
@@ -39,13 +33,13 @@ function createLedVariable(led) {
     ],
   });
 
-  const key =
-    /** @type {{[key: string]: keyof KeyboardState["led"]}} */
-    ({
+  const key = (
+    {
       capslock: "caps",
       numlock: "num",
       scrolllock: "scroll",
-    })[led];
+    } as const
+  )[led];
 
   variable.connect("changed", () => {
     changeState((state) => {
@@ -58,29 +52,16 @@ createLedVariable("capslock");
 createLedVariable("numlock");
 createLedVariable("scrolllock");
 
-Hyprland.connect(
-  "keyboard-layout",
-  /**
-   * @param {string} keyboard
-   * @param {string} layout
-   */
-  (_, keyboard, layout) => {
-    changeState((state) => {
-      state.layout = layout;
-    });
-  }
-);
+Hyprland.connect("keyboard-layout", (_, keyboard: string, layout: string) => {
+  changeState((state) => {
+    state.layout = layout;
+  });
+});
 
-Hyprland.connect(
-  "submap",
-  /**
-   * @param {string} submap
-   */
-  (_, submap) => {
-    changeState((state) => {
-      state.submap = submap;
-    });
-  }
-);
+Hyprland.connect("submap", (_, submap: string) => {
+  changeState((state) => {
+    state.submap = submap;
+  });
+});
 
 export default Keyboard;

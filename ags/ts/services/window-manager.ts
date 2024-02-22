@@ -1,4 +1,5 @@
 import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
+import type { Hyprland as HyprlandType } from "resource:///com/github/Aylur/ags/service/hyprland.js";
 import Applications from "resource:///com/github/Aylur/ags/service/applications.js";
 import Variable from "resource:///com/github/Aylur/ags/variable.js";
 import { execAsync } from "resource:///com/github/Aylur/ags/utils.js";
@@ -7,28 +8,19 @@ import * as user from "../../user.js";
 
 const SPECIAL_WORKSPACE_ID = -99;
 
-const WindowManager = Variable(/** @type {Monitor[]} */ ([]), {});
+const WindowManager = Variable<Monitor[]>([], {});
 export default WindowManager;
 
 Hyprland.connect("changed", () => {
   WindowManager.value = getInfo(user.windowManager);
 });
 
-/**
- * @param {WindowManagerConfig} config
- * @returns {Monitor[]}
- */
-function getInfo(config) {
+function getInfo(config: WindowManagerConfig): Monitor[] {
   return Hyprland.monitors.map(parseMonitor(config));
 }
 
-/**
- * @param {Hyprland["clients"][0]} client
- * @returns {Client}
- */
-function parseClient(client) {
-  /** @type {Client} */
-  let result = {
+function parseClient(client: HyprlandType["clients"][0]): Client {
+  let result: Client = {
     id: client.address,
     pid: client.pid,
     title: client.title,
@@ -56,14 +48,12 @@ function parseClient(client) {
   return result;
 }
 
-/**
- * @param {number} workspacesPerMonitor
- * @param {Hyprland["clients"]} clientsAll
- * @param {WorkspaceInfo[]} workspacesDefaults
- * @param {Hyprland["monitors"][0]} monitor
- * @returns {(workspace: Hyprland["workspaces"][0]) => Workspace}
- */
-function parseWorkspace(workspacesPerMonitor, clientsAll, workspacesDefaults, monitor) {
+function parseWorkspace(
+  workspacesPerMonitor: number,
+  clientsAll: HyprlandType["clients"],
+  workspacesDefaults: WorkspaceInfo[],
+  monitor: HyprlandType["monitors"][0]
+): (workspace: HyprlandType["workspaces"][0]) => Workspace {
   return (workspace) => {
     const clients = clientsAll
       .filter((c) => c.workspace.id === workspace.id)
@@ -91,17 +81,12 @@ function parseWorkspace(workspacesPerMonitor, clientsAll, workspacesDefaults, mo
   };
 }
 
-/**
- * @param {WindowManagerConfig} config
- * @returns {(monitor: Hyprland["monitors"][0]) => Monitor}
- */
-function parseMonitor(config) {
+function parseMonitor(config: WindowManagerConfig): (monitor: HyprlandType["monitors"][0]) => Monitor {
   return (monitor) => {
     const workspacesDefaults =
       config.defaultWorkspaces[monitor.name] ?? config.defaultWorkspaces["default"];
 
-    /** @type {Workspace[]} */
-    const workspaces = Hyprland.workspaces
+    const workspaces: Workspace[] = Hyprland.workspaces
       .filter((w) => w.id != SPECIAL_WORKSPACE_ID && w.monitor === monitor.name)
       .map(
         parseWorkspace(config.workspacesPerMonitor, Hyprland.clients, workspacesDefaults, monitor)

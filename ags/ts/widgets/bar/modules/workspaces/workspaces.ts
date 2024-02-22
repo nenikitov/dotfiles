@@ -5,8 +5,7 @@ import Widget from "resource:///com/github/Aylur/ags/widget.js";
 import WindowManager from "../../../../services/window-manager.js";
 import { groupBy } from "../../../../utils/iterator.js";
 
-/** @type {WorkspacesConfig} */
-const defaultArgs = {
+const defaultArgs: WorkspacesConfig = {
   format: (workspace) => {
     return workspace.display.icon || workspace.display.name;
   },
@@ -27,10 +26,7 @@ const defaultArgs = {
   special: "first",
 };
 
-/**
- * @param {WorkspacesArgs} args
- */
-export function Workspaces({ monitor, ...args }) {
+export function Workspaces({ monitor, ...args }: WorkspacesArgs) {
   const config = Object.assign({}, defaultArgs, args);
 
   return Widget.Box({

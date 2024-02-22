@@ -4,16 +4,10 @@ import { Clock } from "./modules/clock/clock.js";
 import { Workspaces } from "./modules/workspaces/workspaces.js";
 import { Battery } from "./modules/battery/battery.js";
 
-/**
- * @typedef {import("gtk-3.0/gtk-3.0").Gtk.Widget} GtkWidget
- * @typedef {import("types/widgets/window.js").default} AgsWindow
- */
+type GtkWidget = import("gtk-3.0/gtk-3.0").Gtk.Widget;
+type AgsWindow = import("types/widgets/window.js").default;
 
-/**
- * @param {number} monitor
- * @returns {GtkWidget}
- */
-function Start(monitor) {
+function Start(monitor: number): GtkWidget {
   return Widget.Box({
     class_name: "start",
     hpack: "start",
@@ -21,21 +15,13 @@ function Start(monitor) {
   });
 }
 
-/**
- * @param {number} monitor
- * @returns {GtkWidget}
- */
-function Middle(monitor) {
+function Middle(monitor: number): GtkWidget {
   return Widget.Box({
     class_name: "middle",
   });
 }
 
-/**
- * @param {number} monitor
- * @returns {GtkWidget}
- */
-function End(monitor) {
+function End(monitor: number): GtkWidget {
   return Widget.Box({
     class_name: "end",
     hpack: "end",
@@ -49,11 +35,7 @@ function End(monitor) {
   });
 }
 
-/**
- * @param {number} monitor
- * @returns {AgsWindow}
- */
-export default function Bar(monitor) {
+export default function Bar(monitor: number): AgsWindow {
   return Widget.Window({
     name: `bar-${monitor}`,
     class_name: "bar",

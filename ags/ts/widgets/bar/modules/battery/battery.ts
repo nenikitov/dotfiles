@@ -2,13 +2,14 @@ import { Icon, Label } from "resource:///com/github/Aylur/ags/widget.js";
 
 import BatteryService from "resource:///com/github/Aylur/ags/service/battery.js";
 
-/** @type {BatteryConfig} */
-const defaultArgs = {};
+const defaultArgs: BatteryConfig = {
+  formatTooltip: function (battery) {
+    throw new Error("Function not implemented.");
+  },
+  vertical: false,
+};
 
-/**
- * @param {BatteryArgs} args
- */
-export function Battery(args) {
+export function Battery(args: BatteryArgs) {
   const config = Object.assign({}, defaultArgs, args);
 
   return Label({

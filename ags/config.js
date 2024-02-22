@@ -1,9 +1,21 @@
 import App from "resource:///com/github/Aylur/ags/app.js";
-import Bar from "./js/widgets/bar/bar.js";
+import Utils from "resource:///com/github/Aylur/ags/utils.js";
 
-import { forEveryMonitor } from "./js/utils/widget.js";
+const fileOut = `${App.configDir}/build/main.js`;
+const fileEntry = `${App.configDir}/main.ts`;
 
-export default {
-  style: App.configDir + "/style.css",
-  windows: [forEveryMonitor(Bar)],
-};
+try {
+  await Utils.execAsync([
+    "bun",
+    "build",
+    fileEntry,
+    "--outfile",
+    fileOut,
+    ...["resource://*", "gi://*"].flatMap((lib) => ["--external", lib]),
+  ]);
+} catch (error) {
+  console.error(/** @type {Error} */ (error));
+  App.Quit();
+}
+
+export default (await import(`file://${fileOut}`)).default;

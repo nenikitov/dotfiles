@@ -1,12 +1,15 @@
 {
-    "name": "ags-config",
+    "name": "widgets",
     "version": "1.0.0",
-    "description": "AGS starter configuration",
+    "description": "Widgets made with ags",
     "main": "config.js",
-    "author": "Aylur",
+    "author": "nenikitov",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Aylur/ags.git"
+        "url": "git+https://github.com/nenikitov/dotfiles"
+    },
+    "scripts": {
+        "build": "tsc"
     },
     "devDependencies": {
         "@girs/dbusmenugtk3-0.4": "^0.4.0-3.2.0",
@@ -17,6 +20,7 @@
         "@typescript-eslint/eslint-plugin": "^6.15.0",
         "@typescript-eslint/parser": "^6.15.0",
         "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-prettier": "^5.1.0"
+        "eslint-plugin-prettier": "^5.1.0",
+        "typescript": "^5.3.3"
     }
 }

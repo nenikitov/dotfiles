@@ -13,5 +13,5 @@ trim_trailing_whitespace = true
 # Other
 max_line_length = 100
 
-[*.{js,ts}]
+[*.{js,ts,json,css}]
 indent_size = 2

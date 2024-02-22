@@ -4,18 +4,14 @@ import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
 import { seconds } from "../../../../utils/time.js";
 
-/** @type {ClockConfig} */
-const defaultArgs = {
+const defaultArgs: ClockConfig = {
   format: "%X",
   formatTooltip: "%c",
   interval: seconds(1),
   vertical: false,
 };
 
-/**
- * @param {ClockArgs} args
- */
-export function Clock(args) {
+export function Clock(args: ClockArgs) {
   const config = Object.assign({}, defaultArgs, args);
 
   return Widget.Label({
