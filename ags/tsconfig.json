@@ -9,7 +9,13 @@
     "allowJs": true,
     "checkJs": true,
     "strict": true,
-    "baseUrl": "./ts/",
+    "baseUrl": "./",
+    "paths": {
+      "*": [
+        "*",
+        "ts/*"
+      ]
+    },
     "typeRoots": [
       "./types/ags.d.ts",
       "./node_modules/@girs"

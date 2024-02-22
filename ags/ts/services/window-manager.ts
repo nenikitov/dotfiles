@@ -4,7 +4,7 @@ import Applications from "resource:///com/github/Aylur/ags/service/applications.
 import Variable from "resource:///com/github/Aylur/ags/variable.js";
 import { execAsync } from "resource:///com/github/Aylur/ags/utils.js";
 
-import * as user from "../../user.js";
+import * as user from "user";
 
 interface Focusable {
   focus: () => void;
@@ -56,7 +56,7 @@ interface Monitor extends Focusable {
   workspaces: Workspace[];
 }
 
-interface WindowManagerConfig {
+export interface WindowManagerConfig {
   defaultWorkspaces: {
     [monitorName: string]: WorkspaceInfo[];
     default: WorkspaceInfo[];

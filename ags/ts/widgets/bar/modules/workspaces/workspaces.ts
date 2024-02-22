@@ -2,8 +2,8 @@ import Gtk from "gi://Gtk";
 
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
-import WindowManager from "services/window-manager.js";
-import { groupBy } from "utils/iterator.js";
+import WindowManager from "services/window-manager";
+import { groupBy } from "utils/iterator";
 import { type Workspace } from "services/window-manager";
 
 interface WorkspacesConfig extends ModuleConfig {

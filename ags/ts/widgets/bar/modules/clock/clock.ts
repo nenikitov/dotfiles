@@ -2,7 +2,7 @@ import GLib from "gi://GLib";
 
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
-import { seconds } from "utils/time.js";
+import { seconds } from "utils/time";
 
 interface ClockConfig extends ModuleConfig {
   format: string;

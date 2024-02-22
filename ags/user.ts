@@ -1,5 +1,6 @@
-/** @type {WindowManagerConfig} */
-export const windowManager = {
+import { WindowManagerConfig } from "services/window-manager";
+
+export const windowManager: WindowManagerConfig = {
   defaultWorkspaces: {
     default: [
       { icon: "", name: "Home" },
