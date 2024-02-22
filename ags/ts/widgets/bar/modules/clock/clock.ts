@@ -2,7 +2,15 @@ import GLib from "gi://GLib";
 
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
-import { seconds } from "../../../../utils/time.js";
+import { seconds } from "utils/time.js";
+
+interface ClockConfig extends ModuleConfig {
+  format: string;
+  formatTooltip: string;
+  interval: number;
+}
+
+interface ClockArgs extends Partial<ClockConfig> {}
 
 const defaultArgs: ClockConfig = {
   format: "%X",

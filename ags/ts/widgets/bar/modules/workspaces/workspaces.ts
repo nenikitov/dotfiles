@@ -2,8 +2,22 @@ import Gtk from "gi://Gtk";
 
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
-import WindowManager from "../../../../services/window-manager.js";
-import { groupBy } from "../../../../utils/iterator.js";
+import WindowManager from "services/window-manager.js";
+import { groupBy } from "utils/iterator.js";
+import { type Workspace } from "services/window-manager";
+
+interface WorkspacesConfig extends ModuleConfig {
+  format: (workspace: Workspace) => string;
+  formatTooltip: (workspace: Workspace) => string;
+  hideEmpty: boolean;
+  allMonitors: boolean;
+  maxDots: 3;
+  special: "hide" | "first" | "last";
+}
+
+interface WorkspacesArgs extends Partial<WorkspacesConfig> {
+  monitor: number;
+}
 
 const defaultArgs: WorkspacesConfig = {
   format: (workspace) => {

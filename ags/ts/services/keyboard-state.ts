@@ -1,7 +1,19 @@
 import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
 import Variable from "resource:///com/github/Aylur/ags/variable.js";
 
-import { seconds } from "../utils/time.js";
+import { seconds } from "utils/time.js";
+
+type KeyboardLed = "numlock" | "capslock" | "scrolllock";
+
+interface KeyboardState {
+  layout: string;
+  submap: string;
+  led: {
+    caps: boolean;
+    num: boolean;
+    scroll: boolean;
+  };
+}
 
 export const POLL_RATE = seconds(0.1);
 

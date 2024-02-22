@@ -2,7 +2,7 @@ import App from "resource:///com/github/Aylur/ags/app.js";
 import Utils from "resource:///com/github/Aylur/ags/utils.js";
 
 const fileOut = `${App.configDir}/build/main.js`;
-const fileEntry = `${App.configDir}/main.ts`;
+const fileEntry = `${App.configDir}/ts/main.ts`;
 
 try {
   await Utils.execAsync([
