@@ -1,7 +1,6 @@
-import Gtk from "gi://Gtk";
-import Widget from "resource:///com/github/Aylur/ags/widget.js";
+import { Gtk, Widget, Service } from "prelude";
 
-import BatteryService from "resource:///com/github/Aylur/ags/service/battery.js";
+import { ModuleConfig } from "../module";
 
 interface BatteryConfig extends ModuleConfig {}
 
@@ -15,11 +14,12 @@ export function Battery(config: Partial<BatteryConfig>): (monitor: number) => Gt
 
     return Widget.Label({
       class_name: "battery" + (configFull.class ? ` ${configFull.class}` : ""),
+      // TODO(nenikitov): `connections` is deprecated
       connections: [
         [
-          BatteryService,
+          Service.Battery,
           (self) => {
-            self.label = String(BatteryService.percent) + "%";
+            self.label = String(Service.Battery.percent) + "%";
           },
         ],
       ],

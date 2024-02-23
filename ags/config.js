@@ -20,4 +20,4 @@ try {
 
 const main = await import(`file://${fileOut}`);
 
-export default main.default;
+export default main.config;

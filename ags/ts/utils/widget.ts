@@ -1,5 +1,4 @@
-import Gdk from "gi://Gdk";
-
+import { Gdk } from "prelude";
 import { range } from "utils/iterator";
 
 export function forEveryMonitor<T>(widget: (monitor: number) => T) {

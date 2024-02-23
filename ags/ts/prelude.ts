@@ -1,4 +1,5 @@
 // App
+import GLib from "gi://GLib";
 import Gdk from "gi://Gdk";
 import Gtk from "gi://Gtk";
 import App from "resource:///com/github/Aylur/ags/app.js";
@@ -18,7 +19,7 @@ import Utils from "resource:///com/github/Aylur/ags/utils.js";
 import Variable from "resource:///com/github/Aylur/ags/variable.js";
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
 
-import type Window from "types/widgets/window";
+import { type Config } from "types/app";
 
 const service = {
   Applications,
@@ -35,4 +36,4 @@ const service = {
   SystemTray,
 };
 
-export { App, Gdk, Gtk, Utils, Variable, Widget, Window, service as Service };
+export { App, Config, Gdk, GLib, Gtk, Utils, Variable, Widget, service as Service };

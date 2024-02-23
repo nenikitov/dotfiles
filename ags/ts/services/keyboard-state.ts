@@ -1,6 +1,4 @@
-import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
-import Variable from "resource:///com/github/Aylur/ags/variable.js";
-
+import { Service, Variable } from "prelude";
 import { seconds } from "utils/time";
 
 type KeyboardLed = "numlock" | "capslock" | "scrolllock";
@@ -14,21 +12,6 @@ interface KeyboardState {
     scroll: boolean;
   };
 }
-
-export const POLL_RATE = seconds(0.1);
-
-const Keyboard = Variable(
-  /** @type {KeyboardState} */ {
-    layout: "",
-    submap: "",
-    led: {
-      caps: false,
-      num: false,
-      scroll: false,
-    },
-  },
-  {}
-);
 
 function changeState(transform: (state: KeyboardState) => void) {
   const newState = { ...Keyboard.value };
@@ -64,16 +47,29 @@ createLedVariable("capslock");
 createLedVariable("numlock");
 createLedVariable("scrolllock");
 
-Hyprland.connect("keyboard-layout", (_, keyboard: string, layout: string) => {
+Service.Hyprland.connect("keyboard-layout", (_, keyboard: string, layout: string) => {
   changeState((state) => {
     state.layout = layout;
   });
 });
 
-Hyprland.connect("submap", (_, submap: string) => {
+Service.Hyprland.connect("submap", (_, submap: string) => {
   changeState((state) => {
     state.submap = submap;
   });
 });
 
-export default Keyboard;
+export const POLL_RATE = seconds(0.1);
+
+export const Keyboard = Variable(
+  /** @type {KeyboardState} */ {
+    layout: "",
+    submap: "",
+    led: {
+      caps: false,
+      num: false,
+      scroll: false,
+    },
+  },
+  {}
+);

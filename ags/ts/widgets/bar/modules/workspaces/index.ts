@@ -1,10 +1,8 @@
-import Gtk from "gi://Gtk";
-
-import Widget from "resource:///com/github/Aylur/ags/widget.js";
-
-import WindowManager from "services/window-manager";
+import { Gtk, Widget } from "prelude";
+import { WindowManager, type Workspace } from "services/window-manager";
 import { groupBy } from "utils/iterator";
-import { type Workspace } from "services/window-manager";
+
+import { ModuleConfig } from "../module";
 
 interface WorkspacesConfig extends ModuleConfig {
   format: (workspace: Workspace) => string;
@@ -43,11 +41,12 @@ export function Workspaces(config: Partial<WorkspacesConfig>): (monitor: number)
     return Widget.Box({
       class_name: "workspaces" + (configFull.class ? ` ${configFull.class}` : ""),
       vertical: configFull.vertical,
+      // TODO(nenikitov): `connections` is deprecated
       connections: [
         [
           WindowManager,
           (box) => {
-            let monitors = configFull.allMonitors
+            const monitors = configFull.allMonitors
               ? WindowManager.value
               : WindowManager.value.filter((m) => monitor === m.id);
 

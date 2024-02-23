@@ -53,6 +53,7 @@ overrides:
               - warn
               - count: 1
                 exactCount: true
+                considerComments: true
           import/no-named-default:
               - warn
           import/order:

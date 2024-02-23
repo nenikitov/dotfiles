@@ -1,4 +1,4 @@
-import { Gtk, Widget, type Window } from "prelude";
+import { Gtk, Widget } from "prelude";
 
 import { BarConfig, modules, Module } from "./config.js";
 
@@ -6,11 +6,11 @@ function assignLayout(monitor: number, layout: Module[]): Gtk.Widget[] {
   return layout.map((m) => {
     return typeof m == "string"
       ? modules[m]({})(monitor)
-      : modules[m.name](m.config as any)(monitor);
+      : modules[m.name](m.config as Parameters<(typeof modules)[typeof m.name]>)(monitor);
   });
 }
 
-export default function Bar(config: BarConfig): (monitor: number) => Window {
+export function Bar(config: BarConfig): (monitor: number) => Gtk.Window {
   return (monitor) => {
     return Widget.Window({
       monitor,

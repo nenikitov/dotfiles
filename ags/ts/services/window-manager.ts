@@ -1,10 +1,10 @@
-import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
-import type { Hyprland as HyprlandType } from "resource:///com/github/Aylur/ags/service/hyprland.js";
-import Applications from "resource:///com/github/Aylur/ags/service/applications.js";
-import Variable from "resource:///com/github/Aylur/ags/variable.js";
-import { execAsync } from "resource:///com/github/Aylur/ags/utils.js";
-
 import * as options from "options";
+import { Service, Utils, Variable } from "prelude";
+import {
+  type Client as HyprlandClient,
+  type Monitor as HyprlandMonitor,
+  type Workspace as HyprlandWorkspace,
+} from "types/service/hyprland";
 
 interface Focusable {
   focus: () => void;
@@ -66,23 +66,22 @@ export interface WindowManagerConfig {
 
 const SPECIAL_WORKSPACE_ID = -99;
 
-const WindowManager = Variable<Monitor[]>([], {});
-export default WindowManager;
+export const WindowManager = Variable<Monitor[]>([], {});
 
-Hyprland.connect("changed", () => {
+Service.Hyprland.connect("changed", () => {
   WindowManager.value = getInfo(options.windowManager);
 });
 
 function getInfo(config: WindowManagerConfig): Monitor[] {
-  return Hyprland.monitors.map(parseMonitor(config));
+  return Service.Hyprland.monitors.map(parseMonitor(config));
 }
 
-function parseClient(client: HyprlandType["clients"][0]): Client {
-  let result: Client = {
+function parseClient(client: HyprlandClient): Client {
+  const result: Client = {
     id: client.address,
     pid: client.pid,
     title: client.title,
-    active: client.address === Hyprland.active.client.address,
+    active: client.address === Service.Hyprland.active.client.address,
     position: client.at,
     size: client.size,
     hidden: client.hidden,
@@ -92,10 +91,11 @@ function parseClient(client: HyprlandType["clients"][0]): Client {
     fullscreen: client.fullscreen,
     class: client.class,
     initialClass: client.initialClass,
-    focus: () => execAsync(`hyprctl dispatch focuswindow address:${client.address}`),
+    focus: () => Utils.execAsync(`hyprctl dispatch focuswindow address:${client.address}`),
   };
   const queriedInfo =
-    Applications.query(client.initialClass)[0] ?? Applications.query(client.initialTitle)[0];
+    Service.Applications.query(client.initialClass)[0] ??
+    Service.Applications.query(client.initialTitle)[0];
   if (queriedInfo) {
     result.desktopInfo = {
       name: queriedInfo.name,
@@ -108,10 +108,10 @@ function parseClient(client: HyprlandType["clients"][0]): Client {
 
 function parseWorkspace(
   workspacesPerMonitor: number,
-  clientsAll: HyprlandType["clients"],
+  clientsAll: HyprlandClient[],
   workspacesDefaults: WorkspaceInfo[],
-  monitor: HyprlandType["monitors"][0]
-): (workspace: HyprlandType["workspaces"][0]) => Workspace {
+  monitor: HyprlandMonitor
+): (workspace: HyprlandWorkspace) => Workspace {
   return (workspace) => {
     const clients = clientsAll
       .filter((c) => c.workspace.id === workspace.id)
@@ -139,17 +139,20 @@ function parseWorkspace(
   };
 }
 
-function parseMonitor(
-  config: WindowManagerConfig
-): (monitor: HyprlandType["monitors"][0]) => Monitor {
+function parseMonitor(config: WindowManagerConfig): (monitor: HyprlandMonitor) => Monitor {
   return (monitor) => {
     const workspacesDefaults =
       config.defaultWorkspaces[monitor.name] ?? config.defaultWorkspaces["default"];
 
-    const workspaces: Workspace[] = Hyprland.workspaces
+    const workspaces: Workspace[] = Service.Hyprland.workspaces
       .filter((w) => w.id != SPECIAL_WORKSPACE_ID && w.monitor === monitor.name)
       .map(
-        parseWorkspace(config.workspacesPerMonitor, Hyprland.clients, workspacesDefaults, monitor)
+        parseWorkspace(
+          config.workspacesPerMonitor,
+          Service.Hyprland.clients,
+          workspacesDefaults,
+          monitor
+        )
       );
 
     for (const [index, defaults] of workspacesDefaults.entries()) {
@@ -167,7 +170,7 @@ function parseMonitor(
     }
 
     for (const w of workspaces) {
-      w.focus = () => execAsync(`hyprctl dispatch workspace ${w.id}`);
+      w.focus = () => Utils.execAsync(`hyprctl dispatch workspace ${w.id}`);
     }
 
     return {
@@ -178,7 +181,7 @@ function parseMonitor(
       size: [monitor.width, monitor.height],
       scale: monitor.scale,
       workspaces: workspaces.sort((a, b) => a.id - b.id),
-      focus: () => execAsync(`hyprctl dispatch focusmonitor ${monitor.id}`),
+      focus: () => Utils.execAsync(`hyprctl dispatch focusmonitor ${monitor.id}`),
     };
   };
 }

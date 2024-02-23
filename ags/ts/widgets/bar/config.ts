@@ -1,9 +1,10 @@
 import { Gtk } from "prelude";
 
-import { Workspaces } from "./modules/workspaces/";
-import { Battery } from "./modules/battery/";
-import { Clock } from "./modules/clock/";
+import { Battery } from "./modules/battery";
+import { Clock } from "./modules/clock";
+import { Workspaces } from "./modules/workspaces";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- It doesn't matter which parameter it uses, we only care that it's one
 type ModuleFactory = (config: any) => (monitor: number) => Gtk.Widget;
 
 export const modules = {

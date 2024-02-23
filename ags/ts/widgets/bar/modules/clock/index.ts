@@ -1,9 +1,6 @@
-import Gtk from "gi://Gtk";
-import GLib from "gi://GLib";
-
-import Widget from "resource:///com/github/Aylur/ags/widget.js";
-
+import { Gtk, GLib, Widget } from "prelude";
 import { seconds } from "utils/time";
+
 import { ModuleConfig } from "../module";
 
 interface ClockConfig extends ModuleConfig {
@@ -27,6 +24,7 @@ export function Clock(config: Partial<ClockConfig>): (monitor: number) => Gtk.Wi
       class_name: "clock" + (configFull.class ? ` ${configFull.class}` : ""),
       justification: "center",
       angle: config.vertical ? 90 : 0,
+      // TODO(nenikitov): `connections` is deprecated
       connections: [
         [
           configFull.interval,
