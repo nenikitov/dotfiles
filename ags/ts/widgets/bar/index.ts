@@ -1,10 +1,6 @@
-import Widget from "resource:///com/github/Aylur/ags/widget.js";
-
-import type AgsWindow from "types/widgets/window.js";
-import Gtk from "gi://Gtk";
+import { Gtk, Widget, type Window } from "prelude";
 
 import { BarConfig, modules, Module } from "./config.js";
-export * from "./config.js";
 
 function assignLayout(monitor: number, layout: Module[]): Gtk.Widget[] {
   return layout.map((m) => {
@@ -14,7 +10,7 @@ function assignLayout(monitor: number, layout: Module[]): Gtk.Widget[] {
   });
 }
 
-export default function Bar(config: BarConfig): (monitor: number) => AgsWindow {
+export default function Bar(config: BarConfig): (monitor: number) => Window {
   return (monitor) => {
     return Widget.Window({
       monitor,
@@ -43,3 +39,5 @@ export default function Bar(config: BarConfig): (monitor: number) => AgsWindow {
     });
   };
 }
+
+export * from "./config";

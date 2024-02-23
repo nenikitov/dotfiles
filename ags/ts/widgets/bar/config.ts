@@ -1,4 +1,4 @@
-import Gtk from "gi://Gtk";
+import { Gtk } from "prelude";
 
 import { Workspaces } from "./modules/workspaces/";
 import { Battery } from "./modules/battery/";
@@ -20,7 +20,7 @@ export type Module =
   // See [issue](https://github.com/microsoft/TypeScript/issues/55632).
   // Make this an array when this gets fixed
   | {
-      [K in keyof typeof modules]: { name: K, config: Parameters<(typeof modules)[K]>[0] };
+      [K in keyof typeof modules]: { name: K; config: Parameters<(typeof modules)[K]>[0] };
     }[keyof typeof modules];
 
 export interface BarConfig {

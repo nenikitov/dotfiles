@@ -1,5 +1,4 @@
-import _Gdk from "gi://Gdk";
-const Gdk: typeof import("gdk-3.0/gdk-3.0").default = _Gdk;
+import Gdk from "gi://Gdk";
 
 import { range } from "utils/iterator";
 

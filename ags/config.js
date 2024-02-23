@@ -18,4 +18,6 @@ try {
   App.Quit();
 }
 
-export default (await import(`file://${fileOut}`)).default;
+const main = await import(`file://${fileOut}`);
+
+export default main.default;

@@ -1,6 +1,7 @@
 root: true
 env:
     es2022: true
+    node: true
 extends:
     - eslint:recommended
     - plugin:prettier/recommended
@@ -15,12 +16,54 @@ rules:
 overrides:
     - files:
           - "**/*.ts"
+      parser: '@typescript-eslint/parser'
+      settings:
+        import/resolver:
+          typescript: true
+        import/parsers:
+          "@typescript-eslint/parser":
+            - '.tsx'
       extends:
           - eslint:recommended
           - plugin:@typescript-eslint/recommended
+          - plugin:import/recommended
+          - plugin:import/typescript
           - plugin:prettier/recommended
       rules:
           prettier/prettier:
               - warn
           "@typescript-eslint/no-unused-vars":
+              - off
+          import/no-default-export:
+              - warn
+          import/no-absolute-path:
+              - warn
+          import/no-useless-path-segments:
+              - warn
+              - noUselessIndex: true
+          import/consistent-type-specifier-style:
+              - warn
+              - prefer-inline
+          import/exports-last:
+              - warn
+          import/first:
+              - warn
+              - "absolute-first"
+          import/newline-after-import:
+              - warn
+              - count: 1
+                exactCount: true
+          import/no-named-default:
+              - warn
+          import/order:
+              - warn
+              - groups:
+                  - builtin
+                  - external
+                  - internal
+                newlines-between: always
+                alphabetize:
+                    order: asc
+                    orderImportKind: asc
+          import/no-unresolved:
               - off
