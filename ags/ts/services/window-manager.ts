@@ -4,7 +4,7 @@ import Applications from "resource:///com/github/Aylur/ags/service/applications.
 import Variable from "resource:///com/github/Aylur/ags/variable.js";
 import { execAsync } from "resource:///com/github/Aylur/ags/utils.js";
 
-import * as user from "user";
+import * as options from "options";
 
 interface Focusable {
   focus: () => void;
@@ -70,7 +70,7 @@ const WindowManager = Variable<Monitor[]>([], {});
 export default WindowManager;
 
 Hyprland.connect("changed", () => {
-  WindowManager.value = getInfo(user.windowManager);
+  WindowManager.value = getInfo(options.windowManager);
 });
 
 function getInfo(config: WindowManagerConfig): Monitor[] {
