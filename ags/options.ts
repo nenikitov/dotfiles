@@ -21,13 +21,13 @@ export const bar: BarConfig = {
     center: [],
     end: [
       "battery",
-      [
-        "clock",
-        {
+      {
+        name: "clock",
+        config: {
           format: "%H:%M:%S\n%a %Y-%m-%d",
           formatTooltip: "%H:%M:%S\n%A\n%B %d, %Y\n%Z (%:z)",
         },
-      ],
+      },
     ],
   },
 };

@@ -8,7 +8,9 @@ export * from "./config.js";
 
 function assignLayout(monitor: number, layout: Module[]): Gtk.Widget[] {
   return layout.map((m) => {
-    return typeof m == "string" ? modules[m]({})(monitor) : modules[m[0]](m[1] as any)(monitor);
+    return typeof m == "string"
+      ? modules[m]({})(monitor)
+      : modules[m.name](m.config as any)(monitor);
   });
 }
 
