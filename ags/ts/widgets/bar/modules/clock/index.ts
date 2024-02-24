@@ -1,40 +1,30 @@
-import { Gtk, GLib, Widget } from "prelude";
-import { seconds } from "utils/time";
+import { Gtk, Widget, Utils } from "prelude";
+import { time } from "variables/time";
 
-import { ModuleConfig } from "../module";
+import { Module } from "../module";
 
-interface ClockConfig extends ModuleConfig {
+interface ClockConfig {
   format: string;
   formatTooltip: string;
-  interval: number;
 }
 
 const configDefault: ClockConfig = {
   format: "%X",
   formatTooltip: "%c",
-  interval: seconds(1),
-  vertical: false,
 };
 
 export function Clock(config: Partial<ClockConfig>): (monitor: number) => Gtk.Widget {
   return (_) => {
     const configFull = Object.assign({}, configDefault, config);
 
-    return Widget.Label({
-      class_name: "clock" + (configFull.class ? ` ${configFull.class}` : ""),
-      justification: "center",
-      angle: config.vertical ? 90 : 0,
-      // TODO(nenikitov): `connections` is deprecated
-      connections: [
-        [
-          configFull.interval,
-          (label) => {
-            const date = GLib.DateTime.new_now_local();
-            label.label = date.format(configFull.format) || "";
-            label.tooltip_text = date.format(configFull.formatTooltip);
-          },
-        ],
-      ],
+    const timeBar = Utils.derive([time], (t) => t.format(configFull.format) || "");
+    const timeTooltip = Utils.derive([time], (t) => t.format(configFull.formatTooltip) || "");
+
+    return Module({
+      className: "clock",
+      // window: "clock",
+      child: Widget.Label({ label: timeBar.bind(), useMarkup: true }),
+      tooltip: timeTooltip.bind(),
     });
   };
 }

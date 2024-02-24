@@ -4,6 +4,8 @@ import Utils from "resource:///com/github/Aylur/ags/utils.js";
 const fileOut = `${App.configDir}/build/main.js`;
 const fileEntry = `${App.configDir}/ts/main.ts`;
 
+const externalLibraries = ["resource://*", "gi://*"];
+
 try {
   await Utils.execAsync([
     "bun",
@@ -11,7 +13,7 @@ try {
     fileEntry,
     "--outfile",
     fileOut,
-    ...["resource://*", "gi://*"].flatMap((lib) => ["--external", lib]),
+    ...externalLibraries.flatMap((l) => ["--external", l]),
   ]);
 } catch (error) {
   console.error(/** @type {Error} */ (error));
