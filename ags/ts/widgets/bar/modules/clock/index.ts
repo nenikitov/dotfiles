@@ -1,5 +1,5 @@
 import { Gtk, Widget, Utils } from "prelude";
-import { time } from "variables/time";
+import { time } from "services/time";
 
 import { Module } from "../module";
 

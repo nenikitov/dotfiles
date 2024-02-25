@@ -1,6 +1,7 @@
-import { App, Gtk, Widget } from "prelude";
+import { App, Gtk, Service, Widget } from "prelude";
 import { treatClassNames } from "ts/utils/widget";
-import { type Binding } from "types/service";
+import { Connectable, type Binding } from "types/service";
+import { type Button } from "types/widgets/button";
 
 export interface ModuleConfig {
   vertical: boolean;
@@ -10,7 +11,7 @@ export interface ModuleConfig {
 export interface ModuleProps {
   child: Gtk.Widget;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- We don't care about how the binding is set up, we just care about the return
-  tooltip?: "string" | Binding<any, any, string>;
+  tooltip?: string | Binding<any, any, string> | [Connectable, () => string];
   window?: string;
   className?: string | string[];
 }
@@ -20,7 +21,7 @@ export function Module(props: ModuleProps): Gtk.Widget {
   return Widget.Button({
     child: props.child,
     classNames,
-    tooltipMarkup: props.tooltip,
+    tooltipMarkup: !Array.isArray(props.tooltip) ? props.tooltip : null,
     setup: (self) => {
       if (props.window) {
         let open = false;
@@ -39,6 +40,13 @@ export function Module(props: ModuleProps): Gtk.Widget {
             open = false;
             self.toggleClassName("active", false);
           }
+        });
+      }
+
+      if (props.tooltip && Array.isArray(props.tooltip)) {
+        const [service, callback] = props.tooltip;
+        self.hook(service, (self) => {
+          self.tooltip_markup = callback();
         });
       }
     },

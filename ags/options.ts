@@ -20,7 +20,13 @@ export const bar: BarConfig = {
     start: ["workspaces"],
     center: [],
     end: [
-      "battery",
+      {
+        name: "battery",
+        config: {
+          format: false,
+          icon: false,
+        },
+      },
       {
         name: "clock",
         config: {
