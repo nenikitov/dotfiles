@@ -44,8 +44,6 @@ overrides:
           import/consistent-type-specifier-style:
               - warn
               - prefer-inline
-          import/exports-last:
-              - warn
           import/first:
               - warn
               - "absolute-first"

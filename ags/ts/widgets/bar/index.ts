@@ -4,7 +4,7 @@ import { BarConfig, modules, Module } from "./config.js";
 
 function assignLayout(monitor: number, layout: Module[]): Gtk.Widget[] {
   return layout.map((m) => {
-    return typeof m == "string"
+    return typeof m === "string"
       ? modules[m]({})(monitor)
       : // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Config will be appropriate for the module it's associated with
         modules[m.name](m.config as any)(monitor);

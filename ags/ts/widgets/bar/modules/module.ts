@@ -21,7 +21,7 @@ export function Module(props: ModuleProps): Gtk.Widget {
   return Widget.Button({
     child: props.child,
     classNames,
-    tooltipMarkup: !Array.isArray(props.tooltip) ? props.tooltip : null,
+    tooltipMarkup: props.tooltip && !Array.isArray(props.tooltip) ? props.tooltip : null,
     setup: (self) => {
       if (props.window) {
         let open = false;

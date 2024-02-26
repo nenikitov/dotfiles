@@ -1,7 +1,7 @@
-import { WindowManagerConfig } from "services/window-manager";
+import { WmConfig } from "services/window-manager";
 import { BarConfig } from "widgets/bar";
 
-export const windowManager: WindowManagerConfig = {
+export const windowManager: WmConfig = {
   defaultWorkspaces: {
     default: [
       { icon: "", name: "Home" },

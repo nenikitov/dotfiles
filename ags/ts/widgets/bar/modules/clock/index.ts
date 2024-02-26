@@ -13,12 +13,12 @@ const configDefault: ClockConfig = {
   formatTooltip: "%c",
 };
 
-export function Clock(config: Partial<ClockConfig>): (monitor: number) => Gtk.Widget {
+export function Clock(configPartial: Partial<ClockConfig>): (monitor: number) => Gtk.Widget {
   return (_) => {
-    const configFull = Object.assign({}, configDefault, config);
+    const config = Object.assign({}, configDefault, configPartial);
 
-    const timeBar = Utils.derive([time], (t) => t.format(configFull.format) || "");
-    const timeTooltip = Utils.derive([time], (t) => t.format(configFull.formatTooltip) || "");
+    const timeBar = Utils.derive([time], (t) => t.format(config.format) || "");
+    const timeTooltip = Utils.derive([time], (t) => t.format(config.formatTooltip) || "");
 
     return Module({
       className: "clock",

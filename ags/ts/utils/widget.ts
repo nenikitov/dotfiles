@@ -9,7 +9,7 @@ export function forEveryMonitor<T>(widget: (monitor: number) => T) {
 export function treatClassNames(className: string | string[] | undefined): string[] {
   if (!className) {
     return [];
-  } else if (typeof className == "string") {
+  } else if (typeof className === "string") {
     return [className];
   } else {
     return className;

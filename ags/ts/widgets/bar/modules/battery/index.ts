@@ -30,9 +30,9 @@ const configDefault: BatteryConfig = {
   },
 };
 
-export function Battery(config: Partial<BatteryConfig>): (monitor: number) => Gtk.Widget {
+export function Battery(configPartial: Partial<BatteryConfig>): (monitor: number) => Gtk.Widget {
   return (_) => {
-    const configFull = Object.assign({}, configDefault, config);
+    const config = Object.assign({}, configDefault, configPartial);
 
     return Module({
       className: "battery",
@@ -40,15 +40,15 @@ export function Battery(config: Partial<BatteryConfig>): (monitor: number) => Gt
         children: [
           Widget.Icon({
             // TODO(nenikitov): Figure out why this isn't working
-            visible: configFull.icon,
+            visible: config.icon,
             icon: Service.Battery.bind("icon_name"),
           }),
           Widget.Label({
             useMarkup: true,
-            visible: Boolean(configFull.format),
+            visible: Boolean(config.format),
             setup: (self) => {
-              if (typeof configFull.format === "function") {
-                const format = configFull.format;
+              if (typeof config.format === "function") {
+                const format = config.format;
                 self.hook(Service.Battery, (_) => {
                   self.label = format(Service.Battery);
                 });
@@ -57,7 +57,7 @@ export function Battery(config: Partial<BatteryConfig>): (monitor: number) => Gt
           }),
         ],
       }),
-      tooltip: [Service.Battery, () => configFull.formatTooltip(Service.Battery)],
+      tooltip: [Service.Battery, () => config.formatTooltip(Service.Battery)],
     });
   };
 }
