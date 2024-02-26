@@ -6,12 +6,12 @@ export function forEveryMonitor<T>(widget: (monitor: number) => T) {
   return range(count).map(widget);
 }
 
-export function treatClassNames(className: string | string[] | undefined): string[] {
+export function treatClassNames(className: string | (string | undefined)[] | undefined): string[] {
   if (!className) {
     return [];
   } else if (typeof className === "string") {
     return [className];
   } else {
-    return className;
+    return className.filter(Boolean) as string[];
   }
 }

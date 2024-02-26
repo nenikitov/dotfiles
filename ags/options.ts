@@ -2,15 +2,19 @@ import { WmConfig } from "services/window-manager";
 import { BarConfig } from "widgets/bar";
 
 export const windowManager: WmConfig = {
-  defaultWorkspaces: {
-    default: [
-      { icon: "", name: "Home" },
-      { icon: "", name: "Terminal" },
-      { icon: "", name: "Web" },
-      { icon: "", name: "Media" },
-      { icon: "", name: "Communication" },
-    ],
+  workspaceNames: {
+    default: {
+      general: [
+        { icon: "", name: "Home" },
+        { icon: "", name: "Terminal" },
+        { icon: "", name: "Web" },
+        { icon: "", name: "Media" },
+        { icon: "", name: "Communication" },
+      ],
+      special: { icon: "", name: "Special" },
+    },
   },
+  completeWorkspaces: "name-only",
   workspacesPerMonitor: 10,
 };
 

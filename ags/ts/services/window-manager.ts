@@ -1,3 +1,4 @@
+import * as options from "options";
 import { Service, Variable } from "prelude";
 import {
   type Client as HyprlandClient,
@@ -10,11 +11,16 @@ import { groupBy } from "utils/iterator";
 export const WindowManager = Variable<WmMonitor[]>([]);
 
 Service.Hyprland.connect("changed", (hyprland) => {
-  WindowManager.value = hyprland.monitors.map(parseMonitor(hyprland));
+  WindowManager.value = hyprland.monitors.map(parseMonitor(hyprland, options.windowManager));
 });
 
-function parseMonitor(hyprland: Hyprland): (monitor: HyprlandMonitor) => WmMonitor {
+function parseMonitor(
+  hyprland: Hyprland,
+  config: WmConfig
+): (monitor: HyprlandMonitor) => WmMonitor {
   return (monitor) => {
+    const workspaceNames = config.workspaceNames[monitor.name] ?? config.workspaceNames["default"];
+
     return {
       id: monitor.id,
       name: monitor.name,
@@ -37,21 +43,32 @@ function parseMonitor(hyprland: Hyprland): (monitor: HyprlandMonitor) => WmMonit
       scale: monitor.scale,
       transform: monitor.transform,
       workspaces: {
-        general: hyprland.workspaces
-          .filter((w) => w.monitorID === monitor.id && w.id != monitor.specialWorkspace.id)
-          .map(parseWorkspace(hyprland, monitor, false))
-          .sort((a, b) => a.id - b.id),
+        general: completeWorkspaces(
+          hyprland,
+          config,
+          workspaceNames.general,
+          hyprland.workspaces
+            .filter((w) => w.monitorID === monitor.id && w.id != monitor.specialWorkspace.id)
+            .map(parseWorkspace(hyprland, monitor, false))
+            .sort((a, b) => a.id - b.id)
+        ),
         special:
           monitor.specialWorkspace.id != 0
-            ? parseWorkspace(
-                hyprland,
-                monitor,
-                true
-              )(hyprland.getWorkspace(monitor.specialWorkspace.id)!)
+            ? completeSpecialWorkspace(
+                workspaceNames.special,
+                parseWorkspace(
+                  hyprland,
+                  monitor,
+                  true
+                )(hyprland.getWorkspace(monitor.specialWorkspace.id)!)
+              )
             : undefined,
       },
       focused: monitor.focused,
       active: monitor.id === hyprland.active.monitor.id,
+      focus: () => {
+        hyprland.messageAsync(`dispatch focusmonitor ${monitor.id}`);
+      },
     };
   };
 }
@@ -60,7 +77,7 @@ function parseWorkspace(
   hyprland: Hyprland,
   monitor: HyprlandMonitor,
   special: boolean
-): (workspace: HyprlandWorkspace) => WmWorkspace {
+): (workspace: HyprlandWorkspace) => Omit<WmWorkspace, "display"> & { name?: string } {
   return (workspace) => {
     const { "": ungrouped, ...grouped } = groupBy(
       hyprland.clients.filter((c) => c.workspace.id === workspace.id && c.mapped),
@@ -69,7 +86,7 @@ function parseWorkspace(
 
     return {
       id: workspace.id,
-      name: workspace.name,
+      name: workspace.name !== workspace.id.toString() ? workspace.name : undefined,
       clients: [
         ...(ungrouped ?? []).map(parseClient(hyprland)),
         ...Object.values(grouped ?? []).map((g) => g.map(parseClient(hyprland))),
@@ -77,7 +94,98 @@ function parseWorkspace(
       focused: workspace.id === monitor.activeWorkspace.id,
       active: workspace.id === hyprland.active.workspace.id,
       special,
+      focus: () => {
+        hyprland.messageAsync(`dispatch workspace ${workspace.id}`);
+      },
     };
+  };
+}
+
+function getWorkspaceIdAtMonitor(id: number, workspacesPerMonitor: number): number {
+  return workspacesPerMonitor !== 0 ? ((id - 1) % workspacesPerMonitor) + 1 : id;
+}
+
+function getWorkspaceStartAtMonitor(id: number, workspacesPerMonitor: number): number {
+  return (workspacesPerMonitor !== 0 ? Math.floor((id - 1) / workspacesPerMonitor) : 0) + 1;
+}
+
+function completeWorkspaces(
+  hyprland: Hyprland,
+  config: WmConfig,
+  workspaceNames: WmWorkspaceName[],
+  workspaces: (Omit<WmWorkspace, "display"> & { name?: string })[]
+): WmWorkspace[] {
+  const workspacesFull: WmWorkspace[] = workspaces.map((w) =>
+    completeWorkspace(
+      config,
+      workspaceNames[getWorkspaceIdAtMonitor(w.id, config.workspacesPerMonitor) - 1],
+      w
+    )
+  );
+
+  let completeAmount = 0;
+  if (typeof config.completeWorkspaces === "number") {
+    completeAmount = config.completeWorkspaces;
+  } else if (config.completeWorkspaces === "name-only") {
+    completeAmount = workspaceNames.length;
+  } else if (config.completeWorkspaces === "until-largest") {
+    const index = workspacesFull[workspacesFull.length - 1].display.index;
+    completeAmount = index === "special" ? 0 : index;
+  }
+
+  for (let i = 1; i <= completeAmount; i++) {
+    const index = workspacesFull.findIndex((w) => w.display.index === i);
+    if (index === -1) {
+      const id =
+        getWorkspaceStartAtMonitor(workspacesFull[0].id, config.workspacesPerMonitor) + i - 1;
+
+      workspacesFull.push({
+        id,
+        clients: [],
+        focused: false,
+        active: false,
+        special: false,
+        display: {
+          index: i,
+          ...(workspaceNames[i - 1] ?? { icon: "", name: id.toString() }),
+        },
+        focus: () => {
+          hyprland.messageAsync(`dispatch workspace ${id}`);
+        },
+      });
+    }
+  }
+
+  return workspacesFull.sort((a, b) => a.id - b.id);
+}
+
+function completeWorkspace(
+  config: WmConfig,
+  workspaceName: WmWorkspaceName | undefined,
+  workspace: Omit<WmWorkspace, "display"> & { name?: string }
+) {
+  const completed = {
+    ...workspace,
+    display: {
+      index: ((workspace.id - 1) % config.workspacesPerMonitor) + 1,
+      ...workspaceName,
+      ...(workspace.name ? { name: workspace.name } : {}),
+    },
+  };
+
+  return completed;
+}
+
+function completeSpecialWorkspace(
+  workspaceName: WmWorkspaceName,
+  workspace: Omit<WmWorkspace, "display">
+): WmWorkspace {
+  return {
+    ...workspace,
+    display: {
+      index: "special",
+      ...workspaceName,
+    },
   };
 }
 
@@ -109,6 +217,9 @@ function parseClient(hyprland: Hyprland): (client: HyprlandClient) => WmClient {
       },
       pid: client.pid,
       active: client.address === hyprland.active.client.address,
+      focus: () => {
+        hyprland.messageAsync(`dispatch focus address:${client.address}`);
+      },
     };
   };
 }
@@ -118,12 +229,22 @@ export interface WmWorkspaceName {
   name: string;
 }
 
+export interface WmAllWorkpaceNames {
+  general: WmWorkspaceName[];
+  special: WmWorkspaceName;
+}
+
 export interface WmConfig {
-  defaultWorkspaces: {
-    default: WmWorkspaceName[];
-    [monitorName: string]: WmWorkspaceName[];
+  workspaceNames: {
+    default: WmAllWorkpaceNames;
+    [monitorName: string]: WmAllWorkpaceNames;
   };
-  workspacesPerMonitor: false | number;
+  completeWorkspaces: false | "name-only" | "until-largest" | number;
+  workspacesPerMonitor: number;
+}
+
+export interface WmFocusable {
+  focus: () => void;
 }
 
 export interface WmCoordinates {
@@ -149,7 +270,7 @@ export enum WmTransform {
   FlipRotate270 = 7,
 }
 
-export interface WmMonitor {
+export interface WmMonitor extends WmFocusable {
   id: number;
   name: string;
   description: string;
@@ -167,13 +288,15 @@ export interface WmMonitor {
   active: boolean;
 }
 
-export interface WmWorkspace {
+export interface WmWorkspace extends WmFocusable {
   id: number;
-  name: string;
   clients: (WmClient | WmClient[])[];
   focused: boolean;
   active: boolean;
   special: boolean;
+  display: Partial<WmWorkspaceName> & {
+    index: number | "special";
+  };
 }
 
 export enum WmFullscreenMode {
@@ -182,7 +305,7 @@ export enum WmFullscreenMode {
   FakeFullscreen = 2,
 }
 
-export interface WmClient {
+export interface WmClient extends WmFocusable {
   address: string;
   hidden: boolean;
   position: WmCoordinates;

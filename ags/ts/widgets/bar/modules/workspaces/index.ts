@@ -8,15 +8,17 @@ interface WorkspacesConfig {
   formatTooltip: (workspace: WmWorkspace) => string;
   allMonitors: boolean;
   special: "hide" | "first" | "last";
+  hideEmpty: boolean;
 }
 
 const configDefault: WorkspacesConfig = {
   format: (workspace: WmWorkspace): string => {
-    return workspace.name || workspace.id.toString();
+    return workspace.display.icon ?? workspace.display.name ?? workspace.display.index.toString();
   },
   formatTooltip: (workspace: WmWorkspace): string => {
     return [
-      `Workspace ${workspace.id.toString() === workspace.name ? workspace.name : `${workspace.name} (${workspace.id})`}`,
+      (workspace.display.name ? `${workspace.display.index} - ` : "") +
+        (workspace.display.name ?? workspace.display.index),
       workspace.clients.length > 0 ? `${workspace.clients.length} opened` : undefined,
     ]
       .filter(Boolean)
@@ -24,6 +26,7 @@ const configDefault: WorkspacesConfig = {
   },
   allMonitors: false,
   special: "first",
+  hideEmpty: false,
 };
 
 export function Workspaces(
@@ -38,7 +41,10 @@ export function Workspaces(
         const displayedMonitors = config.allMonitors ? m : [m.find((m) => m.id === monitor)!];
 
         return displayedMonitors.map((m) => {
-          const workspaces = m.workspaces?.general ?? [];
+          let workspaces = (m ?? {}).workspaces?.general ?? [];
+          if (config.hideEmpty) {
+            workspaces = workspaces.filter((w) => w.clients.length !== 0 || w.active);
+          }
           if (config.special !== "hide" && m.workspaces.special) {
             workspaces.unshift(m.workspaces.special);
           }
@@ -56,10 +62,14 @@ export function Workspaces(
 function Workspace(config: WorkspacesConfig): (workspace: WmWorkspace) => Gtk.Widget {
   return (workspace) => {
     return Module({
-      className: ["workspace", `workspace-${workspace.name}`],
+      className: ["workspace", `workspace-${workspace.display.name}`],
       child: Widget.Label({
-        label: workspace.name,
+        label: config.format(workspace),
       }),
+      tooltip: config.formatTooltip(workspace),
+      onClicked: () => {
+        workspace.focus();
+      },
     });
   };
 }

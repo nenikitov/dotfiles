@@ -13,7 +13,8 @@ export interface ModuleProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- We don't care about how the binding is set up, we just care about the return
   tooltip?: string | Binding<any, any, string> | [Connectable, () => string];
   window?: string;
-  className?: string | string[];
+  className?: string | (string | undefined)[];
+  onClicked?: () => void;
 }
 
 export function Module(props: ModuleProps): Gtk.Widget {
@@ -53,6 +54,9 @@ export function Module(props: ModuleProps): Gtk.Widget {
     onClicked: () => {
       if (props.window) {
         App.toggleWindow(props.window);
+      }
+      if (props.onClicked) {
+        props.onClicked();
       }
     },
   });
