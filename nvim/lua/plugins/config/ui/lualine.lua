@@ -29,10 +29,9 @@ return {
     opts = function()
         local noice = require('noice')
 
-        local lsp_handler = lsp.progress_handler()
-        lsp_handler.assign()
-
-        local spinner = 1
+        -- local lsp_handler = lsp.progress_handler()
+        -- lsp_handler.assign()
+        -- local spinner = 1
 
         return {
             options = {
@@ -147,16 +146,16 @@ return {
                         end,
                         fmt = hide(IMPORTANT),
                     },
-                    {
-                        function()
-                            if vim.tbl_count(lsp_handler.status) ~= 0 then
-                                spinner = (spinner % #icons.status_bar.lsp.animation) + 1
-                                return icons.status_bar.lsp.animation[spinner]
-                            else
-                                return icons.status_bar.lsp.done
-                            end
-                        end,
-                    },
+                    -- {
+                    --     function()
+                    --         if vim.tbl_count(lsp_handler.status) ~= 0 then
+                    --             spinner = (spinner % #icons.status_bar.lsp.animation) + 1
+                    --             return icons.status_bar.lsp.animation[spinner]
+                    --         else
+                    --             return icons.status_bar.lsp.done
+                    --         end
+                    --     end,
+                    -- },
                 },
                 lualine_z = {
                     {

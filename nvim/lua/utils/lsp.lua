@@ -12,6 +12,11 @@ function M.progress_handler()
     local status = {}
 
     local function handle_progress(_, result, context)
+        vim.cmd([[
+            autocmd LspProgress * redrawstatus
+        ]])
+
+
         local value = result.value
 
         local client = context.client_id

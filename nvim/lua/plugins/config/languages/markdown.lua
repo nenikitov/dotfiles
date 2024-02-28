@@ -4,10 +4,8 @@ return language.register {
     tools = {
         -- Language server
         'marksman',
-        'texlab',
         -- Formatter
         'prettier',
-        'latexindent',
     },
     parsers = {
         'markdown',
@@ -19,11 +17,9 @@ return language.register {
     },
     servers = {
         marksman = {},
-        texlab = {},
     },
     formatters = {
         markdown = { 'injected' },
-        tex = { 'latexindent' },
     },
     plugins = {
         after_core = {
