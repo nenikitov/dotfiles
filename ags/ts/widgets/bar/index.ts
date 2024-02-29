@@ -1,4 +1,4 @@
-import { Gtk, Widget } from "prelude";
+import { Gtk, Service, Widget } from "prelude";
 
 import { BarConfig, modules, Module } from "./config.js";
 

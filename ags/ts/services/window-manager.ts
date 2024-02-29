@@ -1,5 +1,5 @@
 import * as options from "options";
-import { Service, Variable } from "prelude";
+import { Service, Utils, Variable } from "prelude";
 import {
   type Client as HyprlandClient,
   type Monitor as HyprlandMonitor,
@@ -88,8 +88,8 @@ function parseWorkspace(
       id: workspace.id,
       name: workspace.name !== workspace.id.toString() ? workspace.name : undefined,
       clients: [
-        ...(ungrouped ?? []).map(parseClient(hyprland)),
-        ...Object.values(grouped ?? []).map((g) => g.map(parseClient(hyprland))),
+        ...(ungrouped ?? []).map(parseClient(hyprland)).sort(sortClients),
+        ...Object.values(grouped ?? []).map((g) => g.map(parseClient(hyprland)).sort(sortClients)),
       ],
       focused: workspace.id === monitor.activeWorkspace.id,
       active: workspace.id === hyprland.active.workspace.id,
@@ -216,12 +216,25 @@ function parseClient(hyprland: Hyprland): (client: HyprlandClient) => WmClient {
         initial: client.initialTitle,
       },
       pid: client.pid,
-      active: client.address === hyprland.active.client.address,
+      // TODO(nenikitov): There is an issue with Hyprland service and `hyprland.active.client` is not updated properly on window close
+      // This is a hack that re-requests active client id. Replace with `hyprland.active.client.address` if it's gets fixed.
+      // active: client.address === hyprland.active.client.address
+      active:
+        client.address ===
+        (JSON.parse(hyprland.message("j/activewindow")) as HyprlandClient).address,
       focus: () => {
         hyprland.messageAsync(`dispatch focus address:${client.address}`);
       },
     };
   };
+}
+
+function sortClients(a: WmClient, b: WmClient) {
+  return (
+    Number(b.floating) - Number(a.floating) ||
+    a.position.x - b.position.x ||
+    a.position.y - b.position.y
+  );
 }
 
 export interface WmWorkspaceName {

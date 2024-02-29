@@ -1,14 +1,15 @@
 import { Gtk, Widget } from "prelude";
-import { WindowManager, type WmWorkspace } from "services/window-manager";
-import { groupBy } from "utils/iterator";
-import { Module } from "../module";
+import { WindowManager, type WmMonitor, type WmWorkspace } from "services/window-manager";
 
-interface WorkspacesConfig {
+import { Workspace } from "./workspace";
+
+export interface WorkspacesConfig {
   format: (workspace: WmWorkspace) => string;
   formatTooltip: (workspace: WmWorkspace) => string;
   allMonitors: boolean;
   special: "hide" | "first" | "last";
   hideEmpty: boolean;
+  maxDots: number;
 }
 
 const configDefault: WorkspacesConfig = {
@@ -27,6 +28,7 @@ const configDefault: WorkspacesConfig = {
   allMonitors: false,
   special: "first",
   hideEmpty: false,
+  maxDots: 3,
 };
 
 export function Workspaces(
@@ -38,15 +40,24 @@ export function Workspaces(
     return Widget.Box({
       className: "workspaces",
       children: WindowManager.bind().as((m) => {
-        const displayedMonitors = config.allMonitors ? m : [m.find((m) => m.id === monitor)!];
+        const displayedMonitors: WmMonitor[] = (
+          config.allMonitors ? m : [m.find((m) => m.id === monitor)!]
+        ).filter(Boolean);
 
         return displayedMonitors.map((m) => {
-          let workspaces = (m ?? {}).workspaces?.general ?? [];
+          let workspaces = m.workspaces?.general ?? [];
+
           if (config.hideEmpty) {
             workspaces = workspaces.filter((w) => w.clients.length !== 0 || w.active);
           }
-          if (config.special !== "hide" && m.workspaces.special) {
-            workspaces.unshift(m.workspaces.special);
+          if (config.special !== "hide" && m?.workspaces?.special) {
+            switch (config.special) {
+              case "first":
+                workspaces.unshift(m.workspaces.special);
+                break;
+              case "last":
+                workspaces.push(m.workspaces.special);
+            }
           }
 
           return Widget.Box({
@@ -55,21 +66,6 @@ export function Workspaces(
           });
         });
       }),
-    });
-  };
-}
-
-function Workspace(config: WorkspacesConfig): (workspace: WmWorkspace) => Gtk.Widget {
-  return (workspace) => {
-    return Module({
-      className: ["workspace", `workspace-${workspace.display.name}`],
-      child: Widget.Label({
-        label: config.format(workspace),
-      }),
-      tooltip: config.formatTooltip(workspace),
-      onClicked: () => {
-        workspace.focus();
-      },
     });
   };
 }
