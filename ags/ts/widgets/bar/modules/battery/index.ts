@@ -59,6 +59,7 @@ export function Battery(configPartial: Partial<BatteryConfig>): (monitor: number
         ],
       }),
       tooltip: [Service.Battery, () => config.formatTooltip(Service.Battery)],
+      visible: Service.Battery.bind("available"),
     });
   };
 }
