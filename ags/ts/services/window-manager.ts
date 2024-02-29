@@ -21,6 +21,11 @@ function parseMonitor(
   return (monitor) => {
     const workspaceNames = config.workspaceNames[monitor.name] ?? config.workspaceNames["default"];
 
+    const { general, special } = groupBy(
+      hyprland.workspaces.filter((w) => w.monitorID === monitor.id),
+      (w) => (w.id < 0 ? "special" : "general")
+    );
+
     return {
       id: monitor.id,
       name: monitor.name,
@@ -47,22 +52,14 @@ function parseMonitor(
           hyprland,
           config,
           workspaceNames.general,
-          hyprland.workspaces
-            .filter((w) => w.monitorID === monitor.id && w.id != monitor.specialWorkspace.id)
-            .map(parseWorkspace(hyprland, monitor, false))
-            .sort((a, b) => a.id - b.id)
+          general.map(parseWorkspace(hyprland, monitor, false)).sort((a, b) => a.id - b.id)
         ),
-        special:
-          monitor.specialWorkspace.id != 0
-            ? completeSpecialWorkspace(
-                workspaceNames.special,
-                parseWorkspace(
-                  hyprland,
-                  monitor,
-                  true
-                )(hyprland.getWorkspace(monitor.specialWorkspace.id)!)
-              )
-            : undefined,
+        special: special?.length
+          ? completeSpecialWorkspace(
+              workspaceNames.special,
+              parseWorkspace(hyprland, monitor, true)(special[0])
+            )
+          : undefined,
       },
       focused: monitor.focused,
       active: monitor.id === hyprland.active.monitor.id,
@@ -106,7 +103,9 @@ function getWorkspaceIdAtMonitor(id: number, workspacesPerMonitor: number): numb
 }
 
 function getWorkspaceStartAtMonitor(id: number, workspacesPerMonitor: number): number {
-  return (workspacesPerMonitor !== 0 ? Math.floor((id - 1) / workspacesPerMonitor) : 0) + 1;
+  return workspacesPerMonitor !== 0
+    ? Math.floor((id - 1) / workspacesPerMonitor) * workspacesPerMonitor + 1
+    : 0;
 }
 
 function completeWorkspaces(
