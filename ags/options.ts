@@ -24,11 +24,11 @@ export const bar: BarConfig = {
     start: ["workspaces"],
     center: [],
     end: [
+      "keyboardLayout",
       {
         name: "battery",
         config: {
           format: false,
-          icon: false,
         },
       },
       {

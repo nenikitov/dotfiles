@@ -40,8 +40,8 @@ export function Workspace(config: WorkspacesConfig): (workspace: WmWorkspace) =>
   };
 }
 
-function WorkspaceActiveLine(config: WorkspacesConfig): (workspace: WmWorkspace) => Gtk.Widget {
-  return (workspace) => {
+function WorkspaceActiveLine(_: WorkspacesConfig): (workspace: WmWorkspace) => Gtk.Widget {
+  return (_) => {
     return Widget.Icon({
       className: "workspace-line",
       size: 2,
@@ -71,7 +71,7 @@ function WorkspaceDots(config: WorkspacesConfig): (workspace: WmWorkspace) => Gt
   };
 }
 
-function WorkspaceDot(config: WorkspacesConfig): (client: WmClient | WmClient[]) => Gtk.Widget {
+function WorkspaceDot(_: WorkspacesConfig): (client: WmClient | WmClient[]) => Gtk.Widget {
   return (client) => {
     return Widget.Box({
       child: Widget.Icon({

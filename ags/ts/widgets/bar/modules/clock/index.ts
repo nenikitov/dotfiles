@@ -22,7 +22,7 @@ export function Clock(configPartial: Partial<ClockConfig>): (monitor: number) =>
 
     return Module({
       className: "clock",
-      // window: "clock",
+      window: "clock",
       child: Widget.Label({ label: timeBar.bind(), useMarkup: true }),
       tooltip: timeTooltip.bind(),
     });

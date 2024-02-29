@@ -3,9 +3,11 @@ import { seconds } from "utils/time";
 
 type KeyboardLed = "numlock" | "capslock" | "scrolllock";
 
-interface KeyboardState {
+const POLL_RATE = seconds(0.1);
+
+export interface KeyboardState {
   layout: string;
-  submap: string;
+  submap?: string;
   led: {
     caps: boolean;
     num: boolean;
@@ -13,13 +15,40 @@ interface KeyboardState {
   };
 }
 
-function changeState(transform: (state: KeyboardState) => void) {
-  const newState = { ...Keyboard.value };
-  transform(newState);
-  Keyboard.value = newState;
-}
+export const Keyboard = Variable<KeyboardState>({
+  layout: getInitialLayout(),
+  led: {
+    caps: false,
+    num: false,
+    scroll: false,
+  },
+});
+
+Service.Hyprland.connect("submap", (_, submap: string) => {
+  updateState((s) => {
+    s.submap = submap === "" ? undefined : submap;
+  });
+});
+
+Service.Hyprland.connect("keyboard-layout", (_, _keyboard: string, layout: string) => {
+  updateState((s) => {
+    s.layout = layout;
+  });
+});
+
+createLedVariable("capslock");
+createLedVariable("numlock");
+createLedVariable("scrolllock");
 
 function createLedVariable(led: KeyboardLed) {
+  const key = (
+    {
+      numlock: "num",
+      capslock: "caps",
+      scrolllock: "scroll",
+    } as const satisfies Record<KeyboardLed, keyof KeyboardState["led"]>
+  )[led];
+
   const variable = Variable(false, {
     poll: [
       POLL_RATE,
@@ -28,48 +57,36 @@ function createLedVariable(led: KeyboardLed) {
     ],
   });
 
-  const key = (
-    {
-      capslock: "caps",
-      numlock: "num",
-      scrolllock: "scroll",
-    } as const
-  )[led];
-
-  variable.connect("changed", () => {
-    changeState((state) => {
-      state.led[key] = variable.value;
+  variable.connect("changed", (v) => {
+    updateState((s) => {
+      s.led[key] = v.value;
     });
   });
 }
 
-createLedVariable("capslock");
-createLedVariable("numlock");
-createLedVariable("scrolllock");
+function updateState(update: (state: KeyboardState) => void) {
+  const value = { ...Keyboard.value };
+  update(value);
+  Keyboard.value = value;
+}
 
-Service.Hyprland.connect("keyboard-layout", (_, keyboard: string, layout: string) => {
-  changeState((state) => {
-    state.layout = layout;
-  });
-});
+interface Devices {
+  keyboards: {
+    address: string;
+    name: string;
+    rules: string;
+    model: string;
+    layout: string;
+    variant: string;
+    options: string;
+    active_keymap: string;
+    main: boolean;
+  }[];
+}
 
-Service.Hyprland.connect("submap", (_, submap: string) => {
-  changeState((state) => {
-    state.submap = submap;
-  });
-});
+function getInitialLayout(): string {
+  const devices = JSON.parse(Service.Hyprland.message("j/devices")) as Devices;
+  const keyboard = devices.keyboards.find((k) => k.main)!;
 
-export const POLL_RATE = seconds(0.1);
-
-export const Keyboard = Variable(
-  /** @type {KeyboardState} */ {
-    layout: "",
-    submap: "",
-    led: {
-      caps: false,
-      num: false,
-      scroll: false,
-    },
-  },
-  {}
-);
+  return keyboard.layout;
+}

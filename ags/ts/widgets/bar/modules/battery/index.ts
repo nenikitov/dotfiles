@@ -36,6 +36,7 @@ export function Battery(configPartial: Partial<BatteryConfig>): (monitor: number
 
     return Module({
       className: "battery",
+      window: "battery",
       child: Widget.Box({
         children: [
           Widget.Icon({
