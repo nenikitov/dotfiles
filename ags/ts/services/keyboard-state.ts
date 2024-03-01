@@ -88,5 +88,5 @@ function getInitialLayout(): string {
   const devices = JSON.parse(Service.Hyprland.message("j/devices")) as Devices;
   const keyboard = devices.keyboards.find((k) => k.main)!;
 
-  return keyboard.layout;
+  return keyboard.active_keymap;
 }
