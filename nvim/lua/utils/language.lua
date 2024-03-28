@@ -6,6 +6,8 @@ local M = {}
 ---@alias LanguageFormatters {[string]: (string | string[])[]}
 ---@alias LanguageLinters {[string]: string[]}
 ---@alias LanguagePlugins LazySpec
+---@alias LanguageScript fun(): nil
+---@class LanguageBeforeAfterCore<T>: { before_core: T, after_core: T }
 
 ---@class LanguageSpec
 ---@field parsers LanguageParsers | nil Names of TreeSitter parsers (see `TSInstall`) to install.
@@ -13,7 +15,8 @@ local M = {}
 ---@field servers LanguageServers | nil Configuration for LSP servers, key is server name, value is server config.
 ---@field linters LanguageLinters | nil Configuration for linters, key is filetype name, value is linters.
 ---@field formatters LanguageServers | nil Configuration for formatters, key is filetype name, value is formatters.
----@field plugins { before_core: LanguagePlugins | nil, after_core: LanguagePlugins | nil } | nil Configuration for formatters, key is filetype name, value is formatters.
+---@field plugins LanguageBeforeAfterCore<LanguagePlugins> | nil Configuration for additional plugins.
+---@field scripts LanguageBeforeAfterCore<LanguageScript> | nil Lua code to set up the language
 
 ---@type LanguageParsers
 local parsers = {}
@@ -49,6 +52,18 @@ end
 local plugins_before_core = {}
 function M.plugins_before_core()
     return plugins_before_core
+end
+
+---@type LanguageScript[]
+local scripts_before_core = {}
+function M.scripts_before_core()
+    return scripts_before_core
+end
+
+---@type LanguageScript[]
+local scripts_after_core = {}
+function M.scripts_after_core()
+    return scripts_after_core
 end
 
 local CORE_DEPENDENCIES = {
@@ -95,28 +110,39 @@ function M.register(language)
     if language.parsers ~= nil then
         vim.list_extend(parsers, language.parsers)
     end
+
     if language.tools ~= nil then
         vim.list_extend(tools, language.tools)
     end
+
     if language.servers ~= nil then
         local s = vim.tbl_deep_extend('force', servers, language.servers)
         ---@cast s -nil
         servers = s
     end
+
     if language.linters ~= nil then
         local l = vim.tbl_deep_extend('force', linters, language.linters)
         ---@cast l -nil
         linters = l
     end
+
     if language.formatters ~= nil then
         local f = vim.tbl_deep_extend('force', formatters, language.formatters)
         ---@cast f -nil
         formatters = f
     end
+
+    if language.scripts ~= nil and language.scripts.before_core ~= nil then
+        table.insert(scripts_before_core, language.scripts.before_core)
+    end
+    if language.scripts ~= nil and language.scripts.after_core ~= nil then
+        table.insert(scripts_after_core, language.scripts.after_core)
+    end
+
     if language.plugins ~= nil and language.plugins.before_core ~= nil then
         table.insert(plugins_before_core, language.plugins.before_core)
     end
-
     if language.plugins ~= nil and language.plugins.after_core ~= nil then
         return add_core_dependency(language.plugins.after_core)
     else

@@ -13,6 +13,11 @@ return {
         language.plugins_before_core(),
     },
     config = function(_, opts)
+        -- TODO(nenikitov): This is before LSP, make this before everything in core
+        for _, f in ipairs(language.scripts_before_core()) do
+            f()
+        end
+
         local mason_lspconfig = require('mason-lspconfig')
         local lspconfig = require('lspconfig')
 
@@ -108,6 +113,11 @@ return {
         } do
             local sign = 'DiagnosticSign' .. type
             vim.fn.sign_define(sign, { text = icon, texthl = sign, numhl = sign })
+        end
+
+        -- TODO(nenikitov): This is after LSP, make this after everything in core
+        for _, f in ipairs(language.scripts_after_core()) do
+            f()
         end
     end,
     opts = {

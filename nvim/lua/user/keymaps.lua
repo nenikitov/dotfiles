@@ -122,7 +122,7 @@ function M.general()
     map('', 'L', '$', 'To the end of the line')
 
     -- Search
-    map('', '<A-/>', function()
+    map('n', '<ESC>', function()
         vim.fn.setreg('/', '')
     end, 'Clear search')
     map('n', 'n', 'nzzzv', 'Go to next search and put cursor in the middle')
