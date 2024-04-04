@@ -13,10 +13,7 @@ return language.register {
         settings = {
             ['rust-analyzer'] = {
                 cargo = {
-                    allFeatures = true,
-                },
-                check = {
-                    command = 'clippy',
+                    features = 'all',
                 },
             },
         },

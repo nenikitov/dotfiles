@@ -16,4 +16,9 @@ return language.register {
     formatters = {
         clojure = { 'zprint' },
     },
+    plugins = {
+        before_core = {
+            'aklt/plantuml-syntax',
+        },
+    },
 }
