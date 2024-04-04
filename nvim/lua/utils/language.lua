@@ -1,8 +1,11 @@
 local M = {}
 
+---@class LanguageServer
+---@field capabilities (fun(capabilities: table): table) | nil
+
 ---@alias LanguageParsers string[]
 ---@alias LanguageTools string[]
----@alias LanguageServers {[string]: (table | fun(): table)}
+---@alias LanguageServers {[string]: (LanguageServer | fun(): LanguageServer)}
 ---@alias LanguageFormatters {[string]: (string | string[])[]}
 ---@alias LanguageLinters {[string]: string[]}
 ---@alias LanguagePlugins LazySpec

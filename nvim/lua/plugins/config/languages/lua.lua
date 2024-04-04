@@ -16,9 +16,11 @@ return language.register {
     },
     servers = {
         lua_ls = {
-            Lua = {
-                workspace = { checkThirdParty = 'Disable' },
-                telemetry = { enable = false },
+            settings = {
+                Lua = {
+                    workspace = { checkThirdParty = 'Disable' },
+                    telemetry = { enable = false },
+                },
             },
         },
     },

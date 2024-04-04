@@ -34,12 +34,12 @@ return {
                 if type(config) == 'function' then
                     config = config()
                 end
-                lspconfig[server_name].setup {
-                    capabilities = capabilities,
-                    settings = config,
-                    filetypes = config.filetypes,
-                    on_attach = config.on_attach,
-                }
+                if type(config.capabilities) == 'function' then
+                    config.capabilities =
+                        config.capabilities(vim.tbl_deep_extend('force', capabilities, {}))
+                end
+
+                lspconfig[server_name].setup(config)
             end,
         }
 

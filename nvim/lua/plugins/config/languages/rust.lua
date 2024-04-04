@@ -10,9 +10,14 @@ return language.register {
         'toml',
     },
     servers = {
-        ['rust-analyzer'] = {
-            cargo = {
-                allFeatures = true,
+        settings = {
+            ['rust-analyzer'] = {
+                cargo = {
+                    allFeatures = true,
+                },
+                check = {
+                    command = 'clippy',
+                },
             },
         },
     },

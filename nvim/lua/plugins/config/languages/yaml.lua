@@ -10,8 +10,10 @@ return language.register {
     },
     servers = {
         yamlls = {
-            yaml = {
-                keyOrdering = false,
+            settings = {
+                yaml = {
+                    keyOrdering = false,
+                },
             },
         },
     },
