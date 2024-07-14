@@ -8,10 +8,9 @@ return {
             signs = vim.tbl_map(function(icon)
                 return { text = icon }
             end, icons.gitsigns),
-            _signs_staged = vim.tbl_map(function(icon)
+            signs_staged = vim.tbl_map(function(icon)
                 return { text = icon }
             end, icons.gitsigns),
-            _signs_staged_enable = true,
             preview_config = {
                 border = icons.border,
             },
