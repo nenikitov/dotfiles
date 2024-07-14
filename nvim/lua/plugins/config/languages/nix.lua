@@ -11,6 +11,6 @@ return language.register {
         ['nil'] = {}
     },
     formatters = {
-        alejandra = { 'nix' }
+        nix = { 'alejandra' }
     }
 }

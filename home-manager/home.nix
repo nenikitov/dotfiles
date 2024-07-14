@@ -46,9 +46,6 @@
   };
 
   home.sessionVariables = {
-  };
-
-  wayland.windowManager.hyprland = {
-      enable = true;
+    EDITOR = "nvim";
   };
 }
