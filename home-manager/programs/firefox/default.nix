@@ -5,6 +5,21 @@
   inputs,
   ...
 }: {
+  imports = [
+    ./search-engines
+  ];
+
+  ne.firefox.searchEngines = {
+    noUseless = true;
+    defaultAliases = true;
+    custom = {
+      nixPackages = true;
+      nixOptions = true;
+      nixWiki = true;
+      YouTube = true;
+    };
+  };
+
   programs = {
     firefox = {
       enable = true;
@@ -167,7 +182,6 @@
           "addon@darkreader.org" = {
             detectDarkTheme = true;
             fetchNews = false;
-
           };
         };
 
@@ -204,67 +218,6 @@
         search = {
           force = true;
           default = "DuckDuckGo";
-          engines = {
-            "Nix Packages" = {
-              urls = [
-                {
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                  ];
-                }
-              ];
-              iconUpdateURL = "https://wiki.nixos.org/nixos.png";
-              definedAliases = ["@np"];
-            };
-            "NixOS Wiki" = {
-              urls = [
-                {
-                  template = "https://nixos.wiki/index.php";
-                  params = [
-                    {
-                      name = "search";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-              iconUpdateURL = "https://wiki.nixos.org/nixos.png";
-              definedAliases = ["@nw"];
-            };
-            "YouTube" = {
-              urls = [
-                {
-                  template = "https://www.youtube.com/results";
-                  params = [
-                    {
-                      name = "search_query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-              iconUpdateURL = "https://www.youtube.com/s/desktop/252a8b44/img/favicon_144x144.png";
-              definedAliases = ["@yt"];
-            };
-
-            "Google".metaData.alias = "@gg";
-            "Wikipedia (en)".metaData.alias = "@wiki";
-
-            "Bing".metaData.hidden = true;
-            "eBay".metaData.hidden = true;
-          };
         };
       };
     };

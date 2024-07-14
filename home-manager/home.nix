@@ -5,7 +5,7 @@
   ...
 }: {
   imports = [
-    ./programs/firefox.nix
+    ./programs/firefox
     ./programs/neovim.nix
   ];
 
