@@ -1,22 +1,31 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: {
+{lib, ...}: {
   imports = [
     ./search-engines
+    ./settings
   ];
 
-  ne.firefox.searchEngines = {
-    noUseless = true;
-    defaultAliases = true;
-    custom = {
-      nixPackages = true;
-      nixOptions = true;
-      nixWiki = true;
-      YouTube = true;
+  ne.firefox = {
+    searchEngines = {
+      default = "DuckDuckGo";
+
+      noUseless = true;
+      defaultAliases = true;
+      custom = {
+        nixPackages = true;
+        nixOptions = true;
+        nixWiki = true;
+        youTube = true;
+      };
+    };
+
+    settings = {
+      noUseless = true;
+      security = true;
+      interface = true;
+      custom = {
+        minimalSuggestions = true;
+        restoreSession = true;
+      };
     };
   };
 
@@ -28,80 +37,6 @@
       # about:policies#documentation
 
       policies = {
-        # Auto update, useless with NixOS
-        DisableAppUpdate = true;
-        DisableSystemAddonUpdate = true;
-        ExtensionUpdate = false;
-        # Telemetry
-        DisableFirefoxStudies = true;
-        DisablePocket = true;
-        DisableTelemetry = true;
-        DontCheckDefaultBrowser = true;
-        # Useless features
-        DisableFirefoxAccounts = true;
-        DisableAccounts = true;
-        DisableProfileImport = true;
-        DisableProfileRefresh = true;
-        DisableSetDesktopBackground = true;
-        DisableFeedbackCommands = true;
-        NoDefaultBookmarks = true;
-        # TODO(nenikitov): Should I get a PDF viewer?
-        # DisableBuiltinPDFViewer = true;
-        DisableForgetButton = true;
-        UserMessaging = {
-          ExtensionRecommendations = false;
-          FeatureRecommendations = false;
-          UrlbarInterventions = false;
-          SkipOnboarding = true;
-          MoreFromMozilla = false;
-          Locked = true;
-        };
-        # Security
-        DisablePasswordReveal = true;
-        EnableTrackingProtection = {
-          Value = true;
-          Locked = true;
-          Cryptomining = true;
-          Fingerprinting = true;
-          EmailTracking = true;
-        };
-        AutofillCreditCardEnabled = false;
-        AutofillAddressEnabled = false;
-        # Interface
-        DisplayMenuBar = "default-off";
-        DisplayBookmarksToolbar = "never";
-        FirefoxHome = {
-          Search = true;
-          TopSites = false;
-          SponsoredTopSites = false;
-          Highlights = false;
-          Pocket = false;
-          SponsoredPocket = false;
-          Snippets = false;
-          Locked = true;
-        };
-        # Behavior
-        FirefoxSuggest = {
-          WebSuggestions = true;
-          SponsoredSuggestions = false;
-          ImproveSuggest = false;
-          Locked = true;
-        };
-        Homepage = {
-          StartPage = "previous-session";
-        };
-        Permissions = {
-          Notifications = {
-            BlockNewRequests = true;
-          };
-        };
-        # Other settings
-        Preferences = {
-          "privacy.globalprivacycontrol.enabled" = true;
-          "browser.urlbar.suggest.topsites" = false;
-          # user_pref("privacy.donottrackheader.enabled", true);
-        };
-
         # Extensions
         ExtensionSettings = let
           install_custom = uuid: url: {
@@ -208,17 +143,6 @@
 
       profiles.default = {
         isDefault = true;
-
-        settings = {
-          "privacy.donottrackheader.enabled" = true;
-          "findbar.highlightAll" = false;
-          "svg.context-properties.content.enabled" = true;
-        };
-
-        search = {
-          force = true;
-          default = "DuckDuckGo";
-        };
       };
     };
   };

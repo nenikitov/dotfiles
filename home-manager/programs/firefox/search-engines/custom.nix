@@ -8,9 +8,10 @@
       nixPackages = lib.mkEnableOption "NixOS package search engine";
       nixOptions = lib.mkEnableOption "NixOS options search engine";
       nixWiki = lib.mkEnableOption "NixOS Wiki search engine";
-      YouTube = lib.mkEnableOption "YouTube search engine";
+      youTube = lib.mkEnableOption "YouTube search engine";
     };
   };
+
   config = let
     custom = config.ne.firefox.searchEngines.custom;
   in {
@@ -68,7 +69,7 @@
         iconUpdateURL = "https://wiki.nixos.org/nixos.png";
         definedAliases = ["@nw"];
       };
-      "YouTube" = lib.mkIf custom.YouTube {
+      "YouTube" = lib.mkIf custom.youTube {
         urls = [
           {
             template = "https://www.youtube.com/results";
