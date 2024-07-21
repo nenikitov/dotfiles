@@ -1,3 +1,6 @@
+# TODO(nenikitov): Make settings to disable extensions
+# TODO(nenikitov): Make settings to disable installation through browser
+
 {
   lib,
   config,
