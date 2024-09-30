@@ -3,7 +3,7 @@ import { seconds } from "utils/time";
 
 type KeyboardLed = "numlock" | "capslock" | "scrolllock";
 
-const POLL_RATE = seconds(0.1);
+const POLL_RATE = seconds(0.25);
 
 export interface KeyboardState {
   layout: string;
@@ -86,7 +86,7 @@ interface Devices {
 
 function getInitialLayout(): string {
   const devices = JSON.parse(Service.Hyprland.message("j/devices")) as Devices;
-  const keyboard = devices.keyboards.find((k) => k.main)!;
+  const keyboard = devices.keyboards.find((k) => k.main);
 
-  return keyboard.active_keymap;
+  return keyboard?.active_keymap ?? "";
 }

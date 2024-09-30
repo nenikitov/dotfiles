@@ -3,6 +3,7 @@ import { Gtk } from "prelude";
 import { Clock } from "./modules/clock";
 import { KeyboardLayout } from "./modules/keyboard-layout";
 import { SystemStatus } from "./modules/system-status";
+import { SystemTray } from "./modules/system-tray";
 import { Workspaces } from "./modules/workspaces";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- It doesn't matter which parameter it uses, we only care that it's one
@@ -13,6 +14,7 @@ export const modules = {
   clock: Clock,
   ["keyboard-layout"]: KeyboardLayout,
   workspaces: Workspaces,
+  ["system-tray"]: SystemTray,
 } as const satisfies Record<string, ModuleFactory>;
 
 export type Module =

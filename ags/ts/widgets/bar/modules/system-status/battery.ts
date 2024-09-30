@@ -21,7 +21,7 @@ const configDefault: BatteryConfig = {
         : battery.time_remaining
           ? formatSeconds(battery.time_remaining)
           : undefined,
-      battery.charging ? "Charging" : undefined,
+      battery.charging && !battery.charged ? "Charging" : undefined,
     ]
       .filter(Boolean)
       .join("\n");

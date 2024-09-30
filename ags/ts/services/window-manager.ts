@@ -241,15 +241,15 @@ export interface WmWorkspaceName {
   name: string;
 }
 
-export interface WmAllWorkpaceNames {
+export interface WmAllWorkscapeNames {
   general: WmWorkspaceName[];
   special: WmWorkspaceName;
 }
 
 export interface WmConfig {
   workspaceNames: {
-    default: WmAllWorkpaceNames;
-    [monitorName: string]: WmAllWorkpaceNames;
+    default: WmAllWorkscapeNames;
+    [monitorName: string]: WmAllWorkscapeNames;
   };
   completeWorkspaces: false | "name-only" | "until-largest" | number;
   workspacesPerMonitor: number;

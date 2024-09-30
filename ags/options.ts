@@ -21,9 +21,15 @@ export const windowManager: WmConfig = {
 export const bar: BarConfig = {
   position: "top",
   layout: {
-    start: ["workspaces"],
+    start: [
+      {
+        name: "workspaces",
+        config: { special: "hide" },
+      },
+    ],
     center: [],
     end: [
+      "system-tray",
       "keyboard-layout",
       {
         name: "system-status",
