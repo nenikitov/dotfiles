@@ -62,6 +62,12 @@
         ];
       };
 
+      dirHashes = {
+        uni = "$HOME/Shared/Uni/4";
+        proj = "$HOME/Shared/Projects";
+        conf = "$HOME/.config";
+      };
+
       completionInit =
         ''
           autoload -U compinit && compinit
@@ -121,55 +127,6 @@
           "main"
           #"brackets"
         ];
-        styles = {
-          # Other
-          unknown-token = "fg=${red.bright},bold,underline";
-          default = "fg=${red.normal}";
-          comment = "fg=${black.bright}";
-          named-fd = "fg=${red.normal}";
-          numeric-fd = "fg=${yellow.normal}";
-          # Keyword
-          reserved-word = "fg=${magenta.normal},bold";
-          precommand = "fg=${magenta.normal}";
-          # Alias
-          alias = "fg=${blue.normal}";
-          suffix-alias = "fg=${blue.normal}";
-          global-alias = "fg=${blue.normal}";
-          function = "fg=${blue.normal}";
-          # Command
-          command = "fg=${cyan.normal}";
-          builtin = "fg=${cyan.normal}";
-          hashed-command = "fg=${cyan.normal}";
-          history-expansion = "fg=${cyan.normal}";
-          # Operator
-          commandseparator = "fg=${white.normal}";
-          command-substitution-delimiter = "fg=${white.normal}";
-          process-substitution-delimiter = "fg=${white.normal}";
-          arithmetic-expansion = "fg=${white.normal}";
-          back-quoted-argument-delimiter = "fg=${white.normal}";
-          assign = "fg=${white.normal}";
-          redirection = "fg=${white.normal}";
-          # Path
-          autodirectory = "fg=${yellow.bright}";
-          path = "fg=${yellow.bright}";
-          path_prefix = "fg=${yellow.bright}";
-          globbing = "fg=${yellow.bright},bold,underline";
-          # Options
-          single-hyphen-option = "fg=${red.normal}";
-          double-hyphen-option = "fg=${red.normal}";
-          # Strings
-          arg0 = "fg=${yellow.normal}";
-          single-quoted-argument = "fg=${yellow.bright}";
-          single-quoted-argument-unclosed = "fg=${yellow.bright},bold,underline";
-          double-quoted-argument = "fg=${yellow.bright}";
-          double-quoted-argument-unclosed = "fg=${yellow.bright},bold,underline";
-          dollar-quoted-argument = "fg=${yellow.bright}";
-          dollar-quoted-argument-unclosed = "fg=${yellow.bright},bold,underline";
-          rc-quote = "fg=${cyan.normal}";
-          back-double-quoted-argument = "fg=${cyan.normal}";
-          back-dollar-quoted-argument = "fg=${cyan.normal}";
-          dollar-double-quoted-argument = "fg=${red.normal}";
-        };
       };
     };
   };

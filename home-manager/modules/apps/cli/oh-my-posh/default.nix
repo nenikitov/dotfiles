@@ -2,8 +2,7 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.ne.apps.oh-my-posh;
   # TODO(nenikitov): Find a better TTY detector
   icon = icon: tty:
@@ -11,14 +10,14 @@ with lib; let
   ''{{- if eq .Env.TERM "linux" -}}{{- "${tty}" -}}{{- else -}}{{- "${icon}" -}}{{- end -}}'';
 in {
   options.ne.apps.oh-my-posh = {
-    enable = mkEnableOption "Oh My Posh prompt";
+    enable = lib.mkEnableOption "Oh My Posh prompt";
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs = {
       zsh = {
         # https://github.com/JanDeDobbeleer/oh-my-posh/issues/5438#issuecomment-2488593826
         initExtra =
-          mkBefore
+          lib.mkBefore
           # sh
           ''
             # OMP zsh-vi-mode integration

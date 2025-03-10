@@ -9,8 +9,8 @@
     neovim = {
       enable = true;
 
-      viAlias = true;
-      vimAlias = true;
+      # viAlias = true;
+      # vimAlias = true;
       defaultEditor = true;
 
       extraPackages = with pkgs; [
@@ -22,6 +22,7 @@
         alejandra
         cargo
         nixd
+        tree-sitter
       ];
     };
   };

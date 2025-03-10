@@ -2,19 +2,17 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.ne.apps.btop;
 in {
   options.ne.apps.btop = {
-    enable = mkEnableOption "btop system monitor";
+    enable = lib.mkEnableOption "btop system monitor";
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs = {
       btop = {
         enable = true;
         settings = {
-          color_theme = "TTY";
           theme_background = false;
           vim_keys = true;
         };

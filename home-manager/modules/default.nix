@@ -1,7 +1,7 @@
 {
   imports = [
     ./apps
-    ./display
+    ./consona
     ./fonts
   ];
 }

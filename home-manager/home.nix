@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./modules
 
@@ -16,7 +11,8 @@
   home.homeDirectory = "/home/nenikitov";
 
   ne = {
-    fonts.enable = true;
+    consona.enable = true;
+    fonts.enable = false;
     apps = {
       alacritty.enable = true;
       btop.enable = true;
@@ -25,11 +21,6 @@
       oh-my-posh.enable = true;
       bat.enable = true;
     };
-  };
-
-  styler = {
-    enable = true;
-    colors.ansi.primary.fg = "#C0FFEE";
   };
 
   # This value determines the Home Manager release that your configuration is
@@ -51,14 +42,17 @@
     unzip
     ripgrep
     python311
+    moar
+    # spotify
+    figma-linux
+    pureref
+    rustup
+    gcc
+    r2modman
   ];
 
   programs = {
     home-manager.enable = true;
-
-    chromium = {
-      enable = true;
-    };
   };
 
   home.sessionVariables = {

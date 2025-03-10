@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   options = {
@@ -9,6 +10,7 @@
 
   config = lib.mkIf config.ne.firefox.settings.interface {
     programs.firefox = {
+      package = pkgs.firefox-esr;
       policies = {
         DisplayMenuBar = "default-off";
         DisplayBookmarksToolbar = "never";
@@ -24,9 +26,12 @@
         };
         profiles.default = {
           settings = {
+            # browser.backspace_action
             "findbar.highlightAll" = true;
             "svg.context-properties.content.enabled" = true;
             "browser.newtabpage.activity-stream.weather.temperatureUnits" = "c";
+            # TODO(nenikitov): Remove this
+            "xpinstall.signatures.required" = false;
           };
         };
       };

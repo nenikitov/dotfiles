@@ -2,14 +2,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.ne.apps.git;
 in {
   options.ne.apps.git = {
-    enable = mkEnableOption "git version control tool";
+    enable = lib.mkEnableOption "git version control tool";
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs = {
       git = {
         enable = true;

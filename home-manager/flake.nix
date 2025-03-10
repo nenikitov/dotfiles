@@ -7,9 +7,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    styler = {
+    consona = {
       type = "path";
-      path = "/home/nenikitov/Documents/adaptive-styler";
+      path = "/home/nenikitov/Documents/consona";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -27,7 +27,7 @@
       extraSpecialArgs = {inherit inputs;};
       modules = [
         ./home.nix
-        inputs.styler.homeManagerModule
+        inputs.consona.homeManagerModule
       ];
     };
   };

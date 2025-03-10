@@ -3,14 +3,13 @@
   lib,
   pkgs,
   ...
-}:
-with lib; let
+}: let
   cfg = config.ne.fonts;
 in {
   options.ne.fonts = {
-    enable = mkEnableOption "Custom fonts";
+    enable = lib.mkEnableOption "Custom fonts";
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     fonts.fontconfig = {
       enable = true;
       defaultFonts = {

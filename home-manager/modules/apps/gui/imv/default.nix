@@ -2,14 +2,13 @@
   config,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.ne.apps.imv;
 in {
   options.ne.apps.imv = {
-    enable = mkEnableOption "imv image viewer";
+    enable = lib.mkEnableOption "imv image viewer";
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.imv = {
       enable = true;
     };
@@ -17,7 +16,7 @@ in {
     # Because it auto-orders sections and `binds` is before `options.suppress_default_binds`
     # So custom binds get cleared
     # https://github.com/nix-community/home-manager/pull/3481#issuecomment-1584725951
-    home.file.".config/imv/config".text =
+    xdg.configFile."imv/config".text =
       # dosini
       ''
         [options]

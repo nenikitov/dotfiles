@@ -31,17 +31,22 @@
 
     extensions = {
       ublock = true;
-      darkReader = true;
+      darkReader = false;
     };
   };
 
   programs = {
     firefox = {
       enable = true;
-
+      policies = {
+        "3rdparty".Extensions."addon@darkreader.org" = {
+          theme = {
+            sepia = 35;
+          };
+        };
+      };
       # addon@darkreader.org
       # uBlock0@raymondhill.net
-
 
       # {cb31ec5d-c49a-4e5a-b240-16c767444f62}
       # {9076cefe-e6f8-4883-a480-9f968bd09249}
