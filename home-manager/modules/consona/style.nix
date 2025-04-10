@@ -84,6 +84,11 @@
           color = "yellow";
           opacity = 0.4;
         };
+
+        accent = "magenta";
+        danger = "red";
+        inactive = "standoutBlack";
+        separator = "standoutBlack";
       };
     };
   };

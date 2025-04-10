@@ -3,13 +3,13 @@
   lib,
   ...
 }: let
-  cfg = config.ne.apps.oh-my-posh;
+  cfg = config.ne.programs.oh-my-posh;
   # TODO(nenikitov): Find a better TTY detector
   icon = icon: tty:
   # gotmpl
   ''{{- if eq .Env.TERM "linux" -}}{{- "${tty}" -}}{{- else -}}{{- "${icon}" -}}{{- end -}}'';
 in {
-  options.ne.apps.oh-my-posh = {
+  options.ne.programs.oh-my-posh = {
     enable = lib.mkEnableOption "Oh My Posh prompt";
   };
   config = lib.mkIf cfg.enable {

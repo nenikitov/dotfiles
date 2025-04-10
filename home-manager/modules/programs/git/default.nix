@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.ne.apps.git;
+  cfg = config.ne.programs.git;
 in {
-  options.ne.apps.git = {
+  options.ne.programs.git = {
     enable = lib.mkEnableOption "git version control tool";
   };
   config = lib.mkIf cfg.enable {

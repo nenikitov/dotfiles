@@ -12,6 +12,9 @@ in {
     consona = {
       enable = true;
       autoEnable = true;
+      targets = {
+        btop.fullcolor = false;
+      };
     };
   };
 }

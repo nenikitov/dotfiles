@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.ne.apps.imv;
+  cfg = config.ne.programs.imv;
 in {
-  options.ne.apps.imv = {
+  options.ne.programs.imv = {
     enable = lib.mkEnableOption "imv image viewer";
   };
   config = lib.mkIf cfg.enable {

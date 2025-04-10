@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.ne.apps.alacritty;
+  cfg = config.ne.programs.alacritty;
 in {
-  options.ne.apps.alacritty = {
+  options.ne.programs.alacritty = {
     enable = lib.mkEnableOption "Alacritty terminal emulator";
   };
   config = lib.mkIf cfg.enable {

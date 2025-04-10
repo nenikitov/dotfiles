@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.ne.apps.btop;
+  cfg = config.ne.programs.btop;
 in {
-  options.ne.apps.btop = {
+  options.ne.programs.btop = {
     enable = lib.mkEnableOption "btop system monitor";
   };
   config = lib.mkIf cfg.enable {

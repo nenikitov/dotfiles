@@ -13,7 +13,7 @@
   ne = {
     consona.enable = true;
     fonts.enable = false;
-    apps = {
+    programs = {
       alacritty.enable = true;
       btop.enable = true;
       git.enable = true;

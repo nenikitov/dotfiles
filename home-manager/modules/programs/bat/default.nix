@@ -3,9 +3,9 @@
   lib,
   ...
 }: let
-  cfg = config.ne.apps.bat;
+  cfg = config.ne.programs.bat;
 in {
-  options.ne.apps.bat = {
+  options.ne.programs.bat = {
     enable = lib.mkEnableOption "bat file previewer";
   };
   config = lib.mkIf cfg.enable {
