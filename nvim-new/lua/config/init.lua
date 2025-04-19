@@ -1,4 +1,4 @@
 require('config.global')
 require('config.option')
-require('config.autocommand')
+require('config.auto_cmd')
 require('config.keymap')

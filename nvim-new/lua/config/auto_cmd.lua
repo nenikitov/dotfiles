@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
             on_visual = false,
         })
     end,
-    desc = "highlight text for some time after yanking",
+    desc = "Highlight text for some time after yanking",
 })
 
 -- Check if a buffer was updated outside neovim and needs to be reloaded
@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufWinEnter", "TermClose", "TermLe
             vim.cmd([[checktime]])
         end
     end,
-    desc = "check if a buffer was updated outside neovim and needs to be reloaded",
+    desc = "Check if a buffer was updated outside neovim and needs to be reloaded",
 })
 
 -- Return cursor to the last position when file was opened
@@ -58,17 +58,17 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
 
         vim.api.nvim_win_set_cursor(0, { row, col })
     end,
-    desc = "return cursor to the last position when file was opened",
+    desc = "Return cursor to the last position when file was opened",
 })
 
--- Delete trailing white spaces and newlines on save
+-- Delete trailing whitespaces and newlines on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     group = augroup("auto format"),
     callback = function()
         -- Substitution moves the cursor, we need to restore it
         local view = vim.fn.winsaveview()
 
-        -- Remove trailng whitespaces
+        -- Remove trailing whitespaces
         vim.api.nvim_command([[%s/\s\+$//e]])
         -- Remove trailing newlines
         local last_line = vim.fn.line("$")
@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
         vim.fn.winrestview(view)
     end,
-    desc = "delete trailing white spaces and newlines on save",
+    desc = "Delete trailing white spaces and newlines on save",
 })
 
 -- Close some windows with `q` or `ESC`
@@ -98,11 +98,11 @@ vim.api.nvim_create_autocmd("FileType", {
             vim.cmd("close")
             pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
         end
-        local args = { buffer = event.buf, silent = true, desc = "quit" }
+        local args = { buffer = event.buf, silent = true, desc = "Quit" }
         vim.keymap.set("n", [[q]], close, args)
         vim.keymap.set("n", [[<ESC>]], close, args)
     end,
-    desc = "close some windows with `q` or `ESC`",
+    desc = "Close some windows with `q` or `ESC`",
 })
 
 -- Create directory structure for a new file if doesn't exist
@@ -120,5 +120,5 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
             vim.fn.mkdir(dir, "p")
         end
     end,
-    desc = "create directory structure for a new file if doesn't exist",
+    desc = "Create directory structure for a new file if doesn't exist",
 })

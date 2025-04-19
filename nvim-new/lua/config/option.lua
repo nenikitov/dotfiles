@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd({ "WinEnter", "WinResized", "VimEnter" }, {
         vim.opt_local.scrolloff = math.floor(vim.api.nvim_win_get_height(0) * scrolloff)
         vim.opt_local.sidescrolloff = math.floor(vim.api.nvim_win_get_width(0) * scrolloff)
     end,
-    desc = "update scrolloff to a percentage for each window",
+    desc = "Update scrolloff to a percentage for each window",
 })
 -- Show special characters
 vim.opt.list = true
@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function()
         vim.opt_local.formatoptions:remove("o")
     end,
-    desc = "update formatvim.options to not auto insert comments on `o` and `O`",
+    desc = "Update format options to not auto insert comments on `o` and `O`",
 })
 
 --#endregion
@@ -102,7 +102,7 @@ vim.opt.shiftwidth = 0
 
 --#endregion
 
---#region Indentation
+--#region Wrapping
 
 -- Do not wrap long lines
 vim.opt.wrap = false
@@ -113,7 +113,7 @@ vim.opt.linebreak = true
 
 --#endregion
 
---#region Indentation
+--#region Splits
 
 -- When performing a horizontal split, focus the one on the bottom
 vim.opt.splitbelow = true
