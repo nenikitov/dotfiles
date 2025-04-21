@@ -4,6 +4,8 @@
 vim.opt.swapfile = false
 -- Save undo history to a file to persist between sessions
 vim.opt.undofile = true
+-- Number of changes that can be undone
+vim.opt.undolevels = 10000
 -- Show confirmation dialogues instead of failing the operation (for example closing an unsaved buffer)
 vim.opt.confirm = true
 
@@ -37,6 +39,8 @@ vim.opt.showmode = false
 vim.opt.cmdheight = 0
 -- Use 24-bit color
 vim.opt.termguicolors = not vim.g.enable_tty_mode
+-- Default floating window borders
+vim.opt.winborder = vim.g.enable_tty_mode and "single" or "rounded"
 
 --#endregion
 
@@ -70,6 +74,8 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
     desc = "Update format options to not auto insert comments on `o` and `O`",
 })
+-- Modes in which cursor is allowed to move past text boundaries
+vim.opt.virtualedit = 'block'
 
 --#endregion
 
@@ -110,6 +116,8 @@ vim.opt.wrap = false
 vim.opt.breakindent = true
 -- Break long lines at word boundaries instead of exactly at the specified width
 vim.opt.linebreak = true
+-- Scroll over wrapped lines
+vim.opt.smoothscroll = true
 
 --#endregion
 

@@ -71,10 +71,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         -- Remove trailing whitespaces
         vim.api.nvim_command([[%s/\s\+$//e]])
         -- Remove trailing newlines
-        local last_line = vim.fn.line("$")
+        local last_line = vim.api.nvim_buf_line_count(0)
         local last_non_blank_line = vim.fn.prevnonblank(last_line)
         if last_non_blank_line < last_line then
-            vim.api.nvim_buf_set_lines(0, last_non_blank_line, last_line, false, {})
+            vim.api.nvim_buf_set_lines(0, last_non_blank_line, last_line, true, {})
         end
 
         vim.fn.winrestview(view)
