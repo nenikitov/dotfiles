@@ -1,4 +1,6 @@
 local icon = require('util.icon')
+local tty = require('util.tty')
+
 
 local function overwrite_defaults(keys_default, keys_new)
     local d = vim.iter(pairs(keys_default))
@@ -24,6 +26,41 @@ return {
                 },
                 matcher = { sort_empty = true, },
                 formatters = { severity = { pos = 'right' } },
+                icons = {
+                    files = {
+                        dir_open = tty.gui_choose('󰝰', 'D')
+                    },
+                    tree = {
+                        vertical = "│ ",
+                        middle   = "├ ",
+                        last     = "└ ",
+                    },
+                    ui = {
+                        live = 'l',
+                        selected = icon.ui.filled,
+                        unselected = ' ',
+                    },
+                    git = {
+                        commit = icon.version_control.commit,
+                        staged = icon.version_control.staged,
+                        added = icon.version_control.added,
+                        deleted = icon.version_control.deleted,
+                        ignored = icon.version_control.ignored,
+                        modified = icon.version_control.modified,
+                        renamed = icon.version_control.renamed,
+                        unmerged = icon.version_control.unmerged,
+                        untracked = icon.version_control.untracked,
+                    },
+                    lsp = {
+                        unavailable = '[lsp none]',
+                        enabled = '[lsp on]',
+                        disabled = '[lsp off]',
+                        attached = '[lsp]',
+                    },
+                    -- TODO: figure out if I need to add `diagnostics` and `kinds`
+                    -- from [here](https://github.com/folke/snacks.nvim/blob/main/lua/snacks/picker/config/defaults.lua#L361)
+                    -- or they will be picked up once LSP is set up
+                },
                 layouts = {
                     default = {
                         layout = {
@@ -160,20 +197,20 @@ return {
     end,
     keys = {
         -- Prefix
-        { [[<LEADER>f]], [[<NOP>]], desc = 'find' },
+        { '<LEADER>f', '<NOP>', desc = 'find' },
         -- Main
-        { [[<LEADER>ff]], function() Snacks.picker.files() end, desc = 'Files' },
-        { [[<LEADER>fg]], function() Snacks.picker.grep() end, desc = 'Grep' },
-        { [[<LEADER>f:]], function() Snacks.picker.command_history() end, desc = 'Command history' },
-        { [[<LEADER>f/]], function() Snacks.picker.search_history() end, desc = 'Search history' },
-        { [[<LEADER>fm]], function() Snacks.picker.help() end, desc = 'Help' },
-        { [[<LEADER>fM]], function() Snacks.picker.man() end, desc = 'Man' },
+        { '<LEADER>ff', function() Snacks.picker.files() end, desc = 'Files' },
+        { '<LEADER>fg', function() Snacks.picker.grep() end, desc = 'Grep' },
+        { '<LEADER>f:', function() Snacks.picker.command_history() end, desc = 'Command history' },
+        { '<LEADER>f/', function() Snacks.picker.search_history() end, desc = 'Search history' },
+        { '<LEADER>fm', function() Snacks.picker.help() end, desc = 'Help' },
+        { '<LEADER>fM', function() Snacks.picker.man() end, desc = 'Man' },
         -- Secondary
-        { [[<LEADER>fP]], function() Snacks.picker.pickers() end, desc = 'Pickers' },
-        { [[<LEADER>fC]], function() Snacks.picker.colorschemes() end, desc = 'Colorschemes' },
-        { [[<LEADER>fH]], function() Snacks.picker.highlights() end, desc = 'Highlight groups' },
-        { [[<LEADER>fI]], function() Snacks.picker.icons() end, desc = 'Icons' },
-        { [[<LEADER>fL]], function() Snacks.picker.lazy() end, desc = 'Plugin specs' },
-        { [[<LEADER>fN]], function() Snacks.picker.notifications() end, desc = 'Notifications' },
+        { '<LEADER>fP', function() Snacks.picker.pickers() end, desc = 'Pickers' },
+        { '<LEADER>fC', function() Snacks.picker.colorschemes() end, desc = 'Colorschemes' },
+        { '<LEADER>fH', function() Snacks.picker.highlights() end, desc = 'Highlight groups' },
+        { '<LEADER>fI', function() Snacks.picker.icons() end, desc = 'Icons' },
+        { '<LEADER>fL', function() Snacks.picker.lazy() end, desc = 'Plugin specs' },
+        { '<LEADER>fN', function() Snacks.picker.notifications() end, desc = 'Notifications' },
     },
 }

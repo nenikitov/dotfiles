@@ -1,2 +1,2 @@
-vim.g.enable_tty_mode = true
+vim.g.enable_tty_mode = false
 vim.g.colorschemes = { 'onedark_dark', 'slate' }

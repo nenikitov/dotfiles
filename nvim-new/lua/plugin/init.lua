@@ -41,7 +41,7 @@ require('lazy').setup({
 })
 
 -- Prefix
-map('n', [[<LEADER>p]], [[<NOP>]], 'plugin')
+map('n', '<LEADER>p', '<NOP>', 'plugin')
 -- Maps
-map('n', [[<LEADER>pp]], [[<CMD>Lazy<CR>]], 'Plugin manager')
-map('n', [[<LEADER>pP]], function() Snacks.picker.lazy() end, 'Plugins')
+map('n', '<LEADER>pp', '<CMD>Lazy<CR>', 'Plugin manager')
+map('n', '<LEADER>pP', function() Snacks.picker.lazy() end, 'Plugins')

@@ -35,8 +35,6 @@ vim.opt.fillchars = {
 vim.opt.laststatus = 3
 -- Highlight current line
 vim.opt.cursorline = true
--- Do not show current mode in command line (is in status line)
-vim.opt.showmode = false
 -- Do not show command line (is replaced by noice)
 vim.opt.cmdheight = 0
 -- Use 24-bit color
@@ -138,5 +136,12 @@ vim.opt.splitright = true
 vim.opt.ignorecase = true
 -- When the search contains an uppercase, switch to case-sensitive search instead
 vim.opt.smartcase = true
+
+--#endregion
+
+--#region Other
+
+-- Reduce messges
+vim.opt.shortmess:append('W')
 
 --#endregion

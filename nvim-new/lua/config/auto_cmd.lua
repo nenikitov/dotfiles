@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufWinEnter", "TermClose", "TermLe
 })
 
 -- Return cursor to the last position when file was opened
-vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile', 'BufWinEnter' }, {
     group = augroup("return last position"),
     callback = function()
         local ignore_buftype = { "quickfix", "nofile", "help", "terminal", "prompt" }
@@ -101,8 +101,8 @@ vim.api.nvim_create_autocmd("FileType", {
             pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
         end
         local args = { buffer = event.buf }
-        map("n", [[q]], close, "Quit", args)
-        map("n", [[<ESC>]], close, "Quit", args)
+        map("n", 'q', close, "Quit", args)
+        map("n", '<ESC>', close, "Quit", args)
     end,
     desc = "Close some windows with `q` or `ESC`",
 })

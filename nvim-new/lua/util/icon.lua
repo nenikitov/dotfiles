@@ -50,7 +50,7 @@ M.ui = {
     opened     = tty.gui_choose('', 'v'),
     collapsed  = tty.gui_choose('', '>'),
 
-    filled     = tty.gui_choose('●', '+'),
+    filled     = tty.gui_choose('●', '■'),
     empty      = tty.gui_choose('○', '-'),
 
     ellipsis   = tty.gui_choose('⋯', '∙'),
@@ -72,17 +72,15 @@ M.version_control = {
     ignored   = tty.gui_choose('', '-'),
     modified  = tty.gui_choose(M.ui.empty, '.'),
     renamed   = tty.gui_choose('', '→'),
-    unmerged  = tty.gui_choose('', '!'),
+    unmerged  = tty.gui_choose('', '!'),
     untracked = tty.gui_choose('', '?'),
 }
 
 M.diff_bar = {
+    untracked       = tty.gui_choose('┋', ':'),
     added           = tty.gui_choose('┃', '│'),
     changed         = tty.gui_choose('┃', '│'),
     deleted         = tty.gui_choose('', '▶'),
-    deleted_top     = tty.gui_choose('', '▲'),
-    deleted_changed = tty.gui_choose('', '▼'),
-    untracked       = tty.gui_choose('┋', ':'),
 }
 
 M.severity = {

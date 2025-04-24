@@ -1,13 +1,11 @@
-local icon = require('util.icon')
-
 -- TODO: separate this function
 local function overwrite_defaults(keys_default, keys_new)
     local d = vim.iter(pairs(keys_default))
-    :map(function(k) return {k, false} end)
-    :fold({}, function(acc, e)
-        acc[e[1]] = e[2]
-        return acc
-    end)
+        :map(function(k) return {k, false} end)
+        :fold({}, function(acc, e)
+            acc[e[1]] = e[2]
+            return acc
+        end)
     return vim.tbl_deep_extend('force', d, keys_new)
 end
 
@@ -26,27 +24,9 @@ return {
                         auto_close = true,
                         layout = {
                             preview = true,
-                            layout = {
-                                backdrop = false,
-                                box = 'horizontal',
-                                position = 'float',
-                                width = 0.8,
-                                height = 0.8,
-                                {
-                                    box = "vertical",
-                                    width = 0.2,
-                                    min_width = 40,
-                                    border = vim.o.winborder or "rounded",
-                                    title = "{title} {live} {flags}",
-                                    { win = "input", height = 1, border = "bottom" },
-                                    { win = "list", border = "none" },
-                                },
-                                {
-                                    win = "preview",
-                                    title = "{preview}",
-                                    border = vim.o.winborder or "rounded",
-                                },
-                            }
+                            preset = function()
+                                return vim.o.columns >= 120 and 'default' or 'vertical'
+                            end
                         },
                         win = { list = { keys = overwrite_defaults(defaults.win.list.keys, {
                             -- Navigation
@@ -61,7 +41,7 @@ return {
                             -- Accept
                             ['l'] = { 'confirm' },
                             ['m'] = { 'explorer_select' },
-                            -- Explorer actions
+                            -- File manipulation
                             ['h'] = { 'explorer_close' },
                             ['a'] = { 'explorer_add' },
                             ['d'] = { 'explorer_del' },
@@ -70,8 +50,8 @@ return {
                             ['Y'] = { 'explorer_copy_path' },
                             ['x'] = { 'explorer_move' },
                             ['p'] = { 'explorer_paste' },
-                            ['<BS>'] = { 'explorer_up' },
-                            ['<RETURN>'] = { 'tcd' },
+                            ['H'] = { 'explorer_up' },
+                            ['L'] = { 'tcd' },
                         }) } },
                         actions = {
                             explorer_select = function(picker)
@@ -117,14 +97,12 @@ return {
                             end
                         }
                     },
-                }
+                },
             }
         })
     end,
     keys = {
-        -- Prefix
-        { [[<LEADER>e]], [[<NOP>]], desc = 'file explorer' },
         -- Tree
-        { [[<LEADER>et]], function() Snacks.explorer() end, desc = 'Tree file explorer' },
+        { '<LEADER>ft', function() Snacks.explorer() end, desc = 'Tree file explorer' },
     }
 }
