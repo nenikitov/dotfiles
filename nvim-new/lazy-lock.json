@@ -1,8 +1,9 @@
 {
-  "colorscheme-loader.nvim": { "branch": "main", "commit": "072731ec6ae07829f80d54d8dc54aac0cc5ddb1e" },
+  "colorscheme-loader.nvim": { "branch": "main", "commit": "c6523dc1dd85d3c402d5341ebdc8e551861ad675" },
   "horizon.nvim": { "branch": "main", "commit": "b4d7b1e7c3aa77aea31b9ced8960e49fd8682c47" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
-  "mini.nvim": { "branch": "main", "commit": "c404fc5717866ff738aadeeb1f54ab8ed270ae1e" },
+  "mini.nvim": { "branch": "main", "commit": "05975f387906211745d0aaf996eb7ad3c91b193d" },
   "onedarkpro.nvim": { "branch": "main", "commit": "d3d3e11331d30f7d5c1453232bad9c24d04e564f" },
-  "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" }
+  "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
+  "which-key.nvim": { "branch": "main", "commit": "19f5bf84a036f5ec7368ece3919f6674d5e3023e" }
 }

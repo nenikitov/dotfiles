@@ -1,7 +1,11 @@
 return {
-    'folke/snacks.nvim',
+    'snacks.nvim',
     opts = {
         picker = {
+            sources = {
+                files = { hidden = true },
+                grep = { hidden = true },
+            },
             layouts = {
                 default = {
                     layout = {
@@ -56,9 +60,9 @@ return {
     },
     keys = {
         -- Prefix
-        { [[<LEADER>f]], [[NOP]], desc = 'find' },
+        { [[<LEADER>f]], [[<NOP>]], desc = 'find' },
         -- Main
-        { [[<LEADER>ff]], function() Snacks.picker.files({ hidden = true }) end, desc = 'Files' },
+        { [[<LEADER>ff]], function() Snacks.picker.files() end, desc = 'Files' },
         { [[<LEADER>fg]], function() Snacks.picker.grep() end, desc = 'Grep' },
         { [[<LEADER>f:]], function() Snacks.picker.command_history() end, desc = 'Command history' },
         { [[<LEADER>f/]], function() Snacks.picker.search_history() end, desc = 'Search history' },

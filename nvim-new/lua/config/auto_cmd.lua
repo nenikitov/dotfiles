@@ -1,3 +1,5 @@
+local map = require('util.map')
+
 local function augroup(name)
     return vim.api.nvim_create_augroup(name, { clear = true })
 end
@@ -98,9 +100,9 @@ vim.api.nvim_create_autocmd("FileType", {
             vim.cmd("close")
             pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
         end
-        local args = { buffer = event.buf, silent = true, desc = "Quit" }
-        vim.keymap.set("n", [[q]], close, args)
-        vim.keymap.set("n", [[<ESC>]], close, args)
+        local args = { buffer = event.buf }
+        map("n", [[q]], close, "Quit", args)
+        map("n", [[<ESC>]], close, "Quit", args)
     end,
     desc = "Close some windows with `q` or `ESC`",
 })

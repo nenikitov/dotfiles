@@ -1,11 +1,4 @@
-local opts_default = {
-    noremap = true,
-    silent = true,
-}
-local function map(modes, keys, func, desc, opts)
-    opts = vim.tbl_deep_extend("force", opts_default, opts or {}, { desc = desc })
-    vim.keymap.set(modes, keys, func, opts)
-end
+local map = require('util.map')
 
 --#region Leader
 
@@ -28,10 +21,10 @@ map('n', [[<LEADER>bq]], [[<CMD>quit<RETURN>]], 'Quit')
 map('n', [[<A-c>]], [[<CMD>quit<RETURN>]], 'Quit')
 map('n', [[<LEADER>bd]], [[<CMD>bdelete<RETURN>]], 'Delete')
 -- Focus
-map("n", [[<A-l>]], [[<CMD>wincmd l<RETURN>]], "resize right")
-map("n", [[<A-h>]], [[<CMD>wincmd h<RETURN>]], "resize left")
-map("n", [[<A-j>]], [[<CMD>wincmd j<RETURN>]], "resize down")
-map("n", [[<A-k>]], [[<CMD>wincmd k<RETURN>]], "resize up")
+map("n", [[<A-l>]], [[<CMD>wincmd l<RETURN>]], "Focus right")
+map("n", [[<A-h>]], [[<CMD>wincmd h<RETURN>]], "Focus left")
+map("n", [[<A-j>]], [[<CMD>wincmd j<RETURN>]], "Focus down")
+map("n", [[<A-k>]], [[<CMD>wincmd k<RETURN>]], "Focus up")
 -- Resize
 local resize_horizontal = 2
 local resize_vertical = 1
@@ -58,10 +51,10 @@ local function resize(dir)
         )
     end
 end
-map("n", [[<A-L>]], function() resize("l") end, "resize right")
-map("n", [[<A-H>]], function() resize("h") end, "resize left")
-map("n", [[<A-J>]], function() resize("j") end, "resize down")
-map("n", [[<A-K>]], function() resize("k") end, "resize up")
+map("n", [[<A-S-l>]], function() resize("l") end, "Resize right")
+map("n", [[<A-S-h>]], function() resize("h") end, "Resize left")
+map("n", [[<A-S-j>]], function() resize("j") end, "Resize down")
+map("n", [[<A-S-k>]], function() resize("k") end, "Resize up")
 
 --#endregion
 

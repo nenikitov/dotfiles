@@ -13,11 +13,13 @@ return {
         jump = {
             delay = {
                 highlight = 0,
-                idle_stop = 1000,
+                idle_stop = 2000,
             },
             silent = true
         },
         icons = {
+            style = vim.g.enable_tty_mode and 'ascii' or 'glyph',
+            -- TODO: import icons from `config.icons`
             lsp = {
                 array         = { glyph = '' },
                 boolean       = { glyph = '󱎖' },

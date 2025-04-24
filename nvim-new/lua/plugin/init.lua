@@ -1,3 +1,6 @@
+local map = require('util.map')
+local icon = require('util.icon')
+
 local path_lazy = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(path_lazy) then
@@ -24,12 +27,21 @@ vim.opt.rtp:prepend(path_lazy)
 
 require('lazy').setup({
     spec = {
-        { import = "plugin.spec" }
+        { import = "plugin.spec" },
     },
     defaults = { lazy = true },
     install = { colorscheme = vim.g.colorschemes },
     ui = {
-        border = vim.o.winborder
+        border = vim.o.winborder,
+        backdrop = 100,
+        title = 'lazy.nvim ' .. icon.plugin_state.lazy,
+        icons = vim.tbl_extend('force', icon.plugin_state, { list = { '-' } })
     },
     change_detection = { notify = false }
 })
+
+-- Prefix
+map('n', [[<LEADER>p]], [[<NOP>]], 'plugin')
+-- Maps
+map('n', [[<LEADER>pp]], [[<CMD>Lazy<CR>]], 'Plugin manager')
+map('n', [[<LEADER>pP]], function() Snacks.picker.lazy() end, 'Plugins')

@@ -1,3 +1,5 @@
+local icon = require('util.icon')
+
 --#region Recovery
 
 -- Do not use swap files for recovery if (obviously never happens) neovim crashes
@@ -25,8 +27,8 @@ vim.opt.signcolumn = "yes:1"
 vim.opt.fillchars = {
     fold = " ",
     foldsep = " ",
-    foldopen = "v",
-    foldclose = ">",
+    foldopen = icon.ui.opened,
+    foldclose = icon.ui.collapsed,
     eob = "`",
 }
 -- Show a global status line instead of having one for each split
@@ -40,7 +42,7 @@ vim.opt.cmdheight = 0
 -- Use 24-bit color
 vim.opt.termguicolors = not vim.g.enable_tty_mode
 -- Default floating window borders
-vim.opt.winborder = vim.g.enable_tty_mode and "single" or "rounded"
+vim.opt.winborder = icon.border_name
 
 --#endregion
 
@@ -60,11 +62,11 @@ vim.api.nvim_create_autocmd({ "WinEnter", "WinResized", "VimEnter" }, {
 vim.opt.list = true
 -- Characters to use for special characters
 vim.opt.listchars = {
-    tab = "→ ",
-    trail = "·",
-    nbsp = "▬",
-    extends = "»",
-    precedes = "«",
+    tab = icon.special.tab,
+    trail = icon.special.trailing,
+    nbsp = icon.special.nbsp,
+    extends = icon.ui.ellipsis,
+    precedes = icon.ui.ellipsis,
 }
 -- Format options
 vim.api.nvim_create_autocmd("FileType", {
