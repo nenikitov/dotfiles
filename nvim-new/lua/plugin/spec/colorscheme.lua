@@ -5,8 +5,8 @@ return {
             custom = vim.g.colorschemes,
         },
         -- Is called before all other plugins
-        init = function(self)
-            require('colorscheme_loader').setup(self.opts)
+        init = function(spec)
+            require('colorscheme_loader').setup(spec.opts)
         end
     },
     'akinsho/horizon.nvim',

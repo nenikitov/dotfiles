@@ -50,8 +50,8 @@ M.ui = {
     opened     = tty.gui_choose('', 'v'),
     collapsed  = tty.gui_choose('', '>'),
 
-    filled     = tty.gui_choose('', '+'),
-    empty      = tty.gui_choose('', '-'),
+    filled     = tty.gui_choose('●', '+'),
+    empty      = tty.gui_choose('○', '-'),
 
     ellipsis   = tty.gui_choose('⋯', '∙'),
 
@@ -66,11 +66,11 @@ M.ui = {
 M.version_control = {
     commit    = tty.gui_choose('', 'commit'),
     branch    = tty.gui_choose('', 'branch'),
-    staged    = tty.gui_choose('', '√'),
+    staged    = tty.gui_choose(M.ui.filled, '√'),
     added     = tty.gui_choose('', '+'),
     deleted   = tty.gui_choose('', 'x'),
     ignored   = tty.gui_choose('', '-'),
-    modified  = tty.gui_choose('', '.'),
+    modified  = tty.gui_choose(M.ui.empty, '.'),
     renamed   = tty.gui_choose('', '→'),
     unmerged  = tty.gui_choose('', '!'),
     untracked = tty.gui_choose('', '?'),

@@ -62,9 +62,9 @@ map("n", [[<A-S-k>]], function() resize("k") end, "Resize up")
 
 -- Move across wrapped lines
 map("", [[j]], [[v:count == 0 ? 'gj' : 'j']], "Down", { expr = true })
-map("", [[<Down>]], [[v:count == 0 ? 'gj' : 'j']], "Down", { expr = true })
+map("", [[<DOWN>]], [[v:count == 0 ? 'gj' : 'j']], "Down", { expr = true })
 map("", [[k]], [[v:count == 0 ? 'gk' : 'k']], "Up", { expr = true })
-map("", [[<Up>]], [[v:count == 0 ? 'gk' : 'k']], "Up", { expr = true })
+map("", [[<UP>]], [[v:count == 0 ? 'gk' : 'k']], "Up", { expr = true })
 -- Move faster
 map("", [[H]], [[^]], "Start of line (non ws)")
 map("", [[L]], [[$]], "End of line")

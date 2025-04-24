@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.hl.on_yank({
             higroup = "Visual",
-            on_visual = false,
+            on_visual = true,
         })
     end,
     desc = "Highlight text for some time after yanking",
@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufWinEnter", "TermClose", "TermLe
 vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
     group = augroup("return last position"),
     callback = function()
-        local ignore_buftype = { "quickfix", "nofile", "help", "terminal" }
+        local ignore_buftype = { "quickfix", "nofile", "help", "terminal", "prompt" }
         local ignore_filetype = { "gitcommit", "gitrebase" }
 
         if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then
