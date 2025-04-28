@@ -1,6 +1,6 @@
+-- Make sure Snacks loads at startup
 return {
     'folke/snacks.nvim',
-    opts = {
-    },
+    opts = {},
     lazy = false,
 }

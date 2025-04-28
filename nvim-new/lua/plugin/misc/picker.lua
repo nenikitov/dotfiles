@@ -171,8 +171,8 @@ return {
                         ['l'] = { 'confirm' },
                         ['<RETURN>'] = { 'confirm' },
                         ['<2-LeftMouse>'] = { 'confirm' },
-                        ['s'] = { 'edit_split' },
-                        ['v'] = { 'edit_vsplit' },
+                        ['<c-s>'] = { 'edit_split' },
+                        ['<c-v>'] = { 'edit_vsplit' },
                         -- Other
                         ['<c-d>'] = { 'preview_scroll_down' },
                         ['<c-u>'] = { 'preview_scroll_up' },

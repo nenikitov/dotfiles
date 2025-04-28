@@ -40,7 +40,7 @@ return {
                             ["[e"] = "explorer_error_prev",
                             -- Accept
                             ['l'] = { 'confirm' },
-                            ['m'] = { 'explorer_select' },
+                            ['v'] = { 'explorer_select' },
                             -- File manipulation
                             ['h'] = { 'explorer_close' },
                             ['a'] = { 'explorer_add' },
@@ -48,7 +48,7 @@ return {
                             ['r'] = { 'explorer_rename' },
                             ['y'] = { 'explorer_yank', mode = { 'n', 'x' } },
                             ['Y'] = { 'explorer_copy_path' },
-                            ['x'] = { 'explorer_move' },
+                            ['m'] = { 'explorer_move' },
                             ['p'] = { 'explorer_paste' },
                             ['H'] = { 'explorer_up' },
                             ['L'] = { 'tcd' },

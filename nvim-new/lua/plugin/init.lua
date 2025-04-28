@@ -27,7 +27,11 @@ vim.opt.rtp:prepend(path_lazy)
 
 require('lazy').setup({
     spec = {
-        { import = "plugin.spec" },
+        { import = "plugin.core" },
+        { import = "plugin.editor" },
+        { import = "plugin.language" },
+        { import = "plugin.misc" },
+        { import = "plugin.ui" },
     },
     defaults = { lazy = true },
     install = { colorscheme = vim.g.colorschemes },
