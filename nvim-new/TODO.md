@@ -27,6 +27,7 @@
 - [noice.nvim](https://github.com/folke/noice.nvim)
 - [mini.icons](https://github.com/echasnovski/mini.nvim)
 - [Comment.nvim](https://github.com/numToStr/Comment.nvim)
+- [nvim-ts-context-commentstring](https://github.com/JoosepAlviste/nvim-ts-context-commentstring)
 - [neogen](https://github.com/danymat/neogen)
 - [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
 - [mini-ai](https://github.com/echasnovski/mini.nvim)
@@ -46,3 +47,32 @@
 - [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim)
 - [vim-illuminate](https://github.com/RRethy/vim-illuminate)
 - [nvim-scrollview](https://github.com/dstein64/nvim-scrollview)
+
+## File structure
+
+```py
+core                # Basic IDE features (treesitter, lsp, linting, formatting)
+    format-lint     #     `conform.nvim`, `none-ls`
+    lsp             #     `lspconfig`, `mason` and others, `otter`, BUT NOT `inc-rename` (that would be in `editing`)
+    syntax          #     `treesitter`, BUT NOT `nvim-treesitter-textobjects` (that would be in `editing`)
+editing             # Features directly assisting in navigating or writing text (completion, snippets, auto pairs, indents, indent-lines, etc)
+    comment         #     `Comment.nvim`, `nvim-ts-context-commentstring`, `neogen`
+    completion      #     `blink.cmp`, `friendly-snippets`, `colorful-menu`
+    indent          #     `vim-sleuth`, `indent-blankline`, `auto-indent`
+    motion-action   #     `mini-ai`, `dial.nvim`, `mini-splitjoin`, `inc-rename`, `img-clip`, `vim-illuminate`, `mini-surround`, etc
+ui                  # "Global" UI plugins (colorscheme, dashboard, statusline, statuscolumn, gitsigns)
+    bar             #     `gitsigns`, `statusline`, `statuscolumn`, `scrollview`
+    colorscheme     #     `colorscheme-loader`, whatever colorscheme
+    system          #     `snacks-dashboard`, `noice.nvim`, `snacks-notifier`
+workspace           # Standalone utitlies about interacting or navigating large number of files (pickers, explorers, search and replace, session management)
+    terminal        #     `toggleterm.nvim`
+    session         #     Whatever session management plugins
+    picker          #     `snacks-picker`, `mini-files`, `snacks-explorer`?
+misc                # Other miscellaneous plugins that don't fit into their categories
+    ...             #     Whatever
+language            # Language-specific plugins or additional options for `core` plugins (`lspconfig`, `mason-tool-installer`, `conform`, and `none-ls`)
+    lua.lua
+    markdown.lua
+    rust.lua
+    ...
+```
