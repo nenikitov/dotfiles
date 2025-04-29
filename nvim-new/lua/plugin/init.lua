@@ -25,6 +25,10 @@ end
 
 vim.opt.rtp:prepend(path_lazy)
 
+-- Event to signal that a file on disk was loaded
+local Event = require('lazy.core.handler.event')
+Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'FileType' } }
+
 require('lazy').setup({
     spec = {
         { import = "plugin.core" },

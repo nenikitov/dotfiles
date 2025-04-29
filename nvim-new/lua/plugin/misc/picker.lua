@@ -145,8 +145,8 @@ return {
                         ['<c-s>'] = { 'edit_split', mode = {'i', 'n'} },
                         ['<c-v>'] = { 'edit_vsplit', mode = {'i', 'n'} },
                         -- Other
-                        ['<c-d>'] = { 'preview_scroll_down', mode = {'i', 'n'} },
-                        ['<c-u>'] = { 'preview_scroll_up', mode = {'i', 'n'} },
+                        ['<c-y>'] = { 'preview_scroll_up', mode = {'i', 'n'} },
+                        ['<c-e>'] = { 'preview_scroll_down', mode = {'i', 'n'} },
                         ['?'] = { 'toggle_help_input' },
                     }) },
                     list = { keys = overwrite_defaults(defaults.win.list.keys, {
@@ -174,8 +174,8 @@ return {
                         ['<c-s>'] = { 'edit_split' },
                         ['<c-v>'] = { 'edit_vsplit' },
                         -- Other
-                        ['<c-d>'] = { 'preview_scroll_down' },
-                        ['<c-u>'] = { 'preview_scroll_up' },
+                        ['<c-y>'] = { 'preview_scroll_up' },
+                        ['<c-e>'] = { 'preview_scroll_down' },
                         ['?'] = { 'toggle_help_list' },
                     }) },
                     preview = { keys = overwrite_defaults(defaults.win.preview.keys, {
