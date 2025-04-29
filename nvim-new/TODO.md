@@ -1,32 +1,44 @@
 # TODO
 
-## File structure
+## Plugins
 
-```py
-core
-    lsp             # Lspconfig, mason
-    lint            # nvim-lint
-    format          # conform.nvim
-    version_control # gitsigns
-editor
-    navigation      # mini.ai, textobjects
-    completion      # blink.cmp, luasnip
-    pairs           # whatever autopairs, endwise, autotag
-    comment         # neogen, tscommentstring
-    indent          # indent blankline
-    picker          # Snacks
-    explorer        # Snacks, oil?
-ui
-    colorscheme     # ...
-    dashboard       # Snacks?
-    icon            # mini.icons
-    notification    # Snacks
-    input           # Snacks, noice? which-key
-    bar             # Snacks? statuscol? whatever scrolling
-lang
-    rust
-    lua
-    shell
-    ...
-
-```
+- [colorscheme-loader.nvim](https://github.com/nenikitov/colorscheme-loader.nvim/tree/main)
+- Whatever colorscheme I decide to use
+- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+- [mason.nvim](https://github.com/williamboman/mason.nvim)
+- [mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim)
+- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+- [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
+- [lazydev.nvim](https://github.com/folke/lazydev.nvim)
+- [otter.nvim](https://github.com/jmbuhr/otter.nvim)
+- [conform.nvim](https://github.com/stevearc/conform.nvim)
+- [none-ls.nvim](https://github.com/nvimtools/none-ls.nvim)
+- [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
+- [mini-files](https://github.com/echasnovski/mini.nvim)
+- [snacks-picker](https://github.com/folke/snacks.nvim)
+- [blink.cmp](https://github.com/Saghen/blink.cmp)
+- [LuaSnip](L3MON4D3/LuaSnip)
+- [friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
+- [blink-cmp-spell](https://github.com/ribru17/blink-cmp-spell)
+- [colorful-menu.nvim](https://github.com/xzbdmw/colorful-menu.nvim)
+- [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context)
+- [snacks-notifier](https://github.com/folke/snacks.nvim)
+- [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
+- [noice.nvim](https://github.com/folke/noice.nvim)
+- [mini.icons](https://github.com/echasnovski/mini.nvim)
+- [Comment.nvim](https://github.com/numToStr/Comment.nvim)
+- [neogen](https://github.com/danymat/neogen)
+- [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)
+- [mini-ai](https://github.com/echasnovski/mini.nvim)
+- [mini-splitjoin](https://github.com/echasnovski/mini.nvim)
+- [mini-surround](https://github.com/echasnovski/mini.nvim)
+- [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
+- [nvim-treesitter-endwise](https://github.com/RRethy/nvim-treesitter-endwise)
+- [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim)
+- [nvim-autpairs](https://github.com/windwp/nvim-autopairs)
+- [dial.nvim](https://github.com/monaqa/dial.nvim)
+- [inc-rename.nvim](https://github.com/smjonas/inc-rename.nvim)
+- [snacks-dashboard](https://github.com/folke/snacks.nvim)
+- [bufresize.nvim](https://github.com/kwkarlwang/bufresize.nvim)
+- [vim-sleuth](https://github.com/tpope/vim-sleuth)
+- [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
