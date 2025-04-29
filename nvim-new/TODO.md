@@ -42,3 +42,7 @@
 - [bufresize.nvim](https://github.com/kwkarlwang/bufresize.nvim)
 - [vim-sleuth](https://github.com/tpope/vim-sleuth)
 - [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
+- [auto-indent.nvim](https://github.com/VidocqH/auto-indent.nvim)
+- [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim)
+- [vim-illuminate](https://github.com/RRethy/vim-illuminate)
+- [nvim-scrollview](https://github.com/dstein64/nvim-scrollview)
