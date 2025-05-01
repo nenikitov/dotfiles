@@ -26,7 +26,7 @@ return {
             map('', ']H', function() gitsigns.nav_hunk('next') end, 'Next hunk')
             map({'o','x'}, 'iH', gitsigns.select_hunk, 'Hunk')
             -- Manipulation
-            map('n', '<LEADER>vo', gitsigns.preview_hunk, 'Preview hunk')
+            map('n', '<LEADER>vd', gitsigns.preview_hunk, 'Preview differences in current hunk')
             map('n', '<LEADER>vb', gitsigns.blame_line, 'Blame on current line')
             map('n', '<LEADER>vs', gitsigns.stage_hunk, 'Stage hunk')
             map('v', '<leader>vs', function() gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, 'Stage hunk')
