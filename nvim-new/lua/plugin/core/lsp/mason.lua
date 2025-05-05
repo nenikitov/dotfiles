@@ -1,4 +1,14 @@
 local icon = require('util.icon')
+local langauge = require('util.language')
+
+langauge.handler('tools', function (opts)
+    return {
+        'mason-tool-installer.nvim',
+        opts = {
+            ensure_installed = opts
+        }
+    }
+end)
 
 return {
     {
@@ -65,5 +75,6 @@ return {
             end
         end,
         opts_extend = { 'ensure_installed' },
+        event = 'VeryLazy',
     },
 }
