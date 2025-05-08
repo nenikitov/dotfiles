@@ -1,9 +1,9 @@
 ---@module 'lazy'
 
 local icon = require("util.icon")
-local langauge = require('util.language')
+local language = require('util.language')
 
-langauge.handler('servers', function (opts)
+language.handler('servers', function (opts)
     return {
         'nvim-lspconfig',
         opts = {
@@ -12,7 +12,7 @@ langauge.handler('servers', function (opts)
     }
 end)
 
--- TODO(nenikitov): write handlers for `before_lsp` and `after_lsp`
+language.set_lsp_plugin('nvim-lspconfig')
 
 return {
     'neovim/nvim-lspconfig',
