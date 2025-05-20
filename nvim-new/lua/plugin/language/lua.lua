@@ -25,12 +25,30 @@ return language.language({
         }
     },
     plugins = {
-        'folke/lazydev.nvim',
-        ft = 'lua',
-        opts = {
-            library = {
-                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        {
+            'folke/lazydev.nvim',
+            ft = 'lua',
+            opts = {
+                library = {
+                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                },
             },
         },
+        -- TODO: maybe separate this into a language defintion so it doesn't have to be this specific?
+        {
+            'blink.cmp',
+            opts = {
+                sources = {
+                    default = { 'lazydev' },
+                    providers = {
+                        lazydev = {
+                            name = '[lzy]',
+                            module = 'lazydev.integrations.blink',
+                            score_offset = 100,
+                        }
+                    }
+                }
+            }
+        }
     }
 })

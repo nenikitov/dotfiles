@@ -92,6 +92,7 @@ vim.api.nvim_create_autocmd("FileType", {
         "help",
         "lspinfo",
         "man",
+        "lazy",
         "notify",
         "query",
     },

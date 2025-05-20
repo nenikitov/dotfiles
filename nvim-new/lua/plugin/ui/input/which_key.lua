@@ -1,7 +1,7 @@
 local icon = require('util.icon')
 
 return {
-    -- INFO: change origin to `'folke/which-key.nvim'` when this PR gets merged
+    -- TODO: change origin to `'folke/which-key.nvim'` when this PR gets merged
     -- https://github.com/folke/which-key.nvim/pull/964
     'iguanacucumber/which-key.nvim',
     opts = {

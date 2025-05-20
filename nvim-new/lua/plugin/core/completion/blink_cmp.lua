@@ -1,8 +1,10 @@
+-- TODO: look into [this configuration](https://cmp.saghen.dev/recipes.html#for-writers)
+
 return {
     'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
     event = 'VeryLazy',
     version = '1.*',
+    opts_extend = { 'sources.default' },
     opts = {
         keymap = {
             preset = 'none',
@@ -21,10 +23,26 @@ return {
             menu = {
                 draw = {
                     columns = {
-                        { "kind_icon" },
-                        { "label", 'label_description' },
+                        { "kind_icon", },
+                        { "label",      'label_description' },
                         { "source_name" },
                     },
+                    -- TODO: Move this into mini configuration
+                    components = {
+                        kind_icon = {
+                            text = function(ctx)
+                                return ({ require('mini.icons').get('lsp', ctx.kind) })[1]
+                            end,
+                            highlight = function(ctx)
+                                return ({ require('mini.icons').get('lsp', ctx.kind) })[2]
+                            end,
+                        },
+                        kind = {
+                            highlight = function(ctx)
+                                return ({ require('mini.icons').get('lsp', ctx.kind) })[2]
+                            end,
+                        },
+                    }
                 },
             },
             documentation = {
