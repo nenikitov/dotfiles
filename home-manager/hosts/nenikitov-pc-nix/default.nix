@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
+{ config, pkgs, userName, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "nenikitov";
-  home.homeDirectory = "/home/nenikitov";
+  home.username = userName;
+  home.homeDirectory = "/home/${userName}";
+
+  nixpkgs.config.allowUnfree = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -17,7 +19,9 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
+    discord
+    fastfetch
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -68,7 +72,7 @@
   #  /etc/profiles/per-user/nenikitov/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.

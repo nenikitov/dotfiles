@@ -6,9 +6,8 @@
 # Git ignore
 !/.gitignore
 # Configuration files
-!/nvim
 !/home-manager
 
 
-# Blacklist files
+# Blacklist certain files
 __pycache__/
