@@ -1,13 +1,1 @@
-# Blacklist everything
-/*
-
-
-# Track only certain files
-# Git ignore
-!/.gitignore
-# Configuration files
-!/home-manager
-
-
-# Blacklist certain files
-__pycache__/
+result
