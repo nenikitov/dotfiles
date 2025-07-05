@@ -17,8 +17,6 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  programs.firefox.enable = true;
-
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
@@ -82,6 +80,9 @@
   programs.home-manager.enable = true;
 
   "${customNamespace}" = {
-    programs.git.enable = true;
+    programs = {
+      git.enable = true;
+      librewolf.enable = true;
+    };
   };
 }

@@ -1,6 +1,6 @@
 {
   imports = [
-    #./firefox
     ./git
+    ./librewolf
   ];
 }

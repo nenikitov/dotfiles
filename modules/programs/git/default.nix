@@ -8,6 +8,7 @@ mkModule {
   description = "git version control tool";
   options = {
     userName = options.programs.git.userName // {default = "nenikitov";};
+    # TODO: Figure out how to safely pass email
     userEmail = options.programs.git.userEmail;
   };
   config = {configModule, ...}: {
@@ -15,6 +16,8 @@ mkModule {
       enable = true;
 
       inherit (configModule) userName userEmail;
+
+      # TODO: look into delta differ
 
       extraConfig = {
         # Set default branch to `main`
