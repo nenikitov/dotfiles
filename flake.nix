@@ -27,6 +27,7 @@
     lib = nixpkgs.lib;
     userHosts = [
       {userName = "nenikitov"; hostName = "nenikitov-pc-nix";}
+      {userName = "nenikitov"; hostName = "nenikitov-laptop-nix";}
     ];
     customNamespace = "_ne";
     mkHome = system: {userName, hostName}:
