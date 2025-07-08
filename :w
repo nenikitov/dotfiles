@@ -41,29 +41,17 @@ mkModule {
       enable = true;
       package = pkgs.librewolf.override {
         extraPrefs =
-        # HACK: Doesn't work in `extraPolicies.preferences` but works here?
         # js
         ''
-        pref("privacy.resistFingerprinting", false);
+          pref("webgl.disabled", false);
+          pref("privacy.clearOnShutdown.history", false);
+          pref("privacy.clearOnShutdown.downloads", false);
+          pref("middlemouse.paste", false);
+          pref("general.autoScroll", true);
+          pref("privacy.resistFingerprinting", false);
+          pref("browser.tabs.closeWindowWithLastTab", false);
         '';
         extraPolicies = {
-          DisplayMenuBar = "default-off";
-          DisplayBookmarksToolbar = "never";
-          SanitizeOnShutdown = false;
-          Preferences = {
-            "webgl.disabled" = false;
-            "middlemouse.paste" = false;
-            "general.autoScroll" = true;
-            "browser.tabs.closeWindowWithLastTab" = false;
-            "browser.search.suggest.enabled.private" = true;
-            "browser.urlbar.suggest.topsites" = false;
-            "findbar.highlightAll" = true;
-            "svg.context-properties.content.enabled" = true;
-            "browser.uidensity" = 1;
-          };
-          Homepage.StartPage = "previous-session";
-          Permissions.Notifications.BlockNewRequests = true;
-          SearchSuggestEnabled = true;
           SearchEngines = {
             Default = configModule.search.default;
             Remove = [
