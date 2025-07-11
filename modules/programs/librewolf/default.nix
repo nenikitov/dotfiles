@@ -1,12 +1,17 @@
 {
   lib,
-  mkModule,
+  libModule,
+  options,
   pkgs,
   ...
 }:
-mkModule {
-  path = ["programs" "firefox"];
-  description = "Firefox web-browser";
+{
+  imports = [ ./search-engines.nix ];
+}
+//
+libModule.mkEnableModule {
+  path = ["programs" "librewolf"];
+  description = "Librewolf (Firefox fork) web-browser";
   options = {
     search = {
       default = lib.mkOption {

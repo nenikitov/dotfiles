@@ -8,6 +8,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     flakeUtils.url = "github:numtide/flake-utils";
 
     moduleUtils = {
@@ -61,7 +62,9 @@
           overlayArgs = args:
             args
             // {
-              mkModule = moduleUtils.lib.mkModule namespace args.config;
+              libModule = moduleUtils.lib.libModule {
+                inherit namespace args;
+              };
             };
         }
         ./modules);

@@ -1,9 +1,9 @@
 {
-  mkModule,
+  libModule,
   options,
   ...
 }:
-mkModule {
+libModule.mkEnableModule {
   path = ["programs" "git"];
   description = "git version control tool";
   options = {

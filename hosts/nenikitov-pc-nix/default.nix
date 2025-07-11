@@ -82,7 +82,7 @@
   "${customNamespace}" = {
     programs = {
       git.enable = true;
-      firefox.enable = true;
+      librewolf.enable = true;
     };
   };
 }
