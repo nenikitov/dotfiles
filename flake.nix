@@ -11,6 +11,11 @@
 
     flakeUtils.url = "github:numtide/flake-utils";
 
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     moduleUtils = {
       url = "github:nenikitov/nix-module-utils";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,21 +25,24 @@
   outputs = {
     self,
     nixpkgs,
-    homeManager,
-    moduleUtils,
-    flakeUtils,
     ...
   } @ inputs: let
+    customNamespace = "_ne";
+
     lib = nixpkgs.lib;
+    libModule = inputs.moduleUtils.lib;
+    libHomeManager = inputs.homeManager.lib;
+    libFlake = inputs.flakeUtils.lib;
+
     userHosts = [
       {userName = "nenikitov"; hostName = "nenikitov-pc-nix";}
       {userName = "nenikitov"; hostName = "nenikitov-laptop-nix";}
     ];
-    customNamespace = "_ne";
     mkHome = system: {userName, hostName}:
-      homeManager.lib.homeManagerConfiguration {
+      libHomeManager.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [
+          inputs.niri.homeModules.niri
           (self.homeManagerModules.default {namespace = customNamespace;})
           "${self}/hosts/${hostName}"
         ];
@@ -43,7 +51,7 @@
         };
       };
   in
-    flakeUtils.lib.eachSystem flakeUtils.lib.allSystems (system: {
+    libFlake.eachSystem libFlake.allSystems (system: {
       packages.homeConfigurations =
         lib.pipe
         userHosts
@@ -57,12 +65,12 @@
     })
     //
     {
-      homeManagerModules.default = moduleUtils.lib.optionallyConfigureModule ({namespace ? "_ne"}:
-        moduleUtils.lib.overlayModule {
+      homeManagerModules.default = libModule.optionallyConfigureModule ({namespace ? "_ne"}:
+        libModule.overlayModule {
           overlayArgs = args:
             args
             // {
-              libModule = moduleUtils.lib.libModule {
+              libModule = libModule.libModule {
                 inherit namespace args;
               };
             };

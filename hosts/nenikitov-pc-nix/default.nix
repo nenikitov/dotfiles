@@ -79,10 +79,13 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.alacritty.enable = true;
+
   "${customNamespace}" = {
     programs = {
       git.enable = true;
       librewolf.enable = true;
+      niri.enable = true;
     };
   };
 }
