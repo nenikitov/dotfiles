@@ -26,8 +26,8 @@ libModule.mkEnableModule {
         # Do not guess `user.name` and `user.email` if not set
         user.useConfigOnly = true;
 
-        # Correct mistyped commands after 0.5 second
-        help.autocorrect = 5;
+        # Correct mistyped commands after 1 second
+        help.autocorrect = 10;
 
         status = {
           # Make status less verbose
