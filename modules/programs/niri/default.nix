@@ -6,7 +6,7 @@
 libModule.mkEnableModule {
   path = ["programs" "niri"];
   description = "Niri Wayland compositor";
-  config = {configGlobal, ...}: {
+  config = {configGlobal, configNamespace, ...}: {
     programs.niri = {
       enable = true;
       package = pkgs.niri;
@@ -15,26 +15,7 @@ libModule.mkEnableModule {
           mouse.accel-profile = "flat";
         };
 
-        outputs = {
-          "DP-4" = {
-            mode = {
-              width = 1920;
-              height = 1080;
-              refresh = 143.981;
-            };
-            position = {
-              x = 0;
-              y = 0;
-            };
-          };
-          "HDMI-A-2" = {
-            mode = {
-              width = 1920;
-              height = 1080;
-              refresh = 75.001;
-            };
-          };
-        };
+        outputs = configNamespace.settings.monitors;
 
         layout.preset-column-widths = [
           { proportion = 1.0 / 3.0; }
@@ -48,6 +29,10 @@ libModule.mkEnableModule {
 
           "Mod+Return" = {
             action = spawn "alacritty";
+            repeat = false;
+          };
+          "Mod+Space" = {
+            action = spawn "rofi" "-show" "drun";
             repeat = false;
           };
 
