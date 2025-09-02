@@ -24,6 +24,7 @@
           Snippets = false;
           Locked = true;
         };
+      };
         profiles.default = {
           settings = {
             # browser.backspace_action
@@ -34,7 +35,6 @@
             "xpinstall.signatures.required" = false;
           };
         };
-      };
     };
   };
 }

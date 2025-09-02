@@ -8,7 +8,15 @@ return language.register {
         'nix',
     },
     servers = {
-        ['nil'] = {},
+        ['nil'] = {
+            ['nil'] = {
+                nix = {
+                    flake = {
+                        autoArchive = true,
+                    },
+                },
+            },
+        },
         nixd = {},
     },
     formatters = {
@@ -17,12 +25,12 @@ return language.register {
     plugins = {
         after_core = {
             name = 'NixD setup',
-            dir = '',
+            dir = '~/Documents/dummy.nvim/',
             config = function()
                 require('lspconfig').nixd.setup {
                     settings = {
                         nixd = {
-                            forrmatting = {
+                            formatting = {
                                 command = { 'alejandra' },
                             },
                         },

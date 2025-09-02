@@ -27,6 +27,11 @@ return language.register {
             build = function()
                 vim.fn['mkdp#util#install']()
             end,
+            config = function()
+                vim.cmd([[
+                    let g:mkdp_preview_options = { 'uml': { 'imageFormat': 'svg' }}
+                ]])
+            end
         },
     },
 }

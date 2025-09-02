@@ -31,20 +31,21 @@
 
     extensions = {
       ublock = true;
-      darkReader = false;
+      darkReader = true;
     };
   };
 
   programs = {
     firefox = {
       enable = true;
-      policies = {
-        "3rdparty".Extensions."addon@darkreader.org" = {
-          theme = {
-            sepia = 35;
-          };
-        };
-      };
+      # policies = {
+      #   "3rdparty".Extensions."addon@darkreader.org" = {
+      #     theme = {
+      #       sepia = 35;
+      #     };
+      #   };
+      # };
+
       # addon@darkreader.org
       # uBlock0@raymondhill.net
 

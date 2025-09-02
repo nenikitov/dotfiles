@@ -5,5 +5,7 @@
   url = "file:///home/nenikitov/Documents/darkreader/build/release/darkreader-firefox.xpi";
 
   settingsPolicy = {
+    detectDarkTheme = true;
+    fetchNews = false;
   };
 }

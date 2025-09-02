@@ -20,6 +20,11 @@ return {
                     'nenikitov/highlight-builder.nvim',
                 },
             },
+            'navarasu/onedark.nvim',
+            'ellisonleao/gruvbox.nvim',
+            'Mofiqul/vscode.nvim',
+            { 'rose-pine/neovim', name = 'rose-pine' },
+            'projekt0n/github-nvim-theme',
         },
         opts = {
             custom = colorscheme.colorscheme,
