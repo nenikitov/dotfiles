@@ -11,17 +11,65 @@ libModule.mkEnableModule {
       enable = true;
       package = pkgs.niri;
       settings = {
+        hotkey-overlay = {
+          skip-at-startup = true;
+          # hide-not-bound = true;
+        };
+
         input = {
           mouse.accel-profile = "flat";
+          keyboard.numlock = true;
+          warp-mouse-to-focus = {
+            enable = true;
+            mode = "center-xy";
+          };
+          focus-follows-mouse = {
+            enable = true;
+            max-scroll-amount = "0%";
+          };
         };
+
+        prefer-no-csd = true;
 
         outputs = configNamespace.settings.monitors;
 
-        layout.preset-column-widths = [
-          { proportion = 1.0 / 3.0; }
-          { proportion = 1.0 / 2.0; }
-          { proportion = 2.0 / 3.0; }
-          { proportion = 1.0 ; }
+        layout = {
+          gaps = 8;
+          default-column-width = { proportion = 1.0 / 2.0; };
+          border = {
+            enable = true;
+            width = 2;
+            active.gradient = {
+              from = "#DA5261";
+              to = "#DB8878";
+            };
+            inactive.gradient = {
+              from = "#555A66";
+              to = "#20232B";
+            };
+          };
+          focus-ring.enable = false;
+          shadow = {
+            enable = true;
+            softness = 10;
+            offset = {
+              x = 0;
+              y = 0;
+            };
+          };
+        };
+
+        window-rules = [
+          {
+            draw-border-with-background = true;
+            geometry-corner-radius = let r = 4.0; in {
+              bottom-left = r;
+              bottom-right = r;
+              top-left = r;
+              top-right = r;
+            };
+            clip-to-geometry = true;
+          }
         ];
 
         binds = with configGlobal.lib.niri.actions; {
@@ -68,6 +116,10 @@ libModule.mkEnableModule {
             action = close-window;
             repeat = false;
           };
+        };
+
+        gestures = {
+          hot-corners.enable = false;
         };
       };
     };
