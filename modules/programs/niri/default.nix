@@ -7,14 +7,20 @@ libModule.mkEnableModule {
   path = ["programs" "niri"];
   description = "Niri Wayland compositor";
   config = {configGlobal, configNamespace, ...}: {
+    # TODO: Handle this with a theme outside this config
+    home.packages = [pkgs.bibata-cursors];
+    programs.niri.settings.cursor.theme = "Bibata-Modern-Classic";
+
     programs.niri = {
       enable = true;
       package = pkgs.niri;
       settings = {
         hotkey-overlay = {
           skip-at-startup = true;
-          # hide-not-bound = true;
+          hide-not-bound = true;
         };
+
+        # TODO: Handle this with a theme outside this config
 
         input = {
           mouse.accel-profile = "flat";
@@ -72,48 +78,96 @@ libModule.mkEnableModule {
           }
         ];
 
-        binds = with configGlobal.lib.niri.actions; {
-          "Mod+Shift+Slash".action = show-hotkey-overlay;
+        binds = {
+          # System
+          # TODO: "Mod+Q" to lock
+          "Mod+Shift+Q".action.quit = [];
+          "Mod+Shift+Slash".action.show-hotkey-overlay = [];
+          "Mod+Escape" = {
+            action.toggle-overview = [];
+            repeat = false;
+          };
 
+          # Spawning
           "Mod+Return" = {
-            action = spawn "alacritty";
+            action.spawn = "alacritty";
             repeat = false;
           };
-          "Mod+Space" = {
-            action = spawn "rofi" "-show" "drun";
+          "Mod+Shift+Return" = {
+            action.spawn = ["rofi" "-show" "drun"];
             repeat = false;
           };
 
-          "Mod+K".action = focus-window-up;
-          "Mod+J".action = focus-window-down;
-          "Mod+H".action = focus-column-left;
-          "Mod+L".action = focus-column-right;
+          # Workspaces
+          "Mod+Shift+WheelScrollDown" = {
+            action.focus-workspace-down = [];
+            cooldown-ms = 50;
+          };
+          "Mod+Shift+WheelScrollUp" = {
+            action.focus-workspace-up = [];
+            cooldown-ms = 50;
+          };
+          "Mod+1".action.focus-workspace = 1;
+          "Mod+2".action.focus-workspace = 2;
+          "Mod+3".action.focus-workspace = 3;
+          "Mod+4".action.focus-workspace = 4;
+          "Mod+5".action.focus-workspace = 5;
+          "Mod+Shift+1" = {
+            action.move-window-to-workspace = [1 { focus = false; }];
+            cooldown-ms = 500;
+          };
+          "Mod+Shift+2" = {
+            action.move-window-to-workspace = [2 { focus = false; }];
+            cooldown-ms = 500;
+          };
+          "Mod+Shift+3" = {
+            action.move-window-to-workspace = [3 { focus = false; }];
+            cooldown-ms = 500;
+          };
+          "Mod+Shift+4" = {
+            action.move-window-to-workspace = [4 { focus = false; }];
+            cooldown-ms = 500;
+          };
+          "Mod+Shift+5" = {
+            action.move-window-to-workspace = [5 { focus = false; }];
+            cooldown-ms = 500;
+          };
 
-          "Mod+Shift+K".action = move-window-up;
-          "Mod+Shift+J".action = move-window-down;
-          "Mod+Shift+H".action = move-column-left;
-          "Mod+Shift+L".action = move-column-right;
 
-          "Mod+Shift+Comma".action = consume-or-expel-window-left;
-          "Mod+Shift+Period".action = consume-or-expel-window-right;
+          "Mod+WheelScrollDown" = {
+            action.focus-column-right = [];
+            cooldown-ms = 50;
+          };
+          "Mod+WheelScrollUp" = {
+            action.focus-column-left = [];
+            cooldown-ms = 50;
+          };
 
-          "Mod+1".action = focus-workspace 1;
-          "Mod+2".action = focus-workspace 2;
-          "Mod+3".action = focus-workspace 3;
-          "Mod+4".action = focus-workspace 4;
-          "Mod+5".action = focus-workspace 5;
+          "Mod+K".action.focus-window-up = [];
+          "Mod+J".action.focus-window-down = [];
+          "Mod+H".action.focus-column-left = [];
+          "Mod+L".action.focus-column-right = [];
+
+          "Mod+Shift+K".action.move-window-up = [];
+          "Mod+Shift+J".action.move-window-down = [];
+          "Mod+Shift+H".action.move-column-left = [];
+          "Mod+Shift+L".action.move-column-right = [];
+
+          "Mod+Shift+Comma".action.consume-or-expel-window-left = [];
+          "Mod+Shift+Period".action.consume-or-expel-window-right = [];
+
 
           "Mod+F" = {
-            action = switch-preset-column-width;
+            action.switch-preset-column-width = [];
             repeat = false;
           };
           "Mod+Shift+F" = {
-            action = fullscreen-window;
+            action.fullscreen-window = [];
             repeat = false;
           };
 
           "Mod+C" = {
-            action = close-window;
+            action.close-window = [];
             repeat = false;
           };
         };
