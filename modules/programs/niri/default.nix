@@ -8,7 +8,7 @@ libModule.mkEnableModule {
   description = "Niri Wayland compositor";
   config = {configGlobal, configNamespace, ...}: {
     # TODO: Handle this with a theme outside this config
-    home.packages = [pkgs.bibata-cursors];
+    home.packages = with pkgs; [bibata-cursors xwayland-satellite];
     programs.niri.settings.cursor.theme = "Bibata-Modern-Classic";
 
     programs.niri = {
@@ -19,8 +19,6 @@ libModule.mkEnableModule {
           skip-at-startup = true;
           hide-not-bound = true;
         };
-
-        # TODO: Handle this with a theme outside this config
 
         input = {
           mouse.accel-profile = "flat";
@@ -78,98 +76,88 @@ libModule.mkEnableModule {
           }
         ];
 
-        binds = {
-          # System
-          # TODO: "Mod+Q" to lock
-          "Mod+Shift+Q".action.quit = [];
-          "Mod+Shift+Slash".action.show-hotkey-overlay = [];
-          "Mod+Escape" = {
-            action.toggle-overview = [];
-            repeat = false;
-          };
+        workspaces = {
+          "1".name = "static-1";
+          "2".name = "static-2";
+          "3".name = "static-3";
+          "4".name = "static-4";
+          "5".name = "static-5";
+        };
 
-          # Spawning
-          "Mod+Return" = {
-            action.spawn = "alacritty";
-            repeat = false;
-          };
-          "Mod+Shift+Return" = {
-            action.spawn = ["rofi" "-show" "drun"];
-            repeat = false;
-          };
+        binds =
+          let
+            explicitRepeat = builtins.mapAttrs (_: bind: { repeat = false; } // bind);
+            moveWindow = pkgs.writers.writePython3 "move-window" { doCheck = false; } (builtins.readFile ./move-window.py);
+            moveDistance = "50";
+          in explicitRepeat {
+            # System
+            # TODO: "Mod+Q" to lock
+            "Mod+Shift+Q".action.quit = [];
+            "Mod+Shift+Slash".action.show-hotkey-overlay = [];
+            "Mod+Escape".action.toggle-overview = [];
 
-          # Workspaces
-          "Mod+Shift+WheelScrollDown" = {
-            action.focus-workspace-down = [];
-            cooldown-ms = 50;
-          };
-          "Mod+Shift+WheelScrollUp" = {
-            action.focus-workspace-up = [];
-            cooldown-ms = 50;
-          };
-          "Mod+1".action.focus-workspace = 1;
-          "Mod+2".action.focus-workspace = 2;
-          "Mod+3".action.focus-workspace = 3;
-          "Mod+4".action.focus-workspace = 4;
-          "Mod+5".action.focus-workspace = 5;
-          "Mod+Shift+1" = {
-            action.move-window-to-workspace = [1 { focus = false; }];
-            cooldown-ms = 500;
-          };
-          "Mod+Shift+2" = {
-            action.move-window-to-workspace = [2 { focus = false; }];
-            cooldown-ms = 500;
-          };
-          "Mod+Shift+3" = {
-            action.move-window-to-workspace = [3 { focus = false; }];
-            cooldown-ms = 500;
-          };
-          "Mod+Shift+4" = {
-            action.move-window-to-workspace = [4 { focus = false; }];
-            cooldown-ms = 500;
-          };
-          "Mod+Shift+5" = {
-            action.move-window-to-workspace = [5 { focus = false; }];
-            cooldown-ms = 500;
-          };
+            # Spawning
+            "Mod+Return" = {
+              action.spawn = "alacritty";
+              hotkey-overlay.title = "Open Terminal";
+            };
+            "Mod+Shift+Return" = {
+              action.spawn-sh = /* sh */ ''pkill rofi || rofi -show drun'';
+              hotkey-overlay.title = "Open/close application launcher";
+            };
 
+            # Workspace focus
+            "Mod+Shift+WheelScrollDown".action.focus-workspace-down = [];
+            "Mod+Shift+WheelScrollUp".action.focus-workspace-up = [];
+            "Mod+1".action.focus-workspace = 1;
+            "Mod+2".action.focus-workspace = 2;
+            "Mod+3".action.focus-workspace = 3;
+            "Mod+4".action.focus-workspace = 4;
+            "Mod+5".action.focus-workspace = 5;
+            "Mod+Tab".action.focus-workspace-previous = [];
 
-          "Mod+WheelScrollDown" = {
-            action.focus-column-right = [];
-            cooldown-ms = 50;
-          };
-          "Mod+WheelScrollUp" = {
-            action.focus-column-left = [];
-            cooldown-ms = 50;
-          };
+            # Workspace move
+            "Mod+Shift+1".action.move-window-to-workspace = [1 { focus = false; }];
+            "Mod+Shift+2".action.move-window-to-workspace = [2 { focus = false; }];
+            "Mod+Shift+3".action.move-window-to-workspace = [3 { focus = false; }];
+            "Mod+Shift+4".action.move-window-to-workspace = [4 { focus = false; }];
+            "Mod+Shift+5".action.move-window-to-workspace = [5 { focus = false; }];
 
-          "Mod+K".action.focus-window-up = [];
-          "Mod+J".action.focus-window-down = [];
-          "Mod+H".action.focus-column-left = [];
-          "Mod+L".action.focus-column-right = [];
+            # Window focus
+            "Mod+WheelScrollDown".action.focus-column-right = [];
+            "Mod+WheelScrollUp".action.focus-column-left = [];
+            "Mod+H".action.focus-column-left = [];
+            "Mod+J".action.focus-window-down = [];
+            "Mod+K".action.focus-window-up = [];
+            "Mod+L".action.focus-column-right = [];
 
-          "Mod+Shift+K".action.move-window-up = [];
-          "Mod+Shift+J".action.move-window-down = [];
-          "Mod+Shift+H".action.move-column-left = [];
-          "Mod+Shift+L".action.move-column-right = [];
+            # Window move
+            "Mod+Shift+H" = {
+              action.spawn = ["${moveWindow}" "--command" "move-column-left" "--x" "-${moveDistance}"];
+              hotkey-overlay.title = "Move Column / Floating Window Left";
+            };
+            "Mod+Shift+J" = {
+              action.spawn = ["${moveWindow}" "--command" "move-window-down" "--y" "+${moveDistance}"];
+              hotkey-overlay.title = "Move Window Up";
+            };
+            "Mod+Shift+K" = {
+              action.spawn = ["${moveWindow}" "--command" "move-window-up" "--y" "-${moveDistance}"];
+              hotkey-overlay.title = "Move Window Down";
+            };
+            "Mod+Shift+L" = {
+              action.spawn = ["${moveWindow}" "--command" "move-column-right" "--x" "+${moveDistance}"];
+              hotkey-overlay.title = "Move Column / Floating Window Right";
+            };
+            "Mod+Shift+Comma".action.consume-or-expel-window-left = [];
+            "Mod+Shift+Period".action.consume-or-expel-window-right = [];
 
-          "Mod+Shift+Comma".action.consume-or-expel-window-left = [];
-          "Mod+Shift+Period".action.consume-or-expel-window-right = [];
+            # Window resize
+            "Mod+F".action.maximize-column = [];
+            "Mod+Shift+F".action.fullscreen-window = [];
+            "Mod+N".action.switch-preset-column-width = [];
+            "Mod+Shift+N".action.expand-column-to-available-width = [];
 
-
-          "Mod+F" = {
-            action.switch-preset-column-width = [];
-            repeat = false;
-          };
-          "Mod+Shift+F" = {
-            action.fullscreen-window = [];
-            repeat = false;
-          };
-
-          "Mod+C" = {
-            action.close-window = [];
-            repeat = false;
-          };
+            "Mod+C".action.close-window = [];
         };
 
         gestures = {
