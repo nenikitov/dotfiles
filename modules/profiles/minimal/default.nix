@@ -9,6 +9,8 @@ libModule.mkEnableModule {
     nixpkgs.config.allowUnfree = true;
 
     programs.home-manager.enable = true;
+    news.display = "silent";
+
     "${namespace}" = {
       programs = {
         brightnessctl.enable = true;
