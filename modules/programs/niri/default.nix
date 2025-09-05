@@ -95,6 +95,7 @@ libModule.mkEnableModule {
             "Mod+Shift+Q".action.quit = [];
             "Mod+Shift+Slash".action.show-hotkey-overlay = [];
             "Mod+Escape".action.toggle-overview = [];
+            "Mod+C".action.close-window = [];
 
             # Spawning
             "Mod+Return" = {
@@ -105,6 +106,18 @@ libModule.mkEnableModule {
               action.spawn-sh = /* sh */ ''pkill rofi || rofi -show drun'';
               hotkey-overlay.title = "Open/close application launcher";
             };
+
+            # Monitor focus
+            "Mod+Y".action.focus-monitor-left = [];
+            "Mod+U".action.focus-monitor-down = [];
+            "Mod+I".action.focus-monitor-up = [];
+            "Mod+O".action.focus-monitor-right = [];
+
+            # Monitor move
+            "Mod+Shift+Y".action.move-window-to-monitor-left = [];
+            "Mod+Shift+U".action.move-window-to-monitor-down = [];
+            "Mod+Shift+I".action.move-window-to-monitor-up = [];
+            "Mod+Shift+O".action.move-window-to-monitor-right = [];
 
             # Workspace focus
             "Mod+Shift+WheelScrollDown".action.focus-workspace-down = [];
@@ -154,10 +167,16 @@ libModule.mkEnableModule {
             # Window resize
             "Mod+F".action.maximize-column = [];
             "Mod+Shift+F".action.fullscreen-window = [];
-            "Mod+N".action.switch-preset-column-width = [];
-            "Mod+Shift+N".action.expand-column-to-available-width = [];
+            "Mod+R".action.switch-preset-column-width = [];
+            "Mod+Shift+R".action.expand-column-to-available-width = [];
+            "Mod+Control+H".action.set-window-width = "-10%";
+            "Mod+Control+J".action.set-window-height = "+10%";
+            "Mod+Control+K".action.set-window-height = "-10%";
+            "Mod+Control+L".action.set-window-width = "+10%";
 
-            "Mod+C".action.close-window = [];
+            # Floating
+            "Mod+M".action.switch-focus-between-floating-and-tiling = [];
+            "Mod+Shift+M".action.toggle-window-floating = [];
         };
 
         gestures = {
