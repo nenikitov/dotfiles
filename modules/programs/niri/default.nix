@@ -100,25 +100,49 @@ libModule.mkEnableModule {
 
             # Spawning
             "Mod+Return" = {
-              action.spawn = "alacritty";
               hotkey-overlay.title = "Open Terminal";
+              action.spawn = "alacritty";
             };
             "Mod+Shift+Return" = {
-              action.spawn-sh = /* sh */ ''pkill rofi || rofi -show drun'';
               hotkey-overlay.title = "Open/close application launcher";
+              action.spawn-sh = /* sh */ ''pkill rofi || rofi -show drun'';
             };
 
             # Monitor focus
-            "Mod+Y".action.focus-monitor-left = [];
-            "Mod+U".action.focus-monitor-down = [];
-            "Mod+I".action.focus-monitor-up = [];
-            "Mod+O".action.focus-monitor-right = [];
+            "Mod+Y" = {
+              action.focus-monitor-left = [];
+              repeat = true;
+            };
+            "Mod+U" = {
+              action.focus-monitor-down = [];
+              repeat = true;
+            };
+            "Mod+I" = {
+              action.focus-monitor-up = [];
+              repeat = true;
+            };
+            "Mod+O" = {
+              action.focus-monitor-right = [];
+              repeat = true;
+            };
 
             # Monitor move
-            "Mod+Shift+Y".action.move-window-to-monitor-left = [];
-            "Mod+Shift+U".action.move-window-to-monitor-down = [];
-            "Mod+Shift+I".action.move-window-to-monitor-up = [];
-            "Mod+Shift+O".action.move-window-to-monitor-right = [];
+            "Mod+Shift+Y" = {
+              action.move-window-to-monitor-left = [];
+              repeat = true;
+            };
+            "Mod+Shift+U" = {
+              action.move-window-to-monitor-down = [];
+              repeat = true;
+            };
+            "Mod+Shift+I" = {
+              action.move-window-to-monitor-up = [];
+              repeat = true;
+            };
+            "Mod+Shift+O" = {
+              action.move-window-to-monitor-right = [];
+              repeat = true;
+            };
 
             # Workspace focus
             "Mod+Shift+WheelScrollDown".action.focus-workspace-down = [];
@@ -131,36 +155,62 @@ libModule.mkEnableModule {
             "Mod+Tab".action.focus-workspace-previous = [];
 
             # Workspace move
-            "Mod+Shift+1".action.move-window-to-workspace = [1 { focus = false; }];
-            "Mod+Shift+2".action.move-window-to-workspace = [2 { focus = false; }];
-            "Mod+Shift+3".action.move-window-to-workspace = [3 { focus = false; }];
-            "Mod+Shift+4".action.move-window-to-workspace = [4 { focus = false; }];
-            "Mod+Shift+5".action.move-window-to-workspace = [5 { focus = false; }];
+            "Mod+Shift+1" = {
+              action.move-window-to-workspace = [1 { focus = false; }];
+            };
+            "Mod+Shift+2" = {
+              action.move-window-to-workspace = [2 { focus = false; }];
+            };
+            "Mod+Shift+3" = {
+              action.move-window-to-workspace = [3 { focus = false; }];
+            };
+            "Mod+Shift+4" = {
+              action.move-window-to-workspace = [4 { focus = false; }];
+            };
+            "Mod+Shift+5" = {
+              action.move-window-to-workspace = [5 { focus = false; }];
+            };
 
             # Window focus
             "Mod+WheelScrollDown".action.focus-column-right = [];
             "Mod+WheelScrollUp".action.focus-column-left = [];
-            "Mod+H".action.focus-column-left = [];
-            "Mod+J".action.focus-window-down = [];
-            "Mod+K".action.focus-window-up = [];
-            "Mod+L".action.focus-column-right = [];
+            "Mod+H" = {
+              action.focus-column-left = [];
+              repeat = true;
+            };
+            "Mod+J" = {
+              action.focus-window-down = [];
+              repeat = true;
+            };
+            "Mod+K" = {
+              action.focus-window-up = [];
+              repeat = true;
+            };
+            "Mod+L" = {
+              action.focus-column-right = [];
+              repeat = true;
+            };
 
             # Window move
             "Mod+Shift+H" = {
-              action.spawn = ["${moveWindow}" "--command" "move-column-left" "--x" "-${moveFactor}"];
               hotkey-overlay.title = "Move Column / Floating Window Left";
+              action.spawn = ["${moveWindow}" "--command" "move-column-left" "--x" "-${moveFactor}"];
+              repeat = true;
             };
             "Mod+Shift+J" = {
-              action.spawn = ["${moveWindow}" "--command" "move-window-down" "--y" "+${moveFactor}"];
               hotkey-overlay.title = "Move Window Up";
+              action.spawn = ["${moveWindow}" "--command" "move-window-down" "--y" "+${moveFactor}"];
+              repeat = true;
             };
             "Mod+Shift+K" = {
-              action.spawn = ["${moveWindow}" "--command" "move-window-up" "--y" "-${moveFactor}"];
               hotkey-overlay.title = "Move Window Down";
+              action.spawn = ["${moveWindow}" "--command" "move-window-up" "--y" "-${moveFactor}"];
+              repeat = true;
             };
             "Mod+Shift+L" = {
-              action.spawn = ["${moveWindow}" "--command" "move-column-right" "--x" "+${moveFactor}"];
               hotkey-overlay.title = "Move Column / Floating Window Right";
+              action.spawn = ["${moveWindow}" "--command" "move-column-right" "--x" "+${moveFactor}"];
+              repeat = true;
             };
             "Mod+Shift+Comma".action.consume-or-expel-window-left = [];
             "Mod+Shift+Period".action.consume-or-expel-window-right = [];
@@ -170,14 +220,27 @@ libModule.mkEnableModule {
             "Mod+Shift+F".action.fullscreen-window = [];
             "Mod+R".action.switch-preset-column-width = [];
             "Mod+Shift+R".action.expand-column-to-available-width = [];
-            "Mod+Control+H".action.set-window-width = "-${resizeFactor}";
-            "Mod+Control+J".action.set-window-height = "+${resizeFactor}";
-            "Mod+Control+K".action.set-window-height = "-${resizeFactor}";
-            "Mod+Control+L".action.set-window-width = "+${resizeFactor}";
+            "Mod+Control+H" = {
+              action.set-window-width = "-${resizeFactor}";
+              repeat = true;
+            };
+            "Mod+Control+J" = {
+              action.set-window-height = "+${resizeFactor}";
+              repeat = true;
+            };
+            "Mod+Control+K" = {
+              action.set-window-height = "-${resizeFactor}";
+              repeat = true;
+            };
+            "Mod+Control+L" = {
+              action.set-window-width = "+${resizeFactor}";
+              repeat = true;
+            };
 
-            # Floating
+            # Floating/tabbing
             "Mod+M".action.switch-focus-between-floating-and-tiling = [];
             "Mod+Shift+M".action.toggle-window-floating = [];
+            "Mod+T".action.toggle-column-tabbed-display = [];
         };
 
         gestures = {
