@@ -88,7 +88,8 @@ libModule.mkEnableModule {
           let
             explicitRepeat = builtins.mapAttrs (_: bind: { repeat = false; } // bind);
             moveWindow = pkgs.writers.writePython3 "move-window" { doCheck = false; } (builtins.readFile ./move-window.py);
-            moveDistance = "50";
+            moveFactor = "50";
+            resizeFactor = "10%";
           in explicitRepeat {
             # System
             # TODO: "Mod+Q" to lock
@@ -146,19 +147,19 @@ libModule.mkEnableModule {
 
             # Window move
             "Mod+Shift+H" = {
-              action.spawn = ["${moveWindow}" "--command" "move-column-left" "--x" "-${moveDistance}"];
+              action.spawn = ["${moveWindow}" "--command" "move-column-left" "--x" "-${moveFactor}"];
               hotkey-overlay.title = "Move Column / Floating Window Left";
             };
             "Mod+Shift+J" = {
-              action.spawn = ["${moveWindow}" "--command" "move-window-down" "--y" "+${moveDistance}"];
+              action.spawn = ["${moveWindow}" "--command" "move-window-down" "--y" "+${moveFactor}"];
               hotkey-overlay.title = "Move Window Up";
             };
             "Mod+Shift+K" = {
-              action.spawn = ["${moveWindow}" "--command" "move-window-up" "--y" "-${moveDistance}"];
+              action.spawn = ["${moveWindow}" "--command" "move-window-up" "--y" "-${moveFactor}"];
               hotkey-overlay.title = "Move Window Down";
             };
             "Mod+Shift+L" = {
-              action.spawn = ["${moveWindow}" "--command" "move-column-right" "--x" "+${moveDistance}"];
+              action.spawn = ["${moveWindow}" "--command" "move-column-right" "--x" "+${moveFactor}"];
               hotkey-overlay.title = "Move Column / Floating Window Right";
             };
             "Mod+Shift+Comma".action.consume-or-expel-window-left = [];
@@ -169,10 +170,10 @@ libModule.mkEnableModule {
             "Mod+Shift+F".action.fullscreen-window = [];
             "Mod+R".action.switch-preset-column-width = [];
             "Mod+Shift+R".action.expand-column-to-available-width = [];
-            "Mod+Control+H".action.set-window-width = "-10%";
-            "Mod+Control+J".action.set-window-height = "+10%";
-            "Mod+Control+K".action.set-window-height = "-10%";
-            "Mod+Control+L".action.set-window-width = "+10%";
+            "Mod+Control+H".action.set-window-width = "-${resizeFactor}";
+            "Mod+Control+J".action.set-window-height = "+${resizeFactor}";
+            "Mod+Control+K".action.set-window-height = "-${resizeFactor}";
+            "Mod+Control+L".action.set-window-width = "+${resizeFactor}";
 
             # Floating
             "Mod+M".action.switch-focus-between-floating-and-tiling = [];
