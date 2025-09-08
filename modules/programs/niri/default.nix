@@ -10,7 +10,6 @@ libModule.mkEnableModule {
   config = {configGlobal, configNamespace, ...}: {
     # TODO: Handle this with a theme outside this config
     home.packages = with pkgs; [bibata-cursors xwayland-satellite];
-    #programs.niri.settings.cursor.theme = "Bibata-Modern-Classic";
 
     programs.niri = {
       enable = true;
@@ -26,6 +25,8 @@ libModule.mkEnableModule {
         in
           builtins.listToAttrs (lib.imap0 (i: value: { name = key i; inherit value; }) list);
       in {
+        cursor.theme = "Bibata-Modern-Classic";
+
         hotkey-overlay = {
           skip-at-startup = true;
           hide-not-bound = true;

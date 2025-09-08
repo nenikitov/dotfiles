@@ -5,8 +5,8 @@ let
 in libModule.mkModule {
   path = ["settings" "monitors"];
   options = lib.mkOption {
-    default = {};
     description = "List of all monitors and how they should be configured.";
+    default = [];
     type = types.listOf (types.submodule {
       options = {
         name = lib.mkOption {
