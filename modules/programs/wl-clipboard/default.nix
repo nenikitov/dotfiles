@@ -1,4 +1,8 @@
-{libModule, pkgs, ...}:
+{
+  libModule,
+  pkgs,
+  ...
+}:
 libModule.mkEnableModule {
   path = ["programs" "wl-clipboard"];
   description = "wl-clipboard clipboard utility";

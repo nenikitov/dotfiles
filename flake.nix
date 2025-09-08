@@ -37,10 +37,13 @@
     hostsDir = "${self}/hosts";
     hosts = lib.pipe hostsDir [
       builtins.readDir
-      (lib.concatMapAttrs (p: t:
-        if t == "directory" then { "${p}" = p; }
-        else if t == "regular" && lib.hasSuffix ".nix" p then { "${lib.removeSuffix ".nix" p}" = p; }
-        else {}
+      (lib.concatMapAttrs (
+        p: t:
+          if t == "directory"
+          then {"${p}" = p;}
+          else if t == "regular" && lib.hasSuffix ".nix" p
+          then {"${lib.removeSuffix ".nix" p}" = p;}
+          else {}
       ))
       (builtins.mapAttrs (h: p: let
         parsed = builtins.split "@" h;
@@ -51,7 +54,11 @@
       }))
     ];
 
-    mkHome = system: {module, userName, hostName}:
+    mkHome = system: {
+      module,
+      userName,
+      hostName,
+    }:
       libHomeManager.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [
@@ -67,8 +74,7 @@
     libFlake.eachSystem libFlake.allSystems (system: {
       packages.homeConfigurations = builtins.mapAttrs (_: mkHome system) hosts;
     })
-    //
-    {
+    // {
       homeManagerModules.default = libModule.optionallyConfigureModule ({namespace ? "_ne"}:
         libModule.overlayModule {
           overlayArgs = args:

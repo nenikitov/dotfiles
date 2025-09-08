@@ -1,8 +1,18 @@
-{userName, lib, libModule, pkgs, ...}:
+{
+  lib,
+  libModule,
+  pkgs,
+  userName,
+  ...
+}:
 libModule.mkEnableModule {
   path = ["profiles" "minimal"];
   description = "a bare-bones, minimal profile";
-  config = {configGlobal, namespace, ...}: {
+  config = {
+    configGlobal,
+    namespace,
+    ...
+  }: {
     home.username = userName;
     home.homeDirectory = "/home/${configGlobal.home.username}";
 

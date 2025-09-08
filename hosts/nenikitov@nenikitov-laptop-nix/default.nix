@@ -1,6 +1,9 @@
-{ pkgs, userName, customNamespace, ... }:
-
 {
+  customNamespace,
+  pkgs,
+  userName,
+  ...
+}: {
   # Do not change!
   # Corresponds to the first home-manager version
   home.stateVersion = "24.05";

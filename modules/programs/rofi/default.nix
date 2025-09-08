@@ -1,4 +1,8 @@
-{libModule, pkgs, ...}:
+{
+  libModule,
+  pkgs,
+  ...
+}:
 libModule.mkEnableModule {
   path = ["programs" "rofi"];
   description = "rofi application launcher";

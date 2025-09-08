@@ -1,7 +1,7 @@
 {
-    libModule,
-    options,
-    ...
+  libModule,
+  options,
+  ...
 }:
 libModule.mkEnableModule {
   path = ["programs" "alacritty"];

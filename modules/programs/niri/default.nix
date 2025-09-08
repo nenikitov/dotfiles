@@ -7,24 +7,51 @@
 libModule.mkEnableModule {
   path = ["programs" "niri"];
   description = "Niri Wayland compositor";
-  config = {configGlobal, configNamespace, ...}: {
+  config = {
+    configGlobal,
+    configNamespace,
+    ...
+  }: {
     # TODO: Handle this with a theme outside this config
     home.packages = with pkgs; [bibata-cursors xwayland-satellite];
+
+    # TODO: Maybe have this as a separate module?
+    # TODO: Spawn multiple when [this issue](https://github.com/LGFae/swww/issues/419) gets a release
+    services.swww.enable = true;
 
     programs.niri = {
       enable = true;
       package = pkgs.niri;
       settings = let
-        pad = { len, char ? " ", left ? true }: str: let
+        pad = {
+          len,
+          char ? " ",
+          left ? true,
+        }: str: let
           paddingLength = lib.max 0 (len - builtins.stringLength str);
           padding = lib.concatStrings (lib.genList (_: char) paddingLength);
-        in if left then "${padding}${str}" else "${str}${padding}";
-        listToIndexedAttrs = { padKeys ? false }: list: let
-          len = lib.pipe list [builtins.length builtins.toString builtins.stringLength];
-          key = i: if padKeys then pad { inherit len; char = "0"; } (builtins.toString i) else builtins.toString i;
         in
-          builtins.listToAttrs (lib.imap0 (i: value: { name = key i; inherit value; }) list);
+          if left
+          then "${padding}${str}"
+          else "${str}${padding}";
+        listToIndexedAttrs = {padKeys ? false}: list: let
+          len = lib.pipe list [builtins.length builtins.toString builtins.stringLength];
+          key = i:
+            if padKeys
+            then
+              pad {
+                inherit len;
+                char = "0";
+              } (builtins.toString i)
+            else builtins.toString i;
+        in
+          builtins.listToAttrs (lib.imap0 (i: value: {
+              name = key i;
+              inherit value;
+            })
+            list);
       in {
+        # TODO: Handle this with a theme outside this config
         cursor.theme = "Bibata-Modern-Classic";
 
         hotkey-overlay = {
@@ -48,17 +75,19 @@ libModule.mkEnableModule {
         prefer-no-csd = true;
 
         outputs = lib.pipe configNamespace.settings.monitors [
-          (builtins.map (o: (builtins.removeAttrs o ["primary"]) // { focus-at-startup = o.primary; }))
-          (listToIndexedAttrs { padKeys = true; })
+          (builtins.map (o: (builtins.removeAttrs o ["primary"]) // {focus-at-startup = o.primary;}))
+          (listToIndexedAttrs {padKeys = true;})
         ];
 
         layout = {
-          default-column-width = { proportion = 1.0 / 2.0; };
+          background-color = "transparent";
+
+          default-column-width = {proportion = 1.0 / 2.0;};
           preset-column-widths = [
-            { proportion = 1.0 / 3.0; }
-            { proportion = 1.0 / 2.0; }
-            { proportion = 2.0 / 3.0; }
-            { proportion = 1.0 / 1.0; }
+            {proportion = 1.0 / 3.0;}
+            {proportion = 1.0 / 2.0;}
+            {proportion = 2.0 / 3.0;}
+            {proportion = 1.0 / 1.0;}
           ];
 
           tab-indicator = {
@@ -96,7 +125,9 @@ libModule.mkEnableModule {
         window-rules = [
           {
             draw-border-with-background = true;
-            geometry-corner-radius = let r = 4.0; in {
+            geometry-corner-radius = let
+              r = 4.0;
+            in {
               bottom-left = r;
               bottom-right = r;
               top-left = r;
@@ -106,21 +137,28 @@ libModule.mkEnableModule {
           }
         ];
 
-        workspaces = listToIndexedAttrs { padKeys = true; } [
-          { name = "static-1"; }
-          { name = "static-2"; }
-          { name = "static-3"; }
-          { name = "static-4"; }
-          { name = "static-5"; }
+        layer-rules = [
+          {
+            matches = [{namespace = "swww-daemon";}];
+            place-within-backdrop = true;
+          }
         ];
 
-        binds =
-          let
-            explicitRepeat = builtins.mapAttrs (_: bind: { repeat = false; } // bind);
-            moveWindow = pkgs.writers.writePython3 "move-window" { doCheck = false; } (builtins.readFile ./move-window.py);
-            moveFactor = "50";
-            resizeFactor = "10%";
-          in explicitRepeat {
+        workspaces = listToIndexedAttrs {padKeys = true;} [
+          {name = "static-1";}
+          {name = "static-2";}
+          {name = "static-3";}
+          {name = "static-4";}
+          {name = "static-5";}
+        ];
+
+        binds = let
+          explicitRepeat = builtins.mapAttrs (_: bind: {repeat = false;} // bind);
+          moveWindow = pkgs.writers.writePython3 "move-window" {doCheck = false;} (builtins.readFile ./move-window.py);
+          moveFactor = "50";
+          resizeFactor = "10%";
+        in
+          explicitRepeat {
             # System
             # TODO: "Mod+Q" to lock
             "Mod+Shift+Q".action.quit = [];
@@ -135,7 +173,9 @@ libModule.mkEnableModule {
             };
             "Mod+Shift+Return" = {
               hotkey-overlay.title = "Open/close application launcher";
-              action.spawn-sh = /* sh */ ''pkill rofi || rofi -show drun'';
+              action.spawn-sh =
+                # sh
+                ''pkill rofi || rofi -show drun'';
             };
 
             # Monitor focus
@@ -186,19 +226,19 @@ libModule.mkEnableModule {
 
             # Workspace move
             "Mod+Shift+1" = {
-              action.move-window-to-workspace = [1 { focus = false; }];
+              action.move-window-to-workspace = [1 {focus = false;}];
             };
             "Mod+Shift+2" = {
-              action.move-window-to-workspace = [2 { focus = false; }];
+              action.move-window-to-workspace = [2 {focus = false;}];
             };
             "Mod+Shift+3" = {
-              action.move-window-to-workspace = [3 { focus = false; }];
+              action.move-window-to-workspace = [3 {focus = false;}];
             };
             "Mod+Shift+4" = {
-              action.move-window-to-workspace = [4 { focus = false; }];
+              action.move-window-to-workspace = [4 {focus = false;}];
             };
             "Mod+Shift+5" = {
-              action.move-window-to-workspace = [5 { focus = false; }];
+              action.move-window-to-workspace = [5 {focus = false;}];
             };
 
             # Window focus
@@ -271,7 +311,7 @@ libModule.mkEnableModule {
             "Mod+M".action.switch-focus-between-floating-and-tiling = [];
             "Mod+Shift+M".action.toggle-window-floating = [];
             "Mod+T".action.toggle-column-tabbed-display = [];
-        };
+          };
 
         gestures = {
           hot-corners.enable = false;
