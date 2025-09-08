@@ -9,6 +9,7 @@ libModule.mkEnableModule {
       programs = {
         alacritty.enable = true;
         cliphist.enable = true;
+        gammastep.enable = true;
         librewolf.enable = true;
         niri.enable = true;
         rofi.enable = true;
