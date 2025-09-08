@@ -7,9 +7,18 @@ in libModule.mkModule {
   options = lib.mkOption {
     default = {};
     description = "List of all monitors and how they should be configured.";
-    type = types.attrsOf (types.submodule {
+    type = types.listOf (types.submodule {
       options = {
+        name = lib.mkOption {
+          description = "Selector of the monitor.";
+          type = types.str;
+        };
         enable = lib.mkEnableOption "this monitor" // { default = true; };
+        primary = lib.mkOption {
+          description = "Whether this monitor should be primary.";
+          type = types.bool;
+          default = false;
+        };
         scale = lib.mkOption {
           description = "Scale of the output. `null` for automatic.";
           type = types.nullOr number;

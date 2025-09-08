@@ -1,4 +1,5 @@
 {
+  lib,
   libModule,
   pkgs,
   ...
@@ -9,12 +10,22 @@ libModule.mkEnableModule {
   config = {configGlobal, configNamespace, ...}: {
     # TODO: Handle this with a theme outside this config
     home.packages = with pkgs; [bibata-cursors xwayland-satellite];
-    programs.niri.settings.cursor.theme = "Bibata-Modern-Classic";
+    #programs.niri.settings.cursor.theme = "Bibata-Modern-Classic";
 
     programs.niri = {
       enable = true;
       package = pkgs.niri;
-      settings = {
+      settings = let
+        pad = { len, char ? " ", left ? true }: str: let
+          paddingLength = lib.max 0 (len - builtins.stringLength str);
+          padding = lib.concatStrings (lib.genList (_: char) paddingLength);
+        in if left then "${padding}${str}" else "${str}${padding}";
+        listToIndexedAttrs = { padKeys ? false }: list: let
+          len = lib.pipe list [builtins.length builtins.toString builtins.stringLength];
+          key = i: if padKeys then pad { inherit len; char = "0"; } (builtins.toString i) else builtins.toString i;
+        in
+          builtins.listToAttrs (lib.imap0 (i: value: { name = key i; inherit value; }) list);
+      in {
         hotkey-overlay = {
           skip-at-startup = true;
           hide-not-bound = true;
@@ -35,7 +46,10 @@ libModule.mkEnableModule {
 
         prefer-no-csd = true;
 
-        outputs = configNamespace.settings.monitors;
+        outputs = lib.pipe configNamespace.settings.monitors [
+          (builtins.map (o: (builtins.removeAttrs o ["primary"]) // { focus-at-startup = o.primary; }))
+          (listToIndexedAttrs { padKeys = true; })
+        ];
 
         layout = {
           gaps = 8;
@@ -76,13 +90,13 @@ libModule.mkEnableModule {
           }
         ];
 
-        workspaces = {
-          "1".name = "static-1";
-          "2".name = "static-2";
-          "3".name = "static-3";
-          "4".name = "static-4";
-          "5".name = "static-5";
-        };
+        workspaces = listToIndexedAttrs { padKeys = true; } [
+          { name = "static-1"; }
+          { name = "static-2"; }
+          { name = "static-3"; }
+          { name = "static-4"; }
+          { name = "static-5"; }
+        ];
 
         binds =
           let
