@@ -53,8 +53,22 @@ libModule.mkEnableModule {
         ];
 
         layout = {
-          gaps = 8;
           default-column-width = { proportion = 1.0 / 2.0; };
+          preset-column-widths = [
+            { proportion = 1.0 / 3.0; }
+            { proportion = 1.0 / 2.0; }
+            { proportion = 2.0 / 3.0; }
+            { proportion = 1.0 / 1.0; }
+          ];
+
+          tab-indicator = {
+            position = "top";
+            place-within-column = true;
+            gaps-between-tabs = 8;
+          };
+
+          gaps = 8;
+
           border = {
             enable = true;
             width = 2;
@@ -68,6 +82,7 @@ libModule.mkEnableModule {
             };
           };
           focus-ring.enable = false;
+
           shadow = {
             enable = true;
             softness = 10;
