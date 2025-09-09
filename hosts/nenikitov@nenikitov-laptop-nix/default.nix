@@ -13,7 +13,6 @@
   };
 
   home.packages = with pkgs; [
-    discord
     fastfetch
     neovim
     ripgrep
