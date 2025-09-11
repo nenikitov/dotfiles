@@ -9,7 +9,7 @@
   # Corresponds to the first home-manager version
   home.stateVersion = "25.05";
 
-  "${customNamespace}" = {
+  ${customNamespace} = {
     profiles.graphical.enable = true;
 
     settings.monitors = [

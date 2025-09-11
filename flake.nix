@@ -9,8 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flakeUtils.url = "github:numtide/flake-utils";
-
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,6 +16,11 @@
 
     moduleUtils = {
       url = "github:nenikitov/nix-module-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    generationTrimmer = {
+      url = "github:nenikitov/nix-generation-trimmer";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -30,7 +33,8 @@
     lib = nixpkgs.lib;
     libModule = inputs.moduleUtils.lib;
     libHomeManager = inputs.homeManager.lib;
-    libFlake = inputs.flakeUtils.lib;
+
+    forAllSystems = lib.genAttrs lib.systems.flakeExposed;
 
     customNamespace = "_ne";
 
@@ -40,9 +44,9 @@
       (lib.concatMapAttrs (
         p: t:
           if t == "directory"
-          then {"${p}" = p;}
+          then {${p} = p;}
           else if t == "regular" && lib.hasSuffix ".nix" p
-          then {"${lib.removeSuffix ".nix" p}" = p;}
+          then {${lib.removeSuffix ".nix" p} = p;}
           else {}
       ))
       (builtins.mapAttrs (h: p: let
@@ -60,7 +64,10 @@
       hostName,
     }:
       libHomeManager.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [inputs.generationTrimmer.overlays.default];
+        };
         modules = [
           inputs.niri.homeModules.niri
           (self.homeManagerModules.default {namespace = customNamespace;})
@@ -70,21 +77,18 @@
           inherit inputs userName hostName customNamespace;
         };
       };
-  in
-    libFlake.eachSystem libFlake.allSystems (system: {
-      packages.homeConfigurations = builtins.mapAttrs (_: mkHome system) hosts;
-    })
-    // {
-      homeManagerModules.default = libModule.optionallyConfigureModule ({namespace ? "_ne"}:
-        libModule.overlayModule {
-          overlayArgs = args:
-            args
-            // {
-              libModule = libModule.libModule {
-                inherit namespace args;
-              };
+  in {
+    packages = forAllSystems (system: {homeConfigurations = builtins.mapAttrs (_: mkHome system) hosts;});
+    homeManagerModules.default = libModule.optionallyConfigureModule ({namespace ? "_ne"}:
+      libModule.overlayModule {
+        overlayArgs = args:
+          args
+          // {
+            libModule = libModule.libModule {
+              inherit namespace args;
             };
-        }
-        ./modules);
-    };
+          };
+      }
+      ./modules);
+  };
 }

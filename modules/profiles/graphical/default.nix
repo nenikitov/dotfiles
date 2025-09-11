@@ -3,7 +3,7 @@ libModule.mkEnableModule {
   path = ["profiles" "graphical"];
   description = "a graphical profile. Enables `minimal` too";
   config = {namespace, ...}: {
-    "${namespace}" = {
+    ${namespace} = {
       profiles.minimal.enable = true;
 
       programs = {

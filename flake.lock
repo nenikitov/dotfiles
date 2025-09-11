@@ -1,20 +1,22 @@
 {
   "nodes": {
-    "flakeUtils": {
+    "generationTrimmer": {
       "inputs": {
-        "systems": "systems"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "lastModified": 1757516675,
+        "narHash": "sha256-5rAHoR+wyFjgL9Heq6Dv4zQ708s/t1gnF7TATfCkvyU=",
+        "owner": "nenikitov",
+        "repo": "nix-generation-trimmer",
+        "rev": "bad097f7e8edd71a0ff02b3cfe62ce348a879af8",
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
+        "owner": "nenikitov",
+        "repo": "nix-generation-trimmer",
         "type": "github"
       }
     },
@@ -150,26 +152,11 @@
     },
     "root": {
       "inputs": {
-        "flakeUtils": "flakeUtils",
+        "generationTrimmer": "generationTrimmer",
         "homeManager": "homeManager",
         "moduleUtils": "moduleUtils",
         "niri": "niri",
         "nixpkgs": "nixpkgs"
-      }
-    },
-    "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
       }
     },
     "xwayland-satellite-stable": {

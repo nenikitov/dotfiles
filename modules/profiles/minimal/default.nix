@@ -26,6 +26,9 @@ libModule.mkEnableModule {
         brightnessctl.enable = true;
         git.enable = true;
       };
+      settings = {
+        garbageCollection.enable = true;
+      };
     };
   };
 }
