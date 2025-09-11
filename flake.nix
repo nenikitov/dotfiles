@@ -64,13 +64,18 @@
       hostName,
     }:
       libHomeManager.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [inputs.generationTrimmer.overlays.default];
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
         modules = [
+          # Overlays
+          {
+            nixpkgs.overlays = [
+              inputs.generationTrimmer.overlays.default
+            ];
+          }
+          # Modules
           inputs.niri.homeModules.niri
           (self.homeManagerModules.default {namespace = customNamespace;})
+          # Config
           module
         ];
         extraSpecialArgs = {
