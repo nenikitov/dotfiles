@@ -66,15 +66,10 @@
       libHomeManager.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [
-          # Overlays
-          {
-            nixpkgs.overlays = [
-              inputs.generationTrimmer.overlays.default
-            ];
-          }
           # Modules
           inputs.niri.homeModules.niri
-          (self.homeManagerModules.default {namespace = customNamespace;})
+          inputs.generationTrimmer.homeModules.default
+          (self.homeModules.default {namespace = customNamespace;})
           # Config
           module
         ];
@@ -84,7 +79,7 @@
       };
   in {
     packages = forAllSystems (system: {homeConfigurations = builtins.mapAttrs (_: mkHome system) hosts;});
-    homeManagerModules.default = libModule.optionallyConfigureModule ({namespace ? "_ne"}:
+    homeModules.default = libModule.optionallyConfigureModule ({namespace ? "_ne"}:
       libModule.overlayModule {
         overlayArgs = args:
           args

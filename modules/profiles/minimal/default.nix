@@ -13,8 +13,11 @@ libModule.mkEnableModule {
     namespace,
     ...
   }: {
-    home.username = userName;
-    home.homeDirectory = "/home/${configGlobal.home.username}";
+    home = {
+      username = userName;
+      homeDirectory = "/home/${configGlobal.home.username}";
+      packages = with pkgs; [btop];
+    };
 
     nixpkgs.config.allowUnfree = true;
 

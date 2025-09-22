@@ -23,8 +23,9 @@
       defaultEditor = true;
       extraPackages = with pkgs; [
         gcc
+        libcxx
         python314
-        nodejs_22
+        nodejs_24
         luajitPackages.luarocks-nix
         gnumake
         alejandra
