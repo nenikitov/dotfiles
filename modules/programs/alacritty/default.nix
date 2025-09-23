@@ -1,8 +1,4 @@
-{
-  libModule,
-  options,
-  ...
-}:
+{libModule, ...}:
 libModule.mkEnableModule {
   path = ["programs" "alacritty"];
   description = "Alacritty terminal emulator";

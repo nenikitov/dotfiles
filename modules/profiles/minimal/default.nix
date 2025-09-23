@@ -1,7 +1,5 @@
 {
-  lib,
   libModule,
-  pkgs,
   userName,
   ...
 }:
@@ -16,7 +14,6 @@ libModule.mkEnableModule {
     home = {
       username = userName;
       homeDirectory = "/home/${configGlobal.home.username}";
-      packages = with pkgs; [btop];
     };
 
     nixpkgs.config.allowUnfree = true;
@@ -28,6 +25,7 @@ libModule.mkEnableModule {
       programs = {
         brightnessctl.enable = true;
         git.enable = true;
+        btop.enable = true;
       };
       settings = {
         garbageCollection.enable = true;
