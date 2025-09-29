@@ -24,8 +24,9 @@ libModule.mkEnableModule {
     "${namespace}" = {
       programs = {
         brightnessctl.enable = true;
-        git.enable = true;
         btop.enable = true;
+        git.enable = true;
+        neovim.enable = true;
       };
       settings = {
         garbageCollection.enable = true;

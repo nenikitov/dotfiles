@@ -1,4 +1,5 @@
 {
+  config,
   customNamespace,
   pkgs,
   userName,
@@ -10,6 +11,7 @@
 
   ${customNamespace} = {
     profiles.graphical.enable = true;
+    settings.dotfiles_path = "${config.xdg.configHome}/home-manager-new";
   };
 
   home.packages = with pkgs; [
