@@ -1,80 +1,62 @@
-local icon = require('util.icon')
-local langauge = require('util.language')
+local shared_plugin = require("util.shared_plugin")
 
-langauge.handler('tools', function (opts)
+shared_plugin.set_name("tool_installer", "mason-tool-installer.nvim")
+shared_plugin.set_template("tools", function(spec)
     return {
-        'mason-tool-installer.nvim',
-        opts = {
-            ensure_installed = opts
-        }
+        shared_plugin.name("tool_installer"),
+        opts = { ensure_installed = spec },
     }
 end)
 
 return {
     {
-        'williamboman/mason.nvim',
-        opts = {
-            -- Prioritize system-installed packages
-            PATH = 'append',
-            ui = {
-                border = vim.o.winborder,
-                backdrop = 100,
-                width = 0.8,
-                height = 0.8,
-                icons = {
-                    package_installed = icon.plugin_state.loaded,
-                    package_pending = icon.plugin_state.start,
-                    package_uninstalled = icon.plugin_state.not_loaded,
-                },
-                keymaps = {
-                    toggle_package_expand = 'l',
-                    toggle_package_install_log = 'l',
-                    uninstall_package = 'd',
-                    apply_language_filter = 'f',
-                    toggle_help = '?',
-                }
-            },
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        dependencies = {
+            "mason.nvim",
+            "mason-org/mason-lspconfig.nvim",
         },
-        cmd = {'Mason', 'MasonInstall', 'MasonUpdate'},
-        keys = {
-            -- Prefix
-            { '<LEADER>p', '<NOP>', desc = 'plugin' },
-            -- Maps
-            { '<LEADER>pt', '<CMD>Mason<CR>', desc = 'Tool (LSP, linter, formatter) manager' },
+        opts = {
+            -- Extended by specs in `language`
+            ensure_installed = {},
+        },
+        opts_extend = { "ensure_installed" },
+        config = function(spec, opts)
+            require("mason-tool-installer").setup(opts)
+
+            -- HACK: to `run_on_start`, the plugin sets up an auto command on `VimEnter`
+            -- Which won't work if plugin is lazy loaded
+            -- [Issue](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim/issues/39)
+            if spec.lazy and opts.run_on_start ~= false then
+                require("mason-tool-installer").run_on_start()
+            end
+        end,
+        event = "VeryLazy",
+    },
+    {
+        "mason-org/mason.nvim",
+        opts = {
+            PATH = "append",
+            backdrop = 100,
+            width = 0.8,
+            height = 0.8,
         },
         config = function(_, opts)
-            require('mason').setup(opts)
+            require("mason").setup(opts)
 
-            -- Possibly load newly installed packages
-            require('mason-registry'):on('package:install:success', function ()
-                vim.defer_fn(function ()
-                    require('lazy.core.handler.event').trigger({
-                        event = 'FileType',
+            -- NOTE: `LazyVim` does this to possibly load newly installed packages after install
+            require("mason-registry"):on("package:install:success", function()
+                vim.defer_fn(function()
+                    require("lazy.core.handler.event").trigger({
+                        event = "FileType",
                         buf = vim.api.nvim_get_current_buf(),
                     })
                 end, 100)
             end)
-        end
-    },
-    {
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        dependencies = {
-            'mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-        },
-        opts = {
-            -- Is extended by specs in `language`
-            ensure_installed = {}
-        },
-        config = function(spec, opts)
-            require('mason-tool-installer').setup(opts)
-            -- HACK: to `run_on_start`, the plugin sets up an auto command on `VimEnter`
-            -- That won't work if we are lazy loading it
-            if spec.lazy and opts.run_on_start ~= false then
-                require('mason-tool-installer').run_on_start()
-            end
         end,
-        opts_extend = { 'ensure_installed' },
-        event = 'VeryLazy',
+        keys = {
+            { "<LEADER>p", "<NOP>", desc = "plugin" },
+            { "<LEADER>pt", "<CMD>Mason<CR>", desc = "Tool (LSP, linter, formatter) manager" },
+        },
+        cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     },
 }

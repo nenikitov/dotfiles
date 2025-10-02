@@ -20,8 +20,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd({ "FocusGained", "BufWinEnter", "TermClose", "TermLeave" }, {
     group = augroup("file update"),
     callback = function()
-        if vim.o.buftype ~= "nofile" then
-            vim.cmd([[checktime]])
+        if vim.opt.buftype:get() ~= "nofile" then
+            vim.cmd("checktime")
         end
     end,
     desc = "Check if a buffer was updated outside neovim and needs to be reloaded",

@@ -1,6 +1,6 @@
 local map = require('util.map')
-local icon = require('util.icon')
 
+-- Clone
 local path_lazy = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(path_lazy) then
@@ -23,27 +23,30 @@ if not vim.uv.fs_stat(path_lazy) then
     end
 end
 
+-- Initialise
 vim.opt.rtp:prepend(path_lazy)
 
 -- Event to signal that a file on disk was loaded
 local Event = require('lazy.core.handler.event')
-Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'FileType' } }
+Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPre', 'BufNewFile', 'BufWritePre', 'FileType' } }
 
+-- Setup
 require('lazy').setup({
     spec = {
         { import = "plugin.core" },
-        { import = "plugin.editor" },
         { import = "plugin.language" },
-        { import = "plugin.misc" },
-        { import = "plugin.ui" },
+        --{ import = "plugin.editor" },
+        --{ import = "plugin.language" },
+        --{ import = "plugin.misc" },
+        --{ import = "plugin.ui" },
     },
     defaults = { lazy = true },
     install = { colorscheme = vim.g.colorschemes },
     ui = {
-        border = vim.o.winborder,
+        border = vim.opt.winborder:get(),
         backdrop = 100,
-        title = 'lazy.nvim ' .. icon.plugin_state.lazy,
-        icons = vim.tbl_extend('force', icon.plugin_state, { list = { '-' } })
+        --title = 'lazy.nvim ' .. icon.plugin_state.lazy,
+        --icons = vim.tbl_extend('force', icon.plugin_state, { list = { '-' } })
     },
     change_detection = { notify = false }
 })

@@ -1,9 +1,8 @@
-local language = require('util.language')
+local shared_plugin = require("util.shared_plugin")
 
-return language.language({
-    tools = { 'lua_ls' },
-    parsers = { 'lua', 'luadoc', 'luap' },
-    servers = {
+return {
+    shared_plugin.template("tools", { "lua_ls" }),
+    shared_plugin.template("servers", {
         lua_ls = {
             settings = {
                 Lua = {
@@ -16,39 +15,10 @@ return language.language({
                         arrayIndex = "Auto",
                     },
                     codeLens = { enable = true },
-                    doc = { privateName = { '^_' } },
-                    completion = {
-                        callSnippet = 'Replace',
-                    }
-                }
-            }
-        }
-    },
-    plugins = {
-        {
-            'folke/lazydev.nvim',
-            ft = 'lua',
-            opts = {
-                library = {
-                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                    doc = { privateName = { "^_" } },
+                    completion = { callSnippet = "Replace" },
                 },
             },
         },
-        -- TODO: maybe separate this into a language defintion so it doesn't have to be this specific?
-        {
-            'blink.cmp',
-            opts = {
-                sources = {
-                    default = { 'lazydev' },
-                    providers = {
-                        lazydev = {
-                            name = '[lzy]',
-                            module = 'lazydev.integrations.blink',
-                            score_offset = 100,
-                        }
-                    }
-                }
-            }
-        }
-    }
-})
+    }),
+}
