@@ -34,10 +34,8 @@ Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPre", "BufNewFile
 require("lazy").setup({
     spec = {
         { import = "plugin.core" },
+        { import = "plugin.editor" },
         { import = "plugin.language" },
-        --{ import = "plugin.editor" },
-        --{ import = "plugin.language" },
-        --{ import = "plugin.misc" },
         { import = "plugin.ui" },
     },
     defaults = { lazy = true },

@@ -1,9 +1,8 @@
 local shared_plugin = require("util.shared_plugin")
 
-shared_plugin.set_name("tool_installer", "mason-tool-installer.nvim")
 shared_plugin.set_template("tools", function(spec)
     return {
-        shared_plugin.name("tool_installer"),
+        "mason-tool-installer.nvim",
         opts = { ensure_installed = spec },
     }
 end)

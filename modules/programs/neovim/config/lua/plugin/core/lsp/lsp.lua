@@ -1,19 +1,15 @@
--- HACK: Make sure `tool_installer` is defined
-require("plugin.core.lsp.mason")
-
 local shared_plugin = require("util.shared_plugin")
 
-shared_plugin.set_name("lsp", "nvim-lspconfig")
 shared_plugin.set_template("servers", function(spec)
     return {
-        shared_plugin.name("lsp"),
+        "nvim-lspconfig",
         opts = { servers = spec },
     }
 end)
 
 return {
     "neovim/nvim-lspconfig",
-    dependencies = { shared_plugin.name("tool_installer") },
+    dependencies = { "mason-tool-installer.nvim" },
     opts = {
         -- Extended by specs in `language`
         servers = {},
@@ -36,6 +32,7 @@ return {
             ::continue::
         end
     end,
+    -- TODO: Set up LSP keybinds
     keys = {},
     event = "LazyFile",
 }

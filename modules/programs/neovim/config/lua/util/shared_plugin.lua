@@ -2,31 +2,6 @@
 
 local M = {}
 
----@alias shared_plugin.Name.ToolInstaller 'tool_installer'
----@alias shared_plugin.Name.Lsp 'lsp'
-
----@alias shared_plugin.Name
----| shared_plugin.Name.ToolInstaller
----| shared_plugin.Name.Lsp
-
----@type table<shared_plugin.Name, string>
-local plugin_names = {}
-
----@param kind shared_plugin.Name
----@return string
-function M.name(kind)
-    if not plugin_names[kind] then
-        error("Unregistered plugin name " .. kind)
-    end
-    return plugin_names[kind]
-end
-
----@param kind shared_plugin.Name
----@param name string
-function M.set_name(kind, name)
-    plugin_names[kind] = name
-end
-
 ---@alias shared_plugin.Template.Tools 'tools'
 ---@alias shared_plugin.Template.Servers 'servers'
 
