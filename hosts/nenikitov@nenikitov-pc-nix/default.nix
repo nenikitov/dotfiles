@@ -1,8 +1,6 @@
 {
-  config,
   customNamespace,
   pkgs,
-  userName,
   ...
 }: {
   # Do not change!

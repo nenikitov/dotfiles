@@ -1,4 +1,4 @@
-local icon = require('util.icon')
+local icon = require("util.icon")
 
 --#region Recovery
 
@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd("FileType", {
     desc = "Update format options to not auto insert comments on `o` and `O`",
 })
 -- Modes in which cursor is allowed to move past text boundaries
-vim.opt.virtualedit = 'block'
+vim.opt.virtualedit = "block"
 
 --#endregion
 
@@ -142,6 +142,6 @@ vim.opt.smartcase = true
 --#region Other
 
 -- Reduce messges
-vim.opt.shortmess:append('W')
+vim.opt.shortmess:append("W")
 
 --#endregion

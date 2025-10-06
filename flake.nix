@@ -14,6 +14,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    treefmt = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     moduleUtils = {
       url = "github:nenikitov/nix-module-utils";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +38,7 @@
     lib = nixpkgs.lib;
     libModule = inputs.moduleUtils.lib;
     libHomeManager = inputs.homeManager.lib;
+    libTreefmt = inputs.treefmt.lib;
 
     forAllSystems = lib.genAttrs lib.systems.flakeExposed;
 
@@ -77,7 +83,11 @@
           inherit inputs userName hostName customNamespace;
         };
       };
+
+    mkTreefmt = system: (libTreefmt.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix);
   in {
+    # NOTE: Even though it's packages, it's outputting homeConfigurations
+    # Here is a [relevant issue](https://github.com/nix-community/home-manager/issues/3075#issuecomment-2646631773)
     packages = forAllSystems (system: {homeConfigurations = builtins.mapAttrs (_: mkHome system) hosts;});
     homeModules.default = libModule.optionallyConfigureModule ({namespace ? "_ne"}:
       libModule.overlayModule {
@@ -90,5 +100,10 @@
           };
       }
       ./modules);
+
+    formatter = forAllSystems (system: (mkTreefmt system).config.build.wrapper);
+    checks = forAllSystems (system: {
+      format = (mkTreefmt system).config.build.check self;
+    });
   };
 }

@@ -1,5 +1,5 @@
 -- HACK: Make sure `tool_installer` is defined
-require('plugin.core.lsp.mason')
+require("plugin.core.lsp.mason")
 
 local shared_plugin = require("util.shared_plugin")
 

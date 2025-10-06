@@ -1,4 +1,4 @@
-local map = require('util.map')
+local map = require("util.map")
 
 -- Clone
 local path_lazy = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -10,7 +10,7 @@ if not vim.uv.fs_stat(path_lazy) then
         "--filter=blob:none",
         "--branch=stable",
         "https://github.com/folke/lazy.nvim.git",
-        path_lazy
+        path_lazy,
     })
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
@@ -27,18 +27,18 @@ end
 vim.opt.rtp:prepend(path_lazy)
 
 -- Event to signal that a file on disk was loaded
-local Event = require('lazy.core.handler.event')
-Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPre', 'BufNewFile', 'BufWritePre', 'FileType' } }
+local Event = require("lazy.core.handler.event")
+Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPre", "BufNewFile", "BufWritePre", "FileType" } }
 
 -- Setup
-require('lazy').setup({
+require("lazy").setup({
     spec = {
         { import = "plugin.core" },
         { import = "plugin.language" },
         --{ import = "plugin.editor" },
         --{ import = "plugin.language" },
         --{ import = "plugin.misc" },
-        --{ import = "plugin.ui" },
+        { import = "plugin.ui" },
     },
     defaults = { lazy = true },
     install = { colorscheme = vim.g.colorschemes },
@@ -48,11 +48,11 @@ require('lazy').setup({
         --title = 'lazy.nvim ' .. icon.plugin_state.lazy,
         --icons = vim.tbl_extend('force', icon.plugin_state, { list = { '-' } })
     },
-    change_detection = { notify = false }
+    change_detection = { notify = false },
 })
 
 -- Prefix
-map('n', '<LEADER>p', '<NOP>', 'plugin')
+map.map("n", "<LEADER>p", "<NOP>", "plugin")
 -- Maps
-map('n', '<LEADER>pp', '<CMD>Lazy<CR>', 'Plugin manager')
-map('n', '<LEADER>pP', function() Snacks.picker.lazy() end, 'Plugins')
+map.map("n", "<LEADER>pp", "<CMD>Lazy<CR>", "Plugin manager")
+--map.map("n", "<LEADER>pP", Snacks.picker.lazy, "Plugins")

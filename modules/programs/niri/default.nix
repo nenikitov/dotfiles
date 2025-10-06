@@ -7,11 +7,7 @@
 libModule.mkEnableModule {
   path = ["programs" "niri"];
   description = "Niri Wayland compositor";
-  config = {
-    configGlobal,
-    configNamespace,
-    ...
-  }: {
+  config = {configNamespace, ...}: {
     # TODO: Handle this with a theme outside this config
     home.packages = with pkgs; [bibata-cursors xwayland-satellite];
 

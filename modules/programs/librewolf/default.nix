@@ -1,10 +1,4 @@
-{
-  lib,
-  libModule,
-  options,
-  pkgs,
-  ...
-}:
+{libModule, ...}:
 # {
 #   imports = [ ./search-engines.nix ];
 # }
@@ -12,7 +6,7 @@
 libModule.mkEnableModule {
   path = ["programs" "librewolf"];
   description = "Librewolf (Firefox fork) web-browser";
-  config = {configModule, ...}: {
+  config = {
     programs.firefox.enable = true;
 
     programs.librewolf = {

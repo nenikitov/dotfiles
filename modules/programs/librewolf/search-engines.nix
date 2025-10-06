@@ -1,7 +1,6 @@
 {
   lib,
   libModule,
-  pkgs,
   ...
 }:
 libModule.mkEnableSubmodule {

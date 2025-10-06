@@ -17,8 +17,18 @@ return {
                     codeLens = { enable = true },
                     doc = { privateName = { "^_" } },
                     completion = { callSnippet = "Replace" },
+                    type = { checkTableShape = true },
                 },
             },
         },
     }),
+    {
+        "folke/lazydev.nvim",
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+        ft = "lua",
+    },
 }

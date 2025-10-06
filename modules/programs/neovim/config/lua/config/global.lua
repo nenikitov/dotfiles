@@ -1,3 +1,5 @@
-vim.g.icon_charset = 'tty'
+---@type icon.IconKind
+vim.g.icon_charset = "tty"
 
-vim.g.colorschemes = { 'tokyonight', 'onedark_dark', 'slate' }
+---@type string[]
+vim.g.colorschemes = { "tokyonight", "onedark_dark", "slate" }

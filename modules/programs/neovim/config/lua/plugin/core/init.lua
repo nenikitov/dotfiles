@@ -1,3 +1,3 @@
 return {
-    { import = 'plugin.core.lsp' },
+    { import = "plugin.core.lsp" },
 }

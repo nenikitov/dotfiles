@@ -43,8 +43,8 @@ end
 ---@type table<shared_plugin.Template, fun(spec: shared_plugin.TemplateArgs): LazySpec>
 local templates = {}
 
----@overload fun(kind: shared_plugin.Template.Tools, spec: shared_plugin.TemplateArgs.Tools)
----@overload fun(kind: shared_plugin.Template.Servers, spec: shared_plugin.TemplateArgs.Servers)
+---@overload fun(kind: shared_plugin.Template.Tools, spec: shared_plugin.TemplateArgs.Tools): LazySpec
+---@overload fun(kind: shared_plugin.Template.Servers, spec: shared_plugin.TemplateArgs.Servers): LazySpec
 function M.template(kind, spec)
     if not templates[kind] then
         error("Unregistered template " .. kind)

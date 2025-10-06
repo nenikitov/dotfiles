@@ -1,4 +1,8 @@
-{pkgs, libModule, ...}:
+{
+  pkgs,
+  libModule,
+  ...
+}:
 libModule.mkEnableModule {
   path = ["profiles" "graphical"];
   description = "a graphical profile. Enables `minimal` too";

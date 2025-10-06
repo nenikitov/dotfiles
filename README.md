@@ -7,15 +7,15 @@ This config is designed to be used with a standalone home-manager installation.
 ## Installation
 
 1. Install standalone home-manager following these [instructions](https://nix-community.github.io/home-manager/index.xhtml#sec-flakes-standalone)
-2. Clone the repository (normally into `.config/home-manager`, but you can do it anywhere)
-    ```sh
-    git clone https://github.com/nenikitov/dotfiles ${XDG_CONFIG_HOME:-~/.config/home-manager}
-    ```
-3. Build home configuration
-    ```sh
-    home-manager switch
-    home-manager switch --flake /path/to/cloned/dotfiles # If isn't in `.config/home-manager`
-    ```
+1. Clone the repository (normally into `.config/home-manager`, but you can do it anywhere)
+   ```sh
+   git clone https://github.com/nenikitov/dotfiles ${XDG_CONFIG_HOME:-~/.config/home-manager}
+   ```
+1. Build home configuration
+   ```sh
+   home-manager switch
+   home-manager switch --flake /path/to/cloned/dotfiles # If isn't in `.config/home-manager`
+   ```
 
 ## Templates
 
