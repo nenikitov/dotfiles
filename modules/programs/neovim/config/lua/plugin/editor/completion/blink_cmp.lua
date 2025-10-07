@@ -7,13 +7,13 @@ return {
             preset = "none",
             ["<C-y>"] = {
                 function(cmp)
-                    cmp.scroll_documentation_up(1)
+                    return cmp.scroll_documentation_up(1)
                 end,
                 "fallback",
             },
             ["<C-e>"] = {
                 function(cmp)
-                    cmp.scroll_documentation_down(1)
+                    return cmp.scroll_documentation_down(1)
                 end,
                 "fallback",
             },

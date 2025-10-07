@@ -53,7 +53,12 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile", "BufWinEnter" }, {
             row = rows
         end
 
-        local cols = #vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
+        local buf_lines = vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
+        if not buf_lines then
+            return
+        end
+
+        local cols = #buf_lines
         if col > cols then
             col = cols
         end
