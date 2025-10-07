@@ -51,11 +51,7 @@ libModule.mkEnableModule {
 All hosts must be defined in `hosts/<HOSTNAME>/default.nix` and have a corresponding `host/<HOSTNAME>/hardware.nix` file.
 
 ```nix
-{
-  customNamespace,
-  pkgs,
-  ...
-}: {
+{customNamespace, ...}: {
   imports = [
     ./hardware.nix
   ];
@@ -69,7 +65,7 @@ All hosts must be defined in `hosts/<HOSTNAME>/default.nix` and have a correspon
 
   ### Select the best profile to use for the machine
   ### Can use multiple profiles
-  "${customNamespace}" = {
+  ${customNamespace} = {
     profiles.desktop.enable = true;
   };
 

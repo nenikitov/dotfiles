@@ -41,7 +41,6 @@
 
   home.packages = with pkgs; [
     fastfetch
-    neovim
     ripgrep
   ];
 }
