@@ -1,4 +1,5 @@
 local shared_plugin = require("util.shared_plugin")
+local icon = require("util.icon")
 
 shared_plugin.set_template("tools", function(spec)
     return {
@@ -38,6 +39,26 @@ return {
             backdrop = 100,
             width = 0.8,
             height = 0.8,
+            ui = {
+                icons = {
+                    package_installed = icon.plugin.loaded,
+                    package_pending = icon.plugin.task,
+                    package_uninstalled = icon.plugin.not_loaded,
+                },
+                keymaps = {
+                    toggle_help = "?",
+                    toggle_package_expand = "<CR>",
+                    oggle_package_install_log = "<CR>",
+                    install_package = "i",
+                    check_package_version = "c",
+                    check_outdated_packages = "C",
+                    update_package = "u",
+                    update_all_packages = "U",
+                    uninstall_package = "d",
+                    cancel_installation = "<C-c>",
+                    apply_language_filter = "f",
+                },
+            },
         },
         config = function(_, opts)
             require("mason").setup(opts)
@@ -54,7 +75,7 @@ return {
         end,
         keys = {
             { "<LEADER>p", "<NOP>", desc = "plugin" },
-            { "<LEADER>pt", "<CMD>Mason<CR>", desc = "Tool (LSP, linter, formatter) manager" },
+            { "<LEADER>pt", "<CMD>Mason<CR>", desc = "Open tool manager (mason)" },
         },
         cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     },

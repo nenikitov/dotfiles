@@ -1,5 +1,5 @@
 local map = require("util.map")
-local icon = require('util.icon')
+local icon = require("util.icon")
 
 -- Clone
 local path_lazy = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -42,10 +42,10 @@ require("lazy").setup({
     defaults = { lazy = true },
     install = { colorscheme = vim.g.colorschemes },
     ui = {
-        title = ' lazy.nvim ' .. icon.plugin.lazy .. ' ',
+        title = " lazy.nvim " .. icon.plugin.lazy .. " ",
         border = vim.opt.winborder:get(),
         backdrop = 100,
-        icons = vim.tbl_extend('force', icon.plugin, { list = { '-' } })
+        icons = vim.tbl_extend("force", icon.plugin, { list = { "-" } }),
     },
     change_detection = { notify = false },
 })
