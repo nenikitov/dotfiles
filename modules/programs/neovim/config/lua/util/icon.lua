@@ -18,6 +18,8 @@ function M.icon(tty, nerd)
     end
 end
 
+M.border_name = M.icon("single", "rounded")
+
 M.ui = {
     opened = M.icon("v", ""),
     closed = M.icon(">", ""),
@@ -89,6 +91,25 @@ M.version_control = {
     untracked = M.icon("?", " "),
 }
 
-M.plugin = {}
+M.plugin = {
+    cmd = M.icon("[cmd]", " "),
+    config = M.icon("[cfg]", M.token.constructor),
+    debug = M.icon('[dbg]', M.severity.debug),
+    event = M.token.event,
+    favorite = M.icon('[fav]', " "),
+    ft = M.icon('[ft]', M.token.file),
+    init = M.icon('[ini]', M.token["function"]),
+    import = M.icon('[imp]', ' '),
+    keys = M.icon("[key]", " "),
+    lazy = M.icon("[lzy]", "󰒲 "),
+    loaded = M.ui.filled,
+    not_loaded = M.ui.empty,
+    plugin = M.icon('[plg]', M.token.package),
+    runtime = M.icon("[run]", " "),
+    require = M.icon("[req]", "󰢱 "),
+    source = M.icon("[src]", " "),
+    start = M.icon('►', ''),
+    task = M.icon("√", M.severity.ok),
+}
 
 return M

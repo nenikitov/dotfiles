@@ -40,7 +40,7 @@ vim.opt.cmdheight = 0
 -- Use 24-bit color
 --vim.opt.termguicolors = not vim.g.tty_mode
 -- Default floating window borders
---vim.opt.winborder = icon.border_name
+vim.opt.winborder = icon.border_name
 
 --#endregion
 

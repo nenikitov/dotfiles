@@ -1,4 +1,5 @@
 local map = require("util.map")
+local icon = require('util.icon')
 
 -- Clone
 local path_lazy = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -41,10 +42,10 @@ require("lazy").setup({
     defaults = { lazy = true },
     install = { colorscheme = vim.g.colorschemes },
     ui = {
+        title = ' lazy.nvim ' .. icon.plugin.lazy .. ' ',
         border = vim.opt.winborder:get(),
         backdrop = 100,
-        --title = 'lazy.nvim ' .. icon.plugin_state.lazy,
-        --icons = vim.tbl_extend('force', icon.plugin_state, { list = { '-' } })
+        icons = vim.tbl_extend('force', icon.plugin, { list = { '-' } })
     },
     change_detection = { notify = false },
 })
@@ -52,5 +53,5 @@ require("lazy").setup({
 -- Prefix
 map.map("n", "<LEADER>p", "<NOP>", "plugin")
 -- Maps
-map.map("n", "<LEADER>pp", "<CMD>Lazy<CR>", "Plugin manager")
+map.map("n", "<LEADER>pp", "<CMD>Lazy<CR>", "Open plugin manager (lazy)")
 --map.map("n", "<LEADER>pP", Snacks.picker.lazy, "Plugins")
