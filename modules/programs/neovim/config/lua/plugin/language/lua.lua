@@ -2,6 +2,7 @@ local shared_plugin = require("util.shared_plugin")
 
 return {
     shared_plugin.template("tools", { "lua_ls" }),
+    shared_plugin.template("parsers", { "lua", "luadoc", "luap" }),
     shared_plugin.template("servers", {
         lua_ls = {
             settings = {

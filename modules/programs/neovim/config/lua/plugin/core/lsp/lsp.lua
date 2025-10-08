@@ -150,7 +150,7 @@ return {
         })
 
         -- Keymaps
-        local group = vim.api.nvim_create_augroup("lsp keys", { clear = true })
+        local group = vim.api.nvim_create_augroup("lsp", { clear = true })
         vim.api.nvim_create_autocmd("LspAttach", {
             group = group,
             callback = function(event)
@@ -170,7 +170,7 @@ return {
         vim.api.nvim_create_autocmd("LspDetach", {
             group = group,
             callback = function(event)
-                vim.api.nvim_clear_autocmds({ group = "lsp keys", bufnr = event.buf })
+                vim.api.nvim_clear_autocmds({ group = group, buffer = event.buf })
             end,
         })
     end,

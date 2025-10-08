@@ -63,7 +63,7 @@ return {
         config = function(_, opts)
             require("mason").setup(opts)
 
-            -- NOTE: `LazyVim` does this to possibly load newly installed packages after install
+            -- NOTE: LazyVim does this to possibly load newly installed packages after install
             require("mason-registry"):on("package:install:success", function()
                 vim.defer_fn(function()
                     require("lazy.core.handler.event").trigger({
