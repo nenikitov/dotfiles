@@ -2,6 +2,7 @@ local icons = require('user.icons')
 
 return {
     'ray-x/lsp_signature.nvim',
+    enabled = false,
     opts = {
         doc_lines = 0,
         floating_window = false,

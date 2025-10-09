@@ -15,6 +15,10 @@ return language.register {
     servers = {
         jsonls = function()
             return {
+                capabilities = function(capabilities)
+                    capabilities.textDocument.completion.completionItem.snippetSupport = true
+                    return capabilities
+                end,
                 settings = {
                     json = {
                         schemas = require('schemastore').json.schemas(),

@@ -21,7 +21,7 @@ return {
         end)
     end,
     opts = {
-        window = {
+        win = {
             border = icons.border,
         },
         icons = icons.whichkey,

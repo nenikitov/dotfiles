@@ -3,7 +3,7 @@ local language = require('utils.language')
 return language.register {
     tools = {
         -- Language server
-        'tsserver',
+        'typescript-language-server',
         'eslint',
         -- Formatter
         'prettierd',
@@ -15,7 +15,7 @@ return language.register {
         'typescript',
     },
     servers = {
-        tsserver = {},
+        ['typescript-language-server'] = {},
         eslint = {},
     },
     formatters = {

@@ -52,9 +52,9 @@ return {
                                 item.kind_hl_group = hl_group
                             end
                         end
-                    end
 
-                    item.kind = item.kind .. ' '
+                        item.kind = item.kind .. ' '
+                    end
 
                     item.menu = '[' .. entry.source.name .. ']'
                     return item
