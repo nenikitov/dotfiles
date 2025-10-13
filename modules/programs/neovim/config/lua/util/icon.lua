@@ -23,8 +23,8 @@ M.border_name = M.icon("single", "rounded")
 M.ui = {
     opened = M.icon("v", ""),
     closed = M.icon(">", ""),
-    filled = M.icon("■", "●"),
-    empty = M.icon("-", "○"),
+    filled = M.icon("■", ""),
+    empty = M.icon("-", ""),
     previous = M.icon("«", "«"),
     next = M.icon("»", "»"),
     close = M.icon("x", "󰖭"),
@@ -87,8 +87,16 @@ M.version_control = {
     ignored = M.icon("/", " "),
     modified = M.icon(".", M.ui.empty),
     renamed = M.icon("→", " "),
-    unmerged = M.icon("!", " "),
-    untracked = M.icon("?", " "),
+    conflict = M.icon("!", " "),
+    untracked = M.icon("?", " "),
+    copied = M.icon("~", "󱅃 "),
+}
+
+M.diff_bar = {
+    added = M.icon("│", "┃"),
+    modified = M.icon("│", "┃"),
+    deleted = M.icon("▶", ""),
+    untracked = M.icon("║", "┋"),
 }
 
 M.plugin = {

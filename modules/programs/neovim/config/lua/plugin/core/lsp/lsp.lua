@@ -175,7 +175,7 @@ return {
         })
     end,
     keys = {
-        -- Preifx
+        -- Prefix
         { "<LEADER>c", "<NOP>", desc = "code" },
         -- Toggles
         {

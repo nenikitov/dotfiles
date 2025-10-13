@@ -36,10 +36,10 @@ return {
         "mason-org/mason.nvim",
         opts = {
             PATH = "append",
-            backdrop = 100,
-            width = 0.8,
-            height = 0.8,
             ui = {
+                backdrop = 100,
+                width = 0.8,
+                height = 0.8,
                 icons = {
                     package_installed = icon.plugin.loaded,
                     package_pending = icon.plugin.task,

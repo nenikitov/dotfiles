@@ -20,7 +20,7 @@ vim.opt.number = true
 -- Use relative numbers instead of absolute
 vim.opt.relativenumber = true
 -- Minimal width of the number column
-vim.opt.numberwidth = 3
+vim.opt.numberwidth = 4
 -- Show sign column (gutter and folds)
 vim.opt.signcolumn = "yes:1"
 -- Characters to use for sign column

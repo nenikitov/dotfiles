@@ -38,6 +38,7 @@ require("lazy").setup({
         { import = "plugin.editor" },
         { import = "plugin.language" },
         { import = "plugin.ui" },
+        { import = "plugin.workspace" },
     },
     defaults = { lazy = true },
     install = { colorscheme = vim.g.colorschemes },
