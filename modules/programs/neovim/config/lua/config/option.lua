@@ -27,8 +27,8 @@ vim.opt.signcolumn = "yes:1"
 vim.opt.fillchars = {
     fold = " ",
     foldsep = " ",
-    --foldopen = icon.ui.opened,
-    --foldclose = icon.ui.collapsed,
+    foldopen = icon.ui.opened,
+    foldclose = icon.ui.closed,
     eob = "`",
 }
 -- Show a global status line instead of having one for each split
@@ -76,6 +76,10 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 -- Modes in which cursor is allowed to move past text boundaries
 vim.opt.virtualedit = "block"
+-- Show fold column
+vim.o.foldcolumn = "1"
+-- Do not fold anything by default
+vim.o.foldlevelstart = 99
 
 --#endregion
 
