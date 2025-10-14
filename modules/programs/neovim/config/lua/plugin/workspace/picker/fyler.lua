@@ -1,4 +1,5 @@
 local icon = require("util.icon")
+
 return {
     --"A7Lavinraj/fyler.nvim",
     dir = "~/Documents/fyler.nvim",
@@ -17,6 +18,9 @@ return {
                 Conflict = icon.version_control.conflict,
                 Ignored = icon.version_control.ignored,
             },
+        },
+        indentscope = {
+            marker = icon.ui.indent,
         },
         win = {
             kind = "float",

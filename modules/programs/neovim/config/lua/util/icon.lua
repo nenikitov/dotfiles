@@ -25,10 +25,19 @@ M.ui = {
     closed = M.icon(">", ""),
     filled = M.icon("■", ""),
     empty = M.icon("-", ""),
+
     previous = M.icon("«", "«"),
     next = M.icon("»", "»"),
+
     close = M.icon("x", "󰖭"),
+
     prompt = M.icon(">", ""),
+
+    indent = M.icon("│"),
+    end_of_buffer = M.icon("`"),
+    whitespace_tab = M.icon("──→", ""),
+    whitespace_nbsp = M.icon("▬", "␣"),
+    whitespace_trailing = M.icon("·"),
 }
 
 M.token = {

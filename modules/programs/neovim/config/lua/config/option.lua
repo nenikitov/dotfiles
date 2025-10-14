@@ -29,7 +29,7 @@ vim.opt.fillchars = {
     foldsep = " ",
     foldopen = icon.ui.opened,
     foldclose = icon.ui.closed,
-    eob = "`",
+    eob = icon.ui.end_of_buffer,
 }
 -- Show a global status line instead of having one for each split
 vim.opt.laststatus = 3
@@ -60,11 +60,11 @@ vim.api.nvim_create_autocmd({ "WinEnter", "WinResized", "VimEnter" }, {
 vim.opt.list = true
 -- Characters to use for special characters
 vim.opt.listchars = {
-    --tab = icon.special.tab,
-    --trail = icon.special.trailing,
-    --nbsp = icon.special.nbsp,
-    --extends = icon.ui.ellipsis,
-    --precedes = icon.ui.ellipsis,
+    tab = icon.ui.whitespace_tab,
+    trail = icon.ui.whitespace_trailing,
+    nbsp = icon.ui.whitespace_nbsp,
+    extends = icon.ui.previous,
+    precedes = icon.ui.next,
 }
 -- Format options
 vim.api.nvim_create_autocmd("FileType", {
