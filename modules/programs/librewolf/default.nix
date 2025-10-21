@@ -4,10 +4,6 @@
   pkgs,
   ...
 }:
-# {
-#   imports = [ ./search-engines.nix ];
-# }
-# //
 libModule.mkEnableModule {
   path = ["programs" "librewolf"];
   description = "Librewolf (Firefox fork) web-browser";
@@ -27,6 +23,9 @@ libModule.mkEnableModule {
           example = "25.05";
           type = lib.types.str;
         };
+      };
+      programming = {
+        enable = lib.mkEnableOption "programming related search engines" // {default = true;};
       };
     };
   };
@@ -53,6 +52,45 @@ libModule.mkEnableModule {
 
           engines =
             (
+              if configModule.search.programming.enable
+              then {
+                github = {
+                  name = "GitHub";
+                  iconMapObj."32" = "https://github.com/favicon.ico";
+                  definedAliases = ["@gh" "@git-hub"];
+                  urls = [
+                    {
+                      template = "https://github.com/search";
+                      params = [
+                        {
+                          name = "q";
+                          value = "{searchTerms}";
+                        }
+                      ];
+                    }
+                  ];
+                };
+
+                grep = {
+                  name = "grep.app";
+                  iconMapObj."32" = "https://grep.app/icon.png";
+                  definedAliases = ["@gr" "grep"];
+                  urls = [
+                    {
+                      template = "https://grep.app/search";
+                      params = [
+                        {
+                          name = "q";
+                          value = "{searchTerms}";
+                        }
+                      ];
+                    }
+                  ];
+                };
+              }
+              else {}
+            )
+            // (
               if configModule.search.linux.enable
               then {
                 nix-pkgs = {
@@ -172,13 +210,61 @@ libModule.mkEnableModule {
                     }
                   ];
                 };
+
+                arch-wiki = {
+                  name = "Arch Wiki";
+                  iconMapObj."16" = "https://wiki.archlinux.org/favicon.ico";
+                  definedAliases = ["@aw" "@arch-wiki"];
+                  urls = [
+                    {
+                      template = "https://wiki.archlinux.org";
+                      params = [
+                        {
+                          name = "search";
+                          value = "{searchTerms}";
+                        }
+                      ];
+                    }
+                    {
+                      type = "application/x-suggestions+json";
+                      template = "https://wiki.archlinux.org/api.php";
+                      params = [
+                        {
+                          name = "search";
+                          value = "{searchTerms}";
+                        }
+                        {
+                          name = "action";
+                          value = "opensearch";
+                        }
+                      ];
+                    }
+                  ];
+                };
+
+                arch-pkgs = {
+                  name = "Arch Packages";
+                  iconMapObj."16" = "https://archlinux.org/favicon.ico";
+                  definedAliases = ["@ap" "@arch-pkgs"];
+                  urls = [
+                    {
+                      template = "https://archlinux.org/packages";
+                      params = [
+                        {
+                          name = "q";
+                          value = "{searchTerms}";
+                        }
+                      ];
+                    }
+                  ];
+                };
               }
               else {}
             )
             // {
               startpage = {
                 name = "Startpage";
-                iconMapObj."16" = "https://www.startpage.com/sp/cdn/favicons/favicon-16x16-gradient.png";
+                iconMapObj."64" = "https://www.startpage.com/favicon.ico";
                 definedAliases = ["@s" "@startpage"];
                 urls = [
                   {
