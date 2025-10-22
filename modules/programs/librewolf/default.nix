@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   libModule,
   pkgs,
@@ -93,6 +94,23 @@ libModule.mkEnableModule {
             // (
               if configModule.search.linux.enable
               then {
+                noogle = {
+                  name = "Noogle";
+                  iconMapObj."16" = "https://noogle.dev/favicon.png";
+                  definedAliases = ["@nl" "@noogle"];
+                  urls = [
+                    {
+                      template = "https://noogle.dev/q";
+                      params = [
+                        {
+                          name = "term";
+                          value = "{searchTerms}";
+                        }
+                      ];
+                    }
+                  ];
+                };
+
                 nix-pkgs = {
                   name = "NixOS Packages";
                   iconMapObj."16" = "https://search.nixos.org/favicon.png";
@@ -359,7 +377,30 @@ libModule.mkEnableModule {
             };
         };
 
+        extensions = {
+          force = true;
+          packages = with inputs.firefoxAddons.packages.${pkgs.system}; [
+            ublock-origin
+            darkreader
+          ];
+          settings = {
+            "uBlock0@raymondhill.net" = {
+              force = true;
+              settings = {
+                selectedFilterLists = [
+                  "ublock-filters"
+                  "ublock-badware"
+                  "ublock-privacy"
+                  "ublock-unbreak"
+                  "ublock-quick-fixes"
+                ];
+              };
+            };
+          };
+        };
+
         settings = {
+          "extensions.autoDisableScopes" = 0;
           "webgl.disabled" = false;
           "browser.startup.page" = 3;
           "browser.translations.automaticallyPopup" = false;
