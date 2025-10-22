@@ -377,22 +377,150 @@ libModule.mkEnableModule {
             };
         };
 
+        # TODO: Find how to allow extensions run in private mode
         extensions = {
           force = true;
           packages = with inputs.firefoxAddons.packages.${pkgs.system}; [
-            ublock-origin
             darkreader
+            indie-wiki-buddy
+            return-youtube-dislikes
+            search-by-image
+            sponsorblock
+            ublock-origin
+            vimium
           ];
+          # Settings can be found in `~/.librewolf/default/browser-extension-data`
           settings = {
+            "addon@darkreader.org" = {
+              force = true;
+              settings = {
+                fetchNews = false;
+                syncSettings = false;
+                automation = {
+                  enabled = true;
+                  mode = "system";
+                };
+              };
+            };
+            # TODO: Figure out how to set sync settings
+            # Indie Wiki Buddy stores its settings in sync, so these settings don't apply
+            "{cb31ec5d-c49a-4e5a-b240-16c767444f62}" = {
+              force = true;
+              settings = {
+                hideReviewReminder = true;
+                notifications = false;
+                breezewiki = "redirect";
+              };
+            };
             "uBlock0@raymondhill.net" = {
               force = true;
               settings = {
                 selectedFilterLists = [
+                  # Built-in
+                  "user-filters"
                   "ublock-filters"
                   "ublock-badware"
                   "ublock-privacy"
-                  "ublock-unbreak"
                   "ublock-quick-fixes"
+                  "ublock-unbreak"
+                  # Ads
+                  "easylist"
+                  "adguard-generic"
+                  "adguard-mobile"
+                  # Privacy
+                  "easyprivacy"
+                  "LegitimateURLShortener"
+                  "adguard-spyware-url"
+                  # Malware protection security
+                  "urlhaus-1"
+                  "curben-phishing"
+                  # Multipurpose
+                  "plowe-0"
+                  # Cookie notices
+                  "fanboy-cookiemonster"
+                  "ublock-cookies-easylist"
+                  "adguard-cookies"
+                  "ublock-cookies-adguard"
+                  "fanboy-social"
+                  "adguard-social"
+                  "fanboy-thirdparty_social"
+                  # Social widgets
+                  "easylist-chat"
+                  "easylist-newsletters"
+                  "easylist-notifications"
+                  # Annoyances
+                  "easylist-annoyances"
+                  "adguard-mobile-app-banners"
+                  "adguard-other-annoyances"
+                  "adguard-popup-overlays"
+                  "adguard-widgets"
+                  "ublock-annoyances"
+                  # Regions languages
+                  "FRA-0"
+                  "RUS-0"
+                  "RUS-1"
+                ];
+              };
+            };
+            # TODO: Figure out how to set sync settings
+            # SponsorBlock stores its settings in sync, so these settings don't apply
+            "sponsorBlocker@ajay.app" = {
+              force = true;
+              settings = {
+                hideVideoPlayerControls = true;
+                showNewFeaturePopups = false;
+                showDeArrowPromotion = false;
+                showDeArrowInSettings = false;
+                shownDeArrowPromotion = false;
+                showDonationLink = false;
+                showPopupDonationCount = 0;
+                showUpsells = false;
+
+                categorySelections = [
+                  {
+                    name = "sponsor";
+                    option = 1;
+                  }
+                  {
+                    name = "poi_highlight";
+                    option = 1;
+                  }
+                  {
+                    name = "exclusive_access";
+                    option = 0;
+                  }
+                  {
+                    name = "chapter";
+                    option = 0;
+                  }
+                  {
+                    name = "selfpromo";
+                    option = 1;
+                  }
+                  {
+                    name = "interaction";
+                    option = 1;
+                  }
+                  {
+                    name = "intro";
+                    option = 1;
+                  }
+                  {
+                    name = "preview";
+                    option = 1;
+                  }
+                  {
+                    name = "hook";
+                    option = 1;
+                  }
+                  {
+                    name = "filler";
+                    option = 1;
+                  }
+                  {
+                    name = "music_offtopic";
+                    option = 1;
+                  }
                 ];
               };
             };
@@ -400,6 +528,9 @@ libModule.mkEnableModule {
         };
 
         settings = {
+          "findbar.highlightAll" = true;
+          "accessibility.typeaheadfind.flashBar" = 0;
+          "svg.context-properties.content.enabled" = true;
           "extensions.autoDisableScopes" = 0;
           "webgl.disabled" = false;
           "browser.startup.page" = 3;
