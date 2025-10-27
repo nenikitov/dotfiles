@@ -5,6 +5,7 @@
   pkgs,
   ...
 }:
+# TODO: Separate this file into multiple modules?
 libModule.mkEnableModule {
   path = ["programs" "librewolf"];
   description = "Librewolf (Firefox fork) web-browser";
@@ -559,6 +560,47 @@ libModule.mkEnableModule {
           "browser.urlbar.shortcuts.bookmarks" = false;
         };
       };
+    };
+
+    home.file.".librewolf/default/custom.sqlite" = {
+      force = true;
+      text = let
+        mkStorageSyncV2 = settings: let
+        in
+          pkgs.runCommandNoCC "extensions db" {
+            nativeBuildInputs = with pkgs; [sqlite];
+          } (
+            #sh
+            let
+              create =
+                #sql
+                ''
+                  create table storage_sync_data (
+                    ext_id text not null primary key,
+                    data text,
+                    sync_change_counter integer not null default 1
+                  );
+                '';
+              insert =
+                #sql
+                ''
+                  insert into storage_sync_data (ext_id, data)
+                  values ${lib.pipe settings [
+                      (lib.mapAttrsToList (k: v: "('${k}','${builtins.toJSON v}')"))
+                      (builtins.concatStringsSep ",")
+                    ]}
+                '';
+            in
+              # sh
+              ''
+                sqlite3 $out ${lib.escapeShellArg create}
+                sqlite3 $out ${lib.escapeShellArg insert}
+              ''
+          );
+      in lib.fileContents (mkStorageSyncV2 {
+        extension = {setting = true;};
+        other = {world = 10;};
+      });
     };
   };
 }
