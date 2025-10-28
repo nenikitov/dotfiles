@@ -463,68 +463,6 @@ libModule.mkEnableModule {
                 ];
               };
             };
-            # TODO: Figure out how to set sync settings
-            # SponsorBlock stores its settings in sync, so these settings don't apply
-            "sponsorBlocker@ajay.app" = {
-              force = true;
-              settings = {
-                hideVideoPlayerControls = true;
-                showNewFeaturePopups = false;
-                showDeArrowPromotion = false;
-                showDeArrowInSettings = false;
-                shownDeArrowPromotion = false;
-                showDonationLink = false;
-                showPopupDonationCount = 0;
-                showUpsells = false;
-
-                categorySelections = [
-                  {
-                    name = "sponsor";
-                    option = 1;
-                  }
-                  {
-                    name = "poi_highlight";
-                    option = 1;
-                  }
-                  {
-                    name = "exclusive_access";
-                    option = 0;
-                  }
-                  {
-                    name = "chapter";
-                    option = 0;
-                  }
-                  {
-                    name = "selfpromo";
-                    option = 1;
-                  }
-                  {
-                    name = "interaction";
-                    option = 1;
-                  }
-                  {
-                    name = "intro";
-                    option = 1;
-                  }
-                  {
-                    name = "preview";
-                    option = 1;
-                  }
-                  {
-                    name = "hook";
-                    option = 1;
-                  }
-                  {
-                    name = "filler";
-                    option = 1;
-                  }
-                  {
-                    name = "music_offtopic";
-                    option = 1;
-                  }
-                ];
-              };
-            };
           };
         };
 
@@ -564,43 +502,92 @@ libModule.mkEnableModule {
 
     home.file.".librewolf/default/custom.sqlite" = {
       force = true;
-      text = let
-        mkStorageSyncV2 = settings: let
-        in
-          pkgs.runCommandNoCC "extensions db" {
+      source = let
+        mkStorageSyncV2 = settings:
+          pkgs.stdenvNoCC.mkDerivation {
+            name = "storage-sync-v2";
+            src = ./storage-sync-v2.sqlite;
+            dontUnpack = true;
             nativeBuildInputs = with pkgs; [sqlite];
-          } (
-            #sh
-            let
-              create =
-                #sql
-                ''
-                  create table storage_sync_data (
-                    ext_id text not null primary key,
-                    data text,
-                    sync_change_counter integer not null default 1
-                  );
-                '';
+            buildPhase = let
               insert =
                 #sql
                 ''
                   insert into storage_sync_data (ext_id, data)
                   values ${lib.pipe settings [
-                      (lib.mapAttrsToList (k: v: "('${k}','${builtins.toJSON v}')"))
-                      (builtins.concatStringsSep ",")
-                    ]}
+                    (lib.mapAttrsToList (k: v: "('${k}','${builtins.toJSON v}')"))
+                    (builtins.concatStringsSep ",")
+                  ]}
                 '';
             in
               # sh
               ''
-                sqlite3 $out ${lib.escapeShellArg create}
+                cp $src $out
+                chmod +w $out
                 sqlite3 $out ${lib.escapeShellArg insert}
-              ''
-          );
-      in lib.fileContents (mkStorageSyncV2 {
-        extension = {setting = true;};
-        other = {world = 10;};
-      });
+              '';
+            dontInstall = true;
+          };
+      in
+        mkStorageSyncV2 {
+          "sponsorBlocker@ajay.app" = {
+            hideVideoPlayerControls = true;
+            showNewFeaturePopups = false;
+            showDeArrowPromotion = false;
+            showDeArrowInSettings = false;
+            shownDeArrowPromotion = false;
+            showDonationLink = false;
+            showPopupDonationCount = 0;
+            showUpsells = false;
+
+            categorySelections = [
+              {
+                name = "sponsor";
+                option = 1;
+              }
+              {
+                name = "poi_highlight";
+                option = 1;
+              }
+              {
+                name = "exclusive_access";
+                option = 0;
+              }
+              {
+                name = "chapter";
+                option = 0;
+              }
+              {
+                name = "selfpromo";
+                option = 1;
+              }
+              {
+                name = "interaction";
+                option = 1;
+              }
+              {
+                name = "intro";
+                option = 1;
+              }
+              {
+                name = "preview";
+                option = 1;
+              }
+              {
+                name = "hook";
+                option = 1;
+              }
+              {
+                name = "filler";
+                option = 1;
+              }
+              {
+                name = "music_offtopic";
+                option = 1;
+              }
+            ];
+          };
+        };
     };
   };
 }
