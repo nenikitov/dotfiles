@@ -1,8 +1,8 @@
 local icon = require("util.icon")
 
 return {
-    --"A7Lavinraj/fyler.nvim",
-    dir = "~/Documents/fyler.nvim",
+    "A7Lavinraj/fyler.nvim",
+    --dir = "~/Documents/fyler.nvim",
     dependencies = { "mini.icons" },
     branch = "stable",
     opts = {

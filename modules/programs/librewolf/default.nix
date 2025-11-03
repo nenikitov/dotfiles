@@ -1,12 +1,11 @@
 {
-  inputs,
   lib,
   libModule,
   pkgs,
   ...
 }:
-# TODO: Separate this file into multiple modules?
-libModule.mkEnableModule {
+{imports = [./extensions.nix];}
+// libModule.mkEnableModule {
   path = ["programs" "librewolf"];
   description = "Librewolf (Firefox fork) web-browser";
   options = {
@@ -378,99 +377,10 @@ libModule.mkEnableModule {
             };
         };
 
-        # TODO: Find how to allow extensions run in private mode
-        extensions = {
-          force = true;
-          packages = with inputs.firefoxAddons.packages.${pkgs.system}; [
-            darkreader
-            indie-wiki-buddy
-            return-youtube-dislikes
-            search-by-image
-            sponsorblock
-            ublock-origin
-            vimium
-          ];
-          # Settings can be found in `~/.librewolf/default/browser-extension-data`
-          settings = {
-            "addon@darkreader.org" = {
-              force = true;
-              settings = {
-                fetchNews = false;
-                syncSettings = false;
-                automation = {
-                  enabled = true;
-                  mode = "system";
-                };
-              };
-            };
-            # TODO: Figure out how to set sync settings
-            # Indie Wiki Buddy stores its settings in sync, so these settings don't apply
-            "{cb31ec5d-c49a-4e5a-b240-16c767444f62}" = {
-              force = true;
-              settings = {
-                hideReviewReminder = true;
-                notifications = false;
-                breezewiki = "redirect";
-              };
-            };
-            "uBlock0@raymondhill.net" = {
-              force = true;
-              settings = {
-                selectedFilterLists = [
-                  # Built-in
-                  "user-filters"
-                  "ublock-filters"
-                  "ublock-badware"
-                  "ublock-privacy"
-                  "ublock-quick-fixes"
-                  "ublock-unbreak"
-                  # Ads
-                  "easylist"
-                  "adguard-generic"
-                  "adguard-mobile"
-                  # Privacy
-                  "easyprivacy"
-                  "LegitimateURLShortener"
-                  "adguard-spyware-url"
-                  # Malware protection security
-                  "urlhaus-1"
-                  "curben-phishing"
-                  # Multipurpose
-                  "plowe-0"
-                  # Cookie notices
-                  "fanboy-cookiemonster"
-                  "ublock-cookies-easylist"
-                  "adguard-cookies"
-                  "ublock-cookies-adguard"
-                  "fanboy-social"
-                  "adguard-social"
-                  "fanboy-thirdparty_social"
-                  # Social widgets
-                  "easylist-chat"
-                  "easylist-newsletters"
-                  "easylist-notifications"
-                  # Annoyances
-                  "easylist-annoyances"
-                  "adguard-mobile-app-banners"
-                  "adguard-other-annoyances"
-                  "adguard-popup-overlays"
-                  "adguard-widgets"
-                  "ublock-annoyances"
-                  # Regions languages
-                  "FRA-0"
-                  "RUS-0"
-                  "RUS-1"
-                ];
-              };
-            };
-          };
-        };
-
         settings = {
           "findbar.highlightAll" = true;
           "accessibility.typeaheadfind.flashBar" = 0;
           "svg.context-properties.content.enabled" = true;
-          "extensions.autoDisableScopes" = 0;
           "webgl.disabled" = false;
           "browser.startup.page" = 3;
           "browser.translations.automaticallyPopup" = false;
@@ -485,7 +395,6 @@ libModule.mkEnableModule {
           "browser.formfill.enable" = true;
           "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
           "permissions.default.desktop-notification" = 2;
-          "extensions.update.autoUpdateDefault" = false;
           "middlemouse.paste" = false;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "privacy.resistFingerprinting" = false;
@@ -498,96 +407,6 @@ libModule.mkEnableModule {
           "browser.urlbar.shortcuts.bookmarks" = false;
         };
       };
-    };
-
-    home.file.".librewolf/default/custom.sqlite" = {
-      force = true;
-      source = let
-        mkStorageSyncV2 = settings:
-          pkgs.stdenvNoCC.mkDerivation {
-            name = "storage-sync-v2";
-            src = ./storage-sync-v2.sqlite;
-            dontUnpack = true;
-            nativeBuildInputs = with pkgs; [sqlite];
-            buildPhase = let
-              insert =
-                #sql
-                ''
-                  insert into storage_sync_data (ext_id, data)
-                  values ${lib.pipe settings [
-                    (lib.mapAttrsToList (k: v: "('${k}','${builtins.toJSON v}')"))
-                    (builtins.concatStringsSep ",")
-                  ]}
-                '';
-            in
-              # sh
-              ''
-                cp $src $out
-                chmod +w $out
-                sqlite3 $out ${lib.escapeShellArg insert}
-              '';
-            dontInstall = true;
-          };
-      in
-        mkStorageSyncV2 {
-          "sponsorBlocker@ajay.app" = {
-            hideVideoPlayerControls = true;
-            showNewFeaturePopups = false;
-            showDeArrowPromotion = false;
-            showDeArrowInSettings = false;
-            shownDeArrowPromotion = false;
-            showDonationLink = false;
-            showPopupDonationCount = 0;
-            showUpsells = false;
-
-            categorySelections = [
-              {
-                name = "sponsor";
-                option = 1;
-              }
-              {
-                name = "poi_highlight";
-                option = 1;
-              }
-              {
-                name = "exclusive_access";
-                option = 0;
-              }
-              {
-                name = "chapter";
-                option = 0;
-              }
-              {
-                name = "selfpromo";
-                option = 1;
-              }
-              {
-                name = "interaction";
-                option = 1;
-              }
-              {
-                name = "intro";
-                option = 1;
-              }
-              {
-                name = "preview";
-                option = 1;
-              }
-              {
-                name = "hook";
-                option = 1;
-              }
-              {
-                name = "filler";
-                option = 1;
-              }
-              {
-                name = "music_offtopic";
-                option = 1;
-              }
-            ];
-          };
-        };
     };
   };
 }
