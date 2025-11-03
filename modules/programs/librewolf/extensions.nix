@@ -13,7 +13,6 @@ libModule.mkEnableSubmodule {
       # Dark Reader
       {
         package = pkgsFirefoxAddons.darkreader;
-        id = "addon@darkreader.org";
         settingsSync = {
           fetchNews = false;
           automation = {
@@ -25,7 +24,6 @@ libModule.mkEnableSubmodule {
       # Indie Wiki Buddy
       {
         package = pkgsFirefoxAddons.indie-wiki-buddy;
-        id = "{cb31ec5d-c49a-4e5a-b240-16c767444f62}";
         settingsSync = {
           hideReviewReminder = true;
           notifications = false;
@@ -53,7 +51,7 @@ libModule.mkEnableSubmodule {
         settings = lib.pipe extensions [
           (builtins.filter (builtins.hasAttr "settings"))
           (builtins.map (e: {
-            name = e.id;
+            name = e.package.addonId;
             value = {
               force = true;
               settings = e.settings;
@@ -70,16 +68,15 @@ libModule.mkEnableSubmodule {
       };
     };
     # TODO: Replace this with a librewolf setting when [this issue](https://github.com/nix-community/home-manager/issues/8094) gets resolved.
-    home.file.".librewolf/default/storage-sync-v2.sqlite.home-manager" = {
+    home.file.".librewolf/default/storage-sync-v2.sqlite.dummy" = {
       force = true;
       # TODO: Replace this with an actual copy mode when [this issue](https://github.com/nix-community/home-manager/issues/3090) gets resolved.
       onChange =
         #sh
         ''
-          \cp -f "~/.librewolf/default/storage-sync-v2.sqlite.home-manager" "~/.librewolf/default/storage-sync-v2.sqlite"
-          \rm "~/.librewolf/default/storage-sync-v2.sqlite.home-manager"
-          chmod 644 "~/.librewolf/default/storage-sync-v2.sqlite"
-          echo "Repalced Librewolf config"
+          \cp -f "$(realpath ~/".librewolf/default/storage-sync-v2.sqlite.dummy")" ~/".librewolf/default/storage-sync-v2.sqlite"
+          \rm ~/".librewolf/default/storage-sync-v2.sqlite.dummy"
+          chmod 644 ~/".librewolf/default/storage-sync-v2.sqlite"
         '';
       source = pkgs.stdenvNoCC.mkDerivation {
         name = "storage-sync-v2.sqlite";
@@ -92,7 +89,7 @@ libModule.mkEnableSubmodule {
             (builtins.filter (builtins.hasAttr "settingsSync"))
             (builtins.map (e:
               #sql
-              "('${e.id}', '${builtins.toJSON e.settingsSync}')"))
+              "('${e.package.addonId}', '${builtins.toJSON e.settingsSync}')"))
             (builtins.concatStringsSep ",")
           ];
           insert =
