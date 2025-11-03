@@ -25,7 +25,6 @@ libModule.mkEnableSubmodule {
       {
         package = pkgsFirefoxAddons.indie-wiki-buddy;
         settingsSync = {
-          hideReviewReminder = true;
           notifications = false;
           breezewiki = "redirect";
         };
@@ -41,6 +40,108 @@ libModule.mkEnableSubmodule {
       # SponsorBlock
       {
         package = pkgsFirefoxAddons.sponsorblock;
+        settingsSync = {
+          categorySelections = [
+            {
+              name = "filler";
+              option = 1;
+            }
+            {
+              name = "hook";
+              option = 1;
+            }
+            {
+              name = "interaction";
+              option = 1;
+            }
+            {
+              name = "intro";
+              option = 1;
+            }
+            {
+              name = "music_offtopic";
+              option = 1;
+            }
+            {
+              name = "poi_highlight";
+              option = 1;
+            }
+            {
+              name = "preview";
+              option = 1;
+            }
+            {
+              name = "selfpromo";
+              option = 1;
+            }
+            {
+              name = "sponsor";
+              option = 1;
+            }
+            {
+              name = "chapter";
+              option = 0;
+            }
+            {
+              name = "exclusive_access";
+              option = 0;
+            }
+          ];
+          showDeArrowInSettings = false;
+          showDeArrowPromotion = false;
+          hideVideoPlayerControls = true;
+        };
+      }
+      # uBlock Origin
+      {
+        package = pkgsFirefoxAddons.ublock-origin;
+        settings = {
+          selectedFilterLists = [
+            # Built-in
+            "user-filters"
+            "ublock-filters"
+            "ublock-badware"
+            "ublock-privacy"
+            "ublock-quick-fixes"
+            "ublock-unbreak"
+            # Ads
+            "easylist"
+            "adguard-generic"
+            "adguard-mobile"
+            # Privacy
+            "easyprivacy"
+            "LegitimateURLShortener"
+            "adguard-spyware-url"
+            # Malware protection security
+            "urlhaus-1"
+            "curben-phishing"
+            # Multipurpose
+            "plowe-0"
+            # Cookie notices
+            "fanboy-cookiemonster"
+            "ublock-cookies-easylist"
+            "adguard-cookies"
+            "ublock-cookies-adguard"
+            "fanboy-social"
+            "adguard-social"
+            "fanboy-thirdparty_social"
+            # Social widgets
+            "easylist-chat"
+            "easylist-newsletters"
+            "easylist-notifications"
+            # Annoyances
+            "easylist-annoyances"
+            "adguard-mobile-app-banners"
+            "adguard-other-annoyances"
+            "adguard-popup-overlays"
+            "adguard-widgets"
+            "ublock-annoyances"
+            # Regions languages
+            "FRA-0"
+            "RUS-0"
+            "RUS-1"
+          ];
+        };
       }
     ];
   in {

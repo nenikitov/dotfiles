@@ -395,6 +395,7 @@
           "browser.formfill.enable" = true;
           "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
           "permissions.default.desktop-notification" = 2;
+          "permissions.default.shortcuts" = 2;
           "middlemouse.paste" = false;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "privacy.resistFingerprinting" = false;
