@@ -63,8 +63,8 @@ vim.opt.listchars = {
     tab = icon.ui.whitespace_tab,
     trail = icon.ui.whitespace_trailing,
     nbsp = icon.ui.whitespace_nbsp,
-    extends = icon.ui.previous,
-    precedes = icon.ui.next,
+    extends = icon.ui.next,
+    precedes = icon.ui.previous,
 }
 -- Format options
 vim.api.nvim_create_autocmd("FileType", {

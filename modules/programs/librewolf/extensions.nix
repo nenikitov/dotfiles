@@ -10,7 +10,6 @@ libModule.mkEnableSubmodule {
   config = let
     pkgsFirefoxAddons = inputs.firefoxAddons.packages.${pkgs.system};
     extensions = [
-      # Dark Reader
       {
         package = pkgsFirefoxAddons.darkreader;
         settingsSync = {
@@ -21,7 +20,6 @@ libModule.mkEnableSubmodule {
           };
         };
       }
-      # Indie Wiki Buddy
       {
         package = pkgsFirefoxAddons.indie-wiki-buddy;
         settingsSync = {
@@ -29,15 +27,12 @@ libModule.mkEnableSubmodule {
           breezewiki = "redirect";
         };
       }
-      # Return YouTube Dislikes
       {
         package = pkgsFirefoxAddons.return-youtube-dislikes;
       }
-      # Search by Image
       {
         package = pkgsFirefoxAddons.search-by-image;
       }
-      # SponsorBlock
       {
         package = pkgsFirefoxAddons.sponsorblock;
         settingsSync = {
@@ -92,7 +87,6 @@ libModule.mkEnableSubmodule {
           hideVideoPlayerControls = true;
         };
       }
-      # uBlock Origin
       {
         package = pkgsFirefoxAddons.ublock-origin;
         settings = {
