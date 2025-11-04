@@ -1,25 +1,42 @@
 {
+  lib,
   libModule,
-  options,
   ...
 }:
 libModule.mkEnableModule {
   path = ["programs" "git"];
   description = "git version control tool";
   options = {
-    userName = options.programs.git.userName // {default = "nenikitov";};
-    # TODO: Figure out how to safely pass email
-    userEmail = options.programs.git.userEmail;
+    user = {
+      name = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = "nenikitov";
+        description = "User name to use.";
+      };
+      ## TODO: Figure out how to safely pass email
+      email = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "User email to use.";
+      };
+    };
   };
   config = {configModule, ...}: {
     programs.git = {
       enable = true;
 
-      inherit (configModule) userName userEmail;
+      settings = {
+        user = {
+          inherit (configModule.user) name;
+          ${
+            if configModule.user.email != null
+            then "email"
+            else null
+          } =
+            configModule.user.email;
+        };
+        # TODO: look into delta differ
 
-      # TODO: look into delta differ
-
-      extraConfig = {
         # Set default branch to `main`
         init.defaultBranch = "main";
 
