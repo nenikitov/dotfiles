@@ -10,6 +10,13 @@
   ${customNamespace} = {
     profiles.graphical.enable = true;
 
+    # TODO: Move this into separate profiles
+    programs.librewolf.searchEngines = {
+      linux.enable = true;
+      programming.enable = true;
+      game.enable = true;
+    };
+
     settings.monitors = [
       {
         name = "Ancor Communications Inc MG248 G9LMQS024781";

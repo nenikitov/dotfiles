@@ -140,13 +140,13 @@ libModule.mkEnableModule {
           }
         ];
 
-        workspaces = listToIndexedAttrs {padKeys = true;} [
-          {name = "static-1";}
-          {name = "static-2";}
-          {name = "static-3";}
-          {name = "static-4";}
-          {name = "static-5";}
-        ];
+        #workspaces = listToIndexedAttrs {padKeys = true;} [
+        #  {name = "static-1";}
+        #  {name = "static-2";}
+        #  {name = "static-3";}
+        #  {name = "static-4";}
+        #  {name = "static-5";}
+        #];
 
         binds = let
           explicitRepeat = builtins.mapAttrs (_: bind: {repeat = false;} // bind);
