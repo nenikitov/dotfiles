@@ -3,7 +3,7 @@
   libModule,
   pkgs,
   ...
-}:
+} @ inputs:
 libModule.mkEnableModule {
   path = ["programs" "niri"];
   description = "Niri Wayland compositor";
@@ -150,7 +150,7 @@ libModule.mkEnableModule {
 
         binds = let
           explicitRepeat = builtins.mapAttrs (_: bind: {repeat = false;} // bind);
-          moveWindow = pkgs.writers.writePython3 "move-window" {doCheck = false;} (builtins.readFile ./move-window.py);
+          scripts = import ./scripts inputs;
           moveFactor = "50";
           resizeFactor = "10%";
         in
@@ -260,22 +260,22 @@ libModule.mkEnableModule {
             # Window move
             "Mod+Shift+H" = {
               hotkey-overlay.title = "Move Column / Floating Window Left";
-              action.spawn = ["${moveWindow}" "--command" "move-column-left" "--x" "-${moveFactor}"];
+              action.spawn = ["${scripts}/bin/move_window" "--x" "-${moveFactor}" "move-column-left"];
               repeat = true;
             };
             "Mod+Shift+J" = {
               hotkey-overlay.title = "Move Window Up";
-              action.spawn = ["${moveWindow}" "--command" "move-window-down" "--y" "+${moveFactor}"];
+              action.spawn = ["${scripts}/bin/move_window" "--y" "+${moveFactor}" "move-window-down"];
               repeat = true;
             };
             "Mod+Shift+K" = {
               hotkey-overlay.title = "Move Window Down";
-              action.spawn = ["${moveWindow}" "--command" "move-window-up" "--y" "-${moveFactor}"];
+              action.spawn = ["${scripts}/bin/move_window" "--y" "-${moveFactor}" "move-window-up"];
               repeat = true;
             };
             "Mod+Shift+L" = {
               hotkey-overlay.title = "Move Column / Floating Window Right";
-              action.spawn = ["${moveWindow}" "--command" "move-column-right" "--x" "+${moveFactor}"];
+              action.spawn = ["${scripts}/bin/move_window" "--x" "+${moveFactor}" "move-column-right"];
               repeat = true;
             };
             "Mod+Shift+Comma".action.consume-or-expel-window-left = [];

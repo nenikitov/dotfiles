@@ -1,7 +1,9 @@
-{pkgs ? import <nixpkgs> {}}:
-pkgs.rustPlatform.buildRustPackage {
-  pname = "niri-scripts";
-  version = "0.1.0";
-  cargoLock.lockFile = ./Cargo.lock;
-  src = pkgs.lib.cleanSource ./.;
-}
+{pkgs, ...}: let
+  manifest = pkgs.lib.importTOML ./Cargo.toml;
+in
+  pkgs.rustPlatform.buildRustPackage {
+    pname = manifest.package.name;
+    version = manifest.package.version;
+    cargoLock.lockFile = ./Cargo.lock;
+    src = pkgs.lib.cleanSource ./.;
+  }
