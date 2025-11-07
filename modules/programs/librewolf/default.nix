@@ -8,8 +8,6 @@
   path = ["programs" "librewolf"];
   description = "Librewolf (Firefox fork) web-browser";
   config = {
-    programs.firefox.enable = true;
-
     programs.librewolf = {
       enable = true;
       package = pkgs.librewolf.override {

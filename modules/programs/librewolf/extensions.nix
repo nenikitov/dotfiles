@@ -8,10 +8,12 @@
 libModule.mkEnableSubmodule {
   pathParent = ["programs" "librewolf"];
   config = let
-    pkgsFirefoxAddons = inputs.firefoxAddons.packages.${pkgs.system};
-    extensions = [
+    extensions = with inputs.firefoxAddons.packages.${pkgs.system}; [
       {
-        package = pkgsFirefoxAddons.darkreader;
+        package = adaptive-tab-bar-colour;
+      }
+      {
+        package = darkreader;
         settingsSync = {
           fetchNews = false;
           automation = {
@@ -21,20 +23,20 @@ libModule.mkEnableSubmodule {
         };
       }
       {
-        package = pkgsFirefoxAddons.indie-wiki-buddy;
+        package = indie-wiki-buddy;
         settingsSync = {
           notifications = false;
           breezewiki = "redirect";
         };
       }
       {
-        package = pkgsFirefoxAddons.return-youtube-dislikes;
+        package = return-youtube-dislikes;
       }
       {
-        package = pkgsFirefoxAddons.search-by-image;
+        package = search-by-image;
       }
       {
-        package = pkgsFirefoxAddons.sponsorblock;
+        package = sponsorblock;
         settingsSync = {
           categorySelections = [
             {
@@ -88,7 +90,7 @@ libModule.mkEnableSubmodule {
         };
       }
       {
-        package = pkgsFirefoxAddons.ublock-origin;
+        package = ublock-origin;
         settings = {
           selectedFilterLists = [
             # Built-in
