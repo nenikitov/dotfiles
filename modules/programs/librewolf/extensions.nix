@@ -8,7 +8,7 @@
 libModule.mkEnableSubmodule {
   pathParent = ["programs" "librewolf"];
   config = let
-    extensions = with inputs.firefoxAddons.packages.${pkgs.system}; [
+    extensions = with inputs.firefoxAddons.packages.${pkgs.stdenv.hostPlatform.system}; [
       {
         package = adaptive-tab-bar-colour;
       }
