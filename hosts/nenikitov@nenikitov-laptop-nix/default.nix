@@ -10,8 +10,15 @@
 
   ${customNamespace} = {
     profiles.graphical.enable = true;
-    settings.dotfiles_path = "${config.xdg.configHome}/home-manager-new";
+
+    # TODO: Move this into separate profiles
+    programs.librewolf.searchEngines = {
+      linux.enable = true;
+      programming.enable = true;
+      game.enable = true;
+    };
   };
+
 
   home.packages = with pkgs; [
     fastfetch

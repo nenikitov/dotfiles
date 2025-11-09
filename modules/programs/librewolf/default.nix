@@ -45,7 +45,6 @@
           "browser.formfill.enable" = true;
           "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
           "permissions.default.desktop-notification" = 2;
-          "permissions.default.shortcuts" = 2;
           "middlemouse.paste" = false;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "privacy.resistFingerprinting" = false;
@@ -60,9 +59,6 @@
             placements = {
               unified-extensions-area = [
                 "sponsorblocker_ajay_app-browser-action"
-                "_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action"
-                "_2e5ff8c8-32fe-46d0-9fc8-6b8986621f3c_-browser-action"
-                "_cb31ec5d-c49a-4e5a-b240-16c767444f62_-browser-action"
               ];
               nav-bar = [
                 "back-button"
