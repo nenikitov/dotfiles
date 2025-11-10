@@ -12,10 +12,22 @@ struct Args {
     command: Action,
 
     /// X distance to move the floating window.
-    #[arg(short, long, allow_negative_numbers = true, default_value = "+0")]
+    #[arg(
+        short,
+        long,
+        global = true,
+        allow_negative_numbers = true,
+        default_value = "+0"
+    )]
     x: PositionChange,
     /// Y distance to move the floating window.
-    #[arg(short, long, allow_negative_numbers = true, default_value = "+0")]
+    #[arg(
+        short,
+        long,
+        global = true,
+        allow_negative_numbers = true,
+        default_value = "+0"
+    )]
     y: PositionChange,
 }
 

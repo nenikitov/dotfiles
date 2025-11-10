@@ -7,3 +7,4 @@ edition = "2024"
 anyhow = "1.0.100"
 clap = { version = "4.5.51", features = ["derive"] }
 niri-ipc = { version = "25.8.0", features = ["clap"] }
+uuid = { version = "1.18.1", features = ["v4"] }
