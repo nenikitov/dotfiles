@@ -1,9 +1,6 @@
 use clap::Parser;
 use niri_ipc::{Action, Event, Request, Response, WorkspaceReferenceArg, socket::Socket};
-use std::{
-    collections::BTreeSet,
-    sync::{Arc, Condvar, Mutex},
-};
+use uuid::Uuid;
 
 use niri_scripts::SocketExt;
 
@@ -15,47 +12,63 @@ struct Args {
     count: u8,
 }
 
-#[derive(Debug, Eq, Hash, PartialOrd, PartialEq)]
-struct WorkspaceToRename {
-    id: u64,
-    index: u8,
-    output: String,
-}
-
-impl Ord for WorkspaceToRename {
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.output
-            .cmp(&other.output)
-            .then(self.index.cmp(&other.index))
-    }
-}
-
 fn try_main() -> anyhow::Result<()> {
     let args = Args::parse();
     let mut socket_events = Socket::connect()?;
-
-    let rename_queue = Arc::new(Mutex::new(BTreeSet::<WorkspaceToRename>::new()));
-    let rename_queue_not_empty = Condvar::new();
-
-    //fn new_uuid = || { uuid::Uuid::new_v4().simple().to_string() };
+    let mut socket_actions = Socket::connect()?;
 
     let reply = socket_events.send_anyhow(Request::EventStream)?;
     if matches!(reply, Ok(Response::Handled)) {
         let mut read_event = socket_events.read_events();
         while let Ok(event) = read_event() {
             if let Event::WorkspacesChanged { workspaces } = event {
-                let needs_renaming = workspaces
+                // Get focused monitor
+                let output_focused = if let Response::FocusedOutput(output) =
+                    socket_actions.send_anyhow(Request::FocusedOutput)??
+                {
+                    output.map(|o| o.name)
+                } else {
+                    unreachable!("returns always focused output response")
+                };
+
+                // Find workspace to rename
+                let to_rename = if let Some(workspace) = workspaces
                     .into_iter()
-                    .filter(|w| w.name.as_ref().map_or(true, |n| n.starts_with("_static")))
-                    .filter_map(|w| {
-                        Some(WorkspaceToRename {
-                            id: w.id,
-                            index: w.idx,
-                            output: w.output?,
-                        })
-                    })
-                    .collect::<Vec<_>>();
-                println!("Received workspaces: {needs_renaming:#?}");
+                    .filter(|w| w.name.is_none() && w.idx <= args.count)
+                    .min_by(|a, b| a.output.cmp(&b.output).then(a.id.cmp(&b.id)))
+                {
+                    workspace
+                } else {
+                    continue;
+                };
+
+                // HACK: Niri does not generate unnamed workspaces on unfocused monitors.
+                // So, since new unnamed workspaces won't be added, the script will not be able to rename them.
+                // Thus, we need to focus the monitor we'll be populating.
+
+                // Focus monitor it is on
+                if output_focused != to_rename.output
+                    && let Some(ref output) = to_rename.output
+                {
+                    socket_actions.send_anyhow(Request::Action(Action::FocusMonitor {
+                        output: output.clone(),
+                    }))??;
+                }
+
+                // Rename
+                socket_actions.send_anyhow(Request::Action(Action::SetWorkspaceName {
+                    name: format!("_static_{}", Uuid::new_v4().simple()),
+                    workspace: Some(WorkspaceReferenceArg::Id(to_rename.id)),
+                }))??;
+
+                // Focus back the previous monitor
+                if output_focused != to_rename.output
+                    && let Some(ref output) = output_focused
+                {
+                    socket_actions.send_anyhow(Request::Action(Action::FocusMonitor {
+                        output: output.clone(),
+                    }))??;
+                }
             }
         }
     }
