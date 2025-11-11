@@ -11,14 +11,11 @@ libModule.mkEnableModule {
     # TODO: Handle this with a theme outside this config
     home.packages = with pkgs; [bibata-cursors xwayland-satellite];
 
-    # TODO: Maybe have this as a separate module?
-    # TODO: Spawn multiple when [this issue](https://github.com/LGFae/swww/issues/419) gets a release
-    services.swww.enable = true;
-
     programs.niri = {
       enable = true;
       package = pkgs.niri;
       settings = let
+        scripts = import ./scripts inputs;
         pad = {
           len,
           char ? " ",
@@ -49,6 +46,10 @@ libModule.mkEnableModule {
       in {
         # TODO: Handle this with a theme outside this config
         cursor.theme = "Bibata-Modern-Classic";
+
+        spawn-at-startup = [
+          { argv = ["${scripts}/bin/keep_static_workspaces" "5"]; }
+        ];
 
         hotkey-overlay = {
           skip-at-startup = true;
@@ -140,17 +141,8 @@ libModule.mkEnableModule {
           }
         ];
 
-        #workspaces = listToIndexedAttrs {padKeys = true;} [
-        #  {name = "static-1";}
-        #  {name = "static-2";}
-        #  {name = "static-3";}
-        #  {name = "static-4";}
-        #  {name = "static-5";}
-        #];
-
         binds = let
           explicitRepeat = builtins.mapAttrs (_: bind: {repeat = false;} // bind);
-          scripts = import ./scripts inputs;
           moveFactor = "50";
           resizeFactor = "10%";
         in
