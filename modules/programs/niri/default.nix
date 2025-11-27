@@ -3,19 +3,28 @@
   libModule,
   pkgs,
   ...
-} @ inputs:
+}:
 libModule.mkEnableModule {
   path = ["programs" "niri"];
   description = "Niri Wayland compositor";
-  config = {configNamespace, ...}: {
+  config = {
+    configNamespace,
+    namespace,
+    ...
+  }: {
     # TODO: Handle this with a theme outside this config
     home.packages = with pkgs; [bibata-cursors xwayland-satellite];
+
+    # TODO: Figure out module dependencies specification
+    ${namespace} = {
+      programs.awww.enable = true;
+    };
 
     programs.niri = {
       enable = true;
       package = pkgs.niri;
       settings = let
-        scripts = import ./scripts inputs;
+        scripts = import ./scripts pkgs;
         pad = {
           len,
           char ? " ",
@@ -49,6 +58,7 @@ libModule.mkEnableModule {
 
         spawn-at-startup = [
           {argv = ["${scripts}/bin/keep_static_workspaces" "5"];}
+          {argv = ["wallpaper_init"];}
         ];
 
         hotkey-overlay = {
@@ -136,7 +146,7 @@ libModule.mkEnableModule {
 
         layer-rules = [
           {
-            matches = [{namespace = "swww-daemon";}];
+            matches = [{namespace = "swww-daemonoverview";}];
             place-within-backdrop = true;
           }
         ];
