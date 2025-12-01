@@ -1,5 +1,48 @@
 {
   "nodes": {
+    "ags": {
+      "inputs": {
+        "astal": [
+          "astal"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764289441,
+        "narHash": "sha256-ak+lgFiYE5PHByN1/BRkO5JP498hno6Ix24C1Qf/vec=",
+        "owner": "aylur",
+        "repo": "ags",
+        "rev": "e169694390548dfd38ff40f1ef2163d6c3ffe3ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aylur",
+        "repo": "ags",
+        "type": "github"
+      }
+    },
+    "astal": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764173295,
+        "narHash": "sha256-Jh4VtPcK2Ov+RTcV9FtyQRsxiJmXFQGfqX6jjM7/mgc=",
+        "owner": "aylur",
+        "repo": "astal",
+        "rev": "7d1fac8a4b2a14954843a978d2ddde86168c75ef",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aylur",
+        "repo": "astal",
+        "type": "github"
+      }
+    },
     "firefoxAddons": {
       "inputs": {
         "nixpkgs": [
@@ -8,11 +51,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1764475519,
-        "narHash": "sha256-12TAT2CD+L+wdIHszQnPyu8zGSBxcazoVZmP6UQjk6s=",
+        "lastModified": 1764561884,
+        "narHash": "sha256-vQ3iFPPhxsLqV3c5kgmYP53mVD6id6gsP0tN+oTmqok=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "1172c39fb0e847a7f036e480d94f629edcf2cf46",
+        "rev": "aba4621459aec251d90d6452e3495b58a8a5e185",
         "type": "gitlab"
       },
       "original": {
@@ -94,11 +137,11 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1764550084,
-        "narHash": "sha256-fycOsVUZmJP+9EPNY2XZRWHkNn+xckIPX+zmQoIb3xo=",
+        "lastModified": 1764563982,
+        "narHash": "sha256-6pB9TEo5++jkowiajprT6kqDuEYlGrvyIjTc86hZn2M=",
         "owner": "sodiboo",
         "repo": "niri-flake",
-        "rev": "30374d29ee04aca07f0384c2c664dea9487c0feb",
+        "rev": "9b1ac5828fc04bd7b07f147f26908eeaebb31ca7",
         "type": "github"
       },
       "original": {
@@ -174,6 +217,8 @@
     },
     "root": {
       "inputs": {
+        "ags": "ags",
+        "astal": "astal",
         "firefoxAddons": "firefoxAddons",
         "generationTrimmer": "generationTrimmer",
         "homeManager": "homeManager",
@@ -223,11 +268,11 @@
     "xwayland-satellite-unstable": {
       "flake": false,
       "locked": {
-        "lastModified": 1764366786,
-        "narHash": "sha256-yVCJ4Qe/JkdKDu0DddFdAQgDQVeF12nxH7zv3jtooV4=",
+        "lastModified": 1764560400,
+        "narHash": "sha256-Qz1WvGdawnoz4dG3JtCtlParmdQHM5xu6osnXeVOqYI=",
         "owner": "Supreeeme",
         "repo": "xwayland-satellite",
-        "rev": "b362a3873710a42f7ac2d8ba03772d8290733934",
+        "rev": "9a71e77b1e06dbad4a472265e59b52ac83cbe00c",
         "type": "github"
       },
       "original": {

@@ -34,13 +34,13 @@ in
         cp ./build/${pname} $out/bin
       '';
 
-    preFixup =
-      #sh
-      ''
-        gappsWrapperArgs+=(
-          --prefix PATH : ${lib.makeBinPath [
-          # runtime executables
-        ]}
-        )
-      '';
+    #preFixup =
+    #  #sh
+    #  ''
+    #    gappsWrapperArgs+=(
+    #      --prefix PATH : ${lib.makeBinPath [
+    #      # runtime executables
+    #    ]}
+    #    )
+    #  '';
   }
