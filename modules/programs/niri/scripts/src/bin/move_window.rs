@@ -16,7 +16,7 @@ struct Args {
         short,
         long,
         global = true,
-        allow_negative_numbers = true,
+        allow_hyphen_values = true,
         default_value = "+0"
     )]
     x: PositionChange,
@@ -25,7 +25,7 @@ struct Args {
         short,
         long,
         global = true,
-        allow_negative_numbers = true,
+        allow_hyphen_values = true,
         default_value = "+0"
     )]
     y: PositionChange,

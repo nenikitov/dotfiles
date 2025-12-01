@@ -17,7 +17,10 @@ libModule.mkEnableModule {
 
     # TODO: Figure out module dependencies specification
     ${namespace} = {
-      programs.awww.enable = true;
+      programs = {
+        #ags.enable = true;
+        awww.enable = true;
+      };
     };
 
     programs.niri = {
@@ -153,7 +156,7 @@ libModule.mkEnableModule {
 
         binds = let
           explicitRepeat = builtins.mapAttrs (_: bind: {repeat = false;} // bind);
-          moveFactor = "50";
+          moveFactor = "10%";
           resizeFactor = "10%";
         in
           explicitRepeat {
