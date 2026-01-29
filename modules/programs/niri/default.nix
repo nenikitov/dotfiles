@@ -48,7 +48,7 @@ libModule.mkEnableModule {
         cursor.theme = "Bibata-Modern-Classic";
 
         spawn-at-startup = [
-          { argv = ["${scripts}/bin/keep_static_workspaces" "5"]; }
+          {argv = ["${scripts}/bin/keep_static_workspaces" "5"];}
         ];
 
         hotkey-overlay = {

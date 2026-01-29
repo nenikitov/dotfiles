@@ -14,7 +14,10 @@
           mdformat-simple-breaks
         ]);
     };
-    nixf-diagnose.enable = true;
+    nixf-diagnose = {
+      enable = true;
+      ignore = ["sema-primop-removed-prefix"];
+    };
     rustfmt.enable = true;
     shellcheck.enable = true;
     shfmt.enable = true;

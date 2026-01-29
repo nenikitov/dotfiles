@@ -21,5 +21,7 @@
   home.packages = with pkgs; [
     fastfetch
     ripgrep
+    traceroute
+    unixtools.ifconfig
   ];
 }
