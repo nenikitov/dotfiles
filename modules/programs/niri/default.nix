@@ -18,7 +18,6 @@ libModule.mkEnableModule {
     # TODO: Figure out module dependencies specification
     ${namespace} = {
       programs = {
-        ags.enable = true;
         awww.enable = true;
       };
     };
