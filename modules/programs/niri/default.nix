@@ -19,6 +19,7 @@ libModule.mkEnableModule {
     ${namespace} = {
       programs = {
         awww.enable = true;
+        quickshell.enable = true;
       };
     };
 
@@ -60,6 +61,7 @@ libModule.mkEnableModule {
 
         spawn-at-startup = [
           {argv = ["${scripts}/bin/keep_static_workspaces" "5"];}
+          {argv = ["quickshell"];}
         ];
 
         hotkey-overlay = {

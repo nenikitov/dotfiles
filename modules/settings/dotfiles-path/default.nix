@@ -7,7 +7,7 @@
   inherit (lib) types;
 in
   libModule.mkModule {
-    path = ["settings" "dotfiles_path"];
+    path = ["settings" "dotfilesPath"];
     options = lib.mkOption {
       type = types.path;
       apply = toString;

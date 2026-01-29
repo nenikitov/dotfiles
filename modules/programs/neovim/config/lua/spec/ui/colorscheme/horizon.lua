@@ -1,3 +1,3 @@
 return {
-    'akinsho/horizon.nvim'
+    "akinsho/horizon.nvim",
 }

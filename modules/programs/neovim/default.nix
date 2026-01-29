@@ -33,6 +33,6 @@ libModule.mkEnableModule {
 
     xdg.configFile.nvim.source =
       configGlobal.lib.file.mkOutOfStoreSymlink
-      "${configNamespace.settings.dotfiles_path}/modules/programs/neovim/config";
+      "${configNamespace.settings.dotfilesPath}/modules/programs/neovim/config";
   };
 }
