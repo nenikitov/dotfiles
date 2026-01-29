@@ -3,19 +3,31 @@
   libModule,
   pkgs,
   ...
-} @ inputs:
+}:
 libModule.mkEnableModule {
   path = ["programs" "niri"];
   description = "Niri Wayland compositor";
-  config = {configNamespace, ...}: {
+  config = {
+    configNamespace,
+    namespace,
+    ...
+  }: {
     # TODO: Handle this with a theme outside this config
     home.packages = with pkgs; [bibata-cursors xwayland-satellite];
+
+    # TODO: Figure out module dependencies specification
+    ${namespace} = {
+      programs = {
+        ags.enable = true;
+        awww.enable = true;
+      };
+    };
 
     programs.niri = {
       enable = true;
       package = pkgs.niri;
       settings = let
-        scripts = import ./scripts inputs;
+        scripts = import ./scripts pkgs;
         pad = {
           len,
           char ? " ",
@@ -136,14 +148,14 @@ libModule.mkEnableModule {
 
         layer-rules = [
           {
-            matches = [{namespace = "swww-daemon";}];
+            matches = [{namespace = "swww-daemonoverview";}];
             place-within-backdrop = true;
           }
         ];
 
         binds = let
           explicitRepeat = builtins.mapAttrs (_: bind: {repeat = false;} // bind);
-          moveFactor = "50";
+          moveFactor = "10%";
           resizeFactor = "10%";
         in
           explicitRepeat {

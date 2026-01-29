@@ -24,6 +24,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: Remove these inputs when `nixpkgs` updates to ags v3
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ags = {
+      url = "github:aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.astal.follows = "astal";
+    };
+
     moduleUtils = {
       url = "github:nenikitov/nix-module-utils";
       inputs.nixpkgs.follows = "nixpkgs";

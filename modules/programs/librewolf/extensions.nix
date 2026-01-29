@@ -98,7 +98,8 @@ libModule.mkEnableSubmodule {
             "ublock-filters"
             "ublock-badware"
             "ublock-privacy"
-            "ublock-quick-fixes"
+            # TODO: Reenable once this stops breaking YouTube [forum](https://news.ycombinator.com/item?id=45800999)
+            # "ublock-quick-fixes"
             "ublock-unbreak"
             # Ads
             "easylist"
