@@ -1,18 +1,17 @@
 import Quickshell
-import QtQuick
 
-PanelWindow {
-  anchors {
-    top: true
-    left: true
-    right: true
-  }
+import "modules/bar"
 
-  implicitHeight: 30
+ShellRoot {
+  Variants {
+    model: Quickshell.screens
 
-  Text {
-    anchors.centerIn: parent
+    Scope {
+      required property ShellScreen modelData
 
-    text: "hello world"
+      Bar {
+        _screen: modelData
+      }
+    }
   }
 }
