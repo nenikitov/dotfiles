@@ -13,7 +13,7 @@ libModule.mkEnableModule {
     ...
   }: {
     # TODO: Handle this with a theme outside this config
-    home.packages = with pkgs; [bibata-cursors xwayland-satellite];
+    home.packages = with pkgs; [xwayland-satellite];
 
     # TODO: Figure out module dependencies specification
     ${namespace} = {
@@ -56,9 +56,6 @@ libModule.mkEnableModule {
             })
             list);
       in {
-        # TODO: Handle this with a theme outside this config
-        cursor.theme = "Bibata-Modern-Classic";
-
         spawn-at-startup = [
           {argv = ["${scripts}/bin/keep_static_workspaces" "5"];}
           {argv = ["quickshell"];}

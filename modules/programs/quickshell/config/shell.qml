@@ -1,3 +1,5 @@
+//@ pragma IconTheme Fluent
+
 import Quickshell
 
 import "modules/bar"

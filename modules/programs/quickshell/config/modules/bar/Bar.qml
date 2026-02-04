@@ -30,6 +30,10 @@ PanelWindow {
       }
     }
 
+    Image {
+      source: Quickshell.iconPath("battery-050")
+    }
+
     // Battery
     Text {
       text: UPower.displayDevice.percentage
