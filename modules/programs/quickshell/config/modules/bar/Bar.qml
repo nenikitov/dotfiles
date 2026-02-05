@@ -1,13 +1,12 @@
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import Quickshell.Services.UPower
+import Quickshell.Widgets
+import qs.components
 
 PanelWindow {
-  required property ShellScreen _screen
-
-  screen: _screen
-
   anchors {
     top: true
     left: true
@@ -19,7 +18,6 @@ PanelWindow {
 
   RowLayout {
     id: layout
-    anchors.fill: parent
 
     // Time
     Text {
@@ -30,13 +28,15 @@ PanelWindow {
       }
     }
 
-    Image {
-      source: Quickshell.iconPath("battery-050")
+    Icon {
+      type: Icon.Type.Icon
+      implicitSize: 22
+      source: UPower.displayDevice.iconName
     }
 
     // Battery
     Text {
-      text: UPower.displayDevice.percentage
+      text: UPower.displayDevice.percentage * 100
     }
   }
 }

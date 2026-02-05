@@ -1,6 +1,7 @@
 //@ pragma IconTheme Fluent
 
 import Quickshell
+import QtQuick
 
 import "modules/bar"
 
@@ -8,11 +9,11 @@ ShellRoot {
   Variants {
     model: Quickshell.screens
 
-    Scope {
+    Item {
       required property ShellScreen modelData
 
       Bar {
-        _screen: modelData
+        screen: modelData
       }
     }
   }
