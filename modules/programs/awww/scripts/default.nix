@@ -1,6 +1,6 @@
 pkgs: let
   lib = pkgs.lib;
-  buildSwwwPackage = path:
+  buildAwwwPackage = path:
     pkgs.writeShellApplication {
       name = lib.pipe path [
         builtins.baseNameOf
@@ -8,7 +8,7 @@ pkgs: let
       ];
       text = builtins.readFile path;
       runtimeInputs = with pkgs; [
-        swww
+        awww
         imagemagick
       ];
     };
@@ -16,7 +16,7 @@ in
   pkgs.symlinkJoin {
     name = "awww_scripts";
     paths = [
-      (buildSwwwPackage ./src/wallpaper_init.sh)
-      (buildSwwwPackage ./src/wallpaper_set.sh)
+      (buildAwwwPackage ./src/wallpaper_init.sh)
+      (buildAwwwPackage ./src/wallpaper_set.sh)
     ];
   }

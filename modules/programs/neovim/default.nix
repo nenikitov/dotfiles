@@ -15,10 +15,11 @@ libModule.mkEnableModule {
       neovim = {
         enable = true;
         defaultEditor = true;
+        withRuby = false;
+        withPython3 = true;
         extraPackages = with pkgs; [
           gcc
           libcxx
-          python314
           nodejs_24
           luajitPackages.luarocks-nix
           gnumake
