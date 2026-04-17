@@ -1,3 +1,0 @@
-return {
-    "akinsho/horizon.nvim",
-}
