@@ -13,7 +13,10 @@
     # [Relevant issue](https://github.com/nix-community/home-manager/issues/3075#issuecomment-3037360368).
     legacyPackages.homeConfigurations."${userName}@${hostName}" = inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [module] ++ (builtins.attrValues self.homeModules);
+      modules = [
+        #self.homeModules.profile_minimal
+        module
+      ];
       extraSpecialArgs = {
         inherit inputs userName hostName;
       };

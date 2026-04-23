@@ -12,6 +12,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
+    treefmt = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # My own
     generation-trimmer = {
@@ -25,15 +29,35 @@
     flake-parts,
     home-manager,
     import-tree,
+    nixpkgs,
+    treefmt,
     ...
   } @ inputs:
     flake-parts.lib.mkFlake
     {inherit inputs;} {
       debug = true;
-      systems = ["x86_64-linux"];
+      systems = nixpkgs.lib.systems.flakeExposed;
       imports = [
-        home-manager.flakeModules.home-manager
-        (import-tree [./lib /* ./modules */ ./homes])
+        home-manager.flakeModules.default
+        # TODO: Move to a separate file
+        ({
+          lib,
+          flake-parts-lib,
+          moduleLocation,
+          ...
+        }: {
+          options.flake = flake-parts-lib.mkSubmoduleOptions {
+            lib = lib.mkOption {
+              type = lib.types.lazyAttrsOf lib.types.raw;
+              default = {};
+              description = ''
+                Library functions or constants exposed by the flake.
+              '';
+            };
+          };
+        })
+        (import-tree [./lib ./modules ./homes])
+        ./treefmt.nix
       ];
     };
 }
