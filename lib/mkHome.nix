@@ -14,7 +14,9 @@
     legacyPackages.homeConfigurations."${userName}@${hostName}" = inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
-        #self.homeModules.profile_minimal
+        # Third pary
+        # My own
+        self.homeModules.profile_minimal
         module
       ];
       extraSpecialArgs = {

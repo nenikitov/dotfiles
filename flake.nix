@@ -38,26 +38,10 @@
       debug = true;
       systems = nixpkgs.lib.systems.flakeExposed;
       imports = [
+        # Third pary
         home-manager.flakeModules.default
-        # TODO: Move to a separate file
-        ({
-          lib,
-          flake-parts-lib,
-          moduleLocation,
-          ...
-        }: {
-          options.flake = flake-parts-lib.mkSubmoduleOptions {
-            lib = lib.mkOption {
-              type = lib.types.lazyAttrsOf lib.types.raw;
-              default = {};
-              description = ''
-                Library functions or constants exposed by the flake.
-              '';
-            };
-          };
-        })
-        (import-tree [./lib ./modules ./homes])
-        ./treefmt.nix
+        # My own
+        (import-tree [./lib ./parts ./modules ./homes])
       ];
     };
 }

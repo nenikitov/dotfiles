@@ -76,4 +76,5 @@ All hosts must be defined in `hosts/<HOSTNAME>/default.nix` and have a correspon
 
 ## Inspirations
 
-- [Nebucatnetzer/nixos](https://github.com/Nebucatnetzer/nixos/)
+- [Nebucatnetzer/nixos](https://github.com/Nebucatnetzer/nixos)
+- [Doc-Steve/dendritic-design-with-flake-parts](https://github.com/Doc-Steve/dendritic-design-with-flake-parts)

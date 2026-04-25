@@ -14,21 +14,39 @@
 
     getModulePath = path:
       if builtins.isString path
-      then [path]
-      else if builtins.isAttrs path && builtins.hasAttr "file" path
+      then
+        # String
+        [path]
+      else if builtins.isAttrs path && path ? file
       then let
-        dir_match = builtins.match ''^.*/modules/(.*)/default\.nix$'' path.file;
-        name_match = builtins.match ''^.*/modules/(.*)\.nix$'' path.file;
+        # __curPos
+        dirMatch = path.file |> builtins.match ''^.*/modules/(.*)/default\.nix$'';
+        nameMatch = path.file |> builtins.match ''^.*/modules/(.*)\.nix$'';
+        match =
+          builtins.elemAt (
+            if dirMatch != null
+            then dirMatch
+            else nameMatch
+          )
+          0;
+        parts = match |> builtins.split "/" |> builtins.filter builtins.isString;
+        singular = s:
+          {
+            # TODO: Add more top level module names
+            "profiles" = "profile";
+            "settings" = "setting";
+            "programs" = "program";
+          }."${s}" or s;
+        length = builtins.length parts;
+        first = builtins.head parts;
+        last = builtins.elemAt parts (length - 1);
       in
-        builtins.elemAt (
-          if dir_match != null
-          then dir_match
-          else name_match
-        )
-        0
-        |> builtins.split "/"
-        |> builtins.filter (e: e != [])
-      else path;
+        if length > 1
+        then [(singular first) last]
+        else [first]
+      else
+        # Array
+        path;
 
     toList = x:
       if builtins.isList x
@@ -44,11 +62,16 @@
       options ? {},
       config ? {},
     }: let
-      pathModule = builtins.trace (getModulePath path) (getModulePath path);
+      pathModule = getModulePath path;
     in {
       ${moduleName pathModule} = args: {
-        options.${namespace} = args.lib.setAttrByPath pathModule options;
-        config = self.lib.applyIfFunction config (getModuleConfigs args pathModule);
+        options.${namespace} =
+          options
+          |> self.lib.applyIfFunction args
+          |> args.lib.setAttrByPath pathModule;
+        config =
+          config
+          |> self.lib.applyIfFunction (getModuleConfigs args pathModule) // args;
       };
     };
   };
