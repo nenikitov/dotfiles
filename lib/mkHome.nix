@@ -20,7 +20,10 @@
         module
       ];
       extraSpecialArgs = {
-        inherit inputs userName hostName;
+        inherit inputs;
+        extra = {
+          inherit userName hostName;
+        };
       };
     };
   };

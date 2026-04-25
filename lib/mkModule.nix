@@ -55,7 +55,7 @@
   in rec {
     namespace = "_ne";
 
-    moduleName = path: builtins.concatStringsSep "_" path;
+    getModuleName = path: builtins.concatStringsSep "_" path;
 
     mkModule = {
       path,
@@ -64,14 +64,14 @@
     }: let
       pathModule = getModulePath path;
     in {
-      ${moduleName pathModule} = args: {
+      ${getModuleName pathModule} = args: {
         options.${namespace} =
           options
           |> self.lib.applyIfFunction args
           |> args.lib.setAttrByPath pathModule;
         config =
           config
-          |> self.lib.applyIfFunction (getModuleConfigs args pathModule) // args;
+          |> self.lib.applyIfFunction ((getModuleConfigs args pathModule) // args);
       };
     };
   };
