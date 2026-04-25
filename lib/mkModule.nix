@@ -39,10 +39,9 @@
           }."${s}" or s;
         length = builtins.length parts;
         first = builtins.head parts;
-        last = builtins.elemAt parts (length - 1);
       in
         if length > 1
-        then [(singular first) last]
+        then [(singular first)] ++ builtins.tail parts
         else [first]
       else
         # Array
@@ -59,19 +58,25 @@
 
     mkModule = {
       path,
+      imports ? [],
       options ? {},
       config ? {},
     }: let
-      pathModule = getModulePath path;
+      resolvedPath = getModulePath path;
     in {
-      ${getModuleName pathModule} = args: {
-        options.${namespace} =
+      ${getModuleName resolvedPath} = args: {
+        inherit imports;
+        ${
+          if options != {}
+          then "options"
+          else null
+        } =
           options
           |> self.lib.applyIfFunction args
-          |> args.lib.setAttrByPath pathModule;
+          |> args.lib.setAttrByPath ([namespace] ++ resolvedPath);
         config =
           config
-          |> self.lib.applyIfFunction ((getModuleConfigs args pathModule) // args);
+          |> self.lib.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
       };
     };
   };

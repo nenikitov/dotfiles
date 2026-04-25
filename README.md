@@ -1,20 +1,27 @@
-# My humble NixOS user config
+# My humble NixOS system and user configs.
 
 ## Design
 
-This config is designed to be used with a standalone home-manager installation.
+This config includes both system and home configurations.
+
+The system config is very minimal by design.
+It contains only system-level options, a few very necessary programs, and services.
+
+Almost all of my configuration is done in user-level through home-manager and is designed for standalone installation.
 
 ## Installation
 
 1. Install standalone home-manager following these [instructions](https://nix-community.github.io/home-manager/index.xhtml#sec-flakes-standalone)
-1. Clone the repository (normally into `.config/home-manager`, but you can do it anywhere)
+1. Clone the repository
    ```sh
+   # My preferred places but you can do it anywhere
+   sudo git clone https://github.com/nenikitov/dotfiles /etc/nixos
    git clone https://github.com/nenikitov/dotfiles ${XDG_CONFIG_HOME:-~/.config/home-manager}
    ```
-1. Build home configuration
+1. Build configurations
    ```sh
+   sudo nixos-rebuild switch
    home-manager switch
-   home-manager switch --flake /path/to/cloned/dotfiles # If isn't in `.config/home-manager`
    ```
 
 ## Templates
@@ -26,51 +33,54 @@ This config is designed to be used with a standalone home-manager installation.
 ### Module
 
 All modules must be defined in `modules/<PATH>/<TO>/<MODULE>/default.nix`.
+They follow dendritic pattern, allowing each to expose any flake output, but prefer to use `packages`, `homeModules`, and `nixosModules`.
+Home configuration is preferred over system.
 
 ```nix
-{libModule, ...}:
-libModule.mkEnableModule {
-  path = ["<PATH>" "<TO>" "<MODULE>"];
-  description = "<DESCRIPTION>";
-  options = {
-    ### No need for `enable`
-    ### Only additional options here
-    ### Skip entirely if no additional options needed
-  };
-  config = {
-    ### No need for check for `enable`
-    ### Always try to use set
-    ### If access to `config` is needed, make this a function
-    ### Prefer to use `{configGlobal, ...}:` over `config` argument
+{self, ...}: {
+  flake = {
+    homeModules = self.lib.mkModule {
+      path = __curPos;
+      options = {
+        ### No need for `enable`
+        ### Only additional options here
+        ### Skip entirely if no additional options needed
+      };
+      config = {
+        ### No need for check for `enable`
+        ### Always try to use set
+        ### If access to `config` is needed, make this a function
+      };
+    };
   };
 }
 ```
 
-### Host
+### Homes
 
-All hosts must be defined in `hosts/<HOSTNAME>/default.nix` and have a corresponding `host/<HOSTNAME>/hardware.nix` file.
+All home configurations must be defined in `homes/<USER>@<HOST>/default.nix`.
 
 ```nix
-{customNamespace, ...}: {
-  imports = [
-    ./hardware.nix
-  ];
+{self, ...}: {
+  perSystem = {pkgs, ...}:
+    self.lib.mkHome {
+      inherit pkgs;
+      userName = "<USER>";
+      hostName = "<HOST>";
+    } {
+      imports = [
+        ### Minimal profile (`self.homeModules.profile_minimal`) is already enabled.
+        ### Any other modules through `self.homeModules`.
+      ];
 
-  # Do not change!
-  # Corresponds to the first installed NixOS version
-  system.stateVersion = "24.05";
+      # Do not change!
+      # Corresponds to the first home-manager version installed on this machine.
+      home.stateVersion = "<HOME_STATE>";
 
-  ### Set if is an EFI system
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  ### Select the best profile to use for the machine
-  ### Can use multiple profiles
-  ${customNamespace} = {
-    profiles.desktop.enable = true;
-  };
-
-  ### Must-have options
-  time.timeZone = "America/Toronto";
+      ${self.lib.namespace} = {
+        ### Any configuration options for modules.
+      };
+    };
 }
 ```
 
