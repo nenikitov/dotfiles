@@ -16,7 +16,7 @@ Almost all of my configuration is done in user-level through home-manager and is
    ```sh
    # My preferred places but you can do it anywhere
    sudo git clone https://github.com/nenikitov/dotfiles /etc/nixos
-   git clone https://github.com/nenikitov/dotfiles ${XDG_CONFIG_HOME:-~/.config/home-manager}
+   git clone https://github.com/nenikitov/dotfiles "${XDG_CONFIG_HOME:-~/.config/home-manager}"
    ```
 1. Build configurations
    ```sh
