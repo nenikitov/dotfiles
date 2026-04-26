@@ -1,6 +1,6 @@
 {self, ...}: {
   flake = {
-    homeModules.default = self.lib.mkEnableModule' {
+    homeModules = self.lib.mkEnableModule' {
       path = __curPos;
       description = "A test module `a`";
       config = {

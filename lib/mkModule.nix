@@ -87,17 +87,19 @@
     }: args: let
       resolvedPath = getModulePath path;
     in {
-      ${
-        if options != {}
-        then "options"
-        else null
-      } =
-        options
-        |> self.lib.applyIfFunction args
-        |> args.lib.setAttrByPath ([namespace] ++ resolvedPath);
-      config =
-        config
-        |> self.lib.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
+      default = {
+        ${
+          if options != {}
+          then "options"
+          else null
+        } =
+          options
+          |> self.lib.applyIfFunction args
+          |> args.lib.setAttrByPath ([namespace] ++ resolvedPath);
+        config =
+          config
+          |> self.lib.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
+      };
     };
 
     mkEnableModule' = {
@@ -119,6 +121,7 @@
           args.lib.mkIf
           (getModuleConfigs args resolvedPath).configModule.enable
           (self.lib.applyIfFunction a config);
-      } args;
+      }
+      args;
   };
 }
