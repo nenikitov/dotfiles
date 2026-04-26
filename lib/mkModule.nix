@@ -84,10 +84,10 @@
       path,
       options ? {},
       config ? {},
-    }: args: let
+    }: let
       resolvedPath = getModulePath path;
     in {
-      default = {
+      default = args: {
         ${
           if options != {}
           then "options"
@@ -107,21 +107,18 @@
       description,
       options ? {},
       config ? {},
-    }: args: let
-      resolvedPath = getModulePath path;
-    in
+    }:
       mkModule' {
-        path = resolvedPath;
-        options = a:
-          (self.lib.applyIfFunction a options)
+        inherit path;
+        options = args:
+          (self.lib.applyIfFunction args options)
           // {
             enable = args.lib.mkEnableOption description;
           };
-        config = a:
+        config = args:
           args.lib.mkIf
-          (getModuleConfigs args resolvedPath).configModule.enable
-          (self.lib.applyIfFunction a config);
-      }
-      args;
+          args.configModule.enable
+          (self.lib.applyIfFunction args config);
+      };
   };
 }
