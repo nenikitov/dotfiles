@@ -79,5 +79,46 @@
           |> self.lib.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
       };
     };
+
+    mkModule' = {
+      path,
+      options ? {},
+      config ? {},
+    }: args: let
+      resolvedPath = getModulePath path;
+    in {
+      ${
+        if options != {}
+        then "options"
+        else null
+      } =
+        options
+        |> self.lib.applyIfFunction args
+        |> args.lib.setAttrByPath ([namespace] ++ resolvedPath);
+      config =
+        config
+        |> self.lib.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
+    };
+
+    mkEnableModule' = {
+      path,
+      description,
+      options ? {},
+      config ? {},
+    }: args: let
+      resolvedPath = getModulePath path;
+    in
+      mkModule' {
+        path = resolvedPath;
+        options = a:
+          (self.lib.applyIfFunction a options)
+          // {
+            enable = args.lib.mkEnableOption description;
+          };
+        config = a:
+          args.lib.mkIf
+          (getModuleConfigs args resolvedPath).configModule.enable
+          (self.lib.applyIfFunction a config);
+      } args;
   };
 }

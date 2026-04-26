@@ -17,6 +17,7 @@
         # Third pary
         # My own
         self.homeModules.profile_minimal
+        self.homeModules.default
         module
       ];
       extraSpecialArgs = {
