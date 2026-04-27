@@ -16,8 +16,10 @@
       modules = [
         # Third pary
         # My own
-        self.homeModules.profile_minimal
         self.homeModules.default
+        {
+          ${self.lib.namespace}.profiles.minimal.enable = true;
+        }
         module
       ];
       extraSpecialArgs = {

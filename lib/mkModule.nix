@@ -29,20 +29,8 @@
             else nameMatch
           )
           0;
-        parts = match |> builtins.split "/" |> builtins.filter builtins.isString;
-        singular = s:
-          {
-            # TODO: Add more top level module names
-            "profiles" = "profile";
-            "settings" = "setting";
-            "programs" = "program";
-          }."${s}" or s;
-        length = builtins.length parts;
-        first = builtins.head parts;
       in
-        if length > 1
-        then [(singular first)] ++ builtins.tail parts
-        else [first]
+        match |> builtins.split "/" |> builtins.filter builtins.isString
       else
         # Array
         path;
@@ -54,33 +42,7 @@
   in rec {
     namespace = "_ne";
 
-    getModuleName = path: builtins.concatStringsSep "_" path;
-
     mkModule = {
-      path,
-      imports ? [],
-      options ? {},
-      config ? {},
-    }: let
-      resolvedPath = getModulePath path;
-    in {
-      ${getModuleName resolvedPath} = args: {
-        inherit imports;
-        ${
-          if options != {}
-          then "options"
-          else null
-        } =
-          options
-          |> self.lib.applyIfFunction args
-          |> args.lib.setAttrByPath ([namespace] ++ resolvedPath);
-        config =
-          config
-          |> self.lib.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
-      };
-    };
-
-    mkModule' = {
       path,
       options ? {},
       config ? {},
@@ -102,13 +64,19 @@
       };
     };
 
-    mkEnableModule' = {
+    enableCheckSelf = args: args.configModule.enable;
+    enableCheckSelfAndParent = parent: args:
+      (enableCheckSelf args)
+      && (args.lib.setAttrByPath parent args.configNamespace).enable;
+
+    mkEnableModule = {
       path,
       description,
+      enableCheck ? enableCheckSelf,
       options ? {},
       config ? {},
     }:
-      mkModule' {
+      mkModule {
         inherit path;
         options = args:
           (self.lib.applyIfFunction args options)
@@ -117,7 +85,7 @@
           };
         config = args:
           args.lib.mkIf
-          args.configModule.enable
+          (enableCheck args)
           (self.lib.applyIfFunction args config);
       };
   };

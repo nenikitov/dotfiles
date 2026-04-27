@@ -1,7 +1,8 @@
 {self, ...}: {
   flake = {
-    homeModules = self.lib.mkModule {
+    homeModules = self.lib.mkEnableModule {
       path = __curPos;
+      description = "a bare-bones, minimal profile";
       config = {
         extra,
         lib,

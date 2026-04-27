@@ -41,8 +41,9 @@ Home configuration is preferred over system.
   flake = {
     homeModules = self.lib.mkModule {
       path = __curPos;
+      description = "<DESCRIPTION>";
       options = {
-        ### No need for `enable`
+        ### No need for `enable` option, it is made automatically
         ### Only additional options here
         ### Skip entirely if no additional options needed
       };
@@ -68,17 +69,13 @@ All home configurations must be defined in `homes/<USER>@<HOST>/default.nix`.
       userName = "<USER>";
       hostName = "<HOST>";
     } {
-      imports = [
-        ### Minimal profile (`self.homeModules.profile_minimal`) is already enabled.
-        ### Any other modules through `self.homeModules`.
-      ];
-
       # Do not change!
       # Corresponds to the first home-manager version installed on this machine.
       home.stateVersion = "<HOME_STATE>";
 
       ${self.lib.namespace} = {
         ### Any configuration options for modules.
+        ### Minimal profile (`self.homeModules.profile_minimal`) is already enabled.
       };
     };
 }
