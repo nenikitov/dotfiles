@@ -1,6 +1,6 @@
-{...}: {
-  flake.lib = rec {
-    debug' = dbg: ret: builtins.trace (builtins.deepSeq dbg dbg) ret;
-    debug = val: debug' val val;
+{
+  flake.lib.debug = rec {
+    dbg' = valDbg: valRet: builtins.trace (builtins.deepSeq valDbg valDbg) valRet;
+    dbg = val: dbg' val val;
   };
 }

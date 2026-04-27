@@ -3,13 +3,13 @@
   inputs,
   ...
 }: {
-  flake.lib = let
+  flake.lib.module = let
     getModuleConfigs = args: path: rec {
       inherit path;
       inherit (args) config;
       inherit (self.lib) namespace;
       configNamespace = config.${namespace};
-      configModule = args.lib.attrByPath path {} configNamespace;
+      configModule = inputs.nixpkgs.lib.attrByPath path {} configNamespace;
     };
 
     getModulePath = path:
@@ -20,8 +20,20 @@
       else if builtins.isAttrs path && path ? file
       then let
         # __curPos
-        dirMatch = path.file |> builtins.match ''^.*/modules/(.*)/default\.nix$'';
-        nameMatch = path.file |> builtins.match ''^.*/modules/(.*)\.nix$'';
+        dirMatch =
+          path.file
+          |> builtins.match
+          /*
+          regex
+          */
+          ''^.*/modules/(.*)/default\.nix$'';
+        nameMatch =
+          path.file
+          |> builtins.match
+          /*
+          regex
+          */
+          ''^.*/modules/(.*)\.nix$'';
         match =
           builtins.elemAt (
             if dirMatch != null
@@ -30,7 +42,13 @@
           )
           0;
       in
-        match |> builtins.split "/" |> builtins.filter builtins.isString
+        match
+        |> builtins.split "/"
+        |> builtins.filter builtins.isString
+        |> builtins.map (self.lib.case.convert {
+          from = "kebab";
+          to = "camel";
+        })
       else
         # Array
         path;
@@ -56,18 +74,18 @@
           else null
         } =
           options
-          |> self.lib.applyIfFunction args
-          |> args.lib.setAttrByPath ([namespace] ++ resolvedPath);
+          |> self.lib.function.applyIfFunction args
+          |> inputs.nixpkgs.lib.setAttrByPath ([namespace] ++ resolvedPath);
         config =
           config
-          |> self.lib.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
+          |> self.lib.function.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
       };
     };
 
     enableCheckSelf = args: args.configModule.enable;
     enableCheckSelfAndParent = parent: args:
       (enableCheckSelf args)
-      && (args.lib.setAttrByPath parent args.configNamespace).enable;
+      && (inputs.nixpkgs.lib.setAttrByPath parent args.configNamespace).enable;
 
     mkEnableModule = {
       path,
@@ -79,14 +97,14 @@
       mkModule {
         inherit path;
         options = args:
-          (self.lib.applyIfFunction args options)
+          (self.lib.function.applyIfFunction args options)
           // {
-            enable = args.lib.mkEnableOption description;
+            enable = inputs.nixpkgs.lib.mkEnableOption description;
           };
         config = args:
-          args.lib.mkIf
+          inputs.nixpkgs.lib.mkIf
           (enableCheck args)
-          (self.lib.applyIfFunction args config);
+          (self.lib.function.applyIfFunction args config);
       };
   };
 }

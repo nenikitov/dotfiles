@@ -40,6 +40,7 @@ Home configuration is preferred over system.
 {self, ...}: {
   flake = {
     homeModules = self.lib.mkModule {
+      ### This generates module path from file path, converting each name from kebab to camel case
       path = __curPos;
       description = "<DESCRIPTION>";
       options = {
