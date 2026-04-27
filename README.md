@@ -33,7 +33,7 @@ Almost all of my configuration is done in user-level through home-manager and is
 ### Module
 
 All modules must be defined in `modules/<PATH>/<TO>/<MODULE>/default.nix`.
-They follow dendritic pattern, allowing each to expose any flake output, but prefer to use `packages`, `homeModules`, and `nixosModules`.
+They follow dendritic-like pattern, allowing each to expose any flake output, but prefer to use `packages`, `homeModules`, and `nixosModules`.
 Home configuration is preferred over system.
 
 ```nix
@@ -76,7 +76,7 @@ All home configurations must be defined in `homes/<USER>@<HOST>/default.nix`.
 
       ${self.lib.namespace} = {
         ### Any configuration options for modules.
-        ### Minimal profile (`self.homeModules.profile_minimal`) is already enabled.
+        ### Minimal profile (`profiles.minimal`) is already enabled.
       };
     };
 }
