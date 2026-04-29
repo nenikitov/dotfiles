@@ -20,37 +20,38 @@
         # String
         [path]
       else if builtins.isAttrs path && path ? file
-      then let
+      then
         # __curPos
-        dirMatch =
-          path.file
-          |> builtins.match
-          /*
-          regex
-          */
-          ''^.*/modules/(.*)/default\.nix$'';
-        nameMatch =
-          path.file
-          |> builtins.match
-          /*
-          regex
-          */
-          ''^.*/modules/(.*)\.nix$'';
-        match =
-          builtins.elemAt (
-            if dirMatch != null
-            then dirMatch
-            else nameMatch
-          )
-          0;
-      in
-        match
-        |> builtins.split "/"
-        |> builtins.filter builtins.isString
-        |> builtins.map (self.lib.case.convert {
-          from = "kebab";
-          to = "camel";
-        })
+        let
+          dirMatch =
+            path.file
+            |> builtins.match
+            /*
+            regex
+            */
+            ''^.*/modules/(.*)/default\.nix$'';
+          nameMatch =
+            path.file
+            |> builtins.match
+            /*
+            regex
+            */
+            ''^.*/modules/(.*)\.nix$'';
+          match =
+            builtins.elemAt (
+              if dirMatch != null
+              then dirMatch
+              else nameMatch
+            )
+            0;
+        in
+          match
+          |> builtins.split "/"
+          |> builtins.filter builtins.isString
+          |> builtins.map (self.lib.case.convert {
+            from = "kebab";
+            to = "camel";
+          })
       else
         # Array
         path;

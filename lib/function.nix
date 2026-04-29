@@ -16,10 +16,16 @@
         |> (sources: sources ++ [fn])
         |> builtins.map (s:
           if lib.isFunction s
-          then lib.functionArgs s
+          then
+            # Function - get args
+            lib.functionArgs s
           else if (builtins.isAttrs s) && (s |> builtins.attrValues |> builtins.all builtins.isBool)
-          then s
-          else {})
+          then
+            # Funcion arguments - use as is
+            s
+          else
+            # Not a function - assume empty
+            {})
         |> builtins.zipAttrsWith (k: v: builtins.any (v: v == true) v)
       );
   };
