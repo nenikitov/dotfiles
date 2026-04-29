@@ -4,12 +4,14 @@
   ...
 }: {
   flake.lib.module = let
+    inherit (inputs.nixpkgs) lib;
+
     getModuleConfigs = args: path: rec {
       inherit path;
       inherit (args) config;
       inherit (self.lib) namespace;
       configNamespace = config.${namespace};
-      configModule = inputs.nixpkgs.lib.attrByPath path {} configNamespace;
+      configModule = lib.attrByPath path {} configNamespace;
     };
 
     getModulePath = path:
@@ -52,11 +54,6 @@
       else
         # Array
         path;
-
-    toList = x:
-      if builtins.isList x
-      then x
-      else [x];
   in rec {
     namespace = "_ne";
 
@@ -67,25 +64,31 @@
     }: let
       resolvedPath = getModulePath path;
     in {
-      default = args: {
-        ${
-          if options != {}
-          then "options"
-          else null
-        } =
-          options
-          |> self.lib.function.applyIfFunction args
-          |> inputs.nixpkgs.lib.setAttrByPath ([namespace] ++ resolvedPath);
-        config =
-          config
-          |> self.lib.function.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
-      };
+      # HACK: Nix module dynamically determine which arguments to pass to avoid recursion.
+      # So we "migrate" arguments from inner functions to the wrapper so arguments are visible from outside.
+      # [Issue](https://github.com/NixOS/nixpkgs/issues/446068#issuecomment-3335305966)
+      # [Snippet](https://github.com/NixOS/nixpkgs/blob/cd644aa397547e41b974c7c2f48aef83113bc19e/lib/modules.nix#L710)
+      default = self.lib.function.migrateArgs [options config] (
+        args: {
+          ${
+            if options != {}
+            then "options"
+            else null
+          } =
+            options
+            |> self.lib.function.applyIfFunction args
+            |> lib.setAttrByPath ([namespace] ++ resolvedPath);
+          config =
+            config
+            |> self.lib.function.applyIfFunction ((getModuleConfigs args resolvedPath) // args);
+        }
+      );
     };
 
     enableCheckSelf = args: args.configModule.enable;
     enableCheckSelfAndParent = parent: args:
       (enableCheckSelf args)
-      && (inputs.nixpkgs.lib.setAttrByPath parent args.configNamespace).enable;
+      && (lib.setAttrByPath parent args.configNamespace).enable;
 
     mkEnableModule = {
       path,
@@ -96,15 +99,21 @@
     }:
       mkModule {
         inherit path;
-        options = args:
-          (self.lib.function.applyIfFunction args options)
-          // {
-            enable = inputs.nixpkgs.lib.mkEnableOption description;
-          };
-        config = args:
-          inputs.nixpkgs.lib.mkIf
-          (enableCheck args)
-          (self.lib.function.applyIfFunction args config);
+        # HACK: Same arguments hack as before
+        options = self.lib.function.migrateArgs options (
+          args:
+            (self.lib.function.applyIfFunction args options)
+            // {
+              enable = lib.mkEnableOption description;
+            }
+        );
+        # HACK: Same arguments hack as before
+        config = self.lib.function.migrateArgs config (
+          args:
+            lib.mkIf
+            (enableCheck args)
+            (self.lib.function.applyIfFunction args config)
+        );
       };
   };
 }

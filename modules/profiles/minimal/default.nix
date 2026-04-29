@@ -2,7 +2,7 @@
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
-      description = "a bare-bones, minimal profile";
+      description = "a profile with very minimal CLI functionality";
       config = {
         extra,
         lib,

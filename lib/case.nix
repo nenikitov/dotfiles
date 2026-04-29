@@ -1,7 +1,9 @@
 {inputs, ...}: {
-  flake.lib.case = rec {
+  flake.lib.case = let
+    inherit (inputs.nixpkgs) lib;
+  in rec {
     capitalize = str:
-      (str |> builtins.substring 0 1 |> inputs.nixpkgs.lib.toUpper)
+      (str |> builtins.substring 0 1 |> lib.toUpper)
       + (str |> builtins.substring 1 (-1));
 
     kebabToWords = str:
@@ -11,7 +13,7 @@
       # Don't forget to remove empty capture groups
       |> builtins.filter builtins.isString
       # Normalize
-      |> builtins.map inputs.nixpkgs.lib.toLower;
+      |> builtins.map lib.toLower;
 
     snakeToWords = str:
       str
@@ -20,7 +22,7 @@
       # Don't forget to remove empty capture groups
       |> builtins.filter builtins.isString
       # Normalize
-      |> builtins.map inputs.nixpkgs.lib.toLower;
+      |> builtins.map lib.toLower;
 
     pascalToWords = str:
       str
@@ -39,7 +41,7 @@
           |> (s: [(builtins.elemAt s 0) null (builtins.elemAt s 1)])
         else s)
       # Flatten
-      |> inputs.nixpkgs.lib.flatten
+      |> lib.flatten
       # Split on `null`
       |> builtins.foldl' (acc: elem:
         if elem == null
@@ -59,7 +61,7 @@
       |> (acc: acc.words ++ [acc.word])
       # Normalize
       |> builtins.filter (w: w != "")
-      |> builtins.map inputs.nixpkgs.lib.toLower;
+      |> builtins.map lib.toLower;
 
     camelToWords = pascalToWords;
 
