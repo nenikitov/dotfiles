@@ -28,16 +28,19 @@
     self,
     flake-parts,
     import-tree,
+    nixpkgs,
     ...
   } @ inputs:
     flake-parts.lib.mkFlake
     {inherit inputs;} {
       debug = true;
-      systems = inputs.nixpkgs.lib.systems.flakeExposed;
+      # Poor x86-64 Darwin :(
+      systems = nixpkgs.lib.systems.flakeExposed |> nixpkgs.lib.subtractLists ["x86_64-darwin"];
       imports = [
-        # Third pary
+        # Community
         inputs.home-manager.flakeModules.default
-        # My own
+        # Personal
+        # Local
         (import-tree [./lib ./parts ./modules ./homes])
       ];
     };
