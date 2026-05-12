@@ -5,10 +5,14 @@
 }: {
   flake.lib.home = {
     mkHome = {
-      pkgs,
       userName,
       hostName,
     }: module: {
+      pkgs,
+      self',
+      inputs',
+      ...
+    }: {
       # HACK: `flake.homeConfigurations` needs pkgs, so I'll need to hard-code it.
       # Even though I'm outputting a package, home-manager still checks for packages.<system>.homeConfigurations.<name> and accepts it.
       # [Issue](https://github.com/nix-community/home-manager/issues/3075#issuecomment-3037360368).
@@ -28,7 +32,7 @@
           module
         ];
         extraSpecialArgs = {
-          inherit inputs;
+          inherit inputs' self';
           extra = {
             inherit userName hostName;
           };

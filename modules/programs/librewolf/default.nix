@@ -1,1 +1,111 @@
-{}
+{self, ...}: {
+  flake = {
+    homeModules = self.lib.mkEnableModule {
+      path = __curPos;
+      description = "Librewolf (Firefox fork) web-browser";
+      options = {
+        lib,
+        pkgs,
+        ...
+      }: let
+        inherit (lib) types;
+      in {
+        _profileName = lib.mkOption {
+          description = "Name of the default profile.";
+          default = "default";
+          type = types.str;
+          internal = true;
+          visible = false;
+        };
+      };
+      config = {
+        configModule,
+        pkgs,
+        ...
+      }: {
+        ${self.lib.namespace}.programs.librewolf = {
+          extensions.profiles.minimal.enable = true;
+        };
+
+        programs.librewolf = {
+          enable = true;
+          package = pkgs.librewolf.override {
+            extraPolicies = {
+              # HACK: This breaks the entire policy settings section related to search engines
+              # which prevents Librewolf from automatically resetting the search engine to DuckDuckGo
+              # so we can set it with `profile.<profile>.search.default`.
+              SearchEngines.Default = null;
+            };
+          };
+
+          profiles.${configModule._profileName} = {
+            name = "Default";
+            isDefault = true;
+
+            search = {
+              force = true;
+              default = "brave";
+            };
+
+            settings = {
+              "findbar.highlightAll" = true;
+              "accessibility.typeaheadfind.flashBar" = 0;
+              "svg.context-properties.content.enabled" = true;
+              "webgl.disabled" = false;
+              "browser.startup.page" = 3;
+              "browser.translations.automaticallyPopup" = false;
+              "browser.download.always_ask_before_handling_new_types" = true;
+              "media.eme.enabled" = true;
+              "general.autoScroll" = true;
+              "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
+              "browser.search.suggest.enabled" = true;
+              "browser.search.suggest.enabled.private" = true;
+              "browser.urlbar.suggest.searches" = true;
+              "privacy.trackingprotection.allow_list.baseline.enabled" = false;
+              "browser.formfill.enable" = true;
+              "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+              "permissions.default.desktop-notification" = 2;
+              "middlemouse.paste" = false;
+              "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+              "privacy.resistFingerprinting" = false;
+              "browser.tabs.inTitlebar" = 0;
+              "browser.toolbars.bookmarks.visibility" = "never";
+              "browser.uidensity" = 1;
+              "browser.compactmode.show" = true;
+              "browser.urlbar.shortcuts.actions" = false;
+              "browser.urlbar.suggest.quickactions" = false;
+              "browser.urlbar.shortcuts.bookmarks" = false;
+              "browser.uiCustomization.state" = builtins.toJSON {
+                placements = {
+                  unified-extensions-area = [
+                    "sponsorblocker_ajay_app-browser-action"
+                  ];
+                  nav-bar = [
+                    "back-button"
+                    "forward-button"
+                    "stop-reload-button"
+                    "vertical-spacer"
+                    "customizableui-special-spring1"
+                    "urlbar-container"
+                    "customizableui-special-spring2"
+                    "ublock0_raymondhill_net-browser-action"
+                    "addon_darkreader_org-browser-action"
+                    "unified-extensions-button"
+                    "downloads-button"
+                    "fxa-toolbar-menu-button"
+                    "reset-pbm-toolbar-button"
+                  ];
+                  TabsToolbar = [
+                    "tabbrowser-tabs"
+                    "new-tab-button"
+                  ];
+                };
+                currentVersion = 23;
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}

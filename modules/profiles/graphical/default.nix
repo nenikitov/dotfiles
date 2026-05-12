@@ -5,6 +5,7 @@
       description = "a profile with a graphical shell";
       config = {pkgs, ...}: {
         ${self.lib.namespace} = {
+          programs.librewolf.enable = true;
         };
 
         # TODO: Make this a separate module or handle with a theming engine

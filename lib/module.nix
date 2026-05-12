@@ -6,7 +6,7 @@
   flake.lib.module = let
     inherit (inputs.nixpkgs) lib;
 
-    # HACK: Nix module dynamically determine which arguments to pass to avoid recursion.
+    # HACK: Nix module dynamically determinse which arguments to pass to avoid recursion.
     # So we "migrate" arguments from inner functions to the wrapper so arguments are visible from outside.
     # [Issue](https://github.com/NixOS/nixpkgs/issues/446068#issuecomment-3335305966)
     # [Snippet](https://github.com/NixOS/nixpkgs/blob/cd644aa397547e41b974c7c2f48aef83113bc19e/lib/modules.nix#L710)
@@ -29,7 +29,7 @@
           else
             # Not a function - assume empty
             {})
-        |> builtins.zipAttrsWith (k: v: builtins.any (v: v == true) v)
+        |> builtins.zipAttrsWith (k: v: builtins.all (v: v == true) v)
         # Strip arguments my module system provides (see `getModuleArgs` because Nix modules shouldn't be concerned with them)
         |> lib.flip builtins.removeAttrs ["path" "configNamespace" "configModule"]
       );
@@ -54,16 +54,12 @@
           dirMatch =
             path.file
             |> builtins.match
-            /*
-            regex
-            */
+            # regex
             ''^.*/modules/(.*)/default\.nix$'';
           nameMatch =
             path.file
             |> builtins.match
-            /*
-            regex
-            */
+            # regex
             ''^.*/modules/(.*)\.nix$'';
           match =
             builtins.elemAt (

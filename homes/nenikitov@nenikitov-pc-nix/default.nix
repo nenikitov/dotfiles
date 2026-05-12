@@ -1,7 +1,6 @@
 {self, ...}: {
-  perSystem = {pkgs, ...}:
+  perSystem =
     self.lib.mkHome {
-      inherit pkgs;
       userName = "nenikitov";
       hostName = "nenikitov-pc-nix";
     } {
