@@ -2,7 +2,7 @@
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
-      description = "Indie wiki buddy Librewolf extension.";
+      description = "Indie wiki buddy Librewolf extension";
       config = {inputs', ...}: {
         ${self.lib.namespace}.programs.librewolf.extensions.extensions = [
           {

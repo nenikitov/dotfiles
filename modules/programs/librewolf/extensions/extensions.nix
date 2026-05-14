@@ -37,8 +37,6 @@
               };
             };
           });
-          internal = true;
-          visible = false;
         };
       config = {
         configNamespace,

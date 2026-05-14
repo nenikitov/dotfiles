@@ -2,7 +2,7 @@
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
-      description = "Dark reader Librewolf extension.";
+      description = "Dark reader Librewolf extension";
       config = {inputs', ...}: {
         ${self.lib.namespace}.programs.librewolf.extensions.extensions = [
           {

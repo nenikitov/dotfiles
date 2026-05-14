@@ -39,7 +39,7 @@
           };
 
           profiles.${configModule._profileName} = {
-            name = "Default";
+            name = configModule._profileName;
             isDefault = true;
 
             search = {
