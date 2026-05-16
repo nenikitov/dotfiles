@@ -10,7 +10,7 @@
           aliases = ["@noogle"];
           urls = {
             search = {
-              template = "https://noogle.dev/q";
+              url = "https://noogle.dev/q";
               params = {
                 term = "{searchTerms}";
               };

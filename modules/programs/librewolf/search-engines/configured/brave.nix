@@ -10,13 +10,13 @@
           aliases = ["@b" "@brave"];
           urls = {
             search = {
-              template = "https://search.brave.com/search";
+              url = "https://search.brave.com/search";
               params = {
                 q = "{searchTerms}";
               };
             };
             suggestions = {
-              template = "https://search.brave.com/api/suggest";
+              url = "https://search.brave.com/api/suggest";
               params = {
                 q = "{searchTerms}";
               };

@@ -2,21 +2,21 @@
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
-      description = "NixOS wiki Librewolf search engine";
+      description = "PCGamingWiki Librewolf search engine";
       config = {
-        ${self.lib.namespace}.programs.librewolf.searchEngines.searchEngines.nix-wiki = {
-          name = "NixOS Wiki";
-          icons."16" = "https://nixos.wiki/favicon.png";
-          aliases = ["@nix-wiki"];
+        ${self.lib.namespace}.programs.librewolf.searchEngines.searchEngines.pc-gaming-wiki = {
+          name = "PCGamingWiki";
+          icons."64" = "https://static.pcgamingwiki.com/favicons/pcgamingwiki.png";
+          aliases = ["@pc-gaming-wiki"];
           urls = {
             search = {
-              url = "https://nixos.wiki/index.php";
+              url = "https://www.pcgamingwiki.com/w/index.php";
               params = {
                 search = "{searchTerms}";
               };
             };
             suggestions = {
-              url = "https://nixos.wiki/api.php";
+              url = "https://www.pcgamingwiki.com/w/api.php";
               params = {
                 search = "{searchTerms}";
                 action = "opensearch";

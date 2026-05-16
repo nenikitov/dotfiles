@@ -25,6 +25,7 @@
       }: {
         ${self.lib.namespace}.programs.librewolf = {
           extensions.profiles.minimal.enable = true;
+          searchEngines.profiles.minimal.enable = true;
         };
 
         programs.librewolf = {

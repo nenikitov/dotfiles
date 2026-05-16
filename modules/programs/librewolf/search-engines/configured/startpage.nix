@@ -10,13 +10,13 @@
           aliases = ["@s" "@startpage"];
           urls = {
             search = {
-              template = "https://www.startpage.com/sp/search";
+              url = "https://www.startpage.com/sp/search";
               params = {
                 query = "{searchTerms}";
               };
             };
             suggestions = {
-              template = "https://www.startpage.com/osuggestions";
+              url = "https://www.startpage.com/osuggestions";
               params = {
                 q = "{searchTerms}";
               };

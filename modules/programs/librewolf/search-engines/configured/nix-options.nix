@@ -2,18 +2,18 @@
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
-      description = "NixOS packages Librewolf search engine";
+      description = "NixOS options Librewolf search engine";
       options = {lib, ...}: {
-        channel = self.lib.option.mkChannelOption "nixpkgs channel that NixOS system follows.";
+        channel = self.lib.option.mkChannelOption "NixOS system release version.";
       };
       config = {configModule, ...}: {
-        ${self.lib.namespace}.programs.librewolf.searchEngines.searchEngines.nix-packages = {
-          name = "NixOS Packages";
+        ${self.lib.namespace}.programs.librewolf.searchEngines.searchEngines.nix-options = {
+          name = "NixOS Options";
           icons."16" = "https://search.nixos.org/favicon.png";
-          aliases = ["@nix-packages"];
+          aliases = ["@nix-options"];
           urls = {
             search = {
-              url = "https://search.nixos.org/packages";
+              url = "https://search.nixos.org/options";
               params = {
                 query = "{searchTerms}";
                 channel = configModule.channel;

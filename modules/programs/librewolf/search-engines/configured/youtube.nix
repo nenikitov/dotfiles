@@ -10,13 +10,13 @@
           aliases = ["@y" "@youtube"];
           urls = {
             search = {
-              template = "https://www.youtube.com/results";
+              url = "https://www.youtube.com/results";
               params = {
                 search_query = "{searchTerms}";
               };
             };
             suggestions = {
-              template = "ttps://www.google.com/complete/search";
+              url = "ttps://www.google.com/complete/search";
               params = {
                 q = "{searchTerms}";
                 ds = "yt";

@@ -20,10 +20,18 @@
             else if descriptionFull != null
             then descriptionFull
             else if description != null
-            then "Whether to ${description}"
+            then "Whether to ${description}."
             else null;
         }
         // a)
       |> lib.mkOption;
+
+    mkChannelOption = description:
+      lib.mkOption {
+        inherit description;
+        example = "25.11";
+        type = lib.types.either (lib.types.enum ["unstable"]) (lib.types.str);
+        default = "unstable";
+      };
   };
 }

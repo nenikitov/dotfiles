@@ -14,7 +14,7 @@
               description = "URL without parameters.";
               type = types.str;
             };
-            params = {
+            params = lib.mkOption {
               description = "GET parameters";
               type = types.attrsOf types.str;
             };
@@ -79,8 +79,8 @@
                 then
                   e.urls.suggestions
                   |> mkUrl
-                  |> lib.singleton
                   |> (u: u // {type = "application/x-suggestions+json";})
+                  |> lib.singleton
                 else [];
             in
               search ++ suggestions;
