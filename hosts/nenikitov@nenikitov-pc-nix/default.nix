@@ -7,6 +7,23 @@
   # Corresponds to the first home-manager version
   home.stateVersion = "25.05";
 
+  programs.obs-studio.enable = true;
+  # TODO: enabling home-manager module breaks the entire thing and forces the use of nix for config
+  # I might not need anything beyond deploying symlinks and maybe generating monitors file
+  # wayland.windowManager.hyprland = {
+  #   enable = true;
+  #   configType = "hyprlang";
+  #   systemd.enable = false;
+  #   settings = {
+  #     "$mod" = "SUPER";
+  #     bind = [
+  #       "$mod, C, killactive"
+  #       "$mod, RETURN, exec, alacritty"
+  #       "$mod SHIFT, RETURN, exec, rofi -show drun"
+  #     ];
+  #   };
+  # };
+
   ${customNamespace} = {
     profiles.graphical.enable = true;
 

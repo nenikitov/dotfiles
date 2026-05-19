@@ -32,8 +32,8 @@ libModule.mkEnableModule {
       };
     };
 
-    xdg.configFile.nvim.source =
-      configGlobal.lib.file.mkOutOfStoreSymlink
-      "${configNamespace.settings.dotfilesPath}/modules/programs/neovim/config";
+    # xdg.configFile.nvim.source =
+    #   configGlobal.lib.file.mkOutOfStoreSymlink
+    #   "${configNamespace.settings.dotfilesPath}/modules/programs/neovim/config";
   };
 }
