@@ -1,3 +1,35 @@
+local function ternary(...)
+  local args = table.pack(...)
+
+  if args.n == 0 then error("No default case", 2) end
+
+  for i = 1, args.n do
+    local arg = args[i]
+
+    -- Reached last default case
+    if i == args.n then return arg end
+
+    if type(arg) ~= "table" or next(arg, 2) ~= nil then error(string.format("Argument %d is not a table { condition, value }", i), 2) end
+    if arg[1] then return arg[2] end
+  end
+end
+
+local function switch(value, ...)
+  local args = table.pack(...)
+
+  if args.n == 0 then error("No default case", 2) end
+
+  for i = 1, args.n do
+    local arg = args[i]
+
+    -- Reached last default case
+    if i == args.n then return arg end
+
+    if type(arg) ~= "table" or next(arg, 2) ~= nil then error(string.format("Argument %d is not a table { case, value }", i), 2) end
+    if arg[1] == value then return arg[2] end
+  end
+end
+
 -- Monitors
 hl.monitor({
   output = '',
@@ -37,6 +69,9 @@ hl.config({
   general = { layout = "scrolling" },
   dwindle = { preserve_split = true },
   master = { new_status = "master" },
+  scrolling = {
+    direction = "right"
+  }
 })
 
 -- Focus
@@ -148,6 +183,7 @@ hl.config({
       round_only_edges = false,
       stacked = true,
       gaps_out = 4,
+      indicator_height = 2,
       keep_upper_gap = false,
     }
   }
@@ -223,74 +259,189 @@ bind({mod, "SHIFT", "mouse_up"}, hl.dsp.focus{ direction = "r" })
 bind({mod, "mouse:272"}, hl.dsp.window.drag(), { mouse = true })
 bind({mod, "mouse:273"}, hl.dsp.window.resize(), { mouse = true })
 bind({mod, "G"}, hl.dsp.group.toggle())
-for dir, key in pairs(key_window) do
-  bind({mod, key}, function()
+
+local function get_layout_and_group_directions()
+  local workspace = hl.get_active_workspace()
+  if not workspace then return end
+
+  local layout, group = {"l", "r"}, {"u", "d"}
+
+  if workspace.tiled_layout == "scrolling" then
+    local dir = hl.get_config("scrolling.direction")
+    if dir == "up" or dir == "down" then
+      layout, group = group, layout
+    end
+    layout = switch(dir,
+      {"left", {"r", "l"}},
+      {"up",   {"d", "u"}},
+      layout
+    )
+  end
+
+  return layout, group
+end
+
+local function focus_in_direction_or_group(dir)
+  return function()
     local window = hl.get_active_window()
     if not window then return end
 
-    if window.group
-      and ((dir == "u" and window.group.current_index ~= 1)
-      or (dir == "d" and window.group.current_index ~= window.group.size))
-    then
-      local target = dir == "u" and hl.dsp.group.prev() or hl.dsp.group.next()
-      hl.dispatch(target)
-    else
-      hl.dispatch(hl.dsp.focus {direction = dir})
+    local layout_dir, group_dir = get_layout_and_group_directions()
+    local layout = ternary({window.floating, nil}, window.workspace.tiled_layout)
+    local group = window.group
+
+    -- Inside group and along group - cycle in group
+    if group then
+      if dir == group_dir[1] and group.current_index ~= 1 then
+        return hl.dispatch(hl.dsp.group.prev())
+      elseif dir == group_dir[2] and group.current_index ~= group.size then
+        return hl.dispatch(hl.dsp.group.next())
+      end
     end
-  end, {repeating = true})
+
+    -- Monocle and along layout - cycle windows
+    if layout == "monocle" then
+      if dir == layout_dir[1] then
+        return hl.dispatch(hl.dsp.layout("cycleprev"))
+      elseif dir == layout_dir[2] then
+        return hl.dispatch(hl.dsp.layout("cyclenext"))
+      end
+    end
+
+    -- Scrolling - scrolling specific dispatcher
+    if layout == "scrolling" then
+      -- HACK: `focus direction` uses relative l/r/u/d that depend on `scrolling.direction`
+      local dir_relative = switch(
+        hl.get_config("scrolling.direction"),
+        {"left", switch(dir, {"l", "r"}, {"r", "l"}, dir)},
+        {"up", switch(dir, {"u", "d"}, {"d", "u"}, dir)},
+        dir
+      )
+
+      return hl.dispatch(hl.dsp.layout("focus " .. dir_relative))
+    end
+
+    -- Fallback
+    return hl.dispatch(hl.dsp.focus { direction = dir })
+  end
+end
+
+local function move_in_direction_or_group(dir)
+  return function()
+    local window = hl.get_active_window()
+    if not window then return end
+
+    local layout_dir, group_dir = get_layout_and_group_directions()
+    local layout = ternary({window.floating, nil}, window.workspace.tiled_layout)
+    local group = window.group
+
+    -- Floating - move by pixels
+    if window.floating then
+      local factor = 20
+      local x = switch(dir, {"l", -factor}, {"r", factor}, 0)
+      local y = switch(dir, {"u", -factor}, {"d", factor}, 0)
+      return hl.dispatch(hl.dsp.window.move {x = x, y = y, relative = true})
+    end
+
+    -- Inside group and along group - cycle in group
+    if group then
+      if dir == group_dir[1] and group.current_index ~= 1 then
+        return hl.dispatch(hl.dsp.group.move_window{forward = false})
+      elseif dir == group_dir[2] and group.current_index ~= group.size then
+        return hl.dispatch(hl.dsp.group.move_window{forward = true})
+      end
+    end
+
+    -- Scrolling
+    if layout == "scrolling" then
+      -- Not in a group and across layout - new or into existing column
+      if not group then
+        if dir == layout_dir[1] then
+          return hl.dispatch(hl.dsp.layout("consume_or_expel prev"))
+        elseif dir == layout_dir[2] then
+          return hl.dispatch(hl.dsp.layout("consume_or_expel next"))
+        end
+      -- Out of a group - new column or into current column
+      else
+        -- HACK: `group_aware` move is borked in scrolling layout and always generates a column on the right no matter the direction
+        -- To remove this branch completely when [this](https://github.com/hyprwm/Hyprland/discussions/14960) gets resolved
+
+        -- Count tiled windows in a stack
+        local is_vertical = layout_dir[1] == "u" or layout_dir[1] == "d"
+        local scroll_axis = ternary({is_vertical, "y"}, "x")
+        local stack_axis = ternary({is_vertical, "x"}, "y")
+        local stack_dir = ternary({is_vertical, "l"}, "u")
+
+        -- HACK: `window.at` accounts for groupbar height, but to find windows sitting on the same stack we don't need to account for it
+        local function get_window_or_groupbar_position(window)
+          if not window.group then return window.at end
+
+          local height = ternary(
+            {hl.get_config("group.groupbar.render_titles"), hl.get_config("group.groupbar.height")},
+            hl.get_config("group.groupbar.indicator_height") + hl.get_config("group.groupbar.gaps_out")
+          )
+          local elements = ternary(
+            {hl.get_config("group.groupbar.stacked"), window.group.size},
+            1
+          )
+          return {x = window.at.x, y = window.at.y - height * elements}
+        end
+
+        local after_seen = {}
+        local after_size = 0
+        local window_at = get_window_or_groupbar_position(window)
+        for _, w in ipairs(window.workspace:get_windows()) do
+          local w_at = get_window_or_groupbar_position(w)
+
+          if not w.floating
+            and window_at[scroll_axis] == w_at[scroll_axis]
+            and window_at[stack_axis] < w_at[stack_axis]
+            and not after_seen[w_at[stack_axis]]
+          then
+            after_seen[w_at[stack_axis]] = true
+            after_size = after_size + 1
+          end
+        end
+
+        if group.size == 1 then
+          return hl.dispatch(hl.dsp.group.toggle())
+        end
+
+        hl.dispatch(hl.dsp.window.move { out_of_group = layout_dir[2] })
+
+        if dir == layout_dir[1] then
+          -- TODO: Sometimes the column spawned is not the immediately next one but the last one, not sure why
+          return hl.dispatch(hl.dsp.layout("swapcol l"))
+        elseif dir == layout_dir[2] then
+          return
+        else
+          hl.dispatch(hl.dsp.layout("consume_or_expel prev"))
+          for _ = 1, after_size + ternary({dir == stack_dir, 1}, 0) do
+            hl.dispatch(hl.dsp.window.move { direction = stack_dir, group_aware = false })
+          end
+          return
+        end
+      end
+    end
+
+    -- Fallback
+    return hl.dispatch(hl.dsp.window.move { direction = dir, group_aware = true })
+  end
+end
+
+hl.workspace_rule{workspace = "6", layout = "dwindle"}
+
+for dir, key in pairs(key_window) do
+  bind({mod, key}, focus_in_direction_or_group(dir), {repeating = true})
   bind(
     {mod, "SHIFT", key},
-    function()
-      local window = hl.get_active_window()
-      if not window then return end
-
-      if window.floating then
-        local factor = 20
-        local x = (dir == "l" and -factor) or (dir == "r" and factor) or 0
-        local y = (dir == "u" and -factor) or (dir == "d" and factor) or 0
-        hl.dispatch(hl.dsp.window.move{x = x, y = y, relative = true})
-      elseif
-        window.group
-        and ((dir == "u" and window.group.current_index ~= 1)
-        or (dir == "d" and window.group.current_index ~= window.group.size))
-      then
-        local target = dir == "u" and hl.dsp.group.move_window{forward = false} or hl.dsp.group.move_window{forward = true}
-        hl.dispatch(target)
-      elseif not window.group and window.workspace.tiled_layout == "scrolling" and (dir == "l" or dir == "r") then
-        local target = dir == "l" and "prev" or "next"
-        hl.dispatch(hl.dsp.layout("consume_or_expel " .. target))
-      elseif window.group and window.workspace.tiled_layout == "scrolling" then
-        -- TODO: group_aware move direction is borked in scrolling layout and always generates a column on the right
-        -- if dir == "l" or dir == "r" then
-        --   hl.dispatch(hl.dsp.window.move {out_of_group = "r"})
-        --   if dir == "l" then hl.dispatch(hl.dsp.layout("swapcol l")) end
-        -- else
-        --   local below = {}
-        --   for _, w in ipairs(window.workspace:get_windows()) do
-        --     if not w.floating and window.at.x == w.at.x and window.at.y < w.at.y then
-        --       below[w.at.y] = true
-        --     end
-        --   end
-
-        --   hl.dispatch(hl.dsp.window.move{direction = "r", group_aware = true})
-        --   hl.dispatch(hl.dsp.layout("consume_or_expel prev"))
-        --   for _, _ in pairs(below) do
-        --     hl.dispatch(hl.dsp.window.move{direction = "u"})
-        --   end
-        --   if dir == "u" then
-        --     hl.dispatch(hl.dsp.window.move{direction = "u"})
-        --   end
-        -- end
-      else
-        hl.dispatch(hl.dsp.window.move{direction = dir, group_aware = true})
-      end
-    end,
+    move_in_direction_or_group(dir),
     {repeating = true}
   )
 end
 -- Window resize
 bind({mod, "R"}, hl.dsp.layout("colresize +conf"))
-bind({mod, "SHIFT", "R"}, hl.dsp.layout("fit visible"))
+bind({mod, "SHIFT", "R"}, hl.dsp.layout("fit expand"))
 bind({mod, "F"}, function ()
   local window = hl.get_active_window()
   if not window then return end
