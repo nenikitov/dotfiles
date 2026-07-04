@@ -12,8 +12,8 @@
 !/eww
 !/flameshot
 !/fontconfig
-!/gammyconf
 !/gammastep
+!/gammyconf
 !/htop
 !/hypr
 !/neofetch
@@ -21,6 +21,7 @@
 !/nvim-new
 !/picom
 !/rofi
+!/shojiwm
 !/touchegg
 !/zsh
 
