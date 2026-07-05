@@ -53,6 +53,12 @@ import {
 import { WindowManager } from "./window-manager-new";
 import { Match } from "./window-manager-new/match";
 
+function notify(value: any) {
+  COMPOSITOR.process.spawn({
+    command: ["notify-send", JSON.stringify(value, undefined, 2)],
+  });
+}
+
 COMPOSITOR.env.apply({
   QT_QPA_PLATFORM: "wayland;xcb",
   QT_QPA_PLATFORMTHEME: "qt6ct",
@@ -153,9 +159,7 @@ COMPOSITOR.key.bind("toggle-tiling-mode", "Super+S", () => {
 });
 */
 COMPOSITOR.key.bind("debug", "Super+D", () => {
-  COMPOSITOR.process.spawn({
-    command: ["notify-send", "Debug - Writing"],
-  });
+  notify("Debug - Writing");
 
   const value = {};
   writeFileSync(
@@ -163,9 +167,7 @@ COMPOSITOR.key.bind("debug", "Super+D", () => {
     JSON.stringify(value, undefined, 2),
   );
 
-  COMPOSITOR.process.spawn({
-    command: ["notify-send", "Debug - Written"],
-  });
+  notify("Debug - Written");
 });
 
 COMPOSITOR.pointer.bindWindowMoveModifier("Super");
@@ -179,40 +181,14 @@ COMPOSITOR.key.bind("close", "Super+C", () => {
   wm.windowClose(Match.window({ active: Match.eq(true) }));
 });
 
-// const WINDOW_STATE_REAL_RECT = createWindowState<ManagedWindowRect>(
-//   "realRect",
-//   {
-//     default: (window) => window.rect,
-//   },
-// );
-//
-// const border = 2;
-// function rectWithDecorations(
-//   rect: MaybeSignal<ManagedWindowRect>,
-// ): ReadonlySignal<ManagedWindowRect> {
-//   return computed(() => {
-//     const r = read(rect);
-//     return {
-//       x: read(r.x) - border,
-//       y: read(r.y) - border,
-//       width: read(r.width) + 2 * border,
-//       height: read(r.height) + 2 * border,
-//     };
-//   });
-// }
-//
-// COMPOSITOR.event.onWindowResize((event) => {
-//   event.window.state[WINDOW_STATE_REAL_RECT].set()
-// });
-//
 COMPOSITOR.window.composition = (window) => {
   const border = 2;
 
   const rect: ManagedWindowRect = {
     x: window.position.x - border,
     y: window.position.y - border,
-    width: Math.max(window.position.width, 100) + 2 * border,
-    height: Math.max(window.position.height, 100) + 2 * border,
+    width: Math.max(window.position.width, 1000) + 2 * border,
+    height: Math.max(window.position.height, 1000) + 2 * border,
   };
 
   return (
