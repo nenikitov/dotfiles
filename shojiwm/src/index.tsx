@@ -51,6 +51,7 @@ import {
   WINDOW_STATE_WORKSPACE_OPACITY,
 } from "./window-manager";
 import { WindowManager } from "./window-manager-new";
+import { Match } from "./window-manager-new/match";
 
 COMPOSITOR.env.apply({
   QT_QPA_PLATFORM: "wayland;xcb",
@@ -171,25 +172,11 @@ COMPOSITOR.pointer.bindWindowMoveModifier("Super");
 
 const windowManager = new WindowManager(COMPOSITOR);
 
-const windows: Array<WaylandWindow> = [];
-COMPOSITOR.event.onFirstCommit((window) => {
-  windows.push(window);
-});
-COMPOSITOR.event.onClose((window) => {
-  const index = windows.findIndex((w) => w.id === window.id);
-  if (index !== -1) {
-    windows.splice(index, 1);
-  }
-});
 COMPOSITOR.event.onOpen((window) => {
   window.focus();
 });
 COMPOSITOR.key.bind("close", "Super+C", () => {
-  const focused = Object.values(windows).find((w) => read(w.isFocused));
-
-  if (focused) {
-    focused.close();
-  }
+  windowManager.windowClose(Match.window({ active: Match.eq(true) }));
 });
 
 // const WINDOW_STATE_REAL_RECT = createWindowState<ManagedWindowRect>(
@@ -224,8 +211,8 @@ COMPOSITOR.window.composition = (window) => {
   const rect: ManagedWindowRect = {
     x: window.position.x - border,
     y: window.position.y - border,
-    width: window.position.width + 2 * border,
-    height: window.position.height + 2 * border,
+    width: Math.max(window.position.width, 100) + 2 * border,
+    height: Math.max(window.position.height, 100) + 2 * border,
   };
 
   return (

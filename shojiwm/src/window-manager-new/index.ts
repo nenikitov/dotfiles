@@ -17,13 +17,12 @@ export class WindowManager {
       this.windows.push(window);
     });
     this.compositor.event.onClose((window) => {
-      const index = this.windowStates.findIndex(it => Match.window({}).matchesFunc(it))
-      //const index = this.windowStates.findIndex(
-      //  Match.window({ id: Match.eq(window.id) }).matches,
-      //);
-      //if (index !== -1) {
-      //  this.windows.splice(index, 1);
-      //}
+      const index = this.windowStates.findIndex(
+        Match.window({ id: Match.eq(window.id) }).matches,
+      );
+      if (index !== -1) {
+        this.windows.splice(index, 1);
+      }
     });
   }
 
@@ -36,10 +35,10 @@ export class WindowManager {
   }
 
   public windowClose(matcher: Match<WindowState>) {
-    //const target = this.windowStates.find(matcher.matches);
-    //if (target !== undefined) {
-    //  target.info.close();
-    //}
+    const target = this.windowStates.find(matcher.matches);
+    if (target !== undefined) {
+      target.info.close();
+    }
   }
 
   private get windowStates(): WindowState[] {
