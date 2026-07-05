@@ -157,7 +157,7 @@ COMPOSITOR.key.bind("debug", "Super+D", () => {
     command: ["notify-send", "Debug - Writing"],
   });
 
-  const value = windows;
+  const value = {};
   writeFileSync(
     "/home/nenikitov/.config/shojiwm/debug.json",
     JSON.stringify(value, undefined, 2),
@@ -170,13 +170,13 @@ COMPOSITOR.key.bind("debug", "Super+D", () => {
 
 COMPOSITOR.pointer.bindWindowMoveModifier("Super");
 
-const windowManager = new WindowManager(COMPOSITOR);
+const wm = new WindowManager(COMPOSITOR);
 
 COMPOSITOR.event.onOpen((window) => {
   window.focus();
 });
 COMPOSITOR.key.bind("close", "Super+C", () => {
-  windowManager.windowClose(Match.window({ active: Match.eq(true) }));
+  wm.windowClose(Match.window({ active: Match.eq(true) }));
 });
 
 // const WINDOW_STATE_REAL_RECT = createWindowState<ManagedWindowRect>(
