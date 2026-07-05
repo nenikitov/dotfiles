@@ -26,8 +26,14 @@ import {
   type DisplayConfigDraft,
   compilePopupEffect,
   popupSource,
+  createWindowState,
+  type ReadonlySignal,
 } from "shoji_wm";
-import type { CompositionRenderable, ManagedWindowRect } from "shoji_wm/types";
+import type {
+  CompositionRenderable,
+  ManagedWindowRect,
+  MaybeSignal,
+} from "shoji_wm/types";
 import { createIpcServer } from "shoji_wm/ipc";
 import {
   HybridWindowManager,
@@ -44,6 +50,7 @@ import {
   WINDOW_STATE_WORKSPACE_OFFSET_Y,
   WINDOW_STATE_WORKSPACE_OPACITY,
 } from "./window-manager";
+import { WindowManager } from "./window-manager-new";
 
 COMPOSITOR.env.apply({
   QT_QPA_PLATFORM: "wayland;xcb",
@@ -56,114 +63,9 @@ COMPOSITOR.env.apply({
 });
 COMPOSITOR.env.publish();
 
-const HYBRID_WINDOW_MANAGER = new HybridWindowManager(naturalRootRect);
-const HOT_RELOAD_WINDOW_MANAGER_STATE = "config.hybrid-window-manager";
-const FULLSCREEN_Z_INDEX = 2_000_000_000;
-
-COMPOSITOR.onDisable((event) => {
-  if (event.isReloading) {
-    const snapshot = HYBRID_WINDOW_MANAGER.snapshot();
-    event.persist(HOT_RELOAD_WINDOW_MANAGER_STATE, snapshot);
-  }
-});
-
-COMPOSITOR.onEnable((event) => {
-  if (event.isReloading) {
-    const snapshot = event.restore<
-      ReturnType<typeof HYBRID_WINDOW_MANAGER.snapshot>
-    >(HOT_RELOAD_WINDOW_MANAGER_STATE);
-    if (snapshot) {
-      HYBRID_WINDOW_MANAGER.restore(snapshot);
-    }
-  }
-});
-
-// ---------------------------------------------------------------------------
-// External IPC: expose the workspace layout to clients such as the bar.
-//   workspaces.get           -> WorkspacesView                     (request/response)
-//   workspaces.switch        { direction: -1 | 1 }                 (command)
-//   workspaces.activate      { monitor: string, index: number }    (command)
-//   workspaces.toggleTiling  { monitor?: string }                  (command)
-//   workspaces.changed       -> WorkspacesView                     (broadcast)
-//   windows.activate         { windowId: string }                  (command)
-// ---------------------------------------------------------------------------
-const WORKSPACE_IPC = createIpcServer();
-let lastWorkspacesJson = "";
-let workspaceBroadcastQueued = false;
-
-function broadcastWorkspaces() {
-  const view = HYBRID_WINDOW_MANAGER.viewForIpc();
-  const json = JSON.stringify(view);
-  if (json === lastWorkspacesJson) {
-    return;
-  }
-  lastWorkspacesJson = json;
-  WORKSPACE_IPC.broadcast("workspaces.changed", view);
-}
-
-// Coalesce many state mutations within one tick into a single diffed broadcast.
-function scheduleWorkspaceBroadcast() {
-  if (workspaceBroadcastQueued) {
-    return;
-  }
-  workspaceBroadcastQueued = true;
-  void Promise.resolve().then(() => {
-    workspaceBroadcastQueued = false;
-    broadcastWorkspaces();
-  });
-}
-
-WORKSPACE_IPC.handle("workspaces.get", () =>
-  HYBRID_WINDOW_MANAGER.viewForIpc(),
-);
-WORKSPACE_IPC.handle("workspaces.switch", (params) => {
-  const direction = (params as { direction?: number } | undefined)?.direction;
-  HYBRID_WINDOW_MANAGER.switchWorkspace(direction === -1 ? -1 : 1);
-  scheduleWorkspaceBroadcast();
-});
-WORKSPACE_IPC.handle("workspaces.activate", (params) => {
-  const request = params as { monitor?: string; index?: number } | undefined;
-  if (request?.monitor && typeof request.index === "number") {
-    HYBRID_WINDOW_MANAGER.activate(request.monitor, request.index);
-    scheduleWorkspaceBroadcast();
-  }
-});
-WORKSPACE_IPC.handle("workspaces.toggleTiling", (params) => {
-  const monitor = (params as { monitor?: string } | undefined)?.monitor;
-  if (monitor) {
-    HYBRID_WINDOW_MANAGER.toggleWorkspaceTilingForMonitor(monitor);
-  } else {
-    HYBRID_WINDOW_MANAGER.toggleCurrentWorkspaceTiling();
-  }
-  scheduleWorkspaceBroadcast();
-});
-WORKSPACE_IPC.handle("windows.activate", (params) => {
-  const windowId = (params as { windowId?: string } | undefined)?.windowId;
-  if (typeof windowId === "string") {
-    HYBRID_WINDOW_MANAGER.activateWindowById(windowId);
-    scheduleWorkspaceBroadcast();
-  }
-});
-
-// Snap-zone preview: broadcast the active snap rect (floating edge zones, or the
-// opened tiling slot) to the bar, which renders the rounded preview overlay.
-//   snap.preview  { monitor, rect: {x,y,w,h} | null, kind: "floating"|"tiling" }
-let lastSnapJson = "";
-HYBRID_WINDOW_MANAGER.setSnapPreviewBroadcaster((preview) => {
-  const json = JSON.stringify(preview);
-  if (json === lastSnapJson) {
-    return;
-  }
-  lastSnapJson = json;
-  WORKSPACE_IPC.broadcast("snap.preview", preview);
-});
-
-HYBRID_WINDOW_MANAGER.setWorkspaceChangeBroadcaster(() => {
-  scheduleWorkspaceBroadcast();
-});
-
-COMPOSITOR.onDisable(() => {
-  WORKSPACE_IPC.close();
+COMPOSITOR.process.once("dunst", {
+  command: "dunst",
+  runPolicy: "once-per-session",
 });
 
 const workspaceKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
@@ -191,6 +93,7 @@ COMPOSITOR.key.bind("launcher", "Super+Shift+Return", () => {
 });
 
 // Focus
+/*
 COMPOSITOR.key.bind("window-focus-left", "Super+H", () => {
   HYBRID_WINDOW_MANAGER.focusTile(-1);
 });
@@ -247,15 +150,106 @@ COMPOSITOR.key.bind("toggle-tiling-mode", "Super+S", () => {
   HYBRID_WINDOW_MANAGER.toggleCurrentWorkspaceTiling();
   scheduleWorkspaceBroadcast();
 });
+*/
 COMPOSITOR.key.bind("debug", "Super+D", () => {
+  COMPOSITOR.process.spawn({
+    command: ["notify-send", "Debug - Writing"],
+  });
+
+  const value = windows;
   writeFileSync(
     "/home/nenikitov/.config/shojiwm/debug.json",
-    JSON.stringify(COMPOSITOR.output.outputs, undefined, 2),
+    JSON.stringify(value, undefined, 2),
   );
+
   COMPOSITOR.process.spawn({
-    command: ["notify-send", "Written Debug"],
+    command: ["notify-send", "Debug - Written"],
   });
 });
+
+COMPOSITOR.pointer.bindWindowMoveModifier("Super");
+
+const windowManager = new WindowManager(COMPOSITOR);
+
+const windows: Array<WaylandWindow> = [];
+COMPOSITOR.event.onFirstCommit((window) => {
+  windows.push(window);
+});
+COMPOSITOR.event.onClose((window) => {
+  const index = windows.findIndex((w) => w.id === window.id);
+  if (index !== -1) {
+    windows.splice(index, 1);
+  }
+});
+COMPOSITOR.event.onOpen((window) => {
+  window.focus();
+});
+COMPOSITOR.key.bind("close", "Super+C", () => {
+  const focused = Object.values(windows).find((w) => read(w.isFocused));
+
+  if (focused) {
+    focused.close();
+  }
+});
+
+// const WINDOW_STATE_REAL_RECT = createWindowState<ManagedWindowRect>(
+//   "realRect",
+//   {
+//     default: (window) => window.rect,
+//   },
+// );
+//
+// const border = 2;
+// function rectWithDecorations(
+//   rect: MaybeSignal<ManagedWindowRect>,
+// ): ReadonlySignal<ManagedWindowRect> {
+//   return computed(() => {
+//     const r = read(rect);
+//     return {
+//       x: read(r.x) - border,
+//       y: read(r.y) - border,
+//       width: read(r.width) + 2 * border,
+//       height: read(r.height) + 2 * border,
+//     };
+//   });
+// }
+//
+// COMPOSITOR.event.onWindowResize((event) => {
+//   event.window.state[WINDOW_STATE_REAL_RECT].set()
+// });
+//
+COMPOSITOR.window.composition = (window) => {
+  const border = 2;
+
+  const rect: ManagedWindowRect = {
+    x: window.position.x - border,
+    y: window.position.y - border,
+    width: window.position.width + 2 * border,
+    height: window.position.height + 2 * border,
+  };
+
+  return (
+    <ManagedWindow rect={rect} zIndex={1}>
+      <WindowBorder
+        style={{
+          borderRadius: 5,
+          border: {
+            px: border,
+            color: window.isFocused((f) => (f ? "#d7ba7d" : "#4f5666")),
+          },
+        }}
+        interaction={{
+          resizeHitArea: {
+            cornerPx: 16,
+            edgePx: 8,
+          },
+        }}
+      >
+        <ClientWindow />
+      </WindowBorder>
+    </ManagedWindow>
+  );
+};
 
 COMPOSITOR.output.configure((context) => {
   const display: DisplayConfigDraft = {};
@@ -290,13 +284,7 @@ COMPOSITOR.input.configure((input, _context) => {
   };
 });
 
-HYBRID_WINDOW_MANAGER.configureWorkspaceGestureSpeed({
-  workspaceScrollFactor: 1.5,
-  workspaceScrollKineticFactor: 1,
-  workspaceSwitchFactor: 1,
-  workspaceSwitchVelocityFactor: 1,
-});
-
+/*
 COMPOSITOR.effect.background_effect = compileEffect({
   input: backdropSource(),
   invalidate: { kind: "on-source-damage-box", antiArtifactMargin: 8 },
@@ -772,5 +760,6 @@ const MinimizeButton = ({ window }: { window: WaylandWindow }) => {
     </Box>
   );
 };
+*/
 
 export default COMPOSITOR;

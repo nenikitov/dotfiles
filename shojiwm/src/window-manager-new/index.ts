@@ -5,12 +5,27 @@ import { type CompositorDefinition, type WaylandWindow } from "shoji_wm";
 import { type Config, defaults } from "./config";
 import { type PartialDeep } from "../util/partial-deep";
 import { mergeWith } from "lodash-es";
+import { Match, type WindowState } from "./match";
 
 export class WindowManager {
   private config: Config = defaults;
-  private readonly monitors = new Array<Monitor>();
+  private readonly windows: WaylandWindow[] = [];
 
-  constructor(private readonly compositor: CompositorDefinition) {}
+  constructor(private readonly compositor: CompositorDefinition) {
+    // Register windows
+    this.compositor.event.onFirstCommit((window) => {
+      this.windows.push(window);
+    });
+    this.compositor.event.onClose((window) => {
+      const index = this.windowStates.findIndex(it => Match.window({}).matchesFunc(it))
+      //const index = this.windowStates.findIndex(
+      //  Match.window({ id: Match.eq(window.id) }).matches,
+      //);
+      //if (index !== -1) {
+      //  this.windows.splice(index, 1);
+      //}
+    });
+  }
 
   public configure(config: PartialDeep<Config>) {
     this.config = mergeWith(this.config, config, (obj, src) => {
@@ -18,6 +33,19 @@ export class WindowManager {
         return obj.concat(src);
       }
     });
+  }
+
+  public windowClose(matcher: Match<WindowState>) {
+    //const target = this.windowStates.find(matcher.matches);
+    //if (target !== undefined) {
+    //  target.info.close();
+    //}
+  }
+
+  private get windowStates(): WindowState[] {
+    return this.windows.map((info) => ({
+      info,
+    }));
   }
 }
 
