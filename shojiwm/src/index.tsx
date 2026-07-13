@@ -52,6 +52,7 @@ import {
 } from "./window-manager";
 import { WindowManager } from "./window-manager-new";
 import { Match } from "./window-manager-new/match";
+import { defaultWindowComposition } from "shoji_wm/default-composition";
 
 function notify(value: any) {
   COMPOSITOR.process.spawn({
@@ -78,6 +79,7 @@ COMPOSITOR.process.once("dunst", {
 const workspaceKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
 // System control
+/*
 COMPOSITOR.key.bind("play", "XF86AudioPlay", () => {
   COMPOSITOR.process.spawn({ command: "playerctl play-pause" });
 });
@@ -90,6 +92,7 @@ COMPOSITOR.key.bind("next", "XF86AudioNext", () => {
 COMPOSITOR.key.bind("prev", "XF86AudioPrev", () => {
   COMPOSITOR.process.spawn({ command: "playerctl previous" });
 });
+*/
 
 // Launcher
 COMPOSITOR.key.bind("terminal", "Super+Return", () => {
@@ -158,6 +161,7 @@ COMPOSITOR.key.bind("toggle-tiling-mode", "Super+S", () => {
   scheduleWorkspaceBroadcast();
 });
 */
+/*
 COMPOSITOR.key.bind("debug", "Super+D", () => {
   notify("Debug - Writing");
 
@@ -169,9 +173,44 @@ COMPOSITOR.key.bind("debug", "Super+D", () => {
 
   notify("Debug - Written");
 });
+*/
 
 COMPOSITOR.pointer.bindWindowMoveModifier("Super");
 
+COMPOSITOR.window.composition = (window) => {
+  const border = 2;
+
+  const rect: ManagedWindowRect = {
+    x: window.position.x - border,
+    y: window.position.y - border,
+    width: Math.max(window.position.width, 100) + 2 * border,
+    height: Math.max(window.position.height, 100) + 2 * border,
+  };
+
+  return (
+    <ManagedWindow rect={rect} zIndex={1}>
+      <WindowBorder
+        style={{
+          borderRadius: 5,
+          border: {
+            px: border,
+            color: window.isFocused((f) => (f ? "#d7ba7d" : "#4f5666")),
+          },
+        }}
+        interaction={{
+          resizeHitArea: {
+            cornerPx: 16,
+            edgePx: 8,
+          },
+        }}
+      >
+        <ClientWindow />
+      </WindowBorder>
+    </ManagedWindow>
+  );
+};
+
+/*
 const wm = new WindowManager(COMPOSITOR);
 
 COMPOSITOR.event.onOpen((window) => {
@@ -213,18 +252,19 @@ COMPOSITOR.window.composition = (window) => {
     </ManagedWindow>
   );
 };
+*/
 
 COMPOSITOR.output.configure((context) => {
   const display: DisplayConfigDraft = {};
 
   display["DP-1"] = {
     mode: "extend",
-    resolution: "best",
+    resolution: { width: 1920, height: 1080, refreshRate: 144 },
     position: "auto",
   };
   display["HDMI-A-1"] = {
     mode: "extend",
-    resolution: "best",
+    resolution: { width: 1920, height: 1080, refreshRate: 75 },
     position: "auto",
   };
 
@@ -566,6 +606,29 @@ COMPOSITOR.window.composition = (window: WaylandWindow) => {
       interactive={inactive((value) => !value)}
     >
       <WindowBorder
+const states = {
+  rectTarget: createWindowState<ManagedWindowRect>("rectTarget", {
+    default: (window) => {
+      return window.rect;
+    },
+  }),
+} as const;
+
+const border = 2;
+function rectWithDecorations(
+  rect: MaybeSignal<ManagedWindowRect>,
+): ReadonlySignal<ManagedWindowRect> {
+  return computed(() => {
+    const r = read(rect);
+    return {
+      x: read(r.x) - border,
+      y: read(r.y) - border,
+      width: read(r.width) + 2 * border,
+      height: read(r.height) + 2 * border,
+    };
+  });
+}
+
         style={{
           border: { px: WINDOW_BORDER_PX, color: borderColor },
           borderRadius: 10,
