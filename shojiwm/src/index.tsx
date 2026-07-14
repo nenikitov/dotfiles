@@ -161,11 +161,25 @@ COMPOSITOR.key.bind("toggle-tiling-mode", "Super+S", () => {
   scheduleWorkspaceBroadcast();
 });
 */
-/*
+
+const windows: WaylandWindow[] = [];
+COMPOSITOR.event.onFirstCommit((window) => windows.push(window));
+COMPOSITOR.event.onClose((window) => {
+  const index = windows.findIndex((w) => w.id === window.id);
+  if (index !== -1) {
+    windows.splice(index, 1);
+  }
+});
+
 COMPOSITOR.key.bind("debug", "Super+D", () => {
   notify("Debug - Writing");
 
-  const value = {};
+  const value: any = [
+    "STATES",
+    "STATES",
+    ...windows.map((w) => read(w.state[state.rect])),
+  ];
+
   writeFileSync(
     "/home/nenikitov/.config/shojiwm/debug.json",
     JSON.stringify(value, undefined, 2),
@@ -173,22 +187,41 @@ COMPOSITOR.key.bind("debug", "Super+D", () => {
 
   notify("Debug - Written");
 });
-*/
 
 COMPOSITOR.pointer.bindWindowMoveModifier("Super");
+COMPOSITOR.pointer.bindWindowResizeModifier("Super");
+
+const state = {
+  rect: createWindowState<ManagedWindowRect>("rect", {
+    default: (window) => window.position,
+  }),
+} as const;
+
+COMPOSITOR.event.onFirstCommit((window) => {
+  window.state[state.rect].set(window.position);
+});
+COMPOSITOR.event.onWindowResize((event) => {
+  event.window.state[state.rect].set(event.currentRect);
+});
+COMPOSITOR.event.onWindowMove((event) => {
+  event.window.state[state.rect].set(event.currentRect);
+});
 
 COMPOSITOR.window.composition = (window) => {
   const border = 2;
 
-  const rect: ManagedWindowRect = {
-    x: window.position.x - border,
-    y: window.position.y - border,
-    width: Math.max(window.position.width, 100) + 2 * border,
-    height: Math.max(window.position.height, 100) + 2 * border,
-  };
+  const rect = computed(() => {
+    const rect = window.state[state.rect]();
+    return {
+      x: read(rect.x) - border,
+      y: read(rect.y) - border,
+      width: read(rect.width) + 2 * border,
+      height: read(rect.height) + 2 * border,
+    };
+  });
 
   return (
-    <ManagedWindow rect={rect} zIndex={1}>
+    <ManagedWindow rect={rect}>
       <WindowBorder
         style={{
           borderRadius: 5,
@@ -208,6 +241,35 @@ COMPOSITOR.window.composition = (window) => {
       </WindowBorder>
     </ManagedWindow>
   );
+
+  // const rect: ManagedWindowRect = {
+  //   x: window.position.x - border,
+  //   y: window.position.y - border,
+  //   width: Math.max(window.position.width, 100) + 2 * border,
+  //   height: Math.max(window.position.height, 100) + 2 * border,
+  // };
+  //
+  // return (
+  //   <ManagedWindow rect={rect} zIndex={1}>
+  //     <WindowBorder
+  //       style={{
+  //         borderRadius: 5,
+  //         border: {
+  //           px: border,
+  //           color: window.isFocused((f) => (f ? "#d7ba7d" : "#4f5666")),
+  //         },
+  //       }}
+  //       interaction={{
+  //         resizeHitArea: {
+  //           cornerPx: 16,
+  //           edgePx: 8,
+  //         },
+  //       }}
+  //     >
+  //       <ClientWindow />
+  //     </WindowBorder>
+  //   </ManagedWindow>
+  // );
 };
 
 /*
