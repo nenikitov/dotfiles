@@ -11,6 +11,7 @@ import {
   type WindowCompositionFunction,
 } from "shoji_wm";
 import { getState, state } from "./state";
+import { FocusList } from "../util/focus-list";
 
 // TODO: Should be in the config
 const border = 2;
@@ -78,34 +79,22 @@ export class WindowManager {
 export class Output {
   private readonly inner: OutputInfo;
 
-  private readonly workspaces: Workspace[];
-  private activeWorkspace: Workspace | null;
+  private readonly workspaces: FocusList<Workspace> = new FocusList();
 
   public constructor(inner: OutputInfo) {
     this.inner = inner;
-    this.workspaces = [];
-    this.activeWorkspace = null;
-  }
-
-  public addWorkspace(name?: string) {
-    this.workspaces.push(new Workspace(this, name));
   }
 }
 
 export class Workspace {
   private output: Output;
 
-  private readonly windows: Window[];
-  private activeWindow: Window | undefined;
+  private readonly windows: FocusList<Window> = new FocusList();
 
   private name: string | undefined;
 
   public constructor(output: Output, name?: string) {
     this.output = output;
-
-    this.windows = [];
-    this.activeWindow = undefined;
-
     this.name = name;
   }
 }
@@ -118,113 +107,5 @@ export class Window {
   public constructor(inner: WaylandWindow, workspace: Workspace) {
     this.workspace = workspace;
     this.inner = inner;
-  }
-}
-
-class FocusList<T> {
-  private readonly inner: T[] = [];
-  private _active: number | null = null;
-
-  public get items(): readonly T[] {
-    return this.inner;
-  }
-
-  public getActive(method: "index"): number | null;
-  public getActive(method: "object"): T | null;
-  public getActive(method: "index" | "object" = "index"): number | T | null {
-    if (method == "index") {
-      return this._active;
-    } else {
-      return this._active !== null ? this.inner[this._active] : null;
-    }
-  }
-
-  public setActive(
-    method: "index",
-    value: number | null,
-    outOfBounds: "clamp" | "unset",
-  ): void;
-  public setActive(method: "object", value: T | null): void;
-  public setActive(
-    method: "index" | "object",
-    value: number | T | null,
-    outOfBounds: "clamp" | "unset" = "clamp",
-  ): void {
-    if (value === null) {
-      this._active = null;
-      return;
-    }
-
-    if (method === "index") {
-      value = value as number;
-
-      if (this.inner.length === 0) {
-        this._active = null;
-        return;
-      }
-
-      if (value < 0) {
-        value += this.inner.length;
-      }
-
-      if (value >= 0 && value < this.inner.length) {
-        this._active = value;
-      } else if (outOfBounds === "clamp") {
-        this._active = Math.max(0, Math.min(value, this.inner.length - 1));
-      } else {
-        this._active = null;
-      }
-    } else {
-      const index = this.inner.indexOf(value as T);
-      this._active = index >= 0 ? index : null;
-    }
-  }
-
-  public push(value: T, method: "first"): void;
-  public push(value: T, method: "last"): void;
-  public push(value: T, method: "index", index: number, factory: () => T): void;
-  public push(value: T, method: "relative", index: 0 | -1): void;
-  public push(
-    value: T,
-    method: "relative",
-    index: number,
-    factory: () => T,
-  ): void;
-  public push(
-    value: T,
-    method: "first" | "last" | "index" | "relative",
-    index?: 0 | 1 | number,
-    factory?: () => T,
-  ): void {
-    let target = 0;
-    switch (method) {
-      case "first": {
-        target = 0;
-        break;
-      }
-      case "last": {
-        target = this.inner.length;
-      }
-      case "index": {
-        if (index !== undefined) {
-          target = index;
-        }
-        break;
-      }
-      case "relative": {
-        if (index !== undefined) {
-          target = Math.max(0, (this._active ?? 0) + index);
-        }
-        break;
-      }
-    }
-
-    for (let i = this.inner.length; i < target; i++) {
-      if (factory !== undefined) {
-        this.inner.push(factory());
-      }
-    }
-
-    this.inner.splice(target, 0, value);
   }
 }

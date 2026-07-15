@@ -1,3 +1,4 @@
+import { type Workspace } from "../window-manager-new";
 import { type Intersection } from "./type";
 
 export class Filter<T> {
@@ -5,6 +6,8 @@ export class Filter<T> {
   private constructor(
     private readonly compileMatcher: (values: T[]) => (value: T) => boolean,
   ) {}
+
+  public static workspace(filter: {}): Filter<Workspace> {}
 
   public static eq<T>(value: T): Filter<T> {
     return new Filter(() => (v) => v === value);
@@ -90,6 +93,11 @@ export class Filter<T> {
   public filter(values: T[]): T[] {
     const matcher = this.compileMatcher(values);
     return values.filter(matcher);
+  }
+
+  public filterIndices(values: T[]): number[] {
+    const matcher = this.compileMatcher(values);
+    return values.flatMap((value, i) => (matcher(value) ? [i] : []));
   }
 
   public some(values: T[]): boolean {
