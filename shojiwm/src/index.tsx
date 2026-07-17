@@ -48,12 +48,14 @@ COMPOSITOR.key.bind("launcher", "Super+Shift+Return", () => {
 COMPOSITOR.key.bind("debug", "Super+D", () => {
   notify("Debug - Writing");
 
-  const value: any = ["Nothing", []];
+  const value: any = ["OUTPUTS", wm.outputs.items];
 
   writeFileSync(
     "/home/nenikitov/.config/shojiwm/debug.json",
     JSON.stringify(value, undefined, 2),
   );
+
+  notify(value);
 
   notify("Debug - Written");
 });

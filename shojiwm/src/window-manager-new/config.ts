@@ -1,8 +1,6 @@
-import { type Match, type OutputState } from "./match";
-
 export interface Config {
   outputs: [
-    Match<OutputState>,
+    [], // TODO: Make a matcher instead
     {
       focusOnStartup: boolean;
       staticWorkspaces: {

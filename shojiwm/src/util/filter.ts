@@ -1,13 +1,13 @@
-import { type Workspace } from "../window-manager-new";
 import { type Intersection } from "./type";
 
-export class Filter<T> {
-  // Instances
-  private constructor(
-    private readonly compileMatcher: (values: T[]) => (value: T) => boolean,
-  ) {}
 
-  public static workspace(filter: {}): Filter<Workspace> {}
+export class Filter<T> {
+  readonly #compileMatcher: (values: T[]) => (value: T) => boolean;
+
+  // Instances
+  private constructor(compileMatcher: (values: T[]) => (value: T) => boolean) {
+    this.#compileMatcher = compileMatcher;
+  }
 
   public static eq<T>(value: T): Filter<T> {
     return new Filter(() => (v) => v === value);
@@ -52,7 +52,7 @@ export class Filter<T> {
   // Operations on self
   public static not<T>(filter: Filter<T>): Filter<T> {
     return new Filter((values) => {
-      const matcher = filter.compileMatcher(values);
+      const matcher = filter.#compileMatcher(values);
       return (value) => !matcher(value);
     });
   }
@@ -65,7 +65,7 @@ export class Filter<T> {
     ...filters: F
   ): Filter<Intersection<ExtractTs<F>>> {
     return new Filter((values) => {
-      const matchers = filters.map((f) => f.compileMatcher(values));
+      const matchers = filters.map((f) => f.#compileMatcher(values));
       return (value) => matchers.some((matcher) => matcher(value));
     });
   }
@@ -78,7 +78,7 @@ export class Filter<T> {
 
   public static and<T>(...filters: Filter<T>[]): Filter<T> {
     return new Filter((values) => {
-      const matchers = filters.map((f) => f.compileMatcher(values));
+      const matchers = filters.map((f) => f.#compileMatcher(values));
       return (value) => matchers.every((matcher) => matcher(value));
     });
   }
@@ -91,29 +91,29 @@ export class Filter<T> {
 
   // Operations on collections
   public filter(values: T[]): T[] {
-    const matcher = this.compileMatcher(values);
+    const matcher = this.#compileMatcher(values);
     return values.filter(matcher);
   }
 
   public filterIndices(values: T[]): number[] {
-    const matcher = this.compileMatcher(values);
+    const matcher = this.#compileMatcher(values);
     return values.flatMap((value, i) => (matcher(value) ? [i] : []));
   }
 
   public some(values: T[]): boolean {
-    const matcher = this.compileMatcher(values);
+    const matcher = this.#compileMatcher(values);
     return values.some(matcher);
   }
 
   public every(values: T[]): boolean {
-    const matcher = this.compileMatcher(values);
+    const matcher = this.#compileMatcher(values);
     return values.every(matcher);
   }
 
   // HACK: For whatever reason, member function causes a hang when using `array.filter()`, but arrow property does not.
   // I suspect `this` has something to do wit it.
   public readonly matches = (value: T): boolean => {
-    return this.compileMatcher([value])(value);
+    return this.#compileMatcher([value])(value);
   };
 }
 
