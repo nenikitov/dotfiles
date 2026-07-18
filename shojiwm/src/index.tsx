@@ -11,7 +11,7 @@ import {
   createWindowState,
 } from "shoji_wm";
 import type { ManagedWindowRect } from "shoji_wm/types";
-import { WindowManager } from "./window-manager-new";
+import { WindowManager } from "./window-manager/float";
 
 function notify(value: any) {
   COMPOSITOR.process.spawn({
@@ -48,7 +48,7 @@ COMPOSITOR.key.bind("launcher", "Super+Shift+Return", () => {
 COMPOSITOR.key.bind("debug", "Super+D", () => {
   notify("Debug - Writing");
 
-  const value: any = ["OUTPUTS", wm.outputs.items];
+  const value: any = ["NONE"];
 
   writeFileSync(
     "/home/nenikitov/.config/shojiwm/debug.json",

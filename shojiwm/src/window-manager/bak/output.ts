@@ -27,15 +27,18 @@ export class Output {
     return this.#workspaces;
   }
 
-  public setWorkspace(index: number) {
+  public workspaceActivate(index: number) {
     this.#workspaces.setActive("index", index);
   }
 
-  public addWorkspaces(
+  public workspaceAdd(
     ...args:
       | [method: "first" | "last", ...workspaces: Workspace[]]
-      | [method: "index", index: number, ...workspaces: Workspace[]]
-      | [method: "relative", index: number, ...workspaces: Workspace[]]
+      | [
+          method: "index" | "relative",
+          index: number,
+          ...workspaces: Workspace[],
+        ]
   ) {
     const added = this.#workspaces.push(...args);
     for (const a of added) {

@@ -1,4 +1,3 @@
-import { assertType } from "./assert";
 import { clamp } from "./math";
 
 export class FocusListStrict<T> {
@@ -13,134 +12,62 @@ export class FocusListStrict<T> {
   public get items(): readonly T[] {
     return this.#inner;
   }
-
   public get length(): number {
     return this.#inner.length;
   }
 
-  public getActive(method: "index"): number | null;
-  public getActive(method: "object"): T | null;
-  public getActive(method: "index" | "object"): number | T | null;
-  public getActive(method: "index" | "object"): number | T | null {
-    if (method == "index") {
-      return this.#active;
-    } else {
-      return this.#active !== null ? this.#inner[this.#active] : null;
-    }
+  public get activeIndex(): number | null {
+    return this.#active;
   }
 
-  public setActive(method: "first" | "last"): void;
-  public setActive(method: "index", index: number): void;
-  public setActive(method: "relative", index: number): void;
-  public setActive(method: "object", value: T): void;
-  public setActive(
-    method: "first" | "last" | "index" | "relative" | "object",
-    indexOrValue?: number | T,
-  ): void;
-  public setActive(
-    method: "first" | "last" | "index" | "relative" | "object",
-    indexOrValue?: number | T,
-  ): void {
-    if (this.#inner.length === 0 || this.#active === null) {
-      return;
-    }
-
-    let target: number | null = null;
-    switch (method) {
-      case "first": {
-        target = 0;
-        break;
-      }
-      case "last": {
-        target = this.#inner.length - 1;
-        break;
-      }
-      case "index": {
-        assertType<number>(
-          indexOrValue,
-          "When method is index, value is always a number",
-        );
-        target =
-          indexOrValue >= 0 ? indexOrValue : indexOrValue + this.#inner.length;
-        break;
-      }
-      case "relative": {
-        assertType<number>(
-          indexOrValue,
-          "When method is relative, value is always a number",
-        );
-        target = this.#active + indexOrValue;
-        break;
-      }
-      case "object": {
-        assertType<T>(indexOrValue, "When method is object, value is always T");
-        const index = this.#inner.indexOf(indexOrValue);
-        target = index >= 0 ? index : null;
-        break;
-      }
-    }
-
-    if (target !== null) {
-      this.#active = Math.max(0, Math.min(this.#inner.length - 1, target));
-    }
+  public get activeObject(): T | null {
+    return this.#active !== null ? this.#inner[this.#active] : null;
   }
 
-  public push(...args: [method: "first" | "last", ...values: T[]]): T[];
-  public push(...args: [method: "index", index: number, ...values: T[]]): T[];
-  public push(
-    ...args: [method: "relative", index: number, ...values: T[]]
-  ): T[];
-  public push(
-    ...args:
-      | [method: "first" | "last", ...values: T[]]
-      | [method: "index" | "relative", index: number, ...values: T[]]
-  ): T[];
-  public push(
-    ...args:
-      | [method: "first" | "last", ...values: T[]]
-      | [method: "index" | "relative", index: number, ...values: T[]]
-  ): T[] {
-    const [method, ...rest] = args;
-
-    let target: number = 0;
-    let values: T[] = [];
-
-    switch (method) {
-      case "first": {
-        target = 0;
-        values = rest as T[];
-        break;
-      }
-      case "last": {
-        target = this.#inner.length;
-        values = rest as T[];
-        break;
-      }
-      case "index": {
-        assertType<number>(
-          rest[0],
-          "When method is index, index is always a number",
-        );
-        target = rest[0] >= 0 ? rest[0] : rest[0] + this.#inner.length;
-        values = rest.slice(1) as T[];
-        break;
-      }
-      case "relative": {
-        assertType<number>(
-          rest[0],
-          "When method is index, index is always a number",
-        );
-        target = (this.#active ?? 0) + rest[0];
-        values = rest.slice(1) as T[];
-        break;
-      }
+  public activateAt(index: number): boolean {
+    if (this.length === 0 || this.#active === null) {
+      return false;
     }
 
-    // Insert
-    target = clamp(target, 0, this.length);
+    const target = index >= 0 ? index : index + this.#inner.length;
+    if (target < 0 || target >= this.length) {
+      return false;
+    }
+
+    this.#active = target;
+    return true;
+  }
+
+  public activateFirst(): boolean {
+    return this.activateAt(0);
+  }
+
+  public activateLast(): boolean {
+    return this.activateAt(this.length - 1);
+  }
+
+  public activateRelative(offset: number): boolean {
+    if (this.#active === null) return false;
+    return this.activateAt(clamp(this.#active + offset, 0, this.length - 1));
+  }
+
+  public activateObject(value: T): boolean {
+    const index = this.#inner.indexOf(value);
+    if (index < 0) {
+      return false;
+    }
+    return this.activateAt(index);
+  }
+
+  public insertAt(index: number, ...values: T[]): T[] | false {
+    const target = index >= 0 ? index : index + this.length;
+
+    if (target < 0 || target > this.length) {
+      return false;
+    }
+
     this.#inner.splice(target, 0, ...values);
 
-    // Update active
     if (this.#active === null) {
       this.#active = 0;
     } else if (target <= this.#active) {
@@ -150,66 +77,60 @@ export class FocusListStrict<T> {
     return values;
   }
 
-  public remove(method: "first" | "last"): T | null;
-  public remove(method: "index", index: number): T | null;
-  public remove(method: "relative", value: number): T | null;
-  public remove(method: "object", value: T): T | null;
-  public remove(
-    method: "first" | "last" | "index" | "relative" | "object",
-    indexOrValue?: number | T,
-  ): T | null;
-  public remove(
-    method: "first" | "last" | "index" | "relative" | "object",
-    indexOrValue?: number | T,
-  ): T | null {
-    if (this.#inner.length === 0 || this.#active === null) {
+  public insertFirst(...values: T[]): T[] {
+    return this.insertAt(0, ...values) as T[];
+  }
+
+  public insertLast(...values: T[]): T[] {
+    return this.insertAt(this.length, ...values) as T[];
+  }
+
+  public insertRelative(offset: number, ...values: T[]): T[] {
+    return this.insertAt(
+      clamp((this.#active ?? 0) + offset, 0, this.length),
+      ...values,
+    ) as T[];
+  }
+
+  public removeAt(index: number): T | null {
+    if (this.length === 0 || this.#active === null) {
+      return null;
+    }
+    const target = index >= 0 ? index : index + this.#inner.length;
+
+    if (target < 0 || target >= this.length) {
       return null;
     }
 
-    let target: number | null = null;
-    switch (method) {
-      case "first": {
-        target = 0;
-        break;
-      }
-      case "last": {
-        target = this.#inner.length - 1;
-        break;
-      }
-      case "index": {
-        assertType<number>(indexOrValue);
-        target =
-          indexOrValue >= 0 ? indexOrValue : indexOrValue + this.#inner.length;
-        break;
-      }
-      case "relative": {
-        assertType<number>(indexOrValue);
-        target = (this.#active ?? 0) + indexOrValue;
-        break;
-      }
-      case "object": {
-        assertType<T>(indexOrValue);
-        const index = this.#inner.indexOf(indexOrValue);
-        target = index >= 0 ? index : null;
-        break;
-      }
-    }
-
-    if (target === null || target < 0 || target >= this.length) {
-      return null;
-    }
-
-    // Remove
     const [removed] = this.#inner.splice(target, 1);
 
-    // Update active
     if (this.#inner.length === 0) {
       this.#active = null;
-    } else if (this.#active !== null && target <= this.#active) {
+    } else if (target <= this.#active) {
       this.#active = clamp(this.#active - 1, 0, this.length - 1);
     }
 
     return removed;
+  }
+
+  public removeFirst(): T | null {
+    return this.removeAt(0);
+  }
+
+  public removeLast(): T | null {
+    return this.removeAt(this.length - 1);
+  }
+
+  public removeRelative(offset: number): T | null {
+    return this.removeAt((this.#active ?? 0) + offset);
+  }
+
+  public removeObject(value: T): T | null {
+    const index = this.#inner.indexOf(value);
+    if (index < 0) {
+      return null;
+    }
+    return this.removeAt(index);
   }
 
   public rebuild(items: T[] = []) {
@@ -237,174 +158,117 @@ export class FocusListDynamic<T> {
   public get items(): readonly T[] {
     return this.#inner.items;
   }
-
   public get length(): number {
     return this.#inner.length;
   }
 
-  public getActive(method: "index"): number;
-  public getActive(method: "object"): T;
-  public getActive(method: "index" | "object"): number | T;
-  public getActive(method: "index" | "object"): number | T {
-    const result = this.#inner.getActive(method);
-    assertType<number | T>(
-      result,
-      "We always keep the length of the inner list at least 1 (ie has active)",
-    );
+  public get activeIndex(): number {
+    return this.#inner.activeIndex!;
+  }
+
+  public get activeObject(): T {
+    return this.#inner.activeObject!;
+  }
+
+  public activateAt(index: number): boolean {
+    const target = index >= 0 ? index : index + this.#inner.length;
+
+    if (target < 0) {
+      return false;
+    }
+
+    this.#ensureCapacity(target + 1);
+    this.#inner.activateAt(target);
+    this.#cleanupTrailing();
+
+    return true;
+  }
+
+  public activateFirst(): boolean {
+    return this.activateAt(0);
+  }
+  public activateLast(): boolean {
+    return this.activateAt(this.length - 1);
+  }
+
+  public activateRelative(offset: number): boolean {
+    return this.activateAt(this.activeIndex + offset);
+  }
+
+  public activateObject(value: T): boolean {
+    const index = this.items.indexOf(value);
+    if (index < 0) {
+      return false;
+    }
+    return this.activateAt(index);
+  }
+
+  public insertAt(index: number, ...values: T[]): T[] | false {
+    const target = index >= 0 ? index : index + this.length;
+
+    if (target < 0) {
+      return false;
+    }
+
+    this.#ensureCapacity(target);
+    const result = this.#inner.insertAt(target, ...values);
+    this.#cleanupTrailing();
     return result;
   }
 
-  public setActive(method: "first" | "last"): void;
-  public setActive(method: "index", index: number): void;
-  public setActive(method: "relative", index: number): void;
-  public setActive(method: "object", value: T): void;
-  public setActive(
-    method: "first" | "last" | "index" | "relative" | "object",
-    indexOrValue?: number | T,
-  ): void;
-  public setActive(
-    method: "first" | "last" | "index" | "relative" | "object",
-    indexOrValue?: number | T,
-  ): void {
-    let target: number | null = null;
-    switch (method) {
-      case "first": {
-        target = 0;
-        break;
-      }
-      case "last": {
-        target = this.#inner.length - 1;
-        break;
-      }
-      case "index": {
-        assertType<number>(
-          indexOrValue,
-          "When method is index, value is always a number",
-        );
-        target =
-          indexOrValue >= 0 ? indexOrValue : indexOrValue + this.#inner.length;
-        break;
-      }
-      case "relative": {
-        assertType<number>(
-          indexOrValue,
-          "When method is relative, value is always a number",
-        );
-        target = this.getActive("index") + indexOrValue;
-        break;
-      }
-      case "object": {
-        assertType<T>(indexOrValue, "When method is object, value is always T");
-        const index = this.items.indexOf(indexOrValue);
-        target = index >= 0 ? index : null;
-        break;
-      }
-    }
-
-    if (target !== null) {
-      this.#ensureCapacity(target + 1);
-      this.#inner.setActive("index", target);
-      this.#cleanupTrailing();
-    }
+  public insertFirst(...values: T[]): T[] {
+    return this.insertAt(0, ...values) as T[];
+  }
+  public insertLast(...values: T[]): T[] {
+    return this.insertAt(this.length, ...values) as T[];
+  }
+  public insertRelative(offset: number, ...values: T[]): T[] {
+    return this.insertAt(
+      clamp(this.activeIndex + offset, 0, this.length),
+      ...values,
+    ) as T[];
   }
 
-  public push(...args: [method: "first" | "last", ...values: T[]]): T[];
-  public push(...args: [method: "index", index: number, ...values: T[]]): T[];
-  public push(
-    ...args: [method: "relative", index: number, ...values: T[]]
-  ): T[];
-  public push(
-    ...args:
-      | [method: "first" | "last", ...values: T[]]
-      | [method: "index" | "relative", index: number, ...values: T[]]
-  ): T[];
-  public push(
-    ...args:
-      | [method: "first" | "last", ...values: T[]]
-      | [method: "index" | "relative", index: number, ...values: T[]]
-  ): T[] {
-    const [method, ...rest] = args;
-
-    let target: number = 0;
-    let values: T[] = [];
-
-    switch (method) {
-      case "first": {
-        target = 0;
-        values = rest as T[];
-        break;
-      }
-      case "last": {
-        target = this.#inner.length;
-        values = rest as T[];
-        break;
-      }
-      case "index": {
-        assertType<number>(
-          rest[0],
-          "When method is index, index is always a number",
-        );
-        target = rest[0] >= 0 ? rest[0] : rest[0] + this.#inner.length;
-        values = rest.slice(1) as T[];
-        break;
-      }
-      case "relative": {
-        assertType<number>(
-          rest[0],
-          "When method is index, index is always a number",
-        );
-        target = this.getActive("index") + rest[0];
-        values = rest.slice(1) as T[];
-        break;
-      }
-    }
-
-    target = clamp(target, 0);
-    this.#ensureCapacity(target);
-    this.#inner.push("index", target, ...values);
-    this.#cleanupTrailing();
-
-    return values;
-  }
-
-  public remove(method: "first" | "last"): T;
-  public remove(method: "index", index: number): T | null;
-  public remove(method: "relative", value: number): T | null;
-  public remove(method: "object", value: T): T | null;
-  public remove(
-    method: "first" | "last" | "index" | "relative" | "object",
-    value?: number | T,
-  ): T | null;
-  public remove(
-    method: "first" | "last" | "index" | "relative" | "object",
-    value?: number | T,
-  ): T | null {
-    const result = this.#inner.remove(method, value);
+  public removeAt(index: number): T | null {
+    const result = this.#inner.removeAt(index);
     this.#ensureCapacity();
     this.#cleanupTrailing();
     return result;
+  }
+
+  public removeFirst(): T | null {
+    return this.removeAt(0);
+  }
+  public removeLast(): T | null {
+    return this.removeAt(this.length - 1);
+  }
+  public removeRelative(offset: number): T | null {
+    return this.removeAt(this.activeIndex + offset);
+  }
+  public removeObject(value: T): T | null {
+    return this.removeAt(this.items.indexOf(value));
   }
 
   public rebuild(items: T[] = []) {
     this.#inner.rebuild(items);
     this.#ensureCapacity();
-    this.#inner.setActive("first");
+    this.#inner.activateFirst();
   }
 
   #ensureCapacity(length: number = 1) {
     while (this.length < length) {
-      this.#inner.push("last", this.#factory());
+      this.#inner.insertLast(this.#factory());
     }
   }
 
   #cleanupTrailing() {
     for (
       let i = this.length - 1;
-      i > this.getActive("index") && this.length > 1;
+      i > this.activeIndex && this.length > 1;
       i--
     ) {
       if (this.#canCleanup(this.items[i])) {
-        this.#inner.remove("index", i);
+        this.#inner.removeAt(i);
       } else {
         break;
       }

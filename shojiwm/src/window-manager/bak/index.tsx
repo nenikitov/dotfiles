@@ -71,6 +71,14 @@ export class WindowManager {
     return this.#outputs;
   }
 
+  public outputActivate(index: number) {
+    this.#outputs.setActive("index", index);
+  }
+
+  public workspaceActivate(index: number) {
+    this.#outputs.getActive("object")?.workspaceActivate(index);
+  }
+
   #updateOutputs(liveInfos: OutputInfo[], removedInfos: OutputInfo[]) {
     const live = liveInfos
       .filter((l) => l.enabled)
@@ -105,7 +113,7 @@ export class WindowManager {
           for (const workspace of workspaces) {
             workspace.output = active;
           }
-          active.addWorkspaces("last", ...workspaces);
+          active.workspaceAdd("last", ...workspaces);
         } else {
           this.#orphanedWorkspaces.push(...workspaces);
         }
