@@ -11,7 +11,7 @@ import {
   type WindowCompositionFunction,
 } from "shoji_wm";
 import { getState, state } from "./state";
-import { FocusListStrict } from "../util/focus-list";
+import { FocusListStrict } from "../../util/focus-list";
 import { Output } from "./output";
 import type { Workspace } from "./workspace";
 

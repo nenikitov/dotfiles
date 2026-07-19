@@ -48,7 +48,7 @@ COMPOSITOR.key.bind("launcher", "Super+Shift+Return", () => {
 COMPOSITOR.key.bind("debug", "Super+D", () => {
   notify("Debug - Writing");
 
-  const value: any = ["NONE"];
+  const value: any = ["OUTPUTS", COMPOSITOR.output.outputs];
 
   writeFileSync(
     "/home/nenikitov/.config/shojiwm/debug.json",
