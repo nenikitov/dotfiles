@@ -1,7 +1,6 @@
 import {
   COMPOSITOR,
   createWindowState,
-  read,
   type OutputInfo,
   type WaylandWindow,
   type WindowPosition,
