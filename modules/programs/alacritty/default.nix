@@ -4,7 +4,7 @@
       path = __curPos;
       description = "Alacritty terminal emulator";
       options = {
-        isDeafult.terminal = self.lib.option.mkBoolOption {
+        isDefault.terminal = self.lib.option.mkBoolOption {
           description = "set Alacritty as default terminal emulator";
           default = true;
         };
