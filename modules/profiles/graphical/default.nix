@@ -6,6 +6,8 @@
       config = {pkgs, ...}: {
         ${self.lib.namespace} = {
           programs.librewolf.enable = true;
+          programs.niri.enable = true;
+          programs.rofi.enable = true;
         };
 
         # TODO: Make this a separate module or handle with a theming engine

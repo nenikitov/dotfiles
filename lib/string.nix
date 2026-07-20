@@ -1,7 +1,22 @@
 {inputs, ...}: {
-  flake.lib.case = let
+  flake.lib.string = let
     inherit (inputs.nixpkgs) lib;
   in rec {
+    pad = {
+      len,
+      char ? " ",
+      left ? true,
+    }: str: let
+      length = lib.max 0 (len - builtins.stringLength str);
+      padding =
+        length
+        |> lib.genList (_: char)
+        |> lib.concatStrings;
+    in
+      if left
+      then "${padding}${str}"
+      else "${str}${padding}";
+
     capitalize = str:
       (str |> builtins.substring 0 1 |> lib.toUpper)
       + (str |> builtins.substring 1 (-1));
@@ -81,7 +96,7 @@
         )
         |> builtins.concatStringsSep "";
 
-    convert = {
+    convertCase = {
       from,
       to,
     }: str: let

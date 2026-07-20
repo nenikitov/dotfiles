@@ -72,7 +72,7 @@
           match
           |> builtins.split "/"
           |> builtins.filter builtins.isString
-          |> builtins.map (self.lib.case.convert {
+          |> builtins.map (self.lib.string.convertCase {
             from = "kebab";
             to = "camel";
           })

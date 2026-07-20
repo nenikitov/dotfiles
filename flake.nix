@@ -16,6 +16,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
+    niri = {
+      url = "github:epireyn/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,8 +42,8 @@
     flake-parts.lib.mkFlake
     {inherit inputs;} {
       debug = true;
-      # Poor x86-64 Darwin :(
-      systems = nixpkgs.lib.systems.flakeExposed |> nixpkgs.lib.subtractLists ["x86_64-darwin"];
+      # Poor Darwin :(
+      systems = nixpkgs.lib.systems.flakeExposed |> nixpkgs.lib.subtractLists ["aarch64-darwin"];
       imports = [
         # Community
         inputs.home-manager.flakeModules.default

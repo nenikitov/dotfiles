@@ -33,5 +33,10 @@
         type = lib.types.either (lib.types.enum ["unstable"]) (lib.types.str);
         default = "unstable";
       };
+
+    ensureNotNull = message: value:
+      if value == null
+      then throw message
+      else value;
   };
 }

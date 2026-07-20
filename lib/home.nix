@@ -17,6 +17,7 @@
         inherit pkgs;
         modules = [
           # Community
+          inputs.niri.homeModules.niri
           # Personal
           inputs.generation-trimmer.homeModules.default
           # Local

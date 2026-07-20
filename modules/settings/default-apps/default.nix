@@ -26,6 +26,7 @@
         textEditor = {
           terminal = mkDefaultOption "terminal text editor";
         };
+        launcher = mkDefaultOption "GUI launcher for listing and opening applications";
       };
       config = {
         # TODO: Set default apps

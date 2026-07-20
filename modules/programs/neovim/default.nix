@@ -25,6 +25,7 @@
           extraConfig =
             # viml
             ''
+              set clipboard=unnamedplus
               set nu rnu nowrap
               map H ^
               map L $
