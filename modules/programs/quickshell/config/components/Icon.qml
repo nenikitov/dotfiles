@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Widgets
 import QtQuick
+import QtQuick.Effects
 
 Loader {
   enum Type {
@@ -11,17 +12,26 @@ Loader {
 
   id: root
 
-  property int type: Icon.Type.Raw
+  property int type: Icon.Type.Icon
   required property string source
+  property color color: null
 
   property int implicitSize: 22
 
-  readonly property Component iconImage: IconImage {
+  readonly property Component innerImage: IconImage {
+    id: image
+
     source: root.type == Icon.Type.Icon ? Quickshell.iconPath(root.source) : root.source
     implicitSize: root.implicitSize
+
+    // TODO: Add colorization
+    layer.enabled: false
+    layer.effect: MultiEffect { }
   }
-  readonly property Component iconText: Text {
+  readonly property Component innerText: Text {
     text: root.source
+
+    color: root.color
 
     width: root.implicitSize
     height: root.implicitSize
@@ -31,5 +41,5 @@ Loader {
     verticalAlignment: Text.AlignVCenter
   }
 
-  sourceComponent: type == Icon.Type.Nerd ? iconText : iconImage
+  sourceComponent: type == Icon.Type.Nerd ? innerText : innerImage
 }

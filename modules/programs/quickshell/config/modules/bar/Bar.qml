@@ -5,6 +5,7 @@ import QtQuick.Controls
 import Quickshell.Services.UPower
 import Quickshell.Widgets
 import qs.components
+import qs.config
 
 PanelWindow {
   anchors {
@@ -29,14 +30,12 @@ PanelWindow {
     }
 
     Icon {
-      type: Icon.Type.Icon
-      implicitSize: 22
       source: UPower.displayDevice.iconName
     }
 
     // Battery
     Text {
-      text: UPower.displayDevice.percentage * 100
+      text: Math.round(UPower.displayDevice.percentage * 100)
     }
   }
 }

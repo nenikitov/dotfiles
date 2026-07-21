@@ -25,6 +25,7 @@
     traceroute
     unixtools.ifconfig
     wireshark
+    python3
   ];
 
   home.pointerCursor = {
