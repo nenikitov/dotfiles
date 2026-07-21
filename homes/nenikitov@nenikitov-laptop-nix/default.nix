@@ -9,13 +9,11 @@
       home.stateVersion = "24.05";
 
       ${self.lib.namespace} = {
-        profiles.graphical.enable = true;
-        profiles.daily.enable = true;
-
-        # TODO: Move to profile
-        programs = {
-          git.enable = true;
-          neovim.enable = true;
+        profiles = {
+          graphical.enable = true;
+          daily.enable = true;
+          dev.enable = true;
+          devLinux.enable = true;
         };
       };
     };

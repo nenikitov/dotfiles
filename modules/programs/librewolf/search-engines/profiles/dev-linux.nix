@@ -5,7 +5,7 @@
       description = "a Librewolf profile with programming (related to Linux) extensions";
       config = {
         ${self.lib.namespace}.programs.librewolf.searchEngines = {
-          profiles.programming.enable = true;
+          profiles.dev.enable = true;
 
           configured = {
             archPackages.enable = true;

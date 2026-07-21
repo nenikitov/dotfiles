@@ -15,6 +15,7 @@
           ddg.metaData.alias = "@d";
           wikipedia.metaData.alias = "@w";
           bing.metaData.hidden = true;
+          perplexity.metaData.hidden = true;
         };
       };
     };

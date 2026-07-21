@@ -13,6 +13,10 @@
         home = {
           username = extra.userName;
           homeDirectory = lib.mkDefault "/home/${config.home.username}";
+          packages = with pkgs; [
+            ripgrep
+            btop
+          ];
         };
 
         nixpkgs.config.allowUnfree = true;

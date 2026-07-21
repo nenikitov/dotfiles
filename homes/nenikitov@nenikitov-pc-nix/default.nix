@@ -9,14 +9,12 @@
       home.stateVersion = "25.05";
 
       ${self.lib.namespace} = {
-        profiles.graphical.enable = true;
-
-        # TODO: Move to profile
-        programs = {
-          alacritty.enable = true;
-          discord.enable = true;
-          git.enable = true;
-          neovim.enable = true;
+        profiles = {
+          graphical.enable = true;
+          daily.enable = true;
+          dev.enable = true;
+          devLinux.enable = true;
+          gaming.enable = true;
         };
 
         settings = {

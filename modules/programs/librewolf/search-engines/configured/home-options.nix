@@ -9,17 +9,15 @@
       config = {configModule, ...}: {
         ${self.lib.namespace}.programs.librewolf.searchEngines.searchEngines.home-options = {
           name = "Home Options";
-          icons."16" = "https://search.nixos.org/favicon.png";
+          icons."16" = "https://search.nixos.org/images/nixos-logomark-default-gradient-none.svg";
           aliases = ["@home-options"];
           urls = {
             search = {
-              url = "https://home-manager-options.extranix.com";
+              url = "https://search.nixos.org/options";
               params = {
                 query = "{searchTerms}";
-                channel =
-                  if configModule.channel == "unstable"
-                  then "master"
-                  else configModule.channel;
+                channel = configModule.channel;
+                source = "home_manager";
               };
             };
           };

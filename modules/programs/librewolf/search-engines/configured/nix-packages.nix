@@ -9,7 +9,7 @@
       config = {configModule, ...}: {
         ${self.lib.namespace}.programs.librewolf.searchEngines.searchEngines.nix-packages = {
           name = "NixOS Packages";
-          icons."16" = "https://search.nixos.org/favicon.png";
+          icons."16" = "https://search.nixos.org/images/nixos-logomark-default-gradient-none.svg";
           aliases = ["@nix-packages"];
           urls = {
             search = {
