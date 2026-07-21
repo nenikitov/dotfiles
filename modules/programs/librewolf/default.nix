@@ -4,12 +4,17 @@
       path = __curPos;
       description = "Librewolf (Firefox fork) web-browser";
       options = {
+        configModule,
         lib,
         pkgs,
         ...
       }: let
         inherit (lib) types;
       in {
+        isDefault.browser = self.lib.option.mkBoolOption {
+          description = "set Librewolf as default web-browswer";
+          default = true;
+        };
         _profileName = lib.mkOption {
           description = "Name of the default profile.";
           default = "default";
@@ -104,6 +109,13 @@
                 currentVersion = 23;
               };
             };
+          };
+        };
+
+        ${self.lib.namespace}.settings.defaultApps = {
+          browser = lib.mkIf configModule.isDefault.browser {
+            exec = "librewolf";
+            desktop = "librewolf.desktop";
           };
         };
       };
