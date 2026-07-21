@@ -13,8 +13,6 @@
         home = {
           username = extra.userName;
           homeDirectory = lib.mkDefault "/home/${config.home.username}";
-          # TODO: Remove these
-          packages = with pkgs; [ripgrep rofi];
         };
 
         nixpkgs.config.allowUnfree = true;

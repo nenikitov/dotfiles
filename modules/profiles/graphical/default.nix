@@ -5,9 +5,12 @@
       description = "a profile with a graphical shell";
       config = {pkgs, ...}: {
         ${self.lib.namespace} = {
-          programs.librewolf.enable = true;
-          programs.niri.enable = true;
-          programs.rofi.enable = true;
+          programs = {
+            alacritty.enable = true;
+            librewolf.enable = true;
+            niri.enable = true;
+            rofi.enable = true;
+          };
         };
 
         # TODO: Make this a separate module or handle with a theming engine
@@ -26,6 +29,34 @@
           mononoki
           jost
         ];
+        home.pointerCursor = {
+          enable = true;
+          gtk.enable = true;
+
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Classic";
+          size = 16;
+        };
+        gtk = rec {
+          enable = true;
+          gtk4 = {
+            inherit theme iconTheme;
+          };
+
+          colorScheme = "dark";
+          iconTheme = {
+            name = "Fluent dark";
+            package = pkgs.fluent-icon-theme;
+          };
+          theme = {
+            name = "Fluent-Dark-compact";
+            package = pkgs.fluent-gtk-theme;
+          };
+        };
+        qt = {
+          enable = true;
+          platformTheme.name = "gtk3";
+        };
       };
     };
   };

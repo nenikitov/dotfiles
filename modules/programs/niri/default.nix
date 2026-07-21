@@ -149,7 +149,7 @@
               # Spawning
               "Mod+Return" = {
                 hotkey-overlay.title = "Open Terminal";
-                action.spawn = "alacritty";
+                action.spawn-sh = (self.lib.option.ensureNotNull "Enable a default terminal" configNamespace.settings.defaultApps.terminal).exec;
               };
               "Mod+Shift+Return" = {
                 hotkey-overlay.title = "Open/close application launcher";

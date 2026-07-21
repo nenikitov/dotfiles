@@ -10,11 +10,10 @@
 
       ${self.lib.namespace} = {
         profiles.graphical.enable = true;
+        profiles.daily.enable = true;
 
         # TODO: Move to profile
         programs = {
-          alacritty.enable = true;
-          discord.enable = true;
           git.enable = true;
           neovim.enable = true;
         };
