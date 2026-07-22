@@ -59,5 +59,32 @@
         };
       };
     };
+    nixosModules = self.lib.mkEnableModule {
+      path = __curPos;
+      description = "a profile with a graphical shell";
+      config = {pkgs, ...}: {
+        ${self.lib.namespace} = {
+          hardware = {
+            audio.enable = true;
+            bluetooth.enable = true;
+            printing.enable = true;
+          };
+
+          programs = {
+            plymouth.enable = true;
+            niri.enable = true;
+          };
+        };
+
+        services.xserver = {
+          enable = true;
+          excludePackages = [pkgs.xterm];
+        };
+        hardware.graphics = {
+          enable = true;
+          enable32Bit = true;
+        };
+      };
+    };
   };
 }

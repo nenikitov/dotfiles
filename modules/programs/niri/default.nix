@@ -36,8 +36,8 @@
               |> builtins.listToAttrs;
             explicitRepeat = builtins.mapAttrs (_: bind: {repeat = false;} // bind);
             cornerRadius = 4.0;
-            moveFactor = "10%";
-            resizeFactor = "10%";
+            moveFactor = "5%";
+            resizeFactor = "5%";
           in {
             spawn-at-startup = [
               {argv = ["${scripts}/bin/keep_static_workspaces" "5"];}
@@ -63,10 +63,9 @@
 
             prefer-no-csd = true;
 
-            outputs = lib.pipe configNamespace.settings.monitors [
-              (builtins.map (o: (builtins.removeAttrs o ["primary"]) // {focus-at-startup = o.primary;}))
-              (listToIndexedAttrs {padKeys = true;})
-            ];
+            outputs = configNamespace.settings.monitors
+              |> builtins.map (o: (builtins.removeAttrs o ["primary"]) // {focus-at-startup = o.primary;})
+              |> listToIndexedAttrs {padKeys = true;};
 
             layout = {
               background-color = "transparent";
@@ -293,6 +292,13 @@
             };
           };
         };
+      };
+    };
+    nixosModules = self.lib.mkEnableModule {
+      path = __curPos;
+      description = "Niri Wayland compositor";
+      config = {
+        programs.niri.enable = true;
       };
     };
   };
