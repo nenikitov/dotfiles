@@ -1,11 +1,10 @@
 {
   self,
   inputs,
+  lib,
   ...
 }: {
   flake.lib.module = let
-    inherit (inputs.nixpkgs) lib;
-
     # HACK: Nix module dynamically determinse which arguments to pass to avoid recursion.
     # So we "migrate" arguments from inner functions to the wrapper so arguments are visible from outside.
     # [Issue](https://github.com/NixOS/nixpkgs/issues/446068#issuecomment-3335305966)
@@ -81,6 +80,8 @@
         path;
   in rec {
     namespace = "_ne";
+
+    conditionalImport = path: lib.optional (builtins.pathExists path) path;
 
     mkModule = {
       path,

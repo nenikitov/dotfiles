@@ -49,7 +49,7 @@
         inputs.home-manager.flakeModules.default
         # Personal
         # Local
-        (import-tree [./lib ./parts ./modules ./homes])
+        (import-tree [./lib ./parts ./modules ./hosts])
       ];
     };
 }

@@ -4,7 +4,6 @@
       path = __curPos;
       description = "Librewolf (Firefox fork) web-browser";
       options = {
-        configModule,
         lib,
         pkgs,
         ...
@@ -26,11 +25,20 @@
       config = {
         configModule,
         pkgs,
+        lib,
         ...
       }: {
-        ${self.lib.namespace}.programs.librewolf = {
-          extensions.profiles.minimal.enable = true;
-          searchEngines.profiles.minimal.enable = true;
+        ${self.lib.namespace} = {
+          programs.librewolf = {
+            extensions.profiles.minimal.enable = true;
+            searchEngines.profiles.minimal.enable = true;
+          };
+          settings.defaultApps = {
+            browser = lib.mkIf configModule.isDefault.browser {
+              exec = "librewolf";
+              desktop = "librewolf.desktop";
+            };
+          };
         };
 
         programs.librewolf = {
@@ -109,13 +117,6 @@
                 currentVersion = 23;
               };
             };
-          };
-        };
-
-        ${self.lib.namespace}.settings.defaultApps = {
-          browser = lib.mkIf configModule.isDefault.browser {
-            exec = "librewolf";
-            desktop = "librewolf.desktop";
           };
         };
       };

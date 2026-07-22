@@ -1,14 +1,11 @@
-{
-  self,
-  lib,
-  ...
-}: {
+{self, ...}: {
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
       description = "Niri Wayland compositor";
       config = {
         configNamespace,
+        lib,
         pkgs,
         self',
         ...

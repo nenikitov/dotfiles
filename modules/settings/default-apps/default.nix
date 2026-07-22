@@ -27,7 +27,7 @@
           terminal = mkDefaultOption "terminal text editor";
         };
         launcher = mkDefaultOption "GUI launcher for listing and opening applications";
-        browser = mkdDefaultOption "GUI web-browser";
+        browser = mkDefaultOption "GUI web-browser";
       };
       config = {
         # TODO: Set default apps

@@ -7,8 +7,9 @@
       ;
 
     inherit
-      (self.lib.home)
+      (self.lib.host)
       mkHome
+      mkSystem
       ;
 
     inherit

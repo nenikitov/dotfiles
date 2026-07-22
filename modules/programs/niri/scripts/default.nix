@@ -1,9 +1,9 @@
-{
-  self,
-  lib,
-  ...
-}: {
-  perSystem = {pkgs, ...}: {
+{self, ...}: {
+  perSystem = {
+    pkgs,
+    lib,
+    ...
+  }: {
     packages.niri-scripts = pkgs.rustPlatform.buildRustPackage (let
       manifest = lib.importTOML ./Cargo.toml;
     in {
