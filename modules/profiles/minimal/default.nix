@@ -1,4 +1,4 @@
-{self, ...}: {
+{self, inputs, ...}: {
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
@@ -36,7 +36,6 @@
         extra,
         lib,
         config,
-        inputs,
         pkgs,
         ...
       }: {
@@ -74,7 +73,7 @@
           };
         };
 
-        networking = {inherit hostName;};
+        networking = {inherit (extra) hostName;};
 
         boot.supportedFilesystems.ntfs = true;
 

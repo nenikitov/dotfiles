@@ -8,7 +8,7 @@
           [
             ./_hardware.nix
           ]
-          ++ self.lib.conditionalImport ./_temp.nix;
+          ++ self.lib.module.conditionalImport ./_temp.nix;
 
         # Do not change!
         # Corresponds to the first installed NixOS version

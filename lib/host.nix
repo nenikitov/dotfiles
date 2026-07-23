@@ -1,6 +1,7 @@
 {
   self,
   inputs,
+  withSystem,
   ...
 }: {
   flake.lib.host = {
@@ -37,7 +38,7 @@
     };
 
     mkSystem = {hostName}: module: {
-      nixosConfigurations.${hostName} = inputs.nixpkgs.lib.nixosSystem {
+      ${hostName} = inputs.nixpkgs.lib.nixosSystem {
         modules = [
           # Community
           # Personal
@@ -53,6 +54,7 @@
         ];
         specialArgs = {
           extra = {
+            # TODO: Figure out how to pass `inputs'` and `self'`
             inherit hostName;
           };
         };

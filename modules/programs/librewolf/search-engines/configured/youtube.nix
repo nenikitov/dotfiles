@@ -16,7 +16,7 @@
               };
             };
             suggestions = {
-              url = "ttps://www.google.com/complete/search";
+              url = "https://www.google.com/complete/search";
               params = {
                 q = "{searchTerms}";
                 ds = "yt";
