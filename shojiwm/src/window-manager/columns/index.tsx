@@ -6,9 +6,16 @@ import {
   type WaylandWindow,
   type WindowCompositionFunction,
   type OutputInfo,
+  createWindowState,
 } from "shoji_wm";
-import { getState, state } from "./state";
+import { type WindowPosition } from "shoji_wm/types";
 import { todo } from "../../util/assert";
+
+export const state = {
+  rect: createWindowState<WindowPosition>("rect", {
+    default: (window) => window.position,
+  }),
+} as const;
 
 const border = 2;
 const gap = 4;
@@ -100,8 +107,9 @@ export class WindowManager {
     });
 
     // Movement and resize
-    COMPOSITOR.event.onWindowResize(() => {});
+    // TODO: handle these to swap window order or modify column sizes, but not needed so far
     COMPOSITOR.event.onWindowMove(() => {});
+    COMPOSITOR.event.onWindowResize(() => {});
 
     // Final composition
     COMPOSITOR.window.composition = this.#composition;
@@ -178,7 +186,7 @@ export class WindowManager {
 
   readonly #composition: WindowCompositionFunction = (window) => {
     return (
-      <ManagedWindow rect={getState(window, state.rect)}>
+      <ManagedWindow rect={window.state[state.rect]}>
         <WindowBorder
           style={{
             borderRadius: 5,

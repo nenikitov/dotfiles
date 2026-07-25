@@ -11,10 +11,3 @@ export const state = {
     default: (window) => window.position,
   }),
 } as const;
-
-export function getState<T>(
-  window: WaylandWindow,
-  state: WindowStateKey<T>,
-): Signal<T> {
-  return window.state[state];
-}
