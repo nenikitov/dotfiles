@@ -51,7 +51,7 @@ export class WindowManager {
 
   readonly #composition: WindowCompositionFunction = (window) => {
     return (
-      <ManagedWindow rect={getState(window, state.rect)()}>
+      <ManagedWindow rect={getState(window, state.rect)()} forceRectSize>
         <WindowBorder
           style={{
             borderRadius: 5,

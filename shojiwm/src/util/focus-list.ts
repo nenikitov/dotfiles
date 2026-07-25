@@ -1,15 +1,24 @@
 import { clamp } from "./math";
 
+export interface Item<T> {
+  item: T;
+  focusTime: Date | null;
+}
+
 export class FocusListStrict<T> {
-  readonly #inner: T[];
+  readonly #inner: Item<T>[];
   #active: number | null;
 
   public constructor(items: T[] = []) {
-    this.#inner = items;
-    this.#active = items.length > 0 ? 0 : null;
+    this.#inner = items.map((item) => ({ item, focusTime: null }));
+    this.#active = null;
+
+    if (this.length > 0) {
+      this.activateAt(0);
+    }
   }
 
-  public get items(): readonly T[] {
+  public get items(): readonly Item<T>[] {
     return this.#inner;
   }
   public get length(): number {
@@ -20,7 +29,7 @@ export class FocusListStrict<T> {
     return this.#active;
   }
 
-  public get activeObject(): T | null {
+  public get activeObject(): Item<T> | null {
     return this.#active !== null ? this.#inner[this.#active] : null;
   }
 
@@ -35,6 +44,7 @@ export class FocusListStrict<T> {
     }
 
     this.#active = target;
+    this.items[this.#active].focusTime = new Date();
     return true;
   }
 
@@ -52,7 +62,7 @@ export class FocusListStrict<T> {
   }
 
   public activateObject(value: T): boolean {
-    const index = this.#inner.indexOf(value);
+    const index = this.#inner.findIndex((item) => item.item === value);
     if (index < 0) {
       return false;
     }
@@ -66,12 +76,13 @@ export class FocusListStrict<T> {
       return false;
     }
 
-    this.#inner.splice(target, 0, ...values);
+    const items = values.map((item) => ({ item, focusTime: null }));
+    this.#inner.splice(target, 0, ...items);
 
     if (this.#active === null) {
-      this.#active = 0;
+      this.activateAt(0);
     } else if (target <= this.#active) {
-      this.#active = clamp(this.#active + values.length, 0, this.length - 1);
+      this.activateAt(clamp(this.#active + values.length, 0, this.length - 1));
     }
 
     return values;
@@ -92,7 +103,7 @@ export class FocusListStrict<T> {
     ) as T[];
   }
 
-  public removeAt(index: number): T | null {
+  public removeAt(index: number): Item<T> | null {
     if (this.length === 0 || this.#active === null) {
       return null;
     }
@@ -113,20 +124,20 @@ export class FocusListStrict<T> {
     return removed;
   }
 
-  public removeFirst(): T | null {
+  public removeFirst(): Item<T> | null {
     return this.removeAt(0);
   }
 
-  public removeLast(): T | null {
+  public removeLast(): Item<T> | null {
     return this.removeAt(this.length - 1);
   }
 
-  public removeRelative(offset: number): T | null {
+  public removeRelative(offset: number): Item<T> | null {
     return this.removeAt((this.#active ?? 0) + offset);
   }
 
-  public removeObject(value: T): T | null {
-    const index = this.#inner.indexOf(value);
+  public removeObject(value: T): Item<T> | null {
+    const index = this.#inner.findIndex((item) => item.item === value);
     if (index < 0) {
       return null;
     }
@@ -134,11 +145,20 @@ export class FocusListStrict<T> {
   }
 
   public rebuild(items: T[] = []) {
-    this.#inner.splice(0, this.#inner.length, ...items);
-    this.#active = items.length > 0 ? 0 : null;
+    this.#inner.splice(
+      0,
+      this.#inner.length,
+      ...items.map((item) => ({ item, focusTime: null })),
+    );
+    this.#active = null;
+
+    if (this.length > 0) {
+      this.activateAt(0);
+    }
   }
 }
 
+/*
 export class FocusListDynamic<T> {
   #inner: FocusListStrict<T>;
   readonly #factory: () => T;
@@ -275,3 +295,4 @@ export class FocusListDynamic<T> {
     }
   }
 }
+*/

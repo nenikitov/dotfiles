@@ -11,7 +11,7 @@ import {
   createWindowState,
 } from "shoji_wm";
 import type { ManagedWindowRect } from "shoji_wm/types";
-import { WindowManager } from "./window-manager/float";
+import { WindowManager } from "./window-manager/columns";
 
 function notify(value: any) {
   COMPOSITOR.process.spawn({
@@ -35,7 +35,7 @@ COMPOSITOR.process.once("dunst", {
   runPolicy: "once-per-session",
 });
 
-const wm = new WindowManager(COMPOSITOR);
+const wm = new WindowManager();
 
 // Launcher
 COMPOSITOR.key.bind("terminal", "Super+Return", () => {
