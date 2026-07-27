@@ -7,7 +7,6 @@
     "shoji_wm": "file:/usr/lib/shojiwm/packages/shoji_wm"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.12",
-    "@types/node": "^26.1.0"
+    "@types/lodash-es": "^4.17.12"
   }
 }
