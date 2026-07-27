@@ -1,16 +1,9 @@
 import { writeFileSync } from "node:fs";
 
 import {
-  ClientWindow,
   COMPOSITOR,
-  WindowBorder,
-  type WaylandWindow,
-  ManagedWindow,
-  read,
   type DisplayConfigDraft,
-  createWindowState,
 } from "shoji_wm";
-import type { ManagedWindowRect } from "shoji_wm/types";
 import { WindowManager } from "./window-manager/columns";
 
 export function notify(value: any) {

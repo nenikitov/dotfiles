@@ -7,9 +7,12 @@ import {
   type WindowCompositionFunction,
   type OutputInfo,
   createWindowState,
+  seconds,
+  cubicBezier,
 } from "shoji_wm";
 import { type WindowPosition } from "shoji_wm/types";
 import { todo } from "../../util/assert";
+import { playRectAnimation } from "../old/window-animation";
 
 export const state = {
   rect: createWindowState<WindowPosition>("rect", {
@@ -75,14 +78,22 @@ export class Output {
       this.#windows.length <= 0 ?
         0
       : (width - (this.#windows.length - 1) * gap) / this.windows.length;
+    let tileHeight = height;
 
     for (const window of this.#windows) {
-      window.state[state.rect].set({
-        x,
-        y,
-        width: tileWidth,
-        height,
-      });
+      // For whatever reason setting state is insufficient, but playing an empty animation is
+      playRectAnimation(
+        window,
+        state.rect,
+        {
+          x,
+          y,
+          width: tileWidth,
+          height,
+        },
+        cubicBezier(0.05, 0.9, 0.1, 1.0),
+        seconds(0.2),
+      );
       x += tileWidth + gap;
     }
   }
@@ -129,7 +140,6 @@ export class WindowManager {
       inOutputs.handle = output;
       return inOutputs;
     });
-
     if (live.length === 0) {
       todo("Handle when all outputs are disconnected");
     }
@@ -186,7 +196,7 @@ export class WindowManager {
 
   readonly #composition: WindowCompositionFunction = (window) => {
     return (
-      <ManagedWindow rect={window.state[state.rect]}>
+      <ManagedWindow rect={window.state[state.rect]} forceRectSize>
         <WindowBorder
           style={{
             borderRadius: 5,
