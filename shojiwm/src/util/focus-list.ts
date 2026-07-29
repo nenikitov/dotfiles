@@ -1,15 +1,54 @@
 import { clamp } from "./math";
 
-export interface FocusListItem<T> {
+export class FocusListItem<T> {
   /** Value of the item. */
-  item: T;
+  #item: T;
   /** Time that the object was last activated at. */
-  activatedTime: Date | undefined;
+  #activatedTimestamp: number | undefined;
+  /** Time that the object was last activated at that is not updated by history cycling. */
+  #historyTimestamp: number | undefined;
+
+  /**
+   * @param item
+   * Value of the item.
+   */
+  constructor(item: T) {
+    this.#item = item;
+    this.#activatedTimestamp = undefined;
+    this.#historyTimestamp = undefined;
+  }
+
+  /** Value of the item. */
+  get item(): T {
+    return this.#item;
+  }
+
+  /** Time that the object was last activated at. */
+  get activatedTimestamp(): number | undefined {
+    return this.#activatedTimestamp;
+  }
+
   /**
    * @package
    * Time that the object was last activated at that is not updated by history cycling.
    */
-  historyTime: Date | undefined;
+  get _historyTimestamp(): number | undefined {
+    return this.#historyTimestamp;
+  }
+
+  /**
+   * @package
+   *
+   * @param updateHistory
+   * Whether to update history timestamp too.
+   */
+  _activate(updateHistory: boolean = true) {
+    const now = performance.timeOrigin + performance.now();
+    this.#activatedTimestamp = now;
+    if (updateHistory) {
+      this.#historyTimestamp = now;
+    }
+  }
 }
 
 /**
@@ -69,13 +108,7 @@ export class FocusList<T> {
    * Whether activation was successful.
    */
   activateAt(index: number): boolean {
-    const result = this.#activateAtWithoutUpdatingTime(index);
-    if (result) {
-      const now = new Date();
-      this.#items[this.#active!].activatedTime = now;
-      this.#items[this.#active!].historyTime = now;
-    }
-    return result;
+    return this.#activateAtConfigurableTimestamp(index);
   }
 
   /**
@@ -83,16 +116,22 @@ export class FocusList<T> {
    *
    * @param index
    * Target index to activate.
+   * @param updateHistory
+   * Whether to update history timestamp too.
    *
    * @returns
    * Whether activation was successful.
    */
-  #activateAtWithoutUpdatingTime(index: number): boolean {
+  #activateAtConfigurableTimestamp(
+    index: number,
+    updateHistory: boolean = true,
+  ): boolean {
     if (index < 0 || index >= this.length) {
       return false;
     }
 
     this.#active = index;
+    this.#items[this.#active]._activate(updateHistory);
 
     return true;
   }
@@ -195,37 +234,29 @@ export class FocusList<T> {
       return false;
     }
 
-    const byHistoryTime = [...this.#items.entries()]
-      .sort(([_1, a], [_2, b]) => {
-        if (a.historyTime === undefined && b.historyTime === undefined) {
-          return 0;
-        } else if (a.historyTime === undefined) {
-          return -1;
-        } else if (b.historyTime === undefined) {
-          return 1;
-        } else {
-          return a.historyTime.getTime() - b.historyTime.getTime();
-        }
-      })
-      .map(([i, _]) => i);
+    const byHistoryTimestamp = this.#items
+      .map((item, i) => ({ item, i }))
+      .sort(
+        (a, b) =>
+          (a.item._historyTimestamp ?? -1) - (b.item._historyTimestamp ?? -1),
+      )
+      .map(({ i }) => i);
 
-    const current = byHistoryTime.findIndex((i) => i === this.#active);
+    const current = byHistoryTimestamp.findIndex((i) => i === this.#active);
     if (current < 0) {
       return false;
     }
 
     let target = current + offset;
-    if (!shouldClamp && (target < 0 || target >= byHistoryTime.length)) {
+    if (!shouldClamp && (target < 0 || target >= byHistoryTimestamp.length)) {
       return false;
     }
 
-    target = clamp(target, 0, byHistoryTime.length - 1);
-    const result = this.#activateAtWithoutUpdatingTime(byHistoryTime[target]);
-    if (result) {
-      const now = new Date();
-      this.#items[this.#active!].activatedTime = now;
-    }
-    return result;
+    target = clamp(target, 0, byHistoryTimestamp.length - 1);
+    return this.#activateAtConfigurableTimestamp(
+      byHistoryTimestamp[target],
+      false,
+    );
   }
 
   /**
@@ -241,31 +272,116 @@ export class FocusList<T> {
       return false;
     }
 
-    const byActivatedTime = [...this.#items.entries()]
-      .sort(([_1, a], [_2, b]) => {
-        if (a.activatedTime === undefined && b.activatedTime === undefined) {
-          return 0;
-        } else if (a.activatedTime === undefined) {
-          return -1;
-        } else if (b.activatedTime === undefined) {
-          return 1;
-        } else {
-          return a.activatedTime.getTime() - b.activatedTime.getTime();
-        }
-      })
-      .map(([i, _]) => i);
+    const byActivatedTimestamp = this.#items
+      .map((item, i) => ({ item, i }))
+      .sort(
+        (a, b) =>
+          (a.item.activatedTimestamp ?? -1) - (b.item.activatedTimestamp ?? -1),
+      )
+      .map(({ i }) => i);
 
-    const current = byActivatedTime.findIndex((i) => i === this.#active);
+    const current = byActivatedTimestamp.findIndex((i) => i === this.#active);
     if (current < 0) {
       return false;
     }
 
     let target = current - 1;
-    if (target < 0 || target >= byActivatedTime.length) {
+    if (target < 0 || target >= byActivatedTimestamp.length) {
       return false;
     }
 
-    return this.activateAt(byActivatedTime[target]);
+    return this.activateAt(byActivatedTimestamp[target]);
+  }
+
+  /**
+   * Insert items to the list at an index.
+   * If the list was previously empty, will always focus the first element.
+   *
+   * @param index
+   * Index to insert values at.
+   * The first item from `values` will be put into that index.
+   * @param values
+   * Items to insert into the list.
+   *
+   * @returns
+   * Inserted items if the insertion was successful, undefined otherwise.
+   */
+  public insertAt(index: number, values: T[]): FocusListItem<T>[] | undefined {
+    if (index < 0 || index > this.length) {
+      return undefined;
+    }
+
+    const items = values.map<FocusListItem<T>>(
+      (value) => new FocusListItem(value),
+    );
+
+    this.#items.splice(index, 0, ...items);
+
+    if (this.#active === undefined) {
+      this.activateAt(0);
+    } else if (index <= this.#active) {
+      this.#active += values.length;
+    }
+
+    return items;
+  }
+
+  /**
+   * Insert items to the beginning list.
+   * If the list was previously empty, will always focus the first element.
+   *
+   * @param values
+   * Items to insert into the list.
+   *
+   * @returns
+   * Inserted items (insertion is always a success because we can insert to the beginning of even an empty list).
+   */
+  public insertFirst(values: T[]): FocusListItem<T>[] {
+    return this.insertAt(0, values)!;
+  }
+
+  /**
+   * Insert items to the end list.
+   * If the list was previously empty, will always focus the first element.
+   *
+   * @param values
+   * Items to insert into the list.
+   *
+   * @returns
+   * Inserted items (insertion is always a success because we can insert to the end of even an empty list).
+   */
+  public insertLast(values: T[]): FocusListItem<T>[] {
+    return this.insertAt(this.length, values)!;
+  }
+
+  /**
+   * Insert items relative to the active element.
+   * If the list was previously empty, will always focus the first element.
+   *
+   * @param offset
+   * Offset from active index to insert to.
+   * The first item from `values` will be put into that index.
+   * @param values
+   * Items to insert into the list.
+   * @param options
+   * Other options.
+   * @param options.shouldClamp
+   * Whether activation out of bounds is reported to be successful or not.
+   *
+   * @returns
+   * Inserted items if the insertion was successful, undefined otherwise.
+   */
+  public insertRelative(
+    offset: number,
+    values: T[],
+    { shouldClamp = false }: { shouldClamp?: boolean } = {},
+  ): FocusListItem<T>[] | undefined {
+    let index = (this.#active ?? 0) + offset;
+    if (shouldClamp) {
+      index = clamp(index, 0, this.length);
+    }
+
+    return this.insertAt(index, values);
   }
 
   /**
@@ -282,7 +398,7 @@ export class FocusList<T> {
    * Which element to activate if old active is not found.
    * @param options.equalityCheck
    * Predicate to use to check whether an object matches the target.
-   * Not suggested, but can also be used to modify new elements to be inserted in place through `incoming` parameter.
+   * Not suggested, but can also be used to modify new elements to be inserted in place through `existing` and `incoming` parameters.
    */
   setItems(
     items: T[],
@@ -296,14 +412,22 @@ export class FocusList<T> {
       equalityCheck?: (existing: T, incoming: T) => boolean;
     } = {},
   ) {
-    const reused = items.map<FocusListItem<T>>(
-      (item) =>
-        this.#items.find((i) => equalityCheck(i.item, item)) ?? {
-          item,
-          activatedTime: undefined,
-          historyTime: undefined,
-        },
-    );
+    const usedIndices = new Set<number>();
+
+    const reused = items.map<FocusListItem<T>>((item) => {
+      const index = this.#items.findIndex(
+        (existing, i) =>
+          !usedIndices.has(i) && equalityCheck(existing.item, item),
+      );
+      if (index < 0) {
+        // Item did not exist, crate a new one
+        return new FocusListItem(item);
+      }
+
+      // Item existed, reuse
+      usedIndices.add(index);
+      return this.#items[index];
+    });
 
     let active: number | undefined;
     if (
@@ -327,17 +451,14 @@ export class FocusList<T> {
           break;
         }
         case "most_recent": {
-          let index = 0;
-          for (const [i, item] of reused.entries()) {
-            if (
-              item.activatedTime !== undefined &&
-              reused[index].activatedTime !== undefined &&
-              item.activatedTime > reused[index].activatedTime!
-            ) {
-              index = i;
-            }
-          }
-          active = index;
+          active = reused.reduce(
+            (best, item, i) =>
+              (item.activatedTimestamp ?? -1) >
+              (reused[best].activatedTimestamp ?? -1)
+                ? i
+                : best,
+            0,
+          );
           break;
         }
       }
@@ -346,6 +467,8 @@ export class FocusList<T> {
     this.#items.splice(0, this.#items.length, ...reused);
     if (active !== undefined) {
       this.activateAt(active);
+    } else {
+      this.#active = undefined;
     }
   }
 }
