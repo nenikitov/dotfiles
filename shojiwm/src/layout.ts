@@ -1,5 +1,5 @@
 import type { OutputInfo } from "shoji_wm";
-import { FocusList } from "./focus-list";
+import { FocusList } from "./util/focus-list";
 
 export class Layout {
   #outputs: FocusList<Output>;

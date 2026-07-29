@@ -221,7 +221,7 @@ export class FocusList<T> {
    * @param options
    * Other options.
    * @param options.shouldClamp
-   * Whether activation out of bounds is reported to be successful or not.
+   * Whether activation out of bounds should default to the most old / recent item.
    *
    * @returns
    * Whether activation was successful.
@@ -366,7 +366,7 @@ export class FocusList<T> {
    * @param options
    * Other options.
    * @param options.shouldClamp
-   * Whether activation out of bounds is reported to be successful or not.
+   * Whether activation out of bounds should default to inserting to the beginning / end.
    *
    * @returns
    * Inserted items if the insertion was successful, undefined otherwise.
@@ -382,6 +382,175 @@ export class FocusList<T> {
     }
 
     return this.insertAt(index, values);
+  }
+
+  /**
+   * Remove object at the index.
+   *
+   * @param index
+   * Target index to remove.
+   * @param options
+   * Other options.
+   * @param options.fallback
+   * Which element to activate if old active is removed.
+   *
+   * @returns
+   * Removed item if the deletion was successful, undefined otherwise.
+   */
+  removeAt(
+    index: number,
+    {
+      fallback = "most_recent",
+    }: {
+      fallback?: "first" | "last" | "previous" | "next" | "most_recent";
+    } = {},
+  ): FocusListItem<T> | undefined {
+    if (this.#active === undefined) {
+      return undefined;
+    }
+
+    if (index < 0 || index >= this.length) {
+      return undefined;
+    }
+
+    const [removed] = this.#items.splice(index, 1);
+
+    if (this.length === 0) {
+      // List is empty, deselect
+      this.#active = undefined;
+    } else if (index < this.#active) {
+      // Item before was removed, shift
+      this.#active -= 1;
+    } else if (index === this.#active) {
+      // Active item was removed, fallback
+      let active: number;
+      switch (fallback) {
+        case "first": {
+          active = 0;
+          break;
+        }
+        case "last": {
+          active = this.length - 1;
+          break;
+        }
+        case "next": {
+          active = this.#active;
+          break;
+        }
+        case "previous": {
+          active = this.#active - 1;
+          break;
+        }
+        case "most_recent": {
+          active = this.#items.reduce(
+            (best, item, i) =>
+              (item.activatedTimestamp ?? -1) >
+              (this.#items[best].activatedTimestamp ?? -1)
+                ? i
+                : best,
+            0,
+          );
+          break;
+        }
+      }
+
+      this.activateAt(clamp(active, 0, this.length - 1));
+    }
+
+    return removed;
+  }
+
+  /**
+   * Remove object from the beginning of the list.
+   *
+   * @param options
+   * Options from {@link removeAt}.
+   *
+   * @returns
+   * Removed item if the deletion was successful, undefined otherwise.
+   */
+  removeFirst(
+    options: Parameters<this["removeAt"]>[1] = {},
+  ): FocusListItem<T> | undefined {
+    return this.removeAt(0, options);
+  }
+
+  /**
+   * Remove object from the end of the list.
+   *
+   * @param options
+   * Options from {@link removeAt}.
+   *
+   * @returns
+   * Removed item if the deletion was successful, undefined otherwise.
+   */
+  removeLast(
+    options: Parameters<this["removeAt"]>[1] = {},
+  ): FocusListItem<T> | undefined {
+    return this.removeAt(this.length - 1, options);
+  }
+
+  /**
+   * Remove object at the offset relative to the currently active one.
+   *
+   * @param offset
+   * Offset from active index to remove.
+   * @param options
+   * Options from {@link removeAt}.
+   * @param options.shouldClamp
+   * Whether removal out of bounds should default to removing from the beginning / end.
+   *
+   * @returns
+   * Removed item if the deletion was successful, undefined otherwise.
+   */
+  removeRelative(
+    offset: number,
+    {
+      shouldClamp = false,
+      ...options
+    }: {
+      shouldClamp?: boolean;
+    } & Parameters<this["removeAt"]>[1] = {},
+  ): FocusListItem<T> | undefined {
+    if (this.#active === undefined) {
+      return undefined;
+    }
+
+    let index = this.#active + offset;
+    if (shouldClamp) {
+      index = clamp(index, 0, this.length - 1);
+    }
+
+    return this.removeAt(index, options);
+  }
+
+  /**
+   * Remove object that equals the target.
+   *
+   * @param item
+   * Target to remove.
+   * @param options
+   * Options from {@link removeAt}.
+   * @param options.equalityCheck
+   * Predicate to use to check whether an object matches the target.
+   *
+   * @returns
+   * Removed item if the deletion was successful, undefined otherwise.
+   */
+  removeObject(
+    item: T,
+    {
+      equalityCheck = (a, b) => a === b,
+      ...options
+    }: {
+      equalityCheck?: (a: T, b: T) => boolean;
+    } & Parameters<this["removeAt"]>[1] = {},
+  ): FocusListItem<T> | undefined {
+    const index = this.#items.findIndex((i) => equalityCheck(i.item, item));
+    if (index < 0) {
+      return undefined;
+    }
+    return this.removeAt(index, options);
   }
 
   /**
@@ -464,7 +633,7 @@ export class FocusList<T> {
       }
     }
 
-    this.#items.splice(0, this.#items.length, ...reused);
+    this.#items.splice(0, this.length, ...reused);
     if (active !== undefined) {
       this.activateAt(active);
     } else {
