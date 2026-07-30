@@ -2,25 +2,25 @@ import { clamp } from "./math";
 
 export class FocusListItem<T> {
   /** Value of the item. */
-  #item: T;
+  #value: T;
   /** Time that the object was last activated at. */
   #activatedTimestamp: number | undefined;
   /** Time that the object was last activated at that is not updated by history cycling. */
   #historyTimestamp: number | undefined;
 
   /**
-   * @param item
+   * @param value
    * Value of the item.
    */
-  constructor(item: T) {
-    this.#item = item;
+  constructor(value: T) {
+    this.#value = value;
     this.#activatedTimestamp = undefined;
     this.#historyTimestamp = undefined;
   }
 
   /** Value of the item. */
-  get item(): T {
-    return this.#item;
+  get value(): T {
+    return this.#value;
   }
 
   /** Time that the object was last activated at. */
@@ -81,6 +81,11 @@ export class FocusList<T> {
   /** List of items. */
   get items(): readonly FocusListItem<T>[] {
     return this.#items;
+  }
+
+  /** List of values inside items. */
+  get values(): readonly T[] {
+    return this.#items.map((i) => i.value);
   }
 
   /** Length of the list. */
@@ -203,7 +208,7 @@ export class FocusList<T> {
       equalityCheck = (a, b) => a === b,
     }: { equalityCheck?: (a: T, b: T) => boolean } = {},
   ): boolean {
-    const index = this.#items.findIndex((i) => equalityCheck(i.item, item));
+    const index = this.#items.findIndex((i) => equalityCheck(i.value, item));
     if (index < 0) {
       return false;
     }
@@ -546,7 +551,7 @@ export class FocusList<T> {
       equalityCheck?: (a: T, b: T) => boolean;
     } & Parameters<this["removeAt"]>[1] = {},
   ): FocusListItem<T> | undefined {
-    const index = this.#items.findIndex((i) => equalityCheck(i.item, item));
+    const index = this.#items.findIndex((i) => equalityCheck(i.value, item));
     if (index < 0) {
       return undefined;
     }
@@ -586,7 +591,7 @@ export class FocusList<T> {
     const reused = items.map<FocusListItem<T>>((item) => {
       const index = this.#items.findIndex(
         (existing, i) =>
-          !usedIndices.has(i) && equalityCheck(existing.item, item),
+          !usedIndices.has(i) && equalityCheck(existing.value, item),
       );
       if (index < 0) {
         // Item did not exist, crate a new one

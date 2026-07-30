@@ -12,10 +12,6 @@ import {
   type WaylandWindow,
   type WindowPosition,
 } from "shoji_wm";
-import { FocusList } from "./util/focus-list";
-
-const list = new FocusList<number>();
-list.activeObject!.activate()
 
 export function notify(value: any) {
   COMPOSITOR.process.spawn({
