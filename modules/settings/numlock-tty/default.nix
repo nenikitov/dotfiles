@@ -12,20 +12,21 @@
           ];
           services.numlock-on = {
             description = "Enable num lock at startup";
-            wantedBy = [ "initrd.target" ];
-            before = [ "initrd-root-device.target" ];
-            unitConfig = { DefaultDependencies = false; };
-            script = #sh
-            ''
-              for tty in /dev/tty[1-9]*; do
-                ${pkgs.kbd}/bin/setleds -D +num < "$tty"
-              done
-            '';
+            wantedBy = ["initrd.target"];
+            before = ["initrd-root-device.target"];
+            unitConfig = {DefaultDependencies = false;};
+            script =
+              #sh
+              ''
+                for tty in /dev/tty[1-9]*; do
+                  ${pkgs.kbd}/bin/setleds -D +num < "$tty"
+                done
+              '';
           };
         };
 
-	# Display managers - some like to overwrite it
-	services.displayManager.ly.settings.numlock = true;
+        # Display managers - some like to overwrite it
+        services.displayManager.ly.settings.numlock = true;
       };
     };
   };

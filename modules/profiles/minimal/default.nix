@@ -1,4 +1,8 @@
-{self, inputs, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake = {
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
@@ -20,13 +24,13 @@
           ];
         };
 
+        nix.package = pkgs.nix;
         nixpkgs.config.allowUnfree = true;
 
         programs.home-manager.enable = true;
         news.display = "silent";
 
         ${self.lib.namespace} = {
-          ${if options.${self.lib.namespace} ? "unmanaged" then "unmanaged" else null} = true;
           settings.garbageCollection.enable = true;
         };
       };
@@ -51,14 +55,14 @@
           ];
 
           # Make nix3 and legacy commands consistent with flakes
-          registry = inputs
-              |> lib.filterAttrs (k: v: lib.isType "flake" v)
-              |> lib.mapAttrs (k: flake: {inherit flake;});
+          registry =
+            inputs
+            |> lib.filterAttrs (k: v: lib.isType "flake" v)
+            |> lib.mapAttrs (k: flake: {inherit flake;});
           nixPath = lib.mapAttrsToList (k: v: "${k}=${v.to.path}") config.nix.registry;
         };
 
         ${self.lib.namespace} = {
-          ${if options.${self.lib.namespace} ? "unmanaged" then "unmanaged" else null} = true;
           settings = {
             garbageCollection.enable = true;
             numlockTty.enable = true;

@@ -63,7 +63,8 @@
 
             prefer-no-csd = true;
 
-            outputs = configNamespace.settings.monitors
+            outputs =
+              configNamespace.settings.monitors
               |> builtins.map (o: (builtins.removeAttrs o ["primary"]) // {focus-at-startup = o.primary;})
               |> listToIndexedAttrs {padKeys = true;};
 

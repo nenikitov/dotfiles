@@ -10,6 +10,8 @@
         home.stateVersion = "25.05";
 
         ${self.lib.namespace} = {
+          hardware.nvidia.enable = true;
+
           profiles = {
             graphical.enable = true;
             daily.enable = true;
