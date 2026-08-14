@@ -49,12 +49,17 @@
           {
             ${self.lib.namespace}.profiles.minimal.enable = true;
           }
+          ({ config, ... }: {
+            # Inject `inputs'` and `self'` into `specialArgs`
+            _module.args = withSystem config.nixpkgs.hostPlatform.system ({ inputs', self', ... }: {
+              inherit inputs' self';
+            });
+          })
           # Current
           module
         ];
         specialArgs = {
           extra = {
-            # TODO: Figure out how to pass `inputs'` and `self'`
             inherit hostName;
           };
         };
