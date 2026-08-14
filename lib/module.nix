@@ -81,8 +81,6 @@
   in rec {
     namespace = "_ne";
 
-    conditionalImport = path: lib.optional (builtins.pathExists path) path;
-
     mkModule = {
       path,
       options ? {},

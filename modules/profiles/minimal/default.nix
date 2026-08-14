@@ -4,9 +4,10 @@
       path = __curPos;
       description = "a profile with very minimal CLI functionality";
       config = {
+        config,
         extra,
         lib,
-        config,
+        options,
         pkgs,
         ...
       }: {
@@ -25,6 +26,7 @@
         news.display = "silent";
 
         ${self.lib.namespace} = {
+          ${if options.${self.lib.namespace} ? "unmanaged" then "unmanaged" else null} = true;
           settings.garbageCollection.enable = true;
         };
       };
@@ -33,9 +35,10 @@
       path = __curPos;
       description = "a profile with very minimal CLI functionality";
       config = {
+        config,
         extra,
         lib,
-        config,
+        options,
         pkgs,
         ...
       }: {
@@ -55,6 +58,7 @@
         };
 
         ${self.lib.namespace} = {
+          ${if options.${self.lib.namespace} ? "unmanaged" then "unmanaged" else null} = true;
           settings = {
             garbageCollection.enable = true;
             numlockTty.enable = true;

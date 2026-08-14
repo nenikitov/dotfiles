@@ -4,11 +4,9 @@
       self.lib.mkSystem {
         hostName = "nenikitov-laptop-nix";
       } {
-        imports =
-          [
-            ./_hardware.nix
-          ]
-          ++ self.lib.module.conditionalImport ./_temp.nix;
+        imports = [
+          ./_hardware.nix
+        ];
 
         # Do not change!
         # Corresponds to the first installed NixOS version
