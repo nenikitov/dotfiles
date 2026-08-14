@@ -23,6 +23,9 @@
             '';
           };
         };
+
+	# Display managers - some like to overwrite it
+	services.displayManager.ly.settings.numlock = true;
       };
     };
   };
