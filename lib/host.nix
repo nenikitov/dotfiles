@@ -41,6 +41,7 @@
       ${hostName} = inputs.nixpkgs.lib.nixosSystem {
         modules = [
           # Community
+          inputs.shojiwm.nixosModules.default
           # Personal
           inputs.generation-trimmer.nixosModules.default
           # Local

@@ -20,6 +20,10 @@
       url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    shojiwm = {
+      url = "github:bea4dev/ShojiWM";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";

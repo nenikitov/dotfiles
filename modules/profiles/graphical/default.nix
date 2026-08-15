@@ -1,5 +1,33 @@
 {self, ...}: {
   flake = {
+    nixosModules = self.lib.mkEnableModule {
+      path = __curPos;
+      description = "a profile with a graphical shell";
+      config = {pkgs, ...}: {
+        ${self.lib.namespace} = {
+          hardware = {
+            audio.enable = true;
+            bluetooth.enable = true;
+            printing.enable = true;
+          };
+
+          programs = {
+            plymouth.enable = true;
+            niri.enable = true;
+            shojiwm.enable = true;
+          };
+        };
+
+        services.xserver = {
+          enable = true;
+          excludePackages = [pkgs.xterm];
+        };
+        hardware.graphics = {
+          enable = true;
+          enable32Bit = true;
+        };
+      };
+    };
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
       description = "a profile with a graphical shell";
@@ -9,6 +37,7 @@
             alacritty.enable = true;
             librewolf.enable = true;
             niri.enable = true;
+            shojiwm.enable = true;
             rofi.enable = true;
           };
         };
@@ -56,33 +85,6 @@
         qt = {
           enable = true;
           platformTheme.name = "gtk3";
-        };
-      };
-    };
-    nixosModules = self.lib.mkEnableModule {
-      path = __curPos;
-      description = "a profile with a graphical shell";
-      config = {pkgs, ...}: {
-        ${self.lib.namespace} = {
-          hardware = {
-            audio.enable = true;
-            bluetooth.enable = true;
-            printing.enable = true;
-          };
-
-          programs = {
-            plymouth.enable = true;
-            niri.enable = true;
-          };
-        };
-
-        services.xserver = {
-          enable = true;
-          excludePackages = [pkgs.xterm];
-        };
-        hardware.graphics = {
-          enable = true;
-          enable32Bit = true;
         };
       };
     };

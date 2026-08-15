@@ -1,5 +1,12 @@
 {self, ...}: {
   flake = {
+    nixosModules = self.lib.mkEnableModule {
+      path = __curPos;
+      description = "Niri Wayland compositor";
+      config = {
+        programs.niri.enable = true;
+      };
+    };
     homeModules = self.lib.mkEnableModule {
       path = __curPos;
       description = "Niri Wayland compositor";
@@ -293,13 +300,6 @@
             };
           };
         };
-      };
-    };
-    nixosModules = self.lib.mkEnableModule {
-      path = __curPos;
-      description = "Niri Wayland compositor";
-      config = {
-        programs.niri.enable = true;
       };
     };
   };

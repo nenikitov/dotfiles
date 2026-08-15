@@ -209,7 +209,28 @@
         "import-tree": "import-tree",
         "niri": "niri",
         "nixpkgs": "nixpkgs",
+        "shojiwm": "shojiwm",
         "treefmt": "treefmt"
+      }
+    },
+    "shojiwm": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786817640,
+        "narHash": "sha256-v41F7LRZEHcXWwbmNdSJ4cvdL94d7vVxLlBIqShvozE=",
+        "owner": "bea4dev",
+        "repo": "ShojiWM",
+        "rev": "69768ca8998118dc83bb3f6ceea1592f643f9686",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bea4dev",
+        "repo": "ShojiWM",
+        "type": "github"
       }
     },
     "treefmt": {
