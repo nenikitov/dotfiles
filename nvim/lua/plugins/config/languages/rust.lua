@@ -10,12 +10,17 @@ return language.register {
         'toml',
     },
     servers = {
-        settings = {
-            ['rust-analyzer'] = {
-                cargo = {
-                    features = 'all',
+        rust_analyzer = {
+            settings = {
+                ['rust-analyzer'] = {
+                    check = {
+                        command = 'clippy'
+                    },
+                    cargo = {
+                        features = 'all',
+                    },
                 },
             },
-        },
+        }
     },
 }

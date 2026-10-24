@@ -1,0 +1,30 @@
+[shell]
+
+    [shell.panel]
+    launcher_placement = "floating"
+
+    [shell.launcher]
+    categories = false
+    provider_prefix = "@"
+    show_app_actions = true
+
+        [shell.launcher.providers.calculator]
+        global = false
+        prefix = "c"
+
+        [shell.launcher.providers.emoji]
+        global = false
+        prefix = "e"
+
+        [shell.launcher.providers.session]
+        global = false
+        prefix = "s"
+
+        [shell.launcher.providers.wallpaper]
+        global = false
+        prefix = "i"
+
+        [shell.launcher.providers.windows]
+        global = false
+        prefix = "w"
+

@@ -1,0 +1,281 @@
+// Monitors
+
+output "Ancor Communications Inc MG248 G9LMQS024781" {
+    focus-at-startup
+    transform "normal"
+    position x=0 y=0
+    mode "1920x1080"
+}
+output "ASUSTek COMPUTER INC VG245 KCLMQS015128" {
+    transform "normal"
+    position x=1920 y=0
+    mode "1920x1080"
+}
+
+workspace "DP-1_1" { open-on-output "DP-1"; }
+workspace "DP-1_2" { open-on-output "DP-1"; }
+workspace "DP-1_3" { open-on-output "DP-1"; }
+workspace "DP-1_4" { open-on-output "DP-1"; }
+workspace "DP-1_5" { open-on-output "DP-1"; }
+
+workspace "HDMI-A-1_1" { open-on-output "HDMI-A-1"; }
+workspace "HDMI-A-1_2" { open-on-output "HDMI-A-1"; }
+workspace "HDMI-A-1_3" { open-on-output "HDMI-A-1"; }
+workspace "HDMI-A-1_4" { open-on-output "HDMI-A-1"; }
+workspace "HDMI-A-1_5" { open-on-output "HDMI-A-1"; }
+
+// Layout and decorations
+
+layout {
+    // Behavior
+    center-focused-column "never"
+
+    // Column widths
+    default-column-width { proportion 0.5; }
+    preset-column-widths {
+        proportion 0.333333
+        proportion 0.5
+        proportion 0.666667
+        proportion 1.0
+    }
+
+    // Spacing
+    gaps 8
+    struts {
+        left 4
+        right 4
+    }
+
+    // Border
+    focus-ring { off; }
+    border {
+        width 2
+        active-gradient angle=180 from="#DA5261" relative-to="window" to="#DB8878"
+        inactive-gradient angle=180 from="#555A66" relative-to="window" to="#20232B"
+    }
+
+    // Tab indicator
+    tab-indicator {
+        place-within-column
+        gap 6
+        width 4
+        position "top"
+        gaps-between-tabs 8
+        corner-radius 0
+    }
+
+    // Shadow and background
+    shadow {
+        on
+        offset x=0 y=0
+        softness 10
+        spread 6
+        draw-behind-window false
+        color "#00000080"
+    }
+    background-color "transparent"
+}
+
+window-rule {
+    draw-border-with-background true
+    geometry-corner-radius 4
+    clip-to-geometry true
+
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+layer-rule {
+    background-effect {
+        blur true
+        xray false
+    }
+    shadow {
+        on
+    }
+
+    popups {
+        background-effect {
+            blur true
+            xray false
+        }
+    }
+}
+
+layer-rule {
+    match namespace="swww-daemonoverview"
+    place-within-backdrop true
+}
+
+input {
+    keyboard {
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+    mouse { accel-profile "flat"; }
+    warp-mouse-to-focus mode="center-xy"
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+// Theme
+
+cursor {
+    xcursor-theme "default"
+    xcursor-size 24
+}
+
+// Overlay
+hotkey-overlay {
+    skip-at-startup
+    hide-not-bound
+}
+
+// Binds
+binds {
+    // Monitor
+    Mod+Y { focus-monitor-left; }
+    Mod+U { focus-monitor-down; }
+    Mod+I { focus-monitor-up; }
+    Mod+O { focus-monitor-right; }
+    Mod+Shift+Y { move-window-to-monitor-left; }
+    Mod+Shift+U { move-window-to-monitor-down; }
+    Mod+Shift+I { move-window-to-monitor-up; }
+    Mod+Shift+O { move-window-to-monitor-right; }
+
+    // Workspace
+    Mod+1 repeat=false { focus-workspace 1; }
+    Mod+2 repeat=false { focus-workspace 2; }
+    Mod+3 repeat=false { focus-workspace 3; }
+    Mod+4 repeat=false { focus-workspace 4; }
+    Mod+5 repeat=false { focus-workspace 5; }
+    Mod+6 repeat=false { focus-workspace 6; }
+    Mod+7 repeat=false { focus-workspace 7; }
+    Mod+8 repeat=false { focus-workspace 8; }
+    Mod+9 repeat=false { focus-workspace 9; }
+    Mod+Tab repeat=false { focus-workspace-previous; }
+    Mod+Shift+1 repeat=false { move-window-to-workspace 1 focus=false; }
+    Mod+Shift+2 repeat=false { move-window-to-workspace 2 focus=false; }
+    Mod+Shift+3 repeat=false { move-window-to-workspace 3 focus=false; }
+    Mod+Shift+4 repeat=false { move-window-to-workspace 4 focus=false; }
+    Mod+Shift+5 repeat=false { move-window-to-workspace 5 focus=false; }
+    Mod+Shift+6 repeat=false { move-window-to-workspace 6 focus=false; }
+    Mod+Shift+7 repeat=false { move-window-to-workspace 7 focus=false; }
+    Mod+Shift+8 repeat=false { move-window-to-workspace 8 focus=false; }
+    Mod+Shift+9 repeat=false { move-window-to-workspace 9 focus=false; }
+
+    // Window
+    Mod+H { focus-column-left; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+    Mod+L { focus-column-right; }
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+J { move-window-down; }
+    Mod+Shift+K { move-window-up; }
+    Mod+Shift+L { move-column-right; }
+    Mod+Shift+Comma repeat=false { consume-or-expel-window-left; }
+    Mod+Shift+Period repeat=false { consume-or-expel-window-right; }
+    Mod+Control+H { set-window-width "-5%"; }
+    Mod+Control+J { set-window-height "+5%"; }
+    Mod+Control+K { set-window-height "-5%"; }
+    Mod+Control+L { set-window-width "+5%"; }
+    Mod+R repeat=false { switch-preset-column-width; }
+    Mod+Shift+R repeat=false { expand-column-to-available-width; }
+    Mod+F repeat=false { maximize-column; }
+    Mod+Shift+F repeat=false { fullscreen-window; }
+
+    // Window mode
+    Mod+M repeat=false { switch-focus-between-floating-and-tiling; }
+    Mod+Shift+M repeat=false { toggle-window-floating; }
+    Mod+T repeat=false { toggle-column-tabbed-display; }
+
+    // Mouse
+    Mod+WheelScrollLeft repeat=false { focus-column-left; }
+    Mod+WheelScrollRight repeat=false { focus-column-right; }
+
+    Mod+WheelScrollUp repeat=false { focus-column-left; }
+    Mod+WheelScrollDown repeat=false { focus-column-right; }
+    Mod+Shift+WheelScrollUp repeat=false { focus-workspace-up; }
+    Mod+Shift+WheelScrollDown repeat=false { focus-workspace-down; }
+
+    // Open / close
+    Mod+C repeat=false { close-window; }
+
+    // Compositor
+    Mod+Escape repeat=false { toggle-overview; }
+    Mod+Shift+Slash repeat=false { show-hotkey-overlay; }
+
+    Mod+Shift+S repeat=false { screenshot; }
+
+    // Apps
+    Mod+Return hotkey-overlay-title="Open Terminal" repeat=false { spawn-sh "alacritty"; }
+    Mod+Shift+Return hotkey-overlay-title="Open / close application launcher" repeat=false { spawn-sh "pkill rofi || rofi -show drun"; }
+    Mod+Shift+Q repeat=false { spawn-sh "noctalia msg panel-toggle session"; }
+    Mod+Space repeat=false { spawn-sh "noctalia msg keyboard-layout-cycle"; }
+
+    // Media
+    XF86AudioNext allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPrev allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioPause allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+}
+
+recent-windows {
+    binds {
+        Mod+Grave { next-window ; }
+    }
+
+    highlight {
+        corner-radius 6
+    }
+}
+
+// Gestures
+gestures {
+    hot-corners { top-left; }
+}
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+prefer-no-csd
+
+// Rules
+
+
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=4 y=4 relative-to="bottom-right"
+    open-focused false
+}
+
+// Noctalia
+spawn-at-startup "noctalia"
+
+layer-rule {
+    match namespace="^noctalia-.*$"
+
+    background-effect {
+        blur false
+    }
+
+    shadow {
+        off
+    }
+}
+
+layer-rule {
+  match namespace="^noctalia-backdrop"
+  place-within-backdrop true
+}
+
+environment {
+    QT_QPA_PLATFORMTHEME "qt6ct"
+}

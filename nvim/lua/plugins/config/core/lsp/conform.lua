@@ -11,6 +11,9 @@ return {
         keymaps.conform()
     end,
     opts = {
+        default_format_opts = {
+            lsp_format = "fallback";
+        },
         formatters_by_ft = vim.tbl_deep_extend('force', {
             ['*'] = { 'trim_newlines', 'trim_whitespace' },
         }, language.formatters()),

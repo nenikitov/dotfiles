@@ -1,0 +1,23 @@
+[shell]
+
+    [shell.panel]
+    control_center_placement = "floating"
+    open_near_click_control_center = true
+
+[control_center]
+    width = 800
+
+    [control_center.calendar]
+    show_week_numbers = true
+
+    [[control_center.shortcuts]]
+    type = "wifi"
+
+    [[control_center.shortcuts]]
+    type = "bluetooth"
+
+    [[control_center.shortcuts]]
+    type = "audio"
+
+    [[control_center.shortcuts]]
+    type = "mic_mute"

@@ -1,0 +1,8 @@
+[audio]
+enable_sounds = true
+
+[location]
+address = "Saint-Hyacinthe, Canada"
+
+[shell]
+time_format = "%X"

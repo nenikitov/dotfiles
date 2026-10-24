@@ -111,7 +111,7 @@ function M.general()
     map('x', 'J', ":m '>+1<ENTER>gv=gv", 'Move lines to bottom')
     map('x', 'K', ":m '<-2<ENTER>gv=gv", 'Move lines to top')
 
-    -- Yank in visual without moving
+    -- Yank in vjsual without moving
     map('x', 'y', 'ygv<ESC>', 'Yank without moving')
 
     -- Keep clipboard when pasting in visual mode
@@ -335,7 +335,7 @@ function M.conform()
 
     local conform = require('conform')
     map({ 'n', 'v' }, '<LEADER>rf', function()
-        conform.format { async = true, lsp_fallback = true }
+        conform.format { async = true }
     end, 'Format')
 end
 

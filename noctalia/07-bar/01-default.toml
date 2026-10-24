@@ -1,0 +1,115 @@
+[bar]
+
+    [bar.default]
+    radius = 8
+    panel_overlap = 0
+
+    thickness = 24
+    margin_ends = 128
+    padding = 8
+    widget_spacing = 12
+
+    background_opacity = 0.0
+
+    capsule = true
+    capsule_radius = 8
+    capsule_padding = 8
+    capsule_fill = "surface"
+    capsule_thickness = 1.0
+
+    start = ["group:launcher", "group:workspaces"]
+    center = ["group:taskbar"]
+    end = ["group:tray", "group:status", "group:now"]
+
+    [[bar.default.capsule_group]]
+    id = "launcher"
+    fill = "surface"
+    padding = 8
+    widget_spacing = 8
+    members = ["control-center", "rofi"]
+
+    [[bar.default.capsule_group]]
+    id = "workspaces"
+    fill = "surface"
+    padding = 8
+    widget_spacing = 8
+    members = ["workspaces"]
+
+    [[bar.default.capsule_group]]
+    id = "taskbar"
+    fill = "surface"
+    padding = 8
+    widget_spacing = 8
+    members = ["taskbar"]
+
+    [[bar.default.capsule_group]]
+    id = "tray"
+    fill = "surface"
+    padding = 8
+    widget_spacing = 8
+    members = ["tray", "privacy", "keyboard_layout"]
+
+    [[bar.default.capsule_group]]
+    id = "status"
+    fill = "surface"
+    padding = 8
+    widget_spacing = 8
+    members = ["battery", "bluetooth", "network", "input_volume", "volume"]
+
+    [[bar.default.capsule_group]]
+    id = "now"
+    fill = "surface"
+    padding = 8
+    widget_spacing = 8
+    members = ["weather", "clock", "notifications"]
+
+[widget]
+    [widget.rofi]
+    type = "custom_button"
+    glyph = "layout-grid"
+    tooltip = "Rofi"
+
+        [widget.rofi.actions]
+        left = "exec pkill rofi || rofi -show drun"
+
+    [widget.workspaces]
+    active_pill_size = 2.0
+    focused_color = "primary"
+    empty_color = "surface"
+
+    [widget.taskbar]
+    only_active_workspace = true
+    group_single_icon_per_app = true
+
+    [widget.tray]
+    drawer = true
+    detached_panel = true
+    hide_passive = false
+
+    [widget.privacy]
+    hide_inactive = false
+    icon_spacing = 4
+
+    [widget.keyboard_layout]
+    show_glyph = false
+
+    [widget.bluetooth]
+
+    [widget.network]
+    show_label = false
+
+    [widget.input_volume]
+    show_label = false
+
+    [widget.volume]
+    show_label = false
+
+    [widget.weather]
+    show_condition = false
+    show_temperature = false
+
+    [widget.clock]
+    format = "%X"
+
+    [widget.notifications]
+    hide_when_no_unread = false

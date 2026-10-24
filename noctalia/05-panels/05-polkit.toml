@@ -1,0 +1,4 @@
+[shell]
+
+    [shell.panel]
+    polkit_placement = "floating"

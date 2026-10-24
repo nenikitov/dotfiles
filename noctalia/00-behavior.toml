@@ -1,0 +1,6 @@
+[shell]
+clipboard_enabled = false
+polkit_agent = true
+
+    [shell.animation]
+    speed = 1.5

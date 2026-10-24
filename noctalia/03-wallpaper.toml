@@ -1,0 +1,15 @@
+[backdrop]
+blur_intensity = 1.0
+enabled = true
+tint_intensity = 0.5
+
+[wallpaper]
+directory = "/home/nenikitov/Shared/Documents/Projects/Programming/Python/wallpapers/img"
+transition = [ "disc" ]
+transition_on_startup = true
+
+    [wallpaper.default]
+    path = "/home/nenikitov/Shared/Documents/Projects/Programming/Python/wallpapers/img/M030190804B.jpg"
+
+    [wallpaper.monitors.HDMI-A-1]
+    path = "/home/nenikitov/Shared/Documents/Projects/Programming/Python/wallpapers/img/M030190804.jpg"

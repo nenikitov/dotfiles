@@ -8,6 +8,7 @@ alias ll='eza --color=always -laFgh --group-directories-first --git --time-style
 alias c='clear'
 # Easy nvim
 alias v='nvim'
+alias newvim='NVIM_APPNAME=nvim-new nvim'
 # Clear and ls
 alias cls='clear && ls'
 # Better date format by default

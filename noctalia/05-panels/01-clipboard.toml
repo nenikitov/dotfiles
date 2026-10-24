@@ -1,0 +1,4 @@
+[shell]
+
+    [shell.panel]
+    clipboard_placement = "floating"

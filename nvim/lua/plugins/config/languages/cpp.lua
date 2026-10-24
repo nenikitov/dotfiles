@@ -11,6 +11,10 @@ return language.register {
         'printf',
     },
     servers = {
-        clangd = {},
+        clangd = {
+            init_options = {
+                fallbackFlags = { '--std=c++23' },
+            },
+        },
     },
 }

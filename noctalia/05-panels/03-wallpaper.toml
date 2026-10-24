@@ -1,0 +1,5 @@
+[shell]
+
+    [shell.panel]
+    wallpaper_placement = "floating"
+    open_near_click_wallpaper = true

@@ -1,0 +1,14 @@
+[shell]
+card_borders = false
+
+    [shell.screen_corners]
+    enabled = true
+    size = 8
+
+    [shell.shadow]
+    alpha = 0.5
+
+[theme]
+mode = "dark"
+source = "community"
+community_palette = "Horizon"

@@ -1,0 +1,14 @@
+[theme]
+
+    [theme.templates]
+    builtin_ids = ["alacritty", "gtk3", "gtk4", "qt"]
+
+[system.monitor]
+cpu_poll_seconds = 2
+gpu_poll_seconds = 2
+memory_poll_seconds = 2
+network_poll_seconds = 2
+disk_poll_seconds = 10
+
+[weather]
+refresh_minutes = 10

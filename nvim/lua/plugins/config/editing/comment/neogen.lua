@@ -9,5 +9,6 @@ return {
     end,
     opts = {
         snippet_engine = 'luasnip',
+        placeholders_hl = "None";
     },
 }

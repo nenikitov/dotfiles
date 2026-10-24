@@ -6,7 +6,7 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
         'williamboman/mason.nvim',
-        'williamboman/mason-lspconfig.nvim',
+        'nenikitov/mason-lspconfig.nvim',
         'hrsh7th/cmp-nvim-lsp',
         'folke/neoconf.nvim',
         -- TODO(nenikitov): This is before LSP, make this before everything in core
@@ -18,8 +18,8 @@ return {
             f()
         end
 
-        local mason_lspconfig = require('mason-lspconfig')
         local lspconfig = require('lspconfig')
+        local mason_lspconfig = require('mason-lspconfig')
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -28,6 +28,7 @@ return {
             lineFoldingOnly = true,
         }
 
+        mason_lspconfig.setup()
         mason_lspconfig.setup_handlers {
             function(server_name)
                 local config = opts.servers[server_name] or {}
