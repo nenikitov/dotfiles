@@ -34,21 +34,5 @@ return language.language({
                 },
             },
         },
-        -- TODO: maybe separate this into a language defintion so it doesn't have to be this specific?
-        {
-            'blink.cmp',
-            opts = {
-                sources = {
-                    default = { 'lazydev' },
-                    providers = {
-                        lazydev = {
-                            name = '[lzy]',
-                            module = 'lazydev.integrations.blink',
-                            score_offset = 100,
-                        }
-                    }
-                }
-            }
-        }
     }
 })

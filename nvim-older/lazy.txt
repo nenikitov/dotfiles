@@ -1,0 +1,48 @@
+    ● alpha-nvim 20.94ms  VimEnter
+    ● bufferline.nvim 11.12ms  VeryLazy
+    ○ catppuccin 
+    ● cmp-buffer 8.64ms   nvim-cmp
+    ● cmp-nvim-lsp 1.41ms   nvim-cmp
+    ● cmp-path 0.74ms   nvim-cmp
+    ● cmp_luasnip 0.67ms   nvim-cmp
+    ○ dressing.nvim 
+    ● flash.nvim 17.11ms  VeryLazy
+    ● friendly-snippets 13.83ms   LuaSnip
+    ● gitsigns.nvim 7.63ms  BufReadPost
+    ● indent-blankline.nvim 4.59ms  BufReadPost
+    ● LazyVim 20.93ms  start
+    ● lualine.nvim 20.01ms  VeryLazy
+    ● LuaSnip 15.73ms ✔  build
+    ● mason-lspconfig.nvim 0.06ms   nvim-lspconfig
+    ● mason.nvim 18.68ms ✔  build
+    ● mini.ai 10.73ms  VeryLazy
+    ● mini.bufremove 0.62ms   <leader>bd
+    ● mini.comment 1.54ms  VeryLazy
+    ● mini.indentscope 12.03ms  BufReadPost
+    ● mini.pairs 2.36ms  VeryLazy
+    ○ mini.surround   gsa gsd gsf gsF gsh gsr gsn
+    ● neo-tree.nvim 43.27ms   <leader>E
+    ● neoconf.nvim 0.21ms   nvim-lspconfig
+    ● neodev.nvim 1.36ms   nvim-lspconfig
+    ● noice.nvim 13.75ms  VeryLazy
+    ● none-ls.nvim 3.19ms  BufReadPost
+    ● nui.nvim 0.15ms 󰢱  nui.object   noice.nvim
+    ● nvim-cmp 12.56ms  InsertEnter
+    ● nvim-lspconfig 6.73ms  BufReadPost
+    ● nvim-navic 1.5ms 󰢱  nvim-navic   LazyVim
+    ● nvim-notify 3.78ms 󰢱  notify   noice.nvim
+    ○ nvim-spectre   Spectre   <leader>sr
+    ● nvim-treesitter 42.11ms ✔  build
+    ● nvim-treesitter-textobjects 7.31ms   nvim-treesitter
+    ○ nvim-ts-context-commentstring 
+    ● nvim-web-devicons 0.23ms 󰢱  nvim-web-devicons   lualine.nvim
+    ● persistence.nvim 5.02ms  BufReadPre
+    ● plenary.nvim 0.63ms 󰢱  plenary.strings   telescope.nvim
+    ● telescope-fzf-native.nvim 0.15ms ✔  build
+    ● telescope.nvim 22.53ms   Telescope
+    ● todo-comments.nvim 5.21ms  BufReadPost
+    ● tokyonight.nvim 3.25ms 󰢱  tokyonight   LazyVim
+    ● trouble.nvim 3.05ms 󰢱  trouble   lua
+    ● vim-illuminate 1.49ms  BufReadPost
+    ○ vim-startuptime   StartupTime
+    ● which-key.nvim 18ms  VeryLazy
