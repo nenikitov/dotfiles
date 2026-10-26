@@ -86,18 +86,29 @@ return {
         -- Handlers
         vim.diagnostic.handlers.numhl = {
             show = function(namespace, bufnr, diagnostics)
+                if not vim.api.nvim_buf_is_valid(bufnr) then
+                    return
+                end
+
                 local ns = vim.diagnostic.get_namespace(namespace)
                 ns.user_data.numhl_ns = ns.user_data.numhl_ns or vim.api.nvim_create_namespace('')
                 vim.api.nvim_buf_clear_namespace(bufnr, ns.user_data.numhl_ns, 0, -1)
 
+                local line_count = vim.api.nvim_buf_line_count(bufnr)
                 for _, diagnostic in ipairs(diagnostics) do
-                    vim.api.nvim_buf_set_extmark(bufnr, ns.user_data.numhl_ns, diagnostic.lnum, 0, {
-                        number_hl_group = highlights[diagnostic.severity],
-                        priority = 100 - diagnostic.severity,
-                    })
+                    if diagnostic.lnum < line_count then
+                        vim.api.nvim_buf_set_extmark(bufnr, ns.user_data.numhl_ns, diagnostic.lnum, 0, {
+                            number_hl_group = highlights[diagnostic.severity],
+                            priority = 100 - diagnostic.severity,
+                        })
+                    end
                 end
             end,
             hide = function(namespace, bufnr)
+                if not vim.api.nvim_buf_is_valid(bufnr) then
+                    return
+                end
+
                 local ns = vim.diagnostic.get_namespace(namespace)
                 if ns.user_data.numhl_ns then
                     vim.api.nvim_buf_clear_namespace(bufnr, ns.user_data.numhl_ns, 0, -1)

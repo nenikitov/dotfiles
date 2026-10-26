@@ -14,7 +14,7 @@ local lock = util.lockfile.new(vim.fs.joinpath(vim.fn.stdpath('config'), 'mason-
 ---@type LazySpec
 return {
     defs.plugins.mason,
-    cmd = { 'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUpdate', 'MasonLog' },
+    lazy = false,
     keys = {
         defs.keys.plugin:k('m', 'Mason'):bind('n', '<CMD>Mason<CR>'):spec(),
     },

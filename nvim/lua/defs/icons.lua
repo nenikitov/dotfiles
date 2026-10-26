@@ -92,6 +92,11 @@ M.status = {
     ),
 }
 
+M.indent = {
+    space = M.choose('┃', '│'),
+    tab   = M.choose('┋', ':'),
+}
+
 M.version_control = {
     other = {
         commit = M.choose(' ', 'commit'),

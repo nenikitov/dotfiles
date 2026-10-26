@@ -7,6 +7,15 @@ vim.opt.undolevels = 10000
 vim.opt.confirm = true
 --#endregion
 
+--#region Start with cwd if directory was passed
+if vim.fn.argc() == 1 then
+	local arg = vim.fn.argv(0) --[[@as string]]
+	if vim.fn.isdirectory(arg) == 1 then
+		vim.fn.chdir(arg)
+	end
+end
+--#endregion
+
 --#region Reloading
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'TermClose', 'TermLeave' }, {
 	group = util.vim.augroup('reload changed files'),

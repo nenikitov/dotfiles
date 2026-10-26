@@ -27,7 +27,7 @@ vim.opt.foldtext = ''
 --#region Special characters
 vim.opt.list = true
 vim.opt.listchars = {
-	tab = defs.icons.whitespace.tab .. ' ',
+	tab = '  ' .. defs.icons.whitespace.tab,
 	lead = defs.icons.whitespace.space_visible,
 	trail = defs.icons.whitespace.space_visible,
 	nbsp = defs.icons.whitespace.nbsp,

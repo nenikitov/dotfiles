@@ -27,7 +27,6 @@ return {
 	'tpope/vim-sleuth',
 	'NMAC427/guess-indent.nvim',
 	'VidocqH/auto-indent.nvim',
-	'lukas-reineke/indent-blankline.nvim',
 	'kevinhwang91/nvim-ufo',
 	'kevinhwang91/promise-async',
 	'ribru17/blink-cmp-spell',

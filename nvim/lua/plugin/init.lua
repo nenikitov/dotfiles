@@ -45,10 +45,10 @@ require('lazy').setup({
         backdrop = 100,
         title = 'lazy.nvim ' .. defs.icons.plugin.manager,
         icons = {
-			cmd = defs.icons.plugin.source.cmd,
-			config = defs.icons.plugin.source.config,
-			debug = defs.icons.plugin.source.debug,
-			event = defs.icons.plugin.source.event,
+		    cmd = defs.icons.plugin.source.cmd,
+		    config = defs.icons.plugin.source.config,
+		    debug = defs.icons.plugin.source.debug,
+		    event = defs.icons.plugin.source.event,
 			favorite = defs.icons.plugin.status.favorite,
 			ft = defs.icons.plugin.source.ft,
 			init = defs.icons.plugin.source.init,
@@ -74,3 +74,10 @@ require('lazy').setup({
 		rtp = { paths = parser_paths },
 	},
 })
+
+defs.keys.plugin:k('l', 'lazy.nvim'):bind('n', '<CMD>Lazy<CR>'):set()
+defs.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):bind('n', function()
+	local session = vim.fs.joinpath(vim.fn.stdpath('state'), 'reload-session.vim')
+	vim.cmd.mksession({ args = { vim.fn.fnameescape(session) }, bang = true })
+	vim.cmd(('restart source %s'):format(vim.fn.fnameescape(session)))
+end):set()
