@@ -1,4 +1,5 @@
 ---@module 'lazy'
+---@module 'mason'
 
 local util = require('util')
 local defs = require('defs')
@@ -17,14 +18,21 @@ return {
     keys = {
         defs.keys.plugin:k('m', 'Mason'):bind('n', '<CMD>Mason<CR>'):spec(),
     },
+    ---@type MasonSettings
     opts = {
         PATH = 'append',
         ui = {
             backdrop = 100,
             width = 0.8,
             height = 0.8,
+            icons = {
+                package_installed = defs.icons.plugin.status.loaded,
+                package_pending = vim.trim(defs.icons.plugin.status.working),
+                package_uninstalled = defs.icons.plugin.status.not_loaded,
+            },
             keymaps = {
                 apply_language_filter = 'f',
+                uninstall_package = 'x',
                 toggle_help = '?',
             }
         },

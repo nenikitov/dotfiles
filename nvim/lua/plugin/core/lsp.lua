@@ -45,7 +45,8 @@ return {
 		diagnostics = {
 			update_in_insert = true,
 			severity_sort = true,
-			signs = { text = icons },
+            signs = false,
+            numhl = true,
 			virtual_text = {
 				source = 'if_many',
 				prefix = function(diagnostic)
@@ -81,6 +82,28 @@ return {
 
             ::continue::
         end
+
+        -- Handlers
+        vim.diagnostic.handlers.numhl = {
+            show = function(namespace, bufnr, diagnostics)
+                local ns = vim.diagnostic.get_namespace(namespace)
+                ns.user_data.numhl_ns = ns.user_data.numhl_ns or vim.api.nvim_create_namespace('')
+                vim.api.nvim_buf_clear_namespace(bufnr, ns.user_data.numhl_ns, 0, -1)
+
+                for _, diagnostic in ipairs(diagnostics) do
+                    vim.api.nvim_buf_set_extmark(bufnr, ns.user_data.numhl_ns, diagnostic.lnum, 0, {
+                        number_hl_group = highlights[diagnostic.severity],
+                        priority = 100 - diagnostic.severity,
+                    })
+                end
+            end,
+            hide = function(namespace, bufnr)
+                local ns = vim.diagnostic.get_namespace(namespace)
+                if ns.user_data.numhl_ns then
+                    vim.api.nvim_buf_clear_namespace(bufnr, ns.user_data.numhl_ns, 0, -1)
+                end
+            end,
+        }
 
         -- Options
         vim.diagnostic.config(opts.diagnostics)

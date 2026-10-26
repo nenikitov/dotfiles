@@ -20,7 +20,7 @@ return defs.lang({
                     codeLens = { enable = true },
                     doc = { privateName = { '^_' } },
                     completion = {
-                        callSnippet = 'Replace',
+                        callSnippet = 'Disable',
                     }
                 }
             }

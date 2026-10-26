@@ -50,7 +50,7 @@ M.key = {
 }
 
 M.whitespace = {
-    tab             = M.choose(vim.trim(M.key.tab), M.key.right),
+    tab             = M.key.right,
     space_visible   = '·',
     space_invisible = '·',
     nbsp            = M.choose('␣', '▬'),
@@ -61,8 +61,8 @@ M.border = M.choose('rounded', 'single')
 M.ui = {
     item     = '-',
 
-    opened   = M.choose(' ', 'v'),
-    closed   = M.choose(' ', '>'),
+    opened   = M.choose('󰅀 ', 'v'),
+    closed   = M.choose('󰅂 ', '>'),
 
     filled   = M.choose('●', '■'),
     empty    = M.choose('○', '-'),

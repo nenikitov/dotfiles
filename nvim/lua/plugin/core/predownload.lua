@@ -37,7 +37,6 @@ return {
 	'folke/noice.nvim',
 	'MunifTanjim/nui.nvim',
 	'nvim-lualine/lualine.nvim',
-	'luukvbaal/statuscol.nvim',
 	'Bekaboo/dropbar.nvim',
 	'folke/todo-comments.nvim',
 	'dstein64/nvim-scrollview',

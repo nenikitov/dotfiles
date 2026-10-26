@@ -3,6 +3,7 @@ local util = require('util')
 --#region Mouse
 vim.opt.mouse = 'a'
 vim.opt.mousescroll = 'ver:1,hor:2'
+vim.opt.mousemodel = 'extend'
 
 util.map:k('<S-ScrollWheelUp>', 'Scroll left'):bind({ 'n', 'x', 'i' }, '<ScrollWheelLeft>'):set()
 util.map:k('<S-ScrollWheelDown>', 'Scroll right'):bind({ 'n', 'x', 'i' }, '<ScrollWheelRight>'):set()

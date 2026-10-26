@@ -25,7 +25,6 @@ return {
             topdelete = { text = defs.icons.diff_bar.deleted },
             untracked = { text = defs.icons.diff_bar.untracked },
         },
-        word_diff = true,
         attach_to_untracked = true,
         on_attach = function(buf)
             local gitsigns = require('gitsigns')
@@ -33,9 +32,9 @@ return {
             local root_prefix = util.map:buf(buf)
             local leader_prefix = defs.keys.git:buf(buf)
 
-            root_prefix:k('[', 'previous'):k('g', 'Hunk'):bind('', function() gitsigns.nav_hunk('prev') end):set()
-            root_prefix:k(']', 'next'):k('g', 'Hunk'):bind('', function() gitsigns.nav_hunk('next') end):set()
-            root_prefix:k('i', 'inside'):k('h', 'Hunk'):bind({'o', 'x'}, gitsigns.select_hunk):set()
+            root_prefix:k('[g', 'Hunk'):bind('', function() gitsigns.nav_hunk('prev') end):set()
+            root_prefix:k(']g', 'Hunk'):bind('', function() gitsigns.nav_hunk('next') end):set()
+            root_prefix:k('ih', 'Hunk'):bind({'o', 'x'}, gitsigns.select_hunk):set()
 
             leader_prefix:k('o', 'Preview diff of current hunk'):bind('n', gitsigns.preview_hunk):set()
             leader_prefix:k('b', 'Blame current line'):bind('n', gitsigns.blame_line):set()
