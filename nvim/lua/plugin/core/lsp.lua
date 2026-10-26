@@ -2,9 +2,9 @@
 
 local defs = require('defs')
 
-local signs = {
+local icons = {
 	[vim.diagnostic.severity.ERROR] = defs.icons.severity.error,
-	[vim.diagnostic.severity.WARN] = defs.icons.severity.warn,
+	[vim.diagnostic.severity.WARN] = defs.icons.severity.warning,
 	[vim.diagnostic.severity.HINT] = defs.icons.severity.hint,
 	[vim.diagnostic.severity.INFO] = defs.icons.severity.info,
 }
@@ -45,18 +45,18 @@ return {
 		diagnostics = {
 			update_in_insert = true,
 			severity_sort = true,
-			signs = { text = signs },
+			signs = { text = icons },
 			virtual_text = {
 				source = 'if_many',
 				prefix = function(diagnostic)
-					return signs[diagnostic.severity]
+					return icons[diagnostic.severity]
 				end,
 			},
 			float = {
 				source = true,
 				header = '',
 				prefix = function(diagnostic)
-					return signs[diagnostic.severity] .. ' ', highlights[diagnostic.severity]
+					return icons[diagnostic.severity] .. ' ', highlights[diagnostic.severity]
 				end,
 			},
 		},
