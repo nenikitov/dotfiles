@@ -1,72 +1,83 @@
 -- TODO: Remove this, move to separate files
 ---@module 'lazy'
 
+--[[
+TODO
+- Lsp go to defintion in hover
+- # and indent
+    vim.opt_local.cinoptions:append('#1')  -- '#' lines can be shifted with >>
+    vim.opt_local.cinkeys:remove('0#')     -- typing '#' doesn't remove the indent
+- Continue comment only in block and doc comments
+]]
+
 ---@type LazySpec
 return {
-	-- core
-	'stevearc/conform.nvim',
-	'nvimtools/none-ls.nvim',
-	'nvimtools/none-ls-extras.nvim',
+    -- core
 	'jmbuhr/otter.nvim',
-	'nvim-treesitter/nvim-treesitter-context',
-
-	-- editing
-	'numToStr/Comment.nvim',
-	'JoosepAlviste/nvim-ts-context-commentstring',
-	'danymat/neogen',
-	{ 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
-	'nvim-mini/mini.splitjoin',
-	'nvim-mini/mini.surround',
-	'windwp/nvim-ts-autotag',
-	'brianhuster/treesitter-endwise.nvim',
-	'windwp/nvim-autopairs',
-	'monaqa/dial.nvim',
-	'smjonas/inc-rename.nvim',
-	'HakonHarnes/img-clip.nvim',
-	'RRethy/vim-illuminate',
-	'tpope/vim-sleuth',
-	'NMAC427/guess-indent.nvim',
-	'VidocqH/auto-indent.nvim',
-	'kevinhwang91/nvim-ufo',
-	'kevinhwang91/promise-async',
-	'ribru17/blink-cmp-spell',
-
-	-- ui
-	'folke/snacks.nvim',
-	'folke/noice.nvim',
-	'MunifTanjim/nui.nvim',
-	'nvim-lualine/lualine.nvim',
-	'Bekaboo/dropbar.nvim',
-	'folke/todo-comments.nvim',
-	'dstein64/nvim-scrollview',
-	'mihovilrak/scroll.nvim',
-
-	-- colorschemes
-	'folke/tokyonight.nvim',
-	'olimorris/onedarkpro.nvim',
-	'catppuccin/nvim',
-	'rebelot/kanagawa.nvim',
-	'Mofiqul/vscode.nvim',
-
-	-- workspace
-	'nvim-mini/mini.files',
-	'mrjones2014/smart-splits.nvim',
-	'kwkarlwang/bufresize.nvim',
-	'MagicDuck/grug-far.nvim',
-	'akinsho/toggleterm.nvim',
-
-	-- languages
-	'b0o/SchemaStore.nvim',
-	'iamcco/markdown-preview.nvim',
-	'chomosuke/typst-preview.nvim',
-	'frabjous/knap',
-	'aklt/plantuml-syntax',
-
+	'kevinhwang91/nvim-ufo', -- needs a lot of boilerplate to replicate `chrisgrieser/origami`, hl^$ mappings, pause folds for search, pretty fold line, but has best fallback mechanism and custom providers
+	'nvimtools/none-ls.nvim',
+	'stevearc/conform.nvim',
+    'OXY2DEV/tree-sitter-comment',
+    'catgoose/nvim-colorizer.lua',
+    'folke/snacks.nvim', -- for bigfile, rename
+    'joelazar/blink-calc',
+    'smjonas/inc-rename.nvim',
 	-- debugging
 	'mfussenegger/nvim-dap',
-	'rcarriga/nvim-dap-ui',
-	'nvim-neotest/nvim-nio',
+	'nvim-neotest/neotest',
+	'igorlfs/nvim-dap-view',
 
-	-- misc
-	't-troebst/perfanno.nvim',
+    -- editing
+	'HakonHarnes/img-clip.nvim',
+	'JoosepAlviste/nvim-ts-context-commentstring',
+	'brianhuster/treesitter-endwise.nvim',
+	'chrisgrieser/nvim-spider',
+	'danymat/neogen',
+	'monaqa/dial.nvim',
+	'numToStr/Comment.nvim',
+	'nvim-mini/mini.ai',
+	'nvim-mini/mini.align',
+	'nvim-mini/mini.jump',
+	'nvim-mini/mini.splitjoin',
+	'nvim-mini/mini.surround',
+	'nvim-treesitter/nvim-treesitter-textobjects',
+	'tpope/vim-sleuth',
+	'windwp/nvim-autopairs', -- Or `blink.pairs'
+	'windwp/nvim-ts-autotag',
+    'abecodes/tabout.nvim',
+    'nemanjamalesija/smart-paste.nvim',
+    'noamsto/resolved.nvim',
+    'yorickpeterse/nvim-tree-pairs', -- alternatives?
+
+    -- ui
+	'Bekaboo/dropbar.nvim',
+	'RRethy/vim-illuminate',
+	'folke/noice.nvim', -- for message forwarding, centered command line, search virtual text
+	'folke/snacks.nvim', -- for notifier, dashboard, debug
+	'mihovilrak/scroll.nvim',
+	'nvim-treesitter/nvim-treesitter-context',
+	'rebelot/heirline.nvim', -- for statusline and tabline
+    'rachartier/tiny-inline-diagnostic.nvim', -- not sure
+    'stevearc/quicker.nvim',
+
+	-- colorschemes
+	'Mofiqul/vscode.nvim',
+	'catppuccin/nvim',
+	'olimorris/onedarkpro.nvim',
+    'Ferouk/bearded-nvim',
+    'idr4n/andromeda.nvim',
+
+    -- layout
+	'kwkarlwang/bufresize.nvim',
+	'mrjones2014/smart-splits.nvim',
+
+	-- workspace
+	'MagicDuck/grug-far.nvim',
+	'akinsho/toggleterm.nvim',
+    'FylerOrg/fyler.nvim',
+    'akinsho/git-conflict.nvim',
+    'aznhe21/actions-preview.nvim',
+    'brianhuster/unnest.nvim',
+    'chrisgrieser/nvim-rip-substitute', -- not sure
+    'folke/snacks.nvim', -- for picker
 }

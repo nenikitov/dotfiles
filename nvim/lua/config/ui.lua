@@ -18,7 +18,6 @@ vim.opt.foldcolumn = '1'
 --#endregion
 
 --#region Lines
--- Highlight the cursor line
 vim.opt.cursorline = true
 -- Show a closed fold's first line with its normal highlighting
 vim.opt.foldtext = ''
@@ -43,9 +42,7 @@ vim.opt.fillchars = {
 --#endregion
 
 --#region Windows
--- One status line for the whole editor instead of one per window
 vim.opt.laststatus = 3
--- Default border for floating windows
 vim.opt.winborder = defs.icons.border
 --#endregion
 
