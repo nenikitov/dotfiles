@@ -11,31 +11,74 @@ function M.module_to_path(name)
     )
 end
 
+---@param path string
+---@return string name
+function M.path_to_module(path)
+    path = vim.fs.normalize(path)
+
+	if vim.fn.isabsolutepath(path) == 1 then
+		local lua_root = vim.fs.joinpath(vim.fn.stdpath('config'), 'lua')
+		local rel = vim.fs.relpath(lua_root, path)
+		if not rel then
+			error(('%s is not inside %s'):format(path, lua_root))
+		end
+		path = rel
+	end
+
+    path = path:gsub('[/\\]init%.lua$', ''):gsub('%.lua$', '')
+	return (path:gsub('[/\\]', '.'))
+end
+
 ---@param module string
----@param opts? { recursive?: boolean }
+---@param opts? { ignore_init?: boolean }
 ---@return { files: string[], dirs: string[] }
 function M.discover_dir(module, opts)
-	---@type { recursive: boolean }
-	local opts = vim.tbl_extend('force', { recursive = false }, opts or {})
+	---@type { ignore_init: boolean }
+	opts = vim.tbl_extend('force', { ignore_init = false }, opts or {})
 
-	local files, dirs, seen = {}, {}, {}
-	for name, kind in vim.fs.dir(M.module_to_path(module), { depth = opts.recursive and math.huge or 1 }) do
-		if kind ~= 'file' or not name:match('%.lua$') or vim.fs.basename(name) == 'init.lua' then
-			goto continue
+    local root = M.module_to_path(module)
+
+    ---@param dir string
+    ---@return boolean
+    local function has_init(dir)
+        return vim.uv.fs_stat(vim.fs.joinpath(dir, 'init.lua')) ~= nil
+    end
+
+    if not opts.ignore_init and has_init(root) then
+        return { files = { module }, dirs = { } }
+    end
+
+    local files, dirs = {}, {}
+
+    ---@param dir string
+	local function walk(dir)
+        local importable = false
+
+		for name, kind in vim.fs.dir(dir) do
+			local path = vim.fs.joinpath(dir, name)
+
+			if kind == 'file' and name:match('%.lua$') and name ~= 'init.lua' then
+				table.insert(files, M.path_to_module(path))
+                importable = true
+			elseif kind == 'directory' then
+				if has_init(path) then
+					table.insert(files, M.path_to_module(path))
+                    importable = true
+				else
+					walk(path)
+				end
+			end
 		end
 
-		local dir = vim.fs.dirname(name)
-		dir = dir == '.' and module or module .. '.' .. (dir:gsub('[/\\]', '.'))
-
-		if not seen[dir] then
-			seen[dir] = true
-			table.insert(dirs, dir)
+		if importable then
+			if dir == root and has_init(root) then
+				error(('%s has an init.lua, so its other files cannot be imported as a directory'):format(module))
+			end
+			table.insert(dirs, M.path_to_module(dir))
 		end
-
-		table.insert(files, module .. '.' .. (name:sub(1, -5):gsub('[/\\]', '.')))
-
-		::continue::
 	end
+
+	walk(root)
 
 	table.sort(files)
 	table.sort(dirs)

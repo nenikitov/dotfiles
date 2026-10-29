@@ -36,7 +36,7 @@ Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFil
 require('lazy').setup({
 	spec = vim.tbl_map(
 		function(dir) return { import = dir } end,
-		util.fs.discover_dir('plugin', { recursive = true }).dirs
+		util.fs.discover_dir('plugin', { ignore_init = true }).dirs
 	),
 	defaults = { lazy = true },
 	change_detection = { notify = false },

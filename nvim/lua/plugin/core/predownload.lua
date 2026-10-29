@@ -56,7 +56,6 @@ return {
 	'folke/snacks.nvim', -- for notifier, dashboard, debug
 	'mihovilrak/scroll.nvim',
 	'nvim-treesitter/nvim-treesitter-context',
-	'rebelot/heirline.nvim', -- for statusline and tabline
     'rachartier/tiny-inline-diagnostic.nvim', -- not sure
     'stevearc/quicker.nvim',
 

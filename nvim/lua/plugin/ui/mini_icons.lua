@@ -4,7 +4,7 @@ local defs = require('defs')
 
 ---@type LazySpec
 return {
-	'nvim-mini/mini.icons',
+    defs.plugins.mini_icons,
 	opts = {
         style = defs.settings.enable_tty_mode and 'ascii' or 'glyph',
         lsp = {
