@@ -1,6 +1,192 @@
 ---@class ne.util.fs
 local M = {}
 
+--#region General
+
+---@param path string
+---@return string[]
+function M.split(path)
+	return vim.split(vim.fs.normalize(path), '/', { plain = true })
+end
+
+--#endregion
+
+--#region Path shortening and unique
+
+---@param path string
+---@return string prefix, string rest
+local function split_prefix(path)
+    local scheme = path:match('^[^:/\\?#]+://')
+    if scheme then
+        return scheme, path:sub(#scheme + 1)
+    end
+    for _, prefix in ipairs({ '//', '/', '~' }) do
+        if vim.startswith(path, prefix) then
+            return prefix, path:sub(#prefix + 1)
+        end
+    end
+    return '', path
+end
+
+---@param parts string[]
+---@param section string[]
+---@return boolean
+local function contains_section(parts, section)
+	for i = 1, #parts - #section + 1 do
+		if vim.deep_equal(vim.list_slice(parts, i, i + #section - 1), section) then
+			return true
+		end
+	end
+	return false
+end
+
+---@param parts string[]
+---@param section string[]
+---@return boolean
+local function ends_with_section(parts, section)
+	return #parts >= #section and vim.deep_equal(vim.list_slice(parts, #parts - #section + 1), section)
+end
+
+---@param parts string[]
+---@param prefix string
+---@param start integer
+---@param stop integer
+---@param ellipsis string
+---@return string
+local function format_label(parts, prefix, start, stop, ellipsis)
+	local section = table.concat(parts, '/', start, stop)
+	local result = ''
+
+	-- Preserve a Windows drive or root prefix
+	if parts[1]:match(':$') or prefix ~= '' then
+		if start == 2 then
+			-- Extend the section to include the drive or first directory
+			start = 1
+			section = parts[1] .. '/' .. section
+		end
+		if start > 1 then
+			result = parts[1] .. '/'
+		end
+		result = prefix .. result
+	end
+
+	if start > 1 then
+		result = result .. ellipsis .. '/'
+	end
+
+	result = result .. section
+
+	if stop < #parts then
+		-- Keep a trailing slash if the path had one
+		if stop == #parts - 1 and parts[#parts] == '' then
+			result = result .. '/'
+		else
+			result = result .. '/' .. ellipsis
+		end
+	end
+
+	return result
+end
+
+---@param paths string[]
+---@param ellipsis? string
+---@return string[] shortened same order as `paths`
+function M.shorten(paths, ellipsis)
+	ellipsis = ellipsis or '…'
+
+	local all_parts = vim.tbl_map(function(path)
+		return vim.split(path, '/', { plain = true })
+	end, paths)
+
+	local shortened = {}
+	for i, path in ipairs(paths) do
+		shortened[i] = path
+
+        if path == '' then
+            goto continue
+        end
+
+        local prefix, trimmed = split_prefix(path)
+        local segments = vim.split(trimmed, '/', { plain = true })
+
+        ---@param start integer
+        ---@param stop integer
+        local function clashes(start, stop)
+            local section = vim.list_slice(segments, start, stop)
+            local ending = stop == #segments
+
+            for other_index, other in ipairs(all_parts) do
+                if other_index ~= i and paths[other_index] ~= ''
+                    and contains_section(other, section)
+                    and (not ending or ends_with_section(other, section))
+                then
+                    return true
+                end
+            end
+            return false
+        end
+
+        local found = false
+        for length = 1, #segments do
+            for start = #segments - length + 1, 1, -1 do
+                local stop = start + length - 1
+                if not clashes(start, stop) then
+                    shortened[i] = format_label(segments, prefix, start, stop, ellipsis)
+                    found = true
+                    break
+                end
+            end
+            if found then
+                break
+            end
+        end
+
+        ::continue::
+	end
+
+	return shortened
+end
+
+---@param path string
+---@param max integer
+---@param ellipsis? string
+---@return string
+function M.truncate(path, max, ellipsis)
+	local width = vim.api.nvim_strwidth
+	ellipsis = ellipsis or '…'
+
+    -- As is
+	if width(path) <= max then
+		return path
+	end
+
+    -- Shortened by vim
+	local shortened = vim.fn.pathshorten(path)
+	if width(shortened) <= max then
+		return shortened
+	end
+
+    -- Drop leading directories
+	local parts = M.split(shortened)
+	while #parts > 1 and width(ellipsis .. '/' .. table.concat(parts, '/')) > max do
+		table.remove(parts, 1)
+	end
+
+	local result = ellipsis .. '/' .. table.concat(parts, '/')
+	if width(result) <= max then
+		return result
+	end
+
+    -- Cut characters from the beginning
+	local last = parts[#parts]
+	local keep = math.max(max - width(ellipsis), 0)
+	return ellipsis .. vim.fn.strcharpart(last, vim.fn.strcharlen(last) - keep)
+end
+
+--#endregion
+
+--#region Modules
+
 ---@param name string
 ---@return string path
 function M.module_to_path(name)
@@ -25,8 +211,8 @@ function M.path_to_module(path)
 		path = rel
 	end
 
-    path = path:gsub('[/\\]init%.lua$', ''):gsub('%.lua$', '')
-	return (path:gsub('[/\\]', '.'))
+    path, _ = path:gsub('/init%.lua$', ''):gsub('%.lua$', '')
+    return table.concat(M.split(path), '.')
 end
 
 ---@param module string
@@ -109,5 +295,7 @@ function M.dir_module(prefix)
 		end,
 	})
 end
+
+--#endregion
 
 return M

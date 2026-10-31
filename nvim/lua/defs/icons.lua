@@ -1,6 +1,5 @@
 -- All available TTY symbols are [here](https://en.wikipedia.org/wiki/Code_page_437)
 -- All available nerd font symbols are [here](https://www.nerdfonts.com/cheat-sheet)
--- An example of organization could be found [here](https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/icons.lua)
 
 local defs = require('defs')
 
@@ -99,14 +98,15 @@ M.indent = {
 
 M.version_control = {
     other = {
-        commit = M.choose(' ', 'commit'),
-        branch = M.choose(' ', 'branch'),
+        branch     = M.choose(' ', '[brn]'),
+        commit     = M.choose(' ', '[cmt]'),
+        no_commits = M.choose(' ', '[???]'),
     },
     status = {
         added     = M.choose(' ', 'A'),
         deleted   = M.choose(' ', 'D'),
         ignored   = M.choose(' ', '!'),
-        modified  = M.choose(' ', 'M'),
+        changed   = M.choose(' ', 'M'),
         renamed   = M.choose(' ', 'R'),
         staged    = M.choose(' ', '√'),
         unmerged  = M.choose('󰳤 ', 'U'),
@@ -115,13 +115,30 @@ M.version_control = {
 }
 
 M.file = {
-    modified = M.version_control.status.modified,
+    modified = M.version_control.status.changed,
     readonly = M.choose(' ', 'RO'),
-    line_endings = {
-        dos  = M.choose(' ', 'crlf'),
-        mac  = M.choose(' ', 'cr'),
-        unix = M.choose('󰻀 ', 'lf'),
+    line_ending = {
+        icon = {
+            dos  = M.choose(' ', ''),
+            mac  = M.choose(' ', ''),
+            unix = M.choose('󰻀 ', ''),
+        },
+        name = {
+            dos  = 'CRLF',
+            mac  = 'CR',
+            unix = 'LF',
+        },
     },
+    indent = {
+        space = M.choose(M.key.space, M.whitespace.space_visible),
+        tab   = M.choose(M.key.tab, M.whitespace.tab),
+    },
+    encoding = {
+        icon = M.choose('󰾹 ', ''),
+    },
+    filetype = {
+        icon = M.choose(' ', '[ft]'),
+    }
 }
 
 M.folder = {
@@ -220,6 +237,7 @@ M.plugin = {
         source  = M.choose(' ', '[src]'),
         start   = M.choose(' ', '[strt]'),
     },
+    lsp = M.choose(' ', '[lsp]')
 }
 
 M.mode = {
@@ -261,6 +279,7 @@ M.mode = {
         confirm          = 'CONFIRM',
         more             = 'MORE',
     },
+    recording = M.choose(' ', '@'),
 }
 
 return M

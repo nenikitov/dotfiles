@@ -51,15 +51,18 @@ return {
 					components = {
 						kind_icon = {
 							text = function(ctx)
-								return select(1, require('mini.icons').get('lsp', ctx.kind))
+                                local icon, _ = require('mini.icons').get('lsp', ctx.kind)
+								return icon
 							end,
 							highlight = function(ctx)
-								return select(2, require('mini.icons').get('lsp', ctx.kind))
+                                local _, hl = require('mini.icons').get('lsp', ctx.kind)
+								return hl
 							end,
 						},
                         kind = {
 							highlight = function(ctx)
-								return select(2, require('mini.icons').get('lsp', ctx.kind))
+                                local _, hl = require('mini.icons').get('lsp', ctx.kind)
+								return hl
 							end,
                         },
                         label = {
