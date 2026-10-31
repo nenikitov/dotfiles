@@ -1,4 +1,4 @@
----@module 'plugin.ui.heirline.basic'
+---@module 'plugin.ui.heirline.modules.basic'
 
 local M = {}
 
@@ -16,16 +16,16 @@ local function item(code, width, left)
     return '%' .. (left and '-' or '') .. width .. code
 end
 
----@class ne.plugin.heirline.cursor.LocationProps
+---@class ne.plugin.heirline.modules.cursor.LocationProps
 ---@field line_width? integer
 ---@field column_width? integer
 
----@param props? ne.plugin.heirline.cursor.LocationProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.cursor.LocationProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.location(props)
     props = vim.tbl_extend('force', { line_width = 4, column_width = 3 }, props or {})
 
-    ---@type ne.plugin.heirline.basic.Component
+    ---@type ne.plugin.heirline.modules.basic.Component
     local component = {
         provider = item('l', props.line_width) .. ':' .. item('v', props.column_width, true),
     }
@@ -33,15 +33,15 @@ function M.location(props)
     return component
 end
 
----@class ne.plugin.heirline.cursor.ScrollProps
+---@class ne.plugin.heirline.modules.cursor.ScrollProps
 ---@field width? integer
 
----@param props? ne.plugin.heirline.cursor.ScrollProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.cursor.ScrollProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.scroll(props)
     props = vim.tbl_extend('force', { width = 3 }, props or {})
 
-    ---@type ne.plugin.heirline.basic.Component
+    ---@type ne.plugin.heirline.modules.basic.Component
     local component = {
         provider = item('P', props.width),
     }

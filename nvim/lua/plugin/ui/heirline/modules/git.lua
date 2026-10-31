@@ -1,7 +1,7 @@
 ---@module 'gitsigns'
 
 local defs = require('defs')
-local basic = require('plugin.ui.heirline.basic')
+local basic = require('plugin.ui.heirline.modules.basic')
 
 local M = {}
 
@@ -16,43 +16,42 @@ local function is_detached(head)
     return head ~= nil and head:match('^%x%x%x%x%x%x%x$') ~= nil
 end
 
---- Git status of the buffer a component describes
----@param self ne.plugin.heirline.basic.Component
+---@param self ne.plugin.heirline.modules.basic.Component
 ---@return Gitsigns.StatusObj?
 local function status_of(self)
-    return vim.b[basic.buffer(self)].gitsigns_status_dict
+    return vim.b[basic.bufnr(self)].gitsigns_status_dict
 end
 
----@class ne.plugin.heirline.git.Context : ne.plugin.heirline.basic.Component
+---@class ne.plugin.heirline.modules.git.Context : ne.plugin.heirline.modules.basic.Component
 ---@field status? Gitsigns.StatusObj
 
 M.context = basic.context(
-    ---@param self ne.plugin.heirline.git.Context
+    ---@param self ne.plugin.heirline.modules.git.Context
     function(self)
         self.status = status_of(self)
     end
 )
 
----@class ne.plugin.heirline.git.BranchProps
+---@class ne.plugin.heirline.modules.git.BranchProps
 ---@field icon? boolean
 
----@param props? ne.plugin.heirline.git.BranchProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.git.BranchProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.branch(props)
     props = vim.tbl_extend('force', { icon = true }, props or {})
 
-    ---@class ne.plugin.heirline.git.Branch : ne.plugin.heirline.git.Context
+    ---@class ne.plugin.heirline.modules.git.Branch : ne.plugin.heirline.modules.git.Context
     ---@field status Gitsigns.StatusObj
     local component = {
         basic.joined(' ',
             --- Icon
-            ---@class ne.plugin.heirline.git.BranchIcon : ne.plugin.heirline.git.Branch
+            ---@class ne.plugin.heirline.modules.git.BranchIcon : ne.plugin.heirline.modules.git.Branch
             {
-                ---@param self ne.plugin.heirline.git.BranchIcon
+                ---@param self ne.plugin.heirline.modules.git.BranchIcon
                 condition = function(self)
                     return props.icon
                 end,
-                ---@param self ne.plugin.heirline.git.BranchIcon
+                ---@param self ne.plugin.heirline.modules.git.BranchIcon
                 provider = function(self)
                     local head = self.status.head
                     if not head or head == '' then
@@ -65,9 +64,9 @@ function M.branch(props)
                 end,
             },
             --- Head
-            ---@class ne.plugin.heirline.git.BranchHead : ne.plugin.heirline.git.Branch
+            ---@class ne.plugin.heirline.modules.git.BranchHead : ne.plugin.heirline.modules.git.Branch
             {
-                ---@param self ne.plugin.heirline.git.BranchHead
+                ---@param self ne.plugin.heirline.modules.git.BranchHead
                 provider = function(self)
                     local head = self.status.head
                     if not head or head == '' then
@@ -87,12 +86,12 @@ function M.branch(props)
     return M.context(component)
 end
 
----@class ne.plugin.heirline.git.DiffProps
+---@class ne.plugin.heirline.modules.git.DiffProps
 ---@field icon? boolean
 ---@field show_when_zero? boolean | 'with_nonzero'
 
----@param props? ne.plugin.heirline.git.DiffProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.git.DiffProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.diff(props)
     props = vim.tbl_extend('force', { icon = true, show_when_zero = true }, props or {})
 
@@ -111,37 +110,32 @@ function M.diff(props)
         end)
     end
 
-    ---@type ne.plugin.heirline.basic.Component[]
+    ---@type ne.plugin.heirline.modules.basic.Component[]
     local counts = vim.tbl_map(function(part)
         return {
             hl = part.hl_group,
-            ---@param self ne.plugin.heirline.git.Diff
+            ---@param self ne.plugin.heirline.modules.git.Diff
             condition = function(self)
-                if props.show_when_zero == true or (self.status[part.key] or 0) > 0 then
-                    return true
+                local status = status_of(self)
+                if status == nil then
+                    return false
                 end
-                return props.show_when_zero == 'with_nonzero' and any_nonzero(self.status)
+
+                local count = status[part.key] or 0
+                return count > 0
+                    or props.show_when_zero == true
+                    or (props.show_when_zero == 'with_nonzero' and any_nonzero(status))
             end,
-            ---@param self ne.plugin.heirline.git.Diff
+            ---@param self ne.plugin.heirline.modules.git.Diff
             provider = function(self)
                 return (props.icon and part.icon or '') .. (self.status[part.key] or 0)
             end,
         }
     end, parts)
 
-    ---@class ne.plugin.heirline.git.Diff : ne.plugin.heirline.git.Context
+    ---@class ne.plugin.heirline.modules.git.Diff : ne.plugin.heirline.modules.git.Context
     ---@field status Gitsigns.StatusObj
-    local component = {
-        basic.joined(' ', unpack(counts)),
-    }
-
-    function component:condition()
-        local status = status_of(self)
-        if status == nil then
-            return false
-        end
-        return props.show_when_zero == true or any_nonzero(status)
-    end
+    local component = basic.joined(' ', unpack(counts))
 
     return M.context(component)
 end

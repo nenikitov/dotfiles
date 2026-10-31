@@ -1,13 +1,13 @@
 local defs = require('defs')
 local util = require('util')
 
-local basic = require('plugin.ui.heirline.basic')
+local basic = require('plugin.ui.heirline.modules.basic')
 
 local M = {}
 
 --#region Buffer names
 
----@class ne.plugin.heirline.file.BufferName
+---@class ne.plugin.heirline.modules.file.BufferName
 ---@field prefix string
 ---@field directory string
 ---@field basename string
@@ -26,7 +26,7 @@ local function parse_terminal(name)
     }
 end
 
----@param result table<integer, ne.plugin.heirline.file.BufferName>
+---@param result table<integer, ne.plugin.heirline.modules.file.BufferName>
 ---@param groups table<string, integer[]>
 ---@param prefix string
 local function assign_unique_names(result, groups, prefix)
@@ -47,10 +47,10 @@ local function assign_unique_names(result, groups, prefix)
     end
 end
 
----@type table<integer, ne.plugin.heirline.file.BufferName>?
+---@type table<integer, ne.plugin.heirline.modules.file.BufferName>?
 local buffer_names
 
----@return table<integer, ne.plugin.heirline.file.BufferName>
+---@return table<integer, ne.plugin.heirline.modules.file.BufferName>
 local function compute_buffer_names()
     ---@type table<string, integer[]>
     local files = {}
@@ -81,7 +81,7 @@ local function compute_buffer_names()
         end
     end
 
-    ---@type table<integer, ne.plugin.heirline.file.BufferName>
+    ---@type table<integer, ne.plugin.heirline.modules.file.BufferName>
     local result = {}
 
     assign_unique_names(result, files, '')
@@ -118,7 +118,7 @@ local function compute_buffer_names()
 end
 
 ---@param buf integer
----@return ne.plugin.heirline.file.BufferName?
+---@return ne.plugin.heirline.modules.file.BufferName?
 local function buffer_name(buf)
     buffer_names = buffer_names or compute_buffer_names()
     return buffer_names[buf]
@@ -163,17 +163,17 @@ local function escape(text)
     return escaped
 end
 
----@class ne.plugin.heirline.file.Context : ne.plugin.heirline.basic.Component
+---@class ne.plugin.heirline.modules.file.Context : ne.plugin.heirline.modules.basic.Component
 ---@field name string
 
 M.context = basic.context(
-    ---@param self ne.plugin.heirline.file.Context
+    ---@param self ne.plugin.heirline.modules.file.Context
     function(self)
-        self.name = vim.api.nvim_buf_get_name(basic.buffer(self))
+        self.name = vim.api.nvim_buf_get_name(basic.bufnr(self))
     end
 )
 
----@class ne.plugin.heirline.file.NameProps
+---@class ne.plugin.heirline.modules.file.NameProps
 ---@field icon? boolean
 ---@field name? 'full' | 'shorten' | 'filename' | 'filename_unique' | false
 ---@field max_directory_length? integer
@@ -181,8 +181,8 @@ M.context = basic.context(
 ---@field directory_hl? string
 ---@field name_hl? string
 
----@param props? ne.plugin.heirline.file.NameProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.file.NameProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.name(props)
     props = vim.tbl_extend('force', {
         icon = true,
@@ -191,38 +191,38 @@ function M.name(props)
         directory_hl = 'Comment',
     }, props or {})
 
-    ---@class ne.plugin.heirline.file.Name : ne.plugin.heirline.file.Context
+    ---@class ne.plugin.heirline.modules.file.Name : ne.plugin.heirline.modules.file.Context
 
     local component = basic.joined(' ',
         --- Icon
-        ---@class ne.plugin.heirline.file.Icon : ne.plugin.heirline.file.Name
+        ---@class ne.plugin.heirline.modules.file.Icon : ne.plugin.heirline.modules.file.Name
         ---@field icon string
         ---@field hl_group string
         {
             condition = function()
                 return props.icon
             end,
-            ---@param self ne.plugin.heirline.file.Icon
+            ---@param self ne.plugin.heirline.modules.file.Icon
             init = function(self)
                 local icons = require('mini.icons')
-                local buftype = vim.bo[basic.buffer(self)].buftype
+                local buftype = vim.bo[basic.bufnr(self)].buftype
                 if buftype == 'help' or buftype == 'terminal' then
                     self.icon, self.hl_group = icons.get('filetype', buftype)
                 else
                     self.icon, self.hl_group = icons.get('file', self.name)
                 end
             end,
-            ---@param self ne.plugin.heirline.file.Icon
+            ---@param self ne.plugin.heirline.modules.file.Icon
             provider = function(self)
                 return self.icon
             end,
-            ---@param self ne.plugin.heirline.file.Icon
+            ---@param self ne.plugin.heirline.modules.file.Icon
             hl = function(self)
                 return self.hl_group
             end,
         },
         --- Name
-        ---@class ne.plugin.heirline.file.Path : ne.plugin.heirline.file.Name
+        ---@class ne.plugin.heirline.modules.file.Path : ne.plugin.heirline.modules.file.Name
         ---@field prefix string
         ---@field directory string
         ---@field basename string
@@ -230,9 +230,9 @@ function M.name(props)
             condition = function()
                 return props.name ~= false
             end,
-            ---@param self ne.plugin.heirline.file.Path
+            ---@param self ne.plugin.heirline.modules.file.Path
             init = function(self)
-                local buf = basic.buffer(self)
+                local buf = basic.bufnr(self)
                 local buftype = vim.bo[buf].buftype
 
                 -- Help pages, terminals and unnamed buffers are named the same in every mode
@@ -284,24 +284,24 @@ function M.name(props)
             basic.joined('',
                 --- Prefix
                 {
-                    ---@param self ne.plugin.heirline.file.Path
+                    ---@param self ne.plugin.heirline.modules.file.Path
                     condition = function(self)
                         return self.prefix ~= ''
                     end,
                     hl = props.prefix_hl,
-                    ---@param self ne.plugin.heirline.file.Path
+                    ---@param self ne.plugin.heirline.modules.file.Path
                     provider = function(self)
                         return escape(self.prefix) .. ' '
                     end,
                 },
                 --- Directory
                 {
-                    ---@param self ne.plugin.heirline.file.Path
+                    ---@param self ne.plugin.heirline.modules.file.Path
                     condition = function(self)
                         return self.directory ~= ''
                     end,
                     hl = props.directory_hl,
-                    ---@param self ne.plugin.heirline.file.Path
+                    ---@param self ne.plugin.heirline.modules.file.Path
                     provider = function(self)
                         return escape(self.directory)
                     end,
@@ -309,7 +309,7 @@ function M.name(props)
                 --- Basename
                 {
                     hl = props.name_hl,
-                    ---@param self ne.plugin.heirline.file.Path
+                    ---@param self ne.plugin.heirline.modules.file.Path
                     provider = function(self)
                         return escape(self.basename)
                     end,
@@ -321,12 +321,12 @@ function M.name(props)
     return M.context(component)
 end
 
----@class ne.plugin.heirline.file.FlagsProps
+---@class ne.plugin.heirline.modules.file.FlagsProps
 ---@field modified? boolean
 ---@field readonly? boolean
 
----@param props? ne.plugin.heirline.file.FlagsProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.file.FlagsProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.flags(props)
     props = vim.tbl_extend('force', {
         modified = true,
@@ -335,74 +335,74 @@ function M.flags(props)
 
     return basic.joined(' ', {
         --- Modified
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         condition = function(self)
-            return props.modified and vim.bo[basic.buffer(self)].modified
+            return props.modified and vim.bo[basic.bufnr(self)].modified
         end,
         provider = defs.icons.file.modified,
     }, {
         --- Readonly
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         condition = function(self)
-            local bo = vim.bo[basic.buffer(self)]
+            local bo = vim.bo[basic.bufnr(self)]
             return props.readonly and (not bo.modifiable or bo.readonly)
         end,
         provider = defs.icons.file.readonly,
     })
 end
 
----@class ne.plugin.heirline.file.FiletypeProps
+---@class ne.plugin.heirline.modules.file.FiletypeProps
 ---@field icon? 'ft' | 'static' | false
 ---@field name? boolean
 
----@param props? ne.plugin.heirline.file.FiletypeProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.file.FiletypeProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.filetype(props)
     props = vim.tbl_extend('force', { icon = 'ft', name = true }, props or {})
 
-    ---@param self ne.plugin.heirline.basic.Component
+    ---@param self ne.plugin.heirline.modules.basic.Component
     ---@return boolean
     local function has_filetype(self)
-        return vim.bo[basic.buffer(self)].filetype ~= ''
+        return vim.bo[basic.bufnr(self)].filetype ~= ''
     end
 
-    ---@class ne.plugin.heirline.file.Filetype : ne.plugin.heirline.basic.Component
+    ---@class ne.plugin.heirline.modules.file.Filetype : ne.plugin.heirline.modules.basic.Component
     ---@field icon string
     ---@field hl_group? string
     ---@field filetype string
 
     local component = basic.joined(' ', {
         --- Icon
-        ---@param self ne.plugin.heirline.file.Filetype
+        ---@param self ne.plugin.heirline.modules.file.Filetype
         condition = function(self)
             if props.icon == 'static' then
                 return basic.icon(defs.icons.file.filetype.icon) ~= '' and has_filetype(self)
             end
             return props.icon == 'ft' and has_filetype(self)
         end,
-        ---@param self ne.plugin.heirline.file.Filetype
+        ---@param self ne.plugin.heirline.modules.file.Filetype
         provider = function(self)
             return self.icon
         end,
-        ---@param self ne.plugin.heirline.file.Filetype
+        ---@param self ne.plugin.heirline.modules.file.Filetype
         hl = function(self)
             return self.hl_group
         end,
     }, {
         --- Name
-        ---@param self ne.plugin.heirline.file.Filetype
+        ---@param self ne.plugin.heirline.modules.file.Filetype
         condition = function(self)
             return props.name and has_filetype(self)
         end,
-        ---@param self ne.plugin.heirline.file.Filetype
+        ---@param self ne.plugin.heirline.modules.file.Filetype
         provider = function(self)
             return self.filetype
         end,
     })
 
-    ---@param self ne.plugin.heirline.file.Filetype
+    ---@param self ne.plugin.heirline.modules.file.Filetype
     component.init = function(self)
-        self.filetype = vim.bo[basic.buffer(self)].filetype
+        self.filetype = vim.bo[basic.bufnr(self)].filetype
 
         if props.icon == 'ft' then
             local icon, hl_group = require('mini.icons').get('filetype', self.filetype)
@@ -417,12 +417,12 @@ function M.filetype(props)
     return component
 end
 
----@class ne.plugin.heirline.file.LineEndingProps
+---@class ne.plugin.heirline.modules.file.LineEndingProps
 ---@field icon? boolean
 ---@field name? boolean
 
----@param props? ne.plugin.heirline.file.LineEndingProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.file.LineEndingProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.line_ending(props)
     props = vim.tbl_extend('force', { icon = true, name = true }, props or {})
 
@@ -430,32 +430,32 @@ function M.line_ending(props)
 
     return basic.joined(' ', {
         --- Icon
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         condition = function(self)
-            return props.icon and basic.icon(icons.icon[vim.bo[basic.buffer(self)].fileformat]) ~= ''
+            return props.icon and basic.icon(icons.icon[vim.bo[basic.bufnr(self)].fileformat]) ~= ''
         end,
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         provider = function(self)
-            return basic.icon(icons.icon[vim.bo[basic.buffer(self)].fileformat])
+            return basic.icon(icons.icon[vim.bo[basic.bufnr(self)].fileformat])
         end,
     }, {
         --- Name
         condition = function()
             return props.name
         end,
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         provider = function(self)
-            return icons.name[vim.bo[basic.buffer(self)].fileformat]
+            return icons.name[vim.bo[basic.bufnr(self)].fileformat]
         end,
     })
 end
 
----@class ne.plugin.heirline.file.EncodingProps
+---@class ne.plugin.heirline.modules.file.EncodingProps
 ---@field icon? boolean
 ---@field name? boolean
 
----@param props? ne.plugin.heirline.file.EncodingProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.file.EncodingProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.encoding(props)
     props = vim.tbl_extend('force', { icon = true, name = true }, props or {})
 
@@ -472,19 +472,19 @@ function M.encoding(props)
         condition = function()
             return props.name
         end,
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         provider = function(self)
-            local encoding = vim.bo[basic.buffer(self)].fileencoding
+            local encoding = vim.bo[basic.bufnr(self)].fileencoding
             return encoding ~= '' and encoding or vim.o.encoding
         end,
     })
 end
 
----@class ne.plugin.heirline.file.IndentProps
+---@class ne.plugin.heirline.modules.file.IndentProps
 ---@field icon? boolean
 
----@param props? ne.plugin.heirline.file.IndentProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.file.IndentProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.indent(props)
     props = vim.tbl_extend('force', { icon = true }, props or {})
 
@@ -492,18 +492,18 @@ function M.indent(props)
 
     return basic.joined(' ', {
         --- Icon or label
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         provider = function(self)
-            if vim.bo[basic.buffer(self)].expandtab then
+            if vim.bo[basic.bufnr(self)].expandtab then
                 return props.icon and basic.icon(icons.space) or 'spc'
             end
             return props.icon and basic.icon(icons.tab) or 'tab'
         end,
     }, {
         --- Width
-        ---@param self ne.plugin.heirline.basic.Component
+        ---@param self ne.plugin.heirline.modules.basic.Component
         provider = function(self)
-            local bo = vim.bo[basic.buffer(self)]
+            local bo = vim.bo[basic.bufnr(self)]
             if bo.expandtab then
                 -- 'shiftwidth' 0 means "use 'tabstop'"
                 return bo.shiftwidth == 0 and bo.tabstop or bo.shiftwidth

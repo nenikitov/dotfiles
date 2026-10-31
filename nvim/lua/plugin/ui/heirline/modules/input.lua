@@ -1,5 +1,5 @@
 local defs = require('defs')
-local basic = require('plugin.ui.heirline.basic')
+local basic = require('plugin.ui.heirline.modules.basic')
 
 local M = {}
 
@@ -55,33 +55,33 @@ local function current_mode()
     return mode_keys[vim.fn.mode(1)] or 'normal'
 end
 
----@class ne.plugin.heirline.input.Context : ne.plugin.heirline.basic.Component
+---@class ne.plugin.heirline.modules.input.Context : ne.plugin.heirline.modules.basic.Component
 ---@field mode string
 
 M.context = basic.context(
-    ---@param self ne.plugin.heirline.input.Context
+    ---@param self ne.plugin.heirline.modules.input.Context
     function(self)
         self.mode = current_mode()
     end
 )
 
----@class ne.plugin.heirline.input.ModeProps
+---@class ne.plugin.heirline.modules.input.ModeProps
 ---@field icon? boolean
 ---@field text? boolean
 
----@param props? ne.plugin.heirline.input.ModeProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.input.ModeProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.mode(props)
     props = vim.tbl_extend('force', { icon = true, text = true }, props or {})
 
-    ---@class ne.plugin.heirline.input.Mode : ne.plugin.heirline.input.Context
+    ---@class ne.plugin.heirline.modules.input.Mode : ne.plugin.heirline.modules.input.Context
 
     local component = basic.joined(' ', {
         --- Icon
         condition = function()
             return props.icon and basic.icon(defs.icons.mode.icon[current_mode()]) ~= ''
         end,
-        ---@param self ne.plugin.heirline.input.Mode
+        ---@param self ne.plugin.heirline.modules.input.Mode
         provider = function(self)
             return basic.icon(defs.icons.mode.icon[self.mode])
         end,
@@ -90,7 +90,7 @@ function M.mode(props)
         condition = function()
             return props.text
         end,
-        ---@param self ne.plugin.heirline.input.Mode
+        ---@param self ne.plugin.heirline.modules.input.Mode
         provider = function(self)
             return defs.icons.mode.name[self.mode]
         end,
@@ -99,9 +99,9 @@ function M.mode(props)
     return M.context(component)
 end
 
----@return ne.plugin.heirline.basic.Component
+---@return ne.plugin.heirline.modules.basic.Component
 function M.selection()
-    ---@class ne.plugin.heirline.input.Selection : ne.plugin.heirline.input.Context
+    ---@class ne.plugin.heirline.modules.input.Selection : ne.plugin.heirline.modules.input.Context
     local component = {}
 
     function component:condition()
@@ -125,11 +125,11 @@ function M.selection()
     return M.context(component)
 end
 
----@class ne.plugin.heirline.input.RecordingProps
+---@class ne.plugin.heirline.modules.input.RecordingProps
 ---@field icon? boolean
 
----@param props? ne.plugin.heirline.input.RecordingProps
----@return ne.plugin.heirline.basic.Component
+---@param props? ne.plugin.heirline.modules.input.RecordingProps
+---@return ne.plugin.heirline.modules.basic.Component
 function M.recording(props)
     props = vim.tbl_extend('force', { icon = true }, props or {})
 
@@ -140,7 +140,7 @@ function M.recording(props)
     return basic.joined(' ', {
         --- Icon
         condition = function()
-            return props.icon and recording()
+            return recording() and props.icon
         end,
         provider = basic.icon(defs.icons.mode.recording),
     }, {

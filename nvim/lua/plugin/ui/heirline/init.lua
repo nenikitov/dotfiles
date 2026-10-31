@@ -4,59 +4,66 @@
 local defs = require('defs')
 local util = require('util')
 
+---@param name string
+---@return table
+local function section_highlight(name)
+    local group = vim.api.nvim_get_hl(0, { name = name, link = false })
+    local normal = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+
+    local function hex(color)
+        return color and ('#%06x'):format(color)
+    end
+
+    return {
+        fg = hex(group.fg or normal.fg),
+        bg = hex(group.bg),
+        ctermfg = group.ctermfg or normal.ctermfg,
+        ctermbg = group.ctermbg,
+        bold = group.bold,
+    }
+end
+
 ---@type LazySpec
 return {
     'rebelot/heirline.nvim', -- for statusline and tabline
     dependencies = { defs.plugins.mini_icons },
     event = 'UIEnter',
     config = function()
-        local cursor = require('plugin.ui.heirline.cursor')
-        local file = require('plugin.ui.heirline.file')
-        local git = require('plugin.ui.heirline.git')
-        local input = require('plugin.ui.heirline.input')
-        local layout = require('plugin.ui.heirline.layout')
-        local lsp = require('plugin.ui.heirline.lsp')
+        local basic = require('plugin.ui.heirline.modules.basic')
+        local cursor = require('plugin.ui.heirline.modules.cursor')
+        local file = require('plugin.ui.heirline.modules.file')
+        local git = require('plugin.ui.heirline.modules.git')
+        local input = require('plugin.ui.heirline.modules.input')
+        local lsp = require('plugin.ui.heirline.modules.lsp')
 
-        -- Statusline widths for `layout.by_width`
-        local WIDE   = 175 -- icons
-        local MEDIUM = 150 -- secondary details
-        local NARROW = 80  -- context
+        local slayout = require('plugin.ui.heirline.layouts.statusline')
 
-        -- Flexible priorities for `layout.flexible`
-        local ESSENTIAL = 1
-
-        local mode_highlights = {
-            normal           = 'StatusLine',
-            operator_pending = 'StatusLine',
-            insert           = 'DiffAdd',
-            visual           = 'Visual',
-            visual_line      = 'Visual',
-            visual_block     = 'Visual',
-            select           = 'Visual',
-            select_line      = 'Visual',
-            select_block     = 'Visual',
-            replace          = 'DiffDelete',
-            visual_replace   = 'DiffDelete',
-            command          = 'DiffText',
-            ex               = 'DiffText',
-            more             = 'DiffText',
-            confirm          = 'DiffText',
-            shell            = 'DiffText',
-            terminal         = 'DiffChange',
+        ---@class ne.plugin.heirline.ShowWidths
+        local SHOW_WIDTHS = {
+            ICONS = 150,
+            DETAILS = 110,
+            CONTEXT = 65,
+            MINIMAL = 40,
         }
 
-        local statusline = layout.statusline({
+        ---@class ne.plugin.heirline.FlexPriorities
+        local FLEX_PRIORITIES = {
+            ESSENTIAL = 1
+        }
+
+        local statusline = slayout.statusline({
             highlight = function(active, section, mode)
                 if not active then
                     return 'StatusLineNC'
                 end
+
                 local distance = math.abs(section)
                 if distance >= 3 then
-                    return mode_highlights[mode] or 'StatusLine'
+                    return section_highlight('CurSearch')
                 elseif distance == 2 then
-                    return 'TabLine'
+                    return section_highlight('Visual')
                 end
-                return 'TabLineSel'
+                return section_highlight('CursorLine')
             end,
 
             section_separator = function(section)
@@ -67,71 +74,87 @@ return {
                 return section < 0 and defs.icons.status_line.component.left or defs.icons.status_line.component.right
             end,
 
-            -- ┌───┬───┬───┬───────────────────────────┬───┬───┬───┐
-            -- │-3 │-2 │-1 │ 0 ///////////////////// 0 │ 1 │ 2 │ 3 │
-            -- └───┴───┴───┴───────────────────────────┴───┴───┴───┘
             active = {
                 [-3] = {
                     input.mode(),
-                    input.selection(),
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.CONTEXT, input.selection() },
+                    }),
                     input.recording(),
                 },
                 [-2] = {
-                    layout.by_width({
-                        { min = WIDE, git.branch() },
-                        { min = NARROW, git.branch({ icon = false }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, git.branch() },
+                        { min = SHOW_WIDTHS.DETAILS, git.branch({ icon = false }) },
                     }),
-                    layout.by_width({
-                        { min = WIDE, git.diff({ show_when_zero = 'with_nonzero' }) },
-                        { min = MEDIUM, git.diff({ show_when_zero = 'with_nonzero', icon = false }) },
-                        { min = 0, git.diff({ show_when_zero = false, icon = false }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, git.diff({ show_when_zero = 'with_nonzero' }) },
+                        { min = SHOW_WIDTHS.CONTEXT, git.diff({ show_when_zero = false, icon = false }) },
                     }),
                 },
                 [-1] = {
-                    layout.flexible(
-                        { shorten = ESSENTIAL },
-                        file.name({ name = 'full' }),
-                        file.name({ name = 'full', max_directory_length = 20 }),
-                        file.name({ name = 'shorten' }),
-                        file.name({ name = 'filename' })
-                    ),
-                    file.flags(),
+                    basic.by_width({
+                        {
+                            min = SHOW_WIDTHS.ICONS,
+                            {
+                                flexible = FLEX_PRIORITIES.ESSENTIAL,
+                                file.name({ name = 'full' }),
+                                file.name({ name = 'full', max_directory_length = 20 }),
+                                file.name({ name = 'shorten' }),
+                                file.name({ name = 'filename' }),
+                            },
+                        },
+                        {
+                            flexible = FLEX_PRIORITIES.ESSENTIAL,
+                            file.name({ name = 'full', icon = false }),
+                            file.name({ name = 'full', max_directory_length = 20, icon = false }),
+                            file.name({ name = 'shorten', icon = false }),
+                            file.name({ name = 'filename', icon = false }),
+                        },
+                    }),
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.CONTEXT, file.flags() },
+                    }),
                 },
                 [1] = {
-                    layout.by_width({
-                        { min = WIDE, file.encoding() },
-                        { min = MEDIUM, file.encoding({ icon = false }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, file.encoding() },
+                        { min = SHOW_WIDTHS.DETAILS, file.encoding({ icon = false }) },
                     }),
-                    layout.by_width({
-                        { min = WIDE, file.line_ending() },
-                        { min = MEDIUM, file.line_ending({ icon = false }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, file.line_ending() },
+                        { min = SHOW_WIDTHS.DETAILS, file.line_ending({ icon = false }) },
                     }),
-                    file.indent(),
-                    layout.by_width({
-                        { min = WIDE, file.filetype() },
-                        { min = NARROW, file.filetype({ icon = false }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.DETAILS, file.indent() },
+                    }),
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, file.filetype() },
+                        { min = SHOW_WIDTHS.DETAILS, file.filetype({ icon = false }) },
                     }),
                 },
                 [2] = {
-                    layout.by_width({
-                        { min = WIDE, lsp.diagnostics({ show_when_zero = false }) },
-                        { min = 0, lsp.diagnostics({ show_when_zero = false, icon = false }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, lsp.diagnostics({ show_when_zero = 'with_nonzero' }) },
+                        lsp.diagnostics({ show_when_zero = false, icon = false }),
                     }),
-                    layout.by_width({
-                        { min = MEDIUM, lsp.progress() },
-                        { min = 0, lsp.progress({ percentage = false }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, lsp.progress() },
+                        { min = SHOW_WIDTHS.DETAILS, lsp.progress({ icon = false }) },
+                        { min = SHOW_WIDTHS.MINIMAL, lsp.progress({ percentage = false }) },
                     }),
-                    layout.by_width({
-                        { min = NARROW, lsp.clients() },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, lsp.clients() },
+                        { min = SHOW_WIDTHS.CONTEXT, lsp.clients({ icon = false }) },
                     }),
                 },
                 [3] = {
-                    layout.by_width({
-                        { min = MEDIUM, cursor.scroll() },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.ICONS, cursor.scroll() },
                     }),
-                    layout.by_width({
-                        { min = MEDIUM, cursor.location() },
-                        { min = 0, cursor.location({ line_width = 0, column_width = 0 }) },
+                    basic.by_width({
+                        { min = SHOW_WIDTHS.CONTEXT, cursor.location() },
+                        cursor.location({ line_width = 0, column_width = 0 }),
                     }),
                 },
             },
