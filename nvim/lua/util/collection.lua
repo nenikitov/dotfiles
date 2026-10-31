@@ -25,4 +25,32 @@ function M.merge(target, value)
 	return value
 end
 
+---@generic T
+---@param predicates (fun(value: T): any)[]
+---@return fun(value: T): boolean
+function M.any_pass(predicates)
+    return function(value)
+        for _, predicate in ipairs(predicates) do
+            if predicate(value) then
+                return true
+            end
+        end
+        return false
+    end
+end
+
+---@generic T
+---@param predicates (fun(value: T): any)[]
+---@return fun(value: T): boolean
+function M.all_pass(predicates)
+    return function(value)
+        for _, predicate in ipairs(predicates) do
+            if not predicate(value) then
+                return false
+            end
+        end
+        return true
+    end
+end
+
 return M

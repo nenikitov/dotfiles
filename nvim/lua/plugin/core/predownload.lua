@@ -64,7 +64,6 @@ return {
 	'catppuccin/nvim',
 	'olimorris/onedarkpro.nvim',
     'Ferouk/bearded-nvim',
-    'idr4n/andromeda.nvim',
 
     -- layout
 	'kwkarlwang/bufresize.nvim',

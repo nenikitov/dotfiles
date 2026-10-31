@@ -10,8 +10,6 @@ end)
 --#region Yank / paste
 util.map:k('y', 'Yank without moving'):bind('x', 'ygv<ESC>'):set()
 util.map:k('p', 'Paste without yanking replaced text'):bind('x', 'P'):set()
-util.map:k('x', 'Delete character without yanking'):bind({ 'n', 'x' }, '"_x'):set()
-util.map:k('X', 'Delete character before cursor without yanking'):bind('n', '"_X'):set()
 util.map:k('dd', 'Delete line without yanking blank lines'):bind('n', function()
 	return vim.api.nvim_get_current_line():match('^%s*$') and '"_dd' or 'dd'
 end, { expr = true }):set()

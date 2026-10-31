@@ -135,7 +135,7 @@ function M.diagnostics(props)
             end,
             ---@param self ne.plugin.heirline.lsp.Diagnostics
             provider = function(self)
-                return (props.icon and basic.icon(part.icon) or '') .. (self.counts[part.severity] or 0)
+                return (props.icon and part.icon or '') .. (self.counts[part.severity] or 0)
             end,
         }
     end, parts)

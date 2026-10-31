@@ -1,5 +1,7 @@
 ---@module 'heirline'
 
+local util = require('util')
+
 local M = {}
 
 ---@class ne.plugin.heirline.basic.Component : StatusLine
@@ -44,11 +46,13 @@ function M.buffer(self)
     return self.bufnr or vim.api.nvim_get_current_buf()
 end
 
----@param hl string | table | fun(self: StatusLine): (string | table)
----@param ... ne.plugin.heirline.basic.Component
----@return ne.plugin.heirline.basic.Component
-function M.background(hl, ...)
-	return { hl = hl, ... }
+---@param component ne.plugin.heirline.basic.Component
+---@return fun(self: StatusLine): boolean
+function M.visibility(component)
+	local condition = component.condition
+	return function(self)
+		return not condition or (not not condition(self))
+	end
 end
 
 ---@param sep nil | '' | string | ne.plugin.heirline.basic.Component `''` and `nil` get optimized
@@ -56,30 +60,11 @@ end
 ---@return ne.plugin.heirline.basic.Component
 function M.joined(sep, ...)
 	local children = { ... }
-
-	---@param child ne.plugin.heirline.basic.Component
-	---@param self StatusLine
-	local function shown(self, child)
-		return not child.condition or child.condition(self)
-	end
-
-	---@param self StatusLine
-	---@param from integer
-	---@param to integer
-	local function any_shown(self, from, to)
-		for i = from, to do
-			if shown(self, children[i]) then
-				return true
-			end
-		end
-		return false
-	end
+	local shown = vim.tbl_map(M.visibility, children)
 
 	---@type ne.plugin.heirline.basic.Component
 	local component = {
-		condition = function(self)
-			return any_shown(self, 1, #children)
-		end,
+		condition = util.collection.any_pass(shown),
 		children[1],
 	}
 
@@ -96,9 +81,10 @@ function M.joined(sep, ...)
 
 	for i = 2, #children do
 		table.insert(component, {
-			condition = function(self)
-				return shown(self, children[i]) and any_shown(self, 1, i - 1)
-			end,
+			condition = util.collection.all_pass({
+				shown[i],
+				util.collection.any_pass(vim.list_slice(shown, 1, i - 1)),
+			}),
 			sep,
 		})
 		table.insert(component, children[i])

@@ -124,7 +124,7 @@ function M.diff(props)
             end,
             ---@param self ne.plugin.heirline.git.Diff
             provider = function(self)
-                return (props.icon and basic.icon(part.icon) or '') .. (self.status[part.key] or 0)
+                return (props.icon and part.icon or '') .. (self.status[part.key] or 0)
             end,
         }
     end, parts)

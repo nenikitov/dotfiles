@@ -157,6 +157,17 @@ M.diff_bar = {
     deleted   = M.choose('▶', '►'),
 }
 
+M.status_line = {
+    section = {
+        left  = '▒',
+        right = '▒',
+    },
+    component = {
+        left  = ' │ ',
+        right = ' │ ',
+    },
+}
+
 M.severity = {
     error   = M.choose(' ', 'E'),
     warning = M.choose(' ', 'W'),
