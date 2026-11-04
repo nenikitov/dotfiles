@@ -54,7 +54,6 @@ return {
 	'RRethy/vim-illuminate',
 	'folke/noice.nvim', -- for message forwarding, centered command line, search virtual text
 	'folke/snacks.nvim', -- for notifier, dashboard, debug
-	'mihovilrak/scroll.nvim',
 	'nvim-treesitter/nvim-treesitter-context',
     'rachartier/tiny-inline-diagnostic.nvim', -- not sure
     'stevearc/quicker.nvim',

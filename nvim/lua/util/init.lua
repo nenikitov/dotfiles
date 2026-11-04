@@ -1,4 +1,5 @@
 ---@class ne.util
+---@field async ne.util.async
 ---@field collection ne.util.collection
 ---@field fs ne.util.fs
 ---@field lockfile ne.util.lockfile

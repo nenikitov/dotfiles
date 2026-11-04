@@ -2,6 +2,7 @@ local util = require('util')
 
 --#region Mouse
 vim.opt.mouse = 'a'
+vim.opt.mousemoveevent = true
 vim.opt.mousescroll = 'ver:1,hor:2'
 vim.opt.mousemodel = 'extend'
 

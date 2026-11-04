@@ -1,3 +1,5 @@
+local util = require('util')
+
 ---@class ne.util.lockfile
 ---@field path string
 local Lockfile = {}
@@ -11,14 +13,12 @@ end
 
 ---@return table<string, any>?
 function Lockfile:all()
-	local file = io.open(self.path, 'r')
-	if not file then
-		return {}
-	end
+    local content = fs.read(self.path)
+    if not content then
+        return {}
+    end
 
-	local ok, entries = pcall(vim.json.decode, file:read('*a'))
-	file:close()
-
+    local ok, entries = pcall(vim.json.decode, content)
 	if not ok or type(entries) ~= 'table' then
 		vim.notify('Could not parse ' .. self.path .. ', leaving it unchanged', vim.log.levels.ERROR)
 		return nil

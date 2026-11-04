@@ -42,6 +42,7 @@ vim.opt.fillchars = {
 --#endregion
 
 --#region Windows
+vim.opt.showtabline = 2
 vim.opt.laststatus = 3
 vim.opt.winborder = defs.icons.border
 --#endregion

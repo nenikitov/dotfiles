@@ -9,6 +9,24 @@ function M.split(path)
 	return vim.split(vim.fs.normalize(path), '/', { plain = true })
 end
 
+---@param path string
+---@return string?
+function M.read(path)
+    local file = io.open(path, 'rb')
+    if not file then
+        return nil
+    end
+    local content = file:read('*a')
+    file:close()
+    return content
+end
+
+---@param path string
+---@return boolean
+function M.exists(path)
+    return vim.uv.fs_stat(path) ~= nil
+end
+
 --#endregion
 
 --#region Path shortening and unique
@@ -227,7 +245,7 @@ function M.discover_dir(module, opts)
     ---@param dir string
     ---@return boolean
     local function has_init(dir)
-        return vim.uv.fs_stat(vim.fs.joinpath(dir, 'init.lua')) ~= nil
+        return M.exists(vim.fs.joinpath(dir, 'init.lua'))
     end
 
     if not opts.ignore_init and has_init(root) then
@@ -281,7 +299,7 @@ function M.dir_module(prefix)
             local path = M.module_to_path(name)
 
 			local module
-			if vim.uv.fs_stat(path .. '.lua') then
+			if M.exists(path .. '.lua') then
 				module = require(name)
 			elseif vim.fn.isdirectory(path) == 1 then
 				module = M.dir_module(name)

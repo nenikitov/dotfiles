@@ -10,7 +10,7 @@ local path = vim.fs.joinpath(
 	'lazy.nvim'
 )
 
-if not vim.uv.fs_stat(path) then
+if not util.fs.exists(path) then
 	local out = vim.fn.system({
 		"git",
 		"clone",

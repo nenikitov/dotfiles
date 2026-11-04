@@ -71,7 +71,7 @@ M.ui = {
     previous = '«',
     next     = '»',
 
-    close    = M.choose(' ', 'X'),
+    close    = M.choose(' ', 'X'),
 
     prompt   = '>',
 }
@@ -165,6 +165,21 @@ M.status_line = {
     component = {
         left  = ' │ ',
         right = ' │ ',
+    },
+}
+
+M.buffer_line = {
+    current = {
+        left  = '█',
+        right = '',
+    },
+    visible = {
+        left  = '▓',
+        right = '',
+    },
+    inactive = {
+        left  = '░',
+        right = '',
     },
 }
 

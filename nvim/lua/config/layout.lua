@@ -4,7 +4,6 @@ local defs = require('defs')
 --#region Splits
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.splitkeep = 'screen'
 vim.opt.equalalways = false
 
 defs.keys.buffer:k('s', 'Split horizontally'):bind('n', '<CMD>split<CR>'):set()
