@@ -21,10 +21,16 @@ return {
                 },
                 search = {
                     enable = true,
+                    symbols = shared.icons.ui.progress.count,
                 },
                 diagnostic = {
                     enable = true,
-                    symbols = shared.icons.ui.progress.count,
+                    signs = {
+                        error = shared.icons.ui.progress.count,
+                        warn = shared.icons.ui.progress.count,
+                        info = shared.icons.ui.progress.count,
+                        hint = shared.icons.ui.progress.count,
+                    },
                 },
                 gitsigns = {
                     enable = true,

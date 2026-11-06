@@ -20,19 +20,31 @@ return {
                 [vim.diagnostic.severity.HINT] = { enabled = false, icon = shared.icons.severity.hint },
             },
 
-            separator = shared.icons.separator.buffer.inactive,
+            separator = {
+                left = shared.icons.separator.buffer.inactive.left,
+                right = shared.icons.separator.buffer.inactive.right,
+            },
             separator_at_end = false,
 
             button = shared.icons.ui.close,
 
             current = {
-                separator = shared.icons.separator.buffer.current,
+                separator = {
+                    left = shared.icons.separator.buffer.current.left,
+                    right = shared.icons.separator.buffer.current.right,
+                },
             },
             visible = {
-                separator = shared.icons.separator.buffer.visible,
+                separator = {
+                    left = shared.icons.separator.buffer.visible.left,
+                    right = shared.icons.separator.buffer.visible.right,
+                },
             },
             inactive = {
-                separator = shared.icons.separator.buffer.inactive,
+                separator = {
+                    left = shared.icons.separator.buffer.inactive.left,
+                    right = shared.icons.separator.buffer.inactive.right,
+                },
             },
 
             modified = {
