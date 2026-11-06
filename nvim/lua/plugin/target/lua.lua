@@ -1,8 +1,8 @@
 ---@module 'lazydev'
 
-local defs = require('defs')
+local shared = require('shared')
 
-return defs.lang({
+return shared.target({
     tools = {
         mason = { 'lua-language-server' },
     },

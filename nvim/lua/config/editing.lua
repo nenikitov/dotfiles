@@ -41,15 +41,69 @@ vim.opt.virtualedit = 'block'
 vim.opt.jumpoptions:append('view')
 --#endregion
 
+--#region Scrolling
+-- Keep a percentage of the window visible around the cursor, instead of a fixed number of lines
+local scrolloff = 0.2
+vim.api.nvim_create_autocmd({ 'WinEnter', 'WinResized', 'VimEnter' }, {
+	group = util.vim.augroup('ne.config.percent_scrolloff'),
+	desc = 'Update scrolloff to a percentage of each window',
+	callback = function()
+		vim.opt_local.scrolloff = math.floor(vim.api.nvim_win_get_height(0) * scrolloff)
+		vim.opt_local.sidescrolloff = math.floor(vim.api.nvim_win_get_width(0) * scrolloff)
+	end,
+})
+--#endregion
+
+--#region Search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+---@param forward boolean
+---@return function
+local function search_next(forward)
+    return function()
+        local key = (vim.v.searchforward == 1) == forward and 'n' or 'N'
+        if vim.fn.mode(1):sub(1, 2) == 'no' then
+            return key
+        end
+        return key .. 'zvzz'
+    end
+end
+util.map:k('n', 'Next search result (always down), centered'):bind({ 'n', 'x', 'o' }, search_next(true), { expr = true }):set()
+util.map:k('N', 'Previous search result (always up), centered'):bind({ 'n', 'x', 'o' }, search_next(false), { expr = true }):set()
+
+util.map:k('<ESC>', 'Clear search'):bind('n', '<CMD>nohlsearch<CR>'):set()
+--#endregion
+
+--#region Substitution
+vim.opt.inccommand = 'split'
+--#endregion
+
 --#region Automatic formatting
 vim.opt.formatoptions = 'qj'
 --#endregion
 
---#region Wrapping
-vim.opt.wrap = false
-vim.opt.breakindent = true
-vim.opt.linebreak = true
-vim.opt.smoothscroll = true
+--#region Clipboard
+-- HACK: Schedule to keep it out of startup time
+vim.schedule(function()
+    vim.opt.clipboard = 'unnamedplus'
+end)
+--#endregion
+
+--#region Yank / paste
+util.map:k('y', 'Yank without moving'):bind('x', 'ygv<ESC>'):set()
+util.map:k('p', 'Paste without yanking replaced text'):bind('x', 'P'):set()
+util.map:k('dd', 'Delete line without yanking blank lines'):bind('n', function()
+	return vim.api.nvim_get_current_line():match('^%s*$') and '"_dd' or 'dd'
+end, { expr = true }):set()
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = util.vim.augroup('ne.config.yank_highlight'),
+    desc = 'Highlight text right after yanking',
+    callback = function()
+        vim.hl.on_yank({ higroup = 'Visual', on_visual = true })
+    end
+})
 --#endregion
 
 --#region Undo

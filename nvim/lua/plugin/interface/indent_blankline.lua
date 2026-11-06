@@ -2,9 +2,9 @@
 ---@module 'ibl'
 
 local util = require('util')
-local defs = require('defs')
+local shared = require('shared')
 
-local icons = defs.icons.indent
+local icons = shared.icons.indent
 
 ---@type LazySpec
 return {
@@ -14,7 +14,7 @@ return {
     ---@type ibl.config
     opts = {
         indent = {
-            char = defs.icons.indent.space,
+            char = shared.icons.indent.space,
             tab_char = icons.tab,
         },
         scope = {

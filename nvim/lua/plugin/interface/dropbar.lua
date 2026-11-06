@@ -2,7 +2,7 @@
 ---@module 'dropbar'
 
 local util = require('util')
-local defs = require('defs')
+local shared = require('shared')
 
 ---@type LazySpec
 return {
@@ -17,7 +17,7 @@ return {
             :k('];', 'Go to context sibling')
             :bind({'n', 'x', 'o'}, function() require('dropbar.api').select_next_context() end)
             :spec(),
-        defs.keys.find
+        shared.keys.find
             :k(';', 'context')
             :bind('n', function() require('dropbar.api').pick() end)
             :spec(),
@@ -31,18 +31,18 @@ return {
                         local icon, hl = require('mini.icons').get('directory', path)
                         return icon .. ' ', hl
                     end,
-                    -- TODO: Should I add more icons to defs or use existing ones here?
+                    -- TODO: Should I add more icons to shared or use existing ones here?
                     symbols = {
                     },
                 },
                 ui = {
                     bar = {
-                        separator = ' ' .. defs.icons.ui.next .. ' ',
-                        extends = defs.icons.ui.ellipsis,
+                        separator = ' ' .. shared.icons.ui.next .. ' ',
+                        extends = shared.icons.ui.ellipsis,
                     },
                     menu = {
                         separator = ' ',
-                        indicator = defs.icons.ui.closed,
+                        indicator = shared.icons.ui.closed,
                     },
                 },
             }

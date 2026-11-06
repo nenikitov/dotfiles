@@ -1,9 +1,9 @@
 -- All available TTY symbols are [here](https://en.wikipedia.org/wiki/Code_page_437)
 -- All available nerd font symbols are [here](https://www.nerdfonts.com/cheat-sheet)
 
-local defs = require('defs')
+local shared = require('shared')
 
----@class ne.defs.icons
+---@class ne.shared.icons
 local M = {}
 
 ---@generic T
@@ -11,7 +11,7 @@ local M = {}
 ---@param tty T
 ---@return T
 function M.choose(gui, tty)
-    if defs.settings.enable_tty_mode then
+    if shared.settings.enable_tty_mode then
         return tty
     else
         return gui

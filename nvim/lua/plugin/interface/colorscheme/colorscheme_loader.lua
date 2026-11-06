@@ -1,4 +1,4 @@
-local defs = require('defs')
+local shared = require('shared')
 
 ---@module 'lazy'
 ---@module 'colorscheme_loader'
@@ -9,6 +9,6 @@ return {
     priority = 1000,
     ---@type colorscheme_loader.Opts
     opts = {
-        custom = defs.settings.colorschemes,
+        custom = shared.settings.colorschemes,
     },
 }

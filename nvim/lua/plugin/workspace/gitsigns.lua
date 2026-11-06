@@ -2,7 +2,7 @@
 ---@module 'gitsigns'
 
 local util = require('util')
-local defs = require('defs')
+local shared = require('shared')
 
 ---@type LazySpec
 return {
@@ -13,27 +13,27 @@ return {
     ---@diagnostic disable: missing-fields
     opts = {
         signs = {
-            add = { text = defs.icons.diff_bar.added },
-            change = { text = defs.icons.diff_bar.changed },
-            changedelete = { text = defs.icons.diff_bar.changed },
-            delete = { text = defs.icons.diff_bar.deleted },
-            topdelete = { text = defs.icons.diff_bar.deleted },
-            untracked = { text = defs.icons.diff_bar.untracked },
+            add = { text = shared.icons.diff_bar.added },
+            change = { text = shared.icons.diff_bar.changed },
+            changedelete = { text = shared.icons.diff_bar.changed },
+            delete = { text = shared.icons.diff_bar.deleted },
+            topdelete = { text = shared.icons.diff_bar.deleted },
+            untracked = { text = shared.icons.diff_bar.untracked },
         },
         signs_staged = {
-            add = { text = defs.icons.diff_bar.added },
-            change = { text = defs.icons.diff_bar.changed },
-            changedelete = { text = defs.icons.diff_bar.changed },
-            delete = { text = defs.icons.diff_bar.deleted },
-            topdelete = { text = defs.icons.diff_bar.deleted },
-            untracked = { text = defs.icons.diff_bar.untracked },
+            add = { text = shared.icons.diff_bar.added },
+            change = { text = shared.icons.diff_bar.changed },
+            changedelete = { text = shared.icons.diff_bar.changed },
+            delete = { text = shared.icons.diff_bar.deleted },
+            topdelete = { text = shared.icons.diff_bar.deleted },
+            untracked = { text = shared.icons.diff_bar.untracked },
         },
         attach_to_untracked = true,
         on_attach = function(buf)
             local gitsigns = require('gitsigns')
 
             local root_prefix = util.map:buf(buf)
-            local leader_prefix = defs.keys.git:buf(buf)
+            local leader_prefix = shared.keys.git:buf(buf)
 
             root_prefix:k('[g', 'Hunk'):bind('', function() gitsigns.nav_hunk('prev') end):set()
             root_prefix:k(']g', 'Hunk'):bind('', function() gitsigns.nav_hunk('next') end):set()

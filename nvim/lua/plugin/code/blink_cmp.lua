@@ -3,7 +3,7 @@
 ---@module 'lazy'
 ---@module 'blink.cmp'
 
-local defs = require('defs')
+local shared = require('shared')
 
 ---@type LazySpec
 return {
@@ -108,11 +108,11 @@ return {
     config = function(_, opts)
         vim.opt.wildchar = 0
 
-        local completion = defs.lang.collect('completion')
+        local completion = shared.target.collect('completion')
 
         opts.sources.providers = vim.tbl_extend('force', opts.sources.providers, completion.providers or {})
-        opts.sources.per_filetype = opts.sources.sources_by_filetype or {}
-        for filetype, sources in pairs(completion.per_filetype or {}) do
+        opts.sources.per_filetype = opts.sources.per_filetype or {}
+        for filetype, sources in pairs(completion.sources_by_filetype or {}) do
             opts.sources.per_filetype[filetype] = vim.list_extend({ inherit_defaults = true }, sources)
         end
 

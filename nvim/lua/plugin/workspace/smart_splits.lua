@@ -1,7 +1,7 @@
 ---@module 'lazy'
 ---@module 'smart-splits'
 
-local defs = require('defs')
+local shared = require('shared')
 
 ---@type LazySpec
 return {
@@ -18,7 +18,7 @@ return {
     },
     ---@diagnostic enable: missing-fields
     init = function()
-        local handlers = defs.plugins.handlers
+        local handlers = shared.plugins.handlers
         handlers.focus_window:set('smart-splits', function(direction)
             require('smart-splits')['move_cursor_' .. direction]()
         end)

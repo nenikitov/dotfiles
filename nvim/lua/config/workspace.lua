@@ -1,4 +1,5 @@
 local util = require('util')
+local shared = require('shared')
 
 --#region Recovery
 vim.opt.swapfile = false
@@ -130,4 +131,50 @@ end, {
 	complete = 'file',
 	desc = 'Write the current buffer with sudo',
 })
+--#endregion
+
+--#region Splits
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.equalalways = false
+
+shared.keys.buffer:k('s', 'Split horizontally'):bind('n', '<CMD>split<CR>'):set()
+shared.keys.buffer:k('v', 'Split vertically'):bind('n', '<CMD>vsplit<CR>'):set()
+
+---@type table<string, ne.shared.plugins.Direction>
+local directions = { h = 'left', j = 'down', k = 'up', l = 'right' }
+for key, direction in pairs(directions) do
+    local handlers = shared.plugins.handlers
+    util.map:k('<A-' .. key .. '>', 'Focus window ' .. direction):bind('n', handlers.focus_window:bind(direction)):set()
+    util.map:k('<A-' .. key:upper() .. '>', 'Swap window ' .. direction):bind('n', handlers.swap_window:bind(direction)):set()
+    util.map:k('<C-A-' .. key .. '>', 'Resize window ' .. direction):bind('n', handlers.resize_window:bind(direction)):set()
+end
+--#endregion
+
+--#region Buffers
+shared.keys.buffer:k('n', 'Create new empty buffer'):bind('n', '<CMD>enew<CR>'):set()
+shared.keys.buffer:k('r', 'Reload from disk'):bind('n', '<CMD>edit<CR>'):set()
+--#endregion
+
+--#region Closing
+shared.keys.buffer:k('q', 'Quit window'):bind('n', '<CMD>quit<CR>'):set()
+shared.keys.buffer:k('d', 'Delete buffer'):bind('n', shared.plugins.handlers.close_buffer:bind()):set()
+
+vim.api.nvim_create_autocmd('FileType', {
+	group = util.vim.augroup('ne.config.close_shortcuts'),
+	desc = 'Close informational windows with q or <ESC>',
+	pattern = { 'checkhealth', 'help', 'lspinfo', 'man', 'lazy', 'notify', 'query', 'qf' },
+	callback = function(event)
+		local function close()
+			vim.cmd('close')
+			pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+		end
+		local map = util.map:buf(event.buf)
+		map:k('q', 'Quit'):bind('n', close):set()
+	end,
+})
+--#endregion
+
+--#region Terminal
+util.map:k('<ESC><ESC>', 'Leave terminal mode'):bind('t', '<C-\\><C-n>'):set()
 --#endregion

@@ -1,6 +1,6 @@
 local util = require('util')
 
----@class ne.defs.keys
+---@class ne.shared.keys
 local M = {}
 
 M.custom = util.map:k('<LEADER>', 'Custom')

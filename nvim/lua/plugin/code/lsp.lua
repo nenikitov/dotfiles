@@ -1,12 +1,12 @@
 ---@module 'lazy'
 
-local defs = require('defs')
+local shared = require('shared')
 
 local icons = {
-    [vim.diagnostic.severity.ERROR] = defs.icons.severity.error,
-    [vim.diagnostic.severity.WARN] = defs.icons.severity.warning,
-    [vim.diagnostic.severity.HINT] = defs.icons.severity.hint,
-    [vim.diagnostic.severity.INFO] = defs.icons.severity.info,
+    [vim.diagnostic.severity.ERROR] = shared.icons.severity.error,
+    [vim.diagnostic.severity.WARN] = shared.icons.severity.warning,
+    [vim.diagnostic.severity.HINT] = shared.icons.severity.hint,
+    [vim.diagnostic.severity.INFO] = shared.icons.severity.info,
 }
 local highlights = {
     [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
@@ -19,25 +19,25 @@ local highlights = {
 return {
     'neovim/nvim-lspconfig',
     dependencies = {
-        defs.plugins.names.mason,
+        shared.plugins.names.mason,
     },
     event = 'LazyFile',
     keys = {
-        defs.keys.code:k('e', 'Show diagnostic'):bind('n', vim.diagnostic.open_float):spec(),
-        defs.keys.code:k('o', 'Show hover'):bind('n', vim.lsp.buf.hover):spec(),
-        defs.keys.code:k('O', 'Show signature'):bind('n', vim.lsp.buf.signature_help):spec(),
-        defs.keys.code:k('r', 'Show references'):bind('n', vim.lsp.buf.references):spec(),
-        defs.keys.code:k('i', 'Show implementations'):bind('n', vim.lsp.buf.implementation):spec(),
-        defs.keys.code:k('d', 'Show definition'):bind('n', vim.lsp.buf.definition):spec(),
-        defs.keys.code:k('D', 'Show declaration'):bind('n', vim.lsp.buf.declaration):spec(),
-        defs.keys.code:k('a', 'Run code actions'):bind({ 'n', 'x' }, vim.lsp.buf.code_action):spec(),
-        defs.keys.code:k('A', 'Run code lens'):bind('n', vim.lsp.codelens.run):spec(),
-        defs.keys.code:k('n', 'Rename'):bind('n', vim.lsp.buf.rename):spec(),
-        defs.keys.code:k('f', 'Format'):bind({ 'n', 'x' }, defs.plugins.handlers.format_buffer:bind()):spec(),
-        defs.keys.code:k('v', 'Toggle inlay hints'):bind('n', function()
+        shared.keys.code:k('e', 'Show diagnostic'):bind('n', vim.diagnostic.open_float):spec(),
+        shared.keys.code:k('o', 'Show hover'):bind('n', vim.lsp.buf.hover):spec(),
+        shared.keys.code:k('O', 'Show signature'):bind('n', vim.lsp.buf.signature_help):spec(),
+        shared.keys.code:k('r', 'Show references'):bind('n', vim.lsp.buf.references):spec(),
+        shared.keys.code:k('i', 'Show implementations'):bind('n', vim.lsp.buf.implementation):spec(),
+        shared.keys.code:k('d', 'Show definition'):bind('n', vim.lsp.buf.definition):spec(),
+        shared.keys.code:k('D', 'Show declaration'):bind('n', vim.lsp.buf.declaration):spec(),
+        shared.keys.code:k('a', 'Run code actions'):bind({ 'n', 'x' }, vim.lsp.buf.code_action):spec(),
+        shared.keys.code:k('A', 'Run code lens'):bind('n', vim.lsp.codelens.run):spec(),
+        shared.keys.code:k('n', 'Rename'):bind('n', vim.lsp.buf.rename):spec(),
+        shared.keys.code:k('f', 'Format'):bind({ 'n', 'x' }, shared.plugins.handlers.format_buffer:bind()):spec(),
+        shared.keys.code:k('v', 'Toggle inlay hints'):bind('n', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end):spec(),
-        defs.keys.code:k('V', 'Toggle code lens'):bind('n', function()
+        shared.keys.code:k('V', 'Toggle code lens'):bind('n', function()
             vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled())
         end):spec(),
     },
@@ -67,7 +67,7 @@ return {
     },
     config = function(_, opts)
         -- Load servers
-        for name, server in pairs(defs.lang.collect('servers')) do
+        for name, server in pairs(shared.target.collect('servers')) do
             if type(server) == 'function' then
                 server = server()
             end

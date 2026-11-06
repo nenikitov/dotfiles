@@ -1,4 +1,4 @@
----@class ne.defs.settings
+---@class ne.shared.settings
 local M = {
 	enable_tty_mode = false,
 	colorschemes = { 'vscode', 'horizon', 'slate' }

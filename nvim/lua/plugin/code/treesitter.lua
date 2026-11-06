@@ -1,7 +1,7 @@
 ---@module 'lazy'
 
 local util = require('util')
-local defs = require('defs')
+local shared = require('shared')
 
 ---@type LazySpec
 return {
@@ -26,8 +26,8 @@ return {
     config = function(_, opts)
         local treesitter = require('nvim-treesitter')
 
-        local parsers = vim.list_extend(vim.deepcopy(opts.parsers), defs.lang.collect('parsers'))
-        local disable_highlight = defs.lang.collect('treesitter').disable_highlight or {}
+        local parsers = vim.list_extend(vim.deepcopy(opts.parsers), shared.target.collect('parsers'))
+        local disable_highlight = shared.target.collect('treesitter').disable_highlight or {}
 
         -- Install packages
         local installed = treesitter.get_installed()

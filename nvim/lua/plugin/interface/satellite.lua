@@ -1,7 +1,7 @@
 ---@module 'lazy'
 ---@module 'satellite'
 
-local defs = require('defs')
+local shared = require('shared')
 local util = require('util')
 
 ---@type LazySpec
@@ -17,25 +17,25 @@ return {
             handlers = {
                 cursor = {
                     enable = true,
-                    symbols = defs.icons.progress.position,
+                    symbols = shared.icons.progress.position,
                 },
                 search = {
                     enable = true,
                 },
                 diagnostic = {
                     enable = true,
-                    symbols = defs.icons.progress.count,
+                    symbols = shared.icons.progress.count,
                 },
                 gitsigns = {
                     enable = true,
                     signs = {
-                        add = defs.icons.diff_bar.added,
-                        change = defs.icons.diff_bar.changed,
-                        delete = defs.icons.diff_bar.deleted,
+                        add = shared.icons.diff_bar.added,
+                        change = shared.icons.diff_bar.changed,
+                        delete = shared.icons.diff_bar.deleted,
                     },
                 },
                 quickfix = {
-                    signs = defs.icons.progress.count,
+                    signs = shared.icons.progress.count,
                 },
             },
         },

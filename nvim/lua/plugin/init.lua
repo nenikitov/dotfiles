@@ -1,5 +1,5 @@
 local util = require('util')
-local defs = require('defs')
+local shared = require('shared')
 
 -- HACK: Needed on Ubuntu
 local parser_paths = vim.tbl_map(vim.fs.dirname, vim.api.nvim_get_runtime_file('parser', true))
@@ -43,27 +43,27 @@ require('lazy').setup({
     ui = {
         border = vim.o.winborder,
         backdrop = 100,
-        title = 'lazy.nvim ' .. defs.icons.plugin.manager,
+        title = 'lazy.nvim ' .. shared.icons.plugin.manager,
         icons = {
-		    cmd = defs.icons.plugin.source.cmd,
-		    config = defs.icons.plugin.source.config,
-		    debug = defs.icons.plugin.source.debug,
-		    event = defs.icons.plugin.source.event,
-			favorite = defs.icons.plugin.status.favorite,
-			ft = defs.icons.plugin.source.ft,
-			init = defs.icons.plugin.source.init,
-			import = defs.icons.plugin.source.import,
-			keys = defs.icons.plugin.source.keys,
-			lazy = defs.icons.plugin.manager,
-			loaded = defs.icons.plugin.status.loaded,
-			not_loaded = defs.icons.plugin.status.not_loaded,
-			plugin = defs.icons.plugin.source.plugin,
-			runtime = defs.icons.plugin.source.runtime,
-			require = defs.icons.plugin.source.require,
-			source = defs.icons.plugin.source.source,
-			start = defs.icons.plugin.source.start,
-			task = defs.icons.plugin.status.done,
-            list = { defs.icons.ui.item }
+		    cmd = shared.icons.plugin.source.cmd,
+		    config = shared.icons.plugin.source.config,
+		    debug = shared.icons.plugin.source.debug,
+		    event = shared.icons.plugin.source.event,
+			favorite = shared.icons.plugin.status.favorite,
+			ft = shared.icons.plugin.source.ft,
+			init = shared.icons.plugin.source.init,
+			import = shared.icons.plugin.source.import,
+			keys = shared.icons.plugin.source.keys,
+			lazy = shared.icons.plugin.manager,
+			loaded = shared.icons.plugin.status.loaded,
+			not_loaded = shared.icons.plugin.status.not_loaded,
+			plugin = shared.icons.plugin.source.plugin,
+			runtime = shared.icons.plugin.source.runtime,
+			require = shared.icons.plugin.source.require,
+			source = shared.icons.plugin.source.source,
+			start = shared.icons.plugin.source.start,
+			task = shared.icons.plugin.status.done,
+            list = { shared.icons.ui.item }
         },
     },
     checker = {
@@ -75,8 +75,8 @@ require('lazy').setup({
 	},
 })
 
-defs.keys.plugin:k('l', 'lazy.nvim'):bind('n', '<CMD>Lazy<CR>'):set()
-defs.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):bind('n', function()
+shared.keys.plugin:k('l', 'lazy.nvim'):bind('n', '<CMD>Lazy<CR>'):set()
+shared.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):bind('n', function()
 	local session = vim.fs.joinpath(vim.fn.stdpath('state'), 'reload-session.vim')
 	vim.cmd.mksession({ args = { vim.fn.fnameescape(session) }, bang = true })
 	vim.cmd(('restart source %s'):format(vim.fn.fnameescape(session)))

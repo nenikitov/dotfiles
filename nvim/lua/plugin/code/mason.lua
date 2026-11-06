@@ -2,7 +2,7 @@
 ---@module 'mason'
 
 local util = require('util')
-local defs = require('defs')
+local shared = require('shared')
 
 ---@class ne.plugin.mason.Lock
 ---@field version string
@@ -13,9 +13,9 @@ local lock = util.lockfile.new(vim.fs.joinpath(vim.fn.stdpath('config'), 'mason-
 
 ---@type LazySpec
 return {
-    defs.plugins.names.mason,
+    shared.plugins.names.mason,
     keys = {
-        defs.keys.plugin:k('m', 'Mason'):bind('n', '<CMD>Mason<CR>'):spec(),
+        shared.keys.plugin:k('m', 'Mason'):bind('n', '<CMD>Mason<CR>'):spec(),
     },
     lazy = false,
     ---@type MasonSettings
@@ -26,9 +26,9 @@ return {
             width = 0.8,
             height = 0.8,
             icons = {
-                package_installed = defs.icons.plugin.status.loaded,
-                package_pending = vim.trim(defs.icons.plugin.status.working),
-                package_uninstalled = defs.icons.plugin.status.not_loaded,
+                package_installed = shared.icons.plugin.status.loaded,
+                package_pending = vim.trim(shared.icons.plugin.status.working),
+                package_uninstalled = shared.icons.plugin.status.not_loaded,
             },
             keymaps = {
                 apply_language_filter = 'f',
@@ -66,7 +66,7 @@ return {
 
         -- Install packages
 
-        ---@param tool ne.defs.lang.MasonTool
+        ---@param tool ne.shared.target.MasonTool
         ---@return string name
         ---@return string? version
         local function parse(tool)
@@ -77,7 +77,7 @@ return {
             end
         end
         registry.refresh(function()
-            for _, tool in ipairs(defs.lang.collect('tools').mason or {}) do
+            for _, tool in ipairs(shared.target.collect('tools').mason or {}) do
                 local name, pinned = parse(tool)
                 local found, package = pcall(registry.get_package, name)
 
