@@ -8,6 +8,9 @@ local defs = require('defs')
 return {
 	'lewis6991/gitsigns.nvim',
     event = { 'LazyFile' },
+    ---@type Gitsigns.Config
+    --- TODO: Figure out Partial<T>
+    ---@diagnostic disable: missing-fields
     opts = {
         signs = {
             add = { text = defs.icons.diff_bar.added },
@@ -46,4 +49,5 @@ return {
             leader_prefix:k('R', 'Reset entire file'):bind('n', gitsigns.reset_buffer):set()
         end
     },
+    ---@diagnostic enable: missing-fields
 }

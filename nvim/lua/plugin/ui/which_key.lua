@@ -31,7 +31,7 @@ return {
 				Down = defs.icons.key.down,
 				Left = defs.icons.key.left,
 				Right = defs.icons.key.right,
-				C = defs.icons.key.ctrl,
+				C = defs.icons.key.control,
 				M = defs.icons.key.alt,
 				D = defs.icons.key.super,
 				S = defs.icons.key.shift,
@@ -62,8 +62,8 @@ return {
         require('which-key').setup(opts)
 
         vim.api.nvim_create_autocmd('VimResized', {
-            group = util.vim.augroup('which-key resize'),
-            desc = 'Redraw the which-key popup when the terminal is resized',
+            group = util.vim.augroup('ne.plugin.which_key_refresh'),
+            desc = 'Redraw which-key popup when the terminal is resized',
             callback = function()
                 require('which-key.view').update()
             end,

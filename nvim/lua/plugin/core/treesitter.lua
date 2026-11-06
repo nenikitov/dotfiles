@@ -8,7 +8,6 @@ return {
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
     lazy = false,
-    build = ':TSUpdate',
     opts = {
         parsers = {
             -- Recommended to be always installed
@@ -23,6 +22,7 @@ return {
             'regex',
         },
     },
+    build = ':TSUpdate',
     config = function(_, opts)
         local treesitter = require('nvim-treesitter')
 
@@ -40,7 +40,7 @@ return {
         end
 
         vim.api.nvim_create_autocmd('FileType', {
-            group = util.vim.augroup('treesitter'),
+            group = util.vim.augroup('ne.plugin.treesitter_start'),
             desc = 'Start treesitter highlighting when a parser is available',
             callback = function(event)
                 local buf = event.buf

@@ -13,11 +13,11 @@ local lock = util.lockfile.new(vim.fs.joinpath(vim.fn.stdpath('config'), 'mason-
 
 ---@type LazySpec
 return {
-    defs.plugins.mason,
-    lazy = false,
+    defs.plugins.names.mason,
     keys = {
         defs.keys.plugin:k('m', 'Mason'):bind('n', '<CMD>Mason<CR>'):spec(),
     },
+    lazy = false,
     ---@type MasonSettings
     opts = {
         PATH = 'append',

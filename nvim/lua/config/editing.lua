@@ -58,7 +58,7 @@ util.map:k('U', 'Redo'):bind('n', '<C-r>'):set()
 
 --#region Remove some filetype overwrites
 vim.api.nvim_create_autocmd('FileType', {
-    group = util.vim.augroup('keep global options'),
+    group = util.vim.augroup('ne.config.remove_filetype_overrides'),
     desc = 'Reset options changed by filetype plugins to their global values',
     callback = function()
         local keep_global = {

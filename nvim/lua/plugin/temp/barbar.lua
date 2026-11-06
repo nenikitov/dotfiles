@@ -6,10 +6,10 @@ local defs = require('defs')
 ---@type LazySpec
 return {
 	'romgrk/barbar.nvim',
-    event = { 'UIEnter' },
     enabled = false,
-    init = function() vim.g.barbar_auto_setup = false end,
+    event = { 'UIEnter' },
     ---@type barbar.config.options
+    --- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields
     opts = {
         icons = {
@@ -44,4 +44,6 @@ return {
         maximum_length = 30,
         minimum_length = 0,
     },
+    ---@diagnostic enable: missing-fields
+    init = function() vim.g.barbar_auto_setup = false end,
 }

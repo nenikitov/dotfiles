@@ -27,7 +27,7 @@ return {
     config = function(_, opts)
         require('ibl').setup(opts)
 
-        local group = util.vim.augroup('ibl refresh')
+        local group = util.vim.augroup('ne.plugin.indent_blankline_refresh')
         vim.api.nvim_create_autocmd('CmdlineChanged', {
             group = group,
             pattern = { '/', '?' },

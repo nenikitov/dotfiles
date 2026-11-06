@@ -50,11 +50,8 @@ return {
     'yorickpeterse/nvim-tree-pairs', -- alternatives?
 
     -- ui
-	'Bekaboo/dropbar.nvim',
-	'RRethy/vim-illuminate',
 	'folke/noice.nvim', -- for message forwarding, centered command line, search virtual text
 	'folke/snacks.nvim', -- for notifier, dashboard, debug
-	'nvim-treesitter/nvim-treesitter-context',
     'rachartier/tiny-inline-diagnostic.nvim', -- not sure
     'stevearc/quicker.nvim',
 
@@ -63,10 +60,6 @@ return {
 	'catppuccin/nvim',
 	'olimorris/onedarkpro.nvim',
     'Ferouk/bearded-nvim',
-
-    -- layout
-	'kwkarlwang/bufresize.nvim',
-	'mrjones2014/smart-splits.nvim',
 
 	-- workspace
 	'MagicDuck/grug-far.nvim',

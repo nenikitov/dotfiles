@@ -18,7 +18,7 @@ end
 
 --#region Reloading
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'TermClose', 'TermLeave' }, {
-	group = util.vim.augroup('reload changed files'),
+	group = util.vim.augroup('ne.config.reload_changed_files'),
 	desc = 'Check if a buffer was changed outside Neovim and reload it',
 	callback = function()
 		if vim.o.buftype ~= 'nofile' then
@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'TermClos
 --#region Cursor position
 vim.o.shada = vim.o.shada:gsub("'%d+", "'1000")
 vim.api.nvim_create_autocmd('BufRead', {
-	group = util.vim.augroup('restore cursor position'),
+	group = util.vim.augroup('ne.config.restore_cursor'),
 	desc = 'Return the cursor to its last position when a file is opened',
 	callback = function(event)
 		vim.api.nvim_create_autocmd('BufWinEnter', {
@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd('BufRead', {
 
 --#region Saving
 vim.api.nvim_create_autocmd({ 'BufWritePre', 'FileWritePre' }, {
-	group = util.vim.augroup('create missing directories'),
+	group = util.vim.augroup('ne.config.create_missing_directories'),
 	desc = "Create a new file's parent directories if they don't exist",
 	callback = function(event)
 		-- Remote files (like scp:// or ftp://) can't have local directories created for them

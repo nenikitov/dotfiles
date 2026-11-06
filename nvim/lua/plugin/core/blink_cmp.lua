@@ -9,11 +9,11 @@ local defs = require('defs')
 return {
 	'saghen/blink.cmp',
 	version = '1.*',
-	lazy = false,
 	dependencies = {
         'rafamadriz/friendly-snippets',
         { 'xzbdmw/colorful-menu.nvim', opts = {} },
     },
+	lazy = false,
 	---@type blink.cmp.Config
 	opts = {
 		keymap = {

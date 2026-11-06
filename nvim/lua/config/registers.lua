@@ -15,7 +15,7 @@ util.map:k('dd', 'Delete line without yanking blank lines'):bind('n', function()
 end, { expr = true }):set()
 
 vim.api.nvim_create_autocmd('TextYankPost', {
-    group = util.vim.augroup('yank highlight'),
+    group = util.vim.augroup('ne.config.yank_highlight'),
     desc = 'Highlight text right after yanking',
     callback = function()
         vim.hl.on_yank({ higroup = 'Visual', on_visual = true })

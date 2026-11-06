@@ -13,7 +13,7 @@ end
 
 ---@return table<string, any>?
 function Lockfile:all()
-    local content = fs.read(self.path)
+    local content = util.fs.read(self.path)
     if not content then
         return {}
     end

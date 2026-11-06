@@ -3,23 +3,23 @@
 local defs = require('defs')
 
 local icons = {
-	[vim.diagnostic.severity.ERROR] = defs.icons.severity.error,
-	[vim.diagnostic.severity.WARN] = defs.icons.severity.warning,
-	[vim.diagnostic.severity.HINT] = defs.icons.severity.hint,
-	[vim.diagnostic.severity.INFO] = defs.icons.severity.info,
+    [vim.diagnostic.severity.ERROR] = defs.icons.severity.error,
+    [vim.diagnostic.severity.WARN] = defs.icons.severity.warning,
+    [vim.diagnostic.severity.HINT] = defs.icons.severity.hint,
+    [vim.diagnostic.severity.INFO] = defs.icons.severity.info,
 }
 local highlights = {
-	[vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
-	[vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
-	[vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
-	[vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+    [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+    [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+    [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+    [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
 }
 
 ---@type LazySpec
 return {
     'neovim/nvim-lspconfig',
     dependencies = {
-        defs.plugins.mason,
+        defs.plugins.names.mason,
     },
     event = 'LazyFile',
     keys = {
@@ -33,6 +33,7 @@ return {
         defs.keys.code:k('a', 'Run code actions'):bind({ 'n', 'x' }, vim.lsp.buf.code_action):spec(),
         defs.keys.code:k('A', 'Run code lens'):bind('n', vim.lsp.codelens.run):spec(),
         defs.keys.code:k('n', 'Rename'):bind('n', vim.lsp.buf.rename):spec(),
+        defs.keys.code:k('f', 'Format'):bind({ 'n', 'x' }, defs.plugins.handlers.format_buffer:bind()):spec(),
         defs.keys.code:k('v', 'Toggle inlay hints'):bind('n', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end):spec(),
@@ -41,28 +42,28 @@ return {
         end):spec(),
     },
     opts = {
-		---@type vim.diagnostic.Opts
-		diagnostics = {
-			update_in_insert = true,
-			severity_sort = true,
+        ---@type vim.diagnostic.Opts
+        diagnostics = {
+            update_in_insert = true,
+            severity_sort = true,
             signs = false,
             numhl = true,
-			virtual_text = {
-				source = 'if_many',
-				prefix = function(diagnostic)
-					return icons[diagnostic.severity]
-				end,
-			},
-			float = {
-				source = true,
-				header = '',
-				prefix = function(diagnostic)
-					return icons[diagnostic.severity] .. ' ', highlights[diagnostic.severity]
-				end,
-			},
-		},
-		inlay_hints = false,
-		codelens = false,
+            virtual_text = {
+                source = 'if_many',
+                prefix = function(diagnostic)
+                    return icons[diagnostic.severity]
+                end,
+            },
+            float = {
+                source = true,
+                header = '',
+                prefix = function(diagnostic)
+                    return icons[diagnostic.severity] .. ' ', highlights[diagnostic.severity]
+                end,
+            },
+        },
+        inlay_hints = false,
+        codelens = false,
     },
     config = function(_, opts)
         -- Load servers

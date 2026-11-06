@@ -3,13 +3,13 @@
 ---@type LazySpec
 return {
 	'luukvbaal/statuscol.nvim',
-	lazy = false,
 	dependencies = {
 		{
             'dimtion/guttermarks.nvim',
             opts = {}
         },
 	},
+	lazy = false,
 	opts = function()
 		local builtin = require('statuscol.builtin')
 

@@ -23,7 +23,7 @@ M.key = {
     down             = '↓',
     left             = '←',
     right            = '→',
-    ctrl             = M.choose('󰘴 ', 'C-'),
+    control          = M.choose('󰘴 ', 'C-'),
     alt              = M.choose('󰘵 ', 'M-'),
     super            = M.choose('󰝘 ', 'D-'),
     shift            = M.choose('󰘶 ', 'S-'),
@@ -66,7 +66,7 @@ M.ui = {
     filled   = M.choose('●', '■'),
     empty    = M.choose('○', '-'),
 
-    ellipsis = M.choose('⋯', '∙'),
+    ellipsis = M.choose('…', '∙'),
 
     previous = '«',
     next     = '»',
@@ -76,7 +76,7 @@ M.ui = {
     prompt   = '>',
 }
 
-M.status = {
+M.progress = {
     spinner = M.choose(
         { '⠋', '⠙', '⠸', '⢰', '⣠', '⣄', '⡆', '⠇', },
         { '─', '└', '│', '┌', '─', '┐', '│', '┘', }
@@ -95,6 +95,40 @@ M.indent = {
     space = M.choose('┃', '│'),
     tab   = M.choose('┋', ':'),
 }
+
+M.diff_bar = {
+    untracked = M.choose('┋', ':'),
+    added     = M.choose('┃', '│'),
+    changed   = M.choose('┃', '│'),
+    deleted   = M.choose('▶', '►'),
+}
+
+M.status_line = {
+    section = {
+        left  = '▒',
+        right = '▒',
+    },
+    component = {
+        left  = ' │ ',
+        right = ' │ ',
+    },
+}
+
+M.buffer_line = {
+    current = {
+        left  = '█',
+        right = '',
+    },
+    visible = {
+        left  = '▓',
+        right = '',
+    },
+    inactive = {
+        left  = '░',
+        right = '',
+    },
+}
+
 
 M.version_control = {
     other = {
@@ -148,39 +182,6 @@ M.folder = {
     empty_open   = M.choose('󰮞 ', 'v'),
     symlink      = M.choose('󰉒 ', '→'),
     symlink_open = M.choose('󱉆 ', '↓'),
-}
-
-M.diff_bar = {
-    untracked = M.choose('┋', ':'),
-    added     = M.choose('┃', '│'),
-    changed   = M.choose('┃', '│'),
-    deleted   = M.choose('▶', '►'),
-}
-
-M.status_line = {
-    section = {
-        left  = '▒',
-        right = '▒',
-    },
-    component = {
-        left  = ' │ ',
-        right = ' │ ',
-    },
-}
-
-M.buffer_line = {
-    current = {
-        left  = '█',
-        right = '',
-    },
-    visible = {
-        left  = '▓',
-        right = '',
-    },
-    inactive = {
-        left  = '░',
-        right = '',
-    },
 }
 
 M.severity = {

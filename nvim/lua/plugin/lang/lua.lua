@@ -1,3 +1,5 @@
+---@module 'lazydev'
+
 local defs = require('defs')
 
 return defs.lang({
@@ -18,7 +20,7 @@ return defs.lang({
                         arrayIndex = "Auto",
                     },
                     codeLens = { enable = true },
-                    doc = { privateName = { '^_' } },
+                    doc = { privateName = { '_*' } },
                     completion = {
                         callSnippet = 'Disable',
                     }
@@ -42,6 +44,7 @@ return defs.lang({
         {
             'folke/lazydev.nvim',
             ft = 'lua',
+            ---@type lazydev.Config
             opts = {
                 library = {
                     { path = "${3rd}/luv/library", words = { "vim%.uv" } },

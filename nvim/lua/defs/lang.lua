@@ -24,7 +24,7 @@ local util = require('util')
 ---@field tools? ne.defs.lang.Tools
 ---@field parsers? string[]
 ---@field servers? table<string, ne.defs.lang.Server>
----@field tresitter? ne.defs.lang.Treesitter
+---@field treesitter? ne.defs.lang.Treesitter
 ---@field completion? ne.defs.lang.Completion
 ---@field plugins? LazySpec
 
@@ -46,7 +46,7 @@ end
 ---@overload fun(field: 'tools'): ne.defs.lang.Tools
 ---@overload fun(field: 'parsers'): string[]
 ---@overload fun(field: 'servers'): table<string, ne.defs.lang.Server>
----@overload fun(field: 'tresitter'): ne.defs.lang.Treesitter
+---@overload fun(field: 'treesitter'): ne.defs.lang.Treesitter
 ---@overload fun(field: 'completion'): ne.defs.lang.Completion
 ---@param field string
 ---@return table

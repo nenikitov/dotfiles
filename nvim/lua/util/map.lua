@@ -21,45 +21,52 @@ local opts_default = {
 ---| function
 
 ---@class ne.util.map.Binding
----@field private _lhs string
 ---@field private _modes ne.util.map.Mode | ne.util.map.Mode[]
 ---@field private _rhs ne.util.map.Rhs
 ---@field private _opts vim.keymap.set.Opts
----@field private _prefix? ne.util.map.Node
+---@field private _node ne.util.map.Node
 local Binding = {}
 Binding.__index = Binding
 
 ---@package
----@param lhs string
 ---@param modes ne.util.map.Mode | ne.util.map.Mode[]
 ---@param rhs ne.util.map.Rhs
 ---@param opts vim.keymap.set.Opts
----@param prefix? ne.util.map.Node
+---@param node ne.util.map.Node
 ---@return ne.util.map.Binding
-function Binding.new(lhs, modes, rhs, opts, prefix)
-	return setmetatable({ _lhs = lhs, _modes = modes, _rhs = rhs, _opts = opts, _prefix = prefix }, Binding)
+function Binding.new(modes, rhs, opts, node)
+	return setmetatable({ _modes = modes, _rhs = rhs, _opts = opts, _node = node}, Binding)
 end
 
 ---@package
 function Binding:label_groups()
-	local node = self._prefix
-	while node and node._parent do
-		vim.keymap.set(self._modes, node._lhs, '<NOP>', { buffer = self._opts.buffer, desc = node._desc })
-		node = node._parent
+	local parent = self._node._parent
+	while parent and parent._parent do
+		vim.keymap.set(self._modes, parent._lhs, '<NOP>', { buffer = self._opts.buf, desc = parent._desc })
+		parent = parent._parent
 	end
 end
 
 function Binding:set()
 	self:label_groups()
-	vim.keymap.set(self._modes, self._lhs, self._rhs, self._opts)
+
+    ---@type vim.keymap.set.Opts
+    local opts = vim.tbl_extend('force', self._opts, { buffer = self._node._buffer, desc = self._node._desc })
+
+	vim.keymap.set(self._modes, self._node._lhs, self._rhs, opts)
 end
 
 ---@return LazyKeysSpec
 function Binding:spec()
 	self:label_groups()
+
+    ---@type vim.keymap.set.Opts
+    local opts = vim.tbl_extend('force', self._opts, { desc = self._node._desc })
+    opts.buf = nil
+
 	---@type LazyKeysSpec
-	local spec = vim.tbl_extend('force', self._opts, { self._lhs, self._rhs, mode = self._modes })
-	spec.buffer = nil
+	local spec = vim.tbl_extend('force', opts, { self._node._lhs, self._rhs, mode = self._modes })
+
 	return spec
 end
 
@@ -67,7 +74,7 @@ end
 ---@field package _lhs string
 ---@field package _desc string
 ---@field package _parent? ne.util.map.Node
----@field private _buffer? integer
+---@field package _buffer? integer
 local Node = {}
 Node.__index = Node
 
@@ -99,8 +106,9 @@ end
 ---@param opts? vim.keymap.set.Opts
 ---@return ne.util.map.Binding
 function Node:bind(modes, rhs, opts)
-	local merged = vim.tbl_extend('force', opts_default, { buffer = self._buffer }, opts or {}, { desc = self._desc })
-	return Binding.new(self._lhs, modes, rhs, merged, self._parent)
+    ---@type vim.keymap.set.Opts
+	local merged = vim.tbl_extend('force', opts_default, opts or {})
+    return Binding.new(modes, rhs, merged, self)
 end
 
 ---@type ne.util.map.Node

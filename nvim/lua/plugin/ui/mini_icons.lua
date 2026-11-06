@@ -4,7 +4,7 @@ local defs = require('defs')
 
 ---@type LazySpec
 return {
-    defs.plugins.mini_icons,
+    defs.plugins.names.mini_icons,
 	opts = {
         style = defs.settings.enable_tty_mode and 'ascii' or 'glyph',
         lsp = {
