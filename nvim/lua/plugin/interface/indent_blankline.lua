@@ -4,7 +4,7 @@
 local util = require('util')
 local shared = require('shared')
 
-local icons = shared.icons.indent
+local icons = shared.icons.space.indent
 
 ---@type LazySpec
 return {
@@ -14,7 +14,7 @@ return {
     ---@type ibl.config
     opts = {
         indent = {
-            char = shared.icons.indent.space,
+            char = shared.icons.space.indent.space,
             tab_char = icons.tab,
         },
         scope = {

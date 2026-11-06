@@ -34,12 +34,12 @@ vim.opt.smoothscroll = true
 --#region Special characters
 vim.opt.list = true
 vim.opt.listchars = {
-	tab = '  ' .. shared.icons.whitespace.tab,
-	lead = shared.icons.whitespace.space_visible,
-	trail = shared.icons.whitespace.space_visible,
-	nbsp = shared.icons.whitespace.nbsp,
+	tab = '  ' .. shared.icons.space.char.tab,
+	lead = shared.icons.space.char.space_visible,
+	trail = shared.icons.space.char.space_visible,
+	nbsp = shared.icons.space.char.nbsp,
 	extends = shared.icons.ui.next,
-	precedes = shared.icons.ui.preceeds,
+	precedes = shared.icons.ui.previous,
 }
 vim.opt.fillchars = {
 	fold = ' ',

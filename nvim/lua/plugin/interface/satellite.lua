@@ -17,25 +17,25 @@ return {
             handlers = {
                 cursor = {
                     enable = true,
-                    symbols = shared.icons.progress.position,
+                    symbols = shared.icons.ui.progress.position,
                 },
                 search = {
                     enable = true,
                 },
                 diagnostic = {
                     enable = true,
-                    symbols = shared.icons.progress.count,
+                    symbols = shared.icons.ui.progress.count,
                 },
                 gitsigns = {
                     enable = true,
                     signs = {
-                        add = shared.icons.diff_bar.added,
-                        change = shared.icons.diff_bar.changed,
-                        delete = shared.icons.diff_bar.deleted,
+                        add = shared.icons.git.sign.added,
+                        change = shared.icons.git.sign.changed,
+                        delete = shared.icons.git.sign.deleted,
                     },
                 },
                 quickfix = {
-                    signs = shared.icons.progress.count,
+                    signs = shared.icons.ui.progress.count,
                 },
             },
         },

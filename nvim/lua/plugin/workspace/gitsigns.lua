@@ -13,20 +13,20 @@ return {
     ---@diagnostic disable: missing-fields
     opts = {
         signs = {
-            add = { text = shared.icons.diff_bar.added },
-            change = { text = shared.icons.diff_bar.changed },
-            changedelete = { text = shared.icons.diff_bar.changed },
-            delete = { text = shared.icons.diff_bar.deleted },
-            topdelete = { text = shared.icons.diff_bar.deleted },
-            untracked = { text = shared.icons.diff_bar.untracked },
+            add = { text = shared.icons.git.sign.added },
+            change = { text = shared.icons.git.sign.changed },
+            changedelete = { text = shared.icons.git.sign.changed },
+            delete = { text = shared.icons.git.sign.deleted },
+            topdelete = { text = shared.icons.git.sign.deleted },
+            untracked = { text = shared.icons.git.sign.untracked },
         },
         signs_staged = {
-            add = { text = shared.icons.diff_bar.added },
-            change = { text = shared.icons.diff_bar.changed },
-            changedelete = { text = shared.icons.diff_bar.changed },
-            delete = { text = shared.icons.diff_bar.deleted },
-            topdelete = { text = shared.icons.diff_bar.deleted },
-            untracked = { text = shared.icons.diff_bar.untracked },
+            add = { text = shared.icons.git.sign.added },
+            change = { text = shared.icons.git.sign.changed },
+            changedelete = { text = shared.icons.git.sign.changed },
+            delete = { text = shared.icons.git.sign.deleted },
+            topdelete = { text = shared.icons.git.sign.deleted },
+            untracked = { text = shared.icons.git.sign.untracked },
         },
         attach_to_untracked = true,
         on_attach = function(buf)

@@ -18,6 +18,80 @@ function M.choose(gui, tty)
     end
 end
 
+M.space = {
+    char = {
+        tab             = '→',
+        space_visible   = '·',
+        space_invisible = '·',
+        nbsp            = M.choose('␣', '▬'),
+    },
+    indent = {
+        space = M.choose('┃', '│'),
+        tab   = M.choose('┋', ':'),
+    },
+}
+
+M.ui = {
+    item     = '-',
+
+    opened   = M.choose('󰅀 ', 'v'),
+    closed   = M.choose('󰅂 ', '>'),
+
+    filled   = M.choose('●', '■'),
+    empty    = M.choose('○', '-'),
+
+    ellipsis = M.choose('…', '∙'),
+
+    previous = '«',
+    next     = '»',
+
+    close    = M.choose(' ', 'X'),
+
+    prompt   = '>',
+
+    progress = {
+        spinner = M.choose(
+            { '⠋', '⠙', '⠸', '⢰', '⣠', '⣄', '⡆', '⠇', },
+            { '─', '└', '│', '┌', '─', '┐', '│', '┘', }
+        ),
+        count = M.choose(
+            { '-', '=', '≡', '≣' },
+            { '─', '═', '≡' }
+        ),
+        position = M.choose(
+            { '⎺', '⎻', '⎼', '⎽' },
+            { '-', '_' }
+        ),
+    },
+}
+
+M.border = M.choose('rounded', 'single')
+
+M.separator = {
+    section = {
+        left  = '▒',
+        right = '▒',
+    },
+    component = {
+        left  = ' │ ',
+        right = ' │ ',
+    },
+    buffer = {
+        current = {
+            left  = '█',
+            right = '',
+        },
+        visible = {
+            left  = '▓',
+            right = '',
+        },
+        inactive = {
+            left  = '░',
+            right = '',
+        },
+    },
+}
+
 M.key = {
     up               = '↑',
     down             = '↓',
@@ -46,225 +120,6 @@ M.key = {
     f10              = M.choose('󱊴 ', 'F10'),
     f11              = M.choose('󱊵 ', 'F11'),
     f12              = M.choose('󱊶 ', 'F12'),
-}
-
-M.whitespace = {
-    tab             = M.key.right,
-    space_visible   = '·',
-    space_invisible = '·',
-    nbsp            = M.choose('␣', '▬'),
-}
-
-M.border = M.choose('rounded', 'single')
-
-M.ui = {
-    item     = '-',
-
-    opened   = M.choose('󰅀 ', 'v'),
-    closed   = M.choose('󰅂 ', '>'),
-
-    filled   = M.choose('●', '■'),
-    empty    = M.choose('○', '-'),
-
-    ellipsis = M.choose('…', '∙'),
-
-    previous = '«',
-    next     = '»',
-
-    close    = M.choose(' ', 'X'),
-
-    prompt   = '>',
-}
-
-M.progress = {
-    spinner = M.choose(
-        { '⠋', '⠙', '⠸', '⢰', '⣠', '⣄', '⡆', '⠇', },
-        { '─', '└', '│', '┌', '─', '┐', '│', '┘', }
-    ),
-    count = M.choose(
-        { '-', '=', '≡', '≣' },
-        { '─', '═', '≡' }
-    ),
-    position = M.choose(
-        { '⎺', '⎻', '⎼', '⎽' },
-        { '-', '_' }
-    ),
-}
-
-M.indent = {
-    space = M.choose('┃', '│'),
-    tab   = M.choose('┋', ':'),
-}
-
-M.diff_bar = {
-    untracked = M.choose('┋', ':'),
-    added     = M.choose('┃', '│'),
-    changed   = M.choose('┃', '│'),
-    deleted   = M.choose('▶', '►'),
-}
-
-M.status_line = {
-    section = {
-        left  = '▒',
-        right = '▒',
-    },
-    component = {
-        left  = ' │ ',
-        right = ' │ ',
-    },
-}
-
-M.buffer_line = {
-    current = {
-        left  = '█',
-        right = '',
-    },
-    visible = {
-        left  = '▓',
-        right = '',
-    },
-    inactive = {
-        left  = '░',
-        right = '',
-    },
-}
-
-
-M.version_control = {
-    other = {
-        branch     = M.choose(' ', '[brn]'),
-        commit     = M.choose(' ', '[cmt]'),
-        no_commits = M.choose(' ', '[???]'),
-    },
-    status = {
-        added     = M.choose(' ', 'A'),
-        deleted   = M.choose(' ', 'D'),
-        ignored   = M.choose(' ', '!'),
-        changed   = M.choose(' ', 'M'),
-        renamed   = M.choose(' ', 'R'),
-        staged    = M.choose(' ', '√'),
-        unmerged  = M.choose('󰳤 ', 'U'),
-        untracked = M.choose('󱋯 ', '?'),
-    },
-}
-
-M.file = {
-    modified = M.version_control.status.changed,
-    readonly = M.choose(' ', 'RO'),
-    line_ending = {
-        icon = {
-            dos  = M.choose(' ', ''),
-            mac  = M.choose(' ', ''),
-            unix = M.choose('󰻀 ', ''),
-        },
-        name = {
-            dos  = 'CRLF',
-            mac  = 'CR',
-            unix = 'LF',
-        },
-    },
-    indent = {
-        space = M.choose(M.key.space, M.whitespace.space_visible),
-        tab   = M.choose(M.key.tab, M.whitespace.tab),
-    },
-    encoding = {
-        icon = M.choose('󰾹 ', ''),
-    },
-    filetype = {
-        icon = M.choose(' ', '[ft]'),
-    }
-}
-
-M.folder = {
-    regular      = M.choose('󰉋 ', '>'),
-    regular_open = M.choose('󰉖 ', 'v'),
-    empty        = M.choose('󰉘 ', '>'),
-    empty_open   = M.choose('󰮞 ', 'v'),
-    symlink      = M.choose('󰉒 ', '→'),
-    symlink_open = M.choose('󱉆 ', '↓'),
-}
-
-M.severity = {
-    error   = M.choose(' ', 'E'),
-    warning = M.choose(' ', 'W'),
-    hint    = M.choose(' ', 'H'),
-    info    = M.choose(' ', 'I'),
-    ok      = M.choose(' ', 'K'),
-    debug   = M.choose(' ', 'D'),
-    trace   = M.choose(' ', 'T'),
-}
-
-M.debug = {
-    breakpoint  = M.choose('󰏃 ', '■'),
-    conditional = M.choose(' ', '♦'),
-    rejected    = M.choose('󰏄 ', '○'),
-    log_point   = M.choose(' ', 'L'),
-    stop        = M.choose(' ', '→'),
-}
-
-M.token = {
-    array          = M.choose(' ', 'arr'),
-    boolean        = M.choose(' ', 'bln'),
-    class          = M.choose(' ', 'cls'),
-    color          = M.choose('󰸌 ', 'col'),
-    constant       = M.choose(' ', 'cst'),
-    constructor    = M.choose(' ', 'ctr'),
-    enum           = M.choose(' ', 'enu'),
-    enum_member    = M.choose(' ', 'enm'),
-    event          = M.choose(' ', 'evt'),
-    field          = M.choose(' ', 'fld'),
-    file           = M.choose(' ', 'fil'),
-    folder         = M.choose(' ', 'dir'),
-    ['function']   = M.choose(' ', 'fun'),
-    interface      = M.choose(' ', 'ifc'),
-    key            = M.choose(' ', 'key'),
-    keyword        = M.choose(' ', 'kwd'),
-    method         = M.choose(' ', 'mtd'),
-    misc           = M.choose('󰠲 ', 'msc'),
-    module         = M.choose(' ', 'mod'),
-    namespace      = M.choose('󰅩 ', 'nsp'),
-    null           = M.choose(' ', 'nul'),
-    number         = M.choose(' ', 'num'),
-    object         = M.choose(' ', 'obj'),
-    operator       = M.choose(' ', 'opr'),
-    package        = M.choose('󰏗 ', 'pkg'),
-    property       = M.choose(' ', 'prp'),
-    reference      = M.choose(' ', 'ref'),
-    snippet        = M.choose('󰩫 ', 'snp'),
-    string         = M.choose(' ', 'str'),
-    struct         = M.choose(' ', 'sct'),
-    text           = M.choose(' ', 'txt'),
-    type_parameter = M.choose(' ', 'typ'),
-    unit           = M.choose(' ', 'unt'),
-    value          = M.choose(' ', 'val'),
-    variable       = M.choose(' ', 'var'),
-}
-
-M.plugin = {
-    manager = M.choose('󰒲 ', 'Zzz'),
-    status = {
-        done       = M.choose(' ', '√'),
-        favorite   = M.choose(' ', '[fav]'),
-        loaded     = M.ui.filled,
-        not_loaded = M.ui.empty,
-        working    = M.choose(' ', '↔'),
-    },
-    source = {
-        cmd     = M.choose(' ', '[cmd]'),
-        config  = M.choose(M.token.constructor, '[cfg]'),
-        debug   = M.choose(M.severity.debug, '[dbg]'),
-        event   = M.choose(M.token.event, '[evt]'),
-        ft      = M.choose(M.token.file, '[ft]'),
-        import  = M.choose(' ', '[imp]'),
-        init    = M.choose(M.token.constructor, '[init]'),
-        keys    = M.choose(' ', '[key]'),
-        plugin  = M.choose(M.token.module, '[plug]'),
-        require = M.choose('󰢱 ', '[req]'),
-        runtime = M.choose(' ', '[run]'),
-        source  = M.choose(' ', '[src]'),
-        start   = M.choose(' ', '[strt]'),
-    },
-    lsp = M.choose(' ', '[lsp]')
 }
 
 M.mode = {
@@ -307,6 +162,149 @@ M.mode = {
         more             = 'MORE',
     },
     recording = M.choose(' ', '@'),
+}
+
+M.git = {
+    repo = {
+        branch     = M.choose(' ', '[brn]'),
+        commit     = M.choose(' ', '[cmt]'),
+        no_commits = M.choose(' ', '[???]'),
+    },
+    status = {
+        added     = M.choose(' ', 'A'),
+        deleted   = M.choose(' ', 'D'),
+        ignored   = M.choose(' ', '!'),
+        changed   = M.choose(' ', 'M'),
+        renamed   = M.choose(' ', 'R'),
+        staged    = M.choose(' ', '√'),
+        unmerged  = M.choose('󰳤 ', 'U'),
+        untracked = M.choose('󱋯 ', '?'),
+    },
+    sign = {
+        untracked = M.choose('┋', ':'),
+        added     = M.choose('┃', '│'),
+        changed   = M.choose('┃', '│'),
+        deleted   = M.choose('▶', '►'),
+    },
+}
+
+M.file = {
+    states = {
+        modified = M.git.status.changed,
+        readonly = M.choose(' ', 'RO'),
+    },
+    line_ending = {
+        icon = {
+            dos  = M.choose(' ', ''),
+            mac  = M.choose(' ', ''),
+            unix = M.choose('󰻀 ', ''),
+        },
+        name = {
+            dos  = 'CRLF',
+            mac  = 'CR',
+            unix = 'LF',
+        },
+    },
+    indent = {
+        space = M.choose(M.key.space, M.space.char.space_visible),
+        tab   = M.choose(M.key.tab, M.space.char.tab),
+    },
+    encoding = M.choose('󰾹 ', ''),
+    filetype = M.choose(' ', '[ft]'),
+}
+
+M.folder = {
+    regular      = M.choose('󰉋 ', '>'),
+    regular_open = M.choose('󰉖 ', 'v'),
+    empty        = M.choose('󰉘 ', '>'),
+    empty_open   = M.choose('󰮞 ', 'v'),
+    symlink      = M.choose('󰉒 ', '→'),
+    symlink_open = M.choose('󱉆 ', '↓'),
+}
+
+M.severity = {
+    error   = M.choose(' ', 'E'),
+    warning = M.choose(' ', 'W'),
+    hint    = M.choose(' ', 'H'),
+    info    = M.choose(' ', 'I'),
+    ok      = M.choose(' ', 'K'),
+    debug   = M.choose(' ', 'D'),
+    trace   = M.choose(' ', 'T'),
+}
+
+M.kind = {
+    array          = M.choose(' ', 'arr'),
+    boolean        = M.choose(' ', 'bln'),
+    class          = M.choose(' ', 'cls'),
+    color          = M.choose('󰸌 ', 'col'),
+    constant       = M.choose(' ', 'cst'),
+    constructor    = M.choose(' ', 'ctr'),
+    enum           = M.choose(' ', 'enu'),
+    enum_member    = M.choose(' ', 'enm'),
+    event          = M.choose(' ', 'evt'),
+    field          = M.choose(' ', 'fld'),
+    file           = M.choose(' ', 'fil'),
+    folder         = M.choose(' ', 'dir'),
+    ['function']   = M.choose(' ', 'fun'),
+    interface      = M.choose(' ', 'ifc'),
+    key            = M.choose(' ', 'key'),
+    keyword        = M.choose(' ', 'kwd'),
+    method         = M.choose(' ', 'mtd'),
+    misc           = M.choose('󰠲 ', 'msc'),
+    module         = M.choose(' ', 'mod'),
+    namespace      = M.choose('󰅩 ', 'nsp'),
+    null           = M.choose(' ', 'nul'),
+    number         = M.choose(' ', 'num'),
+    object         = M.choose(' ', 'obj'),
+    operator       = M.choose(' ', 'opr'),
+    package        = M.choose('󰏗 ', 'pkg'),
+    property       = M.choose(' ', 'prp'),
+    reference      = M.choose(' ', 'ref'),
+    snippet        = M.choose('󰩫 ', 'snp'),
+    string         = M.choose(' ', 'str'),
+    struct         = M.choose(' ', 'sct'),
+    text           = M.choose(' ', 'txt'),
+    type_parameter = M.choose(' ', 'typ'),
+    unit           = M.choose(' ', 'unt'),
+    value          = M.choose(' ', 'val'),
+    variable       = M.choose(' ', 'var'),
+}
+
+M.debug = {
+    breakpoint  = M.choose('󰏃 ', '■'),
+    conditional = M.choose(' ', '♦'),
+    rejected    = M.choose('󰏄 ', '○'),
+    log_point   = M.choose(' ', 'L'),
+    stop        = M.choose(' ', '→'),
+}
+
+M.plugin = {
+    kind = {
+        lsp     = M.choose(' ', '[lsp]'),
+        manager = M.choose('󰒲 ', 'Zzz'),
+    },
+    status = {
+        done       = M.choose(' ', '√'),
+        favorite   = M.choose(' ', '[fav]'),
+        loaded     = M.ui.filled,
+        not_loaded = M.ui.empty,
+        working    = M.choose(' ', '↔'),
+    },
+    source = {
+        cmd     = M.choose(' ', '[cmd]'),
+        config  = M.choose(M.kind.constructor, '[cfg]'),
+        debug   = M.choose(M.severity.debug, '[dbg]'),
+        event   = M.choose(M.kind.event, '[evt]'),
+        ft      = M.choose(M.kind.file, '[ft]'),
+        import  = M.choose(' ', '[imp]'),
+        init    = M.choose(M.kind.constructor, '[init]'),
+        keys    = M.choose(' ', '[key]'),
+        plugin  = M.choose(M.kind.module, '[plug]'),
+        require = M.choose('󰢱 ', '[req]'),
+        runtime = M.choose(' ', '[run]'),
+        source  = M.choose(' ', '[src]'),
+        start   = M.choose(' ', '[strt]'),
+    },
 }
 
 return M
