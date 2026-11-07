@@ -31,7 +31,7 @@ return {
                         local icon, hl = require('mini.icons').get('directory', path)
                         return icon .. ' ', hl
                     end,
-                    symbols = {
+                    symbols = vim.tbl_map(shared.icons.pad, {
                         Array             = shared.icons.kind.data.array,
                         BlockMappingPair  = shared.icons.kind.member.pair,
                         Boolean           = shared.icons.kind.data.boolean,
@@ -105,7 +105,7 @@ return {
                         Value             = shared.icons.kind.data.value,
                         Variable          = shared.icons.kind.data.variable,
                         WhileStatement    = shared.icons.kind.control['while'],
-                    },
+                    }),
                 },
                 ui = {
                     bar = {

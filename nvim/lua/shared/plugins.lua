@@ -4,6 +4,7 @@ local M = {}
 M.names = {
     mason = 'mason-org/mason.nvim',
     mini_icons = 'nvim-mini/mini.icons',
+    snacks = 'folke/snacks.nvim',
 }
 
 ---@class ne.shared.plugins.Handler<Arg>

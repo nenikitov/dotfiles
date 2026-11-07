@@ -29,7 +29,7 @@ return {
     'FylerOrg/fyler.nvim',
     'MagicDuck/grug-far.nvim',
     'stevearc/quicker.nvim',
-    'folke/snacks.nvim', -- for picker, bigfile, rename
+    'folke/snacks.nvim', -- for bigfile, rename
     -- terminal
     'akinsho/toggleterm.nvim',
     'brianhuster/unnest.nvim',
@@ -63,7 +63,7 @@ return {
 
     -- interface
     'folke/noice.nvim', -- for message forwarding, centered command line, search virtual text
-    'folke/snacks.nvim', -- for notifier, dashboard
+    'folke/snacks.nvim', -- for dashboard
     'catgoose/nvim-colorizer.lua',
     -- colorschemes
     'Mofiqul/vscode.nvim',

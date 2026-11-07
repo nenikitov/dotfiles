@@ -18,6 +18,15 @@ function M.choose(gui, tty)
     end
 end
 
+---@param icon string
+---@return string
+function M.pad(icon)
+    if shared.settings.enable_tty_mode then
+        return vim.trim(icon) .. ' '
+    end
+    return vim.endswith(icon, ' ') and icon or icon .. ' '
+end
+
 M.space = {
     char = {
         tab             = '→',
@@ -48,6 +57,13 @@ M.ui = {
     close    = M.choose(' ', 'X'),
 
     prompt   = '>',
+    live     = M.choose(' ', 'l'),
+
+    tree = {
+        vertical = '│ ',
+        middle   = '├ ',
+        last     = '└ ',
+    },
 
     progress = {
         spinner = M.choose(
@@ -120,6 +136,7 @@ M.key = {
     f10              = M.choose('󱊴 ', 'F10'),
     f11              = M.choose('󱊵 ', 'F11'),
     f12              = M.choose('󱊶 ', 'F12'),
+    nowait           = M.choose(' ', '[nw]'),
 }
 
 M.mode = {
@@ -204,6 +221,7 @@ M.file = {
     states = {
         modified = M.git.status.changed,
         readonly = M.choose(' ', 'RO'),
+        saved    = M.choose(' ', 'S'),
     },
     line_ending = {
         icon = {
@@ -355,6 +373,12 @@ M.plugin = {
         loaded     = M.ui.filled,
         not_loaded = M.ui.empty,
         working    = M.choose(' ', '↔'),
+    },
+    lsp = {
+        attached    = M.choose(' ', '[lsp]'),
+        enabled     = M.choose(' ', '[lsp on]'),
+        disabled    = M.choose(' ', '[lsp off]'),
+        unavailable = M.choose(' ', '[lsp none]'),
     },
     source = {
         cmd     = M.choose(' ', '[cmd]'),
