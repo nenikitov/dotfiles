@@ -1,7 +1,7 @@
 ---@module 'lazy'
 
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 ---@type LazySpec
 return {
@@ -39,7 +39,7 @@ return {
             treesitter.install(missing)
         end
 
-        vim.api.nvim_create_autocmd('FileType', {
+        util.vim.autocmd({ 'FileType' }, {
             group = util.vim.augroup('ne.plugin.treesitter_start'),
             desc = 'Start treesitter highlighting when a parser is available',
             callback = function(event)

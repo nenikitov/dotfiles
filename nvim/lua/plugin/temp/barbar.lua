@@ -8,9 +8,9 @@ return {
 	'romgrk/barbar.nvim',
     enabled = false,
     event = 'UIEnter',
-    ---@type barbar.config.options
-    --- TODO: Figure out Partial<T>
+    -- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields
+    ---@type barbar.config.options
     opts = {
         icons = {
             diagnostics = {

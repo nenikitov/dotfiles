@@ -1,8 +1,8 @@
 ---@module 'lazy'
 ---@module 'mason'
 
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 ---@class ne.plugin.mason.Lock
 ---@field version string
@@ -14,10 +14,10 @@ local lock = util.lockfile.new(vim.fs.joinpath(vim.fn.stdpath('config'), 'mason-
 ---@type LazySpec
 return {
     shared.plugins.names.mason,
-    keys = {
-        shared.keys.plugin:k('m', 'Mason'):bind('n', '<CMD>Mason<CR>'):spec(),
-    },
     lazy = false,
+    keys = {
+        shared.keys.plugin_mason:bind('n', '<CMD>Mason<CR>'):spec(),
+    },
     ---@type MasonSettings
     opts = {
         PATH = 'append',

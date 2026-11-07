@@ -19,6 +19,7 @@ return {
     'joelazar/blink-calc',
     'aznhe21/actions-preview.nvim',
     'rachartier/tiny-inline-diagnostic.nvim', -- not sure
+    'catgoose/nvim-colorizer.lua', -- how to do lsp fallback?
     'folke/snacks.nvim', -- for debug
     -- debugging
     'mfussenegger/nvim-dap',
@@ -62,9 +63,8 @@ return {
     'kevinhwang91/nvim-ufo', -- needs a lot of boilerplate to replicate `chrisgrieser/origami`, hl^$ mappings, pause folds for search, pretty fold line, but has best fallback mechanism and custom providers
 
     -- interface
-    'folke/noice.nvim', -- for message forwarding, centered command line, search virtual text
     'folke/snacks.nvim', -- for dashboard
-    'catgoose/nvim-colorizer.lua',
+    'rebelot/heirline.nvim',
     -- colorschemes
     'Mofiqul/vscode.nvim',
     'catppuccin/nvim',

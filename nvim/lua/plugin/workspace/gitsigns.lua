@@ -1,16 +1,16 @@
 ---@module 'lazy'
 ---@module 'gitsigns'
 
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 ---@type LazySpec
 return {
 	'lewis6991/gitsigns.nvim',
     event = 'LazyFile',
-    ---@type Gitsigns.Config
-    --- TODO: Figure out Partial<T>
+    -- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields
+    ---@type Gitsigns.Config
     opts = {
         signs = {
             add = { text = shared.icons.git.sign.added },

@@ -1,8 +1,8 @@
 ---@module 'lazy'
 ---@module 'ibl'
 
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 local icons = shared.icons.space.indent
 
@@ -27,7 +27,7 @@ return {
     config = function(_, opts)
         require('ibl').setup(opts)
 
-        util.vim.autocmd_multiple_events({
+        util.vim.autocmd({
             -- The search preview scrolls the view without redrawing the guides
             { 'CmdlineChanged', pattern = { '/', '?' } },
             -- Ending or cancelling the search restores the view without redrawing the guides

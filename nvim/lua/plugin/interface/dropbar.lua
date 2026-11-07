@@ -1,8 +1,8 @@
 ---@module 'lazy'
 ---@module 'dropbar'
 
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 ---@type LazySpec
 return {

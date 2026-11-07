@@ -3,8 +3,11 @@
 
 local shared = require('shared')
 
-local function picker(name)
-    return function() require('snacks').picker[name]() end
+---@param source string | snacks.picker.Config
+local function picker(source)
+    return function()
+        require('snacks').picker.pick(source)
+    end
 end
 
 ---@param defaults table<string, any>
@@ -22,8 +25,22 @@ end
 return {
     shared.plugins.names.snacks,
     keys = {
-        shared.keys.find:k('f', 'Files'):bind('n', picker('files')):spec(),
-        shared.keys.find:k('g', 'Grep'):bind('n', picker('grep')):spec(),
+        shared.keys.find_files:bind('n', picker('files')):spec(),
+        shared.keys.find_grep:bind('n', picker('grep')):spec(),
+        shared.keys.find:k('t', 'Filetypes'):bind('n', picker({
+            title = 'Filetypes',
+            format = 'text',
+            layout = { preset = 'vscode' },
+            finder = function()
+                return vim.tbl_map(function(ft) return { text = ft } end, vim.fn.getcompletion('', 'filetype'))
+            end,
+            confirm = function(self, item)
+                self:close()
+                if item then
+                    vim.bo.filetype = item.text
+                end
+            end,
+        })):spec(),
         shared.keys.find:k(':', 'Command history'):bind('n', picker('command_history')):spec(),
         shared.keys.find:k('/', 'Search history'):bind('n', picker('search_history')):spec(),
         shared.keys.find:k('m', 'Help'):bind('n', picker('help')):spec(),
@@ -47,6 +64,24 @@ return {
                 sources = {
                     files = { hidden = true },
                     grep = { hidden = true },
+                    colorschemes = {
+                        layout = { preset = 'vscode' },
+                        preview = 'none',
+                        on_change = function(picker, item)
+                            local state = picker.preview.state
+                            state.original = state.original or { name = vim.g.colors_name or 'default', background = vim.o.background }
+                            if item then
+                                vim.cmd.colorscheme(item.text)
+                            end
+                        end,
+                        on_close = function(picker)
+                            local original = picker.preview.state.original
+                            if original then
+                                vim.cmd.colorscheme(original.name)
+                                vim.o.background = original.background
+                            end
+                        end,
+                    },
                 },
                 matcher = {
                     sort_empty = true,
@@ -55,6 +90,21 @@ return {
                 formatters = { severity = { pos = 'right' } },
                 layouts = {
                     default = { layout = { backdrop = false } },
+                    vscode = {
+                        layout = {
+                            backdrop = false,
+                            row = 2,
+                            width = 0.4,
+                            min_width = 80,
+                            height = 0.4,
+                            box = 'vertical',
+                            border = true,
+                            title = '{title} {live} {flags}',
+                            title_pos = 'center',
+                            { win = 'input', height = 1, border = 'bottom' },
+                            { win = 'list', border = 'none' },
+                        },
+                    },
                 },
                 icons = {
                     files = {

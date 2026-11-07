@@ -44,7 +44,7 @@ vim.opt.jumpoptions:append('view')
 --#region Scrolling
 -- Keep a percentage of the window visible around the cursor, instead of a fixed number of lines
 local scrolloff = 0.2
-vim.api.nvim_create_autocmd({ 'WinEnter', 'WinResized', 'VimEnter' }, {
+util.vim.autocmd({ 'WinEnter', 'WinResized', 'VimEnter' }, {
 	group = util.vim.augroup('ne.config.percent_scrolloff'),
 	desc = 'Update scrolloff to a percentage of each window',
 	callback = function()
@@ -93,7 +93,7 @@ util.map:k('dd', 'Delete line without yanking blank lines'):bind('n', function()
 	return vim.api.nvim_get_current_line():match('^%s*$') and '"_dd' or 'dd'
 end, { expr = true }):set()
 
-vim.api.nvim_create_autocmd('TextYankPost', {
+util.vim.autocmd({ 'TextYankPost' }, {
     group = util.vim.augroup('ne.config.yank_highlight'),
     desc = 'Highlight text right after yanking',
     callback = function()
@@ -107,7 +107,7 @@ util.map:k('U', 'Redo'):bind('n', '<C-r>'):set()
 --#endregion
 
 --#region Remove some filetype overwrites
-vim.api.nvim_create_autocmd('FileType', {
+util.vim.autocmd({ 'FileType' }, {
     group = util.vim.augroup('ne.config.remove_filetype_overrides'),
     desc = 'Reset options changed by filetype plugins to their global values',
     callback = function()

@@ -125,6 +125,16 @@ function Node.new(lhs, desc, parent, buffer)
 	return setmetatable({ _lhs = lhs, _desc = desc, _parent = parent, _buffer = buffer }, Node)
 end
 
+---@return string
+function Node:lhs()
+	return self._lhs
+end
+
+---@return string
+function Node:desc()
+	return self._desc
+end
+
 ---@param keys string
 ---@param desc string
 ---@return ne.util.map.Node

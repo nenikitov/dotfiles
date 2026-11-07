@@ -12,4 +12,11 @@ M.find = M.custom:k('f', 'find')
 M.git = M.custom:k('g', 'git')
 M.plugin = M.custom:k('p', 'plugin')
 
+M.buffer_new = M.buffer:k('n', 'Create new empty buffer')
+M.buffer_quit = M.buffer:k('q', 'Quit window')
+M.find_files = M.find:k('f', 'Files')
+M.find_grep = M.find:k('g', 'Grep')
+M.plugin_lazy = M.plugin:k('l', 'lazy.nvim')
+M.plugin_mason = M.plugin:k('m', 'Mason')
+
 return M

@@ -1,4 +1,5 @@
 local shared = require('shared')
+local util = require('util')
 
 --#region Diagnostics
 local icons = {
@@ -43,6 +44,18 @@ vim.diagnostic.config({
     },
 })
 --#endregion
+
+--#region Unnecessary dim
+local function dim_unnecessary()
+    vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { dim = true })
+end
+dim_unnecessary()
+util.vim.autocmd({ 'ColorScheme' }, {
+    group = util.vim.augroup('ne.config.dim_unnecessary'),
+    desc = 'Dim unused code instead of recoloring it',
+    callback = dim_unnecessary,
+})
+--#end
 
 --#region LSP
 vim.lsp.inlay_hint.enable(false)

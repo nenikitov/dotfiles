@@ -1,5 +1,5 @@
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 -- HACK: Needed on Ubuntu
 local parser_paths = vim.tbl_map(vim.fs.dirname, vim.api.nvim_get_runtime_file('parser', true))
@@ -75,7 +75,7 @@ require('lazy').setup({
     },
 })
 
-shared.keys.plugin:k('l', 'lazy.nvim'):bind('n', '<CMD>Lazy<CR>'):set()
+shared.keys.plugin_lazy:bind('n', '<CMD>Lazy<CR>'):set()
 shared.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):bind('n', function()
     local session = vim.fs.joinpath(vim.fn.stdpath('state'), 'reload-session.vim')
     vim.cmd.mksession({ args = { vim.fn.fnameescape(session) }, bang = true })

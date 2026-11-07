@@ -1,8 +1,8 @@
 ---@module 'lazy'
 ---@module 'noice'
 
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 ---@type LazySpec
 return {
@@ -11,6 +11,8 @@ return {
         'MunifTanjim/nui.nvim',
     },
     event = 'VeryLazy',
+    -- TODO: Figure out Partial<T>
+    ---@diagnostic disable: missing-fields
     ---@type NoiceConfig
     opts = {
         notify = {
@@ -30,12 +32,16 @@ return {
                 enabled = false,
             },
         },
+        popupmenu = {
+            enabled = false,
+        },
         messages = {
             enabled = true,
             view_search = 'virtualtext',
         },
         cmdline = {
             opts = {},
+            ---@type table<string, CmdlineFormat>
             format = {
                 cmdline = {
                     pattern = '^:',
@@ -82,17 +88,17 @@ return {
                 },
             },
         },
+        ---@type NoicePresets
         presets = {
             inc_rename = true,
-        },
-        popupmenu = {
-            enabled = false,
+            command_palette = true,
         },
     },
+    ---@diagnostic enable: missing-fields
     config = function(_, opts)
         require('noice').setup(opts)
 
-        util.vim.autocmd_multiple_events({
+        util.vim.autocmd({
             -- Popups keep the position they were opened at when the terminal is resized
             'VimResized',
         }, {

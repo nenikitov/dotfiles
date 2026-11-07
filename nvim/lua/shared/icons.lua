@@ -59,7 +59,7 @@ M.ui = {
     prompt   = '>',
     live     = M.choose(' ', 'l'),
 
-    tree = {
+    tree     = {
         vertical = '│ ',
         middle   = '├ ',
         last     = '└ ',
@@ -137,6 +137,37 @@ M.key = {
     f11              = M.choose('󱊵 ', 'F11'),
     f12              = M.choose('󱊶 ', 'F12'),
     nowait           = M.choose(' ', '[nw]'),
+}
+
+M.key_names = {
+    Up              = M.key.up,
+    Down            = M.key.down,
+    Left            = M.key.left,
+    Right           = M.key.right,
+    C               = M.key.control,
+    M               = M.key.alt,
+    D               = M.key.super,
+    S               = M.key.shift,
+    CR              = M.key.enter,
+    NL              = M.key.enter,
+    Esc             = M.key.escape,
+    ScrollWheelDown = M.key.mouse_wheel_down,
+    ScrollWheelUp   = M.key.mouse_wheel_up,
+    BS              = M.key.backspace,
+    Space           = M.key.space,
+    Tab             = M.key.tab,
+    F1              = M.key.f1,
+    F2              = M.key.f2,
+    F3              = M.key.f3,
+    F4              = M.key.f4,
+    F5              = M.key.f5,
+    F6              = M.key.f6,
+    F7              = M.key.f7,
+    F8              = M.key.f8,
+    F9              = M.key.f9,
+    F10             = M.key.f10,
+    F11             = M.key.f11,
+    F12             = M.key.f12,
 }
 
 M.mode = {
@@ -340,7 +371,7 @@ M.kind = {
         element  = M.choose(' ', 'elm'),
         rule     = M.choose(' ', 'rul'),
         rule_set = M.choose(' ', 'rls'),
-        heading = {
+        heading  = {
             h1 = M.choose('󰉫 ', 'h1 '),
             h2 = M.choose('󰉬 ', 'h2 '),
             h3 = M.choose('󰉭 ', 'h3 '),
@@ -364,8 +395,9 @@ M.plugin = {
     kind = {
         lsp     = M.choose(' ', '[lsp]'),
         manager = M.choose('󰒲 ', '[plg]'),
-        copilot = M.choose(' ', '[cop]'), -- new
-        log     = M.choose(' ', '[log]'), -- new
+        binary  = M.choose('󰏗 ', '[bin]'),
+        copilot = M.choose(' ', '[cop]'),
+        log     = M.choose(' ', '[log]'),
     },
     status = {
         done       = M.choose(' ', '√'),
@@ -394,6 +426,41 @@ M.plugin = {
         runtime = M.choose(' ', '[run]'),
         source  = M.choose(' ', '[src]'),
         start   = M.choose(' ', '[strt]'),
+    },
+}
+
+M.dashboard = {
+    new_file  = M.choose(' ', ''),
+    find_file = M.choose(' ', ''),
+    find_text = M.choose(' ', ''),
+    lazy      = M.choose(M.plugin.kind.manager, ''),
+    mason     = M.choose(M.plugin.kind.binary, ''),
+    quit      = M.choose(' ', ''),
+}
+
+M.logo = {
+    glyphs = {
+        '███████████████████▄  ',
+        '██                  █▄',
+        '██  ███▄  ▀██▄  ██  ██',
+        '██  ██▀██▄  ▀██▄██  ██',
+        '██  ██  ▀██▄  ▀███  ██',
+        '▀█                  ██',
+        '  ▀███████████████████',
+    },
+    colors = {
+        'bbbbbbbbbbbbbbbbbbbbbb',
+        'bb                  gg',
+        'bb  wwwwwwwwwwwwww  gg',
+        'bb  wwwwwwwwwwwwww  gg',
+        'bb  wwwwwwwwwwwwww  gg',
+        'bb                  gg',
+        'bbgggggggggggggggggggg',
+    },
+    hls = {
+        b = { 'MiniIconsBlue', 'DiagnosticInfo' },
+        g = { 'MiniIconsGreen', 'DiagnosticOk' },
+        w = { 'MiniIconsGrey', 'Normal' },
     },
 }
 

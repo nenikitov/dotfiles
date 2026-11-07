@@ -1,5 +1,5 @@
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 --#region Colors
 if shared.settings.enable_tty_mode then

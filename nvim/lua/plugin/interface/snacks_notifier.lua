@@ -17,6 +17,7 @@ return {
                 debug = shared.icons.severity.debug,
                 trace = shared.icons.severity.trace,
             },
+            top_down = false,
         },
     },
 }

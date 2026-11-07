@@ -14,7 +14,7 @@ end
 ---@param events ne.util.vim.AutocmdEvent[]
 ---@param opts vim.api.keyset.create_autocmd
 ---@return integer[] ids
-function M.autocmd_multiple_events(events, opts)
+function M.autocmd(events, opts)
     local ids = {}
     for _, event in ipairs(events) do
         local name, pattern
@@ -28,6 +28,17 @@ function M.autocmd_multiple_events(events, opts)
         table.insert(ids, vim.api.nvim_create_autocmd(name, event_opts))
     end
     return ids
+end
+
+---@param hls string[]
+---@return string?
+function M.find_hl(hls)
+    for _, hl in ipairs(hls) do
+        if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { create = false, name = hl })) then
+            return hl
+        end
+    end
+    return nil
 end
 
 return M

@@ -9,9 +9,9 @@ return {
     {
         'lewis6991/satellite.nvim',
         event = 'UIEnter',
-        ---@type SatelliteConfig
-        --- TODO: Figure out Partial<T>
+        -- TODO: Figure out Partial<T>
         ---@diagnostic disable: missing-fields
+        ---@type SatelliteConfig
         opts = {
             winblend = 0,
             handlers = {
@@ -49,7 +49,7 @@ return {
         config = function(_, opts)
             require('satellite').setup(opts)
 
-            util.vim.autocmd_multiple_events({
+            util.vim.autocmd({
                 -- Splitting a window doesn't draw a scrollbar in the new one
                 'WinNew',
                 -- Having a noice CMD popup makes the scrollbar lag one resize behind

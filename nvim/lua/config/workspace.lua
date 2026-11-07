@@ -1,5 +1,5 @@
-local util = require('util')
 local shared = require('shared')
+local util = require('util')
 
 --#region Recovery
 vim.opt.swapfile = false
@@ -18,7 +18,7 @@ end
 --#endregion
 
 --#region Reloading
-vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'TermClose', 'TermLeave' }, {
+util.vim.autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'TermClose', 'TermLeave' }, {
 	group = util.vim.augroup('ne.config.reload_changed_files'),
 	desc = 'Check if a buffer was changed outside Neovim and reload it',
 	callback = function()
@@ -31,11 +31,11 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'TermClos
 
 --#region Cursor position
 vim.o.shada = vim.o.shada:gsub("'%d+", "'1000")
-vim.api.nvim_create_autocmd('BufRead', {
+util.vim.autocmd({ 'BufRead' }, {
 	group = util.vim.augroup('ne.config.restore_cursor'),
 	desc = 'Return the cursor to its last position when a file is opened',
 	callback = function(event)
-		vim.api.nvim_create_autocmd('BufWinEnter', {
+		util.vim.autocmd({ 'BufWinEnter' }, {
 			buffer = event.buf,
 			once = true,
 			callback = function()
@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd('BufRead', {
 --#endregion
 
 --#region Saving
-vim.api.nvim_create_autocmd({ 'BufWritePre', 'FileWritePre' }, {
+util.vim.autocmd({ 'BufWritePre', 'FileWritePre' }, {
 	group = util.vim.augroup('ne.config.create_missing_directories'),
 	desc = "Create a new file's parent directories if they don't exist",
 	callback = function(event)
@@ -152,15 +152,15 @@ end
 --#endregion
 
 --#region Buffers
-shared.keys.buffer:k('n', 'Create new empty buffer'):bind('n', '<CMD>enew<CR>'):set()
+shared.keys.buffer_new:bind('n', '<CMD>enew<CR>'):set()
 shared.keys.buffer:k('r', 'Reload from disk'):bind('n', '<CMD>edit<CR>'):set()
 --#endregion
 
 --#region Closing
-shared.keys.buffer:k('q', 'Quit window'):bind('n', '<CMD>quit<CR>'):set()
+shared.keys.buffer_quit:bind('n', '<CMD>quit<CR>'):set()
 shared.keys.buffer:k('d', 'Delete buffer'):bind('n', shared.plugins.handlers.close_buffer:bind()):set()
 
-vim.api.nvim_create_autocmd('FileType', {
+util.vim.autocmd({ 'FileType' }, {
 	group = util.vim.augroup('ne.config.close_shortcuts'),
 	desc = 'Close informational windows with q or <ESC>',
 	pattern = { 'checkhealth', 'help', 'lspinfo', 'man', 'lazy', 'notify', 'query', 'qf' },

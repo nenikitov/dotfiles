@@ -6,9 +6,9 @@ local shared = require('shared')
 ---@type LazySpec
 return {
     'smart-splits-nvim/smart-splits.nvim',
-    ---@type SmartSplitsSetupOpts
-    --- TODO: Figure out Partial<T>
+    -- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields
+    ---@type SmartSplitsSetupOpts
     opts = {
         resize = {
             amount = 1,
