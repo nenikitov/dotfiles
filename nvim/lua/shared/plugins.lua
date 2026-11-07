@@ -2,6 +2,7 @@
 local M = {}
 
 M.names = {
+    blink_cmp = 'saghen/blink.cmp',
     mason = 'mason-org/mason.nvim',
     mini_icons = 'nvim-mini/mini.icons',
     snacks = 'folke/snacks.nvim',

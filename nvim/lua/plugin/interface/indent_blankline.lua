@@ -10,7 +10,7 @@ local icons = shared.icons.space.indent
 return {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
-    event = 'LazyFile',
+    event = {'LazyFile', 'VeryLazy'},
     ---@type ibl.config
     opts = {
         indent = {
@@ -26,7 +26,13 @@ return {
     },
     config = function(_, opts)
         require('ibl').setup(opts)
+        require('ibl').overwrite({
+            exclude = {
+                filetypes = vim.tbl_filter(function(ft) return ft ~= '' end, require('ibl.config').config.exclude.filetypes),
+            },
+        })
 
+        -- HACK: Force-refresh indent-blankline UI on events upstream missed
         util.vim.autocmd({
             -- The search preview scrolls the view without redrawing the guides
             { 'CmdlineChanged', pattern = { '/', '?' } },

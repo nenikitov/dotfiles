@@ -7,7 +7,7 @@ local shared = require('shared')
 return {
 	'romgrk/barbar.nvim',
     enabled = false,
-    event = 'UIEnter',
+    event = 'VeryLazy',
     -- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields
     ---@type barbar.config.options

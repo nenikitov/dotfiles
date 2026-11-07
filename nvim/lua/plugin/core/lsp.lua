@@ -7,6 +7,7 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
         shared.plugins.names.mason,
+        shared.plugins.names.blink_cmp,
     },
     event = 'LazyFile',
     config = function()

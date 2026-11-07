@@ -8,7 +8,7 @@ local util = require('util')
 return {
     {
         'lewis6991/satellite.nvim',
-        event = 'UIEnter',
+        event = 'VeryLazy',
         -- TODO: Figure out Partial<T>
         ---@diagnostic disable: missing-fields
         ---@type SatelliteConfig
@@ -49,16 +49,24 @@ return {
         config = function(_, opts)
             require('satellite').setup(opts)
 
+            -- HACK: Force-refresh satellite UI on events upstream missed
             util.vim.autocmd({
                 -- Splitting a window doesn't draw a scrollbar in the new one
                 'WinNew',
                 -- Having a noice CMD popup makes the scrollbar lag one resize behind
                 'VimResized',
+                -- Git signs add a sign column to the scrollbar, which hides it until the next refresh widens it
+                { 'User', pattern = 'GitSignsUpdate' },
             }, {
                 group = util.vim.augroup('ne.plugin.satellite_refresh'),
                 desc = 'Force-refresh satellite UI on events upstream missed',
-                callback = function()
-                    vim.cmd.SatelliteRefresh()
+                callback = function(args)
+                    -- Satellite places the git signs asynchronously in its own handler for the same event, so refresh after it
+                    if args.event == 'User' then
+                        vim.defer_fn(vim.cmd.SatelliteRefresh, 50)
+                    else
+                        vim.cmd.SatelliteRefresh()
+                    end
                 end,
             })
         end,

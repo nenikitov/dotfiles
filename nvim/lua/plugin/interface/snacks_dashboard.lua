@@ -99,6 +99,19 @@ local function show(buf, win)
             vim.api.nvim_win_set_config(dashboard_win, layout(win))
         end,
     })
+
+    util.vim.autocmd({
+        -- Plugins loaded after the first draw are missing from the startup stats
+        { 'User', pattern = 'VeryLazy' },
+    }, {
+        group = group,
+        desc = 'Redraw dashboard overlay with final startup stats',
+        once = true,
+        callback = vim.schedule_wrap(function()
+            dashboard.lazy_stats = nil
+            dashboard.update()
+        end),
+    })
 end
 
 ---@param lhs string

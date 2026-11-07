@@ -98,6 +98,7 @@ return {
     config = function(_, opts)
         require('noice').setup(opts)
 
+        -- HACK: Force-refresh noice UI on events upstream missed
         util.vim.autocmd({
             -- Popups keep the position they were opened at when the terminal is resized
             'VimResized',

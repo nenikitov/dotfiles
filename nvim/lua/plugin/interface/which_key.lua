@@ -41,6 +41,7 @@ return {
             })
         end)
 
+        -- HACK: Force-refresh which-key UI on events upstream missed
         util.vim.autocmd({
             -- The popup keeps its old size when the terminal is resized
             'VimResized',

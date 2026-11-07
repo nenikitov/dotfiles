@@ -7,7 +7,7 @@ local util = require('util')
 ---@type LazySpec
 return {
     'Bekaboo/dropbar.nvim',
-    event = 'UIEnter',
+    event = {'LazyFile', 'TermOpen'},
     keys = {
         util.map
             :k('[;', 'Go to start of current context')

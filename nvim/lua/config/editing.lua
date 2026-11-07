@@ -1,11 +1,6 @@
 local util = require('util')
 
 --#region Indent
-vim.g.filetype_recommended_style = 0
-for _, ft in ipairs(vim.fn.getcompletion('', 'filetype')) do
-	vim.g[ft .. '_recommended_style'] = 0
-end
-
 vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
@@ -110,7 +105,7 @@ util.map:k('U', 'Redo'):bind('n', '<C-r>'):set()
 util.vim.autocmd({ 'FileType' }, {
     group = util.vim.augroup('ne.config.remove_filetype_overrides'),
     desc = 'Reset options changed by filetype plugins to their global values',
-    callback = function()
+    callback = function(args)
         local keep_global = {
             'formatoptions',
             'textwidth',
@@ -118,6 +113,14 @@ util.vim.autocmd({ 'FileType' }, {
             'breakindent',
             'linebreak',
         }
+        local keep_indent = {
+            make = true,
+            scdoc = true,
+        }
+
+        if not keep_indent[args.match] then
+            vim.list_extend(keep_global, { 'expandtab', 'tabstop', 'shiftwidth', 'softtabstop' })
+        end
 
 		for _, name in ipairs(keep_global) do
             vim.opt_local[name] = vim.opt_global[name]:get()

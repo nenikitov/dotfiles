@@ -8,13 +8,13 @@ local util = require('util')
 
 ---@type LazySpec
 return {
-	'saghen/blink.cmp',
+	shared.plugins.names.blink_cmp,
 	version = '1.*',
 	dependencies = {
         'rafamadriz/friendly-snippets',
         { 'xzbdmw/colorful-menu.nvim', opts = {} },
     },
-	lazy = false,
+	event = 'VeryLazy',
 	---@type blink.cmp.Config
 	opts = {
 		keymap = {
@@ -144,6 +144,7 @@ return {
 
         require('blink.cmp').setup(opts)
 
+        -- HACK: Force-refresh blink.cmp UI on events upstream missed
         util.vim.autocmd({
             -- The menu keeps its position when the terminal is resized while the command line is open
             'VimResized',
