@@ -7,7 +7,7 @@ local shared = require('shared')
 ---@type LazySpec
 return {
 	'lewis6991/gitsigns.nvim',
-    event = { 'LazyFile' },
+    event = 'LazyFile',
     ---@type Gitsigns.Config
     --- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields

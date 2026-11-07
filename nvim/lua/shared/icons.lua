@@ -164,6 +164,18 @@ M.mode = {
     recording = M.choose(' ', '@'),
 }
 
+M.cmdline = {
+    command     = M.choose(M.mode.icon.command, ':'),
+    shell       = M.choose(M.mode.icon.shell, '!'),
+    search_down = M.choose(' ↓', '/'),
+    search_up   = M.choose(' ↑', '?'),
+    lua         = M.choose(' ', 'lua'),
+    help        = M.choose(' ', 'hlp'),
+    expression  = M.choose('󰃬 ', '='),
+    input       = M.ui.prompt,
+    rename      = M.choose('󰘎 ', 'ren'),
+}
+
 M.git = {
     repo = {
         branch     = M.choose(' ', '[brn]'),

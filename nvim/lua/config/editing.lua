@@ -75,10 +75,6 @@ util.map:k('N', 'Previous search result (always up), centered'):bind({ 'n', 'x',
 util.map:k('<ESC>', 'Clear search'):bind('n', '<CMD>nohlsearch<CR>'):set()
 --#endregion
 
---#region Substitution
-vim.opt.inccommand = 'split'
---#endregion
-
 --#region Automatic formatting
 vim.opt.formatoptions = 'qj'
 --#endregion

@@ -3,6 +3,7 @@
 ---@module 'lazy'
 ---@module 'blink.cmp'
 
+local util = require('util')
 local shared = require('shared')
 
 ---@type LazySpec
@@ -117,5 +118,18 @@ return {
         end
 
         require('blink.cmp').setup(opts)
+
+        util.vim.autocmd_multiple_events({
+            -- The menu keeps its position when the terminal is resized while the command line is open
+            'VimResized',
+        }, {
+            group = util.vim.augroup('ne.plugin.blink_cmp_refresh'),
+            desc = 'Force-refresh blink.cmp UI on events upstream missed',
+            callback = function()
+                vim.schedule(function()
+                    require('blink.cmp.completion.windows.menu').update_position()
+                end)
+            end,
+        })
     end,
 }

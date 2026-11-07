@@ -61,9 +61,21 @@ return {
     config = function(_, opts)
         require('which-key').setup(opts)
 
-        vim.api.nvim_create_autocmd('VimResized', {
+        util.map.on_group(function(group)
+            if group.buffer and not vim.api.nvim_buf_is_valid(group.buffer) then
+                return
+            end
+            require('which-key').add({
+                { group.lhs, group = group.desc, mode = group.mode == '' and 'nxso' or group.mode, buffer = group.buffer },
+            })
+        end)
+
+        util.vim.autocmd_multiple_events({
+            -- The popup keeps its old size when the terminal is resized
+            'VimResized',
+        }, {
             group = util.vim.augroup('ne.plugin.which_key_refresh'),
-            desc = 'Redraw which-key popup when the terminal is resized',
+            desc = 'Force-refresh which-key UI on events upstream missed',
             callback = function()
                 require('which-key.view').update()
             end,

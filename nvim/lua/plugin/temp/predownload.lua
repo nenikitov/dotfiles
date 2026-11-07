@@ -17,7 +17,6 @@ return {
     'nvimtools/none-ls.nvim',
     'stevearc/conform.nvim',
     'joelazar/blink-calc',
-    'smjonas/inc-rename.nvim',
     'aznhe21/actions-preview.nvim',
     'rachartier/tiny-inline-diagnostic.nvim', -- not sure
     'folke/snacks.nvim', -- for debug

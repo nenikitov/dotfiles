@@ -8,7 +8,7 @@ local util = require('util')
 return {
     {
         'lewis6991/satellite.nvim',
-        event = { 'UIEnter' },
+        event = 'UIEnter',
         ---@type SatelliteConfig
         --- TODO: Figure out Partial<T>
         ---@diagnostic disable: missing-fields
@@ -46,17 +46,21 @@ return {
             },
         },
         ---@diagnostic enable: missing-fields
-        config = function (_, opts)
+        config = function(_, opts)
             require('satellite').setup(opts)
 
-            vim.api.nvim_create_autocmd({ 'WinNew' }, {
+            util.vim.autocmd_multiple_events({
+                -- Splitting a window doesn't draw a scrollbar in the new one
+                'WinNew',
+                -- Having a noice CMD popup makes the scrollbar lag one resize behind
+                'VimResized',
+            }, {
                 group = util.vim.augroup('ne.plugin.satellite_refresh'),
-                desc = 'Redraw scrollbars when windows are split',
+                desc = 'Force-refresh satellite UI on events upstream missed',
                 callback = function()
-                    vim.cmd("SatelliteRefresh")
+                    vim.cmd.SatelliteRefresh()
                 end,
             })
-
         end,
     },
 }

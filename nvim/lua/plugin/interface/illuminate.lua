@@ -3,7 +3,7 @@
 ---@type LazySpec
 return {
     'RRethy/vim-illuminate',
-    event = { 'LazyFile' },
+    event = 'LazyFile',
     opts = {
         disable_keymaps = true,
     },

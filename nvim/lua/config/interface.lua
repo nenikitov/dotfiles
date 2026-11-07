@@ -53,6 +53,7 @@ vim.opt.fillchars = {
 vim.opt.showtabline = 2
 vim.opt.laststatus = 3
 vim.opt.winborder = shared.icons.border
+vim.opt.cmdheight = 0
 --#endregion
 
 --#region Messages

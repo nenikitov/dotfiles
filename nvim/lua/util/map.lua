@@ -20,6 +20,43 @@ local opts_default = {
 ---| string
 ---| function
 
+---@class ne.util.map.Group
+---@field lhs string
+---@field desc string
+---@field mode ne.util.map.Mode
+---@field buffer? integer
+
+---@type table<string, ne.util.map.Group>
+local groups = {}
+---@type fun(group: ne.util.map.Group)[]
+local group_listeners = {}
+
+---@param lhs string
+---@param desc string
+---@param modes ne.util.map.Mode | ne.util.map.Mode[]
+---@param buffer? integer
+local function add_group(lhs, desc, modes, buffer)
+	if buffer == 0 then
+		buffer = vim.api.nvim_get_current_buf()
+	end
+
+	if type(modes) ~= 'table' then
+		modes = { modes }
+	end
+
+	for _, mode in ipairs(modes) do
+		local id = table.concat({ lhs, mode, tostring(buffer) }, '|')
+		if not groups[id] then
+			---@type ne.util.map.Group
+			local group = { lhs = lhs, desc = desc, mode = mode, buffer = buffer }
+			groups[id] = group
+			for _, listener in ipairs(group_listeners) do
+				listener(group)
+			end
+		end
+	end
+end
+
 ---@class ne.util.map.Binding
 ---@field private _modes ne.util.map.Mode | ne.util.map.Mode[]
 ---@field private _rhs ne.util.map.Rhs
@@ -42,7 +79,7 @@ end
 function Binding:label_groups()
 	local parent = self._node._parent
 	while parent and parent._parent do
-		vim.keymap.set(self._modes, parent._lhs, '<NOP>', { buffer = self._opts.buf, desc = parent._desc })
+		add_group(parent._lhs, parent._desc, self._modes, parent._buffer)
 		parent = parent._parent
 	end
 end
@@ -111,6 +148,15 @@ function Node:bind(modes, rhs, opts)
     return Binding.new(modes, rhs, merged, self)
 end
 
----@type ne.util.map.Node
-local M = Node.new('', '')
+---@class ne.util.map : ne.util.map.Node
+local M = Node.new('', '') --[[@as ne.util.map]]
+
+---@param listener fun(group: ne.util.map.Group)
+function M.on_group(listener)
+	for _, group in pairs(groups) do
+		listener(group)
+	end
+	table.insert(group_listeners, listener)
+end
+
 return M

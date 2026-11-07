@@ -50,6 +50,8 @@ M.handlers = {
     close_buffer = Handler.new('close_buffer', function(_) vim.cmd.bdelete() end),
     ---@param _ nil
     format_buffer = Handler.new('format_buffer', function(_) vim.lsp.buf.format({ async = true }) end),
+    ---@param _ nil
+    rename_symbol = Handler.new('rename_symbol', function(_) vim.lsp.buf.rename() end),
     ---@param direction ne.shared.plugins.Direction
     focus_window = Handler.new('focus_window', function(direction) vim.cmd.wincmd(window_keys[direction]) end),
     ---@param direction ne.shared.plugins.Direction

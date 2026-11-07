@@ -27,23 +27,24 @@ return {
     config = function(_, opts)
         require('ibl').setup(opts)
 
-        local group = util.vim.augroup('ne.plugin.indent_blankline_refresh')
-        vim.api.nvim_create_autocmd('CmdlineChanged', {
-            group = group,
-            pattern = { '/', '?' },
-            desc = 'Redraw indent guides while the search preview scrolls the view',
-            callback = function()
-                require('ibl').refresh(0)
-            end,
-        })
-        vim.api.nvim_create_autocmd('CmdlineLeave', {
-            group = group,
-            pattern = { '/', '?' },
-            desc = 'Redraw indent guides when the search ends or is cancelled',
-            callback = function()
-                vim.schedule(function()
-                    require('ibl').refresh(0)
-                end)
+        util.vim.autocmd_multiple_events({
+            -- The search preview scrolls the view without redrawing the guides
+            { 'CmdlineChanged', pattern = { '/', '?' } },
+            -- Ending or cancelling the search restores the view without redrawing the guides
+            { 'CmdlineLeave', pattern = { '/', '?' } },
+            -- Resizing vim can also auto scroll (horizontal scrolloff)
+            'VimResized',
+        }, {
+            group = util.vim.augroup('ne.plugin.indent_blankline_refresh'),
+            desc = 'Force-refresh indent-blankline UI on events upstream missed',
+            callback = function(args)
+                local function refresh() require('ibl').refresh(0) end
+                -- On leave, the view is restored after the event, so refresh after that
+                if args.event == 'CmdlineLeave' then
+                    vim.schedule(refresh)
+                else
+                    refresh()
+                end
             end,
         })
     end,
