@@ -54,6 +54,14 @@ M.handlers = {
     format_buffer = Handler.new('format_buffer', function(_) vim.lsp.buf.format({ async = true }) end),
     ---@param _ nil
     rename_symbol = Handler.new('rename_symbol', function(_) vim.lsp.buf.rename() end),
+    ---@param _ nil
+    show_references = Handler.new('show_references', function(_) vim.lsp.buf.references() end),
+    ---@param _ nil
+    show_implementations = Handler.new('show_implementations', function(_) vim.lsp.buf.implementation() end),
+    ---@param _ nil
+    show_definitions = Handler.new('show_definitions', function(_) vim.lsp.buf.definition() end),
+    ---@param _ nil
+    show_declarations = Handler.new('show_declarations', function(_) vim.lsp.buf.declaration() end),
     ---@param direction ne.shared.plugins.Direction
     focus_window = Handler.new('focus_window', function(direction) vim.cmd.wincmd(window_keys[direction]) end),
     ---@param direction ne.shared.plugins.Direction

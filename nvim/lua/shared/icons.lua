@@ -430,12 +430,18 @@ M.plugin = {
 }
 
 M.dashboard = {
-    new_file  = M.choose(' ', ''),
-    find_file = M.choose(' ', ''),
-    find_text = M.choose(' ', ''),
-    lazy      = M.choose(M.plugin.kind.manager, ''),
-    mason     = M.choose(M.plugin.kind.binary, ''),
-    quit      = M.choose(' ', ''),
+    actions = {
+        new_file  = M.choose(' ', ''),
+        find_file = M.choose(' ', ''),
+        find_text = M.choose(' ', ''),
+        lazy      = M.choose(M.plugin.kind.manager, ''),
+        mason     = M.choose(M.plugin.kind.binary, ''),
+        quit      = M.choose(' ', ''),
+    },
+    sections = {
+        keymaps = M.choose(' ', '[keys]'),
+        startup = M.choose('⚡ ', '[start]'),
+    },
 }
 
 M.logo = {

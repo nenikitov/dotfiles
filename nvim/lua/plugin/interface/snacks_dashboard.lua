@@ -155,25 +155,26 @@ return {
         return vim.tbl_deep_extend('force', opts, {
             dashboard = {
                 enabled = false,
+                preset = {
+                    keys = vim.tbl_map(
+                        function(item)
+                            return { icon = item.icon, key = key_label(item[1]:lhs()), desc = item[1]:desc() }
+                        end,
+                        {
+                            { shared.keys.buffer_new,   icon = shared.icons.dashboard.actions.new_file },
+                            { shared.keys.find_files,   icon = shared.icons.dashboard.actions.find_file },
+                            { shared.keys.find_grep,    icon = shared.icons.dashboard.actions.find_text },
+                            { shared.keys.plugin_lazy,  icon = shared.icons.dashboard.actions.lazy },
+                            { shared.keys.plugin_mason, icon = shared.icons.dashboard.actions.mason },
+                            { shared.keys.buffer_quit,  icon = shared.icons.dashboard.actions.quit },
+                        }
+                    ),
+                },
                 sections = {
                     { text = logo(shared.icons.logo.glyphs, shared.icons.logo.colors, shared.icons.logo.hls), align = 'center', padding = 1 },
-                    vim.list_extend(
-                        { gap = 1, padding = 1 },
-                        vim.tbl_map(
-                            function(item)
-                                return { icon = item.icon, label = key_label(item[1]:lhs()), desc = item[1]:desc() }
-                            end,
-                            {
-                                { shared.keys.buffer_new,   icon = shared.icons.dashboard.new_file },
-                                { shared.keys.find_files,   icon = shared.icons.dashboard.find_file },
-                                { shared.keys.find_grep,    icon = shared.icons.dashboard.find_text },
-                                { shared.keys.plugin_lazy,  icon = shared.icons.dashboard.lazy },
-                                { shared.keys.plugin_mason, icon = shared.icons.dashboard.mason },
-                                { shared.keys.buffer_quit,  icon = shared.icons.dashboard.quit },
-                            }
-                        )
-                    ),
-                    { section = 'startup' },
+                    { icon = shared.icons.dashboard.sections.keymaps, title = 'Keymaps', padding = 1 },
+                    { section = "keys", padding = 1 },
+                    { icon = shared.icons.dashboard.sections.startup, section = 'startup', align = 'left' },
                 },
             },
         })

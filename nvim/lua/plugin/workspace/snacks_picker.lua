@@ -57,6 +57,12 @@ return {
     opts = function(_, opts)
         local defaults = require('snacks.picker.config.defaults').defaults
 
+        local handlers = shared.plugins.handlers
+        handlers.show_references:set('snacks', picker('lsp_references'))
+        handlers.show_implementations:set('snacks', picker('lsp_implementations'))
+        handlers.show_definitions:set('snacks', picker('lsp_definitions'))
+        handlers.show_declarations:set('snacks', picker('lsp_declarations'))
+
         return vim.tbl_deep_extend('force', opts, {
             picker = {
                 enabled = true,
