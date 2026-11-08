@@ -1,0 +1,223 @@
+diff --git a/lua/snacks/indent.lua b/lua/snacks/indent.lua
+index dfeeace..1d4bad2 100644
+--- a/lua/snacks/indent.lua
++++ b/lua/snacks/indent.lua
+@@ -136,24 +136,21 @@ local function get_underline_hl(hl)
+   return ret
+ end
+ 
+---- Get the virtual text for the indent guide with
+---- the given indent level, left column and shiftwidth
+----@param indent number
++--- Get the extmarks for indent guides at the given columns
++---@param cols number[]
+ ---@param state snacks.indent.State
+ ---@param tabs? table<number, boolean>
+-local function get_extmarks(indent, state, tabs)
++local function get_extmarks(cols, state, tabs)
+   local kinds = {} ---@type string[]
+-  for i = 1, math.floor(indent / state.shiftwidth) do
+-    kinds[i] = tabs and tabs[(i - 1) * state.shiftwidth] and "t" or "s"
++  for i, c in ipairs(cols) do
++    kinds[i] = tabs and tabs[c] and "t" or "s"
+   end
+-  local key = indent
++  local key = table.concat(cols, ",")
+     .. ":"
+     .. table.concat(kinds)
+     .. ":"
+     .. state.leftcol
+     .. ":"
+-    .. state.shiftwidth
+-    .. ":"
+     .. state.indent_offset
+     .. ":"
+     .. (state.breakindent and "bi" or "")
+@@ -162,14 +159,10 @@ local function get_extmarks(indent, state, tabs)
+   end
+   stats.extmarks = stats.extmarks + 1
+ 
+-  local sw = state.shiftwidth
+-  indent = math.floor(indent / sw) -- full visible indents
+-  local offset = math.max(math.floor(state.indent_offset / sw), 0) -- offset for the scope
+   cache_extmarks[key] = {}
+-
+-  for i = 1 + offset, indent do
+-    local col = (i - 1) * sw - state.leftcol
+-    if col >= 0 then
++  for i, c in ipairs(cols) do
++    local col = c - state.leftcol
++    if c >= state.indent_offset and col >= 0 then
+       table.insert(cache_extmarks[key], {
+         virt_text = { { kinds[i] == "t" and config.indent.tab_char or config.indent.char, get_hl(i, config.indent.hl) } },
+         virt_text_pos = "overlay",
+@@ -209,6 +202,8 @@ local function get_tabs(state, l)
+   return state.tabs[l]
+ end
+ 
++local scope_level
++
+ ---@param win number
+ ---@param buf number
+ ---@param top number
+@@ -235,6 +230,7 @@ local function get_state(win, buf, top, bottom)
+     blanks = prev and prev.blanks or {},
+     tabs = prev and prev.tabs or {},
+     tabstop = vim.bo[buf].tabstop,
++    cols = {}, ---@type table<number, number[]>
+     sources = {}, ---@type table<number, number>
+     indent_offset = 0, -- the start column of the indent guides
+     breakindent = vim.wo[win].breakindent and vim.wo[win].wrap,
+@@ -282,41 +278,57 @@ function M.on_win(win, buf, top, bottom)
+   -- Calculate and render indents
+   local indents = state.indents
+   vim.api.nvim_buf_call(buf, function()
+-    local parent_indent, current_indent ---@type number, number
++    local function get_indent(l)
++      indents[l] = indents[l] or vim.fn.indent(l)
++      return indents[l]
++    end
++
++    local stack = {} ---@type number[]
++    local limit = math.huge
++    local l = vim.fn.prevnonblank(state.top - 1)
++    while l > 0 and limit > 0 do
++      local indent = get_indent(l)
++      if indent < limit then
++        table.insert(stack, 1, indent)
++        limit = indent
++      end
++      l = vim.fn.prevnonblank(l - 1)
++    end
++
++    local cols = {} ---@type number[]
+     for l = state.top, state.bottom do
+-      local indent = indents[l]
+-      if not indent then
+-        stats.indents = stats.indents + 1
+-        local next = vim.fn.nextnonblank(l)
+-        -- Indent for a blank line is the minimum of the previous and next non-blank line.
+-        -- If the previous and next non-blank lines have different indents, add shiftwidth.
+-        if next ~= l then
+-          state.blanks[l] = true
+-          local prev = vim.fn.prevnonblank(l)
+-          indents[prev] = indents[prev] or vim.fn.indent(prev)
+-          indents[next] = indents[next] or vim.fn.indent(next)
+-          indent = math.min(indents[prev], indents[next])
+-          if indents[prev] ~= indents[next] and indent > 0 then
+-            indent = indent + state.shiftwidth
++      local source = l
++      local next = vim.fn.nextnonblank(l)
++      if next ~= l then
++        -- Blank lines keep the guides shared by the surrounding lines.
++        -- When those differ, the guide of the shallower line continues as well.
++        state.blanks[l] = true
++        local prev = vim.fn.prevnonblank(l)
++        local prev_i = get_indent(prev)
++        local next_i = next > 0 and get_indent(next) or 0
++        source = next_i > prev_i and next or prev
++        local min = math.min(prev_i, next_i)
++        local continue = prev_i ~= next_i and min > 0
++        indents[l] = continue and min + state.shiftwidth or min
++        cols = {}
++        for _, c in ipairs(stack) do
++          if c < min or (continue and c == min) then
++            cols[#cols + 1] = c
+           end
+-        else
+-          indent = vim.fn.indent(l)
+         end
+-        indents[l] = indent
+-      end
+-      if indent ~= current_indent then
+-        parent_indent = current_indent or indent
+-        current_indent = indent
+-      end
+-      indent = math.min(indent, parent_indent + state.shiftwidth)
+-      local source = l
+-      if state.blanks[l] then
+-        local prev, next = vim.fn.prevnonblank(l), vim.fn.nextnonblank(l)
+-        source = next > 0 and (indents[next] or 0) > (indents[prev] or 0) and next or prev
++      else
++        stats.indents = stats.indents + 1
++        local indent = get_indent(l)
++        while #stack > 0 and stack[#stack] >= indent do
++          stack[#stack] = nil
++        end
++        cols = { unpack(stack) }
++        stack[#stack + 1] = indent
+       end
++      state.cols[l] = cols
+       state.sources[l] = source
+       local tabs = config.indent.tab_char and get_tabs(state, source) or nil
+-      local extmarks = show_indent and indent > 0 and get_extmarks(indent, state, tabs)
++      local extmarks = show_indent and #cols > 0 and get_extmarks(cols, state, tabs)
+       for _, opts in ipairs(extmarks or {}) do
+         vim.api.nvim_buf_set_extmark(buf, ns, l - 1, 0, opts)
+       end
+@@ -325,7 +337,7 @@ function M.on_win(win, buf, top, bottom)
+ 
+   -- Render scope
+   if scope and (scope:size() > 1 or vim.g.snacks_indent_overlap) then
+-    show_chunk = show_chunk and (scope.indent or 0) >= state.shiftwidth
++    show_chunk = show_chunk and select(2, scope_level(scope, state)) ~= nil
+     if show_chunk then
+       M.render_chunk(scope, state)
+     elseif show_scope then
+@@ -348,13 +360,35 @@ local function bounds(scope, state)
+   return from, to
+ end
+ 
++---@param scope snacks.indent.Scope
++---@param state snacks.indent.State
++---@return number level, number? parent
++scope_level = function(scope, state)
++  local indent = scope.indent or 0
++  local from, to = bounds(scope, state)
++  for l = from, to do
++    local cols = state.cols[l]
++    if cols and not state.blanks[l] and (state.indents[l] or 0) >= indent then
++      local level, parent = 1, nil ---@type number, number?
++      for _, c in ipairs(cols) do
++        if c < indent then
++          level, parent = level + 1, c
++        end
++      end
++      return level, parent
++    end
++  end
++  local parent = indent - state.shiftwidth
++  return math.floor(indent / state.shiftwidth) + 1, parent >= 0 and parent or nil
++end
++
+ --- Render the scope overlapping the given range
+ ---@param scope snacks.indent.Scope
+ ---@param state snacks.indent.State
+ ---@private
+ function M.render_scope(scope, state)
+   local indent = (scope.indent or 2)
+-  local hl = get_hl(math.floor(scope.indent / state.shiftwidth) + 1, config.scope.hl)
++  local hl = get_hl((scope_level(scope, state)), config.scope.hl)
+   local from, to = bounds(scope, state)
+   local col = indent - state.leftcol
+ 
+@@ -399,13 +433,16 @@ end
+ ---@param state snacks.indent.State
+ ---@private
+ function M.render_chunk(scope, state)
+-  local indent = (scope.indent or 2)
+-  local col = indent - state.leftcol - state.shiftwidth
++  local level, parent = scope_level(scope, state)
++  if not parent then
++    return
++  end
++  local col = parent - state.leftcol
+   if col < 0 then -- scope is hidden
+     return
+   end
+   local from, to = bounds(scope, state)
+-  local hl = get_hl(math.floor(scope.indent / state.shiftwidth) + 1, config.chunk.hl)
++  local hl = get_hl(level - 1, config.chunk.hl)
+   local char = config.chunk.char
+ 
+   ---@param l number

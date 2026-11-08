@@ -1,0 +1,13 @@
+diff --git a/lua/snacks/indent.lua b/lua/snacks/indent.lua
+index 997f66d..09a8ac7 100644
+--- a/lua/snacks/indent.lua
++++ b/lua/snacks/indent.lua
+@@ -194,7 +194,7 @@ local function get_state(win, buf, top, bottom)
+     is_current = win == vim.api.nvim_get_current_win(),
+     top = top,
+     bottom = bottom,
+-    leftcol = vim.api.nvim_buf_call(buf, vim.fn.winsaveview).leftcol --[[@as number]],
++    leftcol = vim.api.nvim_win_call(win, vim.fn.winsaveview).leftcol --[[@as number]],
+     shiftwidth = vim.bo[buf].shiftwidth,
+     indents = prev and prev.indents or { [0] = 0 },
+     blanks = prev and prev.blanks or {},

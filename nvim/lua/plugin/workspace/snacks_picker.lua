@@ -114,7 +114,6 @@ return {
                     },
                 },
                 icons = {
-                    -- TODO: Redefine spinner
                     files = {
                         dir = shared.icons.folder.regular,
                         dir_open = shared.icons.folder.regular_open,
@@ -285,6 +284,10 @@ return {
                             -- Other
                             ['?'] = { 'toggle_help_preview' },
                         }),
+                        wo = {
+                            statuscolumn = "%{%v:lua.require('statuscol').get_statuscol_string()%}",
+                            list = true,
+                        },
                     },
                 },
             },

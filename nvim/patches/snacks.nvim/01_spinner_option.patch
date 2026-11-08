@@ -1,0 +1,35 @@
+diff --git a/lua/snacks/init.lua b/lua/snacks/init.lua
+index 9e73643..68cdc21 100644
+--- a/lua/snacks/init.lua
++++ b/lua/snacks/init.lua
+@@ -18,9 +18,14 @@ M.version = "2.31.0" -- x-release-please-version
+ ---@field example? string
+ ---@field config? fun(opts: table, defaults: table)
+ 
++---@class snacks.spinner.Config
++---@field frames? string[]
++---@field interval? number milliseconds per frame
++
+ ---@class snacks.Config: snacks.plugins.Config
+ ---@field styles? table<string, snacks.win.Config>
+ ---@field image? snacks.image.Config|{}
++---@field spinner? snacks.spinner.Config
+ local config = {
+   image = {
+     -- define these here, so that we don't need to load the image module
+diff --git a/lua/snacks/util/init.lua b/lua/snacks/util/init.lua
+index 5ff7843..a7ae62f 100644
+--- a/lua/snacks/util/init.lua
++++ b/lua/snacks/util/init.lua
+@@ -430,8 +430,9 @@ function M.is_float(win)
+ end
+ 
+ function M.spinner()
+-  local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+-  return spinner[math.floor(uv.hrtime() / (1e6 * 80)) % #spinner + 1]
++  local opts = Snacks.config.spinner
++  local spinner = opts.frames or { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
++  return spinner[math.floor(uv.hrtime() / (1e6 * (opts.interval or 80))) % #spinner + 1]
+ end
+ 
+ M.base64 = vim.base64 and vim.base64.encode

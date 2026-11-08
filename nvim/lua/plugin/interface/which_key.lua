@@ -46,7 +46,7 @@ return {
             -- The popup keeps its old size when the terminal is resized
             'VimResized',
         }, {
-            group = util.vim.augroup('ne.plugin.which_key_refresh'),
+            group = util.vim.augroup('ne.plugin.which_key.refresh'),
             desc = 'Force-refresh which-key UI on events upstream missed',
             callback = function()
                 require('which-key.view').update()

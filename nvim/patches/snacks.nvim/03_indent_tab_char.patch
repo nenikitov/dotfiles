@@ -1,0 +1,123 @@
+diff --git a/lua/snacks/indent.lua b/lua/snacks/indent.lua
+index 09a8ac7..dfeeace 100644
+--- a/lua/snacks/indent.lua
++++ b/lua/snacks/indent.lua
+@@ -14,6 +14,7 @@ local defaults = {
+     priority = 1,
+     enabled = true, -- enable indent guides
+     char = "│",
++    tab_char = nil, ---@type string?
+     only_scope = false, -- only show indent guides of the scope
+     only_current = false, -- only show indent guides in the current window
+     hl = "SnacksIndent", ---@type string|string[] hl groups for indent guides
+@@ -52,6 +53,7 @@ local defaults = {
+     enabled = true, -- enable highlighting the current scope
+     priority = 200,
+     char = "│",
++    tab_char = nil, ---@type string?
+     underline = false, -- underline the start of the scope
+     only_current = false, -- only show scope in the current window
+     hl = "SnacksIndentScope", ---@type string|string[] hl group for scopes
+@@ -138,8 +140,15 @@ end
+ --- the given indent level, left column and shiftwidth
+ ---@param indent number
+ ---@param state snacks.indent.State
+-local function get_extmarks(indent, state)
++---@param tabs? table<number, boolean>
++local function get_extmarks(indent, state, tabs)
++  local kinds = {} ---@type string[]
++  for i = 1, math.floor(indent / state.shiftwidth) do
++    kinds[i] = tabs and tabs[(i - 1) * state.shiftwidth] and "t" or "s"
++  end
+   local key = indent
++    .. ":"
++    .. table.concat(kinds)
+     .. ":"
+     .. state.leftcol
+     .. ":"
+@@ -162,7 +171,7 @@ local function get_extmarks(indent, state)
+     local col = (i - 1) * sw - state.leftcol
+     if col >= 0 then
+       table.insert(cache_extmarks[key], {
+-        virt_text = { { config.indent.char, get_hl(i, config.indent.hl) } },
++        virt_text = { { kinds[i] == "t" and config.indent.tab_char or config.indent.char, get_hl(i, config.indent.hl) } },
+         virt_text_pos = "overlay",
+         virt_text_win_col = col,
+         hl_mode = "combine",
+@@ -175,6 +184,31 @@ local function get_extmarks(indent, state)
+   return cache_extmarks[key]
+ end
+ 
++---@param state snacks.indent.State
++---@param l number
++---@return table<number, boolean>?
++local function get_tabs(state, l)
++  if l < 1 then
++    return nil
++  end
++  if not state.tabs[l] then
++    local ws = vim.api.nvim_buf_get_lines(state.buf, l - 1, l, false)[1]:match("^%s*")
++    local tabs, vcol = {}, 0
++    for i = 1, #ws do
++      local tab = ws:sub(i, i) == "\t"
++      local width = tab and state.tabstop - vcol % state.tabstop or 1
++      if tab then
++        for c = vcol, vcol + width - 1 do
++          tabs[c] = true
++        end
++      end
++      vcol = vcol + width
++    end
++    state.tabs[l] = tabs
++  end
++  return state.tabs[l]
++end
++
+ ---@param win number
+ ---@param buf number
+ ---@param top number
+@@ -187,6 +221,7 @@ local function get_state(win, buf, top, bottom)
+   ---@class snacks.indent.State
+   ---@field indents table<number, number>
+   ---@field blanks table<number, boolean>
++  ---@field tabs table<number, table<number, boolean>>
+   local state = {
+     win = win,
+     buf = buf,
+@@ -198,6 +233,9 @@ local function get_state(win, buf, top, bottom)
+     shiftwidth = vim.bo[buf].shiftwidth,
+     indents = prev and prev.indents or { [0] = 0 },
+     blanks = prev and prev.blanks or {},
++    tabs = prev and prev.tabs or {},
++    tabstop = vim.bo[buf].tabstop,
++    sources = {}, ---@type table<number, number>
+     indent_offset = 0, -- the start column of the indent guides
+     breakindent = vim.wo[win].breakindent and vim.wo[win].wrap,
+   }
+@@ -271,7 +309,14 @@ function M.on_win(win, buf, top, bottom)
+         current_indent = indent
+       end
+       indent = math.min(indent, parent_indent + state.shiftwidth)
+-      local extmarks = show_indent and indent > 0 and get_extmarks(indent, state)
++      local source = l
++      if state.blanks[l] then
++        local prev, next = vim.fn.prevnonblank(l), vim.fn.nextnonblank(l)
++        source = next > 0 and (indents[next] or 0) > (indents[prev] or 0) and next or prev
++      end
++      state.sources[l] = source
++      local tabs = config.indent.tab_char and get_tabs(state, source) or nil
++      local extmarks = show_indent and indent > 0 and get_extmarks(indent, state, tabs)
+       for _, opts in ipairs(extmarks or {}) do
+         vim.api.nvim_buf_set_extmark(buf, ns, l - 1, 0, opts)
+       end
+@@ -334,8 +379,9 @@ function M.render_scope(scope, state)
+   for l = from, to do
+     local i = state.indents[l]
+     if (i and i > indent) or vim.g.snacks_indent_overlap or state.blanks[l] then
++      local tabs = config.scope.tab_char and state.sources[l] and get_tabs(state, state.sources[l])
+       vim.api.nvim_buf_set_extmark(scope.buf, ns, l - 1, 0, {
+-        virt_text = { { config.scope.char, hl } },
++        virt_text = { { tabs and tabs[indent] and config.scope.tab_char or config.scope.char, hl } },
+         virt_text_pos = "overlay",
+         virt_text_win_col = col,
+         hl_mode = "combine",

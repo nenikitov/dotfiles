@@ -55,18 +55,11 @@ return {
                 'WinNew',
                 -- Having a noice CMD popup makes the scrollbar lag one resize behind
                 'VimResized',
-                -- Git signs add a sign column to the scrollbar, which hides it until the next refresh widens it
-                { 'User', pattern = 'GitSignsUpdate' },
             }, {
-                group = util.vim.augroup('ne.plugin.satellite_refresh'),
+                group = util.vim.augroup('ne.plugin.satellite.refresh'),
                 desc = 'Force-refresh satellite UI on events upstream missed',
-                callback = function(args)
-                    -- Satellite places the git signs asynchronously in its own handler for the same event, so refresh after it
-                    if args.event == 'User' then
-                        vim.defer_fn(vim.cmd.SatelliteRefresh, 50)
-                    else
-                        vim.cmd.SatelliteRefresh()
-                    end
+                callback = function()
+                    vim.cmd.SatelliteRefresh()
                 end,
             })
         end,

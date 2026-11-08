@@ -36,7 +36,7 @@ local function show(buf, win)
 
     local shortmess = vim.o.shortmess
     vim.opt.shortmess:append('I')
-    local group = util.vim.augroup('ne.plugin.snacks_dashboard_overlay_watch')
+    local group = util.vim.augroup('ne.plugin.snacks_dashboard.overlay_watch')
     local dashboard_buf = vim.api.nvim_create_buf(false, true)
 
     local function hide()
@@ -98,19 +98,6 @@ local function show(buf, win)
         callback = function()
             vim.api.nvim_win_set_config(dashboard_win, layout(win))
         end,
-    })
-
-    util.vim.autocmd({
-        -- Plugins loaded after the first draw are missing from the startup stats
-        { 'User', pattern = 'VeryLazy' },
-    }, {
-        group = group,
-        desc = 'Redraw dashboard overlay with final startup stats',
-        once = true,
-        callback = vim.schedule_wrap(function()
-            dashboard.lazy_stats = nil
-            dashboard.update()
-        end),
     })
 end
 
@@ -181,7 +168,7 @@ return {
     end,
     init = function()
         util.vim.autocmd({ 'UIEnter' }, {
-            group = util.vim.augroup('ne.plugin.snacks_dashboard_overlay'),
+            group = util.vim.augroup('ne.plugin.snacks_dashboard.overlay'),
             desc = 'Show snacks dashboard as an overlay on the startup buffer',
             once = true,
             nested = true,

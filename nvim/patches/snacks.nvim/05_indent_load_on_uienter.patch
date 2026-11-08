@@ -1,0 +1,17 @@
+diff --git a/lua/snacks/init.lua b/lua/snacks/init.lua
+index 68cdc21..70cbcb7 100644
+--- a/lua/snacks/init.lua
++++ b/lua/snacks/init.lua
+@@ -160,10 +160,10 @@ function M.setup(opts)
+ 
+   local events = {
+     BufReadPre = { "bigfile", "image" },
+-    BufReadPost = { "quickfile", "indent" },
++    BufReadPost = { "quickfile" },
+     BufEnter = { "explorer" },
+     LspAttach = { "words" },
+-    UIEnter = { "dashboard", "scroll", "input", "scope", "picker" },
++    UIEnter = { "dashboard", "scroll", "input", "scope", "picker", "indent" },
+   }
+ 
+   ---@param event string

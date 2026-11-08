@@ -43,4 +43,25 @@ function M.debounce(delay, task)
     end
 end
 
+---@param on_first fun()
+---@param on_last fun()
+---@return fun() enter
+---@return fun() leave
+function M.refcount(on_first, on_last)
+    local count = 0
+    local function enter()
+        count = count + 1
+        if count == 1 then
+            on_first()
+        end
+    end
+    local function leave()
+        count = math.max(count - 1, 0)
+        if count == 0 then
+            on_last()
+        end
+    end
+    return enter, leave
+end
+
 return M

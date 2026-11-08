@@ -11,12 +11,14 @@ return {
         indent = {
             indent = {
                 char = shared.icons.space.indent.space,
+                tab_char = shared.icons.space.indent.tab,
             },
             animate = {
                 enabled = false,
             },
             scope = {
                 char = shared.icons.space.indent.space,
+                tab_char = shared.icons.space.indent.tab,
             },
         },
     },

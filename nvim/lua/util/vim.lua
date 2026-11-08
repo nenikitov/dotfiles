@@ -41,4 +41,20 @@ function M.find_hl(hls)
     return nil
 end
 
+---@param msg string
+---@param level? integer
+---@param opts? table
+function M.delayed_notify(msg, level, opts)
+    local function notify()
+        vim.schedule(function()
+            vim.notify(msg, level, opts)
+        end)
+    end
+    if vim.v.vim_did_enter == 1 then
+        notify()
+    else
+        vim.api.nvim_create_autocmd('VimEnter', { once = true, callback = notify })
+    end
+end
+
 return M

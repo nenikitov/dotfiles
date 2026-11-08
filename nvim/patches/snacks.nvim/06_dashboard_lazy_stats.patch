@@ -1,0 +1,30 @@
+diff --git a/lua/snacks/dashboard.lua b/lua/snacks/dashboard.lua
+index 4047780..1ac1313 100644
+--- a/lua/snacks/dashboard.lua
++++ b/lua/snacks/dashboard.lua
+@@ -274,6 +274,16 @@ function D:init()
+   self.on("Update", function()
+     self:update()
+   end, self.augroup)
++  vim.api.nvim_create_autocmd("User", {
++    group = self.augroup,
++    pattern = "VeryLazy",
++    once = true,
++    callback = vim.schedule_wrap(function()
++      if vim.api.nvim_buf_is_valid(self.buf) then
++        self:update()
++      end
++    end),
++  })
+ end
+ 
+ ---@return {width:number, height:number}
+@@ -1092,7 +1102,7 @@ end
+ ---@return snacks.dashboard.Section?
+ function M.sections.startup(opts)
+   opts = opts or {}
+-  M.lazy_stats = M.lazy_stats and M.lazy_stats.startuptime > 0 and M.lazy_stats or require("lazy.stats").stats()
++  M.lazy_stats = require("lazy.stats").stats()
+   local ms = (math.floor(M.lazy_stats.startuptime * 100 + 0.5) / 100)
+   local icon = opts.icon or "⚡ "
+   return {

@@ -1,0 +1,62 @@
+diff --git a/lua/satellite/handlers.lua b/lua/satellite/handlers.lua
+index 210c758..9473e3b 100644
+--- a/lua/satellite/handlers.lua
++++ b/lua/satellite/handlers.lua
+@@ -2,6 +2,7 @@ local api = vim.api
+ 
+ local user_config = require 'satellite.config'.user_config
+ local async = require 'satellite.async'
++local util = require 'satellite.util'
+ 
+ --- @class Satellite.Mark
+ --- Row of the mark, use `require('satellite.util').row_to_barpos(winid, lnum)`
+@@ -135,6 +136,10 @@ function Handler:render(winid, bwinid)
+   for _, m in ipairs(marks) do
+     self:apply_mark(bbufnr, m, max_pos)
+   end
++
++  if api.nvim_win_is_valid(bwinid) and util.signwidth(bbufnr) ~= vim.w[bwinid].width - 1 then
++    require('satellite.view').schedule_refresh()
++  end
+ end
+ 
+ --- @param spec Satellite.Handler
+diff --git a/lua/satellite/util.lua b/lua/satellite/util.lua
+index aed5818..d7b9f89 100644
+--- a/lua/satellite/util.lua
++++ b/lua/satellite/util.lua
+@@ -160,6 +160,13 @@ function M.virtual_topline_lookup(winid)
+   return virtual_topline_lookup_cache[winid]
+ end
+ 
++--- @param bufnr integer
++--- @return integer
++function M.signwidth(bufnr)
++  local signs = api.nvim_buf_get_extmarks(bufnr, -1, 0, -1, { type = 'sign', limit = 1 })
++  return #signs > 0 and 2 or 0
++end
++
+ --- Round to the nearest integer.
+ --- WARN: .5 rounds to the right on the number line, including for negatives
+ --- (which would not result in rounding up in magnitude).
+diff --git a/lua/satellite/view.lua b/lua/satellite/view.lua
+index 3617ead..45899c8 100644
+--- a/lua/satellite/view.lua
++++ b/lua/satellite/view.lua
+@@ -124,13 +124,9 @@ local function get_or_create_view(winid)
+ 
+   local bar_winid = get_bar_winid(winid)
+   if bar_winid then
+-    local bar_wininfo = vim.fn.getwininfo(bar_winid)[1]
+-    -- wininfo can be nil when pressing <C-w>o in help buffers
+-    if bar_wininfo then
+-      local signwidth = bar_wininfo.textoff
+-      cfg.col = cfg.col - signwidth
+-      cfg.width = cfg.width + signwidth
+-    end
++    local signwidth = util.signwidth(api.nvim_win_get_buf(bar_winid))
++    cfg.col = cfg.col - signwidth
++    cfg.width = cfg.width + signwidth
+   end
+ 
+   if bar_winid and api.nvim_win_is_valid(bar_winid) then

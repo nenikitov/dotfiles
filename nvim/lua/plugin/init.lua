@@ -4,11 +4,7 @@ local util = require('util')
 -- HACK: Needed on Ubuntu
 local parser_paths = vim.tbl_map(vim.fs.dirname, vim.api.nvim_get_runtime_file('parser', true))
 
-local path = vim.fs.joinpath(
-    vim.fn.stdpath('data'),
-    'lazy',
-    'lazy.nvim'
-)
+local path = vim.fs.joinpath(util.lazy.plugins_dir, 'lazy.nvim')
 
 if not util.fs.exists(path) then
     local out = vim.fn.system({
@@ -29,6 +25,8 @@ end
 
 vim.opt.rtp:prepend(path)
 
+util.lazy.setup_patches()
+
 -- Event to signal that a file was opened
 local Event = require('lazy.core.handler.event')
 Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'FileType' } }
@@ -38,6 +36,7 @@ require('lazy').setup({
         function(dir) return { import = dir } end,
         util.fs.discover_dir('plugin', { ignore_init = true }).dirs
     ),
+    root = util.lazy.plugins_dir,
     defaults = { lazy = true },
     change_detection = { notify = false },
     ui = {
@@ -96,14 +95,10 @@ shared.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):
     vim.cmd.restart({
         args = {
             'lua',
-            ([[
-                require("lazy").load({ plugins = %s })
-                vim.cmd.source(%q)
-            ]]):format(
+            ('require("lazy").load({ plugins = %s }); vim.cmd.source(%q)'):format(
                 vim.inspect(help_plugins, { newline = ' ', indent = '' }),
                 session
-            )
+            ),
         },
-        bang = true,
     })
 end):set()

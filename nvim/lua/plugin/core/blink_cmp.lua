@@ -149,7 +149,7 @@ return {
             -- The menu keeps its position when the terminal is resized while the command line is open
             'VimResized',
         }, {
-            group = util.vim.augroup('ne.plugin.blink_cmp_refresh'),
+            group = util.vim.augroup('ne.plugin.blink_cmp.refresh'),
             desc = 'Force-refresh blink.cmp UI on events upstream missed',
             callback = function()
                 vim.schedule(function()
