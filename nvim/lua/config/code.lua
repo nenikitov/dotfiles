@@ -77,6 +77,7 @@ shared.keys.code:k('r', 'Show references'):bind('n', shared.plugins.handlers.sho
 shared.keys.code:k('i', 'Show implementations'):bind('n', shared.plugins.handlers.show_implementations:bind()):set()
 shared.keys.code:k('d', 'Show definition'):bind('n', shared.plugins.handlers.show_definitions:bind()):set()
 shared.keys.code:k('D', 'Show declaration'):bind('n', shared.plugins.handlers.show_declarations:bind()):set()
+shared.keys.code:k('s', 'Show symbols'):bind('n', shared.plugins.handlers.show_workspace_symbols:bind()):set()
 shared.keys.code:k('a', 'Run code actions'):bind({ 'n', 'x' }, function() vim.lsp.buf.code_action() end):set()
 shared.keys.code:k('A', 'Run code lens'):bind('n', function() vim.lsp.codelens.run() end):set()
 shared.keys.code:k('n', 'Rename'):bind('n', shared.plugins.handlers.rename_symbol:bind()):set()

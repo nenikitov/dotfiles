@@ -18,7 +18,7 @@ return {
             :bind({'n', 'x', 'o'}, function() require('dropbar.api').select_next_context() end)
             :spec(),
         shared.keys.find
-            :k(';', 'context')
+            :k(';', 'Context')
             :bind('n', function() require('dropbar.api').pick() end)
             :spec(),
     },

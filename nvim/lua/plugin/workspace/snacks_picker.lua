@@ -62,6 +62,7 @@ return {
         handlers.show_implementations:set('snacks', picker('lsp_implementations'))
         handlers.show_definitions:set('snacks', picker('lsp_definitions'))
         handlers.show_declarations:set('snacks', picker('lsp_declarations'))
+        handlers.show_workspace_symbols:set('snacks', picker('lsp_workspace_symbols'))
 
         return vim.tbl_deep_extend('force', opts, {
             picker = {

@@ -103,6 +103,7 @@ shared.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):
                 vim.inspect(help_plugins, { newline = ' ', indent = '' }),
                 session
             )
-        }
+        },
+        bang = true,
     })
 end):set()

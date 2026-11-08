@@ -9,6 +9,7 @@ local icons = shared.icons.space.indent
 ---@type LazySpec
 return {
     'lukas-reineke/indent-blankline.nvim',
+    enabled = false,
     main = 'ibl',
     event = {'LazyFile', 'VeryLazy'},
     ---@type ibl.config

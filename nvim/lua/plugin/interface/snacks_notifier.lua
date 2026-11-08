@@ -19,5 +19,10 @@ return {
             },
             top_down = false,
         },
+        styles = {
+            notification = {
+                winblend = 0,
+            },
+        }
     },
 }

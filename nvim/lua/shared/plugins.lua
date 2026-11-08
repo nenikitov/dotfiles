@@ -50,6 +50,13 @@ local resize_keys = { left = '<', down = '-', up = '+', right = '>' }
 M.handlers = {
     ---@param _ nil
     close_buffer = Handler.new('close_buffer', function(_) vim.cmd.bdelete() end),
+    ---@param direction ne.shared.plugins.Direction
+    focus_window = Handler.new('focus_window', function(direction) vim.cmd.wincmd(window_keys[direction]) end),
+    ---@param direction ne.shared.plugins.Direction
+    swap_window = Handler.new('swap_window', function(direction) vim.cmd.wincmd(window_keys[direction]:upper()) end),
+    ---@param direction ne.shared.plugins.Direction
+    resize_window = Handler.new('resize_window', function(direction) vim.cmd('3wincmd ' .. resize_keys[direction]) end),
+
     ---@param _ nil
     format_buffer = Handler.new('format_buffer', function(_) vim.lsp.buf.format({ async = true }) end),
     ---@param _ nil
@@ -62,12 +69,8 @@ M.handlers = {
     show_definitions = Handler.new('show_definitions', function(_) vim.lsp.buf.definition() end),
     ---@param _ nil
     show_declarations = Handler.new('show_declarations', function(_) vim.lsp.buf.declaration() end),
-    ---@param direction ne.shared.plugins.Direction
-    focus_window = Handler.new('focus_window', function(direction) vim.cmd.wincmd(window_keys[direction]) end),
-    ---@param direction ne.shared.plugins.Direction
-    swap_window = Handler.new('swap_window', function(direction) vim.cmd.wincmd(window_keys[direction]:upper()) end),
-    ---@param direction ne.shared.plugins.Direction
-    resize_window = Handler.new('resize_window', function(direction) vim.cmd('3wincmd ' .. resize_keys[direction]) end),
+    ---@param _ nil
+    show_workspace_symbols = Handler.new('show_workspace_symbols', function(_) vim.lsp.buf.workspace_symbol() end),
 }
 
 return M

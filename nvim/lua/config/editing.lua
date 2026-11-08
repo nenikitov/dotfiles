@@ -106,7 +106,7 @@ util.vim.autocmd({ 'FileType' }, {
     group = util.vim.augroup('ne.config.remove_filetype_overrides'),
     desc = 'Reset options changed by filetype plugins to their global values',
     callback = function(args)
-        local keep_global = {
+        local restore_global = {
             'formatoptions',
             'textwidth',
             'wrap',
@@ -115,14 +115,13 @@ util.vim.autocmd({ 'FileType' }, {
         }
         local keep_indent = {
             make = true,
-            scdoc = true,
         }
 
         if not keep_indent[args.match] then
-            vim.list_extend(keep_global, { 'expandtab', 'tabstop', 'shiftwidth', 'softtabstop' })
+            vim.list_extend(restore_global, { 'expandtab', 'tabstop', 'shiftwidth', 'softtabstop' })
         end
 
-		for _, name in ipairs(keep_global) do
+		for _, name in ipairs(restore_global) do
             vim.opt_local[name] = vim.opt_global[name]:get()
         end
     end
