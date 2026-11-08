@@ -113,6 +113,7 @@ return {
                     },
                 },
                 icons = {
+                    -- TODO: Redefine spinner
                     files = {
                         dir = shared.icons.folder.regular,
                         dir_open = shared.icons.folder.regular_open,

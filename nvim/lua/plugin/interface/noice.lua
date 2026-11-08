@@ -93,6 +93,13 @@ return {
             inc_rename = true,
             command_palette = true,
         },
+        ---@type NoiceConfigViews
+        views = {
+            popup = { border = { style = vim.o.winborder } },
+            cmdline_popup = { border = { style = vim.o.winborder } },
+            cmdline_input = { border = { style = vim.o.winborder } },
+            confirm = { border = { style = vim.o.winborder } },
+        }
     },
     ---@diagnostic enable: missing-fields
     config = function(_, opts)
