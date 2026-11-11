@@ -8,10 +8,17 @@ return {
     shared.plugins.names.snacks,
     lazy = false,
     priority = 1000,
-    ---@type snacks.Config
-    opts = {
-        spinner = {
-            frames = shared.icons.ui.progress.spinner,
-        },
-    },
+    ---@return snacks.Config
+    opts = function(_, opts)
+        local handlers = shared.plugins.handlers
+        handlers.close_buffer:set('snacks_delete', function() require('snacks').bufdelete() end)
+
+        vim.print = require('snacks').debug.inspect
+
+        return vim.tbl_deep_extend('force', opts, {
+            spinner = {
+                frames = shared.icons.ui.progress.spinner,
+            },
+        })
+    end
 }

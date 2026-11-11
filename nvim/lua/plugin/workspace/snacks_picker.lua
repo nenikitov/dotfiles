@@ -55,14 +55,14 @@ return {
     ---@param opts snacks.Config
     ---@return snacks.Config
     opts = function(_, opts)
-        local defaults = require('snacks.picker.config.defaults').defaults
-
         local handlers = shared.plugins.handlers
         handlers.show_references:set('snacks', picker('lsp_references'))
         handlers.show_implementations:set('snacks', picker('lsp_implementations'))
         handlers.show_definitions:set('snacks', picker('lsp_definitions'))
         handlers.show_declarations:set('snacks', picker('lsp_declarations'))
         handlers.show_workspace_symbols:set('snacks', picker('lsp_workspace_symbols'))
+
+        local defaults = require('snacks.picker.config.defaults').defaults
 
         return vim.tbl_deep_extend('force', opts, {
             picker = {
@@ -74,15 +74,16 @@ return {
                     colorschemes = {
                         layout = { preset = 'vscode' },
                         preview = 'none',
-                        on_change = function(picker, item)
-                            local state = picker.preview.state
-                            state.original = state.original or { name = vim.g.colors_name or 'default', background = vim.o.background }
+                        on_change = function(p, item)
+                            local state = p.preview.state
+                            state.original = state.original or
+                            { name = vim.g.colors_name or 'default', background = vim.o.background }
                             if item then
                                 vim.cmd.colorscheme(item.text)
                             end
                         end,
-                        on_close = function(picker)
-                            local original = picker.preview.state.original
+                        on_close = function(p)
+                            local original = p.preview.state.original
                             if original then
                                 vim.cmd.colorscheme(original.name)
                                 vim.o.background = original.background
@@ -108,8 +109,8 @@ return {
                             border = true,
                             title = '{title} {live} {flags}',
                             title_pos = 'center',
-                            { win = 'input', height = 1, border = 'bottom' },
-                            { win = 'list', border = 'none' },
+                            { win = 'input', height = 1,     border = 'bottom' },
+                            { win = 'list',  border = 'none' },
                         },
                     },
                 },

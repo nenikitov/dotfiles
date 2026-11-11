@@ -21,7 +21,9 @@ return {
         },
         styles = {
             notification = {
-                winblend = 0,
+                wo = {
+                    winblend = 0,
+                },
             },
         }
     },

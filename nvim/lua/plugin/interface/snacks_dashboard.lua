@@ -139,6 +139,19 @@ return {
     ---@param opts snacks.Config
     ---@return snacks.Config
     opts = function(_, opts)
+        util.vim.autocmd({ 'UIEnter' }, {
+            group = util.vim.augroup('ne.plugin.snacks_dashboard.overlay'),
+            desc = 'Show snacks dashboard as an overlay on the startup buffer',
+            once = true,
+            nested = true,
+            callback = function()
+                local buf = vim.api.nvim_get_current_buf()
+                if should_show(buf) then
+                    show(buf, vim.api.nvim_get_current_win())
+                end
+            end,
+        })
+
         return vim.tbl_deep_extend('force', opts, {
             dashboard = {
                 enabled = false,
@@ -164,20 +177,6 @@ return {
                     { icon = shared.icons.dashboard.sections.startup, section = 'startup', align = 'left' },
                 },
             },
-        })
-    end,
-    init = function()
-        util.vim.autocmd({ 'UIEnter' }, {
-            group = util.vim.augroup('ne.plugin.snacks_dashboard.overlay'),
-            desc = 'Show snacks dashboard as an overlay on the startup buffer',
-            once = true,
-            nested = true,
-            callback = function()
-                local buf = vim.api.nvim_get_current_buf()
-                if should_show(buf) then
-                    show(buf, vim.api.nvim_get_current_win())
-                end
-            end,
         })
     end,
 }

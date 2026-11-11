@@ -18,9 +18,9 @@ index 210c758..9473e3b 100644
 +  if api.nvim_win_is_valid(bwinid) and util.signwidth(bbufnr) ~= vim.w[bwinid].width - 1 then
 +    require('satellite.view').schedule_refresh()
 +  end
- end
- 
- --- @param spec Satellite.Handler
+
+   -- Command-line input does not redraw marks set by scheduled handlers.
+   if api.nvim_get_mode().mode == 'c' then
 diff --git a/lua/satellite/util.lua b/lua/satellite/util.lua
 index aed5818..d7b9f89 100644
 --- a/lua/satellite/util.lua
@@ -47,7 +47,7 @@ index 3617ead..45899c8 100644
  
    local bar_winid = get_bar_winid(winid)
    if bar_winid then
--    local bar_wininfo = vim.fn.getwininfo(bar_winid)[1]
+-    local bar_wininfo = fn.getwininfo(bar_winid)[1]
 -    -- wininfo can be nil when pressing <C-w>o in help buffers
 -    if bar_wininfo then
 -      local signwidth = bar_wininfo.textoff

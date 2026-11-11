@@ -9,15 +9,7 @@ return {
     -- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields
     ---@type SmartSplitsSetupOpts
-    opts = {
-        resize = {
-            amount = 1,
-        },
-        move = { at_edge = 'stop' },
-        swap = { move_cursor = true },
-    },
-    ---@diagnostic enable: missing-fields
-    init = function()
+    opts = function()
         local handlers = shared.plugins.handlers
         handlers.focus_window:set('smart-splits', function(direction)
             require('smart-splits')['move_cursor_' .. direction]()
@@ -28,5 +20,13 @@ return {
         handlers.resize_window:set('smart-splits', function(direction)
             require('smart-splits')['resize_' .. direction]()
         end)
+
+        return {
+            resize = {
+                amount = 1,
+            },
+            move = { at_edge = 'stop' },
+            swap = { move_cursor = true },
+        }
     end,
 }

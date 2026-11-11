@@ -6,6 +6,9 @@ return {
     event = 'VeryLazy',
     opts = {
         disable_keymaps = true,
+        filetypes_denylist = {
+            'snacks_picker_input',
+        },
     },
     init = function()
         -- HACK: illuminate.vim has a vim plugin that gets sourced automatically before `configure` can be called

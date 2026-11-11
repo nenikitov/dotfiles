@@ -238,13 +238,13 @@ M.git = {
         renamed   = M.choose(' ', 'R'),
         staged    = M.choose(' ', '√'),
         unmerged  = M.choose('󰳤 ', 'U'),
-        untracked = M.choose('󱋯 ', '?'),
+        untracked = M.choose(' ', '+'),
     },
     sign = {
         untracked = M.choose('┋', ':'),
         added     = M.choose('┃', '│'),
         changed   = M.choose('┃', '│'),
-        deleted   = M.choose('▶', '►'),
+        deleted   = M.choose('', '►'),
     },
 }
 

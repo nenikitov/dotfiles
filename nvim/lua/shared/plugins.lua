@@ -58,6 +58,8 @@ M.handlers = {
     resize_window = Handler.new('resize_window', function(direction) vim.cmd('3wincmd ' .. resize_keys[direction]) end),
 
     ---@param _ nil
+    code_action = Handler.new('code_action', function(_) vim.lsp.buf.code_action() end),
+    ---@param _ nil
     format_buffer = Handler.new('format_buffer', function(_) vim.lsp.buf.format({ async = true }) end),
     ---@param _ nil
     rename_symbol = Handler.new('rename_symbol', function(_) vim.lsp.buf.rename() end),

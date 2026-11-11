@@ -13,6 +13,7 @@ return {
 	dependencies = {
         'rafamadriz/friendly-snippets',
         { 'xzbdmw/colorful-menu.nvim', opts = {} },
+        'joelazar/blink-calc',
     },
 	event = 'VeryLazy',
 	---@type blink.cmp.Config
@@ -87,7 +88,7 @@ return {
 			enabled = true,
 		},
 		sources = {
-			default = { 'lsp', 'path', 'snippets', 'buffer' },
+			default = { 'lsp', 'path', 'snippets', 'buffer', 'calc' },
 			providers = {
 				lsp = {
 					name = '[lsp]',
@@ -114,11 +115,18 @@ return {
 						end
 						return items
 					end,
-				},
-				path = { name = '[pth]' },
+				}, path = { name = '[pth]' },
 				snippets = { name = '[snp]' },
 				buffer = { name = '[buf]' },
 				cmdline = { name = '[cmd]' },
+                calc = {
+                    name = '[clc]',
+                    module = 'blink-calc',
+                    opts = {
+                        show_bases = true,
+                        require_operator = true,
+                    },
+                },
 			},
 		},
 		cmdline = {

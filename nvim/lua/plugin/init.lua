@@ -42,6 +42,7 @@ require('lazy').setup({
     ui = {
         border = vim.o.winborder,
         backdrop = 100,
+        size = { width = 0.8, height = 0.8 },
         title = 'lazy.nvim ' .. shared.icons.plugin.kind.manager,
         icons = {
             cmd = shared.icons.plugin.source.cmd,

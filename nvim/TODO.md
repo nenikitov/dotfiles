@@ -16,14 +16,10 @@
 - [`otter.nvim`](https://github.com/jmbuhr/otter.nvim)
 - [`none-ls.nvim`](https://github.com/nvimtools/none-ls.nvim)
 - [`conform.nvim`](https://github.com/stevearc/conform.nvim)
-- [`blink-calc`](https://github.com/joelazar/blink-calc)
-- [`actions-preview.nvim`](https://github.com/aznhe21/actions-preview.nvim)
 - [`tiny-inline-diagnostic.nvim`](https://github.com/rachartier/tiny-inline-diagnostic.nvim) \
   not sure
 - [`nvim-colorizer.lua`](https://github.com/catgoose/nvim-colorizer.lua) \
   how to do lsp fallback?
-- [`snacks.nvim`](https://github.com/folke/snacks.nvim) \
-  for debug
 
 ### Debugging
 
@@ -37,7 +33,8 @@
 - [`grug-far.nvim`](https://github.com/MagicDuck/grug-far.nvim)
 - [`quicker.nvim`](https://github.com/stevearc/quicker.nvim)
 - [`snacks.nvim`](https://github.com/folke/snacks.nvim) \
-  for bigfile, rename
+  for rename
+- [`trouble.nvim`](https://github.com/folke/trouble.nvim)
 
 ### Terminal
 
