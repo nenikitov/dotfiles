@@ -244,7 +244,7 @@ M.git = {
         untracked = M.choose('┋', ':'),
         added     = M.choose('┃', '│'),
         changed   = M.choose('┃', '│'),
-        deleted   = M.choose('', '►'),
+        deleted   = M.choose('', '►'),
     },
 }
 

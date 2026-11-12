@@ -36,11 +36,6 @@
   for rename
 - [`trouble.nvim`](https://github.com/folke/trouble.nvim)
 
-### Terminal
-
-- [`toggleterm.nvim`](https://github.com/akinsho/toggleterm.nvim)
-- [`unnest.nvim`](https://github.com/brianhuster/unnest.nvim)
-
 ### Git
 
 - [`git-conflict.nvim`](https://github.com/akinsho/git-conflict.nvim)
