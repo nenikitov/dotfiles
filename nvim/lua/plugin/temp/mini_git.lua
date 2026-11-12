@@ -1,5 +1,4 @@
 ---@module 'lazy'
----@module 'mini.git'
 
 ---@type LazySpec
 return {

@@ -44,11 +44,9 @@
 ## Editing
 
 - [`img-clip.nvim`](https://github.com/HakonHarnes/img-clip.nvim)
-- [`nvim-ts-context-commentstring`](https://github.com/JoosepAlviste/nvim-ts-context-commentstring)
 - [`treesitter-endwise.nvim`](https://github.com/brianhuster/treesitter-endwise.nvim)
 - [`neogen`](https://github.com/danymat/neogen)
 - [`dial.nvim`](https://github.com/monaqa/dial.nvim)
-- [`Comment.nvim`](https://github.com/numToStr/Comment.nvim)
 - [`mini.ai`](https://github.com/nvim-mini/mini.ai)
 - [`mini.align`](https://github.com/nvim-mini/mini.align)
 - [`mini.splitjoin`](https://github.com/nvim-mini/mini.splitjoin)
