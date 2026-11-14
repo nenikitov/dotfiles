@@ -16,7 +16,7 @@ return {
             'JoosepAlviste/nvim-ts-context-commentstring',
             ---@type ts_context_commentstring.Config
             opts = {},
-        }
+        },
     },
     event = 'LazyFile',
     -- TODO: Figure out Partial<T>
@@ -31,9 +31,7 @@ return {
             line = 'gc',
             block = 'gC',
         },
-        pre_hook = function ()
-            return vim.bo.commentstring
-        end
+        pre_hook = function() return vim.bo.commentstring end,
     },
     ---@diagnostic enable: missing-fields
 }

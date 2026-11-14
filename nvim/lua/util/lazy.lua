@@ -8,8 +8,8 @@ M.plugins_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'lazy')
 M.fingerprint_dir = vim.fs.joinpath(vim.fn.stdpath('state'), 'lazy_patches')
 
 ---@class ne.util.lazy.Plugin
----@field name string
----@field dir string
+---@field name    string
+---@field dir     string
 ---@field patches string[]
 
 ---@param dir string
@@ -17,7 +17,7 @@ M.fingerprint_dir = vim.fs.joinpath(vim.fn.stdpath('state'), 'lazy_patches')
 ---@return boolean ok
 ---@return string stderr
 local function git(dir, ...)
-    local result = vim.system({ 'git', '-C', dir, ... }, { text = true }):wait()
+    local result = vim.system({ 'git', '-C', dir, ..., }, { text = true }):wait()
     return result.code == 0, vim.trim(result.stderr or '')
 end
 
@@ -75,7 +75,7 @@ local function generate_fingerprint(plugin)
     if not commit then
         return nil
     end
-    local parts = { commit }
+    local parts = { commit, }
     for _, patch in ipairs(plugin.patches) do
         table.insert(parts, vim.fs.basename(patch))
         table.insert(parts, util.fs.read(patch) or '')
@@ -115,7 +115,9 @@ local function apply_plugin(plugin)
         local ok, err = git(plugin.dir, 'apply', '--index', patch)
         if not ok then
             util.vim.delayed_notify(
-                ('Patch %s does not apply to %s, leaving it unpatched\n%s'):format(vim.fs.basename(patch), plugin.name, err),
+                ('Patch %s does not apply to %s, leaving it unpatched\n%s'):format(
+                    vim.fs.basename(patch), plugin.name, err
+                ),
                 vim.log.levels.WARN
             )
             revert_plugin(plugin.name)
@@ -154,11 +156,11 @@ function M.setup_patches()
 
     local enter, leave = util.async.refcount(M.revert_all, M.apply_all)
     util.vim.autocmd(
-        { { 'User', pattern = { 'LazyInstallPre', 'LazyUpdatePre', 'LazySyncPre', 'LazyRestorePre' } } },
+        { { 'User', pattern = { 'LazyInstallPre', 'LazyUpdatePre', 'LazySyncPre', 'LazyRestorePre', } }, },
         { group = group, callback = enter }
     )
     util.vim.autocmd(
-        { { 'User', pattern = { 'LazyInstall', 'LazyUpdate', 'LazySync', 'LazyRestore' } } },
+        { { 'User', pattern = { 'LazyInstall', 'LazyUpdate', 'LazySync', 'LazyRestore', } }, },
         { group = group, callback = leave }
     )
 end

@@ -1,5 +1,11 @@
 {
   "lua-language-server": {
     "version": "3.19.2"
+  },
+  "luafmt": {
+    "version": "0.25.1"
+  },
+  "stylua": {
+    "version": "v2.6.0"
   }
 }

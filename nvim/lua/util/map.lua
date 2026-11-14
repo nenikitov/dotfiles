@@ -1,29 +1,29 @@
 local opts_default = {
-	noremap = true,
-	silent = true,
+    noremap = true,
+    silent = true,
 }
 
 ---@alias ne.util.map.Mode
----| '' Normal, Visual, Select, Operator-pending
----| 'n' Normal
----| 'v' Visual and Select
----| 's' Select
----| 'x' Visual
----| 'o' Operator-pending
----| '!' Insert, Command-line
----| 'i' Insert
----| 'l' Insert, Command-line, Lang
----| 'c' Command-line
----| 't' Terminal
+--- | '' Normal, Visual, Select, Operator-pending
+--- | 'n' Normal
+--- | 'v' Visual and Select
+--- | 's' Select
+--- | 'x' Visual
+--- | 'o' Operator-pending
+--- | '!' Insert, Command-line
+--- | 'i' Insert
+--- | 'l' Insert, Command-line, Lang
+--- | 'c' Command-line
+--- | 't' Terminal
 
 ---@alias ne.util.map.Rhs
----| string
----| function
+--- | string
+--- | function
 
 ---@class ne.util.map.Group
----@field lhs string
----@field desc string
----@field mode ne.util.map.Mode
+---@field lhs     string
+---@field desc    string
+---@field mode    ne.util.map.Mode
 ---@field buffer? integer
 
 ---@type table<string, ne.util.map.Group>
@@ -31,142 +31,142 @@ local groups = {}
 ---@type fun(group: ne.util.map.Group)[]
 local group_listeners = {}
 
----@param lhs string
----@param desc string
----@param modes ne.util.map.Mode | ne.util.map.Mode[]
+---@param lhs     string
+---@param desc    string
+---@param modes   ne.util.map.Mode | ne.util.map.Mode[]
 ---@param buffer? integer
 local function add_group(lhs, desc, modes, buffer)
-	if buffer == 0 then
-		buffer = vim.api.nvim_get_current_buf()
-	end
+    if buffer == 0 then
+        buffer = vim.api.nvim_get_current_buf()
+    end
 
-	if type(modes) ~= 'table' then
-		modes = { modes }
-	end
+    if type(modes) ~= 'table' then
+        modes = { modes, }
+    end
 
-	for _, mode in ipairs(modes) do
-		local id = table.concat({ lhs, mode, tostring(buffer) }, '|')
-		if not groups[id] then
-			---@type ne.util.map.Group
-			local group = { lhs = lhs, desc = desc, mode = mode, buffer = buffer }
-			groups[id] = group
-			for _, listener in ipairs(group_listeners) do
-				listener(group)
-			end
-		end
-	end
+    for _, mode in ipairs(modes) do
+        local id = table.concat({ lhs, mode, tostring(buffer), }, '|')
+        if not groups[id] then
+            ---@type ne.util.map.Group
+            local group = { lhs = lhs, desc = desc, mode = mode, buffer = buffer }
+            groups[id] = group
+            for _, listener in ipairs(group_listeners) do
+                listener(group)
+            end
+        end
+    end
 end
 
 ---@class ne.util.map.Binding
 ---@field private _modes ne.util.map.Mode | ne.util.map.Mode[]
----@field private _rhs ne.util.map.Rhs
----@field private _opts vim.keymap.set.Opts
----@field private _node ne.util.map.Node
+---@field private _rhs   ne.util.map.Rhs
+---@field private _opts  vim.keymap.set.Opts
+---@field private _node  ne.util.map.Node
 local Binding = {}
 Binding.__index = Binding
 
 ---@package
 ---@param modes ne.util.map.Mode | ne.util.map.Mode[]
----@param rhs ne.util.map.Rhs
----@param opts vim.keymap.set.Opts
----@param node ne.util.map.Node
+---@param rhs   ne.util.map.Rhs
+---@param opts  vim.keymap.set.Opts
+---@param node  ne.util.map.Node
 ---@return ne.util.map.Binding
 function Binding.new(modes, rhs, opts, node)
-	return setmetatable({ _modes = modes, _rhs = rhs, _opts = opts, _node = node}, Binding)
+    return setmetatable({ _modes = modes, _rhs = rhs, _opts = opts, _node = node }, Binding)
 end
 
 ---@package
 function Binding:label_groups()
-	local parent = self._node._parent
-	while parent and parent._parent do
-		add_group(parent._lhs, parent._desc, self._modes, parent._buffer)
-		parent = parent._parent
-	end
+    local parent = self._node._parent
+    while parent and parent._parent do
+        add_group(parent._lhs, parent._desc, self._modes, parent._buffer)
+        parent = parent._parent
+    end
 end
 
 function Binding:set()
-	self:label_groups()
+    self:label_groups()
 
     ---@type vim.keymap.set.Opts
     local opts = vim.tbl_extend('force', self._opts, { buffer = self._node._buffer, desc = self._node._desc })
 
-	vim.keymap.set(self._modes, self._node._lhs, self._rhs, opts)
+    vim.keymap.set(self._modes, self._node._lhs, self._rhs, opts)
 end
 
 ---@return LazyKeysSpec
 function Binding:spec()
-	self:label_groups()
+    self:label_groups()
 
     ---@type vim.keymap.set.Opts
     local opts = vim.tbl_extend('force', self._opts, { desc = self._node._desc })
     opts.buf = nil
 
-	---@type LazyKeysSpec
-	local spec = vim.tbl_extend('force', opts, { self._node._lhs, self._rhs, mode = self._modes })
+    ---@type LazyKeysSpec
+    local spec = vim.tbl_extend('force', opts, { self._node._lhs, self._rhs, mode = self._modes })
 
-	return spec
+    return spec
 end
 
 ---@class ne.util.map.Node
----@field package _lhs string
----@field package _desc string
+---@field package _lhs     string
+---@field package _desc    string
 ---@field package _parent? ne.util.map.Node
 ---@field package _buffer? integer
 local Node = {}
 Node.__index = Node
 
 ---@package
----@param lhs string
----@param desc string
+---@param lhs     string
+---@param desc    string
 ---@param parent? ne.util.map.Node
 ---@param buffer? integer
 ---@return ne.util.map.Node
 function Node.new(lhs, desc, parent, buffer)
-	return setmetatable({ _lhs = lhs, _desc = desc, _parent = parent, _buffer = buffer }, Node)
+    return setmetatable({ _lhs = lhs, _desc = desc, _parent = parent, _buffer = buffer }, Node)
 end
 
 ---@return string
 function Node:lhs()
-	return self._lhs
+    return self._lhs
 end
 
 ---@return string
 function Node:desc()
-	return self._desc
+    return self._desc
 end
 
 ---@param keys string
 ---@param desc string
 ---@return ne.util.map.Node
 function Node:k(keys, desc)
-	return Node.new(self._lhs .. keys, desc, self, self._buffer)
+    return Node.new(self._lhs .. keys, desc, self, self._buffer)
 end
 
 ---@param buf? integer
 ---@return ne.util.map.Node
 function Node:buf(buf)
-	return Node.new(self._lhs, self._desc, self._parent, buf or 0)
+    return Node.new(self._lhs, self._desc, self._parent, buf or 0)
 end
 
 ---@param modes ne.util.map.Mode | ne.util.map.Mode[]
----@param rhs ne.util.map.Rhs
+---@param rhs   ne.util.map.Rhs
 ---@param opts? vim.keymap.set.Opts
 ---@return ne.util.map.Binding
 function Node:bind(modes, rhs, opts)
     ---@type vim.keymap.set.Opts
-	local merged = vim.tbl_extend('force', opts_default, opts or {})
+    local merged = vim.tbl_extend('force', opts_default, opts or {})
     return Binding.new(modes, rhs, merged, self)
 end
 
----@class ne.util.map : ne.util.map.Node
+---@class ne.util.map: ne.util.map.Node
 local M = Node.new('', '') --[[@as ne.util.map]]
 
 ---@param listener fun(group: ne.util.map.Group)
 function M.on_group(listener)
-	for _, group in pairs(groups) do
-		listener(group)
-	end
-	table.insert(group_listeners, listener)
+    for _, group in pairs(groups) do
+        listener(group)
+    end
+    table.insert(group_listeners, listener)
 end
 
 return M

@@ -20,12 +20,12 @@ return {
     opts = {
         keymap = {
             preset = 'none',
-            ['<C-y>'] = { function(cmp) cmp.scroll_documentation_up(1) end, 'fallback' },
-            ['<C-e>'] = { function(cmp) cmp.scroll_documentation_down(1) end, 'fallback' },
-            ['<C-j>'] = { 'select_next', 'fallback' },
-            ['<C-k>'] = { 'select_prev', 'fallback' },
-            ['<C-h>'] = { 'hide', 'snippet_backward', 'fallback' },
-            ['<C-l>'] = { 'select_and_accept', 'snippet_forward', 'fallback' },
+            ['<C-y>'] = { function(cmp) cmp.scroll_documentation_up(1) end, 'fallback', },
+            ['<C-e>'] = { function(cmp) cmp.scroll_documentation_down(1) end, 'fallback', },
+            ['<C-j>'] = { 'select_next', 'fallback', },
+            ['<C-k>'] = { 'select_prev', 'fallback', },
+            ['<C-h>'] = { 'hide', 'snippet_backward', 'fallback', },
+            ['<C-l>'] = { 'select_and_accept', 'snippet_forward', 'fallback', },
             ['<C-Space>'] = {
                 function(cmp)
                     if cmp.is_menu_visible() then
@@ -55,8 +55,8 @@ return {
                 draw = {
                     columns = {
                         { 'kind_icon', },
-                        { 'label',      gap = 1 },
-                        { 'source_name' },
+                        { 'label', gap = 1 },
+                        { 'source_name', },
                     },
                     components = {
                         kind_icon = {
@@ -76,11 +76,9 @@ return {
                             end,
                         },
                         label = {
-                            text = function(ctx)
-                                return require("colorful-menu").blink_components_text(ctx)
-                            end,
+                            text = function(ctx) return require('colorful-menu').blink_components_text(ctx) end,
                             highlight = function(ctx)
-                                return require("colorful-menu").blink_components_highlight(ctx)
+                                return require('colorful-menu').blink_components_highlight(ctx)
                             end,
                         },
                     },
@@ -96,31 +94,35 @@ return {
             enabled = true,
         },
         sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer', 'calc' },
+            default = { 'lsp', 'path', 'snippets', 'buffer', 'calc', },
             providers = {
                 lsp = {
                     name = '[lsp]',
                     -- HACK: Lua_ls suggest incorrect deletion range after a string in a list
                     transform_items = function(ctx, items)
                         local row, col = ctx.cursor[1] - 1, ctx.cursor[2]
-                        local quote = ctx.line:sub(1, col):find([=[['"][%w_]*$]=])
+                        local quote = ctx.line:sub(1, col)
+                            :find([=[['"][%w_]*$]=])
                         local start = quote and quote - 1 or ctx.bounds.start_col - 1
-                        local closing = quote and
-                            ctx.line:sub(col + 1):match('^[%w_]*' .. vim.pesc(ctx.line:sub(quote, quote)))
+                        local closing = quote
+                            and ctx.line:sub(col + 1):match('^[%w_]*' .. vim.pesc(ctx.line:sub(quote, quote)))
                         local finish = closing and col + #closing or col
 
                         for _, item in ipairs(items) do
                             local edit = item.textEdit
                             local range = edit and (edit.range or edit.replace)
-                            if item.client_name == 'lua_ls'
-                                and edit
-                                and range
-                                and edit.newText:match([=[^['"]]=])
-                                and (range.start.line < row or range.start.character < start)
-                            then
-                                local fixed = { start = { line = row, character = start }, ['end'] = { line = row, character = finish } }
-                                edit.range, edit.insert, edit.replace = fixed, edit.insert and fixed,
-                                    edit.replace and fixed
+                            if item.client_name == 'lua_ls' and edit and range and edit.newText:match([=[^['"]]=])
+                                and (range.start.line < row or range.start.character < start) then
+                                local fixed = {
+                                    start = { line = row, character = start },
+                                    ['end'] = {
+                                        line = row,
+                                        character = finish,
+                                    },
+                                }
+                                edit.range = fixed
+                                edit.insert = edit.insert and fixed
+                                edit.replace = edit.replace and fixed
                             end
                         end
                         return items
@@ -167,14 +169,13 @@ return {
         util.vim.autocmd({
             -- The menu keeps its position when the terminal is resized while the command line is open
             'VimResized',
-        }, {
-            group = util.vim.augroup('ne.plugin.blink_cmp.refresh'),
-            desc = 'Force-refresh blink.cmp UI on events upstream missed',
-            callback = function()
-                vim.schedule(function()
-                    require('blink.cmp.completion.windows.menu').update_position()
-                end)
-            end,
-        })
+        },
+            {
+                group = util.vim.augroup('ne.plugin.blink_cmp.refresh'),
+                desc = 'Force-refresh blink.cmp UI on events upstream missed',
+                callback = function()
+                    vim.schedule(function() require('blink.cmp.completion.windows.menu').update_position() end)
+                end,
+            })
     end,
 }

@@ -4,9 +4,9 @@ local shared = require('shared')
 
 return shared.target({
     tools = {
-        mason = { 'lua-language-server' },
+        mason = { 'lua-language-server', 'luafmt', },
     },
-    parsers = { 'lua', 'luadoc', 'luap' },
+    parsers = { 'lua', 'luadoc', 'luap', },
     servers = {
         lua_ls = {
             settings = {
@@ -15,22 +15,27 @@ return shared.target({
                         enable = true,
                         setType = false,
                         paramType = true,
-                        paramName = "Literal",
-                        semicolon = "Disable",
-                        arrayIndex = "Auto",
+                        paramName = 'Literal',
+                        semicolon = 'Disable',
+                        arrayIndex = 'Auto',
                     },
                     codeLens = { enable = true },
-                    doc = { privateName = { '_*' } },
+                    doc = { privateName = { '_*', } },
                     completion = {
                         callSnippet = 'Disable',
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        },
+    },
+    formatters = {
+        by_ft = {
+            lua = { 'luafmt', },
+        },
     },
     completion = {
         sources_by_filetype = {
-            lua = { 'lazydev' },
+            lua = { 'lazydev', },
         },
         providers = {
             lazydev = {
@@ -47,9 +52,9 @@ return shared.target({
             ---@type lazydev.Config
             opts = {
                 library = {
-                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                    { path = '${3rd}/luv/library', words = { 'vim%.uv', } },
                 },
             },
         },
-    }
+    },
 })

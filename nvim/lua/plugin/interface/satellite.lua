@@ -55,13 +55,12 @@ return {
                 'WinNew',
                 -- Having a noice CMD popup makes the scrollbar lag one resize behind
                 'VimResized',
-            }, {
-                group = util.vim.augroup('ne.plugin.satellite.refresh'),
-                desc = 'Force-refresh satellite UI on events upstream missed',
-                callback = function()
-                    vim.cmd.SatelliteRefresh()
-                end,
-            })
+            },
+                {
+                    group = util.vim.augroup('ne.plugin.satellite.refresh'),
+                    desc = 'Force-refresh satellite UI on events upstream missed',
+                    callback = function() vim.cmd.SatelliteRefresh() end,
+                })
         end,
     },
 }

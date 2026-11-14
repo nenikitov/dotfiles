@@ -25,6 +25,6 @@ return {
                     winblend = 0,
                 },
             },
-        }
+        },
     },
 }

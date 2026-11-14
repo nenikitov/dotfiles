@@ -7,17 +7,18 @@ local util = require('util')
 ---@type LazySpec
 return {
     'Bekaboo/dropbar.nvim',
-    event = {'LazyFile', 'TermOpen'},
+    event = { 'LazyFile', 'TermOpen', },
     keys = {
         util.map
             :k('[;', 'Go to start of current context')
-            :bind({'n', 'x', 'o'}, function() require('dropbar.api').goto_context_start() end)
+            :bind({ 'n', 'x', 'o', }, function() require('dropbar.api').goto_context_start() end)
             :spec(),
         util.map
             :k('];', 'Go to context sibling')
-            :bind({'n', 'x', 'o'}, function() require('dropbar.api').select_next_context() end)
+            :bind({ 'n', 'x', 'o', }, function() require('dropbar.api').select_next_context() end)
             :spec(),
-        shared.keys.find
+        shared.keys
+            .find
             :k(';', 'Context')
             :bind('n', function() require('dropbar.api').pick() end)
             :spec(),
@@ -117,7 +118,7 @@ return {
                         indicator = shared.icons.ui.closed,
                     },
                 },
-            }
+            },
         }
     end,
 }

@@ -15,7 +15,7 @@ return {
             gitrebase = false,
         },
         window = {
-            open = 'alternate'
+            open = 'alternate',
         },
     },
     ---@diagnostic enable: missing-fields

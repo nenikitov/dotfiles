@@ -41,25 +41,25 @@ M.space = {
 }
 
 M.ui = {
-    item     = '-',
+    item = '-',
 
-    opened   = M.choose('󰅀 ', 'v'),
-    closed   = M.choose('󰅂 ', '>'),
+    opened = M.choose('󰅀 ', 'v'),
+    closed = M.choose('󰅂 ', '>'),
 
-    filled   = M.choose('●', '■'),
-    empty    = M.choose('○', '-'),
+    filled = M.choose('●', '■'),
+    empty  = M.choose('○', '-'),
 
     ellipsis = M.choose('…', '∙'),
 
     previous = '«',
     next     = '»',
 
-    close    = M.choose(' ', 'X'),
+    close = M.choose(' ', 'X'),
 
-    prompt   = '>',
-    live     = M.choose(' ', 'l'),
+    prompt = '>',
+    live   = M.choose(' ', 'l'),
 
-    tree     = {
+    tree = {
         vertical = '│ ',
         middle   = '├ ',
         last     = '└ ',
@@ -71,12 +71,12 @@ M.ui = {
             { '─', '└', '│', '┌', '─', '┐', '│', '┘', }
         ),
         count = M.choose(
-            { '-', '=', '≡', '≣' },
-            { '─', '═', '≡' }
+            { '-', '=', '≡', '≣', },
+            { '─', '═', '≡', }
         ),
         position = M.choose(
-            { '⎺', '⎻', '⎼', '⎽' },
-            { '-', '_' }
+            { '⎺', '⎻', '⎼', '⎽', },
+            { '-', '_', }
         ),
     },
 }
@@ -464,9 +464,9 @@ M.logo = {
         'bbgggggggggggggggggggg',
     },
     hls = {
-        b = { 'MiniIconsBlue', 'DiagnosticInfo' },
-        g = { 'MiniIconsGreen', 'DiagnosticOk' },
-        w = { 'MiniIconsGrey', 'Normal' },
+        b = { 'MiniIconsBlue', 'DiagnosticInfo', },
+        g = { 'MiniIconsGreen', 'DiagnosticOk', },
+        w = { 'MiniIconsGrey', 'Normal', },
     },
 }
 

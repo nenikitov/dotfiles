@@ -5,7 +5,7 @@ local shared = require('shared')
 
 ---@type LazySpec
 return {
-	'romgrk/barbar.nvim',
+    'romgrk/barbar.nvim',
     enabled = false,
     event = 'VeryLazy',
     -- TODO: Figure out Partial<T>

@@ -3,10 +3,10 @@
 
 ---@type LazySpec
 return {
-	'nvim-treesitter/nvim-treesitter-context',
+    'nvim-treesitter/nvim-treesitter-context',
     event = 'LazyFile',
     ---@type TSContext.UserConfig
     opts = {
-        multiwindow = true
+        multiwindow = true,
     },
 }

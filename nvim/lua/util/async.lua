@@ -2,7 +2,7 @@
 local M = {}
 
 ---@param delay integer
----@param task fun(done: fun(), ...)
+---@param task  fun(done: fun(), ...)
 ---@return fun(...) trigger
 function M.debounce(delay, task)
     ---@class ne.util.async.DebounceState
@@ -44,7 +44,7 @@ function M.debounce(delay, task)
 end
 
 ---@param on_first fun()
----@param on_last fun()
+---@param on_last  fun()
 ---@return fun() enter
 ---@return fun() leave
 function M.refcount(on_first, on_last)

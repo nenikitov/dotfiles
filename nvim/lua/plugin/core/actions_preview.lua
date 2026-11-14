@@ -12,9 +12,9 @@ return {
 
         return {
             highlight_command = {
-                require("actions-preview.highlight").delta(),
-                require("actions-preview.highlight").diff_so_fancy(),
-                require("actions-preview.highlight").diff_highlight(),
+                require('actions-preview.highlight').delta(),
+                require('actions-preview.highlight').diff_so_fancy(),
+                require('actions-preview.highlight').diff_highlight(),
             },
         }
     end,

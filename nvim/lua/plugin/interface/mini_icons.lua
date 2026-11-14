@@ -5,7 +5,7 @@ local shared = require('shared')
 ---@type LazySpec
 return {
     shared.plugins.names.mini_icons,
-	opts = {
+    opts = {
         style = shared.settings.enable_tty_mode and 'ascii' or 'glyph',
         lsp = {
             array         = { glyph = shared.icons.kind.data.array },
@@ -44,12 +44,12 @@ return {
             value         = { glyph = shared.icons.kind.data.value },
             variable      = { glyph = shared.icons.kind.data.variable },
         },
-	},
-	init = function()
-		-- Plugins asking for nvim-web-devicons get mini.icons instead, loaded on first use
-		package.preload['nvim-web-devicons'] = function()
-			require('mini.icons').mock_nvim_web_devicons()
-			return package.loaded['nvim-web-devicons']
-		end
-	end,
+    },
+    init = function()
+        -- Plugins asking for nvim-web-devicons get mini.icons instead, loaded on first use
+        package.preload['nvim-web-devicons'] = function()
+            require('mini.icons').mock_nvim_web_devicons()
+            return package.loaded['nvim-web-devicons']
+        end
+    end,
 }

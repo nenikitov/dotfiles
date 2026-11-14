@@ -7,7 +7,7 @@ local shared = require('shared')
 return {
     'FylerOrg/fyler.nvim',
     keys = {
-        shared.keys.find_explorer:bind('n', '<CMD>Fyler<CR>'):spec()
+        shared.keys.find_explorer:bind('n', '<CMD>Fyler<CR>'):spec(),
     },
     -- TODO: Figure out Partial<T>
     ---@diagnostic disable: missing-fields
@@ -57,6 +57,7 @@ return {
         },
         ui = {
             hidden_items = {
+                switches = {},
             },
             indent_guides = true,
         },

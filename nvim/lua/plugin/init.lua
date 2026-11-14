@@ -8,12 +8,12 @@ local path = vim.fs.joinpath(util.lazy.plugins_dir, 'lazy.nvim')
 
 if not util.fs.exists(path) then
     local out = vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--branch=stable",
-        "https://github.com/folke/lazy.nvim.git",
-        path
+        'git',
+        'clone',
+        '--filter=blob:none',
+        '--branch=stable',
+        'https://github.com/folke/lazy.nvim.git',
+        path,
     })
     if vim.v.shell_error ~= 0 then
         vim.notify('Failed to clone lazy.nvim: ' .. out, vim.log.levels.ERROR)
@@ -29,7 +29,7 @@ util.lazy.setup_patches()
 
 -- Event to signal that a file was opened
 local Event = require('lazy.core.handler.event')
-Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'FileType' } }
+Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'FileType', } }
 
 require('lazy').setup({
     spec = vim.tbl_map(
@@ -63,7 +63,7 @@ require('lazy').setup({
             source = shared.icons.plugin.source.source,
             start = shared.icons.plugin.source.start,
             task = shared.icons.plugin.status.done,
-            list = { shared.icons.ui.item }
+            list = { shared.icons.ui.item, },
         },
     },
     checker = {
@@ -75,10 +75,11 @@ require('lazy').setup({
     },
 })
 
-shared.keys.plugin_lazy:bind('n', '<CMD>Lazy<CR>'):set()
+shared.keys.plugin_lazy:bind('n', '<CMD>Lazy<CR>')
+    :set()
 shared.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):bind('n', function()
     local session = vim.fs.joinpath(vim.fn.stdpath('state'), 'reload-session.vim')
-    vim.cmd.mksession({ args = { vim.fn.fnameescape(session) }, bang = true })
+    vim.cmd.mksession({ args = { vim.fn.fnameescape(session), }, bang = true })
 
     -- Help pages of lazy-loaded plugins only resolve once the plugin is on the runtimepath
     local help_plugins = {}

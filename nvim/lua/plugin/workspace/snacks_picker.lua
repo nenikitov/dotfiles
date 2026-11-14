@@ -5,13 +5,11 @@ local shared = require('shared')
 
 ---@param source string | snacks.picker.Config
 local function picker(source)
-    return function()
-        require('snacks').picker.pick(source)
-    end
+    return function() require('snacks').picker.pick(source) end
 end
 
 ---@param defaults table<string, any>
----@param keys table<string, any>
+---@param keys     table<string, any>
 ---@return table<string, any>
 local function overwrite_defaults(defaults, keys)
     local ret = {}
@@ -27,20 +25,23 @@ return {
     keys = {
         shared.keys.find_files:bind('n', picker('files')):spec(),
         shared.keys.find_grep:bind('n', picker('grep')):spec(),
-        shared.keys.find:k('t', 'Filetypes'):bind('n', picker({
-            title = 'Filetypes',
-            format = 'text',
-            layout = { preset = 'vscode' },
-            finder = function()
-                return vim.tbl_map(function(ft) return { text = ft } end, vim.fn.getcompletion('', 'filetype'))
-            end,
-            confirm = function(self, item)
-                self:close()
-                if item then
-                    vim.bo.filetype = item.text
-                end
-            end,
-        })):spec(),
+        shared.keys.find:k('t', 'Filetypes'):bind(
+            'n',
+            picker({
+                title = 'Filetypes',
+                format = 'text',
+                layout = { preset = 'vscode' },
+                finder = function()
+                    return vim.tbl_map(function(ft) return { text = ft } end, vim.fn.getcompletion('', 'filetype'))
+                end,
+                confirm = function(self, item)
+                    self:close()
+                    if item then
+                        vim.bo.filetype = item.text
+                    end
+                end,
+            })
+        ):spec(),
         shared.keys.find:k(':', 'Command history'):bind('n', picker('command_history')):spec(),
         shared.keys.find:k('/', 'Search history'):bind('n', picker('search_history')):spec(),
         shared.keys.find:k('m', 'Help'):bind('n', picker('help')):spec(),
@@ -76,8 +77,8 @@ return {
                         preview = 'none',
                         on_change = function(p, item)
                             local state = p.preview.state
-                            state.original = state.original or
-                            { name = vim.g.colors_name or 'default', background = vim.o.background }
+                            state.original = state.original
+                                or { name = vim.g.colors_name or 'default', background = vim.o.background }
                             if item then
                                 vim.cmd.colorscheme(item.text)
                             end
@@ -109,8 +110,8 @@ return {
                             border = true,
                             title = '{title} {live} {flags}',
                             title_pos = 'center',
-                            { win = 'input', height = 1,     border = 'bottom' },
-                            { win = 'list',  border = 'none' },
+                            { win = 'input', height = 1, border = 'bottom' },
+                            { win = 'list', border = 'none' },
                         },
                     },
                 },
@@ -204,86 +205,86 @@ return {
                     input = {
                         keys = overwrite_defaults(defaults.win.input.keys, {
                             -- Focus
-                            ['q'] = { 'cancel' },
-                            ['<Esc>'] = { 'cancel' },
-                            ['/'] = { 'toggle_focus' },
-                            ['<a-w>'] = { 'toggle_focus', mode = { 'i', 'n' } },
-                            ['<a-f>'] = { 'toggle_maximize', mode = { 'i', 'n' } },
+                            ['q'] = { 'cancel', },
+                            ['<Esc>'] = { 'cancel', },
+                            ['/'] = { 'toggle_focus', },
+                            ['<a-w>'] = { 'toggle_focus', mode = { 'i', 'n', } },
+                            ['<a-f>'] = { 'toggle_maximize', mode = { 'i', 'n', } },
                             -- Input
-                            ['<C-w>'] = { '<c-s-w>', desc = 'delete word', expr = true, mode = { 'i' } },
+                            ['<C-w>'] = { '<c-s-w>', desc = 'delete word', expr = true, mode = { 'i', } },
                             -- Navigation
-                            ['j'] = { 'list_down' },
-                            ['<c-j>'] = { 'list_down', mode = { 'i', 'n' } },
-                            ['k'] = { 'list_up' },
-                            ['<c-k>'] = { 'list_up', mode = { 'i', 'n' } },
-                            ['<Up>'] = { 'list_up', mode = { 'i', 'n' } },
-                            ['<Down>'] = { 'list_down', mode = { 'i', 'n' } },
-                            ['G'] = { 'list_bottom' },
-                            ['gg'] = { 'list_top' },
+                            ['j'] = { 'list_down', },
+                            ['<c-j>'] = { 'list_down', mode = { 'i', 'n', } },
+                            ['k'] = { 'list_up', },
+                            ['<c-k>'] = { 'list_up', mode = { 'i', 'n', } },
+                            ['<Up>'] = { 'list_up', mode = { 'i', 'n', } },
+                            ['<Down>'] = { 'list_down', mode = { 'i', 'n', } },
+                            ['G'] = { 'list_bottom', },
+                            ['gg'] = { 'list_top', },
                             -- Flags
-                            ['<c-f>'] = { 'toggle_follow', mode = { 'i', 'n' } },
-                            ['<c-d>'] = { 'toggle_hidden', mode = { 'i', 'n' } },
-                            ['<c-x>'] = { 'toggle_ignored', mode = { 'i', 'n' } },
-                            ['<c-p>'] = { 'toggle_preview', mode = { 'i', 'n' } },
-                            ['<c-g>'] = { 'toggle_live', mode = { 'i', 'n' } },
-                            ['<c-r>'] = { 'toggle_regex', mode = { 'i', 'n' } },
+                            ['<c-f>'] = { 'toggle_follow', mode = { 'i', 'n', } },
+                            ['<c-d>'] = { 'toggle_hidden', mode = { 'i', 'n', } },
+                            ['<c-x>'] = { 'toggle_ignored', mode = { 'i', 'n', } },
+                            ['<c-p>'] = { 'toggle_preview', mode = { 'i', 'n', } },
+                            ['<c-g>'] = { 'toggle_live', mode = { 'i', 'n', } },
+                            ['<c-r>'] = { 'toggle_regex', mode = { 'i', 'n', } },
                             -- Accept
-                            ['<c-l>'] = { 'confirm', mode = { 'i', 'n' } },
-                            ['<CR>'] = { 'confirm', mode = { 'n', 'i' } },
-                            ['<c-s>'] = { 'edit_split', mode = { 'i', 'n' } },
-                            ['<c-v>'] = { 'edit_vsplit', mode = { 'i', 'n' } },
-                            ['<c-t>'] = { 'tab', mode = { 'n', 'i' } },
+                            ['<c-l>'] = { 'confirm', mode = { 'i', 'n', } },
+                            ['<CR>'] = { 'confirm', mode = { 'n', 'i', } },
+                            ['<c-s>'] = { 'edit_split', mode = { 'i', 'n', } },
+                            ['<c-v>'] = { 'edit_vsplit', mode = { 'i', 'n', } },
+                            ['<c-t>'] = { 'tab', mode = { 'n', 'i', } },
                             -- Other
-                            ['<c-y>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
-                            ['<c-e>'] = { 'preview_scroll_down', mode = { 'i', 'n' } },
-                            ['?'] = { 'toggle_help_input' },
+                            ['<c-y>'] = { 'preview_scroll_up', mode = { 'i', 'n', } },
+                            ['<c-e>'] = { 'preview_scroll_down', mode = { 'i', 'n', } },
+                            ['?'] = { 'toggle_help_input', },
                         }),
                     },
                     list = {
                         keys = overwrite_defaults(defaults.win.list.keys, {
                             -- Focus
-                            ['q'] = { 'cancel' },
-                            ['<Esc>'] = { 'cancel' },
-                            ['/'] = { 'toggle_focus' },
-                            ['<a-w>'] = { 'toggle_focus' },
-                            ['<a-f>'] = { 'toggle_maximize' },
+                            ['q'] = { 'cancel', },
+                            ['<Esc>'] = { 'cancel', },
+                            ['/'] = { 'toggle_focus', },
+                            ['<a-w>'] = { 'toggle_focus', },
+                            ['<a-f>'] = { 'toggle_maximize', },
                             -- Navigation
-                            ['j'] = { 'list_down' },
-                            ['k'] = { 'list_up' },
-                            ['<Up>'] = { 'list_up' },
-                            ['<Down>'] = { 'list_down' },
-                            ['G'] = { 'list_bottom' },
-                            ['gg'] = { 'list_top' },
+                            ['j'] = { 'list_down', },
+                            ['k'] = { 'list_up', },
+                            ['<Up>'] = { 'list_up', },
+                            ['<Down>'] = { 'list_down', },
+                            ['G'] = { 'list_bottom', },
+                            ['gg'] = { 'list_top', },
                             -- Flags
-                            ['<c-f>'] = { 'toggle_follow' },
-                            ['<c-d>'] = { 'toggle_hidden' },
-                            ['<c-x>'] = { 'toggle_ignored' },
-                            ['<c-p>'] = { 'toggle_preview' },
+                            ['<c-f>'] = { 'toggle_follow', },
+                            ['<c-d>'] = { 'toggle_hidden', },
+                            ['<c-x>'] = { 'toggle_ignored', },
+                            ['<c-p>'] = { 'toggle_preview', },
                             -- Accept
-                            ['l'] = { 'confirm' },
-                            ['<CR>'] = { 'confirm' },
-                            ['<2-LeftMouse>'] = { 'confirm' },
-                            ['<c-s>'] = { 'edit_split' },
-                            ['<c-v>'] = { 'edit_vsplit' },
-                            ['<c-t>'] = { 'tab' },
+                            ['l'] = { 'confirm', },
+                            ['<CR>'] = { 'confirm', },
+                            ['<2-LeftMouse>'] = { 'confirm', },
+                            ['<c-s>'] = { 'edit_split', },
+                            ['<c-v>'] = { 'edit_vsplit', },
+                            ['<c-t>'] = { 'tab', },
                             -- Other
-                            ['<c-y>'] = { 'preview_scroll_up' },
-                            ['<c-e>'] = { 'preview_scroll_down' },
-                            ['?'] = { 'toggle_help_list' },
+                            ['<c-y>'] = { 'preview_scroll_up', },
+                            ['<c-e>'] = { 'preview_scroll_down', },
+                            ['?'] = { 'toggle_help_list', },
                         }),
                     },
                     preview = {
                         keys = overwrite_defaults(defaults.win.preview.keys, {
                             -- Focus
-                            ['q'] = { 'cancel' },
-                            ['<Esc>'] = { 'cancel' },
-                            ['/'] = { 'focus_input' },
-                            ['<a-w>'] = { 'focus_input' },
-                            ['a'] = { 'focus_input' },
-                            ['A'] = { 'focus_input' },
-                            ['<a-f>'] = { 'toggle_maximize' },
+                            ['q'] = { 'cancel', },
+                            ['<Esc>'] = { 'cancel', },
+                            ['/'] = { 'focus_input', },
+                            ['<a-w>'] = { 'focus_input', },
+                            ['a'] = { 'focus_input', },
+                            ['A'] = { 'focus_input', },
+                            ['<a-f>'] = { 'toggle_maximize', },
                             -- Other
-                            ['?'] = { 'toggle_help_preview' },
+                            ['?'] = { 'toggle_help_preview', },
                         }),
                         wo = {
                             statuscolumn = "%{%v:lua.require('statuscol').get_statuscol_string()%}",

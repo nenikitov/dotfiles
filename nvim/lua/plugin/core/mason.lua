@@ -10,7 +10,6 @@ local util = require('util')
 ---@type ne.util.lockfile
 local lock = util.lockfile.new(vim.fs.joinpath(vim.fn.stdpath('config'), 'mason-lock.json'))
 
-
 ---@type LazySpec
 return {
     shared.plugins.names.mason,
@@ -34,7 +33,7 @@ return {
                 apply_language_filter = 'f',
                 uninstall_package = 'x',
                 toggle_help = '?',
-            }
+            },
         },
     },
     config = function(_, opts)
@@ -42,27 +41,35 @@ return {
         local registry = require('mason-registry')
 
         -- Lockfile
-		registry:on('package:install:success', vim.schedule_wrap(function(package)
-			lock:set(package.name, { version = package:get_installed_version() })
-		end))
-		registry:on('package:install:failed', vim.schedule_wrap(function(package)
-			vim.notify(('Failed to install %s, see :MasonLog'):format(package.name), vim.log.levels.ERROR)
-		end))
-		registry:on('package:uninstall:success', vim.schedule_wrap(function(package)
-			lock:set(package.name, nil)
-		end))
+        registry:on(
+            'package:install:success',
+            vim.schedule_wrap(function(package)
+                lock:set(package.name, { version = package:get_installed_version() })
+            end)
+        )
+        registry:on(
+            'package:install:failed',
+            vim.schedule_wrap(function(package)
+                vim.notify(('Failed to install %s, see :MasonLog'):format(package.name), vim.log.levels.ERROR)
+            end)
+        )
+        registry:on(
+            'package:uninstall:success',
+            vim.schedule_wrap(function(package) lock:set(package.name, nil) end)
+        )
 
         -- Retrigger filetypes
-		registry:on('package:install:success', vim.schedule_wrap(function(_)
-            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                local filetype = vim.bo[buf].filetype
-                if vim.api.nvim_buf_is_loaded(buf) and filetype ~= '' then
-                    vim.api.nvim_buf_call(buf, function()
-                        vim.cmd.doautocmd({ args = { 'FileType', filetype } })
-                    end)
+        registry:on(
+            'package:install:success',
+            vim.schedule_wrap(function(_)
+                for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                    local filetype = vim.bo[buf].filetype
+                    if vim.api.nvim_buf_is_loaded(buf) and filetype ~= '' then
+                        vim.api.nvim_buf_call(buf, function() vim.cmd.doautocmd({ args = { 'FileType', filetype, } }) end)
+                    end
                 end
-            end
-		end))
+            end)
+        )
 
         -- Install packages
 
@@ -77,7 +84,7 @@ return {
             end
         end
         registry.refresh(function()
-            for _, tool in ipairs(shared.target.collect('tools').mason or {}) do
+            for _, tool in ipairs(shared.target.collect('tools').mason) do
                 local name, pinned = parse(tool)
                 local found, package = pcall(registry.get_package, name)
 
@@ -91,5 +98,5 @@ return {
                 end
             end
         end)
-    end
+    end,
 }

@@ -1,5 +1,5 @@
 ---@module 'lazy'
 ---@type LazySpec
 return {
-    'Mofiqul/vscode.nvim'
+    'Mofiqul/vscode.nvim',
 }

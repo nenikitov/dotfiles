@@ -9,11 +9,11 @@ M.names = {
 }
 
 ---@class ne.shared.plugins.Handler<Arg>
----@field private _name string
----@field private _default fun(arg?: Arg)
+---@field private _name     string
+---@field private _default  fun(arg?: Arg)
 ---@field private _defined? { source: string, handler: fun(arg?: Arg) }
----@field bind fun(self: ne.shared.plugins.Handler<Arg>, arg?: Arg): fun()
----@field set fun(self: ne.shared.plugins.Handler<Arg>, source: string, handler: fun(arg?: Arg))
+---@field bind              fun(self: ne.shared.plugins.Handler<Arg>, arg?: Arg): fun()
+---@field set               fun(self: ne.shared.plugins.Handler<Arg>, source: string, handler: fun(arg?: Arg))
 local Handler = {}
 Handler.__index = Handler
 
@@ -26,14 +26,16 @@ end
 
 function Handler:set(source, handler)
     if self._defined then
-        vim.notify('Handler ' .. self._name .. ' defined from ' .. self._defined.source .. ' is being redefined by ' .. source, vim.log.levels.WARN)
+        vim.notify('Handler ' .. self._name
+                .. ' defined from ' .. self._defined.source
+                .. ' is being redefined by ' .. source, vim.log.levels.WARN)
     end
     self._defined = { source = source, handler = handler }
 end
 
 ---@package
 ---@generic Arg
----@param name string
+---@param name    string
 ---@param default fun(arg?: Arg)
 ---@return ne.shared.plugins.Handler<Arg>
 function Handler.new(name, default)

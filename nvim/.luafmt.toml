@@ -1,0 +1,14 @@
+[layout]
+prefer_call_args_layout_from_source = true
+prefer_table_layout_from_source = true
+prefer_chain_break_on_statement_tail = true
+prefer_binary_chain_operand_per_line = true
+
+[spacing]
+space_before_lambda_func_paren = false
+
+[output]
+trailing_comma = 'Always'
+quote_style = 'Single'
+single_arg_call_pars = 'Always'
+simple_lambda_single_line = 'Always'

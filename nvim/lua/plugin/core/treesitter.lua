@@ -39,7 +39,7 @@ return {
             treesitter.install(missing)
         end
 
-        util.vim.autocmd({ 'FileType' }, {
+        util.vim.autocmd({ 'FileType', }, {
             group = util.vim.augroup('ne.plugin.treesitter.start'),
             desc = 'Start treesitter highlighting when a parser is available',
             callback = function(event)

@@ -3,7 +3,7 @@ local M = {}
 
 --- Lists are appended, tables are merged key by key, and anything else replaces the target
 ---@param target any
----@param value any
+---@param value  any
 ---@return any
 function M.merge(target, value)
     if vim.islist(target) and vim.islist(value) then
@@ -22,12 +22,12 @@ function M.merge(target, value)
         return result
     end
 
-	return value
+    return value
 end
 
 ---@generic K, V
 ---@param list V[]
----@param key fun(item: V): K
+---@param key  fun(item: V): K
 ---@return table<K, V[]>
 function M.group_by(list, key)
     local result = {}
@@ -54,7 +54,7 @@ function M.windows(list, size)
 end
 
 ---@generic T
----@param list T[]
+---@param list      T[]
 ---@param predicate fun(item: T): boolean
 ---@return boolean
 function M.any(list, predicate)
@@ -67,7 +67,7 @@ function M.any(list, predicate)
 end
 
 ---@generic T
----@param list T[]
+---@param list      T[]
 ---@param predicate fun(item: T): boolean
 ---@return boolean
 function M.all(list, predicate)
