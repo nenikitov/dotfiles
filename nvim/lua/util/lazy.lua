@@ -8,8 +8,8 @@ M.plugins_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'lazy')
 M.fingerprint_dir = vim.fs.joinpath(vim.fn.stdpath('state'), 'lazy_patches')
 
 ---@class ne.util.lazy.Plugin
----@field name    string
----@field dir     string
+---@field name string
+---@field dir string
 ---@field patches string[]
 
 ---@param dir string
@@ -17,7 +17,7 @@ M.fingerprint_dir = vim.fs.joinpath(vim.fn.stdpath('state'), 'lazy_patches')
 ---@return boolean ok
 ---@return string stderr
 local function git(dir, ...)
-    local result = vim.system({ 'git', '-C', dir, ..., }, { text = true }):wait()
+    local result = vim.system({ 'git', '-C', dir, ... }, { text = true }):wait()
     return result.code == 0, vim.trim(result.stderr or '')
 end
 
@@ -30,9 +30,7 @@ end
 
 ---@param name string
 ---@return string
-local function get_plugin_path(name)
-    return vim.fs.joinpath(M.plugins_dir, name)
-end
+local function get_plugin_path(name) return vim.fs.joinpath(M.plugins_dir, name) end
 
 ---@return table<string, ne.util.lazy.Plugin>
 local function get_patches()
@@ -40,7 +38,8 @@ local function get_patches()
     for path, kind in vim.fs.dir(M.patches_dir, { depth = 2 }) do
         local name = kind == 'file' and path:match('^([^/]+)/[^/]+%.patch$')
         if name then
-            plugins[name] = plugins[name] or { name = name, dir = get_plugin_path(name), patches = {} }
+            plugins[name] = plugins[name]
+                or { name = name, dir = get_plugin_path(name), patches = {} }
             table.insert(plugins[name].patches, vim.fs.joinpath(M.patches_dir, path))
         end
     end
@@ -75,7 +74,7 @@ local function generate_fingerprint(plugin)
     if not commit then
         return nil
     end
-    local parts = { commit, }
+    local parts = { commit }
     for _, patch in ipairs(plugin.patches) do
         table.insert(parts, vim.fs.basename(patch))
         table.insert(parts, util.fs.read(patch) or '')
@@ -95,9 +94,15 @@ local function revert_plugin(name)
             )
         end
     end
-    if vim.uv.fs_stat(get_fingerprint_path(name)) and vim.fn.delete(get_fingerprint_path(name)) ~= 0 then
+    if
+        vim.uv.fs_stat(get_fingerprint_path(name))
+        and vim.fn.delete(get_fingerprint_path(name)) ~= 0
+    then
         util.vim.delayed_notify(
-            ('Could not delete the patch state of %s in %s'):format(name, get_fingerprint_path(name)),
+            ('Could not delete the patch state of %s in %s'):format(
+                name,
+                get_fingerprint_path(name)
+            ),
             vim.log.levels.WARN
         )
     end
@@ -116,7 +121,9 @@ local function apply_plugin(plugin)
         if not ok then
             util.vim.delayed_notify(
                 ('Patch %s does not apply to %s, leaving it unpatched\n%s'):format(
-                    vim.fs.basename(patch), plugin.name, err
+                    vim.fs.basename(patch),
+                    plugin.name,
+                    err
                 ),
                 vim.log.levels.WARN
             )
@@ -155,14 +162,28 @@ function M.setup_patches()
     local group = util.vim.augroup('ne.plugin.lazy_nvim.apply_patches')
 
     local enter, leave = util.async.refcount(M.revert_all, M.apply_all)
-    util.vim.autocmd(
-        { { 'User', pattern = { 'LazyInstallPre', 'LazyUpdatePre', 'LazySyncPre', 'LazyRestorePre', } }, },
-        { group = group, callback = enter }
-    )
-    util.vim.autocmd(
-        { { 'User', pattern = { 'LazyInstall', 'LazyUpdate', 'LazySync', 'LazyRestore', } }, },
-        { group = group, callback = leave }
-    )
+    util.vim.autocmd({
+        {
+            'User',
+            pattern = {
+                'LazyInstallPre',
+                'LazyUpdatePre',
+                'LazySyncPre',
+                'LazyRestorePre',
+            },
+        },
+    }, { group = group, callback = enter })
+    util.vim.autocmd({
+        {
+            'User',
+            pattern = {
+                'LazyInstall',
+                'LazyUpdate',
+                'LazySync',
+                'LazyRestore',
+            },
+        },
+    }, { group = group, callback = leave })
 end
 
 return M

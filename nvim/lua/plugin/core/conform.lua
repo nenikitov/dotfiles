@@ -15,21 +15,23 @@ return {
     },
     ---@return conform.setupOpts
     opts = function()
-        shared.plugins.handlers.format_buffer:set('conform', function(_)
-            require('conform').format {
-                async = true,
-                lsp_format = 'fallback',
-            }
-        end)
+        shared.plugins.handlers.format_buffer:set(
+            'conform',
+            function(_)
+                require('conform').format({
+                    async = true,
+                    lsp_format = 'fallback',
+                })
+            end
+        )
 
         local formatters = shared.target.collect('formatters')
 
         ---@type conform.setupOpts
         return {
             formatters_by_ft = vim.tbl_deep_extend('force', {
-                ['*'] = { 'trim_whitespace', 'trim_newlines', 'injected', },
-            }, formatters.by_ft
-            ),
+                ['*'] = { 'trim_whitespace', 'trim_newlines', 'injected' },
+            }, formatters.by_ft),
             formatters = formatters.configs,
         }
     end,

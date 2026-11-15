@@ -35,46 +35,43 @@ return {
             local root_prefix = util.map:buf(buf)
             local leader_prefix = shared.keys.git:buf(buf)
 
-            root_prefix:k('[g', 'Hunk')
-                :bind('', function() gitsigns.nav_hunk('prev') end)
-                :set()
-            root_prefix:k(']g', 'Hunk')
-                :bind('', function() gitsigns.nav_hunk('next') end)
-                :set()
-            root_prefix:k('ih', 'Hunk')
-                :bind({ 'o', 'x', }, gitsigns.select_hunk)
-                :set()
+            root_prefix:k('[g', 'Hunk'):bind('', function() gitsigns.nav_hunk('prev') end):set()
+            root_prefix:k(']g', 'Hunk'):bind('', function() gitsigns.nav_hunk('next') end):set()
+            root_prefix:k('ih', 'Hunk'):bind({ 'o', 'x' }, gitsigns.select_hunk):set()
 
-            leader_prefix:k('o', 'Preview diff of current hunk')
+            leader_prefix
+                :k('o', 'Preview diff of current hunk')
                 :bind('n', gitsigns.preview_hunk)
                 :set()
-            leader_prefix:k('b', 'Blame current line')
-                :bind('n', gitsigns.blame_line)
+            leader_prefix:k('b', 'Blame current line'):bind('n', gitsigns.blame_line):set()
+            leader_prefix:k('s', 'Stage current hunk'):bind('n', gitsigns.stage_hunk):set()
+            leader_prefix
+                :k('s', 'Stage current hunk')
+                :bind(
+                    'v',
+                    function()
+                        gitsigns.stage_hunk({
+                            vim.fn.line('.'),
+                            vim.fn.line('v'),
+                        })
+                    end
+                )
                 :set()
-            leader_prefix:k('s', 'Stage current hunk')
-                :bind('n', gitsigns.stage_hunk)
+            leader_prefix:k('S', 'Stage entire file'):bind('n', gitsigns.stage_buffer):set()
+            leader_prefix:k('r', 'Reset current hunk'):bind('n', gitsigns.reset_hunk):set()
+            leader_prefix
+                :k('r', 'Reset current hunk')
+                :bind(
+                    'v',
+                    function()
+                        gitsigns.reset_hunk({
+                            vim.fn.line('.'),
+                            vim.fn.line('v'),
+                        })
+                    end
+                )
                 :set()
-            leader_prefix:k('s', 'Stage current hunk'):bind(
-                'v',
-                function()
-                    gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v'), })
-                end
-            ):set()
-            leader_prefix:k('S', 'Stage entire file')
-                :bind('n', gitsigns.stage_buffer)
-                :set()
-            leader_prefix:k('r', 'Reset current hunk')
-                :bind('n', gitsigns.reset_hunk)
-                :set()
-            leader_prefix:k('r', 'Reset current hunk'):bind(
-                'v',
-                function()
-                    gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v'), })
-                end
-            ):set()
-            leader_prefix:k('R', 'Reset entire file')
-                :bind('n', gitsigns.reset_buffer)
-                :set()
+            leader_prefix:k('R', 'Reset entire file'):bind('n', gitsigns.reset_buffer):set()
         end,
     },
     ---@diagnostic enable: missing-fields

@@ -9,11 +9,11 @@ M.names = {
 }
 
 ---@class ne.shared.plugins.Handler<Arg>
----@field private _name     string
----@field private _default  fun(arg?: Arg)
+---@field private _name string
+---@field private _default fun(arg?: Arg)
 ---@field private _defined? { source: string, handler: fun(arg?: Arg) }
----@field bind              fun(self: ne.shared.plugins.Handler<Arg>, arg?: Arg): fun()
----@field set               fun(self: ne.shared.plugins.Handler<Arg>, source: string, handler: fun(arg?: Arg))
+---@field bind fun(self: ne.shared.plugins.Handler<Arg>, arg?: Arg): fun()
+---@field set fun(self: ne.shared.plugins.Handler<Arg>, source: string, handler: fun(arg?: Arg))
 local Handler = {}
 Handler.__index = Handler
 
@@ -26,16 +26,22 @@ end
 
 function Handler:set(source, handler)
     if self._defined then
-        vim.notify('Handler ' .. self._name
-                .. ' defined from ' .. self._defined.source
-                .. ' is being redefined by ' .. source, vim.log.levels.WARN)
+        vim.notify(
+            'Handler '
+                .. self._name
+                .. ' defined from '
+                .. self._defined.source
+                .. ' is being redefined by '
+                .. source,
+            vim.log.levels.WARN
+        )
     end
     self._defined = { source = source, handler = handler }
 end
 
 ---@package
 ---@generic Arg
----@param name    string
+---@param name string
 ---@param default fun(arg?: Arg)
 ---@return ne.shared.plugins.Handler<Arg>
 function Handler.new(name, default)
@@ -53,28 +59,46 @@ M.handlers = {
     ---@param _ nil
     close_buffer = Handler.new('close_buffer', function(_) vim.cmd.bdelete() end),
     ---@param direction ne.shared.plugins.Direction
-    focus_window = Handler.new('focus_window', function(direction) vim.cmd.wincmd(window_keys[direction]) end),
+    focus_window = Handler.new(
+        'focus_window',
+        function(direction) vim.cmd.wincmd(window_keys[direction]) end
+    ),
     ---@param direction ne.shared.plugins.Direction
-    swap_window = Handler.new('swap_window', function(direction) vim.cmd.wincmd(window_keys[direction]:upper()) end),
+    swap_window = Handler.new(
+        'swap_window',
+        function(direction) vim.cmd.wincmd(window_keys[direction]:upper()) end
+    ),
     ---@param direction ne.shared.plugins.Direction
-    resize_window = Handler.new('resize_window', function(direction) vim.cmd('3wincmd ' .. resize_keys[direction]) end),
+    resize_window = Handler.new(
+        'resize_window',
+        function(direction) vim.cmd('3wincmd ' .. resize_keys[direction]) end
+    ),
 
     ---@param _ nil
     code_action = Handler.new('code_action', function(_) vim.lsp.buf.code_action() end),
     ---@param _ nil
-    format_buffer = Handler.new('format_buffer', function(_) vim.lsp.buf.format({ async = true }) end),
+    format_buffer = Handler.new(
+        'format_buffer',
+        function(_) vim.lsp.buf.format({ async = true }) end
+    ),
     ---@param _ nil
     rename_symbol = Handler.new('rename_symbol', function(_) vim.lsp.buf.rename() end),
     ---@param _ nil
     show_references = Handler.new('show_references', function(_) vim.lsp.buf.references() end),
     ---@param _ nil
-    show_implementations = Handler.new('show_implementations', function(_) vim.lsp.buf.implementation() end),
+    show_implementations = Handler.new(
+        'show_implementations',
+        function(_) vim.lsp.buf.implementation() end
+    ),
     ---@param _ nil
     show_definitions = Handler.new('show_definitions', function(_) vim.lsp.buf.definition() end),
     ---@param _ nil
     show_declarations = Handler.new('show_declarations', function(_) vim.lsp.buf.declaration() end),
     ---@param _ nil
-    show_workspace_symbols = Handler.new('show_workspace_symbols', function(_) vim.lsp.buf.workspace_symbol() end),
+    show_workspace_symbols = Handler.new(
+        'show_workspace_symbols',
+        function(_) vim.lsp.buf.workspace_symbol() end
+    ),
 }
 
 return M

@@ -2,12 +2,6 @@
 ---@module 'Comment'
 ---@module 'ts_context_commentstring'
 
---[[
----@module 'lazy'
-
----@type LazySpec
-]]
-
 ---@type LazySpec
 return {
     'numtostr/comment.nvim',

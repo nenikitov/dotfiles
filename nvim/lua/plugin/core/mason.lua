@@ -43,15 +43,22 @@ return {
         -- Lockfile
         registry:on(
             'package:install:success',
-            vim.schedule_wrap(function(package)
-                lock:set(package.name, { version = package:get_installed_version() })
-            end)
+            vim.schedule_wrap(
+                function(package)
+                    lock:set(package.name, { version = package:get_installed_version() })
+                end
+            )
         )
         registry:on(
             'package:install:failed',
-            vim.schedule_wrap(function(package)
-                vim.notify(('Failed to install %s, see :MasonLog'):format(package.name), vim.log.levels.ERROR)
-            end)
+            vim.schedule_wrap(
+                function(package)
+                    vim.notify(
+                        ('Failed to install %s, see :MasonLog'):format(package.name),
+                        vim.log.levels.ERROR
+                    )
+                end
+            )
         )
         registry:on(
             'package:uninstall:success',
@@ -65,7 +72,14 @@ return {
                 for _, buf in ipairs(vim.api.nvim_list_bufs()) do
                     local filetype = vim.bo[buf].filetype
                     if vim.api.nvim_buf_is_loaded(buf) and filetype ~= '' then
-                        vim.api.nvim_buf_call(buf, function() vim.cmd.doautocmd({ args = { 'FileType', filetype, } }) end)
+                        vim.api.nvim_buf_call(
+                            buf,
+                            function()
+                                vim.cmd.doautocmd({
+                                    args = { 'FileType', filetype },
+                                })
+                            end
+                        )
                     end
                 end
             end)
@@ -89,7 +103,10 @@ return {
                 local found, package = pcall(registry.get_package, name)
 
                 if not found then
-                    vim.notify('Unknown mason package ' .. name .. ', skipping installation', vim.log.levels.WARN)
+                    vim.notify(
+                        'Unknown mason package ' .. name .. ', skipping installation',
+                        vim.log.levels.WARN
+                    )
                 elseif pinned and pinned ~= package:get_installed_version() then
                     package:install({ version = pinned })
                 elseif not pinned and not package:is_installed() then

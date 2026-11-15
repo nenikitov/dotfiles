@@ -21,9 +21,9 @@ local opts_default = {
 --- | function
 
 ---@class ne.util.map.Group
----@field lhs     string
----@field desc    string
----@field mode    ne.util.map.Mode
+---@field lhs string
+---@field desc string
+---@field mode ne.util.map.Mode
 ---@field buffer? integer
 
 ---@type table<string, ne.util.map.Group>
@@ -31,9 +31,9 @@ local groups = {}
 ---@type fun(group: ne.util.map.Group)[]
 local group_listeners = {}
 
----@param lhs     string
----@param desc    string
----@param modes   ne.util.map.Mode | ne.util.map.Mode[]
+---@param lhs string
+---@param desc string
+---@param modes ne.util.map.Mode | ne.util.map.Mode[]
 ---@param buffer? integer
 local function add_group(lhs, desc, modes, buffer)
     if buffer == 0 then
@@ -41,11 +41,11 @@ local function add_group(lhs, desc, modes, buffer)
     end
 
     if type(modes) ~= 'table' then
-        modes = { modes, }
+        modes = { modes }
     end
 
     for _, mode in ipairs(modes) do
-        local id = table.concat({ lhs, mode, tostring(buffer), }, '|')
+        local id = table.concat({ lhs, mode, tostring(buffer) }, '|')
         if not groups[id] then
             ---@type ne.util.map.Group
             local group = { lhs = lhs, desc = desc, mode = mode, buffer = buffer }
@@ -59,17 +59,17 @@ end
 
 ---@class ne.util.map.Binding
 ---@field private _modes ne.util.map.Mode | ne.util.map.Mode[]
----@field private _rhs   ne.util.map.Rhs
----@field private _opts  vim.keymap.set.Opts
----@field private _node  ne.util.map.Node
+---@field private _rhs ne.util.map.Rhs
+---@field private _opts vim.keymap.set.Opts
+---@field private _node ne.util.map.Node
 local Binding = {}
 Binding.__index = Binding
 
 ---@package
 ---@param modes ne.util.map.Mode | ne.util.map.Mode[]
----@param rhs   ne.util.map.Rhs
----@param opts  vim.keymap.set.Opts
----@param node  ne.util.map.Node
+---@param rhs ne.util.map.Rhs
+---@param opts vim.keymap.set.Opts
+---@param node ne.util.map.Node
 ---@return ne.util.map.Binding
 function Binding.new(modes, rhs, opts, node)
     return setmetatable({ _modes = modes, _rhs = rhs, _opts = opts, _node = node }, Binding)
@@ -88,7 +88,11 @@ function Binding:set()
     self:label_groups()
 
     ---@type vim.keymap.set.Opts
-    local opts = vim.tbl_extend('force', self._opts, { buffer = self._node._buffer, desc = self._node._desc })
+    local opts = vim.tbl_extend(
+        'force',
+        self._opts,
+        { buffer = self._node._buffer, desc = self._node._desc }
+    )
 
     vim.keymap.set(self._modes, self._node._lhs, self._rhs, opts)
 end
@@ -108,16 +112,16 @@ function Binding:spec()
 end
 
 ---@class ne.util.map.Node
----@field package _lhs     string
----@field package _desc    string
+---@field package _lhs string
+---@field package _desc string
 ---@field package _parent? ne.util.map.Node
 ---@field package _buffer? integer
 local Node = {}
 Node.__index = Node
 
 ---@package
----@param lhs     string
----@param desc    string
+---@param lhs string
+---@param desc string
 ---@param parent? ne.util.map.Node
 ---@param buffer? integer
 ---@return ne.util.map.Node
@@ -126,30 +130,22 @@ function Node.new(lhs, desc, parent, buffer)
 end
 
 ---@return string
-function Node:lhs()
-    return self._lhs
-end
+function Node:lhs() return self._lhs end
 
 ---@return string
-function Node:desc()
-    return self._desc
-end
+function Node:desc() return self._desc end
 
 ---@param keys string
 ---@param desc string
 ---@return ne.util.map.Node
-function Node:k(keys, desc)
-    return Node.new(self._lhs .. keys, desc, self, self._buffer)
-end
+function Node:k(keys, desc) return Node.new(self._lhs .. keys, desc, self, self._buffer) end
 
 ---@param buf? integer
 ---@return ne.util.map.Node
-function Node:buf(buf)
-    return Node.new(self._lhs, self._desc, self._parent, buf or 0)
-end
+function Node:buf(buf) return Node.new(self._lhs, self._desc, self._parent, buf or 0) end
 
 ---@param modes ne.util.map.Mode | ne.util.map.Mode[]
----@param rhs   ne.util.map.Rhs
+---@param rhs ne.util.map.Rhs
 ---@param opts? vim.keymap.set.Opts
 ---@return ne.util.map.Binding
 function Node:bind(modes, rhs, opts)

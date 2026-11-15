@@ -7,9 +7,7 @@ Lockfile.__index = Lockfile
 
 ---@param path string
 ---@return ne.util.lockfile
-function Lockfile.new(path)
-    return setmetatable({ path = path }, Lockfile)
-end
+function Lockfile.new(path) return setmetatable({ path = path }, Lockfile) end
 
 ---@return table<string, any>?
 function Lockfile:all()
@@ -20,7 +18,10 @@ function Lockfile:all()
 
     local ok, entries = pcall(vim.json.decode, content)
     if not ok or type(entries) ~= 'table' then
-        vim.notify('Could not parse ' .. self.path .. ', leaving it unchanged', vim.log.levels.ERROR)
+        vim.notify(
+            'Could not parse ' .. self.path .. ', leaving it unchanged',
+            vim.log.levels.ERROR
+        )
         return nil
     end
 
@@ -43,11 +44,11 @@ function Lockfile:replace(entries)
     end
 
     local value = next(entries) == nil and vim.empty_dict() or entries
-    file:write(vim.json.encode(value, { indent = '  ', sort_keys = true }) .. '\n')
+    file:write(vim.json.encode(value, { indent = ' ', sort_keys = true }) .. '\n')
     file:close()
 end
 
----@param name   string
+---@param name string
 ---@param value? any
 function Lockfile:set(name, value)
     local entries = self:all()

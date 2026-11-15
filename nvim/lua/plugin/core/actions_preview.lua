@@ -8,7 +8,10 @@ return {
     event = 'LazyFile',
     opts = function()
         local handlers = shared.plugins.handlers
-        handlers.code_action:set('actions_preview', function() require('actions-preview').code_actions() end)
+        handlers.code_action:set(
+            'actions_preview',
+            function() require('actions-preview').code_actions() end
+        )
 
         return {
             highlight_command = {

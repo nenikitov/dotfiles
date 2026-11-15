@@ -11,15 +11,18 @@ return {
     ---@type SmartSplitsSetupOpts
     opts = function()
         local handlers = shared.plugins.handlers
-        handlers.focus_window:set('smart-splits', function(direction)
-            require('smart-splits')['move_cursor_' .. direction]()
-        end)
-        handlers.swap_window:set('smart-splits', function(direction)
-            require('smart-splits')['swap_buf_' .. direction]()
-        end)
-        handlers.resize_window:set('smart-splits', function(direction)
-            require('smart-splits')['resize_' .. direction]()
-        end)
+        handlers.focus_window:set(
+            'smart-splits',
+            function(direction) require('smart-splits')['move_cursor_' .. direction]() end
+        )
+        handlers.swap_window:set(
+            'smart-splits',
+            function(direction) require('smart-splits')['swap_buf_' .. direction]() end
+        )
+        handlers.resize_window:set(
+            'smart-splits',
+            function(direction) require('smart-splits')['resize_' .. direction]() end
+        )
 
         return {
             resize = {

@@ -29,7 +29,10 @@ util.lazy.setup_patches()
 
 -- Event to signal that a file was opened
 local Event = require('lazy.core.handler.event')
-Event.mappings.LazyFile = { id = 'LazyFile', event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'FileType', } }
+Event.mappings.LazyFile = {
+    id = 'LazyFile',
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre', 'FileType' },
+}
 
 require('lazy').setup({
     spec = vim.tbl_map(
@@ -63,7 +66,7 @@ require('lazy').setup({
             source = shared.icons.plugin.source.source,
             start = shared.icons.plugin.source.start,
             task = shared.icons.plugin.status.done,
-            list = { shared.icons.ui.item, },
+            list = { shared.icons.ui.item },
         },
     },
     checker = {
@@ -75,32 +78,37 @@ require('lazy').setup({
     },
 })
 
-shared.keys.plugin_lazy:bind('n', '<CMD>Lazy<CR>')
-    :set()
-shared.keys.plugin:k('r', 'Reload Neovim and the plugins, keeping the session'):bind('n', function()
-    local session = vim.fs.joinpath(vim.fn.stdpath('state'), 'reload-session.vim')
-    vim.cmd.mksession({ args = { vim.fn.fnameescape(session), }, bang = true })
+shared.keys.plugin_lazy:bind('n', '<CMD>Lazy<CR>'):set()
+shared.keys.plugin
+    :k('r', 'Reload Neovim and the plugins, keeping the session')
+    :bind('n', function()
+        local session = vim.fs.joinpath(vim.fn.stdpath('state'), 'reload-session.vim')
+        vim.cmd.mksession({
+            args = { vim.fn.fnameescape(session) },
+            bang = true,
+        })
 
-    -- Help pages of lazy-loaded plugins only resolve once the plugin is on the runtimepath
-    local help_plugins = {}
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.bo[buf].buftype == 'help' then
-            local file = vim.api.nvim_buf_get_name(buf)
-            for _, plugin in ipairs(require('lazy').plugins()) do
-                if vim.startswith(file, plugin.dir .. '/') then
-                    table.insert(help_plugins, plugin.name)
+        -- Help pages of lazy-loaded plugins only resolve once the plugin is on the runtimepath
+        local help_plugins = {}
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+            if vim.bo[buf].buftype == 'help' then
+                local file = vim.api.nvim_buf_get_name(buf)
+                for _, plugin in ipairs(require('lazy').plugins()) do
+                    if vim.startswith(file, plugin.dir .. '/') then
+                        table.insert(help_plugins, plugin.name)
+                    end
                 end
             end
         end
-    end
 
-    vim.cmd.restart({
-        args = {
-            'lua',
-            ('require("lazy").load({ plugins = %s }); vim.cmd.source(%q)'):format(
-                vim.inspect(help_plugins, { newline = ' ', indent = '' }),
-                session
-            ),
-        },
-    })
-end):set()
+        vim.cmd.restart({
+            args = {
+                'lua',
+                ('require("lazy").load({ plugins = %s }); vim.cmd.source(%q)'):format(
+                    vim.inspect(help_plugins, { newline = ' ', indent = '' }),
+                    session
+                ),
+            },
+        })
+    end)
+    :set()

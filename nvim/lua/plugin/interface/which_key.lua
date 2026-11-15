@@ -9,16 +9,17 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     keys = {
-        shared.keys.custom:k('?', 'Buffer-local keymaps'):bind('n', function()
-            require('which-key').show({ global = false })
-        end):spec(),
+        shared.keys.custom
+            :k('?', 'Buffer-local keymaps')
+            :bind('n', function() require('which-key').show({ global = false }) end)
+            :spec(),
     },
     ---@type wk.Opts
     opts = {
         preset = 'classic',
         win = {
             border = vim.o.winborder,
-            padding = { 0, 0, },
+            padding = { 0, 0 },
         },
         icons = {
             mappings = false,
@@ -50,11 +51,10 @@ return {
         util.vim.autocmd({
             -- The popup keeps its old size when the terminal is resized
             'VimResized',
-        },
-            {
-                group = util.vim.augroup('ne.plugin.which_key.refresh'),
-                desc = 'Force-refresh which-key UI on events upstream missed',
-                callback = function() require('which-key.view').update() end,
-            })
+        }, {
+            group = util.vim.augroup('ne.plugin.which_key.refresh'),
+            desc = 'Force-refresh which-key UI on events upstream missed',
+            callback = function() require('which-key.view').update() end,
+        })
     end,
 }

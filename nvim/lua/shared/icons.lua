@@ -27,6 +27,8 @@ function M.pad(icon)
     return vim.endswith(icon, ' ') and icon or icon .. ' '
 end
 
+-- stylua: ignore start
+
 M.space = {
     char = {
         tab             = '→',
@@ -469,5 +471,7 @@ M.logo = {
         w = { 'MiniIconsGrey', 'Normal', },
     },
 }
+
+-- stylua: ignore end
 
 return M

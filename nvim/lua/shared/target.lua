@@ -7,27 +7,27 @@ local util = require('util')
 
 ---@class ne.shared.target.Tools
 ---@field mason? ne.shared.target.MasonTool[]
----@field nix?   string[]
+---@field nix? string[]
 
 ---@class ne.shared.target.Treesitter
 ---@field disable_highlight? string[]
----@field disable_indent?    string[]
+---@field disable_indent? string[]
 
 ---@alias ne.shared.target.Server boolean | vim.lsp.Config | fun(): (boolean | vim.lsp.Config)
 
 ---@class ne.shared.target.Formatters
----@field by_ft?   string[]
+---@field by_ft? string[]
 ---@field configs? table<string, conform.FormatterConfigOverride | fun(): conform.FormatterConfigOverride>
 
 ---@class ne.shared.target.Completion
 ---@field sources_by_filetype? table<string, string[]>
----@field providers?           table<string, blink.cmp.SourceProviderConfig>
+---@field providers? table<string, blink.cmp.SourceProviderConfig>
 
 ---@class ne.shared.target.DefaultSpec
----@field parsers    string[]
----@field tools      ne.shared.target.Tools
+---@field parsers string[]
+---@field tools ne.shared.target.Tools
 ---@field treesitter ne.shared.target.Treesitter
----@field servers    table<string, ne.shared.target.Server>
+---@field servers table<string, ne.shared.target.Server>
 ---@field formatters ne.shared.target.Formatters
 ---@field completion ne.shared.target.Completion
 local default = {
@@ -56,7 +56,7 @@ local M = {}
 ---@type table<string, ne.shared.target.Spec>
 local targets = {}
 
----@param key  string
+---@param key string
 ---@param spec ne.shared.target.Spec
 ---@return LazySpec
 local function define(key, spec)
@@ -85,18 +85,13 @@ function M.collect(field)
     return result
 end
 
-setmetatable(
-    M, --[[ @as table ]]
-    {
-        ---@param spec ne.shared.target.Spec
-        ---@return LazySpec
-        __call = function(_, spec)
-            local key, _ = debug.getinfo(2, 'S')
-                .source
-                :gsub('^@', '')
-            return define(key, spec)
-        end,
-    }
-)
+setmetatable(M, --[[ @as table ]] {
+    ---@param spec ne.shared.target.Spec
+    ---@return LazySpec
+    __call = function(_, spec)
+        local key, _ = debug.getinfo(2, 'S').source:gsub('^@', '')
+        return define(key, spec)
+    end,
+})
 
 return M

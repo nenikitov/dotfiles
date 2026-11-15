@@ -26,7 +26,8 @@ return {
     config = function(_, opts)
         local treesitter = require('nvim-treesitter')
 
-        local parsers = vim.list_extend(vim.deepcopy(opts.parsers), shared.target.collect('parsers'))
+        local parsers =
+            vim.list_extend(vim.deepcopy(opts.parsers), shared.target.collect('parsers'))
         local disable_highlight = shared.target.collect('treesitter').disable_highlight or {}
 
         -- Install packages
@@ -39,7 +40,7 @@ return {
             treesitter.install(missing)
         end
 
-        util.vim.autocmd({ 'FileType', }, {
+        util.vim.autocmd({ 'FileType' }, {
             group = util.vim.augroup('ne.plugin.treesitter.start'),
             desc = 'Start treesitter highlighting when a parser is available',
             callback = function(event)

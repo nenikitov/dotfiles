@@ -44,11 +44,9 @@ vim.diagnostic.config({
 -- #endregion
 
 -- #region Unnecessary dim
-local function dim_unnecessary()
-    vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { dim = true })
-end
+local function dim_unnecessary() vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { dim = true }) end
 dim_unnecessary()
-util.vim.autocmd({ 'ColorScheme', }, {
+util.vim.autocmd({ 'ColorScheme' }, {
     group = util.vim.augroup('ne.config.dim_unnecessary'),
     desc = 'Dim unused code instead of recoloring it',
     callback = dim_unnecessary,
@@ -56,7 +54,7 @@ util.vim.autocmd({ 'ColorScheme', }, {
 -- #end
 
 -- #region LSP
-util.vim.autocmd({ 'LspAttach', }, {
+util.vim.autocmd({ 'LspAttach' }, {
     group = util.vim.augroup('ne.config.lsp_defaults'),
     desc = 'Set LSP feature defaults',
     once = true,
@@ -68,46 +66,51 @@ util.vim.autocmd({ 'LspAttach', }, {
 -- #endregion
 
 -- #region Keys
-shared.keys.code:k('e', 'Show diagnostic')
+shared.keys.code
+    :k('e', 'Show diagnostic')
     :bind('n', function() vim.diagnostic.open_float() end)
     :set()
-shared.keys.code:k('o', 'Show hover')
-    :bind('n', function() vim.lsp.buf.hover() end)
-    :set()
-shared.keys.code:k('O', 'Show signature')
+shared.keys.code:k('o', 'Show hover'):bind('n', function() vim.lsp.buf.hover() end):set()
+shared.keys.code
+    :k('O', 'Show signature')
     :bind('n', function() vim.lsp.buf.signature_help() end)
     :set()
-shared.keys.code:k('r', 'Show references')
+shared.keys.code
+    :k('r', 'Show references')
     :bind('n', shared.plugins.handlers.show_references:bind())
     :set()
-shared.keys.code:k('i', 'Show implementations')
+shared.keys.code
+    :k('i', 'Show implementations')
     :bind('n', shared.plugins.handlers.show_implementations:bind())
     :set()
-shared.keys.code:k('d', 'Show definition')
+shared.keys.code
+    :k('d', 'Show definition')
     :bind('n', shared.plugins.handlers.show_definitions:bind())
     :set()
-shared.keys.code:k('D', 'Show declaration')
+shared.keys.code
+    :k('D', 'Show declaration')
     :bind('n', shared.plugins.handlers.show_declarations:bind())
     :set()
-shared.keys.code:k('s', 'Show symbols')
+shared.keys.code
+    :k('s', 'Show symbols')
     :bind('n', shared.plugins.handlers.show_workspace_symbols:bind())
     :set()
-shared.keys.code:k('a', 'Run code actions')
-    :bind({ 'n', 'x', }, shared.plugins.handlers.code_action:bind())
+shared.keys.code
+    :k('a', 'Run code actions')
+    :bind({ 'n', 'x' }, shared.plugins.handlers.code_action:bind())
     :set()
-shared.keys.code:k('A', 'Run code lens')
-    :bind('n', function() vim.lsp.codelens.run() end)
+shared.keys.code:k('A', 'Run code lens'):bind('n', function() vim.lsp.codelens.run() end):set()
+shared.keys.code:k('n', 'Rename'):bind('n', shared.plugins.handlers.rename_symbol:bind()):set()
+shared.keys.code
+    :k('f', 'Format')
+    :bind({ 'n', 'x' }, shared.plugins.handlers.format_buffer:bind())
     :set()
-shared.keys.code:k('n', 'Rename')
-    :bind('n', shared.plugins.handlers.rename_symbol:bind())
-    :set()
-shared.keys.code:k('f', 'Format')
-    :bind({ 'n', 'x', }, shared.plugins.handlers.format_buffer:bind())
-    :set()
-shared.keys.code:k('v', 'Toggle inlay hints')
+shared.keys.code
+    :k('v', 'Toggle inlay hints')
     :bind('n', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
     :set()
-shared.keys.code:k('V', 'Toggle code lens')
+shared.keys.code
+    :k('V', 'Toggle code lens')
     :bind('n', function() vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled()) end)
     :set()
 -- #endregion

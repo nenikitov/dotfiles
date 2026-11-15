@@ -34,7 +34,7 @@ vim.opt.smoothscroll = true
 -- #region Special characters
 vim.opt.list = true
 vim.opt.listchars = {
-    tab = '  ' .. shared.icons.space.char.tab,
+    tab = ' ' .. shared.icons.space.char.tab,
     lead = shared.icons.space.char.space_visible,
     trail = shared.icons.space.char.space_visible,
     nbsp = shared.icons.space.char.nbsp,
@@ -70,11 +70,10 @@ vim.opt.mousemoveevent = true
 vim.opt.mousescroll = 'ver:1,hor:2'
 vim.opt.mousemodel = 'extend'
 
-util.map:k('<S-ScrollWheelUp>', 'Scroll left')
-    :bind({ 'n', 'x', 'i', }, '<ScrollWheelLeft>')
-    :set()
-util.map:k('<S-ScrollWheelDown>', 'Scroll right')
-    :bind({ 'n', 'x', 'i', }, '<ScrollWheelRight>')
+util.map:k('<S-ScrollWheelUp>', 'Scroll left'):bind({ 'n', 'x', 'i' }, '<ScrollWheelLeft>'):set()
+util.map
+    :k('<S-ScrollWheelDown>', 'Scroll right')
+    :bind({ 'n', 'x', 'i' }, '<ScrollWheelRight>')
     :set()
 -- #endregion
 

@@ -3,16 +3,14 @@ local M = {}
 
 ---@param name string
 ---@return integer group_id
-function M.augroup(name)
-    return vim.api.nvim_create_augroup(name, { clear = true })
-end
+function M.augroup(name) return vim.api.nvim_create_augroup(name, { clear = true }) end
 
 ---@alias ne.util.vim.AutocmdEvent
 --- | string
 --- | { [1]: string, pattern: string | string[] }
 
 ---@param events ne.util.vim.AutocmdEvent[]
----@param opts   vim.api.keyset.create_autocmd
+---@param opts vim.api.keyset.create_autocmd
 ---@return integer[] ids
 function M.autocmd(events, opts)
     local ids = {}
@@ -41,9 +39,9 @@ function M.find_hl(hls)
     return nil
 end
 
----@param msg    string
+---@param msg string
 ---@param level? integer
----@param opts?  table
+---@param opts? table
 function M.delayed_notify(msg, level, opts)
     local function notify()
         vim.schedule(function() vim.notify(msg, level, opts) end)
@@ -51,10 +49,7 @@ function M.delayed_notify(msg, level, opts)
     if vim.v.vim_did_enter == 1 then
         notify()
     else
-        vim.api.nvim_create_autocmd(
-            'VimEnter',
-            { once = true, callback = notify }
-        )
+        vim.api.nvim_create_autocmd('VimEnter', { once = true, callback = notify })
     end
 end
 

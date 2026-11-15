@@ -5,9 +5,7 @@ local M = {}
 
 ---@param path string
 ---@return string[]
-function M.split(path)
-    return vim.split(vim.fs.normalize(path), '/', { plain = true })
-end
+function M.split(path) return vim.split(vim.fs.normalize(path), '/', { plain = true }) end
 
 ---@param path string
 ---@return string?
@@ -23,9 +21,7 @@ end
 
 ---@param path string
 ---@return boolean
-function M.exists(path)
-    return vim.uv.fs_stat(path) ~= nil
-end
+function M.exists(path) return vim.uv.fs_stat(path) ~= nil end
 
 -- #endregion
 
@@ -60,7 +56,7 @@ function M.path_to_module(path)
 end
 
 ---@param module string
----@param opts?  { ignore_init?: boolean }
+---@param opts? { ignore_init?: boolean }
 ---@return { files: string[], dirs: string[] }
 function M.discover_dir(module, opts)
     ---@type { ignore_init: boolean }
@@ -70,12 +66,10 @@ function M.discover_dir(module, opts)
 
     ---@param dir string
     ---@return boolean
-    local function has_init(dir)
-        return M.exists(vim.fs.joinpath(dir, 'init.lua'))
-    end
+    local function has_init(dir) return M.exists(vim.fs.joinpath(dir, 'init.lua')) end
 
     if not opts.ignore_init and has_init(root) then
-        return { files = { module, }, dirs = {} }
+        return { files = { module }, dirs = {} }
     end
 
     local files, dirs = {}, {}
@@ -102,7 +96,11 @@ function M.discover_dir(module, opts)
 
         if importable then
             if dir == root and has_init(root) then
-                error(('%s has an init.lua, so its other files cannot be imported as a directory'):format(module))
+                error(
+                    ('%s has an init.lua, so its other files cannot be imported as a directory'):format(
+                        module
+                    )
+                )
             end
             table.insert(dirs, M.path_to_module(dir))
         end

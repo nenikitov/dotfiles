@@ -14,10 +14,22 @@ return {
     opts = {
         icons = {
             diagnostics = {
-                [vim.diagnostic.severity.ERROR] = { enabled = true, icon = shared.icons.severity.error },
-                [vim.diagnostic.severity.WARN] = { enabled = true, icon = shared.icons.severity.warning },
-                [vim.diagnostic.severity.INFO] = { enabled = false, icon = shared.icons.severity.info },
-                [vim.diagnostic.severity.HINT] = { enabled = false, icon = shared.icons.severity.hint },
+                [vim.diagnostic.severity.ERROR] = {
+                    enabled = true,
+                    icon = shared.icons.severity.error,
+                },
+                [vim.diagnostic.severity.WARN] = {
+                    enabled = true,
+                    icon = shared.icons.severity.warning,
+                },
+                [vim.diagnostic.severity.INFO] = {
+                    enabled = false,
+                    icon = shared.icons.severity.info,
+                },
+                [vim.diagnostic.severity.HINT] = {
+                    enabled = false,
+                    icon = shared.icons.severity.hint,
+                },
             },
 
             separator = {

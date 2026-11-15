@@ -66,7 +66,7 @@ return {
                     lang = 'bash',
                 },
                 lua = {
-                    pattern = { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*', },
+                    pattern = { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' },
                     icon = shared.icons.cmdline.lua,
                     lang = 'lua',
                 },
@@ -109,32 +109,30 @@ return {
         util.vim.autocmd({
             -- Popups keep the position they were opened at when the terminal is resized
             'VimResized',
-        },
-            {
-                group = util.vim.augroup('ne.plugin.noice.refresh'),
-                desc = 'Force-refresh noice UI on events upstream missed',
-                callback = function()
-                    for view, _ in pairs(require('noice.message.router').get_views()) do
-                        ---@cast view NuiView
-                        if view.is_mounted and view:is_mounted() then
-                            pcall(view.update_layout, view)
-                        end
+        }, {
+            group = util.vim.augroup('ne.plugin.noice.refresh'),
+            desc = 'Force-refresh noice UI on events upstream missed',
+            callback = function()
+                for view, _ in pairs(require('noice.message.router').get_views()) do
+                    ---@cast view NuiView
+                    if view.is_mounted and view:is_mounted() then
+                        pcall(view.update_layout, view)
                     end
+                end
 
-                    local position = require('noice.ui.cmdline').position
-                    if position and vim.api.nvim_win_is_valid(position.win) then
-                        local config = vim.api.nvim_win_get_config(position.win)
-                        local row, col = unpack(
-                            config.relative == 'win' and vim.api.nvim_win_get_position(config.win) or { 0, 0, }
-                        )
-                        vim.g.ui_cmdline_pos = {
-                            row + config.row + position.bufpos.row,
-                            col + config.col
-                                + position.bufpos.col
-                                - 2,
-                        }
-                    end
-                end,
-            })
+                local position = require('noice.ui.cmdline').position
+                if position and vim.api.nvim_win_is_valid(position.win) then
+                    local config = vim.api.nvim_win_get_config(position.win)
+                    local row, col = unpack(
+                        config.relative == 'win' and vim.api.nvim_win_get_position(config.win)
+                            or { 0, 0 }
+                    )
+                    vim.g.ui_cmdline_pos = {
+                        row + config.row + position.bufpos.row,
+                        col + config.col + position.bufpos.col - 2,
+                    }
+                end
+            end,
+        })
     end,
 }

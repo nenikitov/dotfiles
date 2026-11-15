@@ -8,12 +8,8 @@ vim.opt.shiftwidth = 0
 vim.opt.shiftround = true
 vim.opt.softtabstop = -1
 
-util.map:k('<', 'Unindent without exiting visual')
-    :bind('x', '<gv')
-    :set()
-util.map:k('>', 'Indent without exiting visual')
-    :bind('x', '>gv')
-    :set()
+util.map:k('<', 'Unindent without exiting visual'):bind('x', '<gv'):set()
+util.map:k('>', 'Indent without exiting visual'):bind('x', '>gv'):set()
 -- #endregion
 
 -- #region Folding
@@ -27,25 +23,13 @@ vim.opt.foldmethod = 'indent'
 local function g_move(motion)
     return function() return vim.v.count == 0 and 'g' .. motion or motion end
 end
-util.map:k('j', 'Down')
-    :bind({ 'n', 'x', }, g_move('j'), { expr = true })
-    :set()
-util.map:k('<DOWN>', 'Down')
-    :bind({ 'n', 'x', }, g_move('j'), { expr = true })
-    :set()
-util.map:k('k', 'Up')
-    :bind({ 'n', 'x', }, g_move('k'), { expr = true })
-    :set()
-util.map:k('<UP>', 'Up')
-    :bind({ 'n', 'x', }, g_move('k'), { expr = true })
-    :set()
+util.map:k('j', 'Down'):bind({ 'n', 'x' }, g_move('j'), { expr = true }):set()
+util.map:k('<DOWN>', 'Down'):bind({ 'n', 'x' }, g_move('j'), { expr = true }):set()
+util.map:k('k', 'Up'):bind({ 'n', 'x' }, g_move('k'), { expr = true }):set()
+util.map:k('<UP>', 'Up'):bind({ 'n', 'x' }, g_move('k'), { expr = true }):set()
 -- Move faster
-util.map:k('H', 'Start of line (non ws)')
-    :bind('', '^')
-    :set()
-util.map:k('L', 'End of line')
-    :bind('', '$')
-    :set()
+util.map:k('H', 'Start of line (non ws)'):bind('', '^'):set()
+util.map:k('L', 'End of line'):bind('', '$'):set()
 -- Selection
 vim.opt.virtualedit = 'block'
 -- Jumps
@@ -55,7 +39,7 @@ vim.opt.jumpoptions:append('view')
 -- #region Scrolling
 -- Keep a percentage of the window visible around the cursor, instead of a fixed number of lines
 local scrolloff = 0.2
-util.vim.autocmd({ 'WinEnter', 'WinResized', 'VimEnter', }, {
+util.vim.autocmd({ 'WinEnter', 'WinResized', 'VimEnter' }, {
     group = util.vim.augroup('ne.config.percent_scrolloff'),
     desc = 'Update scrolloff to a percentage of each window',
     callback = function()
@@ -80,16 +64,16 @@ local function search_next(forward)
         return key .. 'zvzz'
     end
 end
-util.map:k('n', 'Next search result (always down), centered')
-    :bind({ 'n', 'x', 'o', }, search_next(true), { expr = true })
+util.map
+    :k('n', 'Next search result (always down), centered')
+    :bind({ 'n', 'x', 'o' }, search_next(true), { expr = true })
     :set()
-util.map:k('N', 'Previous search result (always up), centered'):bind({ 'n', 'x', 'o', }, search_next(false), {
-    expr = true,
-}):set()
+util.map
+    :k('N', 'Previous search result (always up), centered')
+    :bind({ 'n', 'x', 'o' }, search_next(false), { expr = true })
+    :set()
 
-util.map:k('<ESC>', 'Clear search')
-    :bind('n', '<CMD>nohlsearch<CR>')
-    :set()
+util.map:k('<ESC>', 'Clear search'):bind('n', '<CMD>nohlsearch<CR>'):set()
 -- #endregion
 
 -- #region Automatic formatting
@@ -102,12 +86,8 @@ vim.schedule(function() vim.opt.clipboard = 'unnamedplus' end)
 -- #endregion
 
 -- #region Yank / paste
-util.map:k('y', 'Yank without moving')
-    :bind('x', 'ygv<ESC>')
-    :set()
-util.map:k('p', 'Paste without yanking replaced text')
-    :bind('x', 'P')
-    :set()
+util.map:k('y', 'Yank without moving'):bind('x', 'ygv<ESC>'):set()
+util.map:k('p', 'Paste without yanking replaced text'):bind('x', 'P'):set()
 util.map
     :k('dd', 'Delete line without yanking blank lines')
     :bind(
@@ -117,7 +97,7 @@ util.map
     )
     :set()
 
-util.vim.autocmd({ 'TextYankPost', }, {
+util.vim.autocmd({ 'TextYankPost' }, {
     group = util.vim.augroup('ne.config.yank_highlight'),
     desc = 'Highlight text right after yanking',
     callback = function() vim.hl.on_yank({ higroup = 'Visual', on_visual = true }) end,
@@ -125,13 +105,11 @@ util.vim.autocmd({ 'TextYankPost', }, {
 -- #endregion
 
 -- #region Undo
-util.map:k('U', 'Redo')
-    :bind('n', '<C-r>')
-    :set()
+util.map:k('U', 'Redo'):bind('n', '<C-r>'):set()
 -- #endregion
 
 -- #region Remove some filetype overwrites
-util.vim.autocmd({ 'FileType', }, {
+util.vim.autocmd({ 'FileType' }, {
     group = util.vim.augroup('ne.config.remove_filetype_overrides'),
     desc = 'Reset options changed by filetype plugins to their global values',
     callback = function(args)
@@ -147,7 +125,7 @@ util.vim.autocmd({ 'FileType', }, {
         }
 
         if not keep_indent[args.match] then
-            vim.list_extend(restore_global, { 'expandtab', 'tabstop', 'shiftwidth', 'softtabstop', })
+            vim.list_extend(restore_global, { 'expandtab', 'tabstop', 'shiftwidth', 'softtabstop' })
         end
 
         for _, name in ipairs(restore_global) do

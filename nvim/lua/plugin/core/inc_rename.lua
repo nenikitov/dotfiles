@@ -11,9 +11,10 @@ return {
     ---@return inc_rename.UserConfig
     opts = function()
         local handlers = shared.plugins.handlers
-        handlers.rename_symbol:set('inc-rename', function()
-            vim.api.nvim_feedkeys(':IncRename ' .. vim.fn.expand('<cword>'), 'n', false)
-        end)
+        handlers.rename_symbol:set(
+            'inc-rename',
+            function() vim.api.nvim_feedkeys(':IncRename ' .. vim.fn.expand('<cword>'), 'n', false) end
+        )
 
         return {}
     end,

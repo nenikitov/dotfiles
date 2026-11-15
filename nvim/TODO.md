@@ -15,7 +15,6 @@
 
 - [`otter.nvim`](https://github.com/jmbuhr/otter.nvim)
 - [`none-ls.nvim`](https://github.com/nvimtools/none-ls.nvim)
-- [`conform.nvim`](https://github.com/stevearc/conform.nvim)
 - [`tiny-inline-diagnostic.nvim`](https://github.com/rachartier/tiny-inline-diagnostic.nvim) \
   not sure
 - [`nvim-colorizer.lua`](https://github.com/catgoose/nvim-colorizer.lua) \
